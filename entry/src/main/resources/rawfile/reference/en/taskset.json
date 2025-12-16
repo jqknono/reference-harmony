@@ -1,0 +1,291 @@
+{
+  "id": "taskset",
+  "title": "Taskset",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 0
+    },
+    {
+      "id": "s2",
+      "title": "Example",
+      "startIndex": 12
+    },
+    {
+      "id": "s3",
+      "title": "Also see",
+      "startIndex": 33
+    }
+  ],
+  "cards": [
+    {
+      "id": "s1-0",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "text",
+      "body": "The default behavior is to run a new command with a given affinity mask"
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset [mask] [command] [arguments]"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "text",
+      "body": "#### Usage #2"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -p [pid]"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -p [mask] [pid]"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "text",
+      "body": "You can also retrieve the CPU affinity of an existing task"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Common Options",
+      "kind": "qa",
+      "front": "`-a`",
+      "back": "--all-tasks | Set or retrieve the CPU affinity of all the task (threads) for a given PID."
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Common Options",
+      "kind": "qa",
+      "front": "`-c`",
+      "back": "--cpu-list | Interpret mask as numerical list of processors instead of a bitmask.</br>Numbers are separated by commas and may include ranges. For example: `0,5,8-11`"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Common Options",
+      "kind": "qa",
+      "front": "`-p`",
+      "back": "--pid | Operate on an existing PID and do not launch a new task."
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Common Options",
+      "kind": "qa",
+      "front": "`-h`",
+      "back": "--help | Display help text and exit."
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Common Options",
+      "kind": "qa",
+      "front": "`-v`",
+      "back": "--version | Print version and exit."
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "View CPU Affinity",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -cp 29523\npid 29523's current affinity list: 0-15"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "View CPU Affinity",
+      "kind": "text",
+      "body": "That mean process with PID `29523` is active on CPU range from `[0,1,...,15]` which means `16` total."
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "View CPU Affinity",
+      "kind": "text",
+      "body": "**PID**: Process Identifier - is a unique numerical identifier given to each running process, you can view PID of\nprocesses in `top` or `htop` tools"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "View CPU Affinity",
+      "kind": "text",
+      "body": "_If you run the above command but get the message `bad usage`, try with PID = 1_"
+    },
+    {
+      "id": "s2-16",
+      "sectionId": "s2",
+      "title": "View CPU Affinity",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -cp 1"
+    },
+    {
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity",
+      "kind": "text",
+      "body": "Now let's try to set process in to a specify CPU. For example, we have a process has PID = 14846"
+    },
+    {
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity",
+      "kind": "text",
+      "body": "Let's see the CPU affinity list of this process first:"
+    },
+    {
+      "id": "s2-19",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -cp 14846\npid 14846's current affinity list: 0-15"
+    },
+    {
+      "id": "s2-20",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity",
+      "kind": "text",
+      "body": "#### Change CPU affinity to 1:"
+    },
+    {
+      "id": "s2-21",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -cp 1 14846\npid 14846's current affinity list: 0-15\npid 14846's new affinity list: 1"
+    },
+    {
+      "id": "s2-22",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity",
+      "kind": "text",
+      "body": "As we see, CPU affinity was changed"
+    },
+    {
+      "id": "s2-23",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity with multiple value",
+      "kind": "text",
+      "body": "That mean new CPU affinity list is `[0,1,2,3]`"
+    },
+    {
+      "id": "s2-24",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity with multiple value",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -cp 0-3 14846\npid 14846's current affinity list: 1\npid 14846's new affinity list: 0-3"
+    },
+    {
+      "id": "s2-25",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity with multiple value",
+      "kind": "text",
+      "body": "You can set single CPU with the following command:"
+    },
+    {
+      "id": "s2-26",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity with multiple value",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -cp 5,8,12 14846\npid 14846's current affinity list: 0-3\npid 14846's new affinity list: 5,8,12"
+    },
+    {
+      "id": "s2-27",
+      "sectionId": "s2",
+      "title": "Set CPU Affinity with multiple value",
+      "kind": "text",
+      "body": "That mean new CPU affinity list is `[5,8,12]`"
+    },
+    {
+      "id": "s2-28",
+      "sectionId": "s2",
+      "title": "Other",
+      "kind": "text",
+      "body": "You can set affinity by range with other like a specify CPU"
+    },
+    {
+      "id": "s2-29",
+      "sectionId": "s2",
+      "title": "Other",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -cp 1-3,12 14846"
+    },
+    {
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "Other",
+      "kind": "text",
+      "body": "Or"
+    },
+    {
+      "id": "s2-31",
+      "sectionId": "s2",
+      "title": "Other",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ taskset -cp 1-6:2 14846"
+    },
+    {
+      "id": "s2-32",
+      "sectionId": "s2",
+      "title": "Other",
+      "kind": "text",
+      "body": "The suffix \":N\" specifies stride in the range, for example 0-10:3 is interpreted as 0,3,6,9 list."
+    },
+    {
+      "id": "s3-33",
+      "sectionId": "s3",
+      "title": "Also see",
+      "kind": "text",
+      "body": "[taskset — Linux manual page](https://man7.org/linux/man-pages/man1/taskset.1.html) _(man7.org)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/taskset.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/taskset.md",
+    "generatedAt": "2025-12-16T07:50:03.307Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

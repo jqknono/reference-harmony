@@ -1,0 +1,1073 @@
+{
+  "id": "postgres",
+  "title": "PostgreSQL",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "The [PostgreSQL](https://www.postgresql.org/docs/current/) cheat sheet provides you with the common PostgreSQL commands and statements."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "Switch and connect"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "```shell script\n$ sudo -u postgres psql"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nList all databases"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "postgres=# \\l"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nConnect to the database named postgres"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "postgres=# \\c postgres"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nDisconnect"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "postgres=# \\q\npostgres=# \\!"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### psql commands {.col-span-2}\n\n| Option              | Example                                      | Description                    |\n| ------------------- | -------------------------------------------- | :----------------------------- |\n| `[-d] <database>`   | psql -d mydb                                 | Connecting to database         |\n| `-U`                | psql -U john mydb                            | Connecting as a specific user  |\n| `-h` `-p`           | psql -h localhost -p 5432 mydb               | Connecting to a host/port      |\n| `-U` `-h` `-p` `-d` | psql -U admin -h 192.168.1.5 -p 2506 -d mydb | Connect remote PostgreSQL      |\n| `-W`                | psql -W mydb                                 | Force password                 |\n| `-c`                | psql -c '\\c postgres' -c '\\dt'               | Execute a SQL query or command |\n| `-H`                | psql -c \"\\l+\" -H postgres > database.html    | Generate HTML report           |\n| `-l`                | psql -l                                      | List all databases             |\n| `-f`                | psql mydb -f file.sql                        | Execute commands from a file   |\n| `-V`                | psql -V                                      | Print the psql version         |\n\n{.show-header}\n\n### Getting help\n\n| -           | -                              |\n| ----------- | :----------------------------- |\n| `\\h`        | Help on syntax of SQL commands |\n| `\\h` DELETE | DELETE SQL statement syntax    |\n| `\\?`        | List of PostgreSQL command     |\n\nRun in PostgreSQL console\n\n## PostgreSQL Working\n\n### Recon\n\nShow version"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SHOW SERVER_VERSION;"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nShow system status"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\conninfo"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nShow environmental variables"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SHOW ALL;"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nList users"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT rolname FROM pg_roles;"
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nShow current user"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT current_user;"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nShow current user's permissions"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\du"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nShow current database"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT current_database();"
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nShow all tables in database"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\dt"
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nList functions"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\df <schema>"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Databases\n\nList databases"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\l"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nConnect to database"
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\c <database_name>"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nShow current database"
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT current_database();"
+    },
+    {
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Create database](http://www.postgresql.org/docs/current/static/sql-createdatabase.html)"
+    },
+    {
+      "id": "s1-34",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "CREATE DATABASE <database_name> WITH OWNER <username>;"
+    },
+    {
+      "id": "s1-35",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Drop database](http://www.postgresql.org/docs/current/static/sql-dropdatabase.html)"
+    },
+    {
+      "id": "s1-36",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "DROP DATABASE IF EXISTS <database_name>;"
+    },
+    {
+      "id": "s1-37",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Rename database](http://www.postgresql.org/docs/current/static/sql-alterdatabase.html)"
+    },
+    {
+      "id": "s1-38",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "ALTER DATABASE <old_name> RENAME TO <new_name>;"
+    },
+    {
+      "id": "s1-39",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Tables\n\nList tables, in current db"
+    },
+    {
+      "id": "s1-40",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\dt"
+    },
+    {
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT table_schema,table_name FROM information_schema.tables ORDER BY table_schema,table_name;"
+    },
+    {
+      "id": "s1-42",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nList tables, globally"
+    },
+    {
+      "id": "s1-43",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\dt *.*."
+    },
+    {
+      "id": "s1-44",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT * FROM pg_catalog.pg_tables"
+    },
+    {
+      "id": "s1-45",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nList table schema"
+    },
+    {
+      "id": "s1-46",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\d <table_name>\n\\d+ <table_name>"
+    },
+    {
+      "id": "s1-47",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT column_name, data_type, character_maximum_length\nFROM INFORMATION_SCHEMA.COLUMNS\nWHERE table_name = '<table_name>';"
+    },
+    {
+      "id": "s1-48",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Create table](http://www.postgresql.org/docs/current/static/sql-createtable.html)"
+    },
+    {
+      "id": "s1-49",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "CREATE TABLE <table_name>(\n<column_name> <column_type>,\n<column_name> <column_type>\n);"
+    },
+    {
+      "id": "s1-50",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nCreate table, with an auto-incrementing primary key"
+    },
+    {
+      "id": "s1-51",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "CREATE TABLE <table_name> (\n<column_name> SERIAL PRIMARY KEY\n);"
+    },
+    {
+      "id": "s1-52",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Delete table](http://www.postgresql.org/docs/current/static/sql-droptable.html)"
+    },
+    {
+      "id": "s1-53",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "DROP TABLE IF EXISTS <table_name> CASCADE;"
+    },
+    {
+      "id": "s1-54",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Permissions\n\nBecome the postgres user, if you have permission errors"
+    },
+    {
+      "id": "s1-55",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "sudo su - postgres\npsql"
+    },
+    {
+      "id": "s1-56",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Grant](http://www.postgresql.org/docs/current/static/sql-grant.html) all permissions on database"
+    },
+    {
+      "id": "s1-57",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <user_name>;"
+    },
+    {
+      "id": "s1-58",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGrant connection permissions on database"
+    },
+    {
+      "id": "s1-59",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "GRANT CONNECT ON DATABASE <db_name> TO <user_name>;"
+    },
+    {
+      "id": "s1-60",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGrant permissions on schema"
+    },
+    {
+      "id": "s1-61",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "GRANT USAGE ON SCHEMA public TO <user_name>;"
+    },
+    {
+      "id": "s1-62",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGrant permissions to functions"
+    },
+    {
+      "id": "s1-63",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO <user_name>;"
+    },
+    {
+      "id": "s1-64",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGrant permissions to select, update, insert, delete, on a all tables"
+    },
+    {
+      "id": "s1-65",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "GRANT SELECT, UPDATE, INSERT ON ALL TABLES IN SCHEMA public TO <user_name>;"
+    },
+    {
+      "id": "s1-66",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGrant permissions, on a table"
+    },
+    {
+      "id": "s1-67",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "GRANT SELECT, UPDATE, INSERT ON <table_name> TO <user_name>;"
+    },
+    {
+      "id": "s1-68",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGrant permissions, to select, on a table"
+    },
+    {
+      "id": "s1-69",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "GRANT SELECT ON ALL TABLES IN SCHEMA public TO <user_name>;"
+    },
+    {
+      "id": "s1-70",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Columns\n\n[Add column](http://www.postgresql.org/docs/current/static/sql-altertable.html)"
+    },
+    {
+      "id": "s1-71",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "ALTER TABLE <table_name> IF EXISTS\nADD <column_name> <data_type> [<constraints>];"
+    },
+    {
+      "id": "s1-72",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nUpdate column"
+    },
+    {
+      "id": "s1-73",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "ALTER TABLE <table_name> IF EXISTS\nALTER <column_name> TYPE <data_type> [<constraints>];"
+    },
+    {
+      "id": "s1-74",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nDelete column"
+    },
+    {
+      "id": "s1-75",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "ALTER TABLE <table_name> IF EXISTS\nDROP <column_name>;"
+    },
+    {
+      "id": "s1-76",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nUpdate column to be an auto-incrementing primary key"
+    },
+    {
+      "id": "s1-77",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "ALTER TABLE <table_name>\nADD COLUMN <column_name> SERIAL PRIMARY KEY;"
+    },
+    {
+      "id": "s1-78",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nInsert into a table, with an auto-incrementing primary key"
+    },
+    {
+      "id": "s1-79",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "INSERT INTO <table_name>\nVALUES (DEFAULT, <value1>);"
+    },
+    {
+      "id": "s1-80",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "INSERT INTO <table_name> (<column1_name>,<column2_name>)\nVALUES ( <value1>,<value2> );"
+    },
+    {
+      "id": "s1-81",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Data\n\n[Select](http://www.postgresql.org/docs/current/static/sql-select.html) all data"
+    },
+    {
+      "id": "s1-82",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT * FROM <table_name>;"
+    },
+    {
+      "id": "s1-83",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nRead one row of data"
+    },
+    {
+      "id": "s1-84",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT * FROM <table_name> LIMIT 1;"
+    },
+    {
+      "id": "s1-85",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nSearch for data"
+    },
+    {
+      "id": "s1-86",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT * FROM <table_name> WHERE <column_name> = <value>;"
+    },
+    {
+      "id": "s1-87",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Insert](http://www.postgresql.org/docs/current/static/sql-insert.html) data"
+    },
+    {
+      "id": "s1-88",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "INSERT INTO <table_name> VALUES( <value_1>, <value_2> );"
+    },
+    {
+      "id": "s1-89",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Update](http://www.postgresql.org/docs/current/static/sql-update.html) data"
+    },
+    {
+      "id": "s1-90",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "UPDATE <table_name>\nSET <column_1> = <value_1>, <column_2> = <value_2>\nWHERE <column_1> = <value>;"
+    },
+    {
+      "id": "s1-91",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Delete](http://www.postgresql.org/docs/current/static/sql-delete.html) all data"
+    },
+    {
+      "id": "s1-92",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "DELETE FROM <table_name>;"
+    },
+    {
+      "id": "s1-93",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nDelete specific data"
+    },
+    {
+      "id": "s1-94",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "DELETE FROM <table_name>\nWHERE <column_name> = <value>;"
+    },
+    {
+      "id": "s1-95",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Users\n\nList roles"
+    },
+    {
+      "id": "s1-96",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT rolname FROM pg_roles;"
+    },
+    {
+      "id": "s1-97",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Create user](http://www.postgresql.org/docs/current/static/sql-createuser.html)"
+    },
+    {
+      "id": "s1-98",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "CREATE USER <user_name> WITH PASSWORD '<password>';"
+    },
+    {
+      "id": "s1-99",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Drop user](http://www.postgresql.org/docs/current/static/sql-dropuser.html)"
+    },
+    {
+      "id": "s1-100",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "DROP USER IF EXISTS <user_name>;"
+    },
+    {
+      "id": "s1-101",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Alter](http://www.postgresql.org/docs/current/static/sql-alterrole.html) user password"
+    },
+    {
+      "id": "s1-102",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "ALTER ROLE <user_name> WITH PASSWORD '<password>';"
+    },
+    {
+      "id": "s1-103",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Schema\n\nList schemas"
+    },
+    {
+      "id": "s1-104",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\dn"
+    },
+    {
+      "id": "s1-105",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT schema_name FROM information_schema.schemata;"
+    },
+    {
+      "id": "s1-106",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT nspname FROM pg_catalog.pg_namespace;"
+    },
+    {
+      "id": "s1-107",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Create schema](http://www.postgresql.org/docs/current/static/sql-createschema.html)"
+    },
+    {
+      "id": "s1-108",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "CREATE SCHEMA IF NOT EXISTS <schema_name>;"
+    },
+    {
+      "id": "s1-109",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Drop schema](http://www.postgresql.org/docs/current/static/sql-dropschema.html)"
+    },
+    {
+      "id": "s1-110",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "DROP SCHEMA IF EXISTS <schema_name> CASCADE;"
+    },
+    {
+      "id": "s1-111",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Dates\n\nShow [current date](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) YYYY-MM-DD"
+    },
+    {
+      "id": "s1-112",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT current_date;"
+    },
+    {
+      "id": "s1-113",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nCalculate\n[age](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=age%20(%20timestamp%2C%20timestamp%20)%20%E2%86%92%20interval>)\nbetween two dates"
+    },
+    {
+      "id": "s1-114",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT age(timestamp, timestamp);"
+    },
+    {
+      "id": "s1-115",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nShow [current time](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) with time\nzone"
+    },
+    {
+      "id": "s1-116",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT current_time;"
+    },
+    {
+      "id": "s1-117",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n[Make](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=make_date%20(%20year%20int%2C%20month%20int%2C%20day%20int%20)%20%E2%86%92%20date>)\ndates using integers"
+    },
+    {
+      "id": "s1-118",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "SELECT make_date(2021,03,25);"
+    },
+    {
+      "id": "s1-119",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## PostgreSQL Commands\n\n### Tables\n\n| -                | -                               |\n| ---------------- | :------------------------------ |\n| `\\d <table>`     | Describe table                  |\n| `\\d+ <table>`    | Describe table with details     |\n| `\\dt`            | List tables from current schema |\n| `\\dt *.*`        | List tables from all schemas    |\n| `\\dt <schema>.*` | List tables for a schema        |\n| `\\dp`            | List table access privileges    |\n| `\\det[+]`        | List foreign tables             |\n\n### Query buffer\n\n| -            | -                                  |\n| ------------ | :--------------------------------- |\n| `\\e [FILE]`  | Edit the query buffer (or file)    |\n| `\\ef [FUNC]` | Edit function definition           |\n| `\\p`         | Show the contents                  |\n| `\\r`         | Reset (clear) the query buffer     |\n| `\\s [FILE]`  | Display history or save it to file |\n| `\\w FILE`    | Write query buffer to file         |\n\n### Informational {.row-span-4}\n\n| -               | -                               |\n| --------------- | :------------------------------ |\n| `\\l[+]`         | List all databases              |\n| `\\dn[S+]`       | List schemas                    |\n| `\\di[S+]`       | List indexes                    |\n| `\\du[+]`        | List roles                      |\n| `\\ds[S+]`       | List sequences                  |\n| `\\df[antw][S+]` | List functions                  |\n| `\\deu[+]`       | List user mappings              |\n| `\\dv[S+]`       | List views                      |\n| `\\dl`           | List large objects              |\n| `\\dT[S+]`       | List data types                 |\n| `\\da[S]`        | List aggregates                 |\n| `\\db[+]`        | List tablespaces                |\n| `\\dc[S+]`       | List conversions                |\n| `\\dC[+]`        | List casts                      |\n| `\\ddp`          | List default privileges         |\n| `\\dd[S]`        | Show object descriptions        |\n| `\\dD[S+]`       | List domains                    |\n| `\\des[+]`       | List foreign servers            |\n| `\\dew[+]`       | List foreign-data wrappers      |\n| `\\dF[+]`        | List text search configurations |\n| `\\dFd[+]`       | List text search dictionaries   |\n| `\\dFp[+]`       | List text search parsers        |\n| `\\dFt[+]`       | List text search templates      |\n| `\\dL[S+]`       | List procedural languages       |\n| `\\do[S]`        | List operators                  |\n| `\\dO[S+]`       | List collations                 |\n| `\\drds`         | List per-database role settings |\n| `\\dx[+]`        | List extensions                 |\n\n`S`: show system objects, `+`: additional detail\n\n### Connection\n\n| -                      | -                           |\n| ---------------------- | :-------------------------- |\n| `\\c [DBNAME]`          | Connect to new database     |\n| `\\encoding [ENCODING]` | Show or set client encoding |\n| `\\password [USER]`     | Change the password         |\n| `\\conninfo`            | Display information         |\n\n### Formatting\n\n| -                         | -                                          |\n| ------------------------- | :----------------------------------------- |\n| `\\a`                      | Toggle between unaligned and aligned       |\n| `\\C [STRING]`             | Set table title, or unset if none          |\n| `\\f [STRING]`             | Show or set field separator for unaligned  |\n| `\\H`                      | Toggle HTML output mode                    |\n| <code>\\t [on\\|off]</code> | Show only rows                             |\n| `\\T [STRING]`             | Set or unset HTML \\<table\\> tag attributes |\n| <code>\\x [on\\|off]</code> | Toggle expanded output                     |\n\n### Input/Output\n\n| -                 | -                                                              |\n| ----------------- | :------------------------------------------------------------- |\n| `\\copy ...`       | Import/export table<br> _See also:_ [copy](#import-export-csv) |\n| `\\echo [STRING]`  | Print string                                                   |\n| `\\i FILE`         | Execute file                                                   |\n| `\\o [FILE]`       | Export all results to file                                     |\n| `\\qecho [STRING]` | String to output stream                                        |\n\n### Variables\n\n| -                     | -                                             |\n| --------------------- | :-------------------------------------------- |\n| `\\prompt [TEXT] NAME` | Set variable                                  |\n| `\\set [NAME [VALUE]]` | Set variable _(or list all if no parameters)_ |\n| `\\unset NAME`         | Delete variable                               |\n\n### Misc\n\n| -                              | -                    |\n| ------------------------------ | :------------------- |\n| `\\cd [DIR]`                    | Change the directory |\n| <code>\\timing [on\\|off]</code> | Toggle timing        |\n| `\\! [COMMAND]`                 | Execute in shell     |\n| `\\! ls -l`                     | List all in shell    |\n\n### Large Objects\n\n- `\\lo_export LOBOID FILE`\n- `\\lo_import FILE [COMMENT]`\n- `\\lo_list`\n- `\\lo_unlink LOBOID`\n\n{.marker-none}\n\n## Miscellaneous\n\n### Backup\n\nUse pg_dumpall to backup all databases"
+    },
+    {
+      "id": "s1-120",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "$ pg_dumpall -U postgres > all.sql"
+    },
+    {
+      "id": "s1-121",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nUse pg_dump to backup a database"
+    },
+    {
+      "id": "s1-122",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "$ pg_dump -d mydb -f mydb_backup.sql"
+    },
+    {
+      "id": "s1-123",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n| -    | -                                              |\n| ---- | :--------------------------------------------- |\n| `-a` | Dump only the data, not the schema             |\n| `-s` | Dump only the schema, no data                  |\n| `-c` | Drop database before recreating                |\n| `-C` | Create database before restoring               |\n| `-t` | Dump the named table(s) only                   |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar) |\n\nUse `pg_dump -?` to get the full list of options\n\n### Restore\n\nRestore a database with psql"
+    },
+    {
+      "id": "s1-124",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "$ psql -U user mydb < mydb_backup.sql"
+    },
+    {
+      "id": "s1-125",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nRestore a database with pg_restore"
+    },
+    {
+      "id": "s1-126",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "$ pg_restore -d mydb mydb_backup.sql -c"
+    },
+    {
+      "id": "s1-127",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n| -    | -                                                                            |\n| ---- | :--------------------------------------------------------------------------- |\n| `-U` | Specify a database user                                                      |\n| `-c` | Drop database before recreating                                              |\n| `-C` | Create database before restoring                                             |\n| `-e` | Exit if an error has encountered                                             |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar, `p`: plain text sql(default)) |\n\n{.marker-none}\n\nUse `pg_restore -?` to get the full list of options\n\n### Remote access\n\nGet location of postgresql.conf"
+    },
+    {
+      "id": "s1-128",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "$ psql -U postgres -c 'SHOW config_file'"
+    },
+    {
+      "id": "s1-129",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nAppend to postgresql.conf"
+    },
+    {
+      "id": "s1-130",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "listen_addresses = '*'"
+    },
+    {
+      "id": "s1-131",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nAppend to pg_hba.conf (Same location as postgresql.conf)"
+    },
+    {
+      "id": "s1-132",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "host  all  all  0.0.0.0/0  md5\nhost  all  all  ::/0       md5"
+    },
+    {
+      "id": "s1-133",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nRestart PostgreSQL server"
+    },
+    {
+      "id": "s1-134",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "$ sudo systemctl restart postgresql"
+    },
+    {
+      "id": "s1-135",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Import/Export CSV\n\nExport table into CSV file"
+    },
+    {
+      "id": "s1-136",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\copy table TO '<path>' CSV\n\\copy table(col1,col1) TO '<path>' CSV\n\\copy (SELECT...) TO '<path>' CSV"
+    },
+    {
+      "id": "s1-137",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nImport CSV file into table"
+    },
+    {
+      "id": "s1-138",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "text",
+      "body": "\\copy table FROM '<path>' CSV\n\\copy table(col1,col1) FROM '<path>' CSV"
+    },
+    {
+      "id": "s1-139",
+      "sectionId": "s1",
+      "title": "Getting started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nSee also: [Copy](https://www.postgresql.org/docs/current/sql-copy.html)\n\n## Also see\n\n- [Posgres-cheatsheet](https://gist.github.com/apolloclark/ea5466d5929e63043dcf#posgres-cheatsheet) _(gist.github.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/postgres.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/postgres.md",
+    "generatedAt": "2025-12-16T07:50:03.234Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

@@ -1,0 +1,555 @@
+{
+  "id": "terraform",
+  "title": "Terraform",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "HCL Syntax:",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Meta-Arguments",
+      "startIndex": 7
+    },
+    {
+      "id": "s3",
+      "title": "Terraform CLI",
+      "startIndex": 53
+    },
+    {
+      "id": "s4",
+      "title": "Also See",
+      "startIndex": 66
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "This is a quick reference cheat sheet for [Terraform](https://docs.docker.com/get-started/)."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "HCL Syntax:",
+      "kind": "code",
+      "lang": "",
+      "code": "(Block Name)  (Resource Type)  (Resource Name)\n      |           |                 |\n      ▽           ▽                 ▽\n  resource \"aws_instance\" \"my_aws_server\" {\n                                            --\n      ami           = \"ami-1251351351513\"    |<--(Arguments)\n      instance_type = \"t2.micro\"             |\n                                            --\n\n}"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Variable Types",
+      "kind": "text",
+      "body": "• Simple types: number, string, bool, null."
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Variable Types",
+      "kind": "text",
+      "body": "• Complex types: Collection types: list, map, set Structural types: `object({<KEY> = <TYPE>, ...})`,"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Variable Types",
+      "kind": "text",
+      "body": "`tuple([<TYPE>, ...])`"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Variable Types",
+      "kind": "text",
+      "body": "Order of Precedence: defaults < env vars < terraform.tfvars file < terraform.tfvars.json file < .auto.tfvars < command\nline (-var & -var-file)"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Variable Types",
+      "kind": "code",
+      "lang": "",
+      "code": "variable \"<VAR NAME>\" {\n    description = \"<DESCRIPTION OF THE VAR>\"\n    type        = <VAR TYPE>\n    default     = <DEFAULT VALUE>\n}\n\n# type string\nvariable \"aws_region\" {\n    description = \"AWS Region\"\n    type        = string\n    default     = \"us-east-1\"\n}\n\n# type list(string)\nvariable \"azs\" {\n    description = \"AZs in the Region\"\n    type        = list(string)\n    default     = [ \"us-east-1a\", \"us-east-1b\", \"us-east-1c\"]\n}\n\n# type map\nvariable \"amis\" {\n    type = map(string)\n    default = {\n      \"eu-west-1\" = \"ami-0fdke15151513145\",\n      \"us-east-1\" = \"ami-0d17359173587519\"\n    }\n}\n\n# type object\nvariable \"egress_dsg\" {\n    type = object({\n        from_port = number\n        to_port = number\n        protocol = string\n        cidr_blocks = list(string)\n    })\n    default = {\n     from_port = 0,\n     to_port = 65365,\n     protocol = \"tcp\",\n     cidr_blocks = [\"100.0.0.0/16\", \"200.0.0.0/16\", \"0.0.0.0/0\"]\n    }\n}"
+    },
+    {
+      "id": "s2-7",
+      "sectionId": "s2",
+      "title": "Loops",
+      "kind": "text",
+      "body": "count, for_each, [for( o in var.list: o.id])"
+    },
+    {
+      "id": "s2-8",
+      "sectionId": "s2",
+      "title": "Loops",
+      "kind": "code",
+      "lang": "",
+      "code": "# creating multiple EC2 instances using count\nresource \"aws_instance\" \"server\" {\n  ami = \"ami-06ec8443c2a35b0ba\"\n  instance_type = \"t2.micro\"\n  count = 3  # creating 3 resources\n}\n\n# declaring a variable\nvariable \"users\" {\n  type = list(string)\n  default = [\"demo-user\", \"admin1\", \"john\"]\n}\n\n# creating IAM users using for_each\nresource \"aws_iam_user\" \"test\" {\n  for_each = toset(var.users) # converts a list to a set\n  name = each.key\n}\n\n# A for expression creates a complex type value by transforming another complex type value.\nvariable \"names\" {\n    type = list\n    default = [\"som\", \"john\", \"mary\"]\n}\n\noutput \"show_names\" {\n    # similar to Python's list comprehension\n    value = [for n in var.names : upper(n)]\n}\n\noutput \"short_upper_names\" {\n  # filter the resulting list by specifying a condition:\n  value = [for name in var.names : upper(name) if length(name) > 7]\n}"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "Splat",
+      "kind": "text",
+      "body": "`Splat(var.list[*].id)`"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "Splat",
+      "kind": "code",
+      "lang": "",
+      "code": "# Launch an EC2 instance\nresource \"aws_instance\" \"server\" {\n  ami = \"ami-05cafdf7c9f772ad2\"\n  instance_type = \"t2.micro\"\n  count = 3\n}\n\noutput \"private_addresses\"{\n  value = aws_instance.server[*].private_ip  # splat expression\n}"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "depends_on",
+      "kind": "text",
+      "body": "if two resources depends on each other, depends_on specifies that dependency to enforce ordering"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "depends_on",
+      "kind": "code",
+      "lang": "",
+      "code": "resource \"aws_iam_role_policy\" \"example\" {\n    name = \"example\"\n    role = \"s3 access\"\n    policy = jsonencode({\n      \"Statement\" = [{\n        \"Action\" = \"s3:*\",\n        \"Effect\" = \"Allow\",\n      }],\n    })\n}\n\nresource \"aws_instance\" \"my_server\" {\n    ami  = \"ami-a255235\"\n    instance_type = \"t2.micro\"\n\n    iam_instance_profile = aws_iam_instance_profile.my_server\n\n    depends_on = [\n      aws_iam_role_policy.example,\n    ]"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "lifecycle",
+      "kind": "text",
+      "body": "A set of meta arguments to control behavior specific resources"
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "lifecycle",
+      "kind": "code",
+      "lang": "",
+      "code": "resources \"aws_instance\" \"server\" {\n  ami           = \"ami-a1b3414\"\n  instance_type = \"t2.micro\"\n\n  lifecycle {\n    create_before_destroy = true\n    ignore_changes = [\n      # Some resources have metadata\n      # modified automatically outside of TF\n\n      tags\n    ]\n  }\n}"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "Conditionals",
+      "kind": "text",
+      "body": "`condition ? true_val : false_val`"
+    },
+    {
+      "id": "s2-16",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`max(5, 10, 9)`",
+      "back": "12"
+    },
+    {
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`min(5, 10, 9)`",
+      "back": "5"
+    },
+    {
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`format(\"There are %d servers\", 4)`",
+      "back": "There are 4 lights"
+    },
+    {
+      "id": "s2-19",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`join(\",\" [\"foo\", \"bar\", \"baz\"])`",
+      "back": "foo,bar,baz"
+    },
+    {
+      "id": "s2-20",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`split(\",\", \"foo,bar,baz\")`",
+      "back": "`[\"foo\", \"bar\", \"baz\"]`"
+    },
+    {
+      "id": "s2-21",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`replace(\"hi world\", \"/w.*d/\", \"mom\"`",
+      "back": "hi mom"
+    },
+    {
+      "id": "s2-22",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`substr(\"hello world\", 1, 4)`",
+      "back": "ello"
+    },
+    {
+      "id": "s2-23",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`lookup({a=\"lol\", b=\"sad\"}, \"a\", \"what?\")`",
+      "back": "lol"
+    },
+    {
+      "id": "s2-24",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`lookup({a=\"lol\", b=\"sad\"}, \"c\", \"what?\")`",
+      "back": "what?"
+    },
+    {
+      "id": "s2-25",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`slice([\"a\", \"b\", \"c\", \"d\"], 1, 3)`",
+      "back": "`[\"b\", \"c\"]`"
+    },
+    {
+      "id": "s2-26",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`timestamp()`",
+      "back": "\"2022-04-02T05:52:48Z\""
+    },
+    {
+      "id": "s2-27",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`cidr(\"10.1.2.240/28\", 1)`",
+      "back": "10.1.2.241"
+    },
+    {
+      "id": "s2-28",
+      "sectionId": "s2",
+      "title": "Built-In functions",
+      "kind": "qa",
+      "front": "`cidr(\"10.1.2.240/28\", 14)`",
+      "back": "10.1.2.254"
+    },
+    {
+      "id": "s2-29",
+      "sectionId": "s2",
+      "title": "Provider block",
+      "kind": "text",
+      "body": "Details of the provider(s) being used. Includes information like access mechanisms, regional options, profile touse etc."
+    },
+    {
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "Provider block",
+      "kind": "code",
+      "lang": "",
+      "code": "provider \"aws\" {\n  region = \"us-east-1\"\n}\n\n# Additional provider config reference as `aws.west`.\nprovider \"aws\" {\n  alias  = \"west\"\n  region = \"us-west-2\"\n}"
+    },
+    {
+      "id": "s2-31",
+      "sectionId": "s2",
+      "title": "Requiring Providers",
+      "kind": "code",
+      "lang": "",
+      "code": "terraform {\n\n  # required_providers block specifies source and version\n  required_providers {\n    aws = {\n      source  = \"hashicorp/aws\" # where to find the provider\n      version = \"5.8.0\" # which version of the provider is needed for this config\n    }\n  }\n}"
+    },
+    {
+      "id": "s2-32",
+      "sectionId": "s2",
+      "title": "Locals block",
+      "kind": "text",
+      "body": "A local value assigns a name to an expression, so you can use the name multiple times within a module instead of\nrepeating the expression"
+    },
+    {
+      "id": "s2-33",
+      "sectionId": "s2",
+      "title": "Locals block",
+      "kind": "code",
+      "lang": "",
+      "code": "locals {\n  service_name = \"forum\"\n  owner        = \"Community Team\"\n}\n\n# once local declared you can reference it\nlocals {\n  common_tags = {\n    Service = local.service_name\n    Owner   = local.owner"
+    },
+    {
+      "id": "s2-34",
+      "sectionId": "s2",
+      "title": "Output block",
+      "kind": "code",
+      "lang": "",
+      "code": "output \"api_base_url\" {\n  value = \"https://${aws_instance.example.private_dns}:8433/\"\n\n  # The EC2 instance must have an encrypted root volume.\n  precondition {\n    condition     = data.aws_ebs_volume.example.encrypted\n    error_message = \"The server's root volume is not encrypted.\"\n  }\n\n  # output can be marked as containing sensitive\n  sensitive = true # output can be marked as containing sensitive\n}"
+    },
+    {
+      "id": "s2-35",
+      "sectionId": "s2",
+      "title": "Data block",
+      "kind": "text",
+      "body": "Data sources that can be queried (cloud provider, local list, etc.)"
+    },
+    {
+      "id": "s2-36",
+      "sectionId": "s2",
+      "title": "Data block",
+      "kind": "code",
+      "lang": "",
+      "code": "data \"aws_ami\" \"example\" {\n  most_recent = true\n\n  owners = [\"self\"]\n  tags = {\n    Name   = \"app-server\"\n    Tested = \"true\"\n  }\n}"
+    },
+    {
+      "id": "s2-37",
+      "sectionId": "s2",
+      "title": "Modules",
+      "kind": "code",
+      "lang": "",
+      "code": "module \"myec2\" {\n  source = \"../modules/ec2\"\n\n  # module inputs\n  ami_id = var.ami_id\n  instance_type = var.instance_type\n  servers = var.servers\n}"
+    },
+    {
+      "id": "s2-38",
+      "sectionId": "s2",
+      "title": "Backends",
+      "kind": "text",
+      "body": "A backend defines where Terraform stores its state data files."
+    },
+    {
+      "id": "s2-39",
+      "sectionId": "s2",
+      "title": "Backends",
+      "kind": "text",
+      "body": "Available backends: local(default), remote, azurerm, consul, cos, gcs, http, Kubernetes, oss, pg, s3"
+    },
+    {
+      "id": "s2-40",
+      "sectionId": "s2",
+      "title": "Backends",
+      "kind": "code",
+      "lang": "",
+      "code": "terraform {\n  backend \"remote\" {\n    organization = \"example_corp\"\n\n    workspaces {\n      name = \"my-app-prod\"\n    }\n  }\n}"
+    },
+    {
+      "id": "s2-41",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`[module path][resource info`",
+      "back": "Resource path syntax"
+    },
+    {
+      "id": "s2-42",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`module.<MODULE_PATH>[optional] module index`",
+      "back": "Module path syntax"
+    },
+    {
+      "id": "s2-43",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`resource_type.user_defined_name[optional index]`",
+      "back": "Resource spec syntax"
+    },
+    {
+      "id": "s2-44",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`<RESOURCE_TYPE>.<NAME>`",
+      "back": "List all images"
+    },
+    {
+      "id": "s2-45",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`var.<NAME>`",
+      "back": "Input Variable"
+    },
+    {
+      "id": "s2-46",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`local.<NAME>`",
+      "back": "Locals"
+    },
+    {
+      "id": "s2-47",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`module.<MODULE_NAME>`",
+      "back": "Child module outputs"
+    },
+    {
+      "id": "s2-48",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`data.<DATA TYPE>.<NAME>`",
+      "back": "Data blocks"
+    },
+    {
+      "id": "s2-49",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`path.module`",
+      "back": "Location of expresssion"
+    },
+    {
+      "id": "s2-50",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`path.root`",
+      "back": "Root Module location"
+    },
+    {
+      "id": "s2-51",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "qa",
+      "front": "`terraform.workspace`",
+      "back": "Current workspace"
+    },
+    {
+      "id": "s2-52",
+      "sectionId": "s2",
+      "title": "Resource Addressing",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s3-53",
+      "sectionId": "s3",
+      "title": "Initialization",
+      "kind": "code",
+      "lang": "sh",
+      "code": "terraform init [options]\n\n    -upgrade            # Install latest module & provider versions\n    -reconfigure        # reconfigure backend, ignoring any saved config\n    -backend=false      # Disable backend & use previous Initialization\n    -migrate-state      # reconfigure backend & attempt to migrate any existing state"
+    },
+    {
+      "id": "s3-54",
+      "sectionId": "s3",
+      "title": "Planning",
+      "kind": "text",
+      "body": "Generates & review an execution plan"
+    },
+    {
+      "id": "s3-55",
+      "sectionId": "s3",
+      "title": "Planning",
+      "kind": "code",
+      "lang": "sh",
+      "code": "terraform plan [options]\n\n    -var 'user=john'    # set value for input vars in the root module of config\n    -var-file=filename  # load var values from the given file\n    -input=true         # ask for input for vars if not directly set\n    -out=path           # write a plan file to given path. can be used as input for \"apply\"\n    -refresh-only       # verifies remote object consistency without proposing actions to undo changes done outside TF\n    -destroy            # create plan to destroy all objects currenly managed\n    -target=resource    # target planning to given resouce & its dependencies only.\n\nterraform plan -refresh-only # updates state to match changes made outside of TF. Good for drift detection"
+    },
+    {
+      "id": "s3-56",
+      "sectionId": "s3",
+      "title": "Validation",
+      "kind": "code",
+      "lang": "sh",
+      "code": "terraform validate      # Validates the config files for errors"
+    },
+    {
+      "id": "s3-57",
+      "sectionId": "s3",
+      "title": "Apply",
+      "kind": "text",
+      "body": "Executes changes to infra"
+    },
+    {
+      "id": "s3-58",
+      "sectionId": "s3",
+      "title": "Apply",
+      "kind": "code",
+      "lang": "sh",
+      "code": "terraform apply [options]\n\n    -auto-approve       # skip interactive approval of plan before applying\n    -replace            # force replacement of a particular resource instance\n    -var 'foo=bar'      # set a value for input vars in the root module of config\n    -var-file=filename  # load var values from the given file\n    -parallelism=n      # limit the no of concurrent operations. Default=10\n\nterraform apply -auto-approve var-file=web-dev.tfvars\nterraform apply -replace=\"aws_instance.server\"\nterraform plan -refresh-only # Updates statefile to accept changes made manually."
+    },
+    {
+      "id": "s3-59",
+      "sectionId": "s3",
+      "title": "Destroy",
+      "kind": "text",
+      "body": "Destroy (deletes) Terraform managed infra. Same as `terraform apply -destroy `"
+    },
+    {
+      "id": "s3-60",
+      "sectionId": "s3",
+      "title": "Destroy",
+      "kind": "code",
+      "lang": "sh",
+      "code": "terraform destroy [options]\n\n    -auto-approve        # skip interactive approval before destroying\n    -target              # limits destroy to only given resource & its dependencies\n\n\nterraform destroy -target aws_vpc.my_vpc -auto-approve"
+    },
+    {
+      "id": "s3-61",
+      "sectionId": "s3",
+      "title": "Destroy",
+      "kind": "text",
+      "body": "Miscellaneous"
+    },
+    {
+      "id": "s3-62",
+      "sectionId": "s3",
+      "title": "Destroy",
+      "kind": "code",
+      "lang": "sh",
+      "code": "terraform state show aws_instance.my_vm\nterraform state pull > my_terraform.tfstate\nterraform state mv aws_iam_role.my_ssm_role\nterraform state list\nterraform state rm aws_instance.my_server\n\nterraform import aws_instance.new_server i-243abc\nsudo apt install graphviz\nterraform graph | dot -Tpng > graph.png"
+    },
+    {
+      "id": "s3-63",
+      "sectionId": "s3",
+      "title": "Destroy",
+      "kind": "text",
+      "body": "Logging"
+    },
+    {
+      "id": "s3-64",
+      "sectionId": "s3",
+      "title": "Destroy",
+      "kind": "text",
+      "body": "log levels = TRACE > DEBUG > INFO > WARN > ERROR"
+    },
+    {
+      "id": "s3-65",
+      "sectionId": "s3",
+      "title": "Destroy",
+      "kind": "code",
+      "lang": "sh",
+      "code": "export TF_LOG_CORE=TRACE     # enable core logging\nexport TF_LOG_PROVIDER=TRACE # enable provider logging\nexport TF_LOG_PATH=logs.txt  # to persist logs"
+    },
+    {
+      "id": "s4-66",
+      "sectionId": "s4",
+      "title": "Also See",
+      "kind": "text",
+      "body": "• [Docs](https://developer.hashicorp.com/terraform/language)\n• [Good FCC Article](https://www.freecodecamp.org/news/terraform-certified-associate-003-study-notes/)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/terraform.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/terraform.md",
+    "generatedAt": "2025-12-16T07:50:03.314Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

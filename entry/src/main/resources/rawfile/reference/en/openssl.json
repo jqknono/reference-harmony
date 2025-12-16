@@ -1,0 +1,508 @@
+{
+  "id": "openssl",
+  "title": "OpenSSL",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Private Key",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Certificate",
+      "startIndex": 6
+    },
+    {
+      "id": "s3",
+      "title": "S/Mime",
+      "startIndex": 20
+    },
+    {
+      "id": "s4",
+      "title": "CRL",
+      "startIndex": 22
+    },
+    {
+      "id": "s5",
+      "title": "PKCS#12",
+      "startIndex": 23
+    },
+    {
+      "id": "s6",
+      "title": "TSA",
+      "startIndex": 27
+    },
+    {
+      "id": "s7",
+      "title": "CSR",
+      "startIndex": 32
+    },
+    {
+      "id": "s8",
+      "title": "HTTPS",
+      "startIndex": 38
+    },
+    {
+      "id": "s9",
+      "title": "STARTTLS",
+      "startIndex": 39
+    },
+    {
+      "id": "s10",
+      "title": "S/MIME verification",
+      "startIndex": 40
+    },
+    {
+      "id": "s11",
+      "title": "Raw",
+      "startIndex": 52
+    },
+    {
+      "id": "s12",
+      "title": "Some resources with useful OpenSSL commands",
+      "startIndex": 54
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "This is a reference of commands to use to interact with electronic certificates"
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Print out the private key details",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl rsa -check -text -in privateKey.key"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Print out the hashes of the private key",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl rsa -noout -modulus -in privateKey.key | openssl md5\nopenssl rsa -noout -modulus -in privateKey.key | openssl sha1\nopenssl rsa -noout -modulus -in privateKey.key | openssl sha256\nopenssl rsa -noout -modulus -in privateKey.key | openssl sha512"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Change password",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl rsa -aes256 -in privateKey.key -out newPrivateKey.key"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "List available elliptic curves",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl ecparam -list_curves"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Create elliptic curve private key with a specific curve",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl ecparam -name secp521r1 -genkey -noout -out privateKey.key"
+    },
+    {
+      "id": "s2-6",
+      "sectionId": "s2",
+      "title": "Print out the hashes of the certificate",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl x509 -noout -modulus -in certificate.crt | openssl md5\nopenssl x509 -noout -modulus -in certificate.crt | openssl sha1\nopenssl x509 -noout -modulus -in certificate.crt | openssl sha256\nopenssl x509 -noout -modulus -in certificate.crt | openssl sha512"
+    },
+    {
+      "id": "s2-7",
+      "sectionId": "s2",
+      "title": "Print out the hashes of the certificate",
+      "kind": "text",
+      "body": "Or, alternatively:"
+    },
+    {
+      "id": "s2-8",
+      "sectionId": "s2",
+      "title": "Print out the hashes of the certificate",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl x509 -noout -fingerprint -in certificate.crt\nopenssl x509 -noout -fingerprint -sha256 -in certificate.crt"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "Print out the content of the certificates",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl x509 -in certificate.crt -noout -text|more"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "Print out specific fields of the certificates",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl x509 -noout -subject certificate.crt\nopenssl x509 -noout -issuer certificate.crt\nopenssl x509 -noout -dates certificate.crt"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "Inspect server certificates",
+      "kind": "code",
+      "lang": "bash",
+      "code": "echo | openssl s_client -servername www.openssl.org -connect \\\nwww.openssl.org:443 2>/dev/null | openssl x509 -noout -text|more\necho | openssl s_client -servername imap.arcor.de -connect \\\nimap.arcor.de:993 2>/dev/null | openssl x509 -noout -text|more"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "Verify certificates",
+      "kind": "text",
+      "body": "**OK**"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "Verify certificates",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl verify -verbose -x509_strict -CAfile \\\nissuer.crt Test\\ Haeschen\\ 1.crt"
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "Verify certificates",
+      "kind": "text",
+      "body": "Result:"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "Verify certificates",
+      "kind": "code",
+      "lang": "bash",
+      "code": "Test Haeschen 1.crt: OK"
+    },
+    {
+      "id": "s2-16",
+      "sectionId": "s2",
+      "title": "Verify certificates",
+      "kind": "text",
+      "body": "**Corrupted**\n([for example](https://security.stackexchange.com/questions/60804/creating-an-x-509-certificate-with-an-invalid-signature))"
+    },
+    {
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "Verify certificates",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl verify -verbose -x509_strict -CAfile \\\nissuer.crt Test\\ Haeschen\\ 1_corrupted.crt"
+    },
+    {
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "Verify certificates",
+      "kind": "text",
+      "body": "Result:"
+    },
+    {
+      "id": "s2-19",
+      "sectionId": "s2",
+      "title": "Verify certificates",
+      "kind": "code",
+      "lang": "bash",
+      "code": "C = DE, ST = Thueringen, L = Rudolstadt, O = Damaschkestr. 11, OU = Arbeitszimmer, CN = Test Haeschen 1\nerror 7 at 0 depth lookup: certificate signature failure\nerror Test Haeschen 1_corrupted.crt: verification failed\n40270500477F0000:error:0200008A:rsa routines:RSA_padding_check_PKCS1_type_1:invalid padding:../crypto/rsa/rsa_pk1.c:75:\n40270500477F0000:error:02000072:rsa routines:rsa_ossl_public_decrypt:padding check failed:../crypto/rsa/rsa_ossl.c:598:\n40270500477F0000:error:1C880004:Provider routines:rsa_verify:RSA lib:../providers/implementations/signature/rsa_sig.c:774:\n40270500477F0000:error:06880006:asn1 encoding routines:ASN1_item_verify_ctx:EVP lib:../crypto/asn1/a_verify.c:217:"
+    },
+    {
+      "id": "s3-20",
+      "sectionId": "s3",
+      "title": "create signature",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl smime -sign -in msg.txt -text -out msg.p7s \\\n-signer certificate.crt -inkey privateKey.key"
+    },
+    {
+      "id": "s3-21",
+      "sectionId": "s3",
+      "title": "Verify signature",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl smime -verify -in msg.p7s -CAfile chain.pem"
+    },
+    {
+      "id": "s4-22",
+      "sectionId": "s4",
+      "title": "Print out the contents of the CRL",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl crl -inform DER -noout -text  -in crl/cacrl.der\nopenssl crl -inform PEM -noout -text  -in crl/cacrl.pem"
+    },
+    {
+      "id": "s5-23",
+      "sectionId": "s5",
+      "title": "Display contents",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl pkcs12 -info -in  digitalIdentity.p12"
+    },
+    {
+      "id": "s5-24",
+      "sectionId": "s5",
+      "title": "Create from certificate and private key",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl pkcs12 -export -in certificate.cert \\\n-inkey privateKey.key -out digitalIdentity.p12"
+    },
+    {
+      "id": "s5-25",
+      "sectionId": "s5",
+      "title": "Extract private key",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl pkcs12 -in digitalIdentity.p12 -out privateKey.key"
+    },
+    {
+      "id": "s5-26",
+      "sectionId": "s5",
+      "title": "Convert to PEM",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl pkcs12 -in digitalIdentity.p12 -out digitalIdentity.pem"
+    },
+    {
+      "id": "s6-27",
+      "sectionId": "s6",
+      "title": "Display query",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl ts -query -in query.tsq -text"
+    },
+    {
+      "id": "s6-28",
+      "sectionId": "s6",
+      "title": "Display reply",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl ts -reply -in reply.tsr -text"
+    },
+    {
+      "id": "s6-29",
+      "sectionId": "s6",
+      "title": "Verify reply",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl ts -verify -in reply.tsr -data data.dat -CAfile chain.pem"
+    },
+    {
+      "id": "s6-30",
+      "sectionId": "s6",
+      "title": "Extract token from reply",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl ts -reply -in reply.tsr -token_out -out token.tk"
+    },
+    {
+      "id": "s6-31",
+      "sectionId": "s6",
+      "title": "Extract certificates from token",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl pkcs7 -inform DER -in token.tk -print_certs -noout -text"
+    },
+    {
+      "id": "s7-32",
+      "sectionId": "s7",
+      "title": "Create from existing key",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl req -new -key privateKey.key -out my.csr"
+    },
+    {
+      "id": "s7-33",
+      "sectionId": "s7",
+      "title": "Create from existing key",
+      "kind": "text",
+      "body": "This can of course be a RSA key or one based on an elliptic curve. Available curves can be listed using"
+    },
+    {
+      "id": "s7-34",
+      "sectionId": "s7",
+      "title": "Create from existing key",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl ecparam -list_curves"
+    },
+    {
+      "id": "s7-35",
+      "sectionId": "s7",
+      "title": "Create from existing key",
+      "kind": "text",
+      "body": "Afterwards you chose one of the curves and create a private key like so:"
+    },
+    {
+      "id": "s7-36",
+      "sectionId": "s7",
+      "title": "Create from existing key",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl ecparam -name secp521r1 -genkey -noout \\\n-out privateKey.key"
+    },
+    {
+      "id": "s7-37",
+      "sectionId": "s7",
+      "title": "Display",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl req -in my.csr -noout -text"
+    },
+    {
+      "id": "s8-38",
+      "sectionId": "s8",
+      "title": "Dump Certificates PEM encoded",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl s_client -showcerts -connect www.example.com:443"
+    },
+    {
+      "id": "s9-39",
+      "sectionId": "s9",
+      "title": "Dump Certificates PEM encoded",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl s_client -showcerts -starttls imap \\\n-connect mail.domain.com:139"
+    },
+    {
+      "id": "s10-40",
+      "sectionId": "s10",
+      "title": "Possible outcomes",
+      "kind": "text",
+      "body": "Message was tampered with (return code 4):"
+    },
+    {
+      "id": "s10-41",
+      "sectionId": "s10",
+      "title": "Possible outcomes",
+      "kind": "code",
+      "lang": "bash",
+      "code": "Verification failure\n140485684135232:error:2E09A09E:CMS routines:CMS_SignerInfo_verify_content:verification failure:../crypto/cms/cms_sd.c:847:\n140485684135232:error:2E09D06D:CMS routines:CMS_verify:content verify error:../crypto/cms/cms_smime.c:393:"
+    },
+    {
+      "id": "s10-42",
+      "sectionId": "s10",
+      "title": "Possible outcomes",
+      "kind": "text",
+      "body": "Message signature not trusted (return code 4):"
+    },
+    {
+      "id": "s10-43",
+      "sectionId": "s10",
+      "title": "Possible outcomes",
+      "kind": "code",
+      "lang": "bash",
+      "code": "Verification failure\n140146111432000:error:2E099064:CMS routines:cms_signerinfo_verify_cert:certificate verify error:../crypto/cms/cms_smime.c:252:Verify error:unable to get local issuer certificate"
+    },
+    {
+      "id": "s10-44",
+      "sectionId": "s10",
+      "title": "Possible outcomes",
+      "kind": "text",
+      "body": "Message not signed (return code 2):"
+    },
+    {
+      "id": "s10-45",
+      "sectionId": "s10",
+      "title": "Possible outcomes",
+      "kind": "code",
+      "lang": "bash",
+      "code": "Error reading S/MIME message\n140701208487232:error:0D0D40CD:asn1 encoding routines:SMIME_read_ASN1:invalid mime type:../crypto/asn1/asn_mime.c:469:type: multipart/alternative"
+    },
+    {
+      "id": "s10-46",
+      "sectionId": "s10",
+      "title": "Possible outcomes",
+      "kind": "text",
+      "body": "Validation successful (return code 0):"
+    },
+    {
+      "id": "s10-47",
+      "sectionId": "s10",
+      "title": "Possible outcomes",
+      "kind": "code",
+      "lang": "bash",
+      "code": "Verification successful"
+    },
+    {
+      "id": "s10-48",
+      "sectionId": "s10",
+      "title": "Verify the validity of an email message",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl cms -verify -in some_email_message.eml"
+    },
+    {
+      "id": "s10-49",
+      "sectionId": "s10",
+      "title": "Verify the validity of an email message explicitly specifying trust",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl cms -verify -in some_email_message \\\n-CAfile trust_anchor-crt"
+    },
+    {
+      "id": "s10-50",
+      "sectionId": "s10",
+      "title": "Signed and encrypted messages need to be decrypted first:",
+      "kind": "text",
+      "body": "Note: the P12 file holding the digital identity must be pem-encoded! (see above)"
+    },
+    {
+      "id": "s10-51",
+      "sectionId": "s10",
+      "title": "Signed and encrypted messages need to be decrypted first:",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl cms -decrypt -out decrypted_email_message \\\n-inkey p12.pem -in some_encrypted_email_message"
+    },
+    {
+      "id": "s11-52",
+      "sectionId": "s11",
+      "title": "See the raw structure of an ASN.1 file (only for DER encoded files)",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl asn1parse -in mysterious_file.pem"
+    },
+    {
+      "id": "s11-53",
+      "sectionId": "s11",
+      "title": "With a bit more detail",
+      "kind": "code",
+      "lang": "bash",
+      "code": "openssl asn1parse -dump -strictpem -in mysterious_file.pem"
+    },
+    {
+      "id": "s12-54",
+      "sectionId": "s12",
+      "title": "Some resources with useful OpenSSL commands",
+      "kind": "text",
+      "body": "• [OpenSSL command cheatsheet](https://www.freecodecamp.org/news/openssl-command-cheatsheet-b441be1e8c4a/)\n• [21 OpenSSL Examples to Help You in Real-World](https://geekflare.com/openssl-commands-certificates/)\n• [The Most Common OpenSSL Commands](https://www.sslshopper.com/article-most-common-openssl-commands.html)\n• [OpenSSL Quick Reference Guide](https://www.digicert.com/ssl-support/openssl-quick-reference-guide.htm)\n• [openssl_commands.md](https://gist.github.com/webtobesocial/5313b0d7abc25e06c2d78f8b767d4bc3)\n• [OpenSSL Essentials: Working with SSL Certificates, Private Keys and CSRs](https://www.digitalocean.com/community/tutorials/openssl-essentials-working-with-ssl-certificates-private-keys-and-csrs)\n• [OpenSSL tips and tricks](https://commandlinefanatic.com/cgi-bin/showarticle.cgi?article=art030)\n• [Checking A Remote Certificate Chain With OpenSSL ](https://langui.sh/2009/03/14/checking-a-remote-certificate-chain-with-openssl/)\n• [OpenSSL: how to extract certificates and token status from RFC3161 timestamping reply?](https://stackoverflow.com/questions/66044640/openssl-how-to-extract-certificates-and-token-status-from-rfc3161-timestamping)\n• [Steps to generate CSR for SAN certificate with openssl](https://www.golinuxcloud.com/openssl-subject-alternative-name/)\n• [Howto add a Subject Alternative Name extension into a Certificate Signing Request](https://support.microfocus.com/kb/doc.php?id=3522065)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/openssl.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/openssl.md",
+    "generatedAt": "2025-12-16T07:50:03.215Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

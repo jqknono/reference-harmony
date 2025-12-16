@@ -1,0 +1,812 @@
+{
+  "id": "ocaml",
+  "title": "OCaml",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Data Types",
+      "startIndex": 17
+    },
+    {
+      "id": "s3",
+      "title": "Functions",
+      "startIndex": 41
+    },
+    {
+      "id": "s4",
+      "title": "Control Flow",
+      "startIndex": 62
+    },
+    {
+      "id": "s5",
+      "title": "Useful Tools",
+      "startIndex": 77
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "The [OCaml](https://www.ocaml.org/) cheat sheet is a one-page reference sheet for the OCaml programming language."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "hello.ml",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let () =\n  let message = \"Hello, World!\" in\n  Printf.printf \"%s\\n\" message"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "hello.ml",
+      "kind": "text",
+      "body": "#### Compile and Run"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "hello.ml",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ocamlc -o hello.byte hello.ml\n$ ./hello.byte"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "hello.ml",
+      "kind": "text",
+      "body": "#### Build and Run with Dune"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "hello.ml",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ dune build hello.exe\n$ _build/default/hello.exe\n\n# you can also just run\n$ dune exec ./hello.exe"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "hello.ml",
+      "kind": "text",
+      "body": "See the [dune](https://dune.build/) documentation for more info."
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Imports",
+      "kind": "text",
+      "body": "Install modules with opam"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Imports",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ opam install hex"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Imports",
+      "kind": "text",
+      "body": "#### Global Open"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Imports",
+      "kind": "code",
+      "lang": "ml",
+      "code": "open Hex"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Imports",
+      "kind": "text",
+      "body": "#### Local Open"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Imports",
+      "kind": "code",
+      "lang": "ml",
+      "code": "Hex.of_string \"hex string\"\n\nlet open Hex in\n  of_string \"to hex\""
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Comments",
+      "kind": "text",
+      "body": "#### Line & Block Comments"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "Comments",
+      "kind": "code",
+      "lang": "ml",
+      "code": "(* A single line comment *)\n\n(* A multi-line comment\n* where we want to explain\n* something complex *)\n\n(* Outer comment\n   (* Nested comment *)\n   End of outer comment *)"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "Comments",
+      "kind": "text",
+      "body": "#### Documentation Comments"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "Comments",
+      "kind": "code",
+      "lang": "ml",
+      "code": "val sum : int -> int -> int\n(** [sum x y] returns the sum\n of two integers [x] and [y] *)"
+    },
+    {
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "Predefined Types",
+      "kind": "text",
+      "body": "#### Unit"
+    },
+    {
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "Predefined Types",
+      "kind": "text",
+      "body": "Note: `#` Indicates execution at the toplevel followed by the output"
+    },
+    {
+      "id": "s2-19",
+      "sectionId": "s2",
+      "title": "Predefined Types",
+      "kind": "code",
+      "lang": "ml",
+      "code": "# ();; (* equivalent to void in C *)\n- : unit = ()"
+    },
+    {
+      "id": "s2-20",
+      "sectionId": "s2",
+      "title": "Predefined Types",
+      "kind": "text",
+      "body": "#### Basic Types"
+    },
+    {
+      "id": "s2-21",
+      "sectionId": "s2",
+      "title": "Predefined Types",
+      "kind": "code",
+      "lang": "ml",
+      "code": "# 5 ;; (* integer *)\n- : int = 5\n\n# 3.14 ;;  (* float *)\n- : float = 3.14\n\n# true ;; (* bool *)\n- : bool = true\n\n# false ;;\n- : bool = false\n\n# 'a' ;; (* char *)\n- : char = 'a'\n\n# \"a string\" ;; (* string *)\n- : string = \"a string\"\n\n# String.to_bytes \"hello\" ;; (* bytes *)\n- : bytes = Bytes.of_string \"hello\"\n\n# (3, 5);; (* tuple *)\n- : int * int = (3, 5)\n\n# ref 0;; (* reference *)\n- : int ref = {contents = 0}"
+    },
+    {
+      "id": "s2-22",
+      "sectionId": "s2",
+      "title": "Predefined Types",
+      "kind": "text",
+      "body": "#### Options & Results"
+    },
+    {
+      "id": "s2-23",
+      "sectionId": "s2",
+      "title": "Predefined Types",
+      "kind": "code",
+      "lang": "ml",
+      "code": "# Some 42;;\n- : int option = Some 42\n\n# Ok 42;;\n- : (int, 'a) result = Ok 42\n\n# Error \"404\";;\n- : ('a, int) result = Error 404"
+    },
+    {
+      "id": "s2-24",
+      "sectionId": "s2",
+      "title": "Arrays & Lists",
+      "kind": "text",
+      "body": "#### Arrays"
+    },
+    {
+      "id": "s2-25",
+      "sectionId": "s2",
+      "title": "Arrays & Lists",
+      "kind": "code",
+      "lang": "ml",
+      "code": "# [|0; 1; 2; 3|];; (* create an array *)\n- : int array = [|0; 1; 2; 3|]\n\n# [|'u'; 's'; 'c'|].(1);; (* array access *)\n- char = 's'"
+    },
+    {
+      "id": "s2-26",
+      "sectionId": "s2",
+      "title": "Arrays & Lists",
+      "kind": "text",
+      "body": "Arrays are mutable"
+    },
+    {
+      "id": "s2-27",
+      "sectionId": "s2",
+      "title": "Arrays & Lists",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let scores = [|97; 85; 99|];;\n- : int array = [|97; 85; 99|]\n\n# scores.(2) <- 89;; (* update an element *)\n- unit = ()\n\n# scores;;\n- : int array = [|97; 85; 89|]"
+    },
+    {
+      "id": "s2-28",
+      "sectionId": "s2",
+      "title": "Arrays & Lists",
+      "kind": "text",
+      "body": "#### Lists"
+    },
+    {
+      "id": "s2-29",
+      "sectionId": "s2",
+      "title": "Arrays & Lists",
+      "kind": "code",
+      "lang": "ml",
+      "code": "# [1; 2; 3];;\n- : int list = [1; 2; 3;]\n\n# [\"a\"; \"str\"; \"lst\"];;\n- : string list = [\"a\"; \"str\"; \"lst\"]"
+    },
+    {
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "Arrays & Lists",
+      "kind": "text",
+      "body": "Lists are immutable"
+    },
+    {
+      "id": "s2-31",
+      "sectionId": "s2",
+      "title": "Arrays & Lists",
+      "kind": "code",
+      "lang": "ml",
+      "code": "# let lst = [1; 2; 3];;\n- : int list = [1; 2; 3]\n\n# let new_lst =  0 :: lst;; (* prepend to a new list *)\n- : int list = [0; 1; 2; 3]\n\n# new_lst @ [4;5;6];; (* combine two lists *)\n- : int list = [0; 1; 2; 3; 4; 5; 6]"
+    },
+    {
+      "id": "s2-32",
+      "sectionId": "s2",
+      "title": "User-Defined Types",
+      "kind": "text",
+      "body": "#### Records"
+    },
+    {
+      "id": "s2-33",
+      "sectionId": "s2",
+      "title": "User-Defined Types",
+      "kind": "text",
+      "body": "Bundle related data"
+    },
+    {
+      "id": "s2-34",
+      "sectionId": "s2",
+      "title": "User-Defined Types",
+      "kind": "code",
+      "lang": "ml",
+      "code": "type person = {\n  name: string;\n  age: int\n}\n\n# let zeno = {name = \"Zeno\"; age = 30};;\nval zeno : person = {name = \"Zeno\"; age = 30}"
+    },
+    {
+      "id": "s2-35",
+      "sectionId": "s2",
+      "title": "User-Defined Types",
+      "kind": "text",
+      "body": "#### Variants"
+    },
+    {
+      "id": "s2-36",
+      "sectionId": "s2",
+      "title": "User-Defined Types",
+      "kind": "text",
+      "body": "Several different, but related types"
+    },
+    {
+      "id": "s2-37",
+      "sectionId": "s2",
+      "title": "User-Defined Types",
+      "kind": "code",
+      "lang": "ml",
+      "code": "type shape =\n  | Circle of float\n  | Rectangle of float * float\n\n# let my_shape = Circle 5.0;;\n- : shape = Circle 5."
+    },
+    {
+      "id": "s2-38",
+      "sectionId": "s2",
+      "title": "User-Defined Types",
+      "kind": "text",
+      "body": "#### Aliases"
+    },
+    {
+      "id": "s2-39",
+      "sectionId": "s2",
+      "title": "User-Defined Types",
+      "kind": "text",
+      "body": "Provide meaningful name to complex or commonly used types"
+    },
+    {
+      "id": "s2-40",
+      "sectionId": "s2",
+      "title": "User-Defined Types",
+      "kind": "code",
+      "lang": "ml",
+      "code": "type point = float * float\n\n# let origin: point = (0.0, 0.0);;\nval origin : point = (0., 0.)"
+    },
+    {
+      "id": "s3-41",
+      "sectionId": "s3",
+      "title": "Functions",
+      "kind": "text",
+      "body": "#### Single parameter"
+    },
+    {
+      "id": "s3-42",
+      "sectionId": "s3",
+      "title": "Functions",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let add_one x =\n  let result = x + 1 in\n  result\n\n# add_one 1;;\n- : int = 2"
+    },
+    {
+      "id": "s3-43",
+      "sectionId": "s3",
+      "title": "Functions",
+      "kind": "text",
+      "body": "#### Multiple parameters"
+    },
+    {
+      "id": "s3-44",
+      "sectionId": "s3",
+      "title": "Functions",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let sum x y =\n  let result = x + y in\n  result\n\n# sum 1 2;;\n- : int = 3"
+    },
+    {
+      "id": "s3-45",
+      "sectionId": "s3",
+      "title": "Functions",
+      "kind": "text",
+      "body": "#### Tuple parameter"
+    },
+    {
+      "id": "s3-46",
+      "sectionId": "s3",
+      "title": "Functions",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let str_concat (x, y) =\n  x ^ \" \" ^ y\n\n# str_concat (\"Hello\", \"OCaml\") ;;\n- : string = \"Hello Ocaml\""
+    },
+    {
+      "id": "s3-47",
+      "sectionId": "s3",
+      "title": "Recursive Functions",
+      "kind": "text",
+      "body": "#### rec keyword"
+    },
+    {
+      "id": "s3-48",
+      "sectionId": "s3",
+      "title": "Recursive Functions",
+      "kind": "text",
+      "body": "All recusive functions use the rec keyword"
+    },
+    {
+      "id": "s3-49",
+      "sectionId": "s3",
+      "title": "Recursive Functions",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let rec factorial n =\n  if n < 1 then 1 else n * factorial (n - 1)"
+    },
+    {
+      "id": "s3-50",
+      "sectionId": "s3",
+      "title": "Recursive Functions",
+      "kind": "text",
+      "body": "The above can cause stackoverflow."
+    },
+    {
+      "id": "s3-51",
+      "sectionId": "s3",
+      "title": "Recursive Functions",
+      "kind": "text",
+      "body": "#### Tail Recursion"
+    },
+    {
+      "id": "s3-52",
+      "sectionId": "s3",
+      "title": "Recursive Functions",
+      "kind": "text",
+      "body": "Makes use of a helper function and the acc argument."
+    },
+    {
+      "id": "s3-53",
+      "sectionId": "s3",
+      "title": "Recursive Functions",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let rec factorial_helper n acc =\n  if n = 0 then acc\n  else factorial_helper (n - 1) (n * acc)"
+    },
+    {
+      "id": "s3-54",
+      "sectionId": "s3",
+      "title": "Recursive Functions",
+      "kind": "text",
+      "body": "Notice the last call is the recursive function."
+    },
+    {
+      "id": "s3-55",
+      "sectionId": "s3",
+      "title": "Recursive Functions",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let factorial n = factorial_helper n 1"
+    },
+    {
+      "id": "s3-56",
+      "sectionId": "s3",
+      "title": "Chaining",
+      "kind": "text",
+      "body": "#### Application Operator"
+    },
+    {
+      "id": "s3-57",
+      "sectionId": "s3",
+      "title": "Chaining",
+      "kind": "text",
+      "body": "Read from right to left, the first operation is `sum 2 3`"
+    },
+    {
+      "id": "s3-58",
+      "sectionId": "s3",
+      "title": "Chaining",
+      "kind": "code",
+      "lang": "ml",
+      "code": "(* find log(2 + 3) *)\n# log @@ float_of_int @@ sum 2 3 ;;\n- : float = 1.609..."
+    },
+    {
+      "id": "s3-59",
+      "sectionId": "s3",
+      "title": "Chaining",
+      "kind": "text",
+      "body": "#### Pipeline"
+    },
+    {
+      "id": "s3-60",
+      "sectionId": "s3",
+      "title": "Chaining",
+      "kind": "code",
+      "lang": "ml",
+      "code": "(* find log((x + y)!) *)\n# sum 2 3\n  |> factorial\n  |> float_of_int\n  |> log ;;\n- : float = 4.787..."
+    },
+    {
+      "id": "s3-61",
+      "sectionId": "s3",
+      "title": "Chaining",
+      "kind": "text",
+      "body": "`|>` takes the output of the function and passes it as input to the next function in the pipeline"
+    },
+    {
+      "id": "s4-62",
+      "sectionId": "s4",
+      "title": "If Statements",
+      "kind": "text",
+      "body": "#### If Statement"
+    },
+    {
+      "id": "s4-63",
+      "sectionId": "s4",
+      "title": "If Statements",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let is_pos x =\n  if x > 0 then \"positive\" else \"negative\""
+    },
+    {
+      "id": "s4-64",
+      "sectionId": "s4",
+      "title": "If Statements",
+      "kind": "text",
+      "body": "#### If else if"
+    },
+    {
+      "id": "s4-65",
+      "sectionId": "s4",
+      "title": "If Statements",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let f x =\n  if x > 3 then \"gt 3\"\n  else if x < 3 then \"lt 3\"\n  else \"eq 3\""
+    },
+    {
+      "id": "s4-66",
+      "sectionId": "s4",
+      "title": "If Statements",
+      "kind": "text",
+      "body": "#### Pattern Matching"
+    },
+    {
+      "id": "s4-67",
+      "sectionId": "s4",
+      "title": "If Statements",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let is_pos x =\n  match x > 0 with\n  | true  -> \"positive\"\n  | false -> \"negative\""
+    },
+    {
+      "id": "s4-68",
+      "sectionId": "s4",
+      "title": "Loops",
+      "kind": "text",
+      "body": "#### For loop"
+    },
+    {
+      "id": "s4-69",
+      "sectionId": "s4",
+      "title": "Loops",
+      "kind": "code",
+      "lang": "ml",
+      "code": "for i = 1 to 5 do\n  print_int i\ndone"
+    },
+    {
+      "id": "s4-70",
+      "sectionId": "s4",
+      "title": "Loops",
+      "kind": "text",
+      "body": "#### While loop"
+    },
+    {
+      "id": "s4-71",
+      "sectionId": "s4",
+      "title": "Loops",
+      "kind": "text",
+      "body": "Notice the `ref` is needed to have the while condition eventually become false."
+    },
+    {
+      "id": "s4-72",
+      "sectionId": "s4",
+      "title": "Loops",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let i = ref 0 in\n  while !i < 5 do\n    print_int !i;\n    i := !i + 1\n  done"
+    },
+    {
+      "id": "s4-73",
+      "sectionId": "s4",
+      "title": "Operators",
+      "kind": "text",
+      "body": "#### Comparison Operators"
+    },
+    {
+      "id": "s4-74",
+      "sectionId": "s4",
+      "title": "Operators",
+      "kind": "code",
+      "lang": "ml",
+      "code": "=         (* equal to *)\n<>        (* not equal to *)\n>         (* greater than *)\n<         (* less than *)\n>=        (* greater than or eq to *)\n<=        (* less than or eq to *)"
+    },
+    {
+      "id": "s4-75",
+      "sectionId": "s4",
+      "title": "Operators",
+      "kind": "text",
+      "body": "#### Arithmatic Operators"
+    },
+    {
+      "id": "s4-76",
+      "sectionId": "s4",
+      "title": "Operators",
+      "kind": "code",
+      "lang": "ml",
+      "code": "(* int operator   float operator *)\n+                 +.  (* addition *)\n-                 -.  (* subtraction *)\n*                 *.  (* multiplication *)\n/                 /.  (* division *)\n                  **  (* power *)"
+    },
+    {
+      "id": "s5-77",
+      "sectionId": "s5",
+      "title": "List",
+      "kind": "text",
+      "body": "#### Searching & Filtering"
+    },
+    {
+      "id": "s5-78",
+      "sectionId": "s5",
+      "title": "List",
+      "kind": "code",
+      "lang": "ml",
+      "code": "# let lst = [1; 2; 3];;\nval lst : int list = [1; 2; 3]\n\n# List.filter (fun x -> x mod 2 = 0) lst;;\n- : int list = [2]\n\n# List.find (fun x -> x = 4) lst;;\nException: Not_found\n\n# List.sort compare [2; 1; 3];;\n- : int list = [1; 2; 3]"
+    },
+    {
+      "id": "s5-79",
+      "sectionId": "s5",
+      "title": "List",
+      "kind": "text",
+      "body": "#### Applying Transformations"
+    },
+    {
+      "id": "s5-80",
+      "sectionId": "s5",
+      "title": "List",
+      "kind": "code",
+      "lang": "ml",
+      "code": "(* Loop over list and apply fun f *)\nList.iter f lst\n\n(* map a function to each elem *)\n(* Ex. double each element x in lst *)\nList.map (fun x -> x + x) lst\n\n(* Apply an operator between elements *)\n(* Ex. 1 + 2 + 3 *)\nList.fold_left (+) 0 lst"
+    },
+    {
+      "id": "s5-81",
+      "sectionId": "s5",
+      "title": "Associaton Lists",
+      "kind": "text",
+      "body": "#### Definition and Access"
+    },
+    {
+      "id": "s5-82",
+      "sectionId": "s5",
+      "title": "Associaton Lists",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let scores =\n  [(\"math\", 91); (\"phil\", 89); (\"stats\", 94)]\n\n# List.assoc \"stats\" scores;;\n- : int = 94\n\n# List.mem_assoc \"math\" scores;;\n- : bool = true"
+    },
+    {
+      "id": "s5-83",
+      "sectionId": "s5",
+      "title": "Associaton Lists",
+      "kind": "text",
+      "body": "#### Split and Combine"
+    },
+    {
+      "id": "s5-84",
+      "sectionId": "s5",
+      "title": "Associaton Lists",
+      "kind": "code",
+      "lang": "ml",
+      "code": "# List.split scores;;\n- : string list * int list = ([\"math\"; \"phil\"; \"stats\"], [91; 89; 94])\n\n# List.combine [1;2;3] [4; 5; 6];;\n- : (int * int) list = [(1, 4); (2, 5); (3, 6)]"
+    },
+    {
+      "id": "s5-85",
+      "sectionId": "s5",
+      "title": "Associaton Lists",
+      "kind": "text",
+      "body": "Association lists are similar to dictionaries or hashmaps"
+    },
+    {
+      "id": "s5-86",
+      "sectionId": "s5",
+      "title": "Hash Tables",
+      "kind": "text",
+      "body": "Hash Tables are mutable."
+    },
+    {
+      "id": "s5-87",
+      "sectionId": "s5",
+      "title": "Hash Tables",
+      "kind": "text",
+      "body": "#### Initialize & Add Data"
+    },
+    {
+      "id": "s5-88",
+      "sectionId": "s5",
+      "title": "Hash Tables",
+      "kind": "code",
+      "lang": "ml",
+      "code": "\n# let my_htable = Hashtbl.create 3;;\nval my_htable : ('_weak1, '_weak2) Hashtbl.t = <abstr>\n\n# Hashtbl.add my_htable \"A\" \"John\";\n  Hashtbl.add my_htable \"A\" \"Jane\";\n  Hashtbl.add my_htable \"B\" \"Max\";;"
+    },
+    {
+      "id": "s5-89",
+      "sectionId": "s5",
+      "title": "Hash Tables",
+      "kind": "text",
+      "body": "#### Find Data"
+    },
+    {
+      "id": "s5-90",
+      "sectionId": "s5",
+      "title": "Hash Tables",
+      "kind": "code",
+      "lang": "ml",
+      "code": "# Hashtbl.find my_htable \"A\";;\n- : string = \"Jane\"\n\n(* find all *)\n# Hashtbl.find_all my_htable \"A\";;\n- : string list = [\"Jane\"; \"John\"]"
+    },
+    {
+      "id": "s5-91",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "text",
+      "body": "Maps are immutable key-value association tables."
+    },
+    {
+      "id": "s5-92",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "text",
+      "body": "#### Initialization & Add Data"
+    },
+    {
+      "id": "s5-93",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "code",
+      "lang": "ml",
+      "code": "(* the Map.Make functor creates the custom map module *)\n# module StringMap = Map.Make(String);;\n\nlet books =\n  StringMap.empty\n  |> StringMap.add \"Dune\" (\"Herbet\", 1965)\n  |> StringMap.add \"Neuromancer\" (\"Gibson\", 1984)"
+    },
+    {
+      "id": "s5-94",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "text",
+      "body": "#### Finding Entries"
+    },
+    {
+      "id": "s5-95",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "code",
+      "lang": "ml",
+      "code": "(* find_opt returns assoc val wrapped in an option else None *)\n# StringMap.find_opt \"Dune\" books;;\n- : (string * int) option = Some (\"Herbet\", 1965)\n\n(* find returns the association else Not_Found *)\n# StringMap.find \"Dune\" books;;\n- : string * int = (\"Herbet\", 1965)"
+    },
+    {
+      "id": "s5-96",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "text",
+      "body": "#### Adding & Removing Entries"
+    },
+    {
+      "id": "s5-97",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "text",
+      "body": "Creates a new map since maps are immutable"
+    },
+    {
+      "id": "s5-98",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let more_books = books\n  |> StringMap.add \"Foundation\" (\"Isaac Asimov\", 1951)\n\nlet less_books =\n  |> StringMap.remove \"Dune\""
+    },
+    {
+      "id": "s5-99",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "text",
+      "body": "Filtering"
+    },
+    {
+      "id": "s5-100",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let eighties_books =\n    StringMap.filter\n      (fun _ (_, year) -> year > 1980 & number < 1990) books"
+    },
+    {
+      "id": "s5-101",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "text",
+      "body": "#### Printing Data"
+    },
+    {
+      "id": "s5-102",
+      "sectionId": "s5",
+      "title": "Maps",
+      "kind": "code",
+      "lang": "ml",
+      "code": "let print_books map =\n  StringMap.iter (fun title (author, year) ->\n    Printf.printf \"Title: %s, Author: %s, Year: %d\\n\" title author year\n  ) map\n\n# let () = print_books eighties_books;;\nTitle: Neuromancer, Author: Gibson, Year: 1984"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/ocaml.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/ocaml.md",
+    "generatedAt": "2025-12-16T07:50:03.213Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

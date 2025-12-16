@@ -1,0 +1,626 @@
+{
+  "id": "yaml",
+  "title": "comment line 3",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "This is a quick reference cheat sheet for understanding and writing YAML format configuration files."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Introduction",
+      "kind": "text",
+      "body": "[YAML](https://yaml.org/) is a data serialization language designed to be directly writable and readable by humans"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Introduction",
+      "kind": "text",
+      "body": "• YAML does not allow the use of tabs\n• Must be space between the element parts\n• YAML is CASE sensitive\n• End your YAML file with the `.yaml` or `.yml` extension\n• YAML is a superset of JSON\n• Ansible playbooks are YAML files {.marker-round}"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Scalar types",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "n1: 1            # integer\nn2: 1.234        # float\n\ns1: 'abc'        # string\ns2: \"abc\"        # string\ns3: abc          # string\n\nb: false         # boolean type\n\nd: 2015-04-05    # date type"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Scalar types",
+      "kind": "text",
+      "body": "#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Scalar types",
+      "kind": "text",
+      "body": "```json {.wrap}\n{\n\"n1\": 1,\n\"n2\": 1.234,\n\"s1\": \"abc\",\n\"s2\": \"abc\",\n\"s3\": \"abc\",\n\"b\": false,\n\"d\": \"2015-04-05\"\n}"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Scalar types",
+      "kind": "code",
+      "lang": "",
+      "code": "\nUse spaces to indent. There must be space between the element parts.\n\n### Variables"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Scalar types",
+      "kind": "text",
+      "body": "some_thing: &VAR_NAME foobar\nother_thing: *VAR_NAME"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Scalar types",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON\n\n<!-- prettier-ignore -->"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Scalar types",
+      "kind": "text",
+      "body": "{\n\"some_thing\": \"foobar\",\n\"other_thing\": \"foobar\"\n}"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Scalar types",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Comments"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Multiline strings"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "description: |\nhello\nworld"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{ \"description\": \"hello\\nworld\\n\" }"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Inheritance {.row-span-2}"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "parent: &defaults\na: 2\nb: 3"
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "child:\n<<: *defaults\nb: 4"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"parent\": {\n\"a\": 2,\n\"b\": 3\n},\n\"child\": {\n\"a\": 2,\n\"b\": 4\n}\n}"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Reference {.row-span-2}"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "values: &ref"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "• Will be\n• reused below"
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "other_values:\ni_am_ref: *ref"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON\n\n<!-- prettier-ignore -->"
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"values\": [\n\"Will be\",\n\"reused below\"\n],\n\"other_values\": {\n\"i_am_ref\": [\n\"Will be\",\n\"reused below\"\n]\n}\n}"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Folded strings"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "description: >\nhello world"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{ \"description\": \"hello world\\n\" }"
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Two Documents"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "---\ndocument: this is doc 1\n---\ndocument: this is doc 2"
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nYAML uses `---` to separate directives from document content.\n\n## YAML Collections\n\n### Sequence"
+    },
+    {
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "• Mark McGwire\n• Sammy Sosa\n• Ken Griffey"
+    },
+    {
+      "id": "s1-34",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON\n\n<!-- prettier-ignore -->"
+    },
+    {
+      "id": "s1-35",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "[\n\"Mark McGwire\",\n\"Sammy Sosa\",\n\"Ken Griffey\"\n]"
+    },
+    {
+      "id": "s1-36",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Mapping\n\n<!-- prettier-ignore -->"
+    },
+    {
+      "id": "s1-37",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "hr:  65       # Home runs\navg: 0.278    # Batting average\nrbi: 147      # Runs Batted In"
+    },
+    {
+      "id": "s1-38",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-39",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"hr\": 65,\n\"avg\": 0.278,\n\"rbi\": 147\n}"
+    },
+    {
+      "id": "s1-40",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Mapping to Sequences"
+    },
+    {
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "attributes:"
+    },
+    {
+      "id": "s1-42",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "• a1\n• a2"
+    },
+    {
+      "id": "s1-43",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "methods: [getter, setter]"
+    },
+    {
+      "id": "s1-44",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-45",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"attributes\": [\"a1\", \"a2\"],\n\"methods\": [\"getter\", \"setter\"]\n}"
+    },
+    {
+      "id": "s1-46",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Sequence of Mappings\n\n<!-- prettier-ignore -->"
+    },
+    {
+      "id": "s1-47",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "children:"
+    },
+    {
+      "id": "s1-48",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "• name: Jimmy Smith"
+    },
+    {
+      "id": "s1-49",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "age: 15"
+    },
+    {
+      "id": "s1-50",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "• name: Jimmy Smith"
+    },
+    {
+      "id": "s1-51",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "age: 15\n-\nname: Sammy Sosa\nage: 12"
+    },
+    {
+      "id": "s1-52",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON\n\n<!-- prettier-ignore -->"
+    },
+    {
+      "id": "s1-53",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"children\": [\n{\"name\": \"Jimmy Smith\", \"age\": 15},\n{\"name\": \"Jimmy Smith\", \"age\": 15},\n{\"name\": \"Sammy Sosa\", \"age\": 12}\n]\n}"
+    },
+    {
+      "id": "s1-54",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Sequence of Sequences\n\n<!-- prettier-ignore -->"
+    },
+    {
+      "id": "s1-55",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "my_sequences:"
+    },
+    {
+      "id": "s1-56",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "• [1, 2, 3]\n• [4, 5, 6]"
+    },
+    {
+      "id": "s1-57",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "-"
+    },
+    {
+      "id": "s1-58",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "• 7\n• 8\n• 9\n• 0"
+    },
+    {
+      "id": "s1-59",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-60",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"my_sequences\": [\n[1, 2, 3],\n[4, 5, 6],\n[7, 8, 9, 0]\n]\n}"
+    },
+    {
+      "id": "s1-61",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Mapping of Mappings"
+    },
+    {
+      "id": "s1-62",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "Mark McGwire: { hr: 65, avg: 0.278 }\nSammy Sosa: { hr: 63, avg: 0.288 }"
+    },
+    {
+      "id": "s1-63",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-64",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"Mark McGwire\": {\n\"hr\": 65,\n\"avg\": 0.278\n},\n\"Sammy Sosa\": {\n\"hr\": 63,\n\"avg\": 0.288\n}\n}"
+    },
+    {
+      "id": "s1-65",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Nested Collections"
+    },
+    {
+      "id": "s1-66",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "Jack:\nid: 1\nname: Franc\nsalary: 25000\nhobby:"
+    },
+    {
+      "id": "s1-67",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "• a\n• b"
+    },
+    {
+      "id": "s1-68",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "location: { country: 'A', city: 'A-A' }"
+    },
+    {
+      "id": "s1-69",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-70",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"Jack\": {\n\"id\": 1,\n\"name\": \"Franc\",\n\"salary\": 25000,\n\"hobby\": [\"a\", \"b\"],\n\"location\": {\n\"country\": \"A\",\n\"city\": \"A-A\"\n}\n}\n}"
+    },
+    {
+      "id": "s1-71",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Unordered Sets"
+    },
+    {
+      "id": "s1-72",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "set1: !!set\n? one\n? two\nset2: !!set { 'one', 'two' }"
+    },
+    {
+      "id": "s1-73",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON"
+    },
+    {
+      "id": "s1-74",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"set1\": { \"one\": null, \"two\": null },\n\"set2\": { \"one\": null, \"two\": null }\n}"
+    },
+    {
+      "id": "s1-75",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nSets are represented as a Mapping where each key is associated with a null value\n\n### Ordered Mappings"
+    },
+    {
+      "id": "s1-76",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "ordered: !!omap"
+    },
+    {
+      "id": "s1-77",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "• Mark McGwire: 65\n• Sammy Sosa: 63\n• Ken Griffy: 58"
+    },
+    {
+      "id": "s1-78",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### ↓ Equivalent JSON\n\n<!-- prettier-ignore -->"
+    },
+    {
+      "id": "s1-79",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "{\n\"ordered\": [\n{ \"Mark McGwire\": 65 },\n{ \"Sammy Sosa\": 63 },\n{ \"Ken Griffy\": 58 }\n]\n}"
+    },
+    {
+      "id": "s1-80",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## YAML Reference\n\n### Terms\n\n- Sequences aka arrays or lists\n- Scalars aka strings or numbers\n- Mappings aka hashes or dictionaries {.marker-round}\n\nBased on the YAML.org [refcard](https://yaml.org/refcard.html).\n\n### Document indicators\n\n|       |                     |\n| ----- | ------------------- |\n| `%`   | Directive indicator |\n| `---` | Document header     |\n| `...` | Document terminator |\n\n### Collection indicators {.row-span-2}\n\n|      |                                 |\n| ---- | ------------------------------- |\n| `?`  | Key indicator                   |\n| `:`  | Value indicator                 |\n| `-`  | Nested series entry indicator   |\n| `,`  | Separate in-line branch entries |\n| `[]` | Surround in-line series branch  |\n| `{}` | Surround in-line keyed branch   |\n\n### Alias indicators\n\n|     |                 |\n| --- | --------------- |\n| `&` | Anchor property |\n| `*` | Alias indicator |\n\n### Special keys\n\n|      |                                 |\n| ---- | ------------------------------- |\n| `=`  | Default \"value\" mapping key     |\n| `<<` | Merge keys from another mapping |\n\n### Scalar indicators\n\n|       |                                   |\n| ----- | --------------------------------- | --------------------------------------------- | ----------- |\n| `''`  | Surround in-line unescaped scalar |\n| `\"`   | Surround in-line escaped scalar   |\n| `     | `                                 | Block scalar indicator                        |\n| `>`   | Folded scalar indicator           |\n| `-`   | Strip chomp modifier (`           | -`or`>-`)                                     |\n| `+`   | Keep chomp modifier (`            | +`or`>+`)                                     |\n| `1-9` | Explicit indentation modifier (`  | 1`or`>2`). <br/> Modifiers can be combined (` | 2-`, `>+1`) |\n\n### Tag Property (usually unspecified) {.col-span-2}\n\n|          |                                                             |\n| -------- | ----------------------------------------------------------- |\n| `none`   | Unspecified tag (automatically resolved by application)     |\n| `!`      | Non-specific tag (by default, `!!map`/`!!seq`/`!!str`)      |\n| `!foo`   | Primary (by convention, means a local `!foo` tag)           |\n| `!!foo`  | Secondary (by convention, means `tag:yaml.org,2002:foo`)    |\n| `!h!foo` | Requires `%TAG !h! <prefix>` (and then means `<prefix>foo`) |\n| `!<foo>` | Verbatim tag (always means `foo`)                           |\n\n### Misc indicators\n\n|                  |                              |\n| ---------------- | ---------------------------- |\n| `#`              | Throwaway comment indicator  |\n| <code>\\`@</code> | Both reserved for future use |\n\n### Core types (default automatic tags) {.row-span-2}\n\n|         |                                          |\n| ------- | ---------------------------------------- |\n| `!!map` | `{Hash table, dictionary, mapping}`      |\n| `!!seq` | `{List, array, tuple, vector, sequence}` |\n| `!!str` | Unicode string                           |\n\n### Escape Codes {.row-span-3}\n\n#### Numeric\n\n- `\\x12` (8-bit)\n- `\\u1234` (16-bit)\n- `\\U00102030` (32-bit)\n\n{.cols-2 .marker-none}\n\n#### Protective\n\n- `\\\\` (\\\\)\n- `\\\"` (\")\n- `\\ ` ( )\n- `\\<TAB>` (TAB)\n\n{.cols-3 .marker-none}\n\n#### C\n\n- `\\0` (NUL)\n- `\\a` (BEL)\n- `\\b` (BS)\n- `\\f` (FF)\n- `\\n` (LF)\n- `\\r` (CR)\n- `\\t` (TAB)\n- `\\v` (VTAB)\n\n{.cols-3 .marker-none}\n\n#### Additional\n\n- `\\e` (ESC)\n- `\\_` (NBSP)\n- `\\N` (NEL)\n- `\\L` (LS)\n- `\\P` (PS)\n\n{.cols-3 .marker-none}\n\n### More types\n\n|          |                             |\n| -------- | --------------------------- |\n| `!!set`  | `{cherries, plums, apples}` |\n| `!!omap` | `[one: 1, two: 2]`          |\n\n### Language Independent Scalar Types {.col-span-2}\n\n|                           |                                            |\n| ------------------------- | ------------------------------------------ |\n| `{~, null}`               | Null (no value).                           |\n| `[1234, 0x4D2, 02333]`    | [Decimal int, Hexadecimal int, Octal int]  |\n| `[1_230.15, 12.3015e+02]` | [Fixed float, Exponential float]           |\n| `[.inf, -.Inf, .NAN]`     | [Infinity (float), Negative, Not a number] |\n| `{Y, true, Yes, ON}`      | Boolean true                               |\n| `{n, FALSE, No, off}`     | Boolean false                              |\n\n## Also see\n\n- [YAML Reference Card](https://yaml.org/refcard.html) _(yaml.org)_\n- [Learn X in Y minutes](https://learnxinyminutes.com/docs/yaml/) _(learnxinyminutes.com)_\n- [YAML lint online](http://www.yamllint.com/) _(yamllint.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/yaml.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/yaml.md",
+    "generatedAt": "2025-12-16T07:50:03.355Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

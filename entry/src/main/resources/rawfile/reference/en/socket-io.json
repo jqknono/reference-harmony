@@ -1,0 +1,966 @@
+{
+  "id": "socket-io",
+  "title": "Throttle high-frequency events and enable compression where possible.",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Introduction",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Installation / Setup",
+      "startIndex": 2
+    },
+    {
+      "id": "s3",
+      "title": "Connecting / Setup",
+      "startIndex": 19
+    },
+    {
+      "id": "s4",
+      "title": "Emitting & Listening to Events",
+      "startIndex": 49
+    },
+    {
+      "id": "s5",
+      "title": "Broadcasting & Rooms",
+      "startIndex": 76
+    },
+    {
+      "id": "s6",
+      "title": "Disconnects & Errors",
+      "startIndex": 85
+    },
+    {
+      "id": "s7",
+      "title": "Namespaces",
+      "startIndex": 91
+    },
+    {
+      "id": "s8",
+      "title": "Authentication (Basic Token)",
+      "startIndex": 96
+    },
+    {
+      "id": "s9",
+      "title": "Tips for Debugging & Logging",
+      "startIndex": 100
+    },
+    {
+      "id": "s10",
+      "title": "Advanced Features",
+      "startIndex": 110
+    },
+    {
+      "id": "s11",
+      "title": "Best Practices",
+      "startIndex": 119
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "Socket.IO is a JavaScript library for real-time web applications. It enables bi-directional, event-based communication between clients (typically browsers or native apps) and servers."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Introduction",
+      "kind": "text",
+      "body": "• [Socket.IO Official Website](https://socket.io/) _(socket.io)_\n• [Socket.IO Documentation (v4.1)](https://socket.io/docs/v4/) _(socket.io)_\n• [Socket.IO GitHub Repository](https://github.com/socketio/socket.io) _(github.com)_\n• [Getting Started with Socket.IO (Chat App Tutorial)](https://socket.io/get-started/chat/) _(socket.io)_\n• [FreeCodeCamp Socket.IO Tutorial](https://www.freecodecamp.org/news/socket-io-tutorial/) _(freecodecamp.org)_"
+    },
+    {
+      "id": "s2-2",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "text",
+      "body": "**JavaScript (Node.js)**"
+    },
+    {
+      "id": "s2-3",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "code",
+      "lang": "bash",
+      "code": "npm install socket.io socket.io-client"
+    },
+    {
+      "id": "s2-4",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "text",
+      "body": "**Python**"
+    },
+    {
+      "id": "s2-5",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "code",
+      "lang": "bash",
+      "code": "pip install python-socketio eventlet\n# or\npip install python-socketio aiohttp"
+    },
+    {
+      "id": "s2-6",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "text",
+      "body": "**Java**"
+    },
+    {
+      "id": "s2-7",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "code",
+      "lang": "groovy",
+      "code": "implementation 'io.socket:socket.io-client:2.0.1'"
+    },
+    {
+      "id": "s2-8",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "text",
+      "body": "**Swift (iOS)**"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "code",
+      "lang": "ruby",
+      "code": "pod 'Socket.IO-Client-Swift', '~> 16.0.1'"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "text",
+      "body": "**C# (.NET)**"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "code",
+      "lang": "powershell",
+      "code": "Install-Package SocketIoClientDotNet"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "text",
+      "body": "**React Native**"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "code",
+      "lang": "bash",
+      "code": "npm install socket.io-client"
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "text",
+      "body": "**Go**"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "code",
+      "lang": "bash",
+      "code": "go get github.com/googollee/go-socket.io"
+    },
+    {
+      "id": "s2-16",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "text",
+      "body": "**Rust**"
+    },
+    {
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "code",
+      "lang": "bash",
+      "code": "\ncargo add socketio-client"
+    },
+    {
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "Installation / Setup",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s3-19",
+      "sectionId": "s3",
+      "title": "JavaScript (Browser Client then Node.js Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s3-20",
+      "sectionId": "s3",
+      "title": "JavaScript (Browser Client then Node.js Server)",
+      "kind": "code",
+      "lang": "js",
+      "code": "import { io } from 'socket.io-client';\nconst socket = io('http://localhost:3000');"
+    },
+    {
+      "id": "s3-21",
+      "sectionId": "s3",
+      "title": "JavaScript (Browser Client then Node.js Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s3-22",
+      "sectionId": "s3",
+      "title": "JavaScript (Browser Client then Node.js Server)",
+      "kind": "code",
+      "lang": "js",
+      "code": "const io = require('socket.io')(3000, {\n  cors: { origin: '*' }\n});\nio.on('connection', (socket) => {\n  console.log('Client connected:', socket.id);\n});"
+    },
+    {
+      "id": "s3-23",
+      "sectionId": "s3",
+      "title": "Python (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s3-24",
+      "sectionId": "s3",
+      "title": "Python (Client then Server)",
+      "kind": "code",
+      "lang": "python",
+      "code": "import socketio\nsio = socketio.Client()\nsio.connect('http://localhost:3000')"
+    },
+    {
+      "id": "s3-25",
+      "sectionId": "s3",
+      "title": "Python (Client then Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s3-26",
+      "sectionId": "s3",
+      "title": "Python (Client then Server)",
+      "kind": "code",
+      "lang": "python",
+      "code": "import socketio, eventlet, flask\n\napp = flask.Flask(__name__)\nsio = socketio.Server(cors_allowed_origins='*')\napp = socketio.WSGIApp(sio, app)\n\n@sio.event\ndef connect(sid, environ):\n    print('Client connected:', sid)\n\nif __name__ == '__main__':\n    eventlet.wsgi.server(eventlet.listen(('', 3000)), app)"
+    },
+    {
+      "id": "s3-27",
+      "sectionId": "s3",
+      "title": "Java (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s3-28",
+      "sectionId": "s3",
+      "title": "Java (Client then Server)",
+      "kind": "code",
+      "lang": "java",
+      "code": "IO.Options opts = new IO.Options();\nSocket socket = IO.socket(\"http://localhost:3000\", opts);\nsocket.connect();"
+    },
+    {
+      "id": "s3-29",
+      "sectionId": "s3",
+      "title": "Java (Client then Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s3-30",
+      "sectionId": "s3",
+      "title": "Java (Client then Server)",
+      "kind": "code",
+      "lang": "java",
+      "code": "import io.socket.engineio.server.EngineIoServer;\nimport io.socket.server.SocketIoServer;\n\nEngineIoServer engineIo = new EngineIoServer();\nSocketIoServer io = new SocketIoServer(engineIo);\nio.listen(3000);\n\nio.on(\"connection\", args -> {\n    var client = args[0];\n    System.out.println(\"Client connected: \" + client.id());\n});"
+    },
+    {
+      "id": "s3-31",
+      "sectionId": "s3",
+      "title": "Swift (iOS Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s3-32",
+      "sectionId": "s3",
+      "title": "Swift (iOS Client then Server)",
+      "kind": "code",
+      "lang": "swift",
+      "code": "let manager = SocketManager(\n  socketURL: URL(string: \"http://localhost:3000\")!,\n  config: [.log(true), .compress]\n)\nlet socket = manager.defaultSocket\nsocket.connect()"
+    },
+    {
+      "id": "s3-33",
+      "sectionId": "s3",
+      "title": "Swift (iOS Client then Server)",
+      "kind": "text",
+      "body": "**Server**\n_Server setups in Swift are uncommon; usually Node.js or Python is used._"
+    },
+    {
+      "id": "s3-34",
+      "sectionId": "s3",
+      "title": "C# (.NET Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s3-35",
+      "sectionId": "s3",
+      "title": "C# (.NET Client then Server)",
+      "kind": "code",
+      "lang": "csharp",
+      "code": "var socket = IO.Socket(\"http://localhost:3000\");\nsocket.Connect();"
+    },
+    {
+      "id": "s3-36",
+      "sectionId": "s3",
+      "title": "C# (.NET Client then Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s3-37",
+      "sectionId": "s3",
+      "title": "C# (.NET Client then Server)",
+      "kind": "code",
+      "lang": "csharp",
+      "code": "using Fleck;\nvar server = new WebSocketServer(\"ws://0.0.0.0:3000\");\nserver.Start(socket =>\n{\n    socket.OnOpen = () => Console.WriteLine(\"Client connected\");\n});"
+    },
+    {
+      "id": "s3-38",
+      "sectionId": "s3",
+      "title": "React Native (Client)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s3-39",
+      "sectionId": "s3",
+      "title": "React Native (Client)",
+      "kind": "code",
+      "lang": "js",
+      "code": "import io from 'socket.io-client';\nconst socket = io('http://localhost:3000');"
+    },
+    {
+      "id": "s3-40",
+      "sectionId": "s3",
+      "title": "React Native (Client)",
+      "kind": "text",
+      "body": "_(Server side same as JavaScript above.)_"
+    },
+    {
+      "id": "s3-41",
+      "sectionId": "s3",
+      "title": "Go (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s3-42",
+      "sectionId": "s3",
+      "title": "Go (Client then Server)",
+      "kind": "code",
+      "lang": "go",
+      "code": "import \"github.com/googollee/go-socket.io-client\"\nsocket, err := gosocketio.Dial(\n    gosocketio.GetUrl(\"localhost\", 3000, false),\n    transport.GetDefaultWebsocketTransport(),\n)"
+    },
+    {
+      "id": "s3-43",
+      "sectionId": "s3",
+      "title": "Go (Client then Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s3-44",
+      "sectionId": "s3",
+      "title": "Go (Client then Server)",
+      "kind": "code",
+      "lang": "go",
+      "code": "import (\n    \"github.com/googollee/go-socket.io\"\n    \"net/http\"\n)\n\nserver, _ := socketio.NewServer(nil)\nserver.OnConnect(\"/\", func(s socketio.Conn) error {\n    fmt.Println(\"Client connected:\", s.ID())\n    return nil\n})\nhttp.Handle(\"/socket.io/\", server)\ngo http.ListenAndServe(\":3000\", nil)"
+    },
+    {
+      "id": "s3-45",
+      "sectionId": "s3",
+      "title": "Rust (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s3-46",
+      "sectionId": "s3",
+      "title": "Rust (Client then Server)",
+      "kind": "code",
+      "lang": "rust",
+      "code": "use socketio_client::ClientBuilder;\n\nasync fn run() -> Result<(), Box<dyn std::error::Error>> {\n    let socket = ClientBuilder::new(\"http://localhost:3000\")\n        .transport(\"websocket\")\n        .connect()\n        .await?;\n    Ok(())\n}"
+    },
+    {
+      "id": "s3-47",
+      "sectionId": "s3",
+      "title": "Rust (Client then Server)",
+      "kind": "text",
+      "body": "**Server**\n_Rust server support is experimental; commonly use Node.js/Python servers._"
+    },
+    {
+      "id": "s3-48",
+      "sectionId": "s3",
+      "title": "Rust (Client then Server)",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s4-49",
+      "sectionId": "s4",
+      "title": "JavaScript (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s4-50",
+      "sectionId": "s4",
+      "title": "JavaScript (Client then Server)",
+      "kind": "code",
+      "lang": "js",
+      "code": "socket.emit('msg', 'Hi');\nsocket.on('reply', (data) => console.log('Reply:', data));"
+    },
+    {
+      "id": "s4-51",
+      "sectionId": "s4",
+      "title": "JavaScript (Client then Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s4-52",
+      "sectionId": "s4",
+      "title": "JavaScript (Client then Server)",
+      "kind": "code",
+      "lang": "js",
+      "code": "io.on('connection', (socket) => {\n  socket.on('msg', (msg) => {\n    console.log('Received:', msg);\n    socket.emit('reply', 'Hello from server');\n  });\n});"
+    },
+    {
+      "id": "s4-53",
+      "sectionId": "s4",
+      "title": "Python (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s4-54",
+      "sectionId": "s4",
+      "title": "Python (Client then Server)",
+      "kind": "code",
+      "lang": "python",
+      "code": "sio.emit('msg', 'Hi')\n\n@sio.on('reply')\ndef on_reply(data):\n    print('Reply:', data)"
+    },
+    {
+      "id": "s4-55",
+      "sectionId": "s4",
+      "title": "Python (Client then Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s4-56",
+      "sectionId": "s4",
+      "title": "Python (Client then Server)",
+      "kind": "code",
+      "lang": "python",
+      "code": "@sio.event\ndef msg(sid, data):\n    print('Received:', data)\n    sio.emit('reply', 'Hello from server', to=sid)"
+    },
+    {
+      "id": "s4-57",
+      "sectionId": "s4",
+      "title": "Java (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s4-58",
+      "sectionId": "s4",
+      "title": "Java (Client then Server)",
+      "kind": "code",
+      "lang": "java",
+      "code": "socket.emit(\"msg\", \"Hi\");\nsocket.on(\"reply\", args -> System.out.println(\"Reply: \" + args[0]));"
+    },
+    {
+      "id": "s4-59",
+      "sectionId": "s4",
+      "title": "Java (Client then Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s4-60",
+      "sectionId": "s4",
+      "title": "Java (Client then Server)",
+      "kind": "code",
+      "lang": "java",
+      "code": "io.on(\"connection\", args -> {\n    var client = args[0];\n    client.on(\"msg\", msgArgs -> {\n        System.out.println(\"Received: \" + msgArgs[0]);\n        client.emit(\"reply\", \"Hello from server\");\n    });\n});"
+    },
+    {
+      "id": "s4-61",
+      "sectionId": "s4",
+      "title": "Swift (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s4-62",
+      "sectionId": "s4",
+      "title": "Swift (Client then Server)",
+      "kind": "code",
+      "lang": "swift",
+      "code": "socket.emit(\"msg\", \"Hi\")\nsocket.on(\"reply\") { data, _ in\n  print(\"Reply:\", data[0])\n}"
+    },
+    {
+      "id": "s4-63",
+      "sectionId": "s4",
+      "title": "Swift (Client then Server)",
+      "kind": "text",
+      "body": "**Server**\n_Server side in Swift is rare; use Node.js/Python._"
+    },
+    {
+      "id": "s4-64",
+      "sectionId": "s4",
+      "title": "C# (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s4-65",
+      "sectionId": "s4",
+      "title": "C# (Client then Server)",
+      "kind": "code",
+      "lang": "csharp",
+      "code": "socket.Emit(\"msg\", \"Hi\");\nsocket.On(\"reply\", data => Console.WriteLine(\"Reply: \" + data));"
+    },
+    {
+      "id": "s4-66",
+      "sectionId": "s4",
+      "title": "C# (Client then Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s4-67",
+      "sectionId": "s4",
+      "title": "C# (Client then Server)",
+      "kind": "code",
+      "lang": "csharp",
+      "code": "socket.OnMessage = message =>\n{\n    Console.WriteLine(\"Received: \" + message);\n    socket.Send(\"reply\", \"Hello from server\");\n};"
+    },
+    {
+      "id": "s4-68",
+      "sectionId": "s4",
+      "title": "Go (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s4-69",
+      "sectionId": "s4",
+      "title": "Go (Client then Server)",
+      "kind": "code",
+      "lang": "go",
+      "code": "socket.Emit(\"msg\", \"Hi\")\nsocket.On(\"reply\", func(msg string) {\n    fmt.Println(\"Reply:\", msg)\n})"
+    },
+    {
+      "id": "s4-70",
+      "sectionId": "s4",
+      "title": "Go (Client then Server)",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s4-71",
+      "sectionId": "s4",
+      "title": "Go (Client then Server)",
+      "kind": "code",
+      "lang": "go",
+      "code": "server.OnEvent(\"/\", \"msg\", func(s socketio.Conn, msg string) {\n    fmt.Println(\"Received:\", msg)\n    s.Emit(\"reply\", \"Hello from server\")\n})"
+    },
+    {
+      "id": "s4-72",
+      "sectionId": "s4",
+      "title": "Rust (Client then Server)",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s4-73",
+      "sectionId": "s4",
+      "title": "Rust (Client then Server)",
+      "kind": "code",
+      "lang": "rust",
+      "code": "socket.emit(\"msg\", Payload::String(\"Hi\"));\nsocket.on(\"reply\", |payload| println!(\"Reply: {:?}\", payload));"
+    },
+    {
+      "id": "s4-74",
+      "sectionId": "s4",
+      "title": "Rust (Client then Server)",
+      "kind": "text",
+      "body": "**Server**\n_Experimental; typically use Node.js/Python._"
+    },
+    {
+      "id": "s4-75",
+      "sectionId": "s4",
+      "title": "Rust (Client then Server)",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s5-76",
+      "sectionId": "s5",
+      "title": "Client (All Languages)",
+      "kind": "text",
+      "body": "• **Join a room:**"
+    },
+    {
+      "id": "s5-77",
+      "sectionId": "s5",
+      "title": "Client (All Languages)",
+      "kind": "text",
+      "body": "```js\n// JavaScript/Python/C#/etc.\nsocket.emit('join', 'room1');\nsocket.on('msg', (data) => console.log('Room message:', data));\n```"
+    },
+    {
+      "id": "s5-78",
+      "sectionId": "s5",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "• **Node.js**"
+    },
+    {
+      "id": "s5-79",
+      "sectionId": "s5",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "```js\nio.on('connection', (socket) => {\nsocket.on('join', (room) => {\nsocket.join(room);\nio.to(room).emit('msg', 'Hello Room');\n});\n});\n```"
+    },
+    {
+      "id": "s5-80",
+      "sectionId": "s5",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "• **Python**"
+    },
+    {
+      "id": "s5-81",
+      "sectionId": "s5",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "```python\n@sio.event\ndef join(sid, room):\nsio.enter_room(sid, room)\nsio.emit('msg', 'Hello Room', room=room)\n```"
+    },
+    {
+      "id": "s5-82",
+      "sectionId": "s5",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "• **Go**"
+    },
+    {
+      "id": "s5-83",
+      "sectionId": "s5",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "```go\nserver.OnEvent(\"/\", \"join\", func(s socketio.Conn, room string) {\ns.Join(room)\nserver.BroadcastToRoom(\"/\", room, \"msg\", \"Welcome\")\n})\n```"
+    },
+    {
+      "id": "s5-84",
+      "sectionId": "s5",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s6-85",
+      "sectionId": "s6",
+      "title": "Client (All Languages)",
+      "kind": "code",
+      "lang": "js",
+      "code": "socket.on('disconnect', (reason) => console.log('Disconnected:', reason));\nsocket.on('connect_error', (err) => console.error('Connection error:', err));"
+    },
+    {
+      "id": "s6-86",
+      "sectionId": "s6",
+      "title": "Client (All Languages)",
+      "kind": "code",
+      "lang": "python",
+      "code": "@sio.event\ndef disconnect():\n    print('Disconnected')\n\n@sio.event\ndef connect_error(data):\n    print('Connection error:', data)"
+    },
+    {
+      "id": "s6-87",
+      "sectionId": "s6",
+      "title": "Client (All Languages)",
+      "kind": "code",
+      "lang": "go",
+      "code": "// Go client library varies; similar patterns apply."
+    },
+    {
+      "id": "s6-88",
+      "sectionId": "s6",
+      "title": "Server (All Languages)",
+      "kind": "code",
+      "lang": "js",
+      "code": "io.on('connection', (socket) => {\n  socket.on('disconnect', (reason) =>\n    console.log('Client disconnected:', reason)\n  );\n});"
+    },
+    {
+      "id": "s6-89",
+      "sectionId": "s6",
+      "title": "Server (All Languages)",
+      "kind": "code",
+      "lang": "go",
+      "code": "server.OnDisconnect(\"/\", func(s socketio.Conn, reason string) {\n    fmt.Println(\"Client disconnected:\", reason)\n})"
+    },
+    {
+      "id": "s6-90",
+      "sectionId": "s6",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s7-91",
+      "sectionId": "s7",
+      "title": "Client (All Languages)",
+      "kind": "code",
+      "lang": "js",
+      "code": "const adminSocket = io('/admin');"
+    },
+    {
+      "id": "s7-92",
+      "sectionId": "s7",
+      "title": "Client (All Languages)",
+      "kind": "code",
+      "lang": "python",
+      "code": "sio.connect('http://localhost:3000/admin', namespaces=['/admin'])"
+    },
+    {
+      "id": "s7-93",
+      "sectionId": "s7",
+      "title": "Server (All Languages)",
+      "kind": "code",
+      "lang": "js",
+      "code": "io.of('/admin').on('connection', (socket) => {\n  console.log('Admin connected:', socket.id);\n});"
+    },
+    {
+      "id": "s7-94",
+      "sectionId": "s7",
+      "title": "Server (All Languages)",
+      "kind": "code",
+      "lang": "go",
+      "code": "server.Of(\"/admin\").OnConnect(func(s socketio.Conn) {\n  fmt.Println(\"Admin connected:\", s.ID())\n})"
+    },
+    {
+      "id": "s7-95",
+      "sectionId": "s7",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s8-96",
+      "sectionId": "s8",
+      "title": "Client (All Languages)",
+      "kind": "code",
+      "lang": "js",
+      "code": "const socket = io('http://localhost:3000', {\n  auth: { token: 'abc' }\n});"
+    },
+    {
+      "id": "s8-97",
+      "sectionId": "s8",
+      "title": "Client (All Languages)",
+      "kind": "code",
+      "lang": "python",
+      "code": "sio.connect('http://localhost:3000', auth={'token': 'abc'})"
+    },
+    {
+      "id": "s8-98",
+      "sectionId": "s8",
+      "title": "Server (All Languages)",
+      "kind": "code",
+      "lang": "js",
+      "code": "io.use((socket, next) => {\n  const token = socket.handshake.auth.token;\n  token === 'abc' ? next() : next(new Error('Auth error'));\n});"
+    },
+    {
+      "id": "s8-99",
+      "sectionId": "s8",
+      "title": "Server (All Languages)",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s9-100",
+      "sectionId": "s9",
+      "title": "Client",
+      "kind": "text",
+      "body": "• Log events:"
+    },
+    {
+      "id": "s9-101",
+      "sectionId": "s9",
+      "title": "Client",
+      "kind": "text",
+      "body": "```js\nsocket.onAny((event, ...args) => console.log(event, args));\n```"
+    },
+    {
+      "id": "s9-102",
+      "sectionId": "s9",
+      "title": "Client",
+      "kind": "text",
+      "body": "• Inspect network in browser devtools."
+    },
+    {
+      "id": "s9-103",
+      "sectionId": "s9",
+      "title": "Server",
+      "kind": "text",
+      "body": "• **JavaScript**"
+    },
+    {
+      "id": "s9-104",
+      "sectionId": "s9",
+      "title": "Server",
+      "kind": "text",
+      "body": "```bash\nDEBUG=socket.io* node server.js\n```"
+    },
+    {
+      "id": "s9-105",
+      "sectionId": "s9",
+      "title": "Server",
+      "kind": "text",
+      "body": "• **Python**"
+    },
+    {
+      "id": "s9-106",
+      "sectionId": "s9",
+      "title": "Server",
+      "kind": "text",
+      "body": "```python\nimport logging\nlogging.getLogger('socketio').setLevel(logging.DEBUG)\n```"
+    },
+    {
+      "id": "s9-107",
+      "sectionId": "s9",
+      "title": "Server",
+      "kind": "text",
+      "body": "• **Go**"
+    },
+    {
+      "id": "s9-108",
+      "sectionId": "s9",
+      "title": "Server",
+      "kind": "text",
+      "body": "Print handler errors and use middleware for structured logs."
+    },
+    {
+      "id": "s9-109",
+      "sectionId": "s9",
+      "title": "Server",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s10-110",
+      "sectionId": "s10",
+      "title": "Middleware",
+      "kind": "text",
+      "body": "**Client**\n_(Rarely needed)_"
+    },
+    {
+      "id": "s10-111",
+      "sectionId": "s10",
+      "title": "Middleware",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s10-112",
+      "sectionId": "s10",
+      "title": "Middleware",
+      "kind": "code",
+      "lang": "js",
+      "code": "io.use((socket, next) => {\n  console.log('Middleware:', socket.id);\n  next();\n});"
+    },
+    {
+      "id": "s10-113",
+      "sectionId": "s10",
+      "title": "Middleware",
+      "kind": "code",
+      "lang": "go",
+      "code": "server.Use(func(s socketio.Conn, next func()) {\n  fmt.Println(\"Middleware triggered:\", s.ID())\n  next()\n})"
+    },
+    {
+      "id": "s10-114",
+      "sectionId": "s10",
+      "title": "Binary Streaming",
+      "kind": "text",
+      "body": "**Client**"
+    },
+    {
+      "id": "s10-115",
+      "sectionId": "s10",
+      "title": "Binary Streaming",
+      "kind": "code",
+      "lang": "js",
+      "code": "fetch('/file')\n  .then((res) => res.arrayBuffer())\n  .then((buf) => socket.emit('file', buf));"
+    },
+    {
+      "id": "s10-116",
+      "sectionId": "s10",
+      "title": "Binary Streaming",
+      "kind": "text",
+      "body": "**Server**"
+    },
+    {
+      "id": "s10-117",
+      "sectionId": "s10",
+      "title": "Binary Streaming",
+      "kind": "code",
+      "lang": "go",
+      "code": "server.OnEvent(\"/\", \"file\", func(s socketio.Conn, data []byte) {\n    ioutil.WriteFile(\"upload\", data, 0644)\n})"
+    },
+    {
+      "id": "s10-118",
+      "sectionId": "s10",
+      "title": "Binary Streaming",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s11-119",
+      "sectionId": "s11",
+      "title": "Best Practices",
+      "kind": "text",
+      "body": "> Official docs: [https://socket.io/docs/v4/](https://socket.io/docs/v4/)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/socket-io.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/socket-io.md",
+    "generatedAt": "2025-12-16T07:50:03.287Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

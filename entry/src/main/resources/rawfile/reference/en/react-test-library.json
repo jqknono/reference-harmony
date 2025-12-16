@@ -1,0 +1,276 @@
+{
+  "id": "react-test-library",
+  "title": "React Testing Library Cheat Sheet",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Introduction",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Basic level",
+      "startIndex": 2
+    },
+    {
+      "id": "s3",
+      "title": "Intermediate level",
+      "startIndex": 19
+    },
+    {
+      "id": "s4",
+      "title": "Advanced Level",
+      "startIndex": 23
+    },
+    {
+      "id": "s5",
+      "title": "Conclusion",
+      "startIndex": 30
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "When it comes to testing React apps manually, we can either choose to render individual component trees in a simplified test environment or run the complete app in a realistic browser environment (end-to-end testing). But for automated tests, React Testing Library (RTL) is recommended for its user-centric approach and maintainability."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Introduction",
+      "kind": "text",
+      "body": "React Testing Library is built on top of DOM Testing Library to test React components by querying and interacting with real DOM nodes, avoiding reliance on implementation details."
+    },
+    {
+      "id": "s2-2",
+      "sectionId": "s2",
+      "title": "1. Purpose & Solution",
+      "kind": "text",
+      "body": "RTL addresses maintainability by focusing on user-visible behavior:"
+    },
+    {
+      "id": "s2-3",
+      "sectionId": "s2",
+      "title": "1. Purpose & Solution",
+      "kind": "text",
+      "body": "• Tests run in actual DOM nodes.\n• Queries mirror user interactions.\n• `data-testid` as an escape hatch when needed.\n• Encourages accessibility."
+    },
+    {
+      "id": "s2-4",
+      "sectionId": "s2",
+      "title": "2. A basic component render test",
+      "kind": "text",
+      "body": "**Component (App.js):**"
+    },
+    {
+      "id": "s2-5",
+      "sectionId": "s2",
+      "title": "2. A basic component render test",
+      "kind": "code",
+      "lang": "js",
+      "code": "const title = 'Hello, World!';\n\nfunction App() {\n  return <div>{title}</div>;\n}\n\nexport default App;"
+    },
+    {
+      "id": "s2-6",
+      "sectionId": "s2",
+      "title": "2. A basic component render test",
+      "kind": "text",
+      "body": "**Test (App.test.js):**"
+    },
+    {
+      "id": "s2-7",
+      "sectionId": "s2",
+      "title": "2. A basic component render test",
+      "kind": "code",
+      "lang": "js",
+      "code": "import { render } from '@testing-library/react';\nimport App from './App';\n\ndescribe('App', () => {\n  test('renders App component', () => {\n    render(<App />);\n  });\n});"
+    },
+    {
+      "id": "s2-8",
+      "sectionId": "s2",
+      "title": "2. A basic component render test",
+      "kind": "text",
+      "body": "Add debug to inspect output:"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "2. A basic component render test",
+      "kind": "code",
+      "lang": "js",
+      "code": "import { render, screen } from '@testing-library/react';\nimport App from './App';\n\ndescribe('App', () => {\n  test('renders App component', () => {\n    render(<App />);\n    screen.debug();\n  });\n});"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "2. A basic component render test",
+      "kind": "text",
+      "body": "Output in console:"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "2. A basic component render test",
+      "kind": "code",
+      "lang": "html",
+      "code": "<body>\n  <div>\n    <div>Hello, World!</div>\n  </div>\n</body>"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "3. Why use RTL vs Enzyme?",
+      "kind": "text",
+      "body": "• Tests based on user interactions, not internal APIs.\n• Improves maintainability after refactors.\n• Intuitive syntax (`getByText`, `getByAltText`, etc.)."
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "4. Queries in RTL",
+      "kind": "code",
+      "lang": "js",
+      "code": "import { render, screen } from '@testing-library/react';\n\ntest('should show login form', () => {\n  render(<Login />);\n  const input = screen.getByLabelText('Username');\n  // events & assertions\n});"
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "4. Queries in RTL",
+      "kind": "text",
+      "body": "**Single element queries:**"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "4. Queries in RTL",
+      "kind": "text",
+      "body": "• `getBy*`: throws if none found\n• `queryBy*`: returns null if none\n• `findBy*`: async Promise"
+    },
+    {
+      "id": "s2-16",
+      "sectionId": "s2",
+      "title": "4. Queries in RTL",
+      "kind": "text",
+      "body": "**Multiple elements queries:**"
+    },
+    {
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "4. Queries in RTL",
+      "kind": "text",
+      "body": "• `getAllBy*`: throws if none\n• `queryAllBy*`: returns \\[] if none\n• `findAllBy*`: async Promise array"
+    },
+    {
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "5. Component tree testing level",
+      "kind": "text",
+      "body": "• Test at user interaction level, not per individual child component unless needed."
+    },
+    {
+      "id": "s3-19",
+      "sectionId": "s3",
+      "title": "1. Jest vs RTL",
+      "kind": "text",
+      "body": "• **Jest**: Test runner & assertion library (`describe`, `test`, `expect`).\n• **RTL**: DOM utilities for React; works within Jest (or other runners)."
+    },
+    {
+      "id": "s3-20",
+      "sectionId": "s3",
+      "title": "2. Mocking with MSW",
+      "kind": "code",
+      "lang": "js",
+      "code": "// fetch.test.jsx\nimport React from 'react';\nimport { rest } from 'msw';\nimport { setupServer } from 'msw/node';\nimport { render, fireEvent, waitFor, screen } from '@testing-library/react';\nimport '@testing-library/jest-dom';\nimport Fetch from '../fetch';\n\nconst server = setupServer(\n  rest.get('/greeting', (req, res, ctx) =>\n    res(ctx.json({ greeting: 'hello there' }))\n  )\n);\n\nbeforeAll(() => server.listen());\nafterEach(() => server.resetHandlers());\nafterAll(() => server.close());\n\ntest('loads and displays greeting', async () => {\n  render(<Fetch url=\"/greeting\" />);\n  fireEvent.click(screen.getByText('Load Greeting'));\n  await waitFor(() => screen.getByRole('heading'));\n  expect(screen.getByRole('heading')).toHaveTextContent('hello there');\n  expect(screen.getByRole('button')).toBeDisabled();\n});\n\ntest('handles server error', async () => {\n  server.use(rest.get('/greeting', (req, res, ctx) => res(ctx.status(500))));\n  render(<Fetch url=\"/greeting\" />);\n  fireEvent.click(screen.getByText('Load Greeting'));\n  await waitFor(() => screen.getByRole('alert'));\n  expect(screen.getByRole('alert')).toHaveTextContent('Oops, failed to fetch!');\n  expect(screen.getByRole('button')).not.toBeDisabled();\n});"
+    },
+    {
+      "id": "s3-21",
+      "sectionId": "s3",
+      "title": "3. `render` options",
+      "kind": "code",
+      "lang": "js",
+      "code": "import { render } from '@testing-library/react';\nimport '@testing-library/jest-dom';\n\ntest('renders a message', () => {\n  const table = document.createElement('table');\n  const { container } = render(<TableBody {...props} />, {\n    container: document.body.appendChild(table),\n    baseElement: document.body,\n    hydrate: true,\n    legacyRoot: true,\n    queries: {\n      /* custom queries */\n    }\n  });\n  expect(container).toBeInTheDocument();\n});"
+    },
+    {
+      "id": "s3-22",
+      "sectionId": "s3",
+      "title": "4. `renderHook` usage",
+      "kind": "code",
+      "lang": "js",
+      "code": "import { renderHook } from '@testing-library/react';\n\ntest('returns logged in user', () => {\n  const { result, rerender } = renderHook(\n    ({ name } = {}) => useLoggedInUser(name),\n    { initialProps: { name: 'Alice' } }\n  );\n  expect(result.current).toEqual({ name: 'Alice' });\n  rerender({ name: 'Bob' });\n  expect(result.current).toEqual({ name: 'Bob' });\n});"
+    },
+    {
+      "id": "s4-23",
+      "sectionId": "s4",
+      "title": "1. Adding custom queries",
+      "kind": "code",
+      "lang": "js",
+      "code": "const dom = require('@testing-library/dom');\nconst { queryHelpers, buildQueries } = require('@testing-library/react');\n\n// Override testId attribute\nexport const queryByTestId = queryHelpers.queryByAttribute.bind(\n  null,\n  'data-test-id'\n);\nexport const queryAllByTestId = queryHelpers.queryAllByAttribute.bind(\n  null,\n  'data-test-id'\n);\nexport function getAllByTestId(container, id, ...rest) {\n  const els = queryAllByTestId(container, id, ...rest);\n  if (!els.length)\n    throw queryHelpers.getElementError(\n      `No element with [data-test-id=\"${id}\"]`,\n      container\n    );\n  return els;\n}\nexport function getByTestId(container, id, ...rest) {\n  const els = getAllByTestId(container, id, ...rest);\n  if (els.length > 1)\n    throw queryHelpers.getElementError(\n      `Multiple elements with [data-test-id=\"${id}\"]`,\n      container\n    );\n  return els[0];\n}"
+    },
+    {
+      "id": "s4-24",
+      "sectionId": "s4",
+      "title": "1. Adding custom queries",
+      "kind": "text",
+      "body": "Or using `buildQueries`:"
+    },
+    {
+      "id": "s4-25",
+      "sectionId": "s4",
+      "title": "1. Adding custom queries",
+      "kind": "code",
+      "lang": "js",
+      "code": "const queryAllByDataCy = (...args) =>\n  queryHelpers.queryAllByAttribute('data-cy', ...args);\nconst [\n  queryByDataCy,\n  getAllByDataCy,\n  getByDataCy,\n  findAllByDataCy,\n  findByDataCy\n] = buildQueries(\n  queryAllByDataCy,\n  (c, v) => `Found multiple elements with data-cy=\"${v}\"`,\n  (c, v) => `Unable to find element with data-cy=\"${v}\"`\n);"
+    },
+    {
+      "id": "s4-26",
+      "sectionId": "s4",
+      "title": "2. Skipping auto cleanup",
+      "kind": "text",
+      "body": "• Via CLI: `cross-env RTL_SKIP_AUTO_CLEANUP=true jest`\n• Or add to Jest `setupFiles`: `import '@testing-library/react/dont-cleanup-after-each';`"
+    },
+    {
+      "id": "s4-27",
+      "sectionId": "s4",
+      "title": "3. Migrating from Enzyme",
+      "kind": "text",
+      "body": "• Install RTL & jest-dom.\n• Replace `shallow`/`mount` with `render` + `screen`.\n• Migrate tests incrementally."
+    },
+    {
+      "id": "s4-28",
+      "sectionId": "s4",
+      "title": "4. Querying within elements",
+      "kind": "code",
+      "lang": "js",
+      "code": "import { render, within } from '@testing-library/react';\n\nconst { getByText } = render(<MyComponent />);\nconst section = getByText('messages');\nconst hello = within(section).getByText('hello');"
+    },
+    {
+      "id": "s4-29",
+      "sectionId": "s4",
+      "title": "5. Integration testing",
+      "kind": "code",
+      "lang": "js",
+      "code": "import { render, cleanup, waitFor } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport nock from 'nock';\nimport App from '../App';\n\nconst REPOS = [{ name: 'repo1', description: '...' }];\n\nbeforeAll(() =>\n  nock('https://api.github.com')\n    .persist()\n    .get('/users/alice/repos')\n    .reply(200, REPOS)\n);\nafterEach(cleanup);\n\ntest('user sees public repos', async () => {\n  render(<App />);\n  userEvent.type(screen.getByPlaceholderText('Enter username'), 'alice');\n  userEvent.click(screen.getByRole('button', { name: /submit/i }));\n  await waitFor(() =>\n    REPOS.forEach((r) => expect(screen.getByText(r.name)).toBeInTheDocument())\n  );\n  expect(screen.queryByText('Loading...')).toBeNull();\n});"
+    },
+    {
+      "id": "s5-30",
+      "sectionId": "s5",
+      "title": "Conclusion",
+      "kind": "text",
+      "body": "This comprehensive cheat sheet covers basic to advanced RTL usage—rendering, querying, mocking, custom queries, and integration tests—to help you write robust, maintainable tests."
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/react-test-library.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/react-test-library.md",
+    "generatedAt": "2025-12-16T07:50:03.253Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

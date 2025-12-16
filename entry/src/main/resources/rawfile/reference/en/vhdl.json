@@ -1,0 +1,478 @@
+{
+  "id": "vhdl",
+  "title": "VHDL",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Data Types",
+      "startIndex": 10
+    },
+    {
+      "id": "s3",
+      "title": "Entity and Architecture",
+      "startIndex": 20
+    },
+    {
+      "id": "s4",
+      "title": "Processes and Sequential Logic",
+      "startIndex": 25
+    },
+    {
+      "id": "s5",
+      "title": "Operators and Expressions",
+      "startIndex": 28
+    },
+    {
+      "id": "s6",
+      "title": "Control Structures",
+      "startIndex": 32
+    },
+    {
+      "id": "s7",
+      "title": "Functions and Procedures",
+      "startIndex": 36
+    },
+    {
+      "id": "s8",
+      "title": "Testbenches and Simulation",
+      "startIndex": 39
+    },
+    {
+      "id": "s9",
+      "title": "Attributes and Configuration",
+      "startIndex": 42
+    },
+    {
+      "id": "s10",
+      "title": "Advanced Concepts",
+      "startIndex": 45
+    },
+    {
+      "id": "s11",
+      "title": "Common Patterns",
+      "startIndex": 48
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "VHDL (VHSIC Hardware Description Language) cheat sheet - A comprehensive reference for digital hardware design and simulation."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Introduction",
+      "kind": "text",
+      "body": "VHDL is a hardware description language used for electronic design automation to describe digital and mixed-signal systems."
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Introduction",
+      "kind": "text",
+      "body": "• [IEEE 1076 Standard](https://standards.ieee.org/ieee/1076/3636/) _(IEEE Standard)_\n• [VHDL Tutorial](https://www.nandland.com/vhdl/tutorials/tutorial-introduction-to-vhdl-for-beginners.html) _(nandland.com)_\n• [Digital Design VHDL](https://vhdl.lapinoo.net/) _(lapinoo.net)_"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Basic Entity",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "entity hello_world is\nend hello_world;\n\narchitecture behavioral of hello_world is\nbegin\n  -- Simple testbench process\n  process\n  begin\n    report \"Hello, VHDL World!\";\n    wait;\n  end process;\nend behavioral;"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Basic Entity",
+      "kind": "text",
+      "body": "A basic VHDL entity and architecture"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Simple AND Gate",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "library ieee;\nuse ieee.std_logic_1164.all;\n\nentity and_gate is\n  port (\n    a : in  std_logic;\n    b : in  std_logic;\n    y : out std_logic\n  );\nend and_gate;\n\narchitecture behavioral of and_gate is\nbegin\n  y <= a and b;\nend behavioral;"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Simple AND Gate",
+      "kind": "text",
+      "body": "Basic two-input AND gate implementation"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Libraries and Packages",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "library ieee;\nuse ieee.std_logic_1164.all;\nuse ieee.numeric_std.all;\nuse ieee.std_logic_arith.all;\nuse ieee.std_logic_unsigned.all;\n\nlibrary work;\nuse work.my_package.all;"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Libraries and Packages",
+      "kind": "text",
+      "body": "Common library declarations"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Comments",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Single line comment\n\n/* Multi-line comment\n   spanning multiple lines\n   (VHDL-2008 feature) */"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "Standard Logic Types",
+      "kind": "qa",
+      "front": "`bit`",
+      "back": "Binary bit | '0', '1'"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "Standard Logic Types",
+      "kind": "qa",
+      "front": "`std_logic`",
+      "back": "IEEE standard | '0', '1', 'Z', 'X', 'H', 'L', 'W', 'U', '-'"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "Standard Logic Types",
+      "kind": "qa",
+      "front": "`boolean`",
+      "back": "Boolean type | true, false"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "Standard Logic Types",
+      "kind": "qa",
+      "front": "`integer`",
+      "back": "Integer type | -2^31 to 2^31-1"
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "Standard Logic Types",
+      "kind": "qa",
+      "front": "`real`",
+      "back": "Real number | Floating point"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "Standard Logic Types",
+      "kind": "qa",
+      "front": "`character`",
+      "back": "Single character | ASCII characters"
+    },
+    {
+      "id": "s2-16",
+      "sectionId": "s2",
+      "title": "Standard Logic Types",
+      "kind": "qa",
+      "front": "`string`",
+      "back": "Character array | \"Hello World\""
+    },
+    {
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "Vector Types",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Bit vectors\nsignal data_bus : bit_vector(7 downto 0);\nsignal address  : bit_vector(15 downto 0);\n\n-- Standard logic vectors\nsignal data     : std_logic_vector(7 downto 0);\nsignal control  : std_logic_vector(3 downto 0);\n\n-- Signed and unsigned (numeric_std)\nsignal counter  : unsigned(7 downto 0);\nsignal offset   : signed(15 downto 0);"
+    },
+    {
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "Array Types",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Array type declaration\ntype memory_type is array (0 to 255) of std_logic_vector(7 downto 0);\n\n-- Array signal declaration\nsignal memory : memory_type;\n\n-- Multi-dimensional arrays\ntype matrix_type is array (0 to 3, 0 to 3) of integer;\nsignal matrix : matrix_type;"
+    },
+    {
+      "id": "s2-19",
+      "sectionId": "s2",
+      "title": "Record Types",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Record type declaration\ntype cpu_interface is record\n  address : std_logic_vector(15 downto 0);\n  data    : std_logic_vector(7 downto 0);\n  read_en : std_logic;\n  write_en: std_logic;\nend record;\n\n-- Record signal\nsignal cpu_bus : cpu_interface;\n\n-- Access record fields\ncpu_bus.address <= x\"1234\";\ncpu_bus.data    <= x\"AB\";"
+    },
+    {
+      "id": "s3-20",
+      "sectionId": "s3",
+      "title": "Entity Declaration",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "entity counter is\n  generic (\n    WIDTH : integer := 8;\n    MAX_COUNT : integer := 255\n  );\n  port (\n    clk     : in  std_logic;\n    reset   : in  std_logic;\n    enable  : in  std_logic;\n    count   : out std_logic_vector(WIDTH-1 downto 0);\n    overflow: out std_logic\n  );\nend entity counter;"
+    },
+    {
+      "id": "s3-21",
+      "sectionId": "s3",
+      "title": "Entity Declaration",
+      "kind": "text",
+      "body": "Entity with generics and ports"
+    },
+    {
+      "id": "s3-22",
+      "sectionId": "s3",
+      "title": "Architecture Styles",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Behavioral Architecture\narchitecture behavioral of counter is\n  signal count_int : unsigned(WIDTH-1 downto 0);\nbegin\n  process(clk, reset)\n  begin\n    if reset = '1' then\n      count_int <= (others => '0');\n      overflow <= '0';\n    elsif rising_edge(clk) then\n      if enable = '1' then\n        if count_int = MAX_COUNT then\n          count_int <= (others => '0');\n          overflow <= '1';\n        else\n          count_int <= count_int + 1;\n          overflow <= '0';\n        end if;\n      end if;\n    end if;\n  end process;\n  \n  count <= std_logic_vector(count_int);\nend behavioral;"
+    },
+    {
+      "id": "s3-23",
+      "sectionId": "s3",
+      "title": "Structural Architecture",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "architecture structural of adder_4bit is\n  component full_adder is\n    port (\n      a, b, cin : in  std_logic;\n      sum, cout : out std_logic\n    );\n  end component;\n  \n  signal carry : std_logic_vector(3 downto 0);\nbegin\n  -- Component instantiation\n  FA0: full_adder port map (a(0), b(0), cin, sum(0), carry(0));\n  FA1: full_adder port map (a(1), b(1), carry(0), sum(1), carry(1));\n  FA2: full_adder port map (a(2), b(2), carry(1), sum(2), carry(2));\n  FA3: full_adder port map (a(3), b(3), carry(2), sum(3), cout);\nend structural;"
+    },
+    {
+      "id": "s3-24",
+      "sectionId": "s3",
+      "title": "Dataflow Architecture",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "architecture dataflow of mux_4to1 is\nbegin\n  -- Concurrent signal assignments\n  output <= input0 when sel = \"00\" else\n            input1 when sel = \"01\" else\n            input2 when sel = \"10\" else\n            input3;\n            \n  -- Conditional assignment\n  with sel select\n    output <= input0 when \"00\",\n              input1 when \"01\", \n              input2 when \"10\",\n              input3 when others;\nend dataflow;"
+    },
+    {
+      "id": "s4-25",
+      "sectionId": "s4",
+      "title": "Clocked Process",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Synchronous process with clock and reset\nprocess(clk, reset)\nbegin\n  if reset = '1' then\n    -- Asynchronous reset\n    output <= '0';\n    state <= IDLE;\n  elsif rising_edge(clk) then\n    -- Synchronous logic\n    case state is\n      when IDLE =>\n        if start = '1' then\n          state <= ACTIVE;\n        end if;\n      when ACTIVE =>\n        output <= '1';\n        if done = '1' then\n          state <= IDLE;\n        end if;\n    end case;\n  end if;\nend process;"
+    },
+    {
+      "id": "s4-26",
+      "sectionId": "s4",
+      "title": "Combinational Process",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Combinational logic process\nprocess(a, b, sel)\nbegin\n  case sel is\n    when \"00\" =>\n      result <= a and b;\n    when \"01\" =>\n      result <= a or b;\n    when \"10\" =>\n      result <= a xor b;\n    when others =>\n      result <= not a;\n  end case;\nend process;"
+    },
+    {
+      "id": "s4-27",
+      "sectionId": "s4",
+      "title": "Wait Statements",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Testbench process with wait statements\nprocess\nbegin\n  -- Initialize\n  reset <= '1';\n  wait for 10 ns;\n  \n  reset <= '0';\n  wait for 20 ns;\n  \n  -- Apply stimulus\n  data_in <= x\"AA\";\n  wait until rising_edge(clk);\n  \n  -- Wait for condition\n  wait until ready = '1';\n  \n  wait;  -- Wait indefinitely\nend process;"
+    },
+    {
+      "id": "s5-28",
+      "sectionId": "s5",
+      "title": "Logical Operators",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Logical operators\nresult <= a and b;\nresult <= a or b;\nresult <= a nand b;\nresult <= a nor b;\nresult <= a xor b;\nresult <= a xnor b;\nresult <= not a;"
+    },
+    {
+      "id": "s5-29",
+      "sectionId": "s5",
+      "title": "Arithmetic Operators",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Arithmetic operators (requires numeric_std)\nsignal a, b : unsigned(7 downto 0);\nsignal result : unsigned(8 downto 0);\n\nresult <= ('0' & a) + ('0' & b);  -- Addition with carry\nresult <= a - b;                   -- Subtraction\nresult <= a * b;                   -- Multiplication\nresult <= a / b;                   -- Division (synthesis limited)\nresult <= a mod b;                 -- Modulo\nresult <= a rem b;                 -- Remainder\nresult <= a ** 2;                  -- Exponentiation\n\n-- Increment/Decrement\ncounter <= counter + 1;\ncounter <= counter - 1;"
+    },
+    {
+      "id": "s5-30",
+      "sectionId": "s5",
+      "title": "Relational Operators",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Comparison operators\nif a = b then         -- Equal\nif a /= b then        -- Not equal\nif a < b then         -- Less than\nif a <= b then        -- Less than or equal\nif a > b then         -- Greater than\nif a >= b then        -- Greater than or equal"
+    },
+    {
+      "id": "s5-31",
+      "sectionId": "s5",
+      "title": "Shift Operators",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Shift operators (VHDL-2008)\nsignal data : std_logic_vector(7 downto 0);\n\ndata <= data sll 1;   -- Shift left logical\ndata <= data srl 1;   -- Shift right logical\ndata <= data sla 1;   -- Shift left arithmetic\ndata <= data sra 1;   -- Shift right arithmetic\ndata <= data rol 1;   -- Rotate left\ndata <= data ror 1;   -- Rotate right"
+    },
+    {
+      "id": "s6-32",
+      "sectionId": "s6",
+      "title": "If-Then-Else",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Simple if statement\nif enable = '1' then\n  output <= input;\nend if;\n\n-- If-else\nif reset = '1' then\n  counter <= 0;\nelse\n  counter <= counter + 1;\nend if;\n\n-- If-elsif-else\nif sel = \"00\" then\n  output <= input0;\nelsif sel = \"01\" then\n  output <= input1;\nelsif sel = \"10\" then\n  output <= input2;\nelse\n  output <= input3;\nend if;"
+    },
+    {
+      "id": "s6-33",
+      "sectionId": "s6",
+      "title": "Case Statement",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Case statement\ncase state is\n  when IDLE =>\n    next_state <= START;\n    output <= '0';\n  when START =>\n    next_state <= ACTIVE;\n    output <= '1';\n  when ACTIVE =>\n    if done = '1' then\n      next_state <= IDLE;\n    else\n      next_state <= ACTIVE;\n    end if;\n  when others =>\n    next_state <= IDLE;\n    output <= '0';\nend case;"
+    },
+    {
+      "id": "s6-34",
+      "sectionId": "s6",
+      "title": "For Loops",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- For loop in process\nprocess(clk)\nbegin\n  if rising_edge(clk) then\n    for i in 0 to 7 loop\n      shift_reg(i+1) <= shift_reg(i);\n    end loop;\n    shift_reg(0) <= serial_in;\n  end if;\nend process;\n\n-- Generate statement with for loop\ngen_mux: for i in 0 to 3 generate\n  mux_inst: entity work.mux_2to1\n    port map (\n      a => input_a(i),\n      b => input_b(i),\n      sel => sel,\n      y => output(i)\n    );\nend generate;"
+    },
+    {
+      "id": "s6-35",
+      "sectionId": "s6",
+      "title": "While Loops",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- While loop (primarily for testbenches)\nprocess\n  variable count : integer := 0;\nbegin\n  while count < 10 loop\n    wait until rising_edge(clk);\n    count := count + 1;\n  end loop;\n  wait;\nend process;"
+    },
+    {
+      "id": "s7-36",
+      "sectionId": "s7",
+      "title": "Function Declaration",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Function declaration\nfunction to_integer(input : std_logic_vector) return integer is\n  variable result : integer := 0;\nbegin\n  for i in input'range loop\n    result := result * 2;\n    if input(i) = '1' then\n      result := result + 1;\n    end if;\n  end loop;\n  return result;\nend function;\n\n-- Function usage\nsignal address : std_logic_vector(7 downto 0);\nsignal addr_int : integer;\n\naddr_int <= to_integer(address);"
+    },
+    {
+      "id": "s7-37",
+      "sectionId": "s7",
+      "title": "Procedure Declaration",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Procedure declaration\nprocedure write_memory(\n  signal clk : in std_logic;\n  signal addr : in std_logic_vector(7 downto 0);\n  signal data : in std_logic_vector(7 downto 0);\n  signal mem : inout memory_type\n) is\nbegin\n  wait until rising_edge(clk);\n  mem(to_integer(unsigned(addr))) <= data;\nend procedure;\n\n-- Procedure call\nwrite_memory(clk, address, data_in, memory);"
+    },
+    {
+      "id": "s7-38",
+      "sectionId": "s7",
+      "title": "Package Declaration",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Package declaration\npackage my_package is\n  -- Constants\n  constant DATA_WIDTH : integer := 8;\n  constant ADDR_WIDTH : integer := 16;\n  \n  -- Types\n  type state_type is (IDLE, READ, WRITE, DONE);\n  \n  -- Functions\n  function parity(data : std_logic_vector) return std_logic;\n  \n  -- Procedures\n  procedure reset_signals(signal clk : in std_logic);\nend package;\n\n-- Package body\npackage body my_package is\n  function parity(data : std_logic_vector) return std_logic is\n    variable result : std_logic := '0';\n  begin\n    for i in data'range loop\n      result := result xor data(i);\n    end loop;\n    return result;\n  end function;\nend package body;"
+    },
+    {
+      "id": "s8-39",
+      "sectionId": "s8",
+      "title": "Basic Testbench",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "library ieee;\nuse ieee.std_logic_1164.all;\nuse ieee.numeric_std.all;\n\nentity tb_counter is\nend tb_counter;\n\narchitecture behavioral of tb_counter is\n  -- Component declaration\n  component counter is\n    port (\n      clk     : in  std_logic;\n      reset   : in  std_logic;\n      enable  : in  std_logic;\n      count   : out std_logic_vector(7 downto 0)\n    );\n  end component;\n  \n  -- Testbench signals\n  signal clk     : std_logic := '0';\n  signal reset   : std_logic := '1';\n  signal enable  : std_logic := '0';\n  signal count   : std_logic_vector(7 downto 0);\n  \n  -- Clock period\n  constant clk_period : time := 10 ns;\n\nbegin\n  -- Unit Under Test instantiation\n  uut: counter\n    port map (\n      clk    => clk,\n      reset  => reset,\n      enable => enable,\n      count  => count\n    );\n  \n  -- Clock generation\n  clk_proc: process\n  begin\n    clk <= '0';\n    wait for clk_period/2;\n    clk <= '1';\n    wait for clk_period/2;\n  end process;\n  \n  -- Stimulus process\n  stim_proc: process\n  begin\n    -- Reset phase\n    reset <= '1';\n    wait for 20 ns;\n    reset <= '0';\n    \n    -- Enable counting\n    enable <= '1';\n    wait for 100 ns;\n    \n    -- Disable counting\n    enable <= '0';\n    wait for 50 ns;\n    \n    -- End simulation\n    wait;\n  end process;\nend behavioral;"
+    },
+    {
+      "id": "s8-40",
+      "sectionId": "s8",
+      "title": "Assert Statements",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Assert for verification\nprocess(clk)\nbegin\n  if rising_edge(clk) then\n    -- Check counter overflow\n    assert count /= \"11111111\" \n      report \"Counter overflow detected!\" \n      severity warning;\n    \n    -- Check reset functionality\n    if reset = '1' then\n      assert count = \"00000000\"\n        report \"Reset failed!\"\n        severity error;\n    end if;\n  end if;\nend process;"
+    },
+    {
+      "id": "s8-41",
+      "sectionId": "s8",
+      "title": "File I/O",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- File I/O for testbenches\nuse std.textio.all;\n\nprocess\n  file input_file  : text open read_mode is \"input.txt\";\n  file output_file : text open write_mode is \"output.txt\";\n  variable line_in  : line;\n  variable line_out : line;\n  variable data     : integer;\nbegin\n  while not endfile(input_file) loop\n    readline(input_file, line_in);\n    read(line_in, data);\n    \n    -- Process data\n    data := data * 2;\n    \n    write(line_out, data);\n    writeline(output_file, line_out);\n  end loop;\n  \n  wait;\nend process;"
+    },
+    {
+      "id": "s9-42",
+      "sectionId": "s9",
+      "title": "Signal Attributes",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Common signal attributes\nsignal data : std_logic_vector(7 downto 0);\n\n-- Range attributes\ndata'left      -- 7 (leftmost index)\ndata'right     -- 0 (rightmost index)\ndata'high      -- 7 (highest index)\ndata'low       -- 0 (lowest index)\ndata'range     -- 7 downto 0\ndata'length    -- 8 (number of elements)\n\n-- Event attributes\nclk'event      -- true if clk changed\nclk'last_event -- time since last event\ndata'stable(5 ns) -- true if stable for 5 ns"
+    },
+    {
+      "id": "s9-43",
+      "sectionId": "s9",
+      "title": "Type Attributes",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Type attributes\ntype state_type is (IDLE, ACTIVE, DONE);\n\nstate_type'left        -- IDLE\nstate_type'right       -- DONE\nstate_type'pos(ACTIVE) -- 1\nstate_type'val(2)      -- DONE\nstate_type'succ(IDLE)  -- ACTIVE\nstate_type'pred(DONE)  -- ACTIVE"
+    },
+    {
+      "id": "s9-44",
+      "sectionId": "s9",
+      "title": "Generate Statements",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Conditional generate\ngen_async: if ASYNC_RESET generate\n  process(clk, reset)\n  begin\n    if reset = '1' then\n      output <= '0';\n    elsif rising_edge(clk) then\n      output <= input;\n    end if;\n  end process;\nend generate;\n\ngen_sync: if not ASYNC_RESET generate\n  process(clk)\n  begin\n    if rising_edge(clk) then\n      if reset = '1' then\n        output <= '0';\n      else\n        output <= input;\n      end if;\n    end if;\n  end process;\nend generate;"
+    },
+    {
+      "id": "s10-45",
+      "sectionId": "s10",
+      "title": "State Machines",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Finite State Machine\ntype state_type is (IDLE, LOAD, EXECUTE, STORE, DONE);\nsignal current_state, next_state : state_type;\n\n-- State register\nprocess(clk, reset)\nbegin\n  if reset = '1' then\n    current_state <= IDLE;\n  elsif rising_edge(clk) then\n    current_state <= next_state;\n  end if;\nend process;\n\n-- Next state logic\nprocess(current_state, start, load_done, exec_done, store_done)\nbegin\n  case current_state is\n    when IDLE =>\n      if start = '1' then\n        next_state <= LOAD;\n      else\n        next_state <= IDLE;\n      end if;\n      \n    when LOAD =>\n      if load_done = '1' then\n        next_state <= EXECUTE;\n      else\n        next_state <= LOAD;\n      end if;\n      \n    when EXECUTE =>\n      if exec_done = '1' then\n        next_state <= STORE;\n      else\n        next_state <= EXECUTE;\n      end if;\n      \n    when STORE =>\n      if store_done = '1' then\n        next_state <= DONE;\n      else\n        next_state <= STORE;\n      end if;\n      \n    when DONE =>\n      next_state <= IDLE;\n  end case;\nend process;\n\n-- Output logic\nprocess(current_state)\nbegin\n  -- Default outputs\n  load_enable <= '0';\n  exec_enable <= '0';\n  store_enable <= '0';\n  busy <= '1';\n  \n  case current_state is\n    when IDLE =>\n      busy <= '0';\n    when LOAD =>\n      load_enable <= '1';\n    when EXECUTE =>\n      exec_enable <= '1';\n    when STORE =>\n      store_enable <= '1';\n    when DONE =>\n      busy <= '0';\n  end case;\nend process;"
+    },
+    {
+      "id": "s10-46",
+      "sectionId": "s10",
+      "title": "Generic Programming",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Generic entity\nentity generic_counter is\n  generic (\n    WIDTH : positive := 8;\n    MAX_VALUE : positive := 255;\n    RESET_VALUE : natural := 0\n  );\n  port (\n    clk   : in  std_logic;\n    reset : in  std_logic;\n    enable: in  std_logic;\n    count : out std_logic_vector(WIDTH-1 downto 0);\n    tc    : out std_logic  -- Terminal count\n  );\nend entity;\n\n-- Generic instantiation\ncounter_8bit: entity work.generic_counter\n  generic map (\n    WIDTH => 8,\n    MAX_VALUE => 255,\n    RESET_VALUE => 0\n  )\n  port map (\n    clk => system_clk,\n    reset => system_reset,\n    enable => count_enable,\n    count => counter_value,\n    tc => counter_tc\n  );"
+    },
+    {
+      "id": "s10-47",
+      "sectionId": "s10",
+      "title": "Configurations",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Configuration declaration\nconfiguration counter_config of tb_counter is\n  for behavioral\n    for uut : counter\n      use entity work.counter(behavioral);\n    end for;\n  end for;\nend configuration;\n\n-- Alternative configuration\nconfiguration counter_rtl_config of tb_counter is\n  for behavioral\n    for uut : counter\n      use entity work.counter(rtl);\n    end for;\n  end for;\nend configuration;"
+    },
+    {
+      "id": "s11-48",
+      "sectionId": "s11",
+      "title": "Clock Domain Crossing",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Double flip-flop synchronizer\nentity synchronizer is\n  port (\n    clk_dest : in  std_logic;\n    reset    : in  std_logic;\n    async_in : in  std_logic;\n    sync_out : out std_logic\n  );\nend entity;\n\narchitecture rtl of synchronizer is\n  signal ff1, ff2 : std_logic;\n  attribute ASYNC_REG : string;\n  attribute ASYNC_REG of ff1 : signal is \"TRUE\";\n  attribute ASYNC_REG of ff2 : signal is \"TRUE\";\nbegin\n  process(clk_dest, reset)\n  begin\n    if reset = '1' then\n      ff1 <= '0';\n      ff2 <= '0';\n    elsif rising_edge(clk_dest) then\n      ff1 <= async_in;\n      ff2 <= ff1;\n    end if;\n  end process;\n  \n  sync_out <= ff2;\nend rtl;"
+    },
+    {
+      "id": "s11-49",
+      "sectionId": "s11",
+      "title": "Memory Inference",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- RAM inference\ntype ram_type is array (0 to 255) of std_logic_vector(7 downto 0);\nsignal ram : ram_type;\n\nprocess(clk)\nbegin\n  if rising_edge(clk) then\n    if write_enable = '1' then\n      ram(to_integer(unsigned(address))) <= data_in;\n    end if;\n    data_out <= ram(to_integer(unsigned(address)));\n  end if;\nend process;"
+    },
+    {
+      "id": "s11-50",
+      "sectionId": "s11",
+      "title": "Reset Strategies",
+      "kind": "code",
+      "lang": "vhdl",
+      "code": "-- Asynchronous reset\nprocess(clk, async_reset)\nbegin\n  if async_reset = '1' then\n    output <= '0';\n  elsif rising_edge(clk) then\n    output <= input;\n  end if;\nend process;\n\n-- Synchronous reset\nprocess(clk)\nbegin\n  if rising_edge(clk) then\n    if sync_reset = '1' then\n      output <= '0';\n    else\n      output <= input;\n    end if;\n  end if;\nend process;"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/vhdl.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/vhdl.md",
+    "generatedAt": "2025-12-16T07:50:03.333Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

@@ -1,0 +1,578 @@
+{
+  "id": "typescript",
+  "title": "TypeScript",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Advanced Features",
+      "startIndex": 33
+    },
+    {
+      "id": "s3",
+      "title": "Conditionals and Loops",
+      "startIndex": 43
+    },
+    {
+      "id": "s4",
+      "title": "Arrays and Iterables",
+      "startIndex": 50
+    },
+    {
+      "id": "s5",
+      "title": "Objects",
+      "startIndex": 54
+    },
+    {
+      "id": "s6",
+      "title": "Modules and Namespaces",
+      "startIndex": 57
+    },
+    {
+      "id": "s7",
+      "title": "Error Handling",
+      "startIndex": 59
+    },
+    {
+      "id": "s8",
+      "title": "TypeScript with JavaScript Features",
+      "startIndex": 61
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "A TypeScript cheat sheet with the most important concepts, functions, methods, and more. A complete quick reference for beginners."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Installing the Compiler",
+      "kind": "code",
+      "lang": "shell",
+      "code": "npm install typescript --save-dev\nnpm tsc"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Introduction",
+      "kind": "text",
+      "body": "TypeScript is a superset of JavaScript that adds **static typing**, **interfaces**, and **compile-time error checking**. It compiles down to plain JavaScript."
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Introduction",
+      "kind": "text",
+      "body": "• [TypeScript Handbook](https://www.typescriptlang.org/docs/)"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Basic Types",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "let age: number = 25;\nlet name: string = \"Alice\";\nlet isOnline: boolean = true;\nlet notSure: any = \"Could be anything\";\nlet nothingHere: null = null;\nlet notDefined: undefined = undefined;\nlet symbolValue: symbol = Symbol(\"unique\");\nlet bigIntValue: bigint = 9007199254740991n;"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Arrays",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "let numbers: number[] = [1, 2, 3];\nlet fruits: Array<string> = [\"apple\", \"banana\"];\nlet mixed: (string | number)[] = [\"one\", 2, \"three\"];"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Tuples",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "let person: [string, number];\nperson = [\"John\", 30]; // ✅\nperson = [30, \"John\"]; // ❌ Error"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Enums",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "enum Direction {\n  Up = 1,\n  Down,\n  Left,\n  Right\n}\n\nlet move: Direction = Direction.Up;\n\nenum Status {\n  Success = \"SUCCESS\",\n  Error = \"ERROR\"\n}"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Type Aliases",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "type ID = string | number;\nlet userId: ID = 123;\n\ntype Callback = () => void;"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Interfaces",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface User {\n  name: string;\n  age: number;\n  isAdmin?: boolean; // optional\n  readonly id: number; // readonly\n}\n\nconst user: User = { name: \"Bob\", age: 25, id: 1 };"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Extending Interfaces",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface Animal {\n  name: string;\n}\n\ninterface Dog extends Animal {\n  breed: string;\n}\n\nconst dog: Dog = { name: \"Fido\", breed: \"Labrador\" };"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Functions",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "function greet(name: string): string {\n  return `Hello, ${name}`;\n}\n\nconst add = (a: number, b: number): number => a + b;"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Optional & Default Parameters",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "function log(message: string, userId?: string) {\n  console.log(message, userId ?? \"Guest\");\n}\n\nfunction multiply(a: number, b: number = 2) {\n  return a * b;\n}"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Rest Parameters",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "function sum(...numbers: number[]): number {\n  return numbers.reduce((acc, curr) => acc + curr, 0);\n}"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "Function Overloads",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "function combine(a: number, b: number): number;\nfunction combine(a: string, b: string): string;\nfunction combine(a: any, b: any): any {\n  return a + b;\n}"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "Union & Intersection Types",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "type Status = \"success\" | \"error\" | \"loading\";\n\ntype UserInfo = { name: string };\ntype AdminInfo = { admin: boolean };\n\ntype AdminUser = UserInfo & AdminInfo;"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "Literal Types",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "type Alignment = \"left\" | \"center\" | \"right\";\nlet align: Alignment = \"left\";"
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Generics",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "function identity<T>(value: T): T {\n  return value;\n}\n\nlet num = identity<number>(42);\nlet str = identity(\"Hello\");"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Generic Constraints",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface Lengthwise {\n  length: number;\n}\n\nfunction logLength<T extends Lengthwise>(arg: T): void {\n  console.log(arg.length);\n}"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Generic Interfaces",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface GenericIdentityFn<T> {\n  (arg: T): T;\n}\n\nconst myIdentity: GenericIdentityFn<number> = identity;"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Classes",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "class Person {\n  name: string;\n  constructor(name: string) {\n    this.name = name;\n  }\n  greet() {\n    console.log(`Hello, I'm ${this.name}`);\n  }\n}\n\nconst alice = new Person(\"Alice\");\nalice.greet();"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Access Modifiers",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "class Car {\n  public brand: string;\n  private speed: number;\n  protected year: number;\n\n  constructor(brand: string, speed: number, year: number) {\n    this.brand = brand;\n    this.speed = speed;\n    this.year = year;\n  }\n}"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "Abstract Classes",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "abstract class Animal {\n  abstract makeSound(): void;\n  move(): void {\n    console.log(\"Moving...\");\n  }\n}\n\nclass Dog extends Animal {\n  makeSound() {\n    console.log(\"Woof!\");\n  }\n}"
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "Implements Interface",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface Vehicle {\n  start(): void;\n}\n\nclass Bike implements Vehicle {\n  start() {\n    console.log(\"Bike starting...\");\n  }\n}"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "Type Assertions",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "let someValue: unknown = \"Hello TypeScript\";\nlet strLength: number = (someValue as string).length;"
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "Nullish Coalescing",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "let input: string | null = null;\nlet result = input ?? \"Default\";"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Optional Chaining",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const user = { profile: { name: \"Alice\" } };\nconsole.log(user.profile?.name); // Alice\nconsole.log(user.address?.street); // undefined"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Namespaces",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "namespace Utils {\n  export function log(msg: string) {\n    console.log(msg);\n  }\n}\n\nUtils.log(\"Hello\");"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Modules",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "// math.ts\nexport function add(a: number, b: number) {\n  return a + b;\n}\n\n// app.ts\nimport { add } from \"./math\";\nconsole.log(add(2, 3));"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Export Default",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "// logger.ts\nexport default class Logger {\n  log(msg: string) {\n    console.log(msg);\n  }\n}\n\n// main.ts\nimport Logger from \"./logger\";\nconst logger = new Logger();\nlogger.log(\"Info\");"
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "Promises & Async/Await",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "async function fetchData(): Promise<string> {\n  return \"Data loaded\";\n}\n\nfetchData().then(console.log);"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "Typing Async Functions",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface User {\n  id: number;\n  name: string;\n}\n\nasync function getUser(id: number): Promise<User> {\n  // Simulate fetch\n  return { id, name: \"User\" };\n}"
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Readonly & Record",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface Config {\n  readonly apiKey: string;\n}\n\ntype Point = Record<\"x\" | \"y\", number>;\nconst origin: Point = { x: 0, y: 0 };"
+    },
+    {
+      "id": "s2-33",
+      "sectionId": "s2",
+      "title": "Type Guards",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "function isString(value: any): value is string {\n  return typeof value === \"string\";\n}\n\nfunction process(value: string | number) {\n  if (isString(value)) {\n    console.log(value.toUpperCase());\n  } else {\n    console.log(value.toFixed(2));\n  }\n}"
+    },
+    {
+      "id": "s2-34",
+      "sectionId": "s2",
+      "title": "Index Signatures",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface Dictionary {\n  [key: string]: string;\n}\n\nconst dict: Dictionary = { hello: \"world\" };"
+    },
+    {
+      "id": "s2-35",
+      "sectionId": "s2",
+      "title": "Mapped Types",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "type Flags = { [K in \"option1\" | \"option2\"]: boolean };\nconst flags: Flags = { option1: true, option2: false };"
+    },
+    {
+      "id": "s2-36",
+      "sectionId": "s2",
+      "title": "Conditional Types",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "type NonNullable<T> = T extends null | undefined ? never : T;\ntype SafeString = NonNullable<string | null>; // string"
+    },
+    {
+      "id": "s2-37",
+      "sectionId": "s2",
+      "title": "Unknown vs Any",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "let value: unknown;\nvalue = 5; // OK\n// console.log(value.length); // Error\n\nlet anyValue: any;\nanyValue = 5;\nconsole.log(anyValue.length); // No error, but risky"
+    },
+    {
+      "id": "s2-38",
+      "sectionId": "s2",
+      "title": "Never Type",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "function throwError(msg: string): never {\n  throw new Error(msg);\n}"
+    },
+    {
+      "id": "s2-39",
+      "sectionId": "s2",
+      "title": "Decorators (Experimental)",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "function sealed(target: any) {\n  Object.seal(target);\n  Object.seal(target.prototype);\n}\n\n@sealed\nclass SealedClass {}"
+    },
+    {
+      "id": "s2-40",
+      "sectionId": "s2",
+      "title": "Utility Types",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface Todo {\n  title: string;\n  description: string;\n  completed: boolean;\n}\n\n// Partial\ntype PartialTodo = Partial<Todo>;\n\n// Required\ntype RequiredTodo = Required<PartialTodo>;\n\n// Pick\ntype TodoPreview = Pick<Todo, \"title\" | \"completed\">;\n\n// Omit\ntype TodoWithoutDesc = Omit<Todo, \"description\">;\n\n// ReturnType\nfunction f() { return { x: 10, y: 3 }; }\ntype P = ReturnType<typeof f>;\n\n// Parameters\ntype Params = Parameters<(a: number, b: string) => void>;"
+    },
+    {
+      "id": "s2-41",
+      "sectionId": "s2",
+      "title": "Keyof and Typeof",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface Person {\n  name: string;\n  age: number;\n}\n\ntype PersonKeys = keyof Person; // \"name\" | \"age\"\n\nconst person = { name: \"Alice\", age: 30 };\ntype PersonType = typeof person; // { name: string; age: number }"
+    },
+    {
+      "id": "s2-42",
+      "sectionId": "s2",
+      "title": "Infer Keyword",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "type ReturnType<T> = T extends (...args: any[]) => infer R ? R : any;"
+    },
+    {
+      "id": "s3-43",
+      "sectionId": "s3",
+      "title": "if Statement",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const max: number = 100;\nif (max > 50) {\n  console.log(\"Large\");\n}"
+    },
+    {
+      "id": "s3-44",
+      "sectionId": "s3",
+      "title": "Ternary Operator",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const isEven: boolean = (10 % 2 === 0) ? true : false;"
+    },
+    {
+      "id": "s3-45",
+      "sectionId": "s3",
+      "title": "Switch Statement",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const color: string = \"red\";\nswitch (color) {\n  case \"red\":\n    console.log(\"Stop\");\n    break;\n  default:\n    console.log(\"Go\");\n}"
+    },
+    {
+      "id": "s3-46",
+      "sectionId": "s3",
+      "title": "For Loop",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "for (let i: number = 0; i < 5; i++) {\n  console.log(i);\n}"
+    },
+    {
+      "id": "s3-47",
+      "sectionId": "s3",
+      "title": "While Loop",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "let count: number = 0;\nwhile (count < 5) {\n  console.log(count++);\n}"
+    },
+    {
+      "id": "s3-48",
+      "sectionId": "s3",
+      "title": "For...of Loop",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const arr: number[] = [1, 2, 3];\nfor (const num of arr) {\n  console.log(num);\n}"
+    },
+    {
+      "id": "s3-49",
+      "sectionId": "s3",
+      "title": "For...in Loop",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const obj = { a: 1, b: 2 };\nfor (const key in obj) {\n  console.log(key);\n}"
+    },
+    {
+      "id": "s4-50",
+      "sectionId": "s4",
+      "title": "Array Methods",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const nums: number[] = [1, 2, 3];\n\n// Map\nconst doubled: number[] = nums.map(n => n * 2);\n\n// Filter\nconst evens: number[] = nums.filter(n => n % 2 === 0);\n\n// Reduce\nconst sum: number = nums.reduce((acc, curr) => acc + curr, 0);"
+    },
+    {
+      "id": "s4-51",
+      "sectionId": "s4",
+      "title": "Readonly Arrays",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const readOnlyNums: ReadonlyArray<number> = [1, 2, 3];\n// readOnlyNums.push(4); // Error"
+    },
+    {
+      "id": "s4-52",
+      "sectionId": "s4",
+      "title": "Sets",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const set: Set<number> = new Set([1, 2, 3]);\nset.add(4);\nset.delete(1);"
+    },
+    {
+      "id": "s4-53",
+      "sectionId": "s4",
+      "title": "Maps",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const map: Map<string, number> = new Map();\nmap.set(\"one\", 1);\nmap.get(\"one\"); // 1"
+    },
+    {
+      "id": "s5-54",
+      "sectionId": "s5",
+      "title": "Object Types",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const car: { type: string, mileage?: number } = {\n  type: \"Toyota\"\n};"
+    },
+    {
+      "id": "s5-55",
+      "sectionId": "s5",
+      "title": "Indexable Types",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface StringArray {\n  [index: number]: string;\n}\n\nconst myArray: StringArray = [\"Bob\", \"Fred\"];"
+    },
+    {
+      "id": "s5-56",
+      "sectionId": "s5",
+      "title": "Excess Property Checks",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "interface Square {\n  color: string;\n  width: number;\n}\n\n// const redSquare = { color: \"red\", width: 100, height: 100 }; // Error if strict"
+    },
+    {
+      "id": "s6-57",
+      "sectionId": "s6",
+      "title": "Namespace with Internal Modules",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "namespace Geometry {\n  export interface Point {\n    x: number;\n    y: number;\n  }\n  export function distance(p1: Point, p2: Point): number {\n    return Math.sqrt((p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2);\n  }\n}"
+    },
+    {
+      "id": "s6-58",
+      "sectionId": "s6",
+      "title": "Module Resolution",
+      "kind": "text",
+      "body": "// tsconfig.json\n{\n\"compilerOptions\": {\n\"moduleResolution\": \"node\"\n}\n}"
+    },
+    {
+      "id": "s7-59",
+      "sectionId": "s7",
+      "title": "Try Catch",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "try {\n  throw new Error(\"Oops\");\n} catch (e: unknown) {\n  if (e instanceof Error) {\n    console.log(e.message);\n  }\n}"
+    },
+    {
+      "id": "s7-60",
+      "sectionId": "s7",
+      "title": "Custom Errors",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "class CustomError extends Error {\n  constructor(message: string) {\n    super(message);\n  }\n}"
+    },
+    {
+      "id": "s8-61",
+      "sectionId": "s8",
+      "title": "Destructuring",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const [first, second]: [number, number] = [1, 2];\nconst { name: userName, age }: { name: string, age: number } = { name: \"Alice\", age: 30 };"
+    },
+    {
+      "id": "s8-62",
+      "sectionId": "s8",
+      "title": "Spread Operator",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const arr1: number[] = [1, 2];\nconst arr2: number[] = [...arr1, 3, 4];"
+    },
+    {
+      "id": "s8-63",
+      "sectionId": "s8",
+      "title": "Template Literals",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const greeting: string = `Hello, ${name}`;"
+    },
+    {
+      "id": "s8-64",
+      "sectionId": "s8",
+      "title": "Arrow Functions",
+      "kind": "code",
+      "lang": "typescript",
+      "code": "const square = (x: number): number => x * x;"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/typescript.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/typescript.md",
+    "generatedAt": "2025-12-16T07:50:03.326Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

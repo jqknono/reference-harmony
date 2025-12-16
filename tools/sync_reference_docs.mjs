@@ -362,6 +362,9 @@ async function main() {
   const outDir = path.join(process.cwd(), 'entry', 'src', 'main', 'resources', 'rawfile', 'reference');
   await fs.mkdir(outDir, { recursive: true });
 
+  /** @type {Map<'zh'|'en', any>} */
+  const manifestsByLang = new Map();
+
   for (const lang of langs) {
     if (lang !== 'zh' && lang !== 'en') continue;
     const source = SOURCES[lang];
@@ -435,7 +438,15 @@ async function main() {
     };
 
     await fs.writeFile(path.join(langOutDir, 'manifest.json'), JSON.stringify(manifest, null, 2), 'utf8');
+    manifestsByLang.set(lang, manifest);
     console.log(`OK: ${lang} ${manifestDocs.length} docs -> ${langOutDir}`);
+  }
+
+  // backward-compat: legacy single-language manifest location
+  const legacyManifest = manifestsByLang.get('zh') ?? manifestsByLang.get('en');
+  if (legacyManifest) {
+    await fs.writeFile(path.join(outDir, 'manifest.json'), JSON.stringify(legacyManifest, null, 2), 'utf8');
+    console.log(`OK: legacy manifest -> ${path.join(outDir, 'manifest.json')}`);
   }
 }
 

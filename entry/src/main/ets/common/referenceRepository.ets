@@ -13,8 +13,16 @@ export class ReferenceRepository {
 
   private async readText(rawPath: string): Promise<string> {
     try {
-      const bytes = await this.rm.getRawFileContent(rawPath);
-      return this.decoder.decodeToString(bytes);
+      const rawFile: Uint8Array | ArrayBuffer = await this.rm.getRawFileContent(rawPath) as Uint8Array | ArrayBuffer;
+      const bytes: Uint8Array = rawFile instanceof ArrayBuffer ? new Uint8Array(rawFile) : rawFile;
+      if (bytes.length === 0) {
+        throw new Error('rawfile 内容为空');
+      }
+      const text: string = this.decoder.decodeToString(bytes);
+      if (!text) {
+        throw new Error(`rawfile 解码为空 (bytes=${bytes.length})`);
+      }
+      return text;
     } catch (e) {
       throw new Error(`读取 rawfile 失败：${rawPath} (${String(e)})`);
     }
@@ -29,29 +37,28 @@ export class ReferenceRepository {
     }
   }
 
-  private async tryReadJson<T>(rawPath: string): Promise<T | undefined> {
-    try {
-      return await this.readJson<T>(rawPath);
-    } catch {
-      return undefined;
-    }
-  }
-
   async getManifest(): Promise<ReferenceManifest> {
     return this.getManifestByLang('zh');
   }
 
   async getManifestByLang(lang: ReferenceLang): Promise<ReferenceManifest> {
     const p = `reference/${lang}/manifest.json`;
-    const primary = await this.tryReadJson<ReferenceManifest>(p);
-    if (primary !== undefined) return primary;
+    try {
+      return await this.readJson<ReferenceManifest>(p);
+    } catch (primaryErr) {
+      // backward-compat: old single-language location
+      if (lang === 'zh') {
+        try {
+          return await this.readJson<ReferenceManifest>('reference/manifest.json');
+        } catch (legacyErr) {
+          throw new Error(
+            `读取 manifest 失败：${p} (${String(primaryErr)})；兼容路径 reference/manifest.json 也失败 (${String(legacyErr)})`,
+          );
+        }
+      }
 
-    // backward-compat: old single-language location
-    if (lang === 'zh') {
-      return await this.readJson<ReferenceManifest>('reference/manifest.json');
+      throw new Error(`读取 manifest 失败：${p} (${String(primaryErr)})`);
     }
-
-    throw new Error(`读取 manifest 失败：${p}`);
   }
 
   async getDoc(docId: string): Promise<ReferenceDoc> {
@@ -60,15 +67,22 @@ export class ReferenceRepository {
 
   async getDocByLang(lang: ReferenceLang, docId: string): Promise<ReferenceDoc> {
     const p = `reference/${lang}/${docId}.json`;
-    const primary = await this.tryReadJson<ReferenceDoc>(p);
-    if (primary !== undefined) return primary;
+    try {
+      return await this.readJson<ReferenceDoc>(p);
+    } catch (primaryErr) {
+      // backward-compat: old single-language location
+      if (lang === 'zh') {
+        try {
+          return await this.readJson<ReferenceDoc>(`reference/${docId}.json`);
+        } catch (legacyErr) {
+          throw new Error(
+            `读取文档失败：${p} (${String(primaryErr)})；兼容路径 reference/${docId}.json 也失败 (${String(legacyErr)})`,
+          );
+        }
+      }
 
-    // backward-compat: old single-language location
-    if (lang === 'zh') {
-      return await this.readJson<ReferenceDoc>(`reference/${docId}.json`);
+      throw new Error(`读取文档失败：${p} (${String(primaryErr)})`);
     }
-
-    throw new Error(`读取文档失败：${p}`);
   }
 
   async getDocBySummary(summary: ReferenceDocSummary): Promise<ReferenceDoc> {

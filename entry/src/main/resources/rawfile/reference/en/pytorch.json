@@ -1,0 +1,180 @@
+{
+  "id": "pytorch",
+  "title": "PyTorch",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Imports",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Tensors",
+      "startIndex": 7
+    },
+    {
+      "id": "s3",
+      "title": "Data Utilities",
+      "startIndex": 16
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "This is a quick reference list of cheat sheets for PyTorch. See also [PyTorch website](https://pytorch.org/)"
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "General",
+      "kind": "code",
+      "lang": "",
+      "code": "import torch                                        # root package\nfrom torch.utils.data import Dataset, DataLoader    # dataset representation and loading"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Neural Network API",
+      "kind": "code",
+      "lang": "",
+      "code": "import torch.autograd as autograd         # computation graph\nfrom torch import Tensor                  # tensor node in the computation graph\nimport torch.nn as nn                     # neural networks\nimport torch.nn.functional as F           # layers, activations and more\nimport torch.optim as optim               # optimizers e.g. gradient descent, ADAM, etc.\nfrom torch.jit import script, trace       # hybrid frontend decorator and tracing jit"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Torchscript and JIT",
+      "kind": "code",
+      "lang": "",
+      "code": "torch.jit.trace()         # takes your module or function and an example\n                          # data input, and traces the computational steps\n                          # that the data encounters as it progresses through the model\n\n@script                   # decorator used to indicate data-dependent\n                          # control flow within the code being traced"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "ONNX",
+      "kind": "code",
+      "lang": "",
+      "code": "torch.onnx.export(model, dummy data, xxxx.proto)       # exports an ONNX formatted\n                                                       # model using a trained model, dummy\n                                                       # data and the desired file name\n\nmodel = onnx.load(\"alexnet.proto\")                     # load an ONNX model\nonnx.checker.check_model(model)                        # check that the model\n                                                       # IR is well formed\n\nonnx.helper.printable_graph(model.graph)               # print a human readable\n                                                       # representation of the graph"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Vision",
+      "kind": "code",
+      "lang": "",
+      "code": "from torchvision import datasets, models, transforms     # vision datasets,\n                                                         # architectures &\n                                                         # transforms\n\nimport torchvision.transforms as transforms              # composable transforms"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Distributed Training",
+      "kind": "code",
+      "lang": "",
+      "code": "import torch.distributed as dist             # distributed communication\nfrom torch.multiprocessing import Process    # memory sharing processes"
+    },
+    {
+      "id": "s2-7",
+      "sectionId": "s2",
+      "title": "Creation",
+      "kind": "code",
+      "lang": "",
+      "code": "x = torch.randn(*size)              # tensor with independent N(0,1) entries\nx = torch.[ones|zeros](*size)       # tensor with all 1's [or 0's]\nx = torch.tensor(L)                 # create tensor from [nested] list or ndarray L\ny = x.clone()                       # clone of x\nwith torch.no_grad():               # code wrap that stops autograd from tracking tensor history\nrequires_grad=True                  # arg, when set to True, tracks computation\n                                    # history for future derivative calculations"
+    },
+    {
+      "id": "s2-8",
+      "sectionId": "s2",
+      "title": "Dimensionality",
+      "kind": "code",
+      "lang": "",
+      "code": "x.size()                                  # return tuple-like object of dimensions\nx = torch.cat(tensor_seq, dim=0)          # concatenates tensors along dim\ny = x.view(a,b,...)                       # reshapes x into size (a,b,...)\ny = x.view(-1,a)                          # reshapes x into size (b,a) for some b\ny = x.transpose(a,b)                      # swaps dimensions a and b\ny = x.permute(*dims)                      # permutes dimensions\ny = x.unsqueeze(dim)                      # tensor with added axis\ny = x.unsqueeze(dim=2)                    # (a,b,c) tensor -> (a,b,1,c) tensor\ny = x.squeeze()                           # removes all dimensions of size 1 (a,1,b,1) -> (a,b)\ny = x.squeeze(dim=1)                      # removes specified dimension of size 1 (a,1,b,1) -> (a,b,1)"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "Algebra",
+      "kind": "code",
+      "lang": "",
+      "code": "ret = A.mm(B)       # matrix multiplication\nret = A.mv(x)       # matrix-vector multiplication\nx = x.t()           # matrix transpose"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "GPU Usage",
+      "kind": "code",
+      "lang": "",
+      "code": "torch.cuda.is_available                                     # check for cuda\nx = x.cuda()                                                # move x's data from\n                                                            # CPU to GPU and return new object\n\nx = x.cpu()                                                 # move x's data from GPU to CPU\n                                                            # and return new object\n\nif not args.disable_cuda and torch.cuda.is_available():     # device agnostic code\n    args.device = torch.device('cuda')                      # and modularity\nelse:                                                       #\n    args.device = torch.device('cpu')                       #\n\nnet.to(device)                                              # recursively convert their\n                                                            # parameters and buffers to\n                                                            # device specific tensors\n\nx = x.to(device)                                            # copy your tensors to a device\n                                                            # (gpu, cpu)"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "Deep Learning",
+      "kind": "code",
+      "lang": "",
+      "code": "nn.Linear(m,n)                                # fully connected layer from\n                                              # m to n units\n\nnn.ConvXd(m,n,s)                              # X dimensional conv layer from\n                                              # m to n channels where X⍷{1,2,3}\n                                              # and the kernel size is s\n\nnn.MaxPoolXd(s)                               # X dimension pooling layer\n                                              # (notation as above)\n\nnn.BatchNormXd                                # batch norm layer\nnn.RNN/LSTM/GRU                               # recurrent layers\nnn.Dropout(p=0.5, inplace=False)              # dropout layer for any dimensional input\nnn.Dropout2d(p=0.5, inplace=False)            # 2-dimensional channel-wise dropout\nnn.Embedding(num_embeddings, embedding_dim)   # (tensor-wise) mapping from\n                                              # indices to embedding vectors"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "Loss Functions",
+      "kind": "code",
+      "lang": "",
+      "code": "nn.X                                  # where X is L1Loss, MSELoss, CrossEntropyLoss\n                                      # CTCLoss, NLLLoss, PoissonNLLLoss,\n                                      # KLDivLoss, BCELoss, BCEWithLogitsLoss,\n                                      # MarginRankingLoss, HingeEmbeddingLoss,\n                                      # MultiLabelMarginLoss, SmoothL1Loss,\n                                      # SoftMarginLoss, MultiLabelSoftMarginLoss,\n                                      # CosineEmbeddingLoss, MultiMarginLoss,\n                                      # or TripletMarginLoss"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "Activation Functions",
+      "kind": "code",
+      "lang": "",
+      "code": "nn.X                                  # where X is ReLU, ReLU6, ELU, SELU, PReLU, LeakyReLU,\n                                      # RReLu, CELU, GELU, Threshold, Hardshrink, HardTanh,\n                                      # Sigmoid, LogSigmoid, Softplus, SoftShrink,\n                                      # Softsign, Tanh, TanhShrink, Softmin, Softmax,\n                                      # Softmax2d, LogSoftmax or AdaptiveSoftmaxWithLoss"
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "Optimizers",
+      "kind": "code",
+      "lang": "",
+      "code": "opt = optim.x(model.parameters(), ...)      # create optimizer\nopt.step()                                  # update weights\noptim.X                                     # where X is SGD, Adadelta, Adagrad, Adam,\n                                            # AdamW, SparseAdam, Adamax, ASGD,\n                                            # LBFGS, RMSprop or Rprop"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "Learning rate scheduling",
+      "kind": "code",
+      "lang": "",
+      "code": "scheduler = optim.X(optimizer,...)      # create lr scheduler\nscheduler.step()                        # update lr after optimizer updates weights\noptim.lr_scheduler.X                    # where X is LambdaLR, MultiplicativeLR,\n                                        # StepLR, MultiStepLR, ExponentialLR,\n                                        # CosineAnnealingLR, ReduceLROnPlateau, CyclicLR,\n                                        # OneCycleLR, CosineAnnealingWarmRestarts,"
+    },
+    {
+      "id": "s3-16",
+      "sectionId": "s3",
+      "title": "Datasets",
+      "kind": "code",
+      "lang": "",
+      "code": "Dataset                    # abstract class representing dataset\nTensorDataset              # labelled dataset in the form of tensors\nConcat Dataset             # concatenation of Datasets"
+    },
+    {
+      "id": "s3-17",
+      "sectionId": "s3",
+      "title": "Dataloaders and DataSamplers",
+      "kind": "code",
+      "lang": "",
+      "code": "DataLoader(dataset, batch_size=1, ...)      # loads data batches agnostic\n                                            # of structure of individual data points\n\nsampler.Sampler(dataset,...)                # abstract class dealing with\n                                            # ways to sample from dataset\n\nsampler.XSampler where ...                  # Sequential, Random, SubsetRandom,\n                                            # WeightedRandom, Batch, Distributed"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/pytorch.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/pytorch.md",
+    "generatedAt": "2025-12-16T07:50:03.248Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

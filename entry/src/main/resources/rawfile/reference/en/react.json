@@ -1,0 +1,438 @@
+{
+  "id": "react",
+  "title": "React",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Components",
+      "startIndex": 8
+    },
+    {
+      "id": "s3",
+      "title": "Properties",
+      "startIndex": 15
+    },
+    {
+      "id": "s4",
+      "title": "States",
+      "startIndex": 17
+    },
+    {
+      "id": "s5",
+      "title": "Events",
+      "startIndex": 18
+    },
+    {
+      "id": "s6",
+      "title": "Loops",
+      "startIndex": 20
+    },
+    {
+      "id": "s7",
+      "title": "Forms",
+      "startIndex": 24
+    },
+    {
+      "id": "s8",
+      "title": "CSS",
+      "startIndex": 25
+    },
+    {
+      "id": "s9",
+      "title": "AJAX",
+      "startIndex": 27
+    },
+    {
+      "id": "s10",
+      "title": "Hooks",
+      "startIndex": 29
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "A React cheat sheet with the most important concepts, functions, methods, and more. A complete quick reference for beginners."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "JSX",
+      "kind": "text",
+      "body": "JSX is a syntax extension for JavaScript that lets you write HTML-like markup inside a JavaScript file."
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "JSX",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "let element = <h1>Hello, world!</h1>;\n\nlet emptyHeading = <h1 />;"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "JSX Expressions",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "let name = 'Josh Perez';\nlet element = <h1>Hello, {name}</h1>;\n\nfunction fullName(firstName, lastName) {\n  return firstName + ' ' + lastName;\n}\nlet element = <h1>Hello, {fullName('Julie', 'Johnson')}</h1>;"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "JSX Attributes",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "const element = <img src={user.avatarUrl} />;\nconst element = <button className=\"btn\">Click me</button>;"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "JSX Functions",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "name() {\n  return \"Julie\";\n}\n\nreturn (\n  <h1>\n    Hi {name()}!\n  </h1>\n)"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "JSX Conditional Rendering",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React from 'react';\nfunction Weather(props) {\n  if (props.temperature >= 20) {\n    return (\n      <p>\n        It is {props.temperature}°C (Warm) in {props.city}\n      </p>\n    );\n  } else {\n    return (\n      <p>\n        It is {props.temperature}°C in {props.city}\n      </p>\n    );\n  }\n}\n\nexport default () => <Weather city=\"New York\" temperature={24} />;"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "JSX Conditional Rendering",
+      "kind": "text",
+      "body": "Note: A component must always return something."
+    },
+    {
+      "id": "s2-8",
+      "sectionId": "s2",
+      "title": "Functional Component",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React from 'react';\n\nexport default function UserProfile() {\n  return (\n    <div className=\"UserProfile\">\n      <div>Hello</div>\n      <div>World</div>\n    </div>\n  );\n}"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "Functional Component",
+      "kind": "text",
+      "body": "Note: Every component needs one root element"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "Embed an internal Component",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React from 'react';\nimport UserAvatar from './UserAvatar';\n\nexport default function UserProfile() {\n  return (\n    <div className=\"UserProfile\">\n      <UserAvatar />\n      <UserAvatar />\n    </div>\n  );\n}"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "Embed an internal Component",
+      "kind": "text",
+      "body": "Note: Assuming UserAvatar is declared in UserAvatar.js"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "Embed an external Component",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React from 'react';\nimport ComponentName from 'component-name';\n\nexport default function UserProfile() {\n  return (\n    <div className=\"UserProfile\">\n      <ComponentName />\n    </div>\n  );\n}"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "Embed an external Component",
+      "kind": "text",
+      "body": "Note: External components are found on npmjs.com and need to be imported first."
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "Advanced Functional Components",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React from 'react';\n\nfunction Hello(props) {\n  function fullName() {\n    return `${props.firstName} ${props.lastName}`;\n  }\n  return <p>{fullName()}</p>;\n}\n\nexport default () => <Hello firstName=\"Matt\" lastName=\"Delac\" />;"
+    },
+    {
+      "id": "s3-15",
+      "sectionId": "s3",
+      "title": "Passing Properties to a Component",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "<Student\n  firstName=\"Julie\"\n  lastName=\"Johnson\"\n  age={23}\n  pro={true}\n/>"
+    },
+    {
+      "id": "s3-16",
+      "sectionId": "s3",
+      "title": "Assigning the Properties from a Component",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React from 'react';\n\nexport default function Student(props) {\n  return (\n    <h1>\n      {props.firstName} {props.lastName} is {props.age}.\n    </h1>\n  );\n}"
+    },
+    {
+      "id": "s4-17",
+      "sectionId": "s4",
+      "title": "React State",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { useState } from 'react';\n\nexport default function Hello(props) {\n  let [name, setName] = useState('Julie');\n  function updateName() {\n    let newName = prompt('What is your name?');\n    setName(newName);\n  }\n\n  return (\n    <div>\n      <h1>{name}</h1>\n      <button onClick={updateName}>Update name</button>\n    </div>\n  );\n}"
+    },
+    {
+      "id": "s5-18",
+      "sectionId": "s5",
+      "title": "Event Listener",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React from 'react';\n\nexport default function Hello() {\n  function handleClick(event) {\n    event.preventDefault();\n    alert('Hello World');\n  }\n\n  return (\n    <a href=\"/\" onClick={handleClick}>\n      Say Hi\n    </a>\n  );\n}"
+    },
+    {
+      "id": "s5-19",
+      "sectionId": "s5",
+      "title": "Event Listener",
+      "kind": "text",
+      "body": "Note: The most common event listeners are onClick for links/buttons and onSubmit for forms."
+    },
+    {
+      "id": "s6-20",
+      "sectionId": "s6",
+      "title": "Looping through an Array",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "let elements = ['one', 'two', 'three'];\n\nreturn (\n  <ul>\n    {elements.map(function (value, index) {\n      return <li key={index}>{value}</li>;\n    })}\n  </ul>\n);"
+    },
+    {
+      "id": "s6-21",
+      "sectionId": "s6",
+      "title": "Looping through an Array",
+      "kind": "text",
+      "body": "Note: Each list item inside a map loop needs a key attribute with a unique value which is generally the index."
+    },
+    {
+      "id": "s6-22",
+      "sectionId": "s6",
+      "title": "Looping through an Array of Objects",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "let elements = [\n  {\n    name: 'one',\n    value: 1\n  },\n  {\n    name: 'two',\n    value: 2\n  },\n  {\n    name: 'three',\n    value: 3\n  }\n];\nreturn (\n  <ul>\n    {elements.map(function (element, index) {\n      return (\n        <li key={index}>\n          The value for {element.name} is {element.value}\n        </li>\n      );\n    })}\n  </ul>\n);"
+    },
+    {
+      "id": "s6-23",
+      "sectionId": "s6",
+      "title": "Looping through an Array of Objects",
+      "kind": "text",
+      "body": "Note: Each list item inside a map loop needs a key attribute with a unique value which is generally the index."
+    },
+    {
+      "id": "s7-24",
+      "sectionId": "s7",
+      "title": "React Forms",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { useState } from 'react';\n\nexport default function LoginForm() {\n  let [username, setUsername] = useState('');\n  let [password, setPassword] = useState('');\n\n  function handleSubmit(event) {\n    event.preventDefault();\n    alert(`Loging in with ${username} and ${password}`);\n  }\n\n  function updateUsername(event) {\n    setUsername(event.target.value);\n  }\n\n  function updatePassword(event) {\n    setPassword(event.target.value);\n  }\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <input type=\"text\" placeholder=\"Username\" onChange={updateUsername} />\n      <input type=\"password\" placeholder=\"Password\" onChange={updatePassword} />\n      <input type=\"submit\" value=\"Login\" />\n    </form>\n  );\n}"
+    },
+    {
+      "id": "s8-25",
+      "sectionId": "s8",
+      "title": "CSS in a React Component",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React from 'react';\nimport './Student.css';\n\nexport default function Student() {\n  return <div className=\"Student\">Julie Johnson</div>;\n}"
+    },
+    {
+      "id": "s8-26",
+      "sectionId": "s8",
+      "title": "CSS in a React Component",
+      "kind": "text",
+      "body": "Note: You'll then have to crate a css file called Student.css"
+    },
+    {
+      "id": "s9-27",
+      "sectionId": "s9",
+      "title": "AJAX Request with Axios",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React from 'react';\nimport axios from 'axios';\n\nexport default function Weather(props) {\n  function handleResponse(response) {\n    console.log(response);\n  }\n\n  if (notifications) {\n    return <p>notifications</p>;\n  } else {\n    let url = `https://notifications.com`;\n    axios.get(url).then(handleResponse);\n    return <p>Loading notifications..</p>;\n  }\n}"
+    },
+    {
+      "id": "s9-28",
+      "sectionId": "s9",
+      "title": "AJAX Request with Axios",
+      "kind": "text",
+      "body": "Note: Make sure to import Axios first to your project."
+    },
+    {
+      "id": "s10-29",
+      "sectionId": "s10",
+      "title": "useState Hook",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={() => setCount(count + 1)}>Increment</button>\n    </div>\n  );\n}\n\nexport default Counter;"
+    },
+    {
+      "id": "s10-30",
+      "sectionId": "s10",
+      "title": "useState Hook",
+      "kind": "text",
+      "body": "Note: The useState Hook is a built-in React Hook that allows functional components to manage local state. It provides a\nway to declare state variables and update them within a functional component. Example code illustrating how to use it"
+    },
+    {
+      "id": "s10-31",
+      "sectionId": "s10",
+      "title": "Multiple State Variable Declaration",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  const [name, setName] = useState('');\n  const [isCompleted, setIsCompleted] = useState(false);\n\n  const handleIncrement = () => {\n    setCount(count + 1);\n  };\n\n  const handleNameChange = (event) => {\n    setName(event.target.value);\n  };\n\n  const toggleCompletion = () => {\n    setIsCompleted(!isCompleted);\n  };\n\n  return (\n    <div>\n      <p>Count: {count}</p>\n      <button onClick={handleIncrement}>Increment</button>\n\n      <input\n        type=\"text\"\n        value={name}\n        onChange={handleNameChange}\n        placeholder=\"Enter your name\"\n      />\n\n      <label>\n        <input\n          type=\"checkbox\"\n          checked={isCompleted}\n          onChange={toggleCompletion}\n        />\n        Completed\n      </label>\n    </div>\n  );\n}\n\nexport default Counter;"
+    },
+    {
+      "id": "s10-32",
+      "sectionId": "s10",
+      "title": "Multiple State Variable Declaration",
+      "kind": "text",
+      "body": "Note: You can declare multiple state variables using the useState Hook by calling it multiple times in a functional\ncomponent. Each call to useState manages a separate piece of state."
+    },
+    {
+      "id": "s10-33",
+      "sectionId": "s10",
+      "title": "Input State Management",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import { useState } from 'react';\n\nfunction FormExample() {\n  const [formData, setFormData] = useState({\n    name: '',\n    email: '',\n    message: ''\n  });\n\n  const handleChange = (event) => {\n    const { name, value } = event.target;\n    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));\n  };\n\n  const handleSubmit = (event) => {\n    event.preventDefault();\n    alert(\n      `Name: ${formData.name}, Email: ${formData.email}, Message: ${formData.message}`\n    );\n  };\n\n  return (\n    <form onSubmit={handleSubmit}>\n      <label htmlFor=\"name\">Name:</label>\n      <input\n        type=\"text\"\n        id=\"name\"\n        name=\"name\"\n        value={formData.name}\n        onChange={handleChange}\n      />\n\n      <label htmlFor=\"email\">Email:</label>\n      <input\n        type=\"email\"\n        id=\"email\"\n        name=\"email\"\n        value={formData.email}\n        onChange={handleChange}\n      />\n\n      <label htmlFor=\"message\">Message:</label>\n      <textarea\n        id=\"message\"\n        name=\"message\"\n        value={formData.message}\n        onChange={handleChange}\n      />\n\n      <button type=\"submit\">Submit</button>\n    </form>\n  );\n}\n\nexport default FormExample;"
+    },
+    {
+      "id": "s10-34",
+      "sectionId": "s10",
+      "title": "useEffect Hook",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { useState, useEffect } from 'react';\n\nfunction Timer() {\n  const [seconds, setSeconds] = useState(0);\n\n  useEffect(() => {\n    const interval = setInterval(() => {\n      setSeconds((prevSeconds) => prevSeconds + 1);\n    }, 1000);\n\n    return () => clearInterval(interval);\n  }, []);\n\n  return <div>Seconds: {seconds}</div>;\n}\n\nexport default Timer;"
+    },
+    {
+      "id": "s10-35",
+      "sectionId": "s10",
+      "title": "useEffect Hook",
+      "kind": "text",
+      "body": "Note: The useEffect Hook in React is used for performing side effects in functional components. It allows you to execute\ncode based on component lifecycle events like mounting, updating, and unmounting."
+    },
+    {
+      "id": "s10-36",
+      "sectionId": "s10",
+      "title": "Fetch API using useEffect",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { useState, useEffect } from 'react';\nimport axios from 'axios';\n\nfunction UserList() {\n  const [users, setUsers] = useState([]);\n\n  useEffect(() => {\n    axios\n      .get('https://jsonplaceholder.typicode.com/users')\n      .then((response) => {\n        setUsers(response.data);\n      })\n      .catch((error) => {\n        console.error('Error fetching users:', error);\n      });\n  }, []);\n\n  return (\n    <div>\n      <h2>User List</h2>\n      <ul>\n        {users.map((user) => (\n          <li key={user.id}>{user.name}</li>\n        ))}\n      </ul>\n    </div>\n  );\n}\n\nexport default UserList;"
+    },
+    {
+      "id": "s10-37",
+      "sectionId": "s10",
+      "title": "Fetch API using useEffect",
+      "kind": "text",
+      "body": "Note: Make sure to import Axios first to your project."
+    },
+    {
+      "id": "s10-38",
+      "sectionId": "s10",
+      "title": "Custom Hook creation useLocalStorage",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import { useState, useEffect } from 'react';\n\nfunction useLocalStorage(key, initialValue) {\n  const [value, setValue] = useState(() => {\n    const storedValue = localStorage.getItem(key);\n    return storedValue !== null ? JSON.parse(storedValue) : initialValue;\n  });\n\n  useEffect(() => {\n    localStorage.setItem(key, JSON.stringify(value));\n  }, [key, value]);\n\n  return [value, setValue];\n}\n\nexport default useLocalStorage;"
+    },
+    {
+      "id": "s10-39",
+      "sectionId": "s10",
+      "title": "Custom Hook creation useLocalStorage",
+      "kind": "text",
+      "body": "Note: Custom Hooks are reusable functions in React that contain logic shared across multiple components. They allow you\nto extract stateful logic from components into standalone functions."
+    },
+    {
+      "id": "s10-40",
+      "sectionId": "s10",
+      "title": "Creating Refs in Class Components",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { Component } from 'react';\n\nclass MyComponent extends Component {\n  constructor(props) {\n    super(props);\n    this.myRef = React.createRef();\n  }\n\n  componentDidMount() {\n    console.log(this.myRef.current); // Access the DOM element\n  }\n\n  render() {\n    return <div ref={this.myRef}>Hello, world!</div>;\n  }\n}\n\nexport default MyComponent;"
+    },
+    {
+      "id": "s10-41",
+      "sectionId": "s10",
+      "title": "Using Refs in Functional Components",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { useRef, useEffect } from 'react';\n\nfunction MyComponent() {\n  const myRef = useRef(null);\n\n  useEffect(() => {\n    console.log(myRef.current); // Access the DOM element\n  }, []);\n\n  return <div ref={myRef}>Hello, world!</div>;\n}\n\nexport default MyComponent;"
+    },
+    {
+      "id": "s10-42",
+      "sectionId": "s10",
+      "title": "Callback Refs",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { Component } from 'react';\n\nclass MyComponent extends Component {\n  constructor(props) {\n    super(props);\n    this.myRef = null;\n    this.setRef = (element) => {\n      this.myRef = element;\n    };\n  }\n\n  componentDidMount() {\n    console.log(this.myRef); // Access the DOM element\n  }\n\n  render() {\n    return <div ref={this.setRef}>Hello, world!</div>;\n  }\n}\n\nexport default MyComponent;"
+    },
+    {
+      "id": "s10-43",
+      "sectionId": "s10",
+      "title": "Forwarding Refs",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "Copy code\nimport React from \"react\";\n\nconst FancyButton = React.forwardRef((props, ref) => (\n  <button ref={ref} className=\"FancyButton\">\n    {props.children}\n  </button>\n));\n\n// Usage\nconst ref = React.createRef();\n<FancyButton ref={ref}>Click me!</FancyButton>;"
+    },
+    {
+      "id": "s10-44",
+      "sectionId": "s10",
+      "title": "Accessing DOM Elements with Refs",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { useRef, useEffect } from 'react';\n\nfunction FocusInput() {\n  const inputRef = useRef(null);\n\n  useEffect(() => {\n    // Focus the input element when the component mounts\n    inputRef.current.focus();\n  }, []);\n\n  return <input ref={inputRef} type=\"text\" />;\n}\n\nexport default FocusInput;"
+    },
+    {
+      "id": "s10-45",
+      "sectionId": "s10",
+      "title": "Accessing DOM Elements with Refs",
+      "kind": "text",
+      "body": "Note: Refs are often used to access and interact with DOM elements directly. Here's an example where we focus an input\nelement using a ref."
+    },
+    {
+      "id": "s10-46",
+      "sectionId": "s10",
+      "title": "Managing Focus with Refs",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import React, { useRef } from 'react';\n\nfunction Form() {\n  const firstInputRef = useRef(null);\n  const secondInputRef = useRef(null);\n\n  const handleKeyDown = (e) => {\n    if (e.key === 'Enter') {\n      secondInputRef.current.focus();\n    }\n  };\n\n  return (\n    <div>\n      <input ref={firstInputRef} type=\"text\" onKeyDown={handleKeyDown} />\n      <input ref={secondInputRef} type=\"text\" />\n    </div>\n  );\n}\n\nexport default Form;"
+    },
+    {
+      "id": "s10-47",
+      "sectionId": "s10",
+      "title": "Managing Focus with Refs",
+      "kind": "text",
+      "body": "Note: You can also manage focus between multiple elements using refs."
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/react.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/react.md",
+    "generatedAt": "2025-12-16T07:50:03.254Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}
