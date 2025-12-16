@@ -1,0 +1,461 @@
+{
+  "id": "r",
+  "title": "r",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "R 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "该备忘单提供了使用 R 语言的示例，涵盖 R 语言基础知识、控制流、类型、结构/类、运算符、函数方法等"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "获取帮助",
+      "kind": "text",
+      "body": "访问帮助文件"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "获取帮助",
+      "kind": "code",
+      "lang": "r",
+      "code": "?mean\n# 获取特定功能的帮助\nhelp.search('weighted mean')\n# 在帮助文件中搜索单词或短语\nhelp(package = 'dplyr')\n# 查找软件包的帮助。"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "获取帮助",
+      "kind": "text",
+      "body": "有关对象的更多信息"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "获取帮助",
+      "kind": "code",
+      "lang": "r",
+      "code": "str(iris)\n# 获取对象结构的摘要\nclass(iris)\n# 查找对象所属的类"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "下载和使用库",
+      "kind": "code",
+      "lang": "r",
+      "code": "install.packages('dplyr')\n# 从 CRAN 下载并安装软件包\ninstall.packages(“BiocManager”)\nlibrary(BiocManager)\nBiocManager::install(\"dplyr\")\n# 使用Bioconductor的BiocManager包下载并安装软件包\ndevtools::install_github(\"clusterProfiler\")\n# 直接从github中下载并安装软件包\nlibrary(dplyr)\n# 将包加载到会话中，使所有其功能可供使用\ndplyr::select\n# 使用包中的特定函数\ndata(iris)\n# 将内置数据集加载到环境中。"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "工作目录",
+      "kind": "text",
+      "body": "查找当前工作目录（其中找到输入并发送输出）"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "工作目录",
+      "kind": "code",
+      "lang": "r",
+      "code": "getwd()"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "工作目录",
+      "kind": "text",
+      "body": "更改当前工作目录"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "工作目录",
+      "kind": "code",
+      "lang": "r",
+      "code": "setwd(‘C://file/path’)"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "工作目录",
+      "kind": "text",
+      "body": "使用 RStudio 中的项目来设置工作目录到您正在使用的文件夹"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "工作目录",
+      "kind": "text",
+      "body": "基础入门\n---"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "变量和赋值",
+      "kind": "code",
+      "lang": "R",
+      "code": "x <- 10   # 使用箭头赋值\ny = 20    # 或者直接使用等号赋值"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "数据类型",
+      "kind": "code",
+      "lang": "R",
+      "code": "numeric_var <- 3.14   # 数值型\ncharacter_var <- \"hello\"  # 字符串\nlogical_var <- TRUE   # 逻辑型"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "向量和列表",
+      "kind": "code",
+      "lang": "R",
+      "code": "# 向量\nnumeric_vector <- c(1, 2, 3, 4)\ncharacter_vector <- c(\"apple\", \"orange\", \"banana\")\n\n# 列表\nmy_list <- list(name = \"John\", age = 30, city = \"New York\")"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "向量和列表",
+      "kind": "text",
+      "body": "向量和操作"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "向量和列表",
+      "kind": "code",
+      "lang": "r",
+      "code": "# 创建向量\nnumbers <- c(1, 2, 3, 4, 5)\n# 计算向量的和\nsum_result <- sum(numbers)\n# 计算向量的平均值\nmean_result <- mean(numbers)"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "数据框(Data Frame)",
+      "kind": "code",
+      "lang": "R",
+      "code": "my_df <- data.frame(name = c(\"John\", \"Alice\"), age = c(30, 25))\n\n# 创建数据框\nstudent_data <- data.frame(\n  name = c(\"John\", \"Alice\", \"Bob\"),\n  age = c(25, 23, 22),\n  grade = c(\"A\", \"B\", \"C\")\n)\n\n# 显示数据框\nprint(student_data)"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "函数",
+      "kind": "code",
+      "lang": "R",
+      "code": "# 定义函数\nadd_numbers <- function(a, b) {\n  result <- a + b\n  return(result)\n}\n\n# 调用函数\nsum_result <- add_numbers(10, 5)"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "条件语句",
+      "kind": "code",
+      "lang": "R",
+      "code": "if (x > 0) {\n  print(\"Positive\")\n} else {\n  print(\"Non-positive\")\n}"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "for 循环语句",
+      "kind": "code",
+      "lang": "R",
+      "code": "for (i in 1:5) {\n  print(i)\n}"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "while 循环",
+      "kind": "code",
+      "lang": "r",
+      "code": "counter <- 1\nwhile (counter <= 5) {\n  print(counter)\n  counter <- counter + 1\n}"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "数据读取和输出",
+      "kind": "code",
+      "lang": "R",
+      "code": "# 读取数据\nmy_data <- read.csv(\"data.csv\")\n# 输出数据\nwrite.csv(my_data, \"output.csv\")"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "清理工作空间",
+      "kind": "code",
+      "lang": "r",
+      "code": "# 清空所有变量\nrm(list = ls())\n# 退出 R\nq()"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "清理工作空间",
+      "kind": "text",
+      "body": "图形绘制\n---"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "散点图",
+      "kind": "code",
+      "lang": "R",
+      "code": "plot(x, y)"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "直方图",
+      "kind": "code",
+      "lang": "R",
+      "code": "hist(data)"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "线图",
+      "kind": "code",
+      "lang": "R",
+      "code": "plot(x, y, type = \"l\")"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "绘制散点图",
+      "kind": "code",
+      "lang": "R",
+      "code": "x <- c(1, 2, 3, 4, 5)\ny <- c(2, 4, 5, 6, 7)\nplot(x, y, main = \"Scatter Plot\", xlab = \"X-axis\", ylab = \"Y-axis\")"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "绘制直方图",
+      "kind": "code",
+      "lang": "R",
+      "code": "data <- c(1, 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 5)\nhist(data, main = \"Histogram\", xlab = \"Value\", col = \"lightblue\")"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "绘制折线图",
+      "kind": "code",
+      "lang": "R",
+      "code": "x <- c(1, 2, 3, 4, 5)\ny <- c(2, 4, 5, 6, 7)\nplot(x, y, type = \"l\", main = \"Line Plot\", xlab = \"X-axis\", ylab = \"Y-axis\")"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "绘制折线图",
+      "kind": "text",
+      "body": "向量\n---"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "创建向量",
+      "kind": "qa",
+      "front": "`c(2, 4, 6)`",
+      "back": "2 4 6 | 将元素连接成向量"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "创建向量",
+      "kind": "qa",
+      "front": "`2:6`",
+      "back": "2 3 4 5 6 | 整数序列"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "创建向量",
+      "kind": "qa",
+      "front": "`seq(2, 3, by=0.5)`",
+      "back": "2.0 2.5 3.0 | 复杂的序列"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "创建向量",
+      "kind": "qa",
+      "front": "`rep(1:2, times=3)`",
+      "back": "1 2 1 2 1 2 | 重复向量"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "创建向量",
+      "kind": "qa",
+      "front": "`rep(1:2, each=3)`",
+      "back": "1 1 1 2 2 2 | 重复向量的元素"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "text",
+      "body": "#### 按位置"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "qa",
+      "front": "`x[4]`",
+      "back": "第四个元素"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "qa",
+      "front": "`x[-4]`",
+      "back": "除了第四个之外的所有"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "qa",
+      "front": "`x[2:4]`",
+      "back": "元素二到四"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "qa",
+      "front": "`x[-(2:4)]`",
+      "back": "除二到四之外的所有元素"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "qa",
+      "front": "`x[c(1, 5)]`",
+      "back": "元素一和元素五"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "text",
+      "body": "#### 按值"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "qa",
+      "front": "`x[x == 10]`",
+      "back": "等于 10 的元素"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "qa",
+      "front": "`x[x < 0]`",
+      "back": "所有元素小于零"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "qa",
+      "front": "`x[x %in% c(1, 2, 5)]`",
+      "back": "集合 1, 2, 5 中的元素"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "text",
+      "body": "#### 命名向量"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "选择向量元素",
+      "kind": "qa",
+      "front": "`x['apple']`",
+      "back": "名为“apple”的元素。"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "重复向量的元素",
+      "kind": "qa",
+      "front": "`sort(x)`",
+      "back": "返回排序后的 x"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "重复向量的元素",
+      "kind": "qa",
+      "front": "`rev(x)`",
+      "back": "返回 x 的反转"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "重复向量的元素",
+      "kind": "qa",
+      "front": "`table(x)`",
+      "back": "查看值的计数"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "重复向量的元素",
+      "kind": "qa",
+      "front": "`unique(x)`",
+      "back": "查看唯一值"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "重复向量的元素",
+      "kind": "text",
+      "body": "另见\n---"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "重复向量的元素",
+      "kind": "text",
+      "body": "• [全面了解Base R](https://blanket58.github.io/books/study-notes-of-R/) _(github.io)_\n• [R 语言官网](https://www.r-project.org/) _(r-project.org)_\n• [数据科学 R](https://r4ds.hadley.nz/) _(hadley.nz)_\n• [使用 R 进行整洁的建模](https://www.tmwr.org/) _(tmwr.org)_\n• [在 R 中使用 mlr3 进行应用机器学习](https://mlr3book.mlr-org.com/) _(mlr-org.com)_\n• [深度学习](https://srdas.github.io/DLBook/) _(github.io)_\n• [搜索任何与 R 相关的内容](https://rdrr.io/) _(rdrr.io)_\n• [R 文档](https://www.rdocumentation.org/) _(rdocumentation.org)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/r.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/r.md",
+    "generatedAt": "2025-12-16T07:36:11.393Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

@@ -1,0 +1,1098 @@
+{
+  "id": "ffmpeg",
+  "title": "ffmpeg",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "FFmpeg 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "本备忘清单是 [FFmpeg](https://ffmpeg.org/) 中常见视频处理操作的备忘清单"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "FFmpeg 参考\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "Linux"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "code",
+      "lang": "",
+      "code": "$ apt-get install ffmpeg\n$ yum install ffmpeg"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "MacOS"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ brew install ffmpeg"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "mp4 转 avi:"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mp4 output.avi"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "webm 转 mp4:"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i movie.webm movie.mp4"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "全局选项",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-y` | 覆盖输出文件\n`-n` | 不要覆盖输出文件"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "主要选项",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-f fmt` | 强制输入或输出文件格式\n`-i fName` | 输入文件名，未指定显示内容流的摘要\n`-c codecName` | 指定编解码器 [输入或输出]\n`-fs Nbytes` | 以 Nbytes 指定最大输出文件大小"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "基础参数",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-codecs`             | 列出可用编码\n`-formats`            | 列出支持的格式\n`-protocols`          | 列出支持的协议\n`-i input.mp4`        | 指定输入文件\n`-c:v libx264`        | 指定视频编码\n`-c:a aac`            | 指定音频编码\n`-vcodec libx264`     | 旧写法\n`-acodec aac`         | 旧写法\n`-fs SIZE`            | 指定文件大小"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "视频参数",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-b bRate` | 设置视频比特率(单位 kbit/s)\n`-fixaspect` | 固定纵横比\n`-bt tolerance` | 设置视频比特率容差(单位 kbit/s)\n`-maxrate bRate` | 设置最大视频比特率容差(单位 kbit/s)\n`-minrate bRate` | 设置最小视频比特率容差(单位 kbit/s)\n`-bufsize size` | 设置速率控制缓冲区大小(以 kByte 为单位)\n`-sameq` | 使用与源相同的视频质量(意味着 VBR)\n`-newvideo` | 将新的视频流添加到当前输出流\n`-aspect RATIO` | 纵横比(4:3、16:9 或 1.25)\n`-r RATE` | 每秒帧率\n`-s WIDTHxHEIGHT` | 帧大小\n`-vn` | 没有视频\n`-crf` | 指定编码的质量，数值越大压缩越高，一般范围是 18-28"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "码率设置",
+      "kind": "code",
+      "lang": "bash",
+      "code": "-b:v 1M      # 视频比特率(1M = 1Mbit/s)\n-b:a 1M      # 音频比特率(1M = 1Mbit/s)"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "尺寸规格",
+      "kind": "text",
+      "body": ":- | - | - | -\n:- | - | - | -\n`K` 或 `k` | 103 | 1000 字节 | 千字节 Kilobytes\n`M` | 106 | 1000000 字节 | 兆字节 Megabytes\n`G` | 109 | 1000000000 | 千兆字节 Gigabytes\n`Ki` | 210 | 1024 | 千字节 Kibibyte\n`Mi` | 220 | 1048576 | 兆字节 Mebibyte\n`Gi` | 230 | 1073741824 | Gibibyte"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "音频参数",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-ab bRate` | 设置音频比特率(单位 kbit/s)\n`-aframes N` | 设置要录制的音频帧数 [-frames:a 的别名]\n`-aq q` | 设置音频质量(特定于编解码器，VBR) [-q:a 的别名]\n`-an` | 禁用录音\n`-acodec codec` | 设置音频编解码器。[-codec:a 的别名] 使用 'copy' 复制流。\n`-vol` | 以 256 的倍数更改音频音量，其中 256 = 100%(正常)音量。例如 512 = 200%\n`-newaudio` | 将新的音频流添加到当前输出流\n`-alang code` | 设置当前音频流的 ISO 639 语言代码(3 个字母)\n`-ac nTract` | 指定立体声通道数（n个声道）。例如 nTract = 2 即2个声道"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "音频参数",
+      "kind": "text",
+      "body": "视频编辑\n---\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "剪切视频部分",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 从1分45秒开始剪切2分35秒\n$ ffmpeg -i <input> -ss 00:01:45 -t 00:02:35 -vcodec copy -acodec copy <output>\n# 从1分45秒开始剪切到第4分20秒，与上一行等效\n$ ffmpeg -i <input> -ss 00:01:45 -to 00:04:20 -codec copy <output>\n$ ffmpeg -ss 00:00:30 -i orginalfile.mpg -t 00:00:05 -vcodec copy -acodec copy newfile.mpg\n# 从 4.5 秒开始的 5 秒长的视频\n$ ffmpeg -i in.mp4 -ss 4.5 -t 5 out.mp4"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "视频帧速率",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.avi -r 24 output.avi"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "视频帧速率",
+      "kind": "text",
+      "body": "将输出文件的帧速率强制为 24 fps"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "视频帧速率",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -r 1 -i input.m2v -r 24 output.avi"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "视频帧速率",
+      "kind": "text",
+      "body": "将输入文件的帧速率(仅对原始格式有效)强制为 1 fps，将输出文件的帧速率强制为 24 fps"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "H265 2-pass 编码",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -y -i <input> -c:v libx265 -b:v 2600k \\\n  -x265-params pass=1 \\\n  -an -f mp4 /dev/null && \\\n    ffmpeg -i <input> \\\n        -c:v libx265 -b:v 2600k \\\n        -x265-params pass=2 \\\n        -c:a aac -b:a 128k output.mp4"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "H265 2-pass 编码",
+      "kind": "text",
+      "body": "对于 `H265 2-pass` 编码，您需要组合 `2` 个 `ffmpeg` 调用"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "视频比特率设置",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.avi -b:v 64k -bufsize 64k output.avi"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "视频比特率设置",
+      "kind": "text",
+      "body": "将输出文件的视频比特率设置为 64 kbit/s"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "固定旋转",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i <input> -c copy -metadata:s:v:0 rotate=90 <output>"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "固定旋转",
+      "kind": "text",
+      "body": "不要为旋转重新编码，而是简单地为旋转角度添加一个视频元数据字段"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "缩放到特定宽度",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i in.mp4 -filter:v scale=\"538:trunc(ow/a/2)*2\" -c:a copy out.mp4"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "缩放到特定宽度",
+      "kind": "text",
+      "body": "给定所需的视频宽度，例如 538 像素，您可以使用以下方法将视频调整为该宽度，同时保持宽高比"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "缩放到特定宽度",
+      "kind": "text",
+      "body": "重新包装\n---"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "提取音频流",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i file.mp4 -vn -c copy output.aac"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "提取音频流",
+      "kind": "text",
+      "body": "`-vn` (过滤视频)，使用 `-c copy`，不会重新解码和编码，加快速度。"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "提取视频流",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i file.mp4 -an -c copy output.mp4"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "处理 id3 标签",
+      "kind": "text",
+      "body": "提取"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "处理 id3 标签",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i file.mp3 -f ffmetadata metadata.txt"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "处理 id3 标签",
+      "kind": "text",
+      "body": "设置"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "处理 id3 标签",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i file.mp3 -acodec copy -metadata title=\"<title>\" -metadata artist=\"<artist>\" -metadata album=\"<album>\" out.mp3"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "处理 id3 标签",
+      "kind": "text",
+      "body": "更多[请查看](https://gist.github.com/eyecatchup/0757b3d8b989fe433979db2ea7d95a01)"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "重新采样/转换音频",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i file.aac -acodec mp3 -ar 44100 -ab 128000 output.mp3"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "将输入文件转码为 DVD PAL 格式",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -y -threads 8 -i inFile -target pal-dvd -ac 2 -aspect 16:9 -acodec mp2 -ab 224000 -vf pad=0:­0:0:0 outFile"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "text",
+      "body": "`-map` 命令用于指定索引文件，以及索引文件中流类型和它的索引"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "code",
+      "lang": "bash",
+      "code": "-map index:stram_type:stream_index"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`input_file_index` | 输入的文件索引(从 0 开始)\n`stream_type` | 指定文件流的类型(a -> 音频，v -> 视频，s -> 字幕)\n`stream_index` | 指定流类型的索引(从 0 开始)"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "text",
+      "body": "将第一个输入文件的第二个音频拷贝到 out.mp3"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mp4 -map 0:a:1 -c copy out.mp3"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "text",
+      "body": "将第一个输入文件的视频流和第二个输入文件的音频流拷贝到 out.mp4"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i i1.mp4 -i i2.mp4 -map 0:v -map 0:a -c copy out.mp4"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "text",
+      "body": "#### 反向 -map 命令\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "-map 命令",
+      "kind": "text",
+      "body": "反向的 map 命令（在 map 命令的参数前加负号）。例如，`-map -0:a:0`，忽略第一个文件中的第一个音频流。\n<!--rehype:className=wrap-text -->"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "切换容器(转换类型)",
+      "kind": "text",
+      "body": "将容器从 `MKV` 更改为 `MP4`"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "切换容器(转换类型)",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i file.mkv -acodec copy -vcodec copy file.mp4"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "切换容器(转换类型)",
+      "kind": "text",
+      "body": "要将视频从 `.mov` 更改为 `.mp4`"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "切换容器(转换类型)",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i in.mov out.mp4"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "音视频同步",
+      "kind": "text",
+      "body": "将音频延迟 3 秒"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "音视频同步",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mov -itsoffset 3 -i input.mov -map 0:v -map 1:a -codec:a copy -codec:v copy output.mov"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "音视频同步",
+      "kind": "text",
+      "body": "将视频延迟 3 秒(即将音频提前 3 秒)"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "音视频同步",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mov -itsoffset 3 -i input.mov -map 1:v -map 0:a -codec:a copy -codec:v copy output.mov"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "图片中的视频",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -f image2 -i image%d.jpg video.mp4"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "图片中的视频",
+      "kind": "text",
+      "body": "多个编号的图像 image1.jpg、image2.jpg... 像这样从它们创建一个视频"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "将视频拆分为图像",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i video.mp4 image%d.jpg"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "录屏",
+      "kind": "text",
+      "body": "#### 查找所有可用设备"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "录屏",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -f avfoundation -list_devices true -i \"\""
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "录屏",
+      "kind": "text",
+      "body": "<span style=\"color:red\">一定要选择好设备，根据设备进行配置。</sapn>"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "录屏",
+      "kind": "text",
+      "body": "#### windows 下录屏"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "录屏",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -hide_banner -loglevel error -stats -f gdigrab -framerate 60 \\\n-offset_x 0 -offset_y 0 -video_size 1920x1080 -draw_mouse 1 -i deskop \\\n-c:v libx264 -r 60 -preset ultrafast -pix_fmt yuv420p -y screen_record.mp4"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "录屏",
+      "kind": "text",
+      "body": "#### mac 下录屏"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "录屏",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -f avfoundation -i 1:0 -preset ultrafast out.mkv"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "合并音频与图片",
+      "kind": "text",
+      "body": "合并多个音频，自定义背景图片，生成视频音乐"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "合并音频与图片",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# mylist.txt >>>\nfile '1.mp3'\nfile '2.mp3'\nfile '3.mp3'\n\n# OBS: 46500 = 25:50 minutes * 60 * 30fps\n# echo \"00:25:50\" | awk -F: '{ print (($1 * 3600) + ($2 * 60) + $3) * 30 }'\n$ ffmpeg -y -loop 1 -i cover.jpg -f concat -i mylist.txt -c:v libx264 -r 30 -pix_fmt yuv420p -vframes 46500 -c:a aac -b:a 192k -strict experimental -shortest output.mp4"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "转换为 Gif",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -ss 2 -t 28 -i input.mp4 -vf \"fps=10,scale=1080:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse\" -loop 0 output.gif"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "转换为 Gif",
+      "kind": "text",
+      "body": "上面有关更多信息，请参阅 [StackOverflow 问题](https://superuser.com/a/556031)"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "转换为 Gif",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 转换为 GIF\n$ ffmpeg -i input.mov output.gif\n# 从 GIF 转换\n$ ffmpeg -i input.gif output.mov\n# 在非 GIF 格式之间转换\n$ ffmpeg -i input.mov -codec:v copy -codec:a copy output.mp4"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "转换为灰度",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -y -i inFile -flags gray outFile"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "字幕格式转换",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# srt -> ass\n$ ffmpeg -i subtitle.srt subtitle.ass\n# ass -> vtt\n$ ffmpeg -i subtitle.ass subtitle.vtt"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "字幕格式转换",
+      "kind": "text",
+      "body": "srt、ass、vtt 等格式之间可以相互转换"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "字幕",
+      "kind": "text",
+      "body": "将字幕写入视频"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "字幕",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mov -filter:v 'subtitles=subtitles.srt' -codec:a copy output.mov"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "字幕",
+      "kind": "text",
+      "body": "将字幕写入视频，具有自定义字幕样式"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "字幕",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mov -filter:v \"subtitles=subtitles.srt:force_style='FontName=Menlo Bold,Fontsize=18'\" -codec:a copy output.mov"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "制造 1 分钟的音频噪音",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -ar 48000 -t 60 -f s16le -acodec pcm_s16le -i /dev/u­random -ab 64K -f mp2 -acodec mp2 -y noise.mp2"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "从视频中提取图像",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i foo.avi -r 1 -s WxH -f image2 outFil­e%0­3d.png"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "音量",
+      "kind": "text",
+      "body": "将音量减半"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "音量",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mov -codec:v copy -filter:a 'volume=0.5' output.mov"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "音量",
+      "kind": "text",
+      "body": "音量加倍"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "音量",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mov -codec:v copy -filter:a 'volume=2' output.mov"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "将图像文件转换为其他格式",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i foo012­2.png foo.tiff"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "将图像文件转换为其他格式",
+      "kind": "text",
+      "body": "pgm, ppm, pam, pgmyuv, jpeg, gif, png, tiff, sgi"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "将图像转换为 AVI 文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -f image2 -i foo-%0­3d.jpeg -r 12 -s WxH foo.avi"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "将 WAV 文件转换为 MP3",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i source­_so­ng.wav -vn -ar 44100 -ac 2 -ab 192 -f mp3 final_­son­g.mp3"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "从视频中提取音频，将其转码为 MP3",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i source.avi -vn -ar 44100 -ac 2 -ab 192 -f mp3 sound.mp3"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "将 .avi 转换为 .flv",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i source.avi -ab 56 -ar 44100 -b 200 -r 15 -s 320x240 -f flv output.flv"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "将图片附加到 mp3",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mp3 -i cover.png -c copy -metad­ata:s:v title=­\"­Album cover\" -metad­ata:s:v commen­t=\"Cover (Front­)\" out.mp3"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "将视频与声音文件混合",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i song.wav -i source­_vi­deo.avi outvid­eo.mpg"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "编写带有 ID3v2.3 页眉和 ID3v1 页脚的 mp3",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i inFile -id3v2­_ve­rsion 3 -write­_id3v1 1 outFil­e.mp3"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "连接输入文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ cat inFile1 inFile2 | ffmpeg -f mpeg -i - -vcodec copy -acodec copy outFil­e.mpg"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "使用比特率和 mp3 音频的编解码器对剪辑进行编码",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i clip.avi -vcodec libxvid -b 800000 -acodec libmp3lame -ab 128 new-cl­ip.avi"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "将音频流与来自不同文件的视频流合并",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i audioS.mp4 -i videoS.mp4 -c copy -map 0:a -map 1:v outFil­e.mp4"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "text",
+      "body": "合并相同规格(解码/分辨率/帧率)视频"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# mylist.txt >>>\nfile '1.mp4'\nfile '2.mp4'\nfile '3.mp4'\n\n# 这些文件是相对路径，如使用绝对路径需要添加 `-safe 0` 参数\n$ ffmpeg -f concat -i mylist.txt -c copy output.mp4"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "text",
+      "body": "合并当前目录下所有视频"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -f concat -safe 0 -i <(for f in ./*.mp4; do echo \"file '$PWD/$f'\"; done) -c copy output.mp4"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "text",
+      "body": "合并不同规格视频，保证视频不变形"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i 1.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts tmp1.ts\n$ ffmpeg -i 2.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts tmp2.ts\n$ ffmpeg -i 3.mp4 -c copy -bsf:v h264_mp4toannexb -f mpegts tmp3.ts\n\n$ ffmpeg -threads 2 -i \"concat:tmp1.ts|tmp2.ts|tmp3.ts\"  -vf \"scale=720:1080:force_original_aspect_ratio=decrease,pad=720:1080:(ow-iw)/2:(oh-ih)/2\" -pix_fmt yuvj420p -shortest -y output.mp4"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "text",
+      "body": "合并不同解码视频"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input1.mp4 -i input2.webm -i input3.mov \\\n-filter_complex \"[0:v:0][0:a:0][1:v:0][1:a:0][2:v:0][2:a:0]concat=n=3:v=1:a=1[outv][outa]\" \\\n-map \"[outv]\" -map \"[outa]\" output.mkv"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "text",
+      "body": "合并视频并重新编码音频"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -f concat -i mylist.txt -c:v copy -c:a flac -strict -2 output.mp4"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "合并视频",
+      "kind": "text",
+      "body": "视频过滤器\n---\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "格式",
+      "kind": "text",
+      "body": "如果一个 fliter 有多个参数，需要使用 `,` 分隔"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "格式",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i test.avi -c:v libx264 -vf \"scale=1024:-1,transpose=1,crop=iw/3:ih/3\" output.mp4"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "缩放",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mp4 -vf \"scale=640:480\" out.mp4\n# -1 → 指根据另一个参数帮我们推断\n$ ffmpeg -i input.mp4 -vf \"scale=720:-1\" out.mp4\n# 宽度和高度\nffmpeg -i input.mp4 -vf \"scale=w=800:h=600\" output.mp4\n# in_w\\in_h 输入尺寸\nffmpeg -i input.mkv -vf \"scale=w=1/2*in_w:h=1/2*in_h\" output.mkv"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "裁剪",
+      "kind": "text",
+      "body": "从左上角开始，复制 `x=0px` `y=0px` 的相应窗口来创建 `1280x720` 大小的输出视频"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "裁剪",
+      "kind": "code",
+      "lang": "bash",
+      "code": "ffmpeg -i input.mp4 -vf \"crop=w=1280:h=720:x=0:y=0\" output.mp4"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "裁剪",
+      "kind": "text",
+      "body": "裁剪到宽度 360，高度 640，从坐标 (10, 20) 开始"
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "裁剪",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.mov -vf 'crop=360:640:10:20' output.mov"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "去除水印",
+      "kind": "text",
+      "body": "设置一个矩形覆盖区域 x=10:y=10:w=120:h=45"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "去除水印",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# show=1 为可选参数，设置显示边框，方便调试用的\nffmpeg -i 1.mp4 -b:v 548k -vf delogo=x=10:y=10:w=120:h=45:show=1 output.mp4"
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "创建缩略图",
+      "kind": "text",
+      "body": "在 10 秒时创建一个缩略图"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "创建缩略图",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -ss 10 -i <input file> -vframes 1 -vcodec png -an thumb.png"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "创建缩略图",
+      "kind": "text",
+      "body": "例如，要每 `n` 秒创建一次缩略图，请使用 `-vf fps=1/n`"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "创建缩略图",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i <input file> -vf fps=1/60 thumbnails/thumb%03d.png"
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "添加水印",
+      "kind": "text",
+      "body": "在视频左上方 20,20 的位置插入 logo.png 图片"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "添加水印",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# -b:v 548k 可选参数，设置视频比特率，默认 200k 最好设置与原视频一致\nffmpeg -i 1.mp4 -acodec copy -b:v 548k -vf \"movie=logo.png[watermark];[in][watermark]overlay=20:20\" output.mp4"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "视频旋转",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 顺时针旋转 90\n$ ffmpeg -i input.avi -vf \"rotate=90*PI/180\" out.mp4 \n# 顺时针旋转 180，翻转 90\n$ ffmpeg -i input.mp4 -vf \"rotate=PI\" out.mp4"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "更改视频播放速度",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 加速 2 倍\n$ ffmpeg -i input.mkv -vf \"setpts=0.5*PTS\" output.mkv \n# 减速 2 倍\n$ ffmpeg -i input.mp4 -vf \"setpts=2*PTS\" output.mp4"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "添加背景音乐",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# -t 10 文件时长，单位为秒，建议取值原始视频总时长\n$ ffmpeg -i 1.mp4 -i test.mp3 \\\n  -filter_complex \"[1:a]aloop=loop=-1:size=2e+09[out];[out][0:a]amix\" \\\n  -t 10 out.mp4"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "添加背景音乐",
+      "kind": "text",
+      "body": "音频过滤器\n---\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "调节音量",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 增大音量\n$ ffmpeg -i test.mp4 -af \"volumn=1.5\" out.mp4"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "更改音频速度",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i input.wav -af \"atempo=0.75\" output.wav \n# 加速 4 倍\n$ ffmpeg -i input.mp3 -af \"atempo=2.0,atempo=2.0\" ouutput.mp3"
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": "更改音频速度",
+      "kind": "text",
+      "body": "`atempo` 它只接受 `0.5`(半速) 到 `2` (倍速)之间的值。为了越过这个限制，你可以链式使用这个过滤器"
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": "统一视频的音量",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ffmpeg -i test.mp4 -af \"loudnorm=I=-5:LRA=1\" out.mp4"
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": "重新映射通道数",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 使左右耳的声音同时出现\n$ ffmpeg -i input.mp3 -af \"channelmap=1-0|1-1\" output.mp3"
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": "重新映射通道数",
+      "kind": "text",
+      "body": "流处理\n---\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": "拉流",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 拉取rtmp流并存储到本地\n$ ffmpeg -i \"rtsp://127.0.0.1/test\" test.mp4"
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": "推流",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 推送test.mp4到远程\n$ ffmpeg -re -i test.mp4 -f flv rtmp://127.0.0.1/test"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": "转发",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 拉取流并转发\n$ ffmpeg -i \"rtsp://127.0.0.1/test\" -f mpegts -codec:v mpeg1video http://127.0.0.1/demo"
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": "转发",
+      "kind": "text",
+      "body": "另见\n---"
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": "转发",
+      "kind": "text",
+      "body": "• [FFmpeg 官网地址](https://ffmpeg.org/) _(ffmpeg.org)_\n• [FFmpeg Cheat Sheet](https://lzone.de/cheat-sheet/ffmpeg) _(lzone.de)_\n• [FFmpeg Cheat Sheet](https://devhints.io/ffmpeg) _(devhints.io)_\n• [FFmpeg Cheat Sheet](https://github.com/yuanqing/ffmpeg-cheatsheet) _(github.com)_\n• [FFmpeg Cheat Sheet](https://cheatography.com/thetartankilt/cheat-sheets/ffmpeg/) _(cheatography.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/ffmpeg.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/ffmpeg.md",
+    "generatedAt": "2025-12-16T07:36:11.212Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

@@ -1,0 +1,864 @@
+{
+  "id": "awk",
+  "title": "awk",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Awk 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这是 [GNU awk](https://www.gnu.org/software/gawk/manual/gawk.html) 的单页快速参考备忘单，其中涵盖了常用的 `awk` 表达式和命令。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n------"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "试试",
+      "kind": "text",
+      "body": "该程序可用于选择文件中的特定记录并对其执行操作"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "试试",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ awk -F: '{print $1, $NF}' /etc/passwd"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "试试",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "Awk 程序",
+      "kind": "code",
+      "lang": "bash",
+      "code": "BEGIN          {<初始化>} \n   <pattern 1> {<计划动作>} \n   <pattern 2> {<计划动作>} \n   ...\nEND            {< 最后的动作 >}"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "Awk 程序",
+      "kind": "text",
+      "body": "#### 示例"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "Awk 程序",
+      "kind": "code",
+      "lang": "bash",
+      "code": "awk '\n    BEGIN { print \"\\n>>>Start\" }\n    !/(login|shutdown)/ { print NR, $0 }\n    END { print \"<<<END\\n\" }\n' /etc/passwd"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "code",
+      "lang": "bash",
+      "code": "          $1      $2/$(NF-1)    $3/$NF\n           ▼          ▼           ▼ \n        ┌──────┬──────────────┬───────┐\n$0/NR ▶ │  ID  │  WEBSITE     │  URI  │\n        ├──────┼──────────────┼───────┤\n$0/NR ▶ │  1   │  baidu.com   │  awk  │\n        ├──────┼──────────────┼───────┤\n$0/NR ▶ │  2   │  google.com  │  25   │\n        └──────┴──────────────┴───────┘"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "code",
+      "lang": "shell",
+      "code": "# 第一个和最后一个字段\nawk -F: '{print $1,$NF}' /etc/passwd\n# 带行号\nawk -F: '{print NR, $0}' /etc/passwd\n# 倒数第二个字段\nawk -F: '{print $(NF-1)}' /etc/passwd\n# 自定义字符串\nawk -F: '{print $1 \"=\" $6}' /etc/passwd"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "text",
+      "body": "查看: [Awk 变量](#awk-变量)"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "Awk 程序示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {print \"hello world\"}'        # 打印 \"hello world\"\nawk -F: '{print $1}' /etc/passwd         # -F: 指定字段分隔符\n# /pattern/ 仅对匹配的模式执行操作\nawk -F: '/root/ {print $1}' /etc/passwd                     \n# BEGIN 块在开始时执行一次\nawk -F: 'BEGIN { print \"uid\"} { print $1 }' /etc/passwd     \n# END 块在最后执行一次\nawk -F: '{print $1} END { print \"-done-\"}' /etc/passwd"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "条件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "awk -F: '$3>30 {print $1}' /etc/passwd"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "条件",
+      "kind": "text",
+      "body": "查看: [Conditions 条件](#awk-条件)"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "生成 1000 个空格",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN{\n    while (a++ < 1000)\n        s=s \" \";\n    print s\n}'"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "生成 1000 个空格",
+      "kind": "text",
+      "body": "查看: [Loops](#awk-循环)"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "数组 Arrays",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n   fruits[\"mango\"] = \"yellow\";\n   fruits[\"orange\"] = \"orange\"\n   for(fruit in fruits) {\n     print fruit \" 的颜色是 \" fruits[fruit]\n   }\n}'"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "数组 Arrays",
+      "kind": "text",
+      "body": "查看: [Awk 数组](#awk-数组)"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "函数 Functions",
+      "kind": "code",
+      "lang": "shell",
+      "code": "# => 5\nawk 'BEGIN{print length(\"hello\")}'\n# => HELLO\nawk 'BEGIN{print toupper(\"hello\")}'\n# => hel\nawk 'BEGIN{print substr(\"hello\", 1, 3)}'"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "函数 Functions",
+      "kind": "text",
+      "body": "查看: [Functions](#awk-函数)"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "函数 Functions",
+      "kind": "text",
+      "body": "Awk 变量\n---------"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "内置变量",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`$0`           | 全线\n`$1, $2...$NF` | 第一个，第二个……最后一个字段\n`NR`           | 记录总数(`N`umber of `R`ecords)\n`NF`           | N个字段(`N`number of `F`ields)\n`OFS`          | `O`utput `F`ield `S`eparator<br> 输出字段分隔符 _(default \" \")_\n`FS`           | input `F`ield `S`eparator <br> 输入字段分隔符 _(default \" \")_\n`ORS`          | `O`utput `R`ecord `S`eparator <br> 输出记录分隔符 _(default \"\\n\")_\n`RS`           | input `R`ecord `S`eparator <br> 输入记录分隔符 _(default \"\\n\")_\n`FILENAME`     | 文件名"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "表达式",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`$1 == \"root\"`       | 第一个字段等于根\n`{print $(NF-1)}`    | 倒数第二个字段\n`NR!=1{print $0}`    | 从第 2 条记录开始\n`NR > 3`             | 从第 4 条记录开始\n`NR == 1`            | 第一次记录\n`END{print NR}`      | 总记录\n`BEGIN{print OFMT}`  | 输出格式\n`{print NR, $0}`     | 行号\n`{print NR \"  \" $0}` | 行号(选项卡)\n`{$1 = NR; print}`   | 用行号替换第一个字段\n`$NF > 4`            | 最后一个字段 > 4\n`NR % 2 == 0`        | 甚至记录\n`NR==10, NR==20`     | 记录 10 到 20\n`BEGIN{print ARGC}`  | 总 `arguments`\n`ORS=NR%5?\",\":\"\\n\"`  | 连接记录"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "打印总和和平均值"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -F: '{sum += $3}\n     END { print sum, sum/NR }\n' /etc/passwd"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "打印参数"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    for (i = 1; i < ARGC; i++)\n        print ARGV[i] }' a b c"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "输出字段分隔符为逗号"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN { FS=\":\";OFS=\",\"}\n    {print $1,$2,$3,$4}' /etc/passwd"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "匹配位置"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    if (match(\"One Two Three\", \"Tw\"))\n        print RSTART }'"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "匹配时长"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    if (match(\"One Two Three\", \"re\"))\n        print RLENGTH }'"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "仅限 GNU awk",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`ENVIRON`     | 环境变量\n`IGNORECASE`  | 忽略大小写\n`CONVFMT`     | 转换格式\n`ERRNO`       | 系统错误\n`FIELDWIDTHS` | 固定宽度字段"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "环境变量",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`ARGC`    | 数字或参数\n`ARGV`    | 参数数组\n`FNR`     | 文件记录数(`F`ile `N`umber of `R`ecords)\n`OFMT`    | 数字格式 _(default \"%.6g\")_\n`RSTART`  | 字符串中的位置\n`RLENGTH` | 比赛时长\n`SUBSEP`  | 多维数组分隔符 _(default \"\\034\")_\n`ARGIND`  | 参数索引"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "定义变量",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -v var1=\"Hello\" -v var2=\"Wold\" '\n    END {print var1, var2}\n' </dev/null"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "定义变量",
+      "kind": "text",
+      "body": "#### 使用 shell 变量"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "定义变量",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -v varName=\"$PWD\" '\n    END {print varName}' </dev/null"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "定义变量",
+      "kind": "text",
+      "body": "Awk 运算符\n---------"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`{print $1}`     | 第一个字段\n`$2 == \"foo\"`    | 等于\n`$2 != \"foo\"`    | 不等于\n`\"foo\" in array` | 在数组中"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": "#### 正则表达式"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n| `/regex/`       | 行匹配|\n| `!/regex/`      | 行不匹配|\n| `$1 ~ /regex/`  | 字段匹配|\n| `$1 !~ /regex/` | 字段不匹配|"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": "#### 更多条件"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`($2 <= 4 \\|\\| $3 < 20)` | 或者\n`($1 == 4 && $3 < 20)`   | 和"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": "#### 算术运算"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": "• `+`\n• `-`\n• `*`\n• `/`\n• `%`\n• `++`\n• `--`"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": "#### 速记作业"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": "• `+=`\n• `-=`\n• `*=`\n• `/=`\n• `%=`"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": "#### 比较运算符"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": "• `==`\n• `!=`\n• `<`\n• `>`\n• `<=`\n• `>=`"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    if (\"foo\" ~ \"^fo+$\")\n        print \"Fooey!\";\n}'"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "#### 不匹配"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    if (\"boo\" !~ \"^fo+$\")\n        print \"Boo!\";\n}'"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "#### 如果在数组中"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    assoc[\"foo\"] = \"bar\";\n    assoc[\"bar\"] = \"baz\";\n    if (\"foo\" in assoc)\n        print \"Fooey!\";\n}'"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "Awk 函数\n----------"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "常用功能",
+      "kind": "text",
+      "body": "函数 | 描述\n:- | :-\n`index(s,t)`          | 字符串 `s` 中出现字符串 `t` 的位置，如果未找到则为 `0`\n`length(s)`           | 字符串 `s` 的长度(如果没有 `arg`，则为 `$0`)\n`rand`                | `0` 到 `1` 之间的随机数\n`substr(s,index,len)` | 返回从索引开始的 `s` 的 `len-char` 子字符串(从 `1` 开始计数)\n`srand`               | 为 `rand` 设置种子并返回之前的种子\n`int(x)`              | 将 `x` 截断为整数值\n`split(s,a,fs)`       | 将字符串 `s` 拆分为数组 `a` 由 `fs` 拆分，返回 `a` 的长度\n`match(s,r)`          | 字符串 `s` 中出现正则表达式 `r` 的位置，如果未找到，则为 `0`\n`sub(r,t,s)`          | 将 `t` 替换为字符串 `s` 中第一次出现的正则表达式 `r`(如果未给出 `s`，则替换为 `$0`)\n`gsub(r,t,s)`         | 用 `t` 替换字符串 `s` 中所有出现的正则表达式 `r`\n`system(cmd)`         | 执行cmd并返回退出状态\n`tolower(s)`          | 字符串 `s` 转小写\n`toupper(s)`          | 字符串 `s` 转大写\n`getline`             | 将 `$0` 设置为当前输入文件中的下一个输入记录"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "用户定义函数",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk '\n    # 返回最小数量\n    function find_min(num1, num2){\n       if (num1 < num2)\n       return num1\n       return num2\n    }\n    # 返回最大数量\n    function find_max(num1, num2){\n       if (num1 > num2)\n       return num1\n       return num2\n    }\n    # 主功能\n    function main(num1, num2){\n       result = find_min(num1, num2)\n       print \"Minimum =\", result\n      \n       result = find_max(num1, num2)\n       print \"Maximum =\", result\n    }\n    # 脚本执行从这里开始\n    BEGIN {\n       main(10, 60)\n    }\n'"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "用户定义函数",
+      "kind": "text",
+      "body": "Awk 数组\n---------"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "带索引的数组",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    arr[0] = \"foo\";\n    arr[1] = \"bar\";\n    print(arr[0]); # => foo\n    delete arr[0];\n    print(arr[0]); # => \"\"\n}'"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "带键的数组",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    assoc[\"foo\"] = \"bar\";\n    assoc[\"bar\"] = \"baz\";\n    print(\"baz\" in assoc); # => 0\n    print(\"foo\" in assoc); # => 1\n}'"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "带拆分的数组",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    split(\"foo:bar:baz\", arr, \":\");\n    for (key in arr)\n        print arr[key];\n}'"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "带有排序的数组",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    arr[0] = 3\n    arr[1] = 2\n    arr[2] = 4\n    n = asort(arr)\n    for (i = 1; i <= n ; i++)\n        print(arr[i])\n}'"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "多维",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    multidim[0,0] = \"foo\";\n    multidim[0,1] = \"bar\";\n    multidim[1,0] = \"baz\";\n    multidim[1,1] = \"boo\";\n}'"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "多维迭代",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    array[1,2]=3;\n    array[2,3]=5;\n    for (comb in array) {\n        split(comb,sep,SUBSEP);\n        print sep[1], sep[2], \n        array[sep[1],sep[2]]\n    }\n}'"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "多维迭代",
+      "kind": "text",
+      "body": "Awk 条件\n----------"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "if-else 语句",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -v count=2 'BEGIN {\n    if (count == 1)\n        print \"Yes\";\n    else\n        print \"Huh?\";\n}'"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "if-else 语句",
+      "kind": "text",
+      "body": "#### 三元运算符"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "if-else 语句",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -v count=2 'BEGIN {\n    print (count==1) ? \"Yes\" : \"Huh?\";\n}'"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "存在",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    assoc[\"foo\"] = \"bar\";\n    assoc[\"bar\"] = \"baz\";\n    if (\"foo\" in assoc)\n        print \"Fooey!\";\n}'"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "存在",
+      "kind": "text",
+      "body": "#### 不存在"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "存在",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    assoc[\"foo\"] = \"bar\";\n    assoc[\"bar\"] = \"baz\";\n    if (\"Huh\" in assoc == 0 )\n        print \"Huh!\";\n}'"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "switch",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -F: '{\n    switch (NR * 2 + 1) {\n        case 3:\n        case \"11\":\n            print NR - 1\n            break\n        case /2[[:digit:]]+/:\n            print NR\n        default:\n            print NR + 1\n        case -1:\n            print NR * -1\n    }\n}' /etc/passwd"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "switch",
+      "kind": "text",
+      "body": "Awk 循环\n----------"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "for...i",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    for (i = 0; i < 10; i++)\n        print \"i=\" i;\n}'"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "for...i",
+      "kind": "text",
+      "body": "#### 1 到 100 之间的 2 的幂"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "for...i",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    for (i = 1; i <= 100; i *= 2)\n        print i\n}'"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "for...in",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    assoc[\"key1\"] = \"val1\"\n    assoc[\"key2\"] = \"val2\"\n    for (key in assoc)\n        print assoc[key];\n}'"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "for...in",
+      "kind": "text",
+      "body": "#### Arguments"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "for...in",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    for (argnum in ARGV)\n        print ARGV[argnum];\n}' a b c"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "#### 反向记录"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -F: '{ x[NR] = $0 }\n    END {\n        for (i = NR; i > 0; i--)\n        print x[i]\n    }\n' /etc/passwd"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "#### 反向字段"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -F: '{\n    for (i = NF; i > 0; i--)\n        printf(\"%s \",$i);\n    print \"\"\n}' /etc/passwd"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "#### 按记录求和"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -F: '{\n    s=0;\n    for (i = 1; i <= NF; i++)\n        s += $i;\n    print s\n}' /etc/passwd"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "#### 总结整个文件"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -F: '\n    {for (i = 1; i <= NF; i++)\n        s += $i;\n    };\n    END{print s}\n' /etc/passwd"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "while",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    while (a < 10) {\n        print \"- \" \" concatenation: \" a\n        a++;\n    }\n}'"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "while",
+      "kind": "text",
+      "body": "#### do...while"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "while",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk '{\n    i = 1\n    do {\n        print $0\n        i++\n    } while (i <= 5)\n}' /etc/passwd"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "Break",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    break_num = 5\n    for (i = 0; i < 10; i++) {\n        print i\n        if (i == break_num)\n            break\n    }\n}'"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "Continue",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN {\n    for (x = 0; x <= 10; x++) {\n        if (x == 5 || x == 6)\n            continue\n        printf \"%d \", x\n    }\n    print \"\"\n}'"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "Continue",
+      "kind": "text",
+      "body": "Awk 格式化打印\n---------"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "用法",
+      "kind": "text",
+      "body": "#### 右对齐"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "用法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN{printf \"|%10s|\\n\", \"hello\"}'\n# |     hello|"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "用法",
+      "kind": "text",
+      "body": "#### 左对齐"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "用法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk 'BEGIN{printf \"|%-10s|\\n\", \"hello\"}'\n# |hello     |"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "通用说明符",
+      "kind": "text",
+      "body": "特征符 | 描述\n:- | :-\n`c`           | ASCII 字符\n`d`           | 十进制整数\n`e`, `E`, `f` | 浮点格式\n`o`           | 无符号八进制值\n`s`           | 细绳\n`%`           | 文字百分比"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "Space 空间",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -F: '{\n    printf \"%-10s %s\\n\", $1, $(NF-1)\n}' /etc/passwd | head -n 3"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "Space 空间",
+      "kind": "text",
+      "body": "输出"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "Space 空间",
+      "kind": "code",
+      "lang": "shell",
+      "code": "root       /root\nbin        /bin\ndaemon     /sbin"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "Header 标题头",
+      "kind": "code",
+      "lang": "shell",
+      "code": "awk -F: 'BEGIN {\n    printf \"%-10s %s\\n\", \"User\", \"Home\"\n    printf \"%-10s %s\\n\", \"----\",\"----\"}\n    { printf \"%-10s %s\\n\", $1, $(NF-1) }\n' /etc/passwd | head -n 5"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "Header 标题头",
+      "kind": "text",
+      "body": "输出"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "Header 标题头",
+      "kind": "code",
+      "lang": "shell",
+      "code": "User       Home\n----       ----\nroot       /root\nbin        /bin\ndaemon     /sbin"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "Header 标题头",
+      "kind": "text",
+      "body": "各种各样的\n-------------"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "正则表达式元字符",
+      "kind": "text",
+      "body": "• `\\`\n• `^`\n• `$`\n• `.`\n• `[`\n• `]`\n• `|`\n• `(`\n• `)`\n• `*`\n• `+`\n• `?`"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "转义序列",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`\\b` | 退格\n`\\f` | 换页\n`\\n` | 换行(换行)\n`\\r` | 回车\n`\\t` | 水平选项卡\n`\\v` | 垂直选项卡"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "运行脚本",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ cat demo.awk\n#!/usr/bin/awk -f\nBEGIN { x = 23 }\n      { x += 2 }\nEND   { print x }\n$ awk -f demo.awk /etc/passwd\n69"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "运行脚本",
+      "kind": "text",
+      "body": "另见\n--------"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "运行脚本",
+      "kind": "text",
+      "body": "• [GNU awk 用户指南](https://www-zeuthen.desy.de/dv/documentation/unixguide/infohtml/gawk/gawk.html) _(www-zeuthen.desy.de)_\n• [AWK cheatsheet](https://gist.github.com/Rafe/3102414) _(gist.github.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/awk.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/awk.md",
+    "generatedAt": "2025-12-16T07:36:11.120Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

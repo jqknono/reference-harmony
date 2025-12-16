@@ -1,0 +1,1362 @@
+{
+  "id": "nim",
+  "title": "Nim",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Data Types",
+      "startIndex": 22
+    },
+    {
+      "id": "s3",
+      "title": "Compound Types",
+      "startIndex": 33
+    },
+    {
+      "id": "s4",
+      "title": "Operators",
+      "startIndex": 44
+    },
+    {
+      "id": "s5",
+      "title": "Flow Control",
+      "startIndex": 87
+    },
+    {
+      "id": "s6",
+      "title": "Loops",
+      "startIndex": 99
+    },
+    {
+      "id": "s7",
+      "title": "Procedures",
+      "startIndex": 111
+    },
+    {
+      "id": "s8",
+      "title": "Object-Oriented Programming",
+      "startIndex": 123
+    },
+    {
+      "id": "s9",
+      "title": "Imports and Modules",
+      "startIndex": 129
+    },
+    {
+      "id": "s10",
+      "title": "Error Handling",
+      "startIndex": 146
+    },
+    {
+      "id": "s11",
+      "title": "Enums",
+      "startIndex": 151
+    },
+    {
+      "id": "s12",
+      "title": "Iterators",
+      "startIndex": 154
+    },
+    {
+      "id": "s13",
+      "title": "Files & IO",
+      "startIndex": 157
+    },
+    {
+      "id": "s14",
+      "title": "Generics",
+      "startIndex": 161
+    },
+    {
+      "id": "s15",
+      "title": "Templates and Macros",
+      "startIndex": 162
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "The Nim quick reference cheat sheet that aims at providing help on writing basic syntax and methods."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "helloworld.nim",
+      "kind": "code",
+      "lang": "nim",
+      "code": "echo \"Hello World!\"\n\n# This is a comment\necho \"What's your name? \"\nvar name: string = readLine(stdin)\n# readLine(stdin) asks you to type in a string.\n\necho \"Hi, \", name, \"!\""
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "helloworld.nim",
+      "kind": "text",
+      "body": "Compile `helloworld.nim` with `nim compile`"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "helloworld.nim",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ nim compile helloworld.nim"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "helloworld.nim",
+      "kind": "text",
+      "body": "Run the compiled binary `helloworld` (or `helloworld.exe` if you're on Windows)"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "helloworld.nim",
+      "kind": "code",
+      "lang": "",
+      "code": "./helloworld\nHello, World!\nWhat's your name?\nHi, <name>!"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "helloworld.nim",
+      "kind": "text",
+      "body": "There is also a possibility\nto both compile and run the\nprogram with just one command.\nWe need to type:\n`$ nim c -r helloworld.nim`"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "helloworld.nim",
+      "kind": "text",
+      "body": "#### Common compile commands (terminal)"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "helloworld.nim",
+      "kind": "code",
+      "lang": "sh",
+      "code": "nim c -r main.nim          # debug build, run after compile\nnim c -d:release main.nim  # optimized release build\nnim c --mm:arc main.nim    # ARC memory management (Nim 2 default)"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Useful Resources",
+      "kind": "text",
+      "body": "• [Nim](https://www.nim-lang.org/) _(nim-lang.org)_\n• [The Nim Manual](https://nim-lang.org/docs/manual.html) _(../docs/manual.html)_\n• [Nim Basics](https://narimiran.github.io/nim-basics/) _(narimiran.github.io)_\n• [Learn X in Y minutes](https://learnxinyminutes.com/docs/nim/) _(learnxinyminutes.com)_"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Variables",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# 'var' declares mutable variables.\n\nvar number: int = 100 # Single line declaration\n\n# A 'var' block can declare multiple variables at once.\n\nvar\n  letter: char = 'n'\n  lang = \"N\" & \"im\"\n  length = len(lang)\n  counter: int = 7\n  boat: float\n  truth = true"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Immutable Variables (let)",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# 'let' declares immutable variables.\nlet\n  salute: string = \"Hello!\"\n  x: int = 10\n  y = x + 5\n\nlet z = 20\nz = 500   # Error: 'z' is immutable"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Comments",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# This is a comment\n\n#[\n  This is a multiline comment.\n  In Nim, multiline comments can be nested, beginning with #[\n  ... and ending with ]#\n]#"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Constants",
+      "kind": "code",
+      "lang": "nim",
+      "code": "const\n  debug = true\n  compileBadCode = false\n\n# Constants are declared at compile time and cannot be changed."
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "\"For\" Loops",
+      "kind": "code",
+      "lang": "nim",
+      "code": "for item in (1 ..< 6):\n  if item == 3: break\n  echo item\n\necho \"All done!\""
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "\"For\" Loops",
+      "kind": "text",
+      "body": "See: [Loops](#loops)"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "If Statements",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/strutils\nlet number = parseInt(readLine(stdin))\n\nif number <= 5:\n  echo \"Small sized number.\"\nelif number > 5 and number <= 25:\n  echo \"Medium sized number.\"\nelse:\n  echo \"Big number.\""
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "If Statements",
+      "kind": "text",
+      "body": "See: [Flow Control](#flow-control)"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Procedures / Functions",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc myFunction() =\n  echo \"Hello, this is my function\"\n\nmyFunction()\n\n# prints \"Hello, this is my function\""
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Procedures / Functions",
+      "kind": "text",
+      "body": "See: [Procedures](#procedures)"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Formatted Strings",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/strformat\n\nlet\n  a = \"Hello there.\"\n  b = \"How's it going?\"\n  c = \"These are variables.\"\n\necho fmt\"{a} {b} {c}\" # \"Hello there. How's it going? These are variables.\""
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Formatted Strings",
+      "kind": "text",
+      "body": "See: [Imports](#imports-and-modules)"
+    },
+    {
+      "id": "s2-22",
+      "sectionId": "s2",
+      "title": "Integers",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let\n  a = 11\n  b = 4\n\necho \"a + b = \", a + b # 15\necho \"a - b = \", a - b # 7\necho \"a * b = \", a * b # 44\necho \"a / b = \", a / b # 2.75\necho \"a div b = \", a div b # 2\necho \"a mod b = \", a mod b # 3"
+    },
+    {
+      "id": "s2-23",
+      "sectionId": "s2",
+      "title": "Floats",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let\n  c = 6.75\n  d = 2.25\n\necho \"c + d = \", c + d # 9.0\necho \"c - d = \", c - d # 4.5\necho \"c * d = \", c * d # 15.1875\necho \"c / d = \", c / d # 3.0"
+    },
+    {
+      "id": "s2-24",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let\n  m = \"word\"\n  n = \"A sentence with punctuation.\"\n  o = \"\"\n  p = \"32\"\n  q = \"!\"\n\necho m\n# prints \"word\"\necho p, \" is a string.\"\n# prints \"32 is a string.\""
+    },
+    {
+      "id": "s2-25",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "text",
+      "body": "#### String Concatenation"
+    },
+    {
+      "id": "s2-26",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "code",
+      "lang": "nim",
+      "code": "var\n  p = \"abc\"\n  q = \"xy\"\n  r = 'z'\n\np.add(\"def\")   # modifies p\nq.add(r)       # chars can be added to strings\n\necho p         # \"abcdef\"\necho q         # \"xyz\"\n\n# `&` creates a new string:\necho p & q     # \"abcdefxyz\""
+    },
+    {
+      "id": "s2-27",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "text",
+      "body": "#### Special Escape Sequences"
+    },
+    {
+      "id": "s2-28",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "code",
+      "lang": "nim",
+      "code": "echo \"line1\\nline2\"     # newline\necho \"col1\\tcol2\"       # tab\necho \"A\\\\B\\\\C\"          # backslash\n\n# Raw strings ignore escapes:\necho r\"line1\\nline2\""
+    },
+    {
+      "id": "s2-29",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "text",
+      "body": "See also: [Escape Sequences](https://nim-lang.org/docs/manual.html#lexical-analysis-string-literals)"
+    },
+    {
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "Characters",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let\n  h = 'z'\n  i = '+'\n  j = '2'\n  k = '35'   # error: too many characters\n  l = 'xy'   # error: too many characters"
+    },
+    {
+      "id": "s2-31",
+      "sectionId": "s2",
+      "title": "Booleans",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let x = true\nlet y = false\n\n# Boolean literals are lowercase."
+    },
+    {
+      "id": "s2-32",
+      "sectionId": "s2",
+      "title": "Type Conversion",
+      "kind": "code",
+      "lang": "nim",
+      "code": "\nlet e = 5\nlet f = 23.987\n\n# Converting between ints and floats:\necho float(e)    # 5.0\necho int(f)      # 23\n\n# Mixed operations require explicit conversion:\necho float(e) + f    # 28.987\necho e + int(f)      # 28"
+    },
+    {
+      "id": "s3-33",
+      "sectionId": "s3",
+      "title": "Arrays",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type IntArray = array[0..3, int]\n\nlet a: IntArray = [10, 20, 30, 40]\n\necho a[0]      # 10\necho a.len     # 4"
+    },
+    {
+      "id": "s3-34",
+      "sectionId": "s3",
+      "title": "Sequences",
+      "kind": "code",
+      "lang": "nim",
+      "code": "var s: seq[int] = @[1, 2, 3]\ns.add(4)\n\necho s         # @[1, 2, 3, 4]\necho s.len     # 4"
+    },
+    {
+      "id": "s3-35",
+      "sectionId": "s3",
+      "title": "Objects",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type Person = object\n  name: string\n  age: int\n\nlet p = Person(name: \"Ana\", age: 20)\necho p.name"
+    },
+    {
+      "id": "s3-36",
+      "sectionId": "s3",
+      "title": "Tuples",
+      "kind": "code",
+      "lang": "nim",
+      "code": "var person = (name: \"Sophie\", age: 18)\n\necho person.name # Sophie\necho person.age  # 18\n\n# swapping values:\nvar (x, y) = (1, 2)\n(x, y) = (y, x)\necho x, \" \", y     # 2 1"
+    },
+    {
+      "id": "s3-37",
+      "sectionId": "s3",
+      "title": "Sets",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type CharSet = set[char]\n\nlet letters: CharSet = {'a'..'z'}\n\necho 'a' in letters    # true\necho 'Z' in letters    # false"
+    },
+    {
+      "id": "s3-38",
+      "sectionId": "s3",
+      "title": "Reference Objects",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type Node = ref object\n  value: int\n  next: Node     # linked list style\n\nvar n = Node(value: 10)\necho n.value"
+    },
+    {
+      "id": "s3-39",
+      "sectionId": "s3",
+      "title": "Reference Objects",
+      "kind": "text",
+      "body": "Needed for Object Oriented Programming within Nim."
+    },
+    {
+      "id": "s3-40",
+      "sectionId": "s3",
+      "title": "Slicing Sequences and Strings",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let xs = @[10, 20, 30, 40]\n\necho xs[1..2]    # @[20, 30]\necho xs[^2..^1]  # @[30, 40]"
+    },
+    {
+      "id": "s3-41",
+      "sectionId": "s3",
+      "title": "Slicing Sequences and Strings",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s3-42",
+      "sectionId": "s3",
+      "title": "Slicing Sequences and Strings",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let s = \"abcdef\"\n\necho s[0..2]     # \"abc\"\necho s[3..^1]    # \"def\" (^1 = last char)\necho s[1..<4]    # \"bcd\""
+    },
+    {
+      "id": "s3-43",
+      "sectionId": "s3",
+      "title": "Tables/Dictionaries",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/tables\n\nvar ages = initTable[string, int]()\nages[\"Ana\"] = 20\nages[\"Sophie\"] = 18\n\necho ages[\"Ana\"]                 # 20\necho ages.getOrDefault(\"X\", -1)  # -1\n\nfor name, age in ages:\n  echo name, \": \", age"
+    },
+    {
+      "id": "s4-44",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "code",
+      "lang": "nim",
+      "code": "var\n  a = 10\n  b = 3\n\necho a + b      # 13\necho a - b      # 7\necho a * b      # 30\necho a / b      # 3.333333\necho a div b    # 3\necho a mod b    # 1\necho a ^ b      # 1000"
+    },
+    {
+      "id": "s4-45",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s4-46",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`+`",
+      "back": "Add | `x + y`"
+    },
+    {
+      "id": "s4-47",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`-`",
+      "back": "Subtract | `x - y`"
+    },
+    {
+      "id": "s4-48",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`*`",
+      "back": "Multiply | `x * y`"
+    },
+    {
+      "id": "s4-49",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`/`",
+      "back": "Float Divide | `x / y`"
+    },
+    {
+      "id": "s4-50",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`div`",
+      "back": "Integer Divide | `x div y`"
+    },
+    {
+      "id": "s4-51",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`mod`",
+      "back": "Modulo | `x mod y`"
+    },
+    {
+      "id": "s4-52",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`^`",
+      "back": "Power | `x ^ y`"
+    },
+    {
+      "id": "s4-53",
+      "sectionId": "s4",
+      "title": "Assignment",
+      "kind": "text",
+      "body": "These only work on mutable (`var`) variables, not on `let` or `const`."
+    },
+    {
+      "id": "s4-54",
+      "sectionId": "s4",
+      "title": "Assignment",
+      "kind": "code",
+      "lang": "nim",
+      "code": "var value = 1990\necho value # 1990\n\nvalue = 2\necho value # 2"
+    },
+    {
+      "id": "s4-55",
+      "sectionId": "s4",
+      "title": "Assignment",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s4-56",
+      "sectionId": "s4",
+      "title": "Assignment",
+      "kind": "qa",
+      "front": "`=`",
+      "back": "Assign value | `x = y`"
+    },
+    {
+      "id": "s4-57",
+      "sectionId": "s4",
+      "title": "Assignment",
+      "kind": "text",
+      "body": "#### Update operations"
+    },
+    {
+      "id": "s4-58",
+      "sectionId": "s4",
+      "title": "Assignment",
+      "kind": "qa",
+      "front": "`x += y`",
+      "back": "`x = x + y` | add, assign"
+    },
+    {
+      "id": "s4-59",
+      "sectionId": "s4",
+      "title": "Assignment",
+      "kind": "qa",
+      "front": "`x -= y`",
+      "back": "`x = x - y` | subtract, assign"
+    },
+    {
+      "id": "s4-60",
+      "sectionId": "s4",
+      "title": "Assignment",
+      "kind": "qa",
+      "front": "`x *= y`",
+      "back": "`x = x * y` | multiply, assign"
+    },
+    {
+      "id": "s4-61",
+      "sectionId": "s4",
+      "title": "Assignment",
+      "kind": "text",
+      "body": "Other variants like `/=` or `mod=` are not available,\nso just write them out explicitly, e.g. `x = x / y`."
+    },
+    {
+      "id": "s4-62",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let\n  x = 5\n  y = 3\n\necho x > y\n# prints \"true\" because 5 is greater than 3"
+    },
+    {
+      "id": "s4-63",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s4-64",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`==`",
+      "back": "equals | `if x == y`..."
+    },
+    {
+      "id": "s4-65",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`!=`",
+      "back": "not equal to | `if x != y`..."
+    },
+    {
+      "id": "s4-66",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`>`",
+      "back": "greater than | `if x > y`..."
+    },
+    {
+      "id": "s4-67",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`<`",
+      "back": "less than | `if x < y`..."
+    },
+    {
+      "id": "s4-68",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`>=`",
+      "back": "greater than or equal to | `if x >= y`..."
+    },
+    {
+      "id": "s4-69",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`<=`",
+      "back": "less than or equal to | `if x <= y`..."
+    },
+    {
+      "id": "s4-70",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "text",
+      "body": "Comparison operators are used to compare two values."
+    },
+    {
+      "id": "s4-71",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "text",
+      "body": "#### Lexicographical Comparison"
+    },
+    {
+      "id": "s4-72",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "text",
+      "body": "They also work on `char` and `string` values via lexicographic order."
+    },
+    {
+      "id": "s4-73",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "code",
+      "lang": "nim",
+      "code": "echo \"apple\" < \"banana\"  # true\necho \"axyz\" < \"axyb\"     # true\necho \"ooooo\" > \"o\"       # true\necho \"abc\" < \"ab\"        # false\n\necho 'a' < 'd'           # true\necho 'a' < 'Z'           # false"
+    },
+    {
+      "id": "s4-74",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`and`",
+      "back": "`if a > 0 and a < 10:` | From 1 to 9"
+    },
+    {
+      "id": "s4-75",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`or`",
+      "back": "`if x == 0 or y == 0:` | Either one of them is 0"
+    },
+    {
+      "id": "s4-76",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`not`",
+      "back": "`if not isValid:` | If `isValid` is not true"
+    },
+    {
+      "id": "s4-77",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`xor`",
+      "back": "`if flagA xor flagB:` | Only one of them is true"
+    },
+    {
+      "id": "s4-78",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "text",
+      "body": "Logical operators work on `bool`."
+    },
+    {
+      "id": "s4-79",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "text",
+      "body": "#### Extra Bitwise Operators"
+    },
+    {
+      "id": "s4-80",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`and`",
+      "back": "`a and b` | `12`"
+    },
+    {
+      "id": "s4-81",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`or`",
+      "back": "`a or b` | `61`"
+    },
+    {
+      "id": "s4-82",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`xor`",
+      "back": "`a xor b` | `49`"
+    },
+    {
+      "id": "s4-83",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`not`",
+      "back": "`not a` | `-61`"
+    },
+    {
+      "id": "s4-84",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`shl`",
+      "back": "`a shl 2` | `240`"
+    },
+    {
+      "id": "s4-85",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "qa",
+      "front": "`shr`",
+      "back": "`a shr 2` | `15`"
+    },
+    {
+      "id": "s4-86",
+      "sectionId": "s4",
+      "title": "Logical Operators {.row-span-2}",
+      "kind": "text",
+      "body": "These work on integers bit-by-bit; use them for flags, masks, low-level code, etc."
+    },
+    {
+      "id": "s5-87",
+      "sectionId": "s5",
+      "title": "Match Case",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let x = 5\ncase x:\nof 0, 1:\n  echo \"small\"\nof 2, 3, 4:\n  echo \"medium\"\nelse:\n  echo \"large\""
+    },
+    {
+      "id": "s5-88",
+      "sectionId": "s5",
+      "title": "Match Case",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s5-89",
+      "sectionId": "s5",
+      "title": "Match Case",
+      "kind": "text",
+      "body": "`case of` can look for ranges too."
+    },
+    {
+      "id": "s5-90",
+      "sectionId": "s5",
+      "title": "Match Case",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let age = 17\n\ncase age:\nof 0..12:\n  echo \"child\"\nof 13..19:\n  echo \"teen\"\nelse:\n  echo \"adult\""
+    },
+    {
+      "id": "s5-91",
+      "sectionId": "s5",
+      "title": "Match Case",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s5-92",
+      "sectionId": "s5",
+      "title": "Match Case",
+      "kind": "text",
+      "body": "...and `strings` and `chars`, too"
+    },
+    {
+      "id": "s5-93",
+      "sectionId": "s5",
+      "title": "Match Case",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let cmd = \"quit\"\n\ncase cmd:\nof \"help\":\n  echo \"show help\"\nof \"quit\", \"exit\":\n  echo \"bye!\"\nelse:\n  echo \"unknown command\""
+    },
+    {
+      "id": "s5-94",
+      "sectionId": "s5",
+      "title": "Match Case",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s5-95",
+      "sectionId": "s5",
+      "title": "Match Case",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let ch = 'g'\ncase ch:\nof {'a', 'e', 'i', 'o', 'u'}:\n  echo \"vowel\"\nelse:\n  echo \"consonant or symbol\""
+    },
+    {
+      "id": "s5-96",
+      "sectionId": "s5",
+      "title": "Basic If-Else",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let num = 5\n\nif num > 10:\n  echo \"num is bigger than 10\"\nelif num < 10:\n  echo \"num is smaller than 10\"\nelse:\n  echo \"num is exactly 10\""
+    },
+    {
+      "id": "s5-97",
+      "sectionId": "s5",
+      "title": "One Liners",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let\n  a = 330\n  b = 200\n\nlet r = if a > b: a else: b\n\necho r # 330"
+    },
+    {
+      "id": "s5-98",
+      "sectionId": "s5",
+      "title": "Compile-Time Conditions",
+      "kind": "code",
+      "lang": "nim",
+      "code": "when defined(linux):\n  echo \"Compiled on Linux\"\nelif defined(windows):\n  echo \"Compiled on Windows\"\nelse:\n  echo \"Unknown OS\""
+    },
+    {
+      "id": "s6-99",
+      "sectionId": "s6",
+      "title": "For Loops",
+      "kind": "code",
+      "lang": "nim",
+      "code": "for i in 1..5:\n  echo i\n# 1 2 3 4 5"
+    },
+    {
+      "id": "s6-100",
+      "sectionId": "s6",
+      "title": "For Loops",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s6-101",
+      "sectionId": "s6",
+      "title": "For Loops",
+      "kind": "code",
+      "lang": "nim",
+      "code": "for i in 0..<3:\n  echo i\n# 0 1 2"
+    },
+    {
+      "id": "s6-102",
+      "sectionId": "s6",
+      "title": "For Loops",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s6-103",
+      "sectionId": "s6",
+      "title": "For Loops",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# i = index, v = value in sequence\nfor i, v in @[10, 20, 30]:\n  echo i, \": \", v\n# 0: 10\n# 1: 20\n# 2: 30"
+    },
+    {
+      "id": "s6-104",
+      "sectionId": "s6",
+      "title": "For Loops",
+      "kind": "text",
+      "body": "**Keep in mind**: \\\n1..5 = Inclusive (1 2 3 4 5) \\\n1..<5 = Exclusive (1 2 3 4)"
+    },
+    {
+      "id": "s6-105",
+      "sectionId": "s6",
+      "title": "While Loops",
+      "kind": "code",
+      "lang": "nim",
+      "code": "var counter = 0\n\nwhile counter <= 10:\n  counter = counter + 1\n  echo counter # prints 1..10"
+    },
+    {
+      "id": "s6-106",
+      "sectionId": "s6",
+      "title": "Infinite Loops",
+      "kind": "code",
+      "lang": "nim",
+      "code": "while true:\n  echo \"ay! \""
+    },
+    {
+      "id": "s6-107",
+      "sectionId": "s6",
+      "title": "Infinite Loops",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s6-108",
+      "sectionId": "s6",
+      "title": "Infinite Loops",
+      "kind": "code",
+      "lang": "nim",
+      "code": "while 1 > 0:\n  echo \"echo... \""
+    },
+    {
+      "id": "s6-109",
+      "sectionId": "s6",
+      "title": "Break Statements",
+      "kind": "code",
+      "lang": "nim",
+      "code": "var query = \"\"\nwhile true:\n  echo \"Do you want out?\"\n  query = readLine(stdin)\n  if query == \"yes\":\n    echo \"Well then.\"\n    break\n  else:\n    echo \"I'll ask again.\""
+    },
+    {
+      "id": "s6-110",
+      "sectionId": "s6",
+      "title": "Continue Statements",
+      "kind": "code",
+      "lang": "nim",
+      "code": "for i in 1..5:\n  if i mod 2 == 0: continue\n  echo i\n# prints only odd numbers: 1 3 5"
+    },
+    {
+      "id": "s7-111",
+      "sectionId": "s7",
+      "title": "Simple Procedure",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc salute() =\n  echo \"Hello!\"\n\nsalute() # prints \"Hello!\""
+    },
+    {
+      "id": "s7-112",
+      "sectionId": "s7",
+      "title": "Procedures with Parameters",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc addition(a: int, b: int): int =\n  a + b\n\necho addition(20, 30) # returns 50"
+    },
+    {
+      "id": "s7-113",
+      "sectionId": "s7",
+      "title": "Using result",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc double(x: int): int =\n  result = x * 2\n\necho double(5) # returns 10"
+    },
+    {
+      "id": "s7-114",
+      "sectionId": "s7",
+      "title": "Using result",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s7-115",
+      "sectionId": "s7",
+      "title": "Using result",
+      "kind": "text",
+      "body": "Useful when building results step-by-step:"
+    },
+    {
+      "id": "s7-116",
+      "sectionId": "s7",
+      "title": "Using result",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc sumAll(xs: seq[int]): int =\n  for n in xs:\n    result += n\n\necho sumAll(@[1,1,1,1,1]) # returns 5"
+    },
+    {
+      "id": "s7-117",
+      "sectionId": "s7",
+      "title": "Default Parameters",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc welcome(name = \"stranger\") =\n  echo \"Hi, \", name\n\nwelcome(\"Sophie\") # prints \"Hi, Sophie\"\nwelcome()         # uses default, prints \"Hi, stranger\""
+    },
+    {
+      "id": "s7-118",
+      "sectionId": "s7",
+      "title": "Procedures returning multiple values",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc divmod(a, b: int): (int, int) =\n  (a div b, a mod b)\n\nlet (q, r) = divmod(10, 3)\necho q, \" \", r   # 3 1"
+    },
+    {
+      "id": "s7-119",
+      "sectionId": "s7",
+      "title": "Anonymous Procedures (Lambdas)",
+      "kind": "code",
+      "lang": "nim",
+      "code": "let square = proc(x: int): int = x * x\necho square(5) # 25"
+    },
+    {
+      "id": "s7-120",
+      "sectionId": "s7",
+      "title": "Procedures within Procedures",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc outer() =\n  var count = 0\n\n  proc inner() =\n    inc(count)\n    echo count\n\n  inner()\n  inner()\n\nouter()   # prints 1 then 2"
+    },
+    {
+      "id": "s7-121",
+      "sectionId": "s7",
+      "title": "Overloading",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc show(x: int) = echo \"int: \", x\nproc show(x: string) = echo \"string: \", x\n\nshow(10)\nshow(\"hi\")"
+    },
+    {
+      "id": "s7-122",
+      "sectionId": "s7",
+      "title": "Discardable Procedure Returns",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc doSomething(): int {.discardable.} =\n  123\n\ndoSomething()      # allowed now"
+    },
+    {
+      "id": "s8-123",
+      "sectionId": "s8",
+      "title": "Ref Objects and Inheritance",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type\n  Animal = ref object of RootObj\n    name: string\n\n  Dog = ref object of Animal\n    breed: string\n\nmethod speak(a: Animal) {.base.} =\n  echo a.name, \" makes a sound.\"\n\nmethod speak(d: Dog) =\n  echo d.name, \" barks!\"\n\nvar\n  a: Animal = Animal(name: \"Creature\")\n  d: Animal = Dog(name: \"Fido\", breed: \"Mutt\")  # Dog upcasted to Animal\n\nspeak(a)  # Creature makes a sound.\nspeak(d)  # Fido barks!"
+    },
+    {
+      "id": "s8-124",
+      "sectionId": "s8",
+      "title": "Ref Objects and Inheritance",
+      "kind": "text",
+      "body": "Use `ref object of RootObj` + `method` when you need runtime polymorphism."
+    },
+    {
+      "id": "s8-125",
+      "sectionId": "s8",
+      "title": "Procs as Methods",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type\n  Counter = ref object\n    value: int\n\nproc inc(c: var Counter) =\n  inc c.value\n\nvar c = Counter(value: 0)\ninc(c)\necho c.value  # 1"
+    },
+    {
+      "id": "s8-126",
+      "sectionId": "s8",
+      "title": "Constructor Procs",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type\n  Dog = ref object\n    name: string\n    age: int\n\nproc newDog(name: string; age: int): Dog =\n  Dog(name: name, age: age)\n\nlet d = newDog(\"Fido\", 3)\necho d.name, \" is \", d.age, \" years old\""
+    },
+    {
+      "id": "s8-127",
+      "sectionId": "s8",
+      "title": "Type tests and Downcasting",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type\n  Animal = ref object of RootObj\n    name: string\n\n  Dog = ref object of Animal\n    breed: string\n\nproc newDog(name, breed: string): Dog =\n  Dog(name: name, breed: breed)\n\nvar a: Animal = newDog(\"Fido\", \"mutt\")\n\nif a of Dog:                       # runtime type check\n  let d = Dog(a)                   # downcast\n  echo d.name, \" is a \", d.breed"
+    },
+    {
+      "id": "s8-128",
+      "sectionId": "s8",
+      "title": "Type tests and Downcasting",
+      "kind": "text",
+      "body": "`x of Type` checks the dynamic type; `Type(x)` downcasts (unsafe if you lie)."
+    },
+    {
+      "id": "s9-129",
+      "sectionId": "s9",
+      "title": "Basic Imports",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/math\n\necho sqrt(9.0) # 3.0"
+    },
+    {
+      "id": "s9-130",
+      "sectionId": "s9",
+      "title": "Basic Imports",
+      "kind": "text",
+      "body": "See also: [Standard Library](https://nim-lang.org/docs/lib.html)"
+    },
+    {
+      "id": "s9-131",
+      "sectionId": "s9",
+      "title": "Importing Multiple Modules",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/[strutils, sequtils]\n\necho \"hi\".toUpperAscii()    # \"HI\"\necho @[1,2,3].mapIt(it * 2) # @[2, 4, 6]"
+    },
+    {
+      "id": "s9-132",
+      "sectionId": "s9",
+      "title": "Importing Specific Modules",
+      "kind": "code",
+      "lang": "nim",
+      "code": "from std/strutils import toLowerAscii\n\necho toLowerAscii(\"ABC\")  # \"abc\""
+    },
+    {
+      "id": "s9-133",
+      "sectionId": "s9",
+      "title": "Renaming Modules",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/random as rng\n\nrng.randomize()\n\necho rng.rand(1..10) # anywhere from 1 to 10"
+    },
+    {
+      "id": "s9-134",
+      "sectionId": "s9",
+      "title": "Renaming Modules",
+      "kind": "text",
+      "body": "_Don't forget to use randomize() if you're using the std/random library, or else you won't have randomness._"
+    },
+    {
+      "id": "s9-135",
+      "sectionId": "s9",
+      "title": "Creating Modules",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# utils.nim\nproc greet*(name: string) =\n  echo \"Hello, \", name"
+    },
+    {
+      "id": "s9-136",
+      "sectionId": "s9",
+      "title": "Creating Modules",
+      "kind": "text",
+      "body": "(The asterisk means \"export this procedure from the module\".)"
+    },
+    {
+      "id": "s9-137",
+      "sectionId": "s9",
+      "title": "Creating Modules",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s9-138",
+      "sectionId": "s9",
+      "title": "Creating Modules",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# main.nim\nimport utils\n\ngreet(\"John\") # prints \"Hello, John\""
+    },
+    {
+      "id": "s9-139",
+      "sectionId": "s9",
+      "title": "`when isMainModule`",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc run() =\n  echo \"Running...\"\n\nwhen isMainModule:\n  run()  # Only runs when this file is the program entry point"
+    },
+    {
+      "id": "s9-140",
+      "sectionId": "s9",
+      "title": "`when isMainModule`",
+      "kind": "text",
+      "body": "_Code inside when isMainModule: is skipped when the file is imported._"
+    },
+    {
+      "id": "s9-141",
+      "sectionId": "s9",
+      "title": "Re-exporting",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# utils.nim\nimport std/strutils\nexport strutils    # re-export everything from strutils"
+    },
+    {
+      "id": "s9-142",
+      "sectionId": "s9",
+      "title": "Re-exporting",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s9-143",
+      "sectionId": "s9",
+      "title": "Re-exporting",
+      "kind": "text",
+      "body": "Now main.nim can use toUpperAscii directly, through utils."
+    },
+    {
+      "id": "s9-144",
+      "sectionId": "s9",
+      "title": "Re-exporting",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# main.nim\nimport utils\n\necho \"hi\".toUpperAscii()"
+    },
+    {
+      "id": "s9-145",
+      "sectionId": "s9",
+      "title": "Prelude Module",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/prelude\ninclude std/prelude\n  # same as:\n  # import std/[os, strutils, times, parseutils, hashes, tables, sets, sequtils, parseopt, strformat]\nlet x = 1\nassert \"foo $# $#\" % [$x, \"bar\"] == \"foo 1 bar\"\nassert toSeq(1..3) == @[1, 2, 3]\nwhen not defined(js) or defined(nodejs):\n  assert getCurrentDir().len > 0\n  assert ($now()).startsWith \"20\""
+    },
+    {
+      "id": "s10-146",
+      "sectionId": "s10",
+      "title": "Try - Except - Finally",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/strutils\n\ntry:\n  let x = parseInt(\"42a\")         # invalid integer\n  echo x\nexcept ValueError as e:\n  echo \"Value error: \", e.msg     # catch conversion error\nexcept IOError:\n  echo \"I/O error!\"\nfinally:\n  echo \"This always runs\""
+    },
+    {
+      "id": "s10-147",
+      "sectionId": "s10",
+      "title": "Raising Exceptions",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type\n  MyError* = object of Exception\n\nproc loadData(name: string) =\n  if name == \"\":\n    raise newException(MyError, \"No name provided\")\n  # ... else proceed\n\nloadData(\"\")  # raises MyError"
+    },
+    {
+      "id": "s10-148",
+      "sectionId": "s10",
+      "title": "`defer` for Cleanup",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc processFile(path: string) =\n  var f = open(path, fmRead)\n  defer:\n    close(f)\n  # work with f …"
+    },
+    {
+      "id": "s10-149",
+      "sectionId": "s10",
+      "title": "Try as Exception",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/strutils\n\nlet result = try: parseInt(\"bad\")\n             except ValueError: -1\n\necho result  # prints -1"
+    },
+    {
+      "id": "s10-150",
+      "sectionId": "s10",
+      "title": "Exception Tracking with raises",
+      "kind": "code",
+      "lang": "nim",
+      "code": "proc riskyOperation() {.raises: [IOError].} =\n  # this proc may raise IOError\n  raise newException(IOError, \"fail\")\n\n# A proc with {.raises: []} must not raise any catchable exception."
+    },
+    {
+      "id": "s11-151",
+      "sectionId": "s11",
+      "title": "Basic Usage",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type\n  Direction = enum\n    north, east, south, west\n\nvar d = north\n\nif d == north:\n  echo \"Going up!\""
+    },
+    {
+      "id": "s11-152",
+      "sectionId": "s11",
+      "title": "Enums and `case`",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# with the same Direction enum:\n\nvar d = north\n\ncase d:\n  of north: echo \"N\"\n  of south: echo \"S\"\n  of east:  echo \"E\"\n  of west:  echo \"W\""
+    },
+    {
+      "id": "s11-153",
+      "sectionId": "s11",
+      "title": "Enum as an Ordinal",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# with the same Direction enum:\necho ord(north)   # 0\necho succ(north)  # east\necho pred(south)  # east"
+    },
+    {
+      "id": "s12-154",
+      "sectionId": "s12",
+      "title": "Basic Iterator",
+      "kind": "code",
+      "lang": "nim",
+      "code": "iterator countUp(a, b: int): int =\n  var i = a\n  while i <= b:\n    yield i      # `yield` produces a value for the `for` loop\n    inc i\n\nfor n in countUp(1, 5):\n  echo n\n# 1 2 3 4 5"
+    },
+    {
+      "id": "s12-155",
+      "sectionId": "s12",
+      "title": "Common Built-In Iterators",
+      "kind": "code",
+      "lang": "nim",
+      "code": "for i in countup(1, 3):\n  echo i               # 1 2 3\n\nfor i in countdown(3, 1):\n  echo i               # 3 2 1"
+    },
+    {
+      "id": "s12-156",
+      "sectionId": "s12",
+      "title": "Defining your own Iterator",
+      "kind": "code",
+      "lang": "nim",
+      "code": "iterator evensUpTo(n: int): int =\n  var x = 0\n  while x <= n:\n    yield x\n    x += 2\n\nfor e in evensUpTo(10):\n  echo e        # 0 2 4 6 8 10"
+    },
+    {
+      "id": "s13-157",
+      "sectionId": "s13",
+      "title": "Check Paths and Existence",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/os\n\nif fileExists(\"data.txt\"):\n  echo \"File exists!\"\n\nif dirExists(\"configs\"):\n  echo \"Directory exists!\"\n\necho getCurrentDir()\necho absolutePath(\"data.txt\")"
+    },
+    {
+      "id": "s13-158",
+      "sectionId": "s13",
+      "title": "Read / Write Whole File",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# Write whole file\nwriteFile(\"out.txt\", \"Hello Nim!\\n\")\n\n# Read whole file\nlet text = readFile(\"out.txt\")\necho text"
+    },
+    {
+      "id": "s13-159",
+      "sectionId": "s13",
+      "title": "Manual Open/Close with `defer`",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/syncio\n\nproc writeLog() =\n  var f = open(\"log.txt\", fmWrite)\n  defer: f.close()\n  f.writeLine(\"entry 1\")\n  f.writeLine(\"entry 2\")\n\nwhen isMainModule:\n  writeLog()"
+    },
+    {
+      "id": "s13-160",
+      "sectionId": "s13",
+      "title": "Read a File Line-By-Line",
+      "kind": "code",
+      "lang": "nim",
+      "code": "for line in lines(\"data.txt\"):\n  echo line"
+    },
+    {
+      "id": "s14-161",
+      "sectionId": "s14",
+      "title": "Generic Types and Procedures",
+      "kind": "code",
+      "lang": "nim",
+      "code": "type\n  Box[T] = object\n    value: T\n\nproc wrap[T](x: T): Box[T] =\n  Box[T](value: x)\n\nlet a = wrap(10)        # Box[int]\nlet b = wrap(\"hello\")   # Box[string]\n\necho a.value            # 10\necho b.value            # hello"
+    },
+    {
+      "id": "s15-162",
+      "sectionId": "s15",
+      "title": "Templates",
+      "kind": "code",
+      "lang": "nim",
+      "code": "# Template = macro-like, expanded at compile time\ntemplate times2(x: untyped): untyped = (x) * 2\necho times2(21)  # 42"
+    },
+    {
+      "id": "s15-163",
+      "sectionId": "s15",
+      "title": "Macros {.row-span-2}",
+      "kind": "code",
+      "lang": "nim",
+      "code": "import std/macros\n\nmacro dbg(expr: untyped): untyped =\n  # prints both the expression and its value\n  result = quote do:\n    echo astToStr(`expr`), \" = \", `expr`\n\nlet x = 10\ndbg(x * 2)\n# prints: x * 2 = 20"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/nim.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/nim.md",
+    "generatedAt": "2025-12-16T07:36:11.747Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

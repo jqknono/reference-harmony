@@ -1,0 +1,713 @@
+{
+  "id": "julia",
+  "title": "也显示从其他模块显式导入的名称",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Julia 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "本备忘清单旨在快速理解 [Julia](https://julialang.org/) 一份简单而粗略的语言概览，供您参考。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "Julia 是什么？",
+      "kind": "text",
+      "body": "• **`Julia`** 是一种为科学计算而生的，开源、多平台、高性能的高级编程语言\n• **`Julia`** 有一个基于 LLVM 的 JIT 编译器，这让使用者无需编写底层的代码也能拥有像 C 与 FORTRAN 那样的性能。因为代码在运行中编译，你可以在 shell 或 REPL 中运行代码，这也是一种推荐的工作流程\n• **`Julia`** 是动态类型的。并且提供了为并行计算和分布式运算设计的多重派发机制\n• **`Julia`** 自带包管理器\n• **`Julia`** 有许多内置的数学函数，包括特殊函数 (例如：Gamma 函数)。并且支持开箱即用的复数运算\n• **`Julia`** 允许你通过类似 Lisp 的宏来自动生成代码\n• **`Julia`** 诞生于 2012 年"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "赋值语句",
+      "kind": "code",
+      "lang": "julia",
+      "code": "answer = 42\nx, y, z = 1, [1:10; ], \"A string\"\nx, y = y, x     # 交换 x, y"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "常量定义",
+      "kind": "code",
+      "lang": "julia",
+      "code": "const DATE_OF_BIRTH = 2012"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "行尾注释",
+      "kind": "code",
+      "lang": "julia",
+      "code": "i = 1           # 这是一行注释\n# 多行注释\n#= 这是另一行注释 =#"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "链式操作",
+      "kind": "code",
+      "lang": "julia",
+      "code": "x = y = z = 1   # 从右向左\n0 < x < 3       # true\n5 < x != y < 5  # false"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "函数定义",
+      "kind": "code",
+      "lang": "julia",
+      "code": "function add_one(i)\n    return i + 1\nend"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "插入 LaTeX 符号",
+      "kind": "code",
+      "lang": "julia",
+      "code": "\\delta + [Tab] # δ"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "运算符",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n基本算数运算 | `+`，`-`，`*`，`/`\n幂运算 | `2^3` => 8\n除法 | `3/12` => 0.25\n反向除法 | `7\\3 == 3/7` => true\n取余 | `x % y` 或 `rem(x,y)`\n取反 | `!true` => false\n等于 | `a == b`\n不等于 | `a != b` 或 `a ≠ b`\n小于与大于 | `<` 与 `>`\n小于等于 | `<=` 或 `≤`\n大于等于 | `>=` 或 `≥`\n逐元素运算(点运算) | `[1, 2, 3] .+ [1, 2, 3] == [2, 4, 6]` => true<br /> `[1, 2, 3] .* [1, 2, 3] == [1, 4, 9]` => true\n检测非数值(NaN) | `isnan(NaN)` => true <br />而不是 `NaN == NaN` => false\n三元运算符 | `a == b ? \"Equal\" : \"Not equal\"`\n短路 AND 和 OR 表达式 | `a && b` 和 `a \\|\\| b`\n对象等价 | `a === b`"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "shell/REPL 环境",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n上一次运算的结果 | `ans`\n中断命令执行 | <kbd>Ctrl</kbd> + <kbd>C</kbd>\n清屏 | <kbd>Ctrl</kbd> + <kbd>L</kbd>\n运行程序文件 | `include(\"filename.jl\")`\n查找 func 相关的帮助 | `?func`\n查找 func 的所有定义 | `apropos(\"func\")`\n命令行模式 | `;`\n包管理模式 | `]`\n帮助模式 | `?`\n查找特殊符号输入方式 | `?☆ # \"☆\" can be typed by \\bigwhitestar<tab>`\n退出特殊模式，返回到 REPL | 在空行上按 <kbd>Backspace</kbd>\n退出 REPL | `exit()` 或 <kbd>Ctrl</kbd> + <kbd>D</kbd>"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "缺失值与空值",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n空值(Null) | `nothing`\n缺失数据 | `missing`\n浮点数的非数值 | `NaN`\n滤除缺失值 | `collect(skipmissing([1, 2, missing])) == [1,2]`\n替换缺失值 | `collect((df[:col], 1))`\n检查是否有缺失值 | `ismissing(x)` 而不是 `x == missing`"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "自我检查与反射",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n类型 | `typeof(name)`\n类型检查 | `isa(name, TypeName)`\n列出子类型 | `subtypes(TypeName)`\n列出超类型 | `supertype(TypeName)`\n函数方法 | `methods(func)`\n即时编译的字节码 | `code_llvm(expr)`\n汇编代码 | `code_native(expr)`"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "随机数",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n设置随机数种子 | `Random.seed!(seed)`\n产生随机数 | `rand()` # 均匀分布 [0,1)<br/>`randn()` # 正态分布 (-Inf, Inf)\n产生特定分布的随机数 | `using Distributions`<br/>`my_dist = Bernoulli(0.2)` 举例<br/>`rand(my_dist)`\n以概率 p 从 A 中进行伯努利抽样 | `randsubseq(A, p)`\n随机重排 A 中的元素 | `shuffle(A)`"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "随机数",
+      "kind": "text",
+      "body": "许多随机数函数都需要 `using Random`"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "异常处理",
+      "kind": "code",
+      "lang": "julia",
+      "code": "# 抛出异常 SomeExcep\nthrow(SomeExcep())\n# 再次引发当前的异常\nrethrow()"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "异常处理",
+      "kind": "text",
+      "body": "定义新异常 NewExcep"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "异常处理",
+      "kind": "code",
+      "lang": "julia",
+      "code": "struct NewExcep <: Exception\n    v::String\nend\nBase.showerror(io::IO, e::NewExcep) = print(io, \"A problem with $(e.v)!\")\n\nthrow(NewExcep(\"x\"))\n# 抛出带文本的异常\nerror(msg)"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "异常处理",
+      "kind": "text",
+      "body": "异常处理流程"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "异常处理",
+      "kind": "code",
+      "lang": "julia",
+      "code": "try\n  # 进行一些可能会失败的操作\n  catch ex\n    if isa(ex, SomeExcep)\n        # 处理异常 SomeExcep\n    elseif isa(ex, AnotherExcep)\n        # 处理另一个异常 AnotherExcep\n    else\n        # 处理其余的异常\n    end\n  finally\n  # 永远执行这些语句\nend"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "类型",
+      "kind": "code",
+      "lang": "julia",
+      "code": "# 类型注释\nvar::TypeName\n# 类型声明\nstruct Programmer\n    name::String\n    birth_year::UInt16\n    fave_language::AbstractString\nend\n# 可变类型声明\n将 struct 替换为 mutable struct\n# 类型别名\nconst Nerd = Programmer\n# 类型构造器\nmethods(TypeName)\n# 类型实例\nme = Programmer(\"Ian\", 1984, \"Julia\")\nme = Nerd(\"Ian\", 1984, \"Julia\")\n# 子类型声明\nabstract type Bird end\nstruct Duck <: Bird\n    pond::String\nend\n# 参数化类型\nstruct Point{T <: Real}\n    x::T\n    y::T\nend\n\np = Point{Float64}(1,2)\n# 联合类型\nUnion{Int, String}\n# 遍历类型层级\nsupertype(TypeName) 和 subtypes(TypeName)\n# 默认的超类型\nAny\n# 所有字段\nfieldnames(TypeName)\n# 所有字段类型\nTypeName.types"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "标准库",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\nRandom | `rand`, `randn`, `randsubseq`\nStatistics | `mean`, `std`, `cor`, `median`, `quantile`\nLinearAlgebra | `I`, `eigvals`, `eigvecs`, `det`, `cholesky`\nSparseArrays | `sparse`, `SparseVector`, `SparseMatrixCSC`\nDistributed | `@distributed`, `pmap`, `addprocs`\nDates | `DateTime`, `Date`"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "表达式",
+      "kind": "text",
+      "body": "使用引用 `:( ... )` 或块引用 `quote ... end` 可以创建一个表达式，就像 `parse(str)`，和 `Expr(:call, ...)`。"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "表达式",
+      "kind": "code",
+      "lang": "julia",
+      "code": "x = 1\nline = \"1 + $x\"         # 一些代码\nexpr = Meta.parse(line) # 生成一个 Expr 对象\ntypeof(expr) == Expr # true\ndump(expr)           # 打印生成抽象语法(AST)\neval(expr) == 2      # 对 Expr 对象求值: true"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "表达式",
+      "kind": "text",
+      "body": "Julia 具有同像性：程序被表示为语言本身的数据结构。 实际上 `Julia` 语言里的任何东西都是一个表达式 `Expr`。符号(`Symbols`)即驻留字符串 ，以冒号 `:` 为前缀。相对于其他类型来说，符号效率更高。它也经常用作标识符、字典的键或者数据表里的列名。符号不能进行拼接。"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "text",
+      "body": "读取流"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "code",
+      "lang": "julia",
+      "code": "stream = stdin\nfor line in eachline(stream)\n    # 做点啥\nend"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "text",
+      "body": "读取文件"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "code",
+      "lang": "julia",
+      "code": "open(filename) do file\n    for line in eachline(file)\n        # 做点啥\n    end\nend"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "text",
+      "body": "读取/写入 CSV 文件"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "code",
+      "lang": "julia",
+      "code": "# 读取 CSV 文件\nusing CSV\ndata = CSV.File(filename)\n# 写入 CSV 文件\n[label](koajs.md)CSV.write(filename, data)"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "text",
+      "body": "读取/保存 Julia 对象"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "code",
+      "lang": "julia",
+      "code": "using JLD\n# 保存 Julia 对象\nsave(filename, \"object_key\", object, ...)\n# 读取 Julia 对象\nd = load(filename) # 返回对象的字典"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "text",
+      "body": "读取/保存 HDF5"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "输入/输出",
+      "kind": "code",
+      "lang": "julia",
+      "code": "using HDF5\n# 保存 HDF5\nh5write(filename, \"key\", object)\n# 读取 HDF5\nh5read(filename, \"key\")"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "宏",
+      "kind": "text",
+      "body": "宏允许你在程序中自动生成代码（如：表达式）"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "宏",
+      "kind": "code",
+      "lang": "julia",
+      "code": "# 定义\nmacro macroname(expr)\n    # 做点啥\nend"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "宏",
+      "kind": "text",
+      "body": "使用"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "宏",
+      "kind": "code",
+      "lang": "julia",
+      "code": "macroname(ex1, ex2, ...) 或 @macroname ex1, ex2, ..."
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "宏",
+      "kind": "text",
+      "body": "内置的宏"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "宏",
+      "kind": "code",
+      "lang": "julia",
+      "code": "@assert    # assert (单元测试)\n@which     # 查看对特定参数使用的方法/查找函数所在的模块\n@time      # 运行时间与内存分配统计\n@elapsed   # 返回执行用时\n@allocated # 查看内存分配\n@async     # 异步任务\n\nusing Test\n@test          # 精确相等\n@test x ≈ y    # 近似相等 isapprox(x, y)\n\nusing Profile\n@profile        # 优化"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "宏",
+      "kind": "text",
+      "body": "创建 卫生宏 (hygienic macros)的规则："
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "宏",
+      "kind": "text",
+      "body": "• 在宏的内部只通过 `local` 声明本地变量\n• 在宏的内部不使用 `eval`\n• 转义插值表达式以避免宏变大：`$(esc(expr))`"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "并行计算",
+      "kind": "text",
+      "body": "并行计算相关的工具可以在标准库 `Distributed` 里找到"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "并行计算",
+      "kind": "code",
+      "lang": "julia",
+      "code": "# 启动带 N 各 worker 的 REPL\njulia -p N\n# 可用的 worker 数量\nnprocs()\n# 添加 N 个 worker\naddprocs(N)\n# 查看所有 worker 的 pid\nfor pid in workers()\n    println(pid)\nend\n# 获得正在执行的 worker 的 id\nmyid()\n# 移除 worker\nrmprocs(pid)\n# 在特定 pid 的 worker 上运行 f(args)\nr = remotecall(f, pid, args...)\n# 或:\nr = @spawnat pid f(args)\n...\nfetch(r)\n# 在特定 pid 的 worker 上运行 f(args) (更高效)\nremotecall_fetch(f, pid, args...)\n# 在任意 worker 上运行 f(args)\nr = @spawn f(args) ... fetch(r)\n# 在所有 worker 上运行 f(args)\nr = [@spawnat w f(args) for w in workers()] ... fetch(r)\n# 让表达式 expr 在所有 worker 上执行\n@everywhere expr\n# 并行化带规约函数 red 的循环\nsum = @distributed (red) for i in 1:10^6\n    # 进行并行任务\nend\n# 将 f 用用到集合 coll 中的所有元素上\npmap(f, coll)"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n声明数组 | `arr = Float64[]`\n预分配内存 | `sizehint!(arr, 10^4)`\n访问与赋值 | `arr = Any[1,2]`<br/>`arr[1] = \"Some text\"`\n从 m 到 n 的子数组 | `arr[m:n]`\nn 个 `0.0` 填充的数组 | `zeros(n)`\nn 个 `1.0` 填充的数组 | `ones(n)`\nn 个随机 Int8 填充的数组 | `rand(Int8, n)`\n用值 val 填充数组 | `fill!(arr, val)`\n弹出最后一个元素 | `pop!(arr)`\n弹出第一个元素 | `popfirst!(a)`\nn 个 `#undef` 填充的数组 | `Vector{Type}(undef,n)`\nn 个从 `start` 到 `stop` 的等间距数 | `range(start,stop=stop,length=n)`\n将值 `val` 作为最后一个元素压入数组 | `push!(arr, val)`\n将值 `val` 作为第一个元素压入数组 | `pushfirst!(arr, val)`\n删除指定索引值的元素 | `deleteat!(arr, idx)`\n数组排序 | `sort!(arr)`\n将 `b` 连接到 `a` 后 | `append!(a,b)`\n转化为字符串，并以 delim 分隔 | `join(arr, delim)`\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "code",
+      "lang": "julia",
+      "code": "# 数组比较\na = [1:10;]\nb = a      # b 指向 a\na[1] = -99\na == b     # true\n# 复制元素(而不是地址)/深拷贝\nb = copy(a)\nb = deepcopy(a)\n# 检查值 val 是否在数组 arr 中\nin(val, arr) # 或\nval in arr\n# 改变维数\nreshape(1:6, 3, 2)' == [1 2 3; 4 5 6]"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "线性代数",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n单位矩阵 | `I`\n定义矩阵 | `M = [1 0; 0 1]`\n矩阵维数 | `size(M)`\n选出第 i 行 | `M[i, :]`\n选出第 j 列 | `M[:, j]`\n水平拼接 | `M = [a b] 或 M = hcat(a, b)`\n竖直拼接 | `M = [a ; b]` 或 `M = vcat(a, b)`\n矩阵转置 | `transpose(M)`\n共轭转置 | `M'` 或 `adjoint(M)`\n迹(trace) | `tr(M)`\n行列式 | `det(M)`\n秩(rank) | `rank(M)`\n特征值 | `eigvals(M)`\n特征向量 | `eigvecs(M)`\n矩阵求逆 | `inv(M)`\n解矩阵方程 `M*x == v` | `M\\v` 比 `inv(M)*v` 更好\n求 Moore-Penrose 伪逆 | `pinv(M)`\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "线性代数",
+      "kind": "text",
+      "body": "控制流与循环\n---"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "条件语句",
+      "kind": "code",
+      "lang": "julia",
+      "code": "if x < y\n    println(\"x is less than y\")\nelseif x > y\n    println(\"x is greater than y\")\nelse\n    println(\"x is equal to y\")\nend"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "for 循环",
+      "kind": "code",
+      "lang": "julia",
+      "code": "for i in 1:10\n    println(i)\nend"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "嵌套循环",
+      "kind": "code",
+      "lang": "julia",
+      "code": "for i in 1:10, j = 1:5\n    println(i*j)\nend"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "枚举",
+      "kind": "code",
+      "lang": "julia",
+      "code": "for (idx, val) in enumerate(arr)\n    println(\"the $idx-th element is $val\")\nend"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "while 循环",
+      "kind": "code",
+      "lang": "julia",
+      "code": "while bool_expr\n    # 做点啥\nend"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "text",
+      "body": "```julia {4}\njulia> i = 0\njulia> while true\nglobal i += 1\ni > 5 && break\nprintln(i)\nend"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 退出本次循环"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "text",
+      "body": "for i = 1:6\niseven(i) && continue\nprintln(i)\nend"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "code",
+      "lang": "",
+      "code": "\n数字相关\n---\n\n### 整数类型\n\n`IntN` 和 `UIntN`, 且 `N ∈ {8, 16, 32, 64, 128}`, `BigInt`\n\n### 浮点类型\n\n`FloatN` 且 `N ∈ {16, 32, 64}`\n`BigFloat`\n\n### 类型的最大和最小值"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "text",
+      "body": "typemin(Int8)\ntypemax(Int64)"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 复数类型"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "text",
+      "body": "Complex{T<:Real}"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 虚数单位"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "text",
+      "body": "im"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 机器精度"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "text",
+      "body": "eps() # 等价于 eps(Float64)"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 圆整"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "text",
+      "body": "round()       # 浮点数圆整\nround(Int, x) # 整数圆整"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "退出循环",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 类型转换"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "convert(TypeName, val)"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "TypeName(val)"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 全局常量"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "pi # 3.1415...\nπ  # 3.1415...\nim # real(im * im) == -1"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 更多常量"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "using Base.MathConstants"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n模块\n---\n\n### 定义"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "module PackageName"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "end"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 包含文件 filename.jl"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "include(\"filename.jl\")"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 加载\n<!--rehype:wrap-class=row-span-2-->"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "using ModuleName # 导出所有名称"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "using ModuleName: x, y"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "using ModuleName.x, ModuleName.y:"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import ModuleName"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import ModuleName: x, y"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import ModuleName.x, ModuleName.y"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n`using` 和 `import` 只有一点区别：使用 `using` 时，你需要写 `function Foo.bar(..` 来给 `Foo` 模块的函数 `bar` 增添一个新方法； 而使用 `import Foo.bar` 时，只需写 `function bar(...` 就能达到同样的效果\n\n### 导出"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "names(ModuleName)"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "names(ModuleName, all::Bool)"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "names(ModuleName, all::Bool, imported::Bool)"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text-->\n\n包管理\n---\n\n### 介绍\n\n一个程序包必须先[注册](https://github.com/JuliaRegistries/General)，然后才能在包管理器中看到它。在 Julia 1.0 中，有两种使用包管理器的方法：\n\n- 一是通过 `using Pkg` 导入 `Pkg` 模块，然后用它的函数管理其他包；\n- 或者在 REPL 中输入 `]`，然后按回车。进入特殊的交互式包管理模式。 (要从包管理模式返回 REPL，只需要在空行上按退格键 `BACKSPACE` 就行了)\n\n注意新的工具总是先添加到交互式模式中，然后才会加入 `Pkg` 模块\n\n### 在 Julia 会话中使用 Pkg 管理包\n\n:- | :-\n:- | :-\n列出已安装的包 | `Pkg.status()`\n更新所有包 | `Pkg.update()`\n安装包 | `Pkg.add(\"PackageName\")`\n重新构建包 | `Pkg.build(\"PackageName\")`\n使用包 | `using PackageName`\n删除包 | `Pkg.rm(\"PackageName\")`\n<!--rehype:className=left-align-->\n\n### 交互式包管理模式\n\n:- | :-\n:- | :-\n添加包 | `add PackageName`\n删除包 | `rm PackageName`\n更新包 | `update PackageName`\n使用开发版本 | `dev PackageName` 或 `dev GitRepoUrl`\n返回普通发行版 | `free PackageName`\n<!--rehype:className=left-align-->\n\n另见\n---\n\n- [Julia 官方网站](https://julialang.org/) _(julialang.org)_\n- [快速入门一份简单而粗略的语言概览](https://cheatsheet.juliadocs.org/zh-cn/) _(juliadocs.org)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/julia.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/julia.md",
+    "generatedAt": "2025-12-16T07:36:11.291Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

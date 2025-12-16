@@ -1,0 +1,249 @@
+{
+  "id": "fastapi",
+  "title": "FastAPI",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Routing & Parameters",
+      "startIndex": 4
+    },
+    {
+      "id": "s3",
+      "title": "Request Body & Validation",
+      "startIndex": 7
+    },
+    {
+      "id": "s4",
+      "title": "Forms, Files, Headers",
+      "startIndex": 10
+    },
+    {
+      "id": "s5",
+      "title": "Middleware & Dependency",
+      "startIndex": 13
+    },
+    {
+      "id": "s6",
+      "title": "Errors & JSON API",
+      "startIndex": 15
+    },
+    {
+      "id": "s7",
+      "title": "Templates & Static",
+      "startIndex": 17
+    },
+    {
+      "id": "s8",
+      "title": "Routers & Structure",
+      "startIndex": 19
+    },
+    {
+      "id": "s9",
+      "title": "Docs & Status",
+      "startIndex": 21
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "A concise cheatsheet for FastAPI, a fast and modern web framework for building APIs with Python 3.7+."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Install & Run",
+      "kind": "code",
+      "lang": "bash",
+      "code": "pip install fastapi uvicorn\nuvicorn main:app --reload"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Hello World",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi import FastAPI\napp = FastAPI()\n\n@app.get(\"/\")\ndef root():\n    return {\"message\": \"Hello FastAPI\"}"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "CLI Run Hint",
+      "kind": "code",
+      "lang": "bash",
+      "code": "uvicorn main:app --reload"
+    },
+    {
+      "id": "s2-4",
+      "sectionId": "s2",
+      "title": "Path Parameter",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.get(\"/items/{id}\")\ndef read(id: int):\n    return {\"id\": id}"
+    },
+    {
+      "id": "s2-5",
+      "sectionId": "s2",
+      "title": "Query Parameter",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.get(\"/search\")\ndef find(q: str = \"default\"):\n    return {\"q\": q}"
+    },
+    {
+      "id": "s2-6",
+      "sectionId": "s2",
+      "title": "Optional Query",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.get(\"/filter\")\ndef filter_data(limit: int = 10, active: bool = True):\n    return {\"limit\": limit, \"active\": active}"
+    },
+    {
+      "id": "s3-7",
+      "sectionId": "s3",
+      "title": "Using Pydantic",
+      "kind": "code",
+      "lang": "python",
+      "code": "from pydantic import BaseModel\n\nclass Item(BaseModel):\n    name: str\n    price: float"
+    },
+    {
+      "id": "s3-8",
+      "sectionId": "s3",
+      "title": "JSON Body",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.post(\"/items/\")\ndef create(item: Item):\n    return item"
+    },
+    {
+      "id": "s3-9",
+      "sectionId": "s3",
+      "title": "Response Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.post(\"/items/\", response_model=Item)\ndef create(item: Item):\n    return item"
+    },
+    {
+      "id": "s4-10",
+      "sectionId": "s4",
+      "title": "Form Input",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi import Form\n\n@app.post(\"/login\")\ndef login(user: str = Form(...)):\n    return {\"user\": user}"
+    },
+    {
+      "id": "s4-11",
+      "sectionId": "s4",
+      "title": "File Upload",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi import UploadFile, File\n\n@app.post(\"/upload\")\ndef upload(f: UploadFile = File(...)):\n    return {\"filename\": f.filename}"
+    },
+    {
+      "id": "s4-12",
+      "sectionId": "s4",
+      "title": "Headers / Cookies",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi import Header, Cookie\n\n@app.get(\"/info\")\ndef info(ua: str = Header(None)):\n    return {\"UA\": ua}"
+    },
+    {
+      "id": "s5-13",
+      "sectionId": "s5",
+      "title": "Middleware",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.middleware(\"http\")\nasync def log_req(req, call_next):\n    res = await call_next(req)\n    return res"
+    },
+    {
+      "id": "s5-14",
+      "sectionId": "s5",
+      "title": "Dependency",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi import Depends\n\ndef auth(token: str = \"\"):\n    if token != \"xyz\": raise HTTPException(401)\n    return True\n\n@app.get(\"/secure\")\ndef secure(_: bool = Depends(auth)):\n    return {\"secure\": True}"
+    },
+    {
+      "id": "s6-15",
+      "sectionId": "s6",
+      "title": "HTTP Error",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi import HTTPException\n\n@app.get(\"/err\")\ndef error():\n    raise HTTPException(404, \"Not Found\")"
+    },
+    {
+      "id": "s6-16",
+      "sectionId": "s6",
+      "title": "JSON API",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi import FastAPI\n\n@app.get(\"/json\")\ndef get_data():\n    return {\"status\": \"ok\"}"
+    },
+    {
+      "id": "s7-17",
+      "sectionId": "s7",
+      "title": "Mount Static",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi.staticfiles import StaticFiles\napp.mount(\"/static\", StaticFiles(directory=\"static\"), name=\"static\")"
+    },
+    {
+      "id": "s7-18",
+      "sectionId": "s7",
+      "title": "Jinja2 Support",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi.templating import Jinja2Templates\ntemplates = Jinja2Templates(\"templates\")"
+    },
+    {
+      "id": "s8-19",
+      "sectionId": "s8",
+      "title": "Routers (Blueprints)",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi import APIRouter\nrouter = APIRouter()\n\n@router.get(\"/\")\ndef admin():\n    return {\"admin\": True}\n\napp.include_router(router, prefix=\"/admin\")"
+    },
+    {
+      "id": "s8-20",
+      "sectionId": "s8",
+      "title": "Folder Layout",
+      "kind": "code",
+      "lang": "bash",
+      "code": "project/\n├── main.py\n├── static/\n├── templates/\n├── routers/\n│   └── admin.py\n└── models/"
+    },
+    {
+      "id": "s9-21",
+      "sectionId": "s9",
+      "title": "Built-in Docs",
+      "kind": "text",
+      "body": "• Swagger: `/docs`\n• ReDoc: `/redoc`"
+    },
+    {
+      "id": "s9-22",
+      "sectionId": "s9",
+      "title": "Custom Status Code",
+      "kind": "code",
+      "lang": "python",
+      "code": "from fastapi import status\n\n@app.post(\"/create\", status_code=status.HTTP_201_CREATED)\ndef create():\n    return {\"msg\": \"Created\"}"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/fastapi.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/fastapi.md",
+    "generatedAt": "2025-12-16T07:36:11.625Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

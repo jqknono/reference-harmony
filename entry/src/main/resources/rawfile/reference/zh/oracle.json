@@ -1,0 +1,1197 @@
+{
+  "id": "oracle",
+  "title": "oracle",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Oracle 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "SELECT 语句",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT * \nFROM beverages \nWHERE field1 = 'Kona' \n  AND field2 = 'coffee' \n  AND field3 = 122;"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "SELECT INTO 语句",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT name, address, phone_number \nINTO v_employee_name, v_employee_address, v_employee_phone_number \nFROM employee \nWHERE employee_id = 6;"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "INSERT 语句",
+      "kind": "text",
+      "body": "使用 VALUES 关键字插入"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "INSERT 语句",
+      "kind": "code",
+      "lang": "sql",
+      "code": "INSERT INTO table_name \nVALUES ('Value1', 'Value2', ... );\n\nINSERT INTO table_name (Column1, Column2, ... ) \nVALUES ( 'Value1', 'Value2', ... );"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "INSERT 语句",
+      "kind": "text",
+      "body": "使用 SELECT 语句插入"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "INSERT 语句",
+      "kind": "code",
+      "lang": "sql",
+      "code": "INSERT INTO table_name\nSELECT Value1, Value2, ...\nFROM table_name;\n\nINSERT INTO table_name (Column1, Column2, ...)\nSELECT Value1, Value2, ...\nFROM table_name;"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "DELETE 语句",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DELETE FROM table_name \nWHERE some_column = some_value;\n\nDELETE FROM customer \nWHERE sold = 0;"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "UPDATE 语句",
+      "kind": "code",
+      "lang": "sql",
+      "code": "-- 更新该表的整个列，设置 `state` 列所有值为 `CA`\nUPDATE customer SET state='CA';\n-- 更新表的具体记录eg：\nUPDATE customer SET name='Joe' WHERE customer_id=10;\n-- 当 `paid` 列大于零时，将列 `invoice` 更新为 `paid`\nUPDATE movies SET invoice='paid' WHERE paid > 0;"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "UPDATE 语句",
+      "kind": "text",
+      "body": "SEQUENCES\n---"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "CREATE SEQUENCE",
+      "kind": "text",
+      "body": "序列的语法是"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "CREATE SEQUENCE",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE SEQUENCE sequence_name\n    MINVALUE value\n    MAXVALUE value\n    START WITH value\n    INCREMENT BY value\n    CACHE value;"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "CREATE SEQUENCE",
+      "kind": "text",
+      "body": "例如"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "CREATE SEQUENCE",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE SEQUENCE supplier_seq\n    MINVALUE 1\n    MAXVALUE 999999999999999999999999999\n    START WITH 1\n    INCREMENT BY 1\n    CACHE 20;"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "text",
+      "body": "将序列增加一定数量"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER SEQUENCE <sequence_name> INCREMENT BY <integer>;\nALTER SEQUENCE seq_inc_by_ten  INCREMENT BY 10;"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "text",
+      "body": "改变序列的最大值"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER SEQUENCE <sequence_name> MAXVALUE <integer>;\nALTER SEQUENCE seq_maxval  MAXVALUE  10;"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "text",
+      "body": "设置序列循环或不循环"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER SEQUENCE <sequence_name> <CYCLE | NOCYCLE>;\nALTER SEQUENCE seq_cycle NOCYCLE;"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "text",
+      "body": "配置序列以缓存值"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER SEQUENCE <sequence_name> CACHE <integer> | NOCACHE;\nALTER SEQUENCE seq_cache NOCACHE;"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "text",
+      "body": "设置是否按顺序返回值"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "ALTER SEQUENCE",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER SEQUENCE <sequence_name> <ORDER | NOORDER>;\nALTER SEQUENCE seq_order NOORDER;\nALTER SEQUENCE seq_order;"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "从字符串生成查询",
+      "kind": "text",
+      "body": "有时需要从字符串创建查询"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "从字符串生成查询",
+      "kind": "code",
+      "lang": "sql",
+      "code": "PROCEDURE oracle_runtime_query_pcd IS\n    TYPE ref_cursor IS REF CURSOR;\n    l_cursor        ref_cursor;\n\n    v_query         varchar2(5000);\n    v_name          varchar2(64);\nBEGIN\n    v_query := 'SELECT name FROM employee WHERE employee_id=5';\n    OPEN l_cursor FOR v_query;\n    LOOP\n      FETCH l_cursor INTO v_name;\n      EXIT WHEN l_cursor%NOTFOUND;\n    END LOOP;\n    CLOSE l_cursor;\nEND;"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "从字符串生成查询",
+      "kind": "text",
+      "body": "这是一个如何完成动态查询的非常简单的示例"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "字符串操作",
+      "kind": "code",
+      "lang": "sql",
+      "code": "length( string1 );"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "字符串操作",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "字符串操作",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT length('hello world') FROM dual;"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "字符串操作",
+      "kind": "text",
+      "body": "这将返回 11，因为参数由 11 个字符组成，包括空格"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "字符串操作",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT lengthb('hello world') FROM dual;\nSELECT lengthc('hello world') FROM dual;\nSELECT length2('hello world') FROM dual;\nSELECT length4('hello world') FROM dual;"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "字符串操作",
+      "kind": "text",
+      "body": "这些也返回 `11`，因为调用的函数是等价的"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "Instr",
+      "kind": "text",
+      "body": "`Instr`（在字符串中）返回一个整数，该整数指定字符串中子字符串的位置。程序员可以指定他们想要检测的字符串的外观以及起始位置。不成功的搜索返回 `0`"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "Instr",
+      "kind": "code",
+      "lang": "sql",
+      "code": "instr( string1, string2, [ start_position ], [ nth_appearance ] )"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "Instr",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "Instr",
+      "kind": "code",
+      "lang": "sql",
+      "code": "instr( 'oracle pl/sql cheatsheet', '/');"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "Instr",
+      "kind": "text",
+      "body": "这将返回 `10`，因为第一次出现的 `/` 是第十个字符"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "Instr",
+      "kind": "code",
+      "lang": "sql",
+      "code": "instr( 'oracle pl/sql cheatsheet', 'e', 1, 2);"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "Instr",
+      "kind": "text",
+      "body": "这将返回 `17`，因为第二次出现的 `e` 是第 `17` 个字符"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "Instr",
+      "kind": "code",
+      "lang": "sql",
+      "code": "instr( 'oracle pl/sql cheatsheet', '/', 12, 1);"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "Instr",
+      "kind": "text",
+      "body": "这将返回 `0`，因为第一次出现的 `/` 在起点之前，即第 `12` 个字符"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "Replace",
+      "kind": "code",
+      "lang": "sql",
+      "code": "replace(string1, string_to_replace, [ replacement_string ] );\n\nreplace('i am here','am','am not');"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "Replace",
+      "kind": "text",
+      "body": "这返回 `i am not here`"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "Substr",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT substr( 'oracle pl/sql cheatsheet', 8, 6) FROM dual;"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "Substr",
+      "kind": "text",
+      "body": "返回 `pl/sql`，因为 `pl/sql` 中的 `p` 在字符串中的第 `8` 个位置（从 `oracle` 中的 `o` 处的 `1` 开始计算）"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "Substr",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT substr( 'oracle pl/sql cheatsheet', 15) FROM dual;"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "Substr",
+      "kind": "text",
+      "body": "返回 `cheatsheet`，因为 `c` 在字符串中的第 `15` 个位置，`t`是字符串中的最后一个字符。"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "Substr",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT substr('oracle pl/sql cheatsheet', -10, 5) FROM dual;"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "Substr",
+      "kind": "text",
+      "body": "返回 `cheat`，因为 `c` 是字符串中的第 `10` 个字符，从字符串末尾以 `t` 作为位置 `1` 开始计算。"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "Trim",
+      "kind": "text",
+      "body": "这些函数可用于从字符串中过滤不需要的字符。默认情况下，它们会删除空格，但也可以指定要删除的字符集"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "Trim",
+      "kind": "code",
+      "lang": "sql",
+      "code": "trim ( [ leading | trailing | both ] [ trim-char ] from string-to-be-trimmed );\ntrim ('   删除两侧的空格     ');"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "Trim",
+      "kind": "text",
+      "body": "这将返回“`删除两侧的空格`”"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "Trim",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ltrim ( string-to-be-trimmed [, trimming-char-set ] );\nltrim ('   删除左侧的空格     ');"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "Trim",
+      "kind": "text",
+      "body": "这将返回“`删除左侧的空格`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;”"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "Trim",
+      "kind": "code",
+      "lang": "sql",
+      "code": "rtrim ( string-to-be-trimmed [, trimming-char-set ] );\nrtrim ('   删除右侧的空格     ');"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "Trim",
+      "kind": "text",
+      "body": "这将返回“&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`删除右侧的空格`”"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "Trim",
+      "kind": "text",
+      "body": "DDL SQL\n---"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "创建表",
+      "kind": "text",
+      "body": "创建表的语法"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "创建表",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE TABLE [table name]\n      ( [column name] [datatype], ... );"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "创建表",
+      "kind": "text",
+      "body": "示例："
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "创建表",
+      "kind": "code",
+      "lang": "sql",
+      "code": " CREATE TABLE employee\n       (id int, name varchar(20));"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "添加列",
+      "kind": "text",
+      "body": "添加列的语法"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "添加列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE [table name]\n    ADD ( [column name] [datatype], ... );"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "添加列",
+      "kind": "text",
+      "body": "示例："
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "添加列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE employee\n    ADD (id int)"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "修改列",
+      "kind": "text",
+      "body": "修改列的语法"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "修改列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE [table name]\n    MODIFY ( [column name] [new datatype]);"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "修改列",
+      "kind": "text",
+      "body": "`ALTER` 表语法和示例："
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "修改列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE employee\n    MODIFY( sickHours s float );"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "删除列",
+      "kind": "text",
+      "body": "删除列的语法"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "删除列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE [table name]\n    DROP COLUMN [column name];"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "删除列",
+      "kind": "text",
+      "body": "示例："
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "删除列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE employee\n    DROP COLUMN vacationPay;"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "约束类型和代码",
+      "kind": "text",
+      "body": "类型代码 | 类型描述 | 作用于级别\n:-- | -- | --\n`C` | 检查表 | Column\n`O` | 在视图上只读 | Object\n`P` | 首要的关键 | Object\n`R` | 参考 AKA 外键 | Column\n`U` | 唯一键 | Column\n`V` | 检查视图上的选项 | Object"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "显示约束",
+      "kind": "text",
+      "body": "以下语句显示了系统中的所有约束："
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "显示约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT\n    table_name,\n    constraint_name,\n    constraint_type\nFROM user_constraints;"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "选择参照约束",
+      "kind": "text",
+      "body": "以下语句显示了源和目标表/列对的所有引用约束（外键）："
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "选择参照约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT\n    c_list.CONSTRAINT_NAME as NAME,\n    c_src.TABLE_NAME as SRC_TABLE,\n    c_src.COLUMN_NAME as SRC_COLUMN,\n    c_dest.TABLE_NAME as DEST_TABLE,\n    c_dest.COLUMN_NAME as DEST_COLUMN\nFROM ALL_CONSTRAINTS c_list,\n    ALL_CONS_COLUMNS c_src,\n    ALL_CONS_COLUMNS c_dest\nWHERE c_list.CONSTRAINT_NAME = c_src.CONSTRAINT_NAME\n    AND c_list.R_CONSTRAINT_NAME = c_dest.CONSTRAINT_NAME\n    AND c_list.CONSTRAINT_TYPE = 'R'"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "对表设置约束",
+      "kind": "text",
+      "body": "使用 `CREATE TABLE` 语句创建检查约束的语法是："
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "对表设置约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE TABLE table_name\n(\n    column1 datatype null/not null,\n    column2 datatype null/not null,\n    ...\n    CONSTRAINT constraint_name\n    CHECK (column_name condition) [DISABLE]\n);"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "对表设置约束",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "对表设置约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE TABLE suppliers\n(\n    supplier_id  numeric(4),\n    supplier_name  varchar2(50),\n    CONSTRAINT check_supplier_id\n    CHECK (supplier_id BETWEEN 100 and 9999)\n);"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "表上的唯一索引",
+      "kind": "text",
+      "body": "使用 `CREATE TABLE` 语句创建唯一约束的语法是："
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "表上的唯一索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE TABLE table_name\n(\n    column1 datatype null/not null,\n    column2 datatype null/not null,\n    ...\n    CONSTRAINT constraint_name \n    UNIQUE (column1, column2, column_n)\n);"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "表上的唯一索引",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "表上的唯一索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE TABLE customer\n(\n    id   integer not null,\n    name varchar2(20),\n    CONSTRAINT customer_id_constraint\n    UNIQUE (id)\n);"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "添加唯一约束",
+      "kind": "text",
+      "body": "唯一约束的语法是："
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "添加唯一约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE [table name]\n    ADD CONSTRAINT [constraint name] \n    UNIQUE([column name]) \n    USING INDEX [index name];"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "添加唯一约束",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "添加唯一约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE employee\n    ADD CONSTRAINT uniqueEmployeeId \n    UNIQUE(employeeId) \n    USING INDEX ourcompanyIndx_tbs;"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "添加外部约束",
+      "kind": "text",
+      "body": "foregin 约束的语法是："
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "添加外部约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE [table name]\n    ADD CONSTRAINT [constraint name] \n    FOREIGN KEY (column,...) \n    REFERENCES table [(column,...)] \n    [ON DELETE {CASCADE | SET NULL}];"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "添加外部约束",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "添加外部约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE employee\n    ADD CONSTRAINT fk_departament \n    FOREIGN KEY (departmentId) \n    REFERENCES departments(Id);"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "删除约束",
+      "kind": "text",
+      "body": "删除（删除）约束的语法是："
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "删除约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE [table name]\n    DROP CONSTRAINT [constraint name];"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "删除约束",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "删除约束",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE employee\n    DROP CONSTRAINT uniqueEmployeeId;"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "删除约束",
+      "kind": "text",
+      "body": "INDEXES\n----"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "创建索引",
+      "kind": "text",
+      "body": "创建索引的语法是："
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "创建索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE [UNIQUE] INDEX index_name\n    ON table_name (\n        column1,\n        column2,\n        . \n        column_n\n    )\n    [ COMPUTE STATISTICS ];"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "创建索引",
+      "kind": "text",
+      "body": "• `UNIQUE` 表示索引列中值的组合必须是唯一的\n• `COMPUTE STATISTICS` 告诉 Oracle 在创建索引期间收集统计信息。然后优化器使用这些统计信息来选择执行语句时的最佳执行计划。例如："
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "创建索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE INDEX customer_idx\n    ON customer (customer_name);"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "创建索引",
+      "kind": "text",
+      "body": "在此示例中，已在名为 `customer_idx` 的客户表上创建了一个索引。它仅包含 `customer_name` 字段"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "创建索引",
+      "kind": "text",
+      "body": "下面创建一个包含多个字段的索引："
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "创建索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE INDEX customer_idx\n    ON supplier (customer_name, country);"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "创建索引",
+      "kind": "text",
+      "body": "以下内容在创建索引时收集统计信息："
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "创建索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE INDEX customer_idx\n    ON supplier (customer_name, country)\n    COMPUTE STATISTICS;"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "创建基于函数的索引",
+      "kind": "text",
+      "body": "在 `Oracle` 中，您不仅限于在列上创建索引。您可以创建基于函数的索引"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "创建基于函数的索引",
+      "kind": "text",
+      "body": "创建基于函数的索引的语法是："
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "创建基于函数的索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE [UNIQUE] INDEX index_name\n    ON table_name (function1, function2, . function_n)\n    [ COMPUTE STATISTICS ];"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "创建基于函数的索引",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "创建基于函数的索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE INDEX customer_idx\n    ON customer (UPPER(customer_name));\n-- 已创建基于 customer_name 字段的大写评估的索引"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "创建基于函数的索引",
+      "kind": "text",
+      "body": "为确保 `Oracle` 优化器在执行 SQL 语句时使用此索引，请确保 `UPPER(customer_name)` 的计算结果不为 `NULL` 值。 为确保这一点，请将 `UPPER(customer_name) IS NOT NULL` 添加到 `WHERE` 子句中，如下所示："
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "创建基于函数的索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT customer_id, customer_name, UPPER(customer_name)\nFROM customer\nWHERE UPPER(customer_name) IS NOT NULL\nORDER BY UPPER(customer_name);"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "重命名索引",
+      "kind": "text",
+      "body": "重命名索引的语法是："
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "重命名索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER INDEX index_name\n    RENAME TO new_index_name;"
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "重命名索引",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "重命名索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER INDEX customer_id\n    RENAME TO new_customer_id;"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "重命名索引",
+      "kind": "text",
+      "body": "在此示例中，`customer_id` 重命名为 `new_customer_id`"
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "收集索引的统计信息",
+      "kind": "text",
+      "body": "如果您需要在索引首次创建后收集统计信息或者您想要更新统计信息，您总是可以使用 ALTER INDEX 命令来收集统计信息。 您收集统计信息以便 `oracle` 可以有效地使用索引。 这将重新计算表大小、行数、块数、段数并更新字典表，以便 `oracle` 在选择执行计划时可以有效地使用数据。"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "收集索引的统计信息",
+      "kind": "text",
+      "body": "收集索引统计信息的语法是："
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "收集索引的统计信息",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER INDEX index_name\n    REBUILD COMPUTE STATISTICS;"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "收集索引的统计信息",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "收集索引的统计信息",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER INDEX customer_idx\n    REBUILD COMPUTE STATISTICS;"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "收集索引的统计信息",
+      "kind": "text",
+      "body": "在此示例中，为名为 `customer_idx` 的索引收集统计信息"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "删除索引",
+      "kind": "text",
+      "body": "删除索引的语法是："
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "删除索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DROP INDEX index_name;"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "删除索引",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "删除索引",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DROP INDEX customer_idx;"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "删除索引",
+      "kind": "text",
+      "body": "在此示例中，删除了 `customer_idx`"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "删除索引",
+      "kind": "text",
+      "body": "DBA 相关\n---"
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": "创建用户",
+      "kind": "text",
+      "body": "创建用户的语法是："
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": "创建用户",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE USER username\n    IDENTIFIED BY password;"
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": "创建用户",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": "创建用户",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE USER brian IDENTIFIED BY brianpass;"
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": "授予特权",
+      "kind": "text",
+      "body": "授予权限的语法是："
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": "授予特权",
+      "kind": "code",
+      "lang": "sql",
+      "code": "GRANT privilege TO user;"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": "授予特权",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": "授予特权",
+      "kind": "code",
+      "lang": "sql",
+      "code": "GRANT dba TO brian;"
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": "更改密码",
+      "kind": "text",
+      "body": "更改用户密码的语法是："
+    },
+    {
+      "id": "intro-143",
+      "sectionId": "intro",
+      "title": "更改密码",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER USER username IDENTIFIED BY password;"
+    },
+    {
+      "id": "intro-144",
+      "sectionId": "intro",
+      "title": "更改密码",
+      "kind": "text",
+      "body": "例如："
+    },
+    {
+      "id": "intro-145",
+      "sectionId": "intro",
+      "title": "更改密码",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER USER brian IDENTIFIED BY brianpassword;"
+    },
+    {
+      "id": "intro-146",
+      "sectionId": "intro",
+      "title": "查看表空间的名称以及大小",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT t.table_name,\n       ROUND(SUM(bytes / (1024 * 1024)), 0) AS ts_size\nFROM dba_tablespaces t,\n     dba_data_files d\nWHERE t.table_name = d.table_name\nGROUP BY t.table_name;"
+    },
+    {
+      "id": "intro-147",
+      "sectionId": "intro",
+      "title": "查看还没提交的事务",
+      "kind": "code",
+      "lang": "sql",
+      "code": "select * from v$locked_object;\nselect * from v$transaction;"
+    },
+    {
+      "id": "intro-148",
+      "sectionId": "intro",
+      "title": "查看数据库库对象",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT owner, object_type, status, COUNT(*) AS count#\nFROM all_objects\nGROUP BY owner, object_type, status;"
+    },
+    {
+      "id": "intro-149",
+      "sectionId": "intro",
+      "title": "查看数据库的版本",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT version\nFROM Product_component_version\nWHERE SUBSTR(PRODUCT, 1, 6) = 'Oracle';"
+    },
+    {
+      "id": "intro-150",
+      "sectionId": "intro",
+      "title": "查看数据库的创建日期和归档方式",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT created, Log_Mode, Log_Mode \nFROM v$Database;"
+    },
+    {
+      "id": "intro-151",
+      "sectionId": "intro",
+      "title": "查看控制文件",
+      "kind": "code",
+      "lang": "sql",
+      "code": "select name from v$controlfile;"
+    },
+    {
+      "id": "intro-152",
+      "sectionId": "intro",
+      "title": "查看日志文件",
+      "kind": "code",
+      "lang": "sql",
+      "code": "select member from v$logfile;"
+    },
+    {
+      "id": "intro-153",
+      "sectionId": "intro",
+      "title": "查看表空间的使用情況",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT SUM(bytes)/(1024*1024) AS free_space,\n       tablespace_name\nFROM dba_free_space\nGROUP BY tablespace_name;"
+    },
+    {
+      "id": "intro-154",
+      "sectionId": "intro",
+      "title": "捕捉运行很久的SOL",
+      "kind": "code",
+      "lang": "sql",
+      "code": "COLUMN username FORMAT A12\nCOLUMN opname FORMAT A16\nCOLUMN progress FORMAT A8\n\nSELECT username,\n       sid,\n       opname,\n       ROUND(sofar * 100 / totalwork, 0) || '%' AS progress,\n       time_remaining,\n       sql_text\nFROM v$session_longops, v$sql\nWHERE time_remaining <> 0\n  AND sql_address = address\n  AND sql_hash_value = hash_value;"
+    },
+    {
+      "id": "intro-155",
+      "sectionId": "intro",
+      "title": "捕捉运行很久的SOL",
+      "kind": "text",
+      "body": "另见\n---"
+    },
+    {
+      "id": "intro-156",
+      "sectionId": "intro",
+      "title": "捕捉运行很久的SOL",
+      "kind": "text",
+      "body": "• [Oracle Database/SQL Cheatsheet](https://en.wikibooks.org/wiki/Oracle_Database/SQL_Cheatsheet) _(wikibooks.org)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/oracle.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/oracle.md",
+    "generatedAt": "2025-12-16T07:36:11.356Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

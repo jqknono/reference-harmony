@@ -1,0 +1,232 @@
+{
+  "id": "lsof",
+  "title": "lsof",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Lsof 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这个快速参考备忘单提供了使用 lsof 命令的各种方法。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n----"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "**lsof** 表示 `L`i`s`t `O`pen `F`iles 用于查找哪个进程打开了哪些文件"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ lsof\n$ sudo lsof -u root"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "特定于端口",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ lsof -i :8080\n$ lsof -i :80 -i :22\n$ lsof -i TCP:22\n$ lsof -i TCP:1-1024\n$ lsof -i UDP\n$ lsof -i @192.168.1.5"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "特定于进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ lsof -c mysql\n$ lsof -c java\n$ lsof -c ssh\n$ lsof -c nginx\n$ lsof -c ssh -c httpd"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "特定于用户",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ lsof -u www-data\n$ lsof -u www-data -u ubuntu\n$ lsof -i -u ^root # 特定用户除外"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "特定于网络",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ lsof -i 4   # 仅 IPv4\n$ lsof -i 6   # 仅 IPv6"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "特定的PID",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ lsof -p 1753\n$ lsof -p ^3  # 除了某些pid"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "特定文件名",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ lsof /var/log/messages\n$ lsof /etc/passwd"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "特定目录",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ lsof +D /var/log # 在目录内"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "Kill",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ kill -9 `lsof -t -u apache`\n$ kill -9 $(lsof -t -i :8080)"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "参数",
+      "kind": "code",
+      "lang": "bash",
+      "code": "-a        # 列出打开文件存在的进程；\n-c<进程名> # 列出指定进程所打开的文件；\n-g        # 列出GID号进程详情；\n-d<文件号> # 列出占用该文件号的进程；\n+d<目录>   # 列出目录下被打开的文件；\n+D<目录>   # 递归列出目录下被打开的文件；\n-n<目录>   # 列出使用NFS的文件；\n-i<条件>   # 列出符合条件的进程(协议,:端口,@ip)\n-p<进程号> # 列出指定进程号所打开的文件；\n-u        # 列出UID号进程详情；\n-h        # 显示帮助信息；\n-v        # 显示版本信息"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "列出指定进程号所打开的文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "lsof -p $pid"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "获取端口对应的进程 ID=>pid",
+      "kind": "code",
+      "lang": "bash",
+      "code": "lsof -i:9981 -P -t -sTCP:LISTEN"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "列出打开文件的进程",
+      "kind": "code",
+      "lang": "bash",
+      "code": "lsof $filename"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "列出打开文件的进程",
+      "kind": "text",
+      "body": "示例\n---"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ lsof\ncommand     PID USER   FD      type      DEVICE     SIZE       NODE NAME\ninit          1 root  cwd       DIR         8,2     4096          2 /\ninit          1 root  rtd       DIR         8,2     4096          2 /\ninit          1 root  txt       REG         8,2    43496    6121706 /sbin/init\ninit          1 root  mem       REG         8,2   143600    7823908 /lib64/ld-2.5.so\ninit          1 root  mem       REG         8,2  1722304    7823915 /lib64/libc-2.5.so\ninit          1 root  mem       REG         8,2    23360    7823919 /lib64/libdl-2.5.so\ninit          1 root  mem       REG         8,2    95464    7824116 /lib64/libselinux.so.1\ninit          1 root  mem       REG         8,2   247496    7823947 /lib64/libsepol.so.1\ninit          1 root   10u     FIFO        0,17                1233 /dev/initctl\nmigration     2 root  cwd       DIR         8,2     4096          2 /\nmigration     2 root  rtd       DIR         8,2     4096          2 /\nmigration     2 root  txt   unknown                                 /proc/2/exe"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "文件描述符列表(FD)",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`cwd`  | 表示当前工作目录，即：应用程序的当前工作目录，这是该应用程序启动的目录，除非它本身对这个目录进行更改\n`txt`  | 该类型的文件是程序代码，如应用程序二进制文件本身或共享库，如上列表中显示的 /sbin/init 程序\n`lnn`  | 库引用 (AIX);\n`er`   | FD 信息错误（参见名称栏）\n`jld`  | jail 目录 (FreeBSD);\n`ltx`  | 共享库文本（代码和数据）\n`mxx`  | 十六进制内存映射类型编号xx\n`m86`  | DOS合并映射文件\n`mem`  | 内存映射文件\n`mmap` | 内存映射设备\n`pd`   | 父目录\n`rtd`  | 根目录\n`tr`   | 内核跟踪文件 (OpenBSD)\n`v86`  | VP/ix 映射文件\n`0`    | 表示标准输出\n`1`    | 表示标准输入\n`2`    | 表示标准错误\n<!--rehype:className=style-list-arrow-->"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "示例列信息",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`COMMAND` | 进程的名称\n`PID` | 进程标识符\n`PPID` | 父进程标识符（需要指定-R参数）\n`USER` | 进程所有者\n`PGID` | 进程所属组\n`FD` | 文件描述符，应用程序通过它识别该文件"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "标准输出/输入/错误文件状态模式(FD)",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`u` | 表示该文件被打开并处于读取/写入模式\n`r` | 表示该文件被打开并处于只读模式\n`w` | 表示该文件被打开并处于写入模式\n`空格` | 表示该文件的状态模式为 unknow，且没有锁定\n`-` | 表示该文件的状态模式为 unknow，且被锁定"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "标准输出/输入/错误文件状态模式(FD)",
+      "kind": "text",
+      "body": "一般在[标准输出/输入/错误](#文件描述符列表fd)后还跟着文件状态模式"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "文件状态模锁 (FD)",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`N`     | 对于未知类型的Solaris NFS锁\n`r`     | 用于部分文件的读取锁定\n`R`     | 对整个文件进行读取锁定\n`w`     | 对文件的一部分进行写锁定(文件的部分写锁)\n`W`     | 对整个文件进行写锁定(整个文件的写锁)\n`u`     | 用于任何长度的读写锁\n`U`     | 对于未知类型的锁\n`x`     | 对于文件部分的SCO OpenServer Xenix锁\n`X`     | 对于整个文件的SCO OpenServer Xenix锁\n`space` | 如果没有锁"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "文件状态模锁 (FD)",
+      "kind": "text",
+      "body": "在[文件状态模式](#标准输出输入错误文件状态模式fd)后面，还跟着相关的锁"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "文件类型",
+      "kind": "text",
+      "body": "标识 | 说明\n:- | :-\n`DIR` | 表示目录\n`CHR` | 表示字符类型\n`BLK` | 块设备类型\n`UNIX` |  UNIX 域套接字\n`FIFO` | 先进先出 (FIFO) 队列\n`IPv4` | 网际协议 (IP) 套接字\n`DEVICE` | 指定磁盘的名称\n`SIZE` | 文件的大小\n`NODE` | 索引节点（文件在磁盘上的标识）\n`NAME` | 打开文件的确切名称\n`REG` | 常规文件"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "文件类型",
+      "kind": "text",
+      "body": "另见\n---"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "文件类型",
+      "kind": "text",
+      "body": "• [lsof 命令帮助文档](https://jaywcjlove.github.io/linux-command/c/lsof.html) _(jaywcjlove.github.io)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/lsof.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/lsof.md",
+    "generatedAt": "2025-12-16T07:36:11.313Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "id": "tar",
+  "title": "tar",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "tar 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这是 tar 常用命令的快速参考备忘单。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n----"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "在Linux平台上，`tar` 命令是主要的归档实用程序。了解各种 `tar` 命令选项将帮助您掌握归档文件操作。`tar` 代表磁带存档。"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "#### 语法"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "shell",
+      "code": "tar [-ABcdgGhiklmMoOpPrRsStuUvwWxzZ][-C <目的目录>][-f <备份文件>][--delete][--totals][文件或目录...]"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "以前 unix 系统管理员使用 `tar` 执行磁带机备份。`tar` 命令用于获取文件和目录的集合，并生成高度压缩的归档文件，在Linux中通常称为 `tarball` 或 `tar`、`gzip` 和 `bzip`。"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "选项",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-c` | 建立新的备份文件\n`-C` | 切换到指定的目录\n`-d` | 对比备份文件内和文件系统上的文件的差异\n`-x` | 解压缩归档文件\n`-v` | 显示指令执行过程\n`-f` | 指定归档文件的文件名\n`-t` | 查看归档文件内容\n`-j` | 通过 bzip2 指令处理备份文件\n`-z` | 通过 gzip 指令处理备份文件\n`-r` | 向现有存档文件追加或更新文件或目录\n`-W` | 验证归档文件\n`--totals` | 备份文件建立后，列出文件大小\n`--delete` | 从备份文件中删除指定的文件\n`--wildcards` | 在 unix tar 命令中指定匹配模式"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "创建一个 tar 格式的压缩文件",
+      "kind": "text",
+      "body": "在当前工作目录的 `/home/cyberpunk/testdir` 目录下创建一个名为 `archive.tar` 的 `tar` 归档文件:"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "创建一个 tar 格式的压缩文件",
+      "kind": "code",
+      "lang": "shell",
+      "code": "tar -cvf archive.tar /home/cyberpunk/testdir/\n\n/home/cyberpunk/testdir/\n/home/cyberpunk/testdir/file1.txt\n/home/cyberpunk/testdir/file2.sh\n/home/cyberpunk/testdir/file3.tar"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "创建一个 tar 格式的压缩文件",
+      "kind": "text",
+      "body": "本例中使用的选项有:\n:- | -\n:- | -\n`-c` | 建立新的备份文件\n`-v` | 显示指令执行过程\n`-f` | 指定归档文件的文件名"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "创建压缩后的 `tar.gz` 存档文件",
+      "kind": "text",
+      "body": "要创建一个压缩的 `gzip` 归档文件，我们需要使用选项 `z` 。"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "创建压缩后的 `tar.gz` 存档文件",
+      "kind": "code",
+      "lang": "shell",
+      "code": "tar cvzf compressedArchive.tar.gz /home/cyberpunk/testdir\n\n/home/cyberpunk/testdir/\n/home/cyberpunk/testdir/file1.txt\n/home/cyberpunk/testdir/file2.jpg\n/home/cyberpunk/testdir/file3.png"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "创建压缩后的 `tar.gz` 存档文件",
+      "kind": "text",
+      "body": "本例中使用的选项有:\n:- | -\n:- | -\n`-c` | 建立新的备份文件\n`-v` | 显示指令执行过程\n`-f` | 指定归档文件的文件名\n`-z` | 通过 `gzip` 指令处理备份文件"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "生成压缩率更高的 `tar.bz2` 文件",
+      "kind": "text",
+      "body": "`tar` 的 `bz2` 压缩，可以创建比 `gzip` 文件小的归档。`Bz2` 模式执行归档压缩和解压所需的时间比 `gzip` 模式多。通常，这个时间差可以忽略不计，但如果文件非常大，或者是文件数量非常多，那么时间差就会非常大。"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "生成压缩率更高的 `tar.bz2` 文件",
+      "kind": "code",
+      "lang": "shell",
+      "code": "tar cvfj Archive.tar.bz2 /home/cyberpunk/testdir\n\n/home/cyberpunk/testdir/\n/home/cyberpunk/testdir/file1.txt\n/home/cyberpunk/testdir/file2.txt\n/home/cyberpunk/testdir/file3.txt"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "生成压缩率更高的 `tar.bz2` 文件",
+      "kind": "text",
+      "body": "本例中使用的选项有:\n:- | -\n:- | -\n`-c` | 建立新的备份文件\n`-v` | 显示指令执行过程\n`-f` | 指定归档文件的文件名\n`-j` | 通过 bzip2 指令处理备份文件"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "解压缩 tar 文件",
+      "kind": "text",
+      "body": "要解压缩(提取)一个tar文件，将 `x` (提取)选项传递给该命令\n使用不带 `-C` 选项的命令将在当前工作目录中提取存档。`-C` 选项告诉命令在哪里提取存档文件。"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "解压缩 tar 文件",
+      "kind": "code",
+      "lang": "shell",
+      "code": "tar -xvf Archive.tar -C /home/cyberpunk/testdir/\n\n/home/cyberpunk/testdir/\n/home/cyberpunk/testdir/file1.txt\n/home/cyberpunk/testdir/file2.txt\n/home/cyberpunk/testdir/file3.txt"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "解压缩 tar 文件",
+      "kind": "text",
+      "body": "本例中使用的选项有:\n:- | -\n:- | -\n`-x` | 解压缩归档文件\n`-v` | 显示指令执行过程\n`-f` | 指定归档文件的文件名"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "解压缩 tar.gz 文件",
+      "kind": "text",
+      "body": "小知识：使用 `tar` 命令创建的所有归档文件，都可以以相同的方式提取。"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "解压缩 tar.gz 文件",
+      "kind": "code",
+      "lang": "shell",
+      "code": "tar -xvf Archive.tar.gz\n\n/home/cyberpunk/testdir/\n/home/cyberpunk/testdir/file1.txt\n/home/cyberpunk/testdir/file2.txt\n/home/cyberpunk/testdir/file3.txt"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "解压缩 tar.gz 文件",
+      "kind": "text",
+      "body": "本例中使用的选项有:\n:- | -\n:- | -\n`-x` | 解压缩归档文件\n`-v` | 显示指令执行过程\n`-f` | 指定归档文件的文件名"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "解压缩 tar.bz2 文件",
+      "kind": "text",
+      "body": "小知识：使用 `tar` 命令创建的所有归档文件，都可以以相同的方式提取。"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "解压缩 tar.bz2 文件",
+      "kind": "code",
+      "lang": "shell",
+      "code": "tar -xvf Archive.tar.bz2\n\n/home/cyberpunk/testdir/\n/home/cyberpunk/testdir/file1.txt\n/home/cyberpunk/testdir/file2.txt\n/home/cyberpunk/testdir/file3.txt"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "解压缩 tar.bz2 文件",
+      "kind": "text",
+      "body": "本例中使用的选项有:\n:- | -\n:- | -\n`-x` | 解压缩归档文件\n`-v` | 显示指令执行过程\n`-f` | 指定归档文件的文件名"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "列出归档内容",
+      "kind": "text",
+      "body": "使用 `t` 选项列出 `tar` 归档文件的内容:"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "列出归档内容",
+      "kind": "code",
+      "lang": "shell",
+      "code": "# tar -tvf uploadprogress.tar\n\n-rwxr--r-- root/root   1111 2014-10-19 12:33:42 file1.txt\n-rwxr--r-- root/root   1111 2014-10-19 12:33:42 file2.txt\n-rwxr--r-- root/root   1111 2014-10-19 12:33:42 file3.txt\n-rwxr--r-- root/root   1111 2014-10-19 12:33:42 file4.txt"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "列出归档内容",
+      "kind": "text",
+      "body": "本例中使用的选项有:\n:- | -\n:- | -\n`-t` | 查看归档文件内容\n`-v` | 显示指令执行过程\n`-f` | 指定归档文件的文件名"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "从 tar 归档文件中提取单个文件",
+      "kind": "code",
+      "lang": "shell",
+      "code": "tar --extract --file=archive.tar file1.txt\n\nfile1.txt"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "从 tar 归档文件中提取多个文件",
+      "kind": "code",
+      "lang": "shell",
+      "code": "tar -xvf Archive.tar \"file 1\" \"file 2\""
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "使用通配符提取文件组",
+      "kind": "code",
+      "lang": "shell",
+      "code": "# tar -xvf Archive.tar --wildcards *.txt'\n\n/home/cyberpunk/testdir/file1.txt\n/home/cyberpunk/testdir/file2.txt\n/home/cyberpunk/testdir/file3.txt"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "添加文件或目录到 tar 存档中",
+      "kind": "text",
+      "body": "要向现有的 `tar` 文件中添加文件或目录，可以使用 `r` 选项。例如，我们将 `xyz.txt` 文件和 `php` 目录添加到现有的 `tecmint-14-09-12.tar` 归档文件中。"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "添加文件或目录到 tar 存档中",
+      "kind": "code",
+      "lang": "shell",
+      "code": "# tar -rvf Archive.tar xyz.txt  #add file\nor\n# tar -rvf Archive.tar php      # add directory"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "添加文件或目录到 tar 存档中",
+      "kind": "text",
+      "body": "另见\n----"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "添加文件或目录到 tar 存档中",
+      "kind": "text",
+      "body": "[Linux Tar Commands Cheatsheet](https://neverendingsecurity.wordpress.com/2015/04/13/linux-tar-commands-cheatsheet/)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/tar.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/tar.md",
+    "generatedAt": "2025-12-16T07:36:11.462Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

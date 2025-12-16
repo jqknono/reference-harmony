@@ -1,0 +1,1870 @@
+{
+  "id": "gitlab-ci",
+  "title": "gitlab-ci",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "GitLab CI/CD 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "本备忘单总结了 [GitLab CI/CD](https://docs.gitlab.com/ee/ci/yaml/#default) 常用的配置说明，以供快速参考"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "创建并运行您的第一个 GitLab `CI/CD` 管道，在开始之前，请确保您拥有："
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "• GitLab 中您想要使用 CI/CD 的项目\n• 项目的维护者或所有者角色"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "如果您没有项目，可以在 <https://gitlab.com> 上免费创建一个公共项目"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "• 在存储库的根目录下创建一个 `.gitlab-ci.yml` 文件。该文件是您定义 `CI/CD` 作业的地方\n• 转到`Settings` > `CI/CD` 并展开运行程序，只要您至少有一个运行器处于活动状态，旁边有一个绿色圆圈，您就有一个运行器可以处理您的工作"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "code",
+      "lang": "yml",
+      "code": "default:\n  image: node:16\n\nwindows_job:\n  only:\n    - master\n  tags:\n    - windows\n  script:\n    - echo Hello, %USERNAME%!\n\nlinux_job:\n  tags:\n    - linux\n  script:\n    - echo \"Hello, $USER!\""
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "`tags` 用于在不同的平台上运行作业，`only` 控制 `master` 分支提交触发"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "示例",
+      "kind": "text",
+      "body": "关键字\n---"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "关键字",
+      "kind": "text",
+      "body": "关键字 | 描述\n:-- | --\n[default](#default) | 工作关键字的自定义默认值 [#](https://docs.gitlab.com/ee/ci/yaml/#default)\n[include](#include) | 从其他 YAML 文件导入配置 [#](https://docs.gitlab.com/ee/ci/yaml/#include)\n[stages](#stages) | 管道阶段的名称和顺序 [#](https://docs.gitlab.com/ee/ci/yaml/#stages)\n[variables](#variables) | 为管道中的所有作业定义 CI/CD 变量 [#](https://docs.gitlab.com/ee/ci/yaml/#variables)\n[workflow](#workflow) | 控制运行什么类型的管道 [#](https://docs.gitlab.com/ee/ci/yaml/#workflow)"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "关键字",
+      "kind": "text",
+      "body": "关键字 | 描述\n:-- | --\n[after_script](#after_script) | 覆盖一组在作业之后执行的命令 [#](https://docs.gitlab.com/ee/ci/yaml/#after_script)\n[allow_failure](#allow_failure) | 允许作业失败。失败的作业不会导致管道失败 [#](https://docs.gitlab.com/ee/ci/yaml/#allow_failure)\n[artifacts](#artifacts) | 成功时附加到作业的文件和目录列表 [#](https://docs.gitlab.com/ee/ci/yaml/#artifacts)\n[before_script](#before_script) | 覆盖在作业之前执行的一组命令 [#](https://docs.gitlab.com/ee/ci/yaml/#before_script)\n[cache](#cache) | 应在后续运行之间缓存的文件列表 [#](https://docs.gitlab.com/ee/ci/yaml/#cache)\n[coverage](#coverage) | 给定作业的代码覆盖率设置 [#](https://docs.gitlab.com/ee/ci/yaml/#coverage)\n[dast_configuration](#dast_configuration) | 在作业级别使用 DAST 配置文件中的配置 [#](https://docs.gitlab.com/ee/ci/yaml/#dast_configuration)\n[dependencies](#dependencies) | 通过提供要从中获取工件的作业列表来限制将哪些工件传递给特定作业 [#](https://docs.gitlab.com/ee/ci/yaml/#dependencies)\n[environment](#environment) | 作业部署到的环境的名称 [#](https://docs.gitlab.com/ee/ci/yaml/#environment)\n[except](#only--except) | 控制何时不创建作业 [#](https://docs.gitlab.com/ee/ci/yaml/#only--except)\n[extends](#extends) | 此作业继承自的配置条目 [#](https://docs.gitlab.com/ee/ci/yaml/#extends)\n[image](#image) | 使用 Docker 镜像 [#](https://docs.gitlab.com/ee/ci/yaml/#image)\n[inherit](#inherit) | 选择所有作业继承的全局默认值 [#](https://docs.gitlab.com/ee/ci/yaml/#inherit)\n[interruptible](#interruptible) | 定义作业是否可以在被较新的运行冗余时取消 [#](https://docs.gitlab.com/ee/ci/yaml/#interruptible)\n[needs](#needs) | 在阶段排序之前执行作业 [#](https://docs.gitlab.com/ee/ci/yaml/#needs)\n[only](#only--except) | 控制何时创建作业 [#](https://docs.gitlab.com/ee/ci/yaml/#only--except)\n[pages](#pages) | 上传作业的结果以与 GitLab Pages 一起使用 [#](https://docs.gitlab.com/ee/ci/yaml/#pages)\n[parallel](#parallel) | 应并行运行多少个作业实例 [#](https://docs.gitlab.com/ee/ci/yaml/#parallel)\n[release](#release) | 指示运行器生成释放对象 [#](https://docs.gitlab.com/ee/ci/yaml/#release)\n[resource_group](#resource_group) | 限制作业并发 [#](https://docs.gitlab.com/ee/ci/yaml/#resource_group)\n[retry](#retry) | 发生故障时可以自动重试作业的时间和次数 [#](https://docs.gitlab.com/ee/ci/yaml/#retry)\n[rules](#rules) | 用于评估和确定作业的选定属性以及是否创建的条件列表 [#](https://docs.gitlab.com/ee/ci/yaml/#rules)\n[script](#script) | 由运行器执行的 Shell 脚本 [#](https://docs.gitlab.com/ee/ci/yaml/#script)\n[secrets](#secrets) | CI/CD 保密工作需要 [#](https://docs.gitlab.com/ee/ci/yaml/#secrets)\n[services](#services) | 使用 Docker 服务映像 [#](https://docs.gitlab.com/ee/ci/yaml/#services)\n[stage](#stage) | 定义作业阶段 [#](https://docs.gitlab.com/ee/ci/yaml/#stage)\n[tags](#tags) | 用于选择跑步者的标签列表 [#](https://docs.gitlab.com/ee/ci/yaml/#tags)\n[timeout](#timeout) | 定义优先于项目范围设置的自定义作业级超时 [#](https://docs.gitlab.com/ee/ci/yaml/#timeout)\n[trigger](#trigger) | 定义下游管道触发器 [#](https://docs.gitlab.com/ee/ci/yaml/#trigger)\n[variables](#variables) | 在作业级别定义作业变量 [#](https://docs.gitlab.com/ee/ci/yaml/#variables)\n[when](#when) | 何时运行作业 [#](https://docs.gitlab.com/ee/ci/yaml/#when)"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "全局关键词",
+      "kind": "text",
+      "body": "• [after_script](#after_script)\n• [artifacts](#artifacts)\n• [before_script](#before_script)\n• [cache](#cache)\n• [image](#image)\n• [interruptible](#interruptible)\n• [retry](#retry)\n• [services](#services)\n• [tags](#tags)\n• [timeout](#timeout)"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "全局关键词",
+      "kind": "text",
+      "body": "全局关键词\n---"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "default",
+      "kind": "code",
+      "lang": "yml",
+      "code": "default:\n  image: ruby:3.0\n\nrspec:\n  script: bundle exec rspec\n\nrspec 2.7:\n  image: ruby:2.7\n  script: bundle exec rspec"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "default",
+      "kind": "text",
+      "body": "在此示例中，`ruby:3.0` 是管道中所有作业的默认图像值。`rspec 2.7` 作业不使用默认值，因为它使用特定于作业的图像部分覆盖了默认值"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "include",
+      "kind": "code",
+      "lang": "yml",
+      "code": "include:\n  - local: '/temp/.gitlab-ci-template.yml'"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "include",
+      "kind": "text",
+      "body": "在 `11.4` 中移至 `GitLab` 免费版，使用 `include` 将外部 `YAML` 文件包含在您的 `CI/CD` 配置中"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "include:local",
+      "kind": "code",
+      "lang": "yml",
+      "code": "include:\n  - local: '/temp/.gitlab-ci-template.yml'"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "include:local",
+      "kind": "text",
+      "body": "使用 `include:local` 包含与 `.gitlab-ci.yml` 文件位于同一存储库中的文件"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "include:project",
+      "kind": "text",
+      "body": "要在同一个 GitLab 实例上包含来自另一个私有项目的文件，请使用 `include:project` 和 `include:file`"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "include:project",
+      "kind": "code",
+      "lang": "yml",
+      "code": "include:\n  - project: 'group/my-project'\n    file: '/temp/.gitlab-ci-template.yml'\n  - project: 'group/subgroup/my-project-2'\n    file:\n      - '/temp/.builds.yml'\n      - '/temp/.tests.yml'"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "include:project",
+      "kind": "text",
+      "body": "您还可以指定一个 `ref`："
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "include:project",
+      "kind": "code",
+      "lang": "yml",
+      "code": "include:\n  - project: 'group/my-project'\n    ref: main    # Git branch\n    file: '/templates/.gitlab-ci.yml'\n  - project: 'group/my-project'\n    ref: v1.0.0   # Git Tag\n    file: '/templates/.gitlab-ci.yml'\n  - project: 'group/my-project'\n    ref: 787123b  # Git SHA\n    file: '/templates/.gitlab-ci.yml'"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "include:remote",
+      "kind": "code",
+      "lang": "yml",
+      "code": "include:\n  - remote: 'https://gitlab.com/example-project/-/raw/main/.gitlab-ci.yml'"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "include:remote",
+      "kind": "text",
+      "body": "使用带有完整 `URL` 的 `include:remote` 来包含来自不同位置的文件"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "include:template",
+      "kind": "text",
+      "body": "使用 `include:template` 来包含 `.gitlab-ci.yml` 模板"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "include:template",
+      "kind": "code",
+      "lang": "yml",
+      "code": "# 文件来自 GitLab 模板集合\ninclude:\n  - template: Auto-DevOps.gitlab-ci.yml"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "include:template",
+      "kind": "text",
+      "body": "多个 `include:template` 文件："
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "include:template",
+      "kind": "code",
+      "lang": "yml",
+      "code": "include:\n  - template: Android-Fastlane.gitlab-ci.yml\n  - template: Auto-DevOps.gitlab-ci.yml"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "stages",
+      "kind": "text",
+      "body": "使用阶段来定义包含作业组的阶段。如果 `.gitlab-ci.yml` 文件中未定义阶段，则默认管道阶段为："
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "stages",
+      "kind": "text",
+      "body": "• [.pre](#stage-pre)\n• build\n• test\n• deploy\n• [.post](#stage-post)"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "stages",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "stages",
+      "kind": "code",
+      "lang": "yml",
+      "code": "stages:\n  - build\n  - test\n  - deploy"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "stages",
+      "kind": "text",
+      "body": "workflow\n---"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "workflow:name",
+      "kind": "text",
+      "body": "您可以在 workflow: 中使用 name 来定义管道的名称"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "workflow:name",
+      "kind": "code",
+      "lang": "yml",
+      "code": "workflow:\n  name: '分支管道：$CI_COMMIT_BRANCH'"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "workflow:name",
+      "kind": "text",
+      "body": "根据管道条件具有不同管道名称的配置："
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "workflow:name",
+      "kind": "code",
+      "lang": "yml",
+      "code": "variables:\n  PIPELINE_NAME: '默认管道名称'\n\nworkflow:\n  name: '$PIPELINE_NAME'\n  rules:\n    - if: '$CI_PIPELINE_SOURCE == \"merge_request_event\"'\n      variables:\n        PIPELINE_NAME: 'MR pipeline: $CI_COMMIT_BRANCH'\n    - if: '$CI_MERGE_REQUEST_LABELS =~ /pipeline:run-in-ruby3/'\n      variables:\n        PIPELINE_NAME: 'Ruby 3 pipeline'"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "workflow:rules:variables",
+      "kind": "text",
+      "body": "您可以在 `workflow:rules` 中使用变量来定义特定管道条件的变量"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "workflow:rules:variables",
+      "kind": "code",
+      "lang": "yml",
+      "code": "variables:\n  DEPLOY_VARIABLE: \"default-deploy\"\n\nworkflow:\n  rules:\n    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH\n      variables:\n        DEPLOY_VARIABLE: \"deploy-production\"  # 覆盖全局定义的 DEPLOY_VARIABLE\n    - if: $CI_COMMIT_REF_NAME =~ /feature/\n      variables:\n        IS_A_FEATURE: \"true\"                  # 定义一个新变量\n    - when: always                            # 在其他情况下运行管道\n\njob1:\n  variables:\n    DEPLOY_VARIABLE: \"job1-default-deploy\"\n  rules:\n    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH\n      variables:                                   # 覆盖定义的 DEPLOY_VARIABLE\n        DEPLOY_VARIABLE: \"job1-deploy-production\"  # 在工作层面。\n    - when: on_success                             # 在其他情况下运行作业\n  script:\n    - echo \"以 $DEPLOY_VARIABLE 作为参数运行脚本\"\n    - echo \"如果 $IS_A_FEATURE 存在则运行另一个脚本\"\n\njob2:\n  script:\n    - echo \"以 $DEPLOY_VARIABLE 作为参数运行脚本\"\n    - echo \"如果 $IS_A_FEATURE 存在则运行另一个脚本\""
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "workflow:rules",
+      "kind": "text",
+      "body": "工作流(workflow)中的 `rules` 关键字类似于作业中定义的 [`rules`](#rules)，但控制是否创建整个管道"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "workflow:rules",
+      "kind": "text",
+      "body": "• [rules: if](#rulesif)\n• [rules: changes](#ruleschanges)\n• [rules: exists](#rulesexists)\n• [when](#when)\n• [variables](#workflowrulesvariables)"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "workflow:rules",
+      "kind": "code",
+      "lang": "yml",
+      "code": "workflow:\n  rules:\n    - if: $CI_COMMIT_TITLE =~ /-draft$/\n      when: never\n    - if: $CI_PIPELINE_SOURCE == \"merge_request_event\"\n    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "workflow:rules",
+      "kind": "text",
+      "body": "Job 关键词\n---"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "after_script",
+      "kind": "text",
+      "body": "在每个作业（包括失败的作业）**之后**运行的命令数组"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "after_script",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  script:\n    - echo \"示例脚本部分\"\n  after_script:\n    - echo \"在“script”部分完成后执行此命令\""
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "allow_failure",
+      "kind": "text",
+      "body": "确定管道是否应在作业失败时继续运行"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "allow_failure",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job1:\n  stage: test\n  script:\n    - execute_script_1\n\njob2:\n  stage: test\n  script:\n    - execute_script_2\n  allow_failure: true\n\njob3:\n  stage: deploy\n  script:\n    - deploy_to_staging\n  environment: staging"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "allow_failure",
+      "kind": "text",
+      "body": "#### allow_failure:exit_codes"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "allow_failure",
+      "kind": "text",
+      "body": "控制何时允许作业失败。对于任何列出的退出代码，作业是 `allow_failure: true`，对于任何其他退出代码，`allow_failure` false"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "allow_failure",
+      "kind": "code",
+      "lang": "yml",
+      "code": "test_job_1:\n  script:\n    - echo \"退出代码 1 的脚本。此作业失败\"\n    - exit 1\n  allow_failure:\n    exit_codes: 137\n\ntest_job_2:\n  script:\n    - echo \"退出代码 137 的脚本允许此作业失败\"\n    - exit 137\n  allow_failure:\n    exit_codes:\n      - 137\n      - 255"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "dast_configuration",
+      "kind": "code",
+      "lang": "yml",
+      "code": "stages:\n  - build\n  - dast\n\ninclude:\n  - template: DAST.gitlab-ci.yml\n\ndast:\n  dast_configuration:\n    site_profile: \"Example Co\"\n    scanner_profile: \"Quick Passive Test\""
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "dast_configuration",
+      "kind": "text",
+      "body": "指定要在 CI/CD 配置中使用的站点配置文件和扫描仪配置文件。 两个配置文件必须首先在项目中创建。 作业的阶段必须快"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "before_script",
+      "kind": "text",
+      "body": "在每个作业的 `script` 命令之前运行，但在工件恢复之后运行"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "before_script",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  before_script:\n    - echo \"在任何“script:”命令之前执行此命令\"\n  script:\n    - echo \"“before_script”命令之后执行\""
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "coverage",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job1:\n  script: rspec\n  coverage: '/Code coverage: \\d+\\.\\d+/'"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "coverage",
+      "kind": "text",
+      "body": "使用自定义正则表达式的覆盖率来配置如何从作业输出中提取代码覆盖率"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "extends",
+      "kind": "code",
+      "lang": "yml",
+      "code": ".tests:\n  script: rake test\n  stage: test\n  only:\n    refs:\n      - branches\n\nrspec:\n  extends: .tests\n  script: rake rspec\n  only:\n    variables:\n      - $RSPEC"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "extends",
+      "kind": "text",
+      "body": "使用 `extends` 重用配置部分。 它是 YAML 锚点的替代品，并且更加灵活和可读"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "dependencies",
+      "kind": "code",
+      "lang": "yml",
+      "code": "build osx:\n  stage: build\n  script: make build:osx\n  artifacts:\n    paths:\n      - binaries/\n\nbuild linux:\n  stage: build\n  script: make build:linux\n  artifacts:\n    paths:\n      - binaries/\n\ntest osx:\n  stage: test\n  script: make test:osx\n  dependencies:\n    - build osx\n\ntest linux:\n  stage: test\n  script: make test:linux\n  dependencies:\n    - build linux\n\ndeploy:\n  stage: deploy\n  script: make deploy\n  environment: production"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "dependencies",
+      "kind": "text",
+      "body": "定义要从中获取工件的作业列表。您还可以将作业设置为根本不下载任何工件"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "inherit",
+      "kind": "text",
+      "body": "使用 inherit 控制默认关键字和变量的继承"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "inherit",
+      "kind": "text",
+      "body": "#### inherit:default"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "inherit",
+      "kind": "text",
+      "body": "使用 `inherit:default` 控制 `default` 关键字的继承"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "inherit",
+      "kind": "code",
+      "lang": "yml",
+      "code": "default:\n  retry: 2\n  image: ruby:3.0\n  interruptible: true\n\njob1:\n  script: echo \"此作业不继承任何默认关键字\"\n  inherit:\n    default: false\n\njob2:\n  script: echo \"此作业仅继承列出的两个默认关键字。它不继承“可中断”\"\n  inherit:\n    default:\n      - retry\n      - image"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "inherit",
+      "kind": "text",
+      "body": "#### inherit:variables"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "inherit",
+      "kind": "text",
+      "body": "使用 inherit:variables 控制全局变量关键字的继承"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "inherit",
+      "kind": "code",
+      "lang": "yml",
+      "code": "variables:\n  VARIABLE1: \"这是变量 1\"\n  VARIABLE2: \"这是变量 2\"\n  VARIABLE3: \"这是变量 3\"\n\njob1:\n  script: echo \"该作业不继承任何全局变量\"\n  inherit:\n    variables: false\n\njob2:\n  script: echo \"此作业仅继承列出的两个全局变量。它不继承“VARIABLE3”\"\n  inherit:\n    variables:\n      - VARIABLE1\n      - VARIABLE2"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "interruptible",
+      "kind": "code",
+      "lang": "yml",
+      "code": "stages:\n  - stage1\n  - stage2\n  - stage3\n\nstep-1:\n  stage: stage1\n  script:\n    - echo \"可以取消\"\n  interruptible: true\n\nstep-2:\n  stage: stage2\n  script:\n    - echo \"不能取消\"\n\nstep-3:\n  stage: stage3\n  script:\n    - echo \"因为第 2 步无法取消，所以此步骤永远无法取消，即使它被设置为可中断\"\n  interruptible: true"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "interruptible",
+      "kind": "text",
+      "body": "如果在作业完成之前启动较新的管道时应取消作业，则使用可中断的"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "pages",
+      "kind": "code",
+      "lang": "yml",
+      "code": "pages:\n  stage: deploy\n  script:\n    - mkdir .public\n    - cp -r * .public\n    - mv .public public\n  artifacts:\n    paths:\n      - public\n  rules:\n    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH\n  environment: production"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "pages",
+      "kind": "text",
+      "body": "使用页面定义将静态内容上传到 `GitLab` 的 `GitLab Pages` 作业。然后将内容发布为网站"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "parallel",
+      "kind": "code",
+      "lang": "yml",
+      "code": "test:\n  script: rspec\n  parallel: 5"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "parallel",
+      "kind": "text",
+      "body": "使用 `parallel` 在单个管道中并行多次运行作业"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "parallel",
+      "kind": "text",
+      "body": "#### parallel:matrix"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "parallel",
+      "kind": "code",
+      "lang": "yml",
+      "code": "deploystacks:\n  stage: deploy\n  script:\n    - bin/deploy\n  parallel:\n    matrix:\n      - PROVIDER: aws\n        STACK:\n          - monitoring\n          - app1\n          - app2\n      - PROVIDER: ovh\n        STACK: [monitoring, backup, app]\n      - PROVIDER: [gcp, vultr]\n        STACK: [data, processing]\n  environment: $PROVIDER/$STACK"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "parallel",
+      "kind": "text",
+      "body": "使用 `parallel:matrix` 在单个管道中并行多次运行作业，但每个作业实例具有不同的变量值"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "resource_group",
+      "kind": "code",
+      "lang": "yml",
+      "code": "deploy-to-production:\n  script: deploy\n  resource_group: production"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "resource_group",
+      "kind": "text",
+      "body": "创建一个资源组，以确保作业在同一项目的不同管道之间互斥"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "tags",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  tags:\n    - ruby\n    - postgres"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "tags",
+      "kind": "text",
+      "body": "使用标签从项目可用的所有运行器列表中选择特定运行器"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "retry",
+      "kind": "code",
+      "lang": "yml",
+      "code": "test:\n  script: rspec\n  retry: 2"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "retry",
+      "kind": "text",
+      "body": "使用 `retry` 配置作业失败时重试的次数。如果未定义，则默认为 `0`，并且作业不会重试"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "retry",
+      "kind": "text",
+      "body": "#### retry:when"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "retry",
+      "kind": "code",
+      "lang": "yml",
+      "code": "test:\n  script: rspec\n  retry:\n    max: 2\n    when: runner_system_failure"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "retry",
+      "kind": "text",
+      "body": "使用 `retry:when` 和 `retry:max` 来重试特定失败案例的作业。 `retry:max` 是最大重试次数，和`retry`一样，可以是0、1、2"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "script",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job1:\n  script: \"bundle exec rspec\"\n\njob2:\n  script:\n    - uname -a\n    - bundle exec rspec"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "script",
+      "kind": "text",
+      "body": "使用脚本指定运行器执行的命令"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "secrets",
+      "kind": "text",
+      "body": "此关键字必须与 `secrets:vault` 一起使用"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "secrets",
+      "kind": "text",
+      "body": "#### secrets:vault"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "secrets",
+      "kind": "text",
+      "body": "使用 `secrets:vault` 指定 HashiCorp Vault 提供的秘密"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "secrets",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  secrets:\n    # 将秘密的路径存储在此 CI/CD 变量中\n    DATABASE_PASSWORD:\n      # 转换为秘密：`ops/data/production/db`\n      # 字段：`password`\n      vault: \n        engine:\n          name: kv-v2\n          path: ops\n        path: production/db\n        field: password"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "secrets",
+      "kind": "text",
+      "body": "#### secrets:file"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "secrets",
+      "kind": "text",
+      "body": "使用 `secrets:file` 将秘密配置为存储为文件或变量类型的 CI/CD 变量"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "secrets",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  secrets:\n    DATABASE_PASSWORD:\n      vault: production/db/password@ops\n      file: false"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "timeout",
+      "kind": "code",
+      "lang": "yml",
+      "code": "build:\n  script: build.sh\n  timeout: 3 hours 30 minutes\n\ntest:\n  script: rspec\n  timeout: 3h 30m"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "timeout",
+      "kind": "text",
+      "body": "为特定作业配置超时。 如果作业运行时间超过超时时间，则作业失败"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "services",
+      "kind": "text",
+      "body": "使用服务指定额外的 `Docker` 映像以在其中运行脚本"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "services",
+      "kind": "code",
+      "lang": "yml",
+      "code": "default:\n  image:\n    name: ruby:2.6\n    entrypoint: [\"/bin/bash\"]\n\n  services:\n    - name: my-postgres:11.7\n      alias: db-postgres\n      entrypoint: [\"/usr/local/bin/db-postgres\"]\n      command: [\"start\"]\n\n  before_script:\n    - bundle install\n\ntest:\n  script:\n    - bundle exec rake spec"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "services",
+      "kind": "text",
+      "body": "#### service:pull_policy"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "services",
+      "kind": "text",
+      "body": "运行器用于获取 `Docker` 映像的拉取策略"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "services",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job1:\n  script: echo \"A single pull policy.\"\n  services:\n    - name: postgres:11.6\n      pull_policy: if-not-present\n\njob2:\n  script: echo \"Multiple pull policies.\"\n  services:\n    - name: postgres:11.6\n      pull_policy: [always, if-not-present]"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "stage",
+      "kind": "code",
+      "lang": "yml",
+      "code": "stages:\n  - build\n  - test\n  - deploy\n\njob1:\n  stage: build\n  script:\n    - echo \"这项工作编译代码\"\n\njob2:\n  stage: test\n  script:\n    - echo \"此作业测试编译后的代码。它在构建阶段完成时运行\"\n\njob3:\n  script:\n    - echo \"这项工作也在测试阶段运行\"\n\njob4:\n  stage: deploy\n  script:\n    - echo \"此作业部署代码。它在测试阶段完成时运行\"\n  environment: production"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "stage",
+      "kind": "text",
+      "body": "#### stage: .pre"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "stage",
+      "kind": "code",
+      "lang": "yml",
+      "code": "stages:\n  - build\n  - test\n\njob1:\n  stage: build\n  script:\n    - echo \"该作业在构建阶段运行\"\n\nfirst-job:\n  stage: .pre\n  script:\n    - echo \"该作业在 .pre 阶段运行，在所有其他阶段之前\"\n\njob2:\n  stage: test\n  script:\n    - echo \"该作业在测试阶段运行\""
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "stage",
+      "kind": "text",
+      "body": "#### stage: .post"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "stage",
+      "kind": "code",
+      "lang": "yml",
+      "code": "stages:\n  - build\n  - test\n\njob1:\n  stage: build\n  script:\n    - echo \"该作业在构建阶段运行\"\n\nlast-job:\n  stage: .post\n  script:\n    - echo \"该作业在 .post 阶段运行，在所有其他阶段之后\"\n\njob2:\n  stage: test\n  script:\n    - echo \"该作业在测试阶段运行\""
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "text",
+      "body": "声明一个作业是一个“触发作业”"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "code",
+      "lang": "yml",
+      "code": "trigger-multi-project-pipeline:\n  trigger: my-group/my-project"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "text",
+      "body": "#### trigger:include"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "code",
+      "lang": "yml",
+      "code": "trigger-child-pipeline:\n  trigger:\n    include: path/to/child-pipeline.gitlab-ci.yml"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "text",
+      "body": "声明作业是启动子管道的“触发器作业”"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "text",
+      "body": "#### trigger:project"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "code",
+      "lang": "yml",
+      "code": "trigger-multi-project-pipeline:\n  trigger:\n    project: my-group/my-project"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "text",
+      "body": "声明作业是启动多项目管道的“触发器作业”"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "text",
+      "body": "#### trigger:strategy"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "code",
+      "lang": "yml",
+      "code": "trigger-multi-project-pipeline:\n  trigger:\n    project: my-group/my-project\n    branch: development"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "text",
+      "body": "强制触发作业等待下游管道完成后再标记为成功"
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "text",
+      "body": "#### trigger:forward"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "trigger",
+      "kind": "code",
+      "lang": "yml",
+      "code": "variables: # 每个作业的默认变量\n  VAR: value\n\n# 默认行为：\n# - VAR 传递给孩子\n# - MYVAR 没有传递给孩子\nchild1:\n  trigger:\n    include: .child-pipeline.yml\n\n# 转发管道变量：\n# - VAR 传递给孩子\n# - MYVAR 传递给孩子\nchild2:\n  trigger:\n    include: .child-pipeline.yml\n    forward:\n      pipeline_variables: true\n\n# 不要转发 YAML 变量：\n# - VAR 不会传递给孩子\n# - MYVAR 没有传递给孩子\nchild3:\n  trigger:\n    include: .child-pipeline.yml\n    forward:\n      yaml_variables: false"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "variables",
+      "kind": "text",
+      "body": "CI/CD 变量是传递给作业的可配置值。使用变量创建自定义变量"
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "variables",
+      "kind": "code",
+      "lang": "yml",
+      "code": "variables:\n  DEPLOY_SITE: \"https://example.com/\"\n\ndeploy_job:\n  stage: deploy\n  script:\n    - deploy-script --url $DEPLOY_SITE --path \"/\"\n  environment: production\n\ndeploy_review_job:\n  stage: deploy\n  variables:\n    REVIEW_PATH: \"/review\"\n  script:\n    - deploy-review-script --url $DEPLOY_SITE --path $REVIEW_PATH\n  environment: production"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "variables",
+      "kind": "text",
+      "body": "#### variables:description"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "variables",
+      "kind": "code",
+      "lang": "yml",
+      "code": "variables:\n  DEPLOY_ENVIRONMENT:\n    description: \"部署目标。 如果需要，将此变量更改为“canary”或“production”\"\n    value: \"staging\""
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "variables",
+      "kind": "text",
+      "body": "#### variables:expand"
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "variables",
+      "kind": "code",
+      "lang": "yml",
+      "code": "variables:\n  VAR1: value1\n  VAR2: value2 $VAR1\n  VAR3:\n    value: value3 $VAR1\n    expand: false"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "variables",
+      "kind": "text",
+      "body": "使用 `expand` 关键字将变量配置为可扩展或不可扩展"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "when",
+      "kind": "text",
+      "body": "使用 `when` 配置作业运行的条件。如果未在作业中定义，则默认值为 `when:on_success`"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "when",
+      "kind": "code",
+      "lang": "yml",
+      "code": "stages:\n  - build\n  - cleanup_build\n  - test\n  - deploy\n  - cleanup\n\nbuild_job:\n  stage: build\n  script:\n    - make build\n\ncleanup_build_job:\n  stage: cleanup_build\n  script:\n    - cleanup build when failed\n  when: on_failure\n\ntest_job:\n  stage: test\n  script:\n    - make test\n\ndeploy_job:\n  stage: deploy\n  script:\n    - make deploy\n  when: manual\n  environment: production\n\ncleanup_job:\n  stage: cleanup\n  script:\n    - cleanup after jobs\n  when: always"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "when",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "when",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n`on_success(default)` | 仅当早期阶段的所有作业都成功或具有 `allow_failure: true` 时才运行该作业\n`manual` | 仅在手动触发时运行作业\n`always` | 无论早期阶段的作业状态如何，都运行作业。也可以用在 `workflow:rules` 中\n`on_failure` | 仅当早期阶段的至少一项作业失败时才运行该作业\n`delayed` | 将作业的执行延迟指定的持续时间\n`never` | 不要运行作业。只能在规则[rules](#rules)部分或工作流中使用：`workflow: rules`\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "when",
+      "kind": "text",
+      "body": "artifacts\n---"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "when",
+      "kind": "text",
+      "body": "使用工件指定要将哪些文件另存为作业 artifacts。作业 artifacts 是作业成功、失败或始终附加到作业的文件和目录的列表"
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": "artifacts:paths",
+      "kind": "text",
+      "body": "路径是相对于项目目录（$CI_PROJECT_DIR）的，不能直接链接到项目目录之外"
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": "artifacts:paths",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  artifacts:\n    paths:\n      - binaries/\n      - .config"
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": "artifacts:exclude",
+      "kind": "text",
+      "body": "防止将文件添加到 artifacts 存档中"
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": "artifacts:exclude",
+      "kind": "code",
+      "lang": "yml",
+      "code": "artifacts:\n  paths:\n    - binaries/\n  exclude:\n    - binaries/**/*.o"
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": "artifacts:expire_in",
+      "kind": "text",
+      "body": "指定作业 artifacts 在它们过期和被删除之前存储多长时间"
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": "artifacts:expire_in",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  artifacts:\n    expire_in: 1 week"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": "artifacts:expire_in",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": "artifacts:expire_in",
+      "kind": "text",
+      "body": "• '42'\n• 42 seconds\n• 3 mins 4 sec\n• 2 hrs 20 min\n• 2h20min\n• 6 mos 1 day\n• 47 yrs 6 mos and 4d\n• 3 weeks and 2 days\n• never"
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": "artifacts:expose_as",
+      "kind": "text",
+      "body": "使用 `artifacts:expose_as` 关键字在合并请求 UI 中公开作业 artifacts"
+    },
+    {
+      "id": "intro-143",
+      "sectionId": "intro",
+      "title": "artifacts:expose_as",
+      "kind": "code",
+      "lang": "yml",
+      "code": "test:\n  script: [\"echo 'test' > file.txt\"]\n  artifacts:\n    expose_as: 'artifact 1'\n    paths: ['file.txt']"
+    },
+    {
+      "id": "intro-144",
+      "sectionId": "intro",
+      "title": "artifacts:name",
+      "kind": "text",
+      "body": "定义创建的 `artifacts` 存档的名称。您可以为每个存档指定一个唯一的名称"
+    },
+    {
+      "id": "intro-145",
+      "sectionId": "intro",
+      "title": "artifacts:name",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  artifacts:\n    name: \"job1-artifacts-file\"\n    paths:\n      - binaries/"
+    },
+    {
+      "id": "intro-146",
+      "sectionId": "intro",
+      "title": "artifacts:public",
+      "kind": "text",
+      "body": "确定作业工件是否应该公开可用"
+    },
+    {
+      "id": "intro-147",
+      "sectionId": "intro",
+      "title": "artifacts:public",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  artifacts:\n    public: false"
+    },
+    {
+      "id": "intro-148",
+      "sectionId": "intro",
+      "title": "artifacts:reports",
+      "kind": "text",
+      "body": "收集作业中包含的模板生成的 `artifacts`"
+    },
+    {
+      "id": "intro-149",
+      "sectionId": "intro",
+      "title": "artifacts:reports",
+      "kind": "code",
+      "lang": "yml",
+      "code": "rspec:\n  stage: test\n  script:\n    - bundle install\n    - rspec --format RspecJunitFormatter --out rspec.xml\n  artifacts:\n    reports:\n      junit: rspec.xml"
+    },
+    {
+      "id": "intro-150",
+      "sectionId": "intro",
+      "title": "artifacts:untracked",
+      "kind": "text",
+      "body": "将所有 Git 未跟踪文件添加为 `artifacts`（连同在 `artifacts:paths` 中定义的路径）"
+    },
+    {
+      "id": "intro-151",
+      "sectionId": "intro",
+      "title": "artifacts:untracked",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  artifacts:\n    untracked: true"
+    },
+    {
+      "id": "intro-152",
+      "sectionId": "intro",
+      "title": "artifacts:when",
+      "kind": "text",
+      "body": "作业失败或尽管失败时上传 `artifacts`"
+    },
+    {
+      "id": "intro-153",
+      "sectionId": "intro",
+      "title": "artifacts:when",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  artifacts:\n    when: on_failure"
+    },
+    {
+      "id": "intro-154",
+      "sectionId": "intro",
+      "title": "artifacts:when",
+      "kind": "text",
+      "body": "cache\n---"
+    },
+    {
+      "id": "intro-155",
+      "sectionId": "intro",
+      "title": "cache:paths",
+      "kind": "code",
+      "lang": "yml",
+      "code": "rspec:\n  script:\n    - echo \"此作业使用缓存\"\n  cache:\n    key: binaries-cache\n    paths:\n      - binaries/*.apk\n      - .config"
+    },
+    {
+      "id": "intro-156",
+      "sectionId": "intro",
+      "title": "cache:paths",
+      "kind": "text",
+      "body": "关键字来选择要缓存的文件或目录"
+    },
+    {
+      "id": "intro-157",
+      "sectionId": "intro",
+      "title": "cache:key",
+      "kind": "text",
+      "body": "为每个缓存提供唯一的标识键。 使用相同缓存键的所有作业都使用相同的缓存，包括在不同的管道中"
+    },
+    {
+      "id": "intro-158",
+      "sectionId": "intro",
+      "title": "cache:key",
+      "kind": "code",
+      "lang": "yml",
+      "code": "cache-job:\n  script:\n    - echo \"此作业使用缓存\"\n  cache:\n    key: binaries-cache-$CI_COMMIT_REF_SLUG\n    paths:\n      - binaries/"
+    },
+    {
+      "id": "intro-159",
+      "sectionId": "intro",
+      "title": "cache:key",
+      "kind": "text",
+      "body": "#### `cache:key:files`"
+    },
+    {
+      "id": "intro-160",
+      "sectionId": "intro",
+      "title": "cache:key",
+      "kind": "code",
+      "lang": "yml",
+      "code": "cache-job:\n  script:\n    - echo \"此作业使用缓存\"\n  cache:\n    key:\n      files:\n        - Gemfile.lock\n        - package.json\n    paths:\n      - vendor/ruby\n      - node_modules"
+    },
+    {
+      "id": "intro-161",
+      "sectionId": "intro",
+      "title": "cache:key",
+      "kind": "text",
+      "body": "当一个或两个特定文件更改时，使用 `cache:key:files` 关键字生成新密钥"
+    },
+    {
+      "id": "intro-162",
+      "sectionId": "intro",
+      "title": "cache:key",
+      "kind": "text",
+      "body": "#### `cache:key:prefix`"
+    },
+    {
+      "id": "intro-163",
+      "sectionId": "intro",
+      "title": "cache:key",
+      "kind": "code",
+      "lang": "yml",
+      "code": "rspec:\n  script:\n    - echo \"此 rspec 作业使用缓存\"\n  cache:\n    key:\n      files:\n        - Gemfile.lock\n      prefix: $CI_JOB_NAME\n    paths:\n      - vendor/ruby"
+    },
+    {
+      "id": "intro-164",
+      "sectionId": "intro",
+      "title": "cache:key",
+      "kind": "text",
+      "body": "使用 `cache:key:prefix` 将前缀与为 `cache:key:files` 计算的 SHA 结合起来"
+    },
+    {
+      "id": "intro-165",
+      "sectionId": "intro",
+      "title": "cache:untracked",
+      "kind": "code",
+      "lang": "yml",
+      "code": "rspec:\n  script: test\n  cache:\n    untracked: true\n    paths:\n      - binaries/"
+    },
+    {
+      "id": "intro-166",
+      "sectionId": "intro",
+      "title": "cache:untracked",
+      "kind": "text",
+      "body": "使用 `untracked: true` 缓存 Git 存储库中所有未跟踪的文件"
+    },
+    {
+      "id": "intro-167",
+      "sectionId": "intro",
+      "title": "cache:when",
+      "kind": "code",
+      "lang": "yml",
+      "code": "rspec:\n  script: rspec\n  cache:\n    paths:\n      - rspec/\n    when: 'always'"
+    },
+    {
+      "id": "intro-168",
+      "sectionId": "intro",
+      "title": "cache:when",
+      "kind": "text",
+      "body": "使用 `cache:when` 根据作业的状态定义何时保存缓存"
+    },
+    {
+      "id": "intro-169",
+      "sectionId": "intro",
+      "title": "cache:when",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n`on_succes(默认)` | 仅当作业成功时才保存缓存\n`on_failure` | 仅在作业失败时才保存缓存\n`always` | 始终保存缓存"
+    },
+    {
+      "id": "intro-170",
+      "sectionId": "intro",
+      "title": "cache:policy",
+      "kind": "code",
+      "lang": "yml",
+      "code": "prepare-dependencies-job:\n  stage: build\n  cache:\n    key: gems\n    paths:\n      - vendor/bundle\n    policy: push\n  script:\n    - echo \"此作业仅下载依赖项并构建缓存\"\n    - echo \"正在下载依赖...\"\n\nfaster-test-job:\n  stage: test\n  cache:\n    key: gems\n    paths:\n      - vendor/bundle\n    policy: pull\n  script:\n    - echo \"此作业脚本使用缓存，但不更新它\"\n    - echo \"运行测试...\""
+    },
+    {
+      "id": "intro-171",
+      "sectionId": "intro",
+      "title": "cache:policy",
+      "kind": "text",
+      "body": "要更改缓存的上传和下载行为，请使用 `cache:policy` 关键字"
+    },
+    {
+      "id": "intro-172",
+      "sectionId": "intro",
+      "title": "cache:policy",
+      "kind": "text",
+      "body": "environment\n---"
+    },
+    {
+      "id": "intro-173",
+      "sectionId": "intro",
+      "title": "environment:name",
+      "kind": "code",
+      "lang": "yml",
+      "code": "deploy to production:\n  stage: deploy\n  script: git push production HEAD:main\n  environment:\n    name: production"
+    },
+    {
+      "id": "intro-174",
+      "sectionId": "intro",
+      "title": "environment:name",
+      "kind": "text",
+      "body": "为环境设置名称"
+    },
+    {
+      "id": "intro-175",
+      "sectionId": "intro",
+      "title": "environment:url",
+      "kind": "code",
+      "lang": "yml",
+      "code": "deploy to production:\n  stage: deploy\n  script: git push production HEAD:main\n  environment:\n    name: production\n    url: https://prod.example.com"
+    },
+    {
+      "id": "intro-176",
+      "sectionId": "intro",
+      "title": "environment:url",
+      "kind": "text",
+      "body": "为环境设置 URL"
+    },
+    {
+      "id": "intro-177",
+      "sectionId": "intro",
+      "title": "environment:on_stop",
+      "kind": "text",
+      "body": "关闭（停止）环境可以通过在环境下定义的 on_stop 关键字来实现。 它声明运行以关闭环境的不同作业"
+    },
+    {
+      "id": "intro-178",
+      "sectionId": "intro",
+      "title": "environment:action",
+      "kind": "code",
+      "lang": "yml",
+      "code": "stop_review_app:\n  stage: deploy\n  variables:\n    GIT_STRATEGY: none\n  script: make delete-app\n  when: manual\n  environment:\n    name: review/$CI_COMMIT_REF_SLUG\n    action: stop"
+    },
+    {
+      "id": "intro-179",
+      "sectionId": "intro",
+      "title": "environment:action",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n`start` _默认值_ | 指示作业启动环境。在作业开始后创建的\n`prepare` | 表示作业只是准备环境。它不会触发部署\n`stop` | 指示作业停止部署\n`verify` | 指示作业仅验证环境。它不会触发部署\n`access` | 指示作业仅访问环境。它不会触发部署"
+    },
+    {
+      "id": "intro-180",
+      "sectionId": "intro",
+      "title": "environment:auto_stop_in",
+      "kind": "code",
+      "lang": "yml",
+      "code": "review_app:\n  script: deploy-review-app\n  environment:\n    name: review/$CI_COMMIT_REF_SLUG\n    auto_stop_in: 1 day"
+    },
+    {
+      "id": "intro-181",
+      "sectionId": "intro",
+      "title": "environment:auto_stop_in",
+      "kind": "text",
+      "body": "• `168 hours`\n• `7 days`\n• `one week`\n• `never`"
+    },
+    {
+      "id": "intro-182",
+      "sectionId": "intro",
+      "title": "environment:auto_stop_in",
+      "kind": "text",
+      "body": "`auto_stop_in` 关键字指定环境的生命周期。 当环境到期时，GitLab 会自动停止它"
+    },
+    {
+      "id": "intro-183",
+      "sectionId": "intro",
+      "title": "environment:kubernetes",
+      "kind": "code",
+      "lang": "yml",
+      "code": "deploy:\n  stage: deploy\n  script: make deploy-app\n  environment:\n    name: production\n    kubernetes:\n      namespace: production"
+    },
+    {
+      "id": "intro-184",
+      "sectionId": "intro",
+      "title": "environment:kubernetes",
+      "kind": "text",
+      "body": "使用 `kubernetes` 关键字将部署配置到与您的项目关联的 `Kubernetes` 集群"
+    },
+    {
+      "id": "intro-185",
+      "sectionId": "intro",
+      "title": "environment:deployment_tier",
+      "kind": "code",
+      "lang": "yml",
+      "code": "deploy:\n  script: echo\n  environment:\n    name: customer-portal\n    deployment_tier: production"
+    },
+    {
+      "id": "intro-186",
+      "sectionId": "intro",
+      "title": "environment:deployment_tier",
+      "kind": "text",
+      "body": "• `production`\n• `staging`\n• `testing`\n• `development`\n• `other`"
+    },
+    {
+      "id": "intro-187",
+      "sectionId": "intro",
+      "title": "动态 environment",
+      "kind": "code",
+      "lang": "yml",
+      "code": "deploy as review app:\n  stage: deploy\n  script: make deploy\n  environment:\n    name: review/$CI_COMMIT_REF_SLUG\n    url: https://$CI_ENVIRONMENT_SLUG.example.com/"
+    },
+    {
+      "id": "intro-188",
+      "sectionId": "intro",
+      "title": "动态 environment",
+      "kind": "text",
+      "body": "image\n---"
+    },
+    {
+      "id": "intro-189",
+      "sectionId": "intro",
+      "title": "image:name",
+      "kind": "code",
+      "lang": "yml",
+      "code": "image:\n  name: \"registry.example.com/my/image:latest\""
+    },
+    {
+      "id": "intro-190",
+      "sectionId": "intro",
+      "title": "image:name",
+      "kind": "text",
+      "body": "作业运行所在的 Docker 镜像的名称。类似于它自己使用的镜像"
+    },
+    {
+      "id": "intro-191",
+      "sectionId": "intro",
+      "title": "image:entrypoint",
+      "kind": "code",
+      "lang": "yml",
+      "code": "image:\n  name: super/sql:experimental\n  entrypoint: [\"\"]"
+    },
+    {
+      "id": "intro-192",
+      "sectionId": "intro",
+      "title": "image:entrypoint",
+      "kind": "text",
+      "body": "作为容器入口点执行的命令或脚本"
+    },
+    {
+      "id": "intro-193",
+      "sectionId": "intro",
+      "title": "image:pull_policy",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job1:\n  script: echo \"单一拉动政策\"\n  image:\n    name: ruby:3.0\n    pull_policy: if-not-present\n\njob2:\n  script: echo \"多重拉动政策\"\n  image:\n    name: ruby:3.0\n    pull_policy: [always, if-not-present]"
+    },
+    {
+      "id": "intro-194",
+      "sectionId": "intro",
+      "title": "image:pull_policy",
+      "kind": "text",
+      "body": "运行器用于获取 Docker 映像的拉取策略"
+    },
+    {
+      "id": "intro-195",
+      "sectionId": "intro",
+      "title": "image:pull_policy",
+      "kind": "text",
+      "body": "needs\n---"
+    },
+    {
+      "id": "intro-196",
+      "sectionId": "intro",
+      "title": "needs:artifacts",
+      "kind": "text",
+      "body": "当作业使用需求时，它不再默认下载先前阶段的所有工件，因为有需求的作业可以在早期阶段完成之前开始"
+    },
+    {
+      "id": "intro-197",
+      "sectionId": "intro",
+      "title": "needs:artifacts",
+      "kind": "code",
+      "lang": "yml",
+      "code": "test-job1:\n  stage: test\n  needs:\n    - job: build_job1\n      artifacts: true\n\ntest-job2:\n  stage: test\n  needs:\n    - job: build_job2\n      artifacts: false\n\ntest-job3:\n  needs:\n    - job: build_job1\n      artifacts: true\n    - job: build_job2\n    - build_job3"
+    },
+    {
+      "id": "intro-198",
+      "sectionId": "intro",
+      "title": "needs:project",
+      "kind": "text",
+      "body": "使用 `needs:project` 从其他管道中的最多五个作业下载工件。工件是从指定参考的最新成功管道下载的。要指定多个作业，请将每个作业作为单独的数组项添加到 needs 关键字下"
+    },
+    {
+      "id": "intro-199",
+      "sectionId": "intro",
+      "title": "needs:project",
+      "kind": "code",
+      "lang": "yml",
+      "code": "build_job:\n  stage: build\n  script:\n    - ls -lhR\n  needs:\n    - project: namespace/group/project-name\n      job: build-1\n      ref: main\n      artifacts: true\n    - project: namespace/group/project-name-2\n      job: build-2\n      ref: main\n      artifacts: true"
+    },
+    {
+      "id": "intro-200",
+      "sectionId": "intro",
+      "title": "needs:pipeline:job",
+      "kind": "code",
+      "lang": "yml",
+      "code": "create-artifact:\n  stage: build\n  script: echo \"sample artifact\" > artifact.txt\n  artifacts:\n    paths: [artifact.txt]\n\nchild-pipeline:\n  stage: test\n  trigger:\n    include: child.yml\n    strategy: depend\n  variables:\n    PARENT_PIPELINE_ID: $CI_PIPELINE_ID"
+    },
+    {
+      "id": "intro-201",
+      "sectionId": "intro",
+      "title": "needs:pipeline:job",
+      "kind": "text",
+      "body": "子管道可以从其父管道中的作业或同一父子管道层次结构中的另一个子管道下载工件"
+    },
+    {
+      "id": "intro-202",
+      "sectionId": "intro",
+      "title": "needs:optional",
+      "kind": "text",
+      "body": "要需要管道中有时不存在的作业，请将 `optional: true` 添加到需求配置中。如果未定义，则可选：默认为 `false`"
+    },
+    {
+      "id": "intro-203",
+      "sectionId": "intro",
+      "title": "needs:optional",
+      "kind": "code",
+      "lang": "yml",
+      "code": "build-job:\n  stage: build\n\ntest-job1:\n  stage: test\n\ntest-job2:\n  stage: test\n  rules:\n    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH\n\ndeploy-job:\n  stage: deploy\n  needs:\n    - job: test-job2\n      optional: true\n    - job: test-job1\n  environment: production\n\nreview-job:\n  stage: deploy\n  needs:\n    - job: test-job2\n      optional: true\n  environment: review"
+    },
+    {
+      "id": "intro-204",
+      "sectionId": "intro",
+      "title": "needs:pipeline",
+      "kind": "text",
+      "body": "您可以使用 `needs:pipeline` 关键字将管道状态从上游管道镜像到桥接作业"
+    },
+    {
+      "id": "intro-205",
+      "sectionId": "intro",
+      "title": "needs:pipeline",
+      "kind": "code",
+      "lang": "yml",
+      "code": "upstream_bridge:\n  stage: test\n  needs:\n    pipeline: other/project"
+    },
+    {
+      "id": "intro-206",
+      "sectionId": "intro",
+      "title": "needs:pipeline",
+      "kind": "text",
+      "body": "only / except\n---"
+    },
+    {
+      "id": "intro-207",
+      "sectionId": "intro",
+      "title": "only:refs / except:refs",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job1:\n  script: echo\n  only:\n    - main\n    - /^issue-.*$/\n    - merge_requests\n\njob2:\n  script: echo\n  except:\n    - main\n    - /^stable-branch.*$/\n    - schedules"
+    },
+    {
+      "id": "intro-208",
+      "sectionId": "intro",
+      "title": "only:refs / except:refs",
+      "kind": "text",
+      "body": "使用 `only:refs` 和 `except:refs` 关键字来控制何时根据分支名称或管道类型将作业添加到管道"
+    },
+    {
+      "id": "intro-209",
+      "sectionId": "intro",
+      "title": "only:variables / except:variables",
+      "kind": "code",
+      "lang": "yml",
+      "code": "deploy:\n  script: cap staging deploy\n  only:\n    variables:\n      - $RELEASE == \"staging\"\n      - $STAGING"
+    },
+    {
+      "id": "intro-210",
+      "sectionId": "intro",
+      "title": "only:variables / except:variables",
+      "kind": "text",
+      "body": "根据 CI/CD 变量的状态，使用 only:variables 或 except:variables 关键字来控制何时将作业添加到管道"
+    },
+    {
+      "id": "intro-211",
+      "sectionId": "intro",
+      "title": "only:changes / except:changes",
+      "kind": "code",
+      "lang": "yml",
+      "code": "docker build:\n  script: docker build -t my-image:$CI_COMMIT_REF_SLUG .\n  only:\n    refs:\n      - branches\n    changes:\n      - Dockerfile\n      - docker/scripts/*\n      - dockerfiles/**/*\n      - more_scripts/*.{rb,py,sh}\n      - \"**/*.json\""
+    },
+    {
+      "id": "intro-212",
+      "sectionId": "intro",
+      "title": "only:changes / except:changes",
+      "kind": "text",
+      "body": "当 `Git` 推送事件修改文件时，使用 `changes` 关键字仅运行作业，或使用 `except` 跳过作业"
+    },
+    {
+      "id": "intro-213",
+      "sectionId": "intro",
+      "title": "only:kubernetes / except:kubernetes",
+      "kind": "code",
+      "lang": "yml",
+      "code": "deploy:\n  only:\n    kubernetes: active"
+    },
+    {
+      "id": "intro-214",
+      "sectionId": "intro",
+      "title": "only:kubernetes / except:kubernetes",
+      "kind": "text",
+      "body": "使用 `only:kubernetes` 或 `except:kubernetes` 来控制当 `Kubernetes` 服务在项目中处于活动状态时是否将作业添加到管道中"
+    },
+    {
+      "id": "intro-215",
+      "sectionId": "intro",
+      "title": "only:kubernetes / except:kubernetes",
+      "kind": "text",
+      "body": "release\n---"
+    },
+    {
+      "id": "intro-216",
+      "sectionId": "intro",
+      "title": "release 参考",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[release:tag_name](#releasetag_name) | 发布的 Git 标签\n[release:tag_message](#releasetag_message) | 指定的消息进行注释\n[release:name](#releasename) | 发布名称\n[release:description](#releasedescription) | 版本的详细描述\n[release:ref](#releaseref) | 发布的 ref\n[release:milestones](#releasemilestones) | 每个里程碑的标题\n[release:released_at](#releasereleased_at) | 发布准备就绪的日期和时间"
+    },
+    {
+      "id": "intro-217",
+      "sectionId": "intro",
+      "title": "release:tag_name",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  script: echo \"为新标签运行发布作业\"\n  release:\n    tag_name: $CI_COMMIT_TAG\n    description: 'Release description'\n  rules:\n    - if: $CI_COMMIT_TAG"
+    },
+    {
+      "id": "intro-218",
+      "sectionId": "intro",
+      "title": "release:tag_name",
+      "kind": "text",
+      "body": "必需的。发布的 Git 标签"
+    },
+    {
+      "id": "intro-219",
+      "sectionId": "intro",
+      "title": "release:tag_message",
+      "kind": "code",
+      "lang": "yml",
+      "code": "release_job:\n  stage: release\n  release:\n    tag_name: $CI_COMMIT_TAG\n    description: 'Release description'\n    tag_message: 'Annotated tag message'"
+    },
+    {
+      "id": "intro-220",
+      "sectionId": "intro",
+      "title": "release:tag_message",
+      "kind": "text",
+      "body": "如果标签不存在，则新创建的标签将使用 `tag_message` 指定的消息进行注释"
+    },
+    {
+      "id": "intro-221",
+      "sectionId": "intro",
+      "title": "release:name",
+      "kind": "code",
+      "lang": "yml",
+      "code": "release_job:\n  stage: release\n  release:\n    name: 'Release $CI_COMMIT_TAG'"
+    },
+    {
+      "id": "intro-222",
+      "sectionId": "intro",
+      "title": "release:name",
+      "kind": "text",
+      "body": "发布名称。如果省略，它会填充 `release:tag_name` 的值"
+    },
+    {
+      "id": "intro-223",
+      "sectionId": "intro",
+      "title": "release:description",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  release:\n    tag_name: ${MAJOR}_${MINOR}_${REVISION}\n    description: './path/to/CHANGELOG.md'"
+    },
+    {
+      "id": "intro-224",
+      "sectionId": "intro",
+      "title": "release:description",
+      "kind": "text",
+      "body": "版本的详细描述"
+    },
+    {
+      "id": "intro-225",
+      "sectionId": "intro",
+      "title": "release:ref",
+      "kind": "text",
+      "body": "发布的 ref，如果发布：`tag_name` 尚不存在"
+    },
+    {
+      "id": "intro-226",
+      "sectionId": "intro",
+      "title": "release:milestones",
+      "kind": "text",
+      "body": "与版本关联的每个里程碑的标题"
+    },
+    {
+      "id": "intro-227",
+      "sectionId": "intro",
+      "title": "release:released_at",
+      "kind": "code",
+      "lang": "yml",
+      "code": "released_at: '2021-03-15T08:00:00Z'"
+    },
+    {
+      "id": "intro-228",
+      "sectionId": "intro",
+      "title": "release:released_at",
+      "kind": "text",
+      "body": "发布准备就绪的日期和时间"
+    },
+    {
+      "id": "intro-229",
+      "sectionId": "intro",
+      "title": "release:assets:links",
+      "kind": "code",
+      "lang": "yml",
+      "code": "assets:\n  links:\n    - name: 'asset1'\n      url: 'https://example.com/assets/1'\n    - name: 'asset2'\n      url: 'https://example.com/assets/2'\n      filepath: '/pretty/url/1' # 可选的\n      link_type: 'other' # 可选的"
+    },
+    {
+      "id": "intro-230",
+      "sectionId": "intro",
+      "title": "release:assets:links",
+      "kind": "text",
+      "body": "使用 `release:assets:links` 在发布中包含资产链接"
+    },
+    {
+      "id": "intro-231",
+      "sectionId": "intro",
+      "title": "release:assets:links",
+      "kind": "text",
+      "body": "rules\n---"
+    },
+    {
+      "id": "intro-232",
+      "sectionId": "intro",
+      "title": "rules:if",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  script: echo \"Hello, Rules!\"\n  rules:\n    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feature/ && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME != $CI_DEFAULT_BRANCH\n      when: never\n    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feature/\n      when: manual\n      allow_failure: true\n    - if: $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME"
+    },
+    {
+      "id": "intro-233",
+      "sectionId": "intro",
+      "title": "rules:if",
+      "kind": "text",
+      "body": "使用 `rules:if` 子句指定何时将作业添加到管道"
+    },
+    {
+      "id": "intro-234",
+      "sectionId": "intro",
+      "title": "rules:changes",
+      "kind": "code",
+      "lang": "yml",
+      "code": "docker build:\n  script: docker build -t my-image:$CI_COMMIT_REF_SLUG .\n  rules:\n    - if: $CI_PIPELINE_SOURCE == \"merge_request_event\"\n      changes:\n        - Dockerfile\n      when: manual\n      allow_failure: true"
+    },
+    {
+      "id": "intro-235",
+      "sectionId": "intro",
+      "title": "rules:changes",
+      "kind": "text",
+      "body": "使用 `rules:changes` 通过检查对特定文件的更改来指定何时将作业添加到管道"
+    },
+    {
+      "id": "intro-236",
+      "sectionId": "intro",
+      "title": "rules:changes",
+      "kind": "text",
+      "body": "#### rules:changes:paths"
+    },
+    {
+      "id": "intro-237",
+      "sectionId": "intro",
+      "title": "rules:changes",
+      "kind": "code",
+      "lang": "yml",
+      "code": "docker-build-1:\n  script: docker build -t my-image:$CI_COMMIT_REF_SLUG .\n  rules:\n    - if: $CI_PIPELINE_SOURCE == \"merge_request_event\"\n      changes:\n        - Dockerfile\n\ndocker-build-2:\n  script: docker build -t my-image:$CI_COMMIT_REF_SLUG .\n  rules:\n    - if: $CI_PIPELINE_SOURCE == \"merge_request_event\"\n      changes:\n        paths:\n          - Dockerfile"
+    },
+    {
+      "id": "intro-238",
+      "sectionId": "intro",
+      "title": "rules:changes",
+      "kind": "text",
+      "body": "使用 `rules:changes` 指定仅在更改特定文件时将作业添加到管道，并使用 `rules:changes:paths` 指定文件"
+    },
+    {
+      "id": "intro-239",
+      "sectionId": "intro",
+      "title": "rules:changes",
+      "kind": "text",
+      "body": "#### rules:changes:compare_to"
+    },
+    {
+      "id": "intro-240",
+      "sectionId": "intro",
+      "title": "rules:changes",
+      "kind": "code",
+      "lang": "yml",
+      "code": "docker build:\n  script: docker build -t my-image:$CI_COMMIT_REF_SLUG .\n  rules:\n    - if: $CI_PIPELINE_SOURCE == \"merge_request_event\"\n      changes:\n        paths:\n          - Dockerfile\n        compare_to: 'refs/heads/branch1'"
+    },
+    {
+      "id": "intro-241",
+      "sectionId": "intro",
+      "title": "rules:changes",
+      "kind": "text",
+      "body": "使用 `rules:changes:compare_to` 指定要比较哪个 `ref` 来比较 `rules:changes:paths` 下列出的文件的更改"
+    },
+    {
+      "id": "intro-242",
+      "sectionId": "intro",
+      "title": "rules:exists",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  script: docker build -t my-image:$CI_COMMIT_REF_SLUG .\n  rules:\n    - exists:\n        - Dockerfile"
+    },
+    {
+      "id": "intro-243",
+      "sectionId": "intro",
+      "title": "rules:exists",
+      "kind": "text",
+      "body": "当存储库中存在某些文件时，使用 `exists` 运行作业"
+    },
+    {
+      "id": "intro-244",
+      "sectionId": "intro",
+      "title": "rules:allow_failure",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  script: echo \"Hello, Rules!\"\n  rules:\n    - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH\n      when: manual\n      allow_failure: true"
+    },
+    {
+      "id": "intro-245",
+      "sectionId": "intro",
+      "title": "rules:allow_failure",
+      "kind": "text",
+      "body": "在规则中使用 `allow_failure: true` 允许作业失败而不停止管道"
+    },
+    {
+      "id": "intro-246",
+      "sectionId": "intro",
+      "title": "rules:variables",
+      "kind": "code",
+      "lang": "yml",
+      "code": "job:\n  variables:\n    DEPLOY_VARIABLE: \"default-deploy\"\n  rules:\n    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH\n      variables:                              # 覆盖定义的 DEPLOY_VARIABLE\n        DEPLOY_VARIABLE: \"deploy-production\"  # 在工作层面\n    - if: $CI_COMMIT_REF_NAME =~ /feature/\n      variables:\n        IS_A_FEATURE: \"true\"                  # 定义一个新变量\n  script:\n    - echo \"以 $DEPLOY_VARIABLE 作为参数运行脚本\"\n    - echo \"如果 $IS_A_FEATURE 存在则运行另一个脚本\""
+    },
+    {
+      "id": "intro-247",
+      "sectionId": "intro",
+      "title": "rules:variables",
+      "kind": "text",
+      "body": "在规则中使用变量来为特定条件定义变量"
+    },
+    {
+      "id": "intro-248",
+      "sectionId": "intro",
+      "title": "rules:variables",
+      "kind": "text",
+      "body": "另见\n---"
+    },
+    {
+      "id": "intro-249",
+      "sectionId": "intro",
+      "title": "rules:variables",
+      "kind": "text",
+      "body": "• [.gitlab-ci.yml 关键字参考](https://docs.gitlab.com/ee/ci/yaml/)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/gitlab-ci.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/gitlab-ci.md",
+    "generatedAt": "2025-12-16T07:36:11.239Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

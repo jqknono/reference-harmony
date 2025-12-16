@@ -1,0 +1,579 @@
+{
+  "id": "graphql",
+  "title": "graphql",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "GraphQL 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这份快速参考备忘单提供了 [GraphQL](https://graphql.org/) 的简要概述"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "概述",
+      "kind": "text",
+      "body": "• RESTful API 的另一种方法\n• GraphQL 是一种 API 查询语言\n• 使用清晰的共享术语轻松描述 GraphQL API 的形状。\n• 客户端发出查询/突变以读取和更新数据\n• GraphQL 语法可以表达复杂的实体关系\n• 用 [不同语言](https://graphql.org/code/) 实现 GraphQL 的库"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "概述",
+      "kind": "text",
+      "body": "[GraphQL](https://graphql.org/)"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "Schema",
+      "kind": "text",
+      "body": ":-|-\n:-|-\n`schema`       | GraphQL 架构定义\n`query`        | 读取和遍历数据\n`mutation`     | 修改数据或触发动作\n`subscription` | 发生事件时运行查询"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "内置标量类型",
+      "kind": "text",
+      "body": ":-|-\n:-|-\n`Int`     | 有符号 32 位整数\n`Float`   | 有符号双精度浮点值\n`String`  | UTF-8 字符序列\n`Boolean` | 对或错布尔值类型\n`ID`      | 唯一标识符"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "类型定义",
+      "kind": "text",
+      "body": ":-|-\n:-|-\n`scalar`    | 标量类型\n`type`      | 对象类型\n`interface` | 接口类型\n`union`     | 联合类型\n`enum`      | 枚举类型\n`input`     | 输入对象类型"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "类型修饰符",
+      "kind": "text",
+      "body": ":-|-\n:-|-\n`String`     | 可空字符串\n`String!`    | 非空字符串\n`[String]`   | 可空字符串列表\n`[String]!`  | 可空字符串的非空列表\n`[String!]!` | 非空字符串的非空列表"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "输入参数",
+      "kind": "text",
+      "body": "#### 基本输入"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "输入参数",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "type Query {\n  users(limit: Int): [User]\n}"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "输入参数",
+      "kind": "text",
+      "body": "#### 输入默认值"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "输入参数",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "type Query {\n  users(limit: Int = 10): [User]\n}"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "输入参数",
+      "kind": "text",
+      "body": "#### 具有多个参数的输入"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "输入参数",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "type Query {\n  users(limit: Int, sort: String): [User]\n}"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "输入参数",
+      "kind": "text",
+      "body": "#### 具有多个参数和默认值的输入"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "输入参数",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "type Query {\n  users(limit: Int = 10, sort: String): [User]\n}\ntype Query {\n  users(limit: Int, sort: String = \"asc\"): [User]\n}\ntype Query {\n  users(limit: Int = 10, sort: String = \"asc\"): [User]\n}"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "输入类型",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "input ListUsersInput {\n  limit: Int\n  since_id: ID\n}"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "输入类型",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "type Mutation {\n  users(params: ListUsersInput): [User]!\n}"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "自定义标量",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "scalar Url\ntype User {\n  name: String\n  homepage: Url\n}"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "接口",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "interface Foo {\n  is_foo: Boolean\n}\ninterface Goo {\n  is_goo: Boolean\n}\ntype Bar implements Foo {\n  is_foo: Boolean\n  is_bar: Boolean\n}\ntype Baz implements Foo, Goo {\n  is_foo: Boolean\n  is_goo: Boolean\n  is_baz: Boolean\n}"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "接口",
+      "kind": "text",
+      "body": "实现一个或多个接口的对象"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "联合",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "type Foo {\n  name: String\n}\ntype Bar {\n  is_bar: String\n}\nunion SingleUnion = Foo\nunion MultipleUnion = Foo | Bar\ntype Root {\n  single: SingleUnion\n  multiple: MultipleUnion\n}"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "联合",
+      "kind": "text",
+      "body": "一个或多个对象的联合"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "枚举",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "enum USER_STATE {\n  NOT_FOUND\n  ACTIVE\n  INACTIVE\n  SUSPENDED\n}\ntype Root {\n  stateForUser(userID: ID!): USER_STATE!\n  users(state: USER_STATE, limit: Int = 10): [User]\n}"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "枚举",
+      "kind": "text",
+      "body": "查询和变更(Mutations)\n---"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "字段",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "{\n  hero {\n    name\n  }\n}"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "字段",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "字段",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"hero\": {\n      \"name\": \"R2-D2\"\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "查询可以有注释",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "{\n  hero {\n    name\n    # 查询可以有注释！\n    friends {\n      name\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "查询可以有注释",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "查询可以有注释",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"hero\": {\n      \"name\": \"R2-D2\",\n      \"friends\": [\n        { \"name\": \"Luke Skywalker\" },\n        { \"name\": \"Han Solo\" }\n      ]\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "参数 Arguments",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "{\n  human(id: \"1000\") {\n    name\n    height\n  }\n}"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "参数 Arguments",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "参数 Arguments",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"human\": {\n      \"name\": \"Luke Skywalker\",\n      \"height\": 1.72\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "不同类型的参数",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "{\n  human(id: \"1000\") {\n    name\n    height(unit: FOOT)\n  }\n}"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "不同类型的参数",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "不同类型的参数",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"human\": {\n      \"name\": \"Luke Skywalker\",\n      \"height\": 5.6430448\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "别名(Aliases)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "{\n  empireHero: hero(episode: EMPIRE) {\n    name\n  }\n  jediHero: hero(episode: JEDI) {\n    name\n  }\n}"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "别名(Aliases)",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "别名(Aliases)",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"empireHero\": {\n      \"name\": \"Luke Skywalker\"\n    },\n    \"jediHero\": {\n      \"name\": \"R2-D2\"\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "片段(Fragments)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "{\n  leftComparison: hero(episode: EMPIRE) {\n    ...comparisonFields\n  }\n  rightComparison: hero(episode: JEDI) {\n    ...comparisonFields\n  }\n}\n​\nfragment comparisonFields on Character {\n  name\n  appearsIn\n  friends {\n    name\n  }\n}"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "片段(Fragments)",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "片段(Fragments)",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"leftComparison\": {\n      \"name\": \"Luke Skywalker\",\n      \"appearsIn\": [\n        \"NEWHOPE\",\n        \"EMPIRE\",\n        \"JEDI\"\n      ],\n      \"friends\": [\n        { \"name\": \"Han Solo\" },\n        { \"name\": \"Leia Organa\" },\n        { \"name\": \"C-3PO\" },\n        { \"name\": \"R2-D2\" }\n      ]\n    },\n    \"rightComparison\": {\n      \"name\": \"R2-D2\",\n      \"appearsIn\": [\n        \"NEWHOPE\",\n        \"EMPIRE\",\n        \"JEDI\"\n      ],\n      \"friends\": [\n        { \"name\": \"Luke Skywalker\" },\n        { \"name\": \"Han Solo\" },\n        { \"name\": \"Leia Organa\" }\n      ]\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "在片段内使用变量",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "query HeroComparison($first: Int = 3) {\n  leftComparison: hero(episode: EMPIRE) {\n    ...comparisonFields\n  }\n  rightComparison: hero(episode: JEDI) {\n    ...comparisonFields\n  }\n}\n​\nfragment comparisonFields on Character {\n  name\n  friendsConnection(first: $first) {\n    totalCount\n    edges {\n      node {\n        name\n      }\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "在片段内使用变量",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "在片段内使用变量",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"leftComparison\": {\n      \"name\": \"Luke Skywalker\",\n      \"friendsConnection\": {\n        \"totalCount\": 4,\n        \"edges\": [\n          {\n            \"node\": {\n              \"name\": \"Han Solo\"\n            }\n          },\n          {\n            \"node\": {\n              \"name\": \"Leia Organa\"\n            }\n          }\n        ]\n      }\n    },\n    \"rightComparison\": {\n      \"name\": \"R2-D2\",\n      \"friendsConnection\": {\n        \"totalCount\": 3,\n        \"edges\": [\n          {\n            \"node\": {\n              \"name\": \"Luke Skywalker\"\n            }\n          },\n          {\n            \"node\": {\n              \"name\": \"Han Solo\"\n            }\n          }\n        ]\n      }\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "操作名称(Operation name)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "query HeroNameAndFriends {\n  hero {\n    name\n    friends {\n      name\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "操作名称(Operation name)",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "操作名称(Operation name)",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"hero\": {\n      \"name\": \"R2-D2\",\n      \"friends\": [\n        { \"name\": \"Luke Skywalker\" },\n        { \"name\": \"Han Solo\" },\n        { \"name\": \"Leia Organa\" }\n      ]\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "变量(Variables)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "# { \"graphiql\": true, \"variables\": { \"episode\": JEDI } }\nquery HeroNameAndFriends($episode: Episode) {\n  hero(episode: $episode) {\n    name\n    friends {\n      name\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "变量(Variables)",
+      "kind": "text",
+      "body": "变量前缀必须为 `$`，后跟其类型"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "默认变量(Default variables)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "query HeroNameAndFriends($episode: Episode = \"JEDI\") {\n  hero(episode: $episode) {\n    name\n    friends {\n      name\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "指令(Directives)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "query Hero($episode: Episode, $withFriends: Boolean!) {\n  hero(episode: $episode) {\n    name\n    friends @include(if: $withFriends) {\n      name\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "指令(Directives)",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "指令(Directives)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "{ \"episode\": \"JEDI\", \"withFriends\": false }"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "指令(Directives)",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "指令(Directives)",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": { \"hero\": { \"name\": \"R2-D2\" } }\n}"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "指令(Directives)",
+      "kind": "text",
+      "body": "• `@include(if: Boolean)` 仅在参数为 `true` 时，包含此字段\n• `@skip(if: Boolean)` 如果参数为 `true`，跳过此字段"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "变更(Mutations)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "mutation CreateReviewForEpisode($ep: Episode!, $review: ReviewInput!) {\n  createReview(episode: $ep, review: $review) {\n    stars\n    commentary\n  }\n}"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "变更(Mutations)",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "变更(Mutations)",
+      "kind": "code",
+      "lang": "",
+      "code": "{\n  \"ep\": \"JEDI\",\n  \"review\": {\n    \"stars\": 5,\n    \"commentary\": \"This is a great movie!\"\n  }\n}"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "变更(Mutations)",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "变更(Mutations)",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"createReview\": {\n      \"stars\": 5,\n      \"commentary\": \"This is a great movie!\"\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "内联片段(Inline Fragments)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "query HeroForEpisode($ep: Episode!) {\n  hero(episode: $ep) {\n    name\n    ... on Droid {\n      primaryFunction\n    }\n    ... on Human {\n      height\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "内联片段(Inline Fragments)",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "内联片段(Inline Fragments)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "{ \"ep\": \"JEDI\" }"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "内联片段(Inline Fragments)",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "内联片段(Inline Fragments)",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"hero\": {\n      \"name\": \"R2-D2\",\n      \"primaryFunction\": \"Astromech\"\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "元字段(Meta fields)",
+      "kind": "code",
+      "lang": "graphql",
+      "code": "{\n  search(text: \"an\") {\n    __typename\n    ... on Human {\n      name\n    }\n    ... on Droid {\n      name\n    }\n    ... on Starship {\n      name\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "元字段(Meta fields)",
+      "kind": "text",
+      "body": "结果:"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "元字段(Meta fields)",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"data\": {\n    \"search\": [\n      {\n        \"__typename\": \"Human\",\n        \"name\": \"Han Solo\"\n      },\n      {\n        \"__typename\": \"Human\",\n        \"name\": \"Leia Organa\"\n      },\n      {\n        \"__typename\": \"Starship\",\n        \"name\": \"TIE Advanced x1\"\n      }\n    ]\n  }\n}"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "元字段(Meta fields)",
+      "kind": "text",
+      "body": "另见\n-------"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "元字段(Meta fields)",
+      "kind": "text",
+      "body": "• [GraphQL Schema Language Cheat Sheet](https://github.com/sogko/graphql-schema-language-cheat-sheet) _(github.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/graphql.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/graphql.md",
+    "generatedAt": "2025-12-16T07:36:11.251Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

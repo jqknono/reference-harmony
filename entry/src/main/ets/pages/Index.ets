@@ -1,5 +1,7 @@
+import preferences from '@ohos.data.preferences';
+
 import { ReferenceRepository } from '../common/referenceRepository';
-import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
+import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
 import { ReferenceCard } from '../components/ReferenceCard';
 
 interface SectionWithCards {
@@ -13,6 +15,7 @@ struct Index {
   @State private currentTabIndex: number = 0;
   @State private loading: boolean = false;
   @State private errorText: string = '';
+  @State private lang: ReferenceLang = 'zh';
 
   @State private docs: Array<ReferenceDocSummary> = [];
   @State private selectedDoc: ReferenceDoc | undefined = undefined;
@@ -24,13 +27,41 @@ struct Index {
   private sectionNavScroller: Scroller = new Scroller();
   private repository: ReferenceRepository | undefined = undefined;
 
+  private t(zh: string, en: string): string {
+    return this.lang === 'en' ? en : zh;
+  }
+
+  private async loadLangSetting(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    try {
+      const prefs = await preferences.getPreferences(host, 'settings');
+      const saved = (await prefs.get('lang', 'zh')) as string;
+      this.lang = saved === 'en' ? 'en' : 'zh';
+    } catch (_) {
+      this.lang = 'zh';
+    }
+  }
+
+  private async saveLangSetting(next: ReferenceLang): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    try {
+      const prefs = await preferences.getPreferences(host, 'settings');
+      await prefs.put('lang', next);
+      await prefs.flush();
+    } catch (_) {
+      // ignore
+    }
+  }
+
   private async ensureRepository(): Promise<ReferenceRepository | undefined> {
     if (this.repository) {
       return this.repository;
     }
     const host = this.getUIContext().getHostContext();
     if (!host) {
-      this.errorText = '无法获取 HostContext';
+      this.errorText = this.t('无法获取 HostContext', 'Failed to get HostContext');
       return undefined;
     }
     this.repository = new ReferenceRepository(host.resourceManager);
@@ -51,7 +82,7 @@ struct Index {
 
     let sections: Array<ReferenceSection> = doc.sections;
     if (sections.length === 0) {
-      const defaultSection: ReferenceSection = { id: 'default', title: '内容', startIndex: 0 };
+      const defaultSection: ReferenceSection = { id: 'default', title: this.t('内容', 'Content'), startIndex: 0 };
       sections = [defaultSection];
     }
 
@@ -74,19 +105,29 @@ struct Index {
     this.loading = true;
     this.errorText = '';
     try {
-      const doc: ReferenceDoc = await repo.getDoc(docId);
+      const doc: ReferenceDoc = await repo.getDocByLang(this.lang, docId);
       this.selectedDoc = doc;
       this.selectedDocId = docId;
       this.rebuildSectionCards(doc);
       this.tabsController.changeIndex(1);
     } catch (e) {
-      this.errorText = `加载文档失败：${String(e)}`;
+      this.errorText = this.t(`加载文档失败：${String(e)}`, `Failed to load doc: ${String(e)}`);
     } finally {
       this.loading = false;
     }
   }
 
-  private async loadManifest(): Promise<void> {
+  private async switchLang(next: ReferenceLang): Promise<void> {
+    if (this.lang === next) return;
+    this.lang = next;
+    await this.saveLangSetting(next);
+    this.selectedDoc = undefined;
+    this.selectedDocId = '';
+    this.sectionCards = [];
+    await this.loadManifest(false);
+  }
+
+  private async loadManifest(autoOpenFirst: boolean = true): Promise<void> {
     const repo = await this.ensureRepository();
     if (!repo) {
       return;
@@ -95,32 +136,36 @@ struct Index {
     this.loading = true;
     this.errorText = '';
     try {
-      const manifest: ReferenceManifest = await repo.getManifest();
+      const manifest: ReferenceManifest = await repo.getManifestByLang(this.lang);
       this.docs = manifest.docs ?? [];
-      if (!this.selectedDocId && this.docs.length > 0) {
+      if (autoOpenFirst && !this.selectedDocId && this.docs.length > 0) {
         await this.openDoc(this.docs[0].id);
       }
     } catch (e) {
-      this.errorText = `加载 manifest 失败：${String(e)}\n\n请先运行 tools/sync_reference_docs.mjs 生成 rawfile 数据。`;
+      this.errorText = this.t(
+        `加载 manifest 失败：${String(e)}\n\n请先运行 tools/sync_reference_docs.mjs 生成 rawfile 数据。`,
+        `Failed to load manifest: ${String(e)}\n\nRun tools/sync_reference_docs.mjs to generate rawfile data.`,
+      );
     } finally {
       this.loading = false;
     }
   }
 
   async aboutToAppear(): Promise<void> {
+    await this.loadLangSetting();
     await this.loadManifest();
   }
 
   @Builder
   private DocListTab(): void {
     Column({ space: 10 }) {
-      Text('快速参考')
+      Text(this.t('快速参考', 'Quick Reference'))
         .fontSize(22)
         .fontWeight(FontWeight.Bold)
         .fontColor(0x0f172a);
 
       if (this.loading) {
-        Text('加载中…').fontColor(0x64748b);
+        Text(this.t('加载中…', 'Loading…')).fontColor(0x64748b);
       }
 
       if (this.errorText) {
@@ -133,12 +178,12 @@ struct Index {
             Row() {
               Column({ space: 4 }) {
                 Text(doc.title).fontSize(16).fontColor(0x0f172a);
-                Text(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`)
+                Text(this.t(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`, `${doc.sectionCount} sections · ${doc.cardCount} cards`))
                   .fontSize(12)
                   .fontColor(0x64748b);
               }.layoutWeight(1);
 
-              Text('打开').fontSize(12).fontColor(0x2563eb);
+              Text(this.t('打开', 'Open')).fontSize(12).fontColor(0x2563eb);
             }
             .padding(14)
             .backgroundColor(0xffffff)
@@ -161,7 +206,7 @@ struct Index {
   private ReadTab(): void {
     Column({ space: 10 }) {
       Row() {
-        Text(this.selectedDoc ? this.selectedDoc.title : '阅读')
+        Text(this.selectedDoc ? this.selectedDoc.title : this.t('未选择', 'No selection'))
           .fontSize(18)
           .fontWeight(FontWeight.Bold)
           .fontColor(0x0f172a)
@@ -174,7 +219,7 @@ struct Index {
       .padding({ left: 16, right: 16, top: 14, bottom: 6 });
 
       if (this.loading) {
-        Text('加载中…').fontColor(0x64748b).padding({ left: 16, right: 16 });
+        Text(this.t('加载中…', 'Loading…')).fontColor(0x64748b).padding({ left: 16, right: 16 });
       }
 
       if (this.errorText) {
@@ -194,7 +239,7 @@ struct Index {
 
             ForEach(group.cards, (card: ReferenceCardData) => {
               ListItem() {
-                ReferenceCard({ card })
+                ReferenceCard({ card, lang: this.lang })
                   .margin({ left: 16, right: 16, top: 8, bottom: 8 });
               }
             }, (card: ReferenceCardData) => card.id);
@@ -232,8 +277,8 @@ struct Index {
   @Builder
   private SearchTab(): void {
     Column({ space: 10 }) {
-      Text('搜索').fontSize(22).fontWeight(FontWeight.Bold);
-      Text('TODO：搜索（按标题/内容过滤卡片）').fontColor(0x64748b);
+      Text(this.t('搜索', 'Search')).fontSize(22).fontWeight(FontWeight.Bold);
+      Text(this.t('TODO：搜索（按标题/内容过滤卡片）', 'TODO: Search (filter cards by title/body)')).fontColor(0x64748b);
     }
     .padding(16)
     .height('100%')
@@ -244,9 +289,29 @@ struct Index {
   @Builder
   private SettingsTab(): void {
     Column({ space: 10 }) {
-      Text('设置').fontSize(22).fontWeight(FontWeight.Bold);
-      Text('数据来源：jaywcjlove/reference').fontColor(0x64748b);
-      Text('生成脚本：tools/sync_reference_docs.mjs').fontColor(0x64748b);
+      Text(this.t('设置', 'Settings')).fontSize(22).fontWeight(FontWeight.Bold);
+
+      Row({ space: 10 }) {
+        Text(this.t('语言', 'Language')).fontColor(0x64748b);
+        Text(this.t('中文', '中文'))
+          .fontSize(12)
+          .fontColor(this.lang === 'zh' ? 0xffffff : 0x0f172a)
+          .padding({ left: 10, right: 10, top: 6, bottom: 6 })
+          .backgroundColor(this.lang === 'zh' ? 0x2563eb : 0xe2e8f0)
+          .borderRadius(999)
+          .onClick(() => this.switchLang('zh'));
+        Text('English')
+          .fontSize(12)
+          .fontColor(this.lang === 'en' ? 0xffffff : 0x0f172a)
+          .padding({ left: 10, right: 10, top: 6, bottom: 6 })
+          .backgroundColor(this.lang === 'en' ? 0x2563eb : 0xe2e8f0)
+          .borderRadius(999)
+          .onClick(() => this.switchLang('en'));
+      }
+
+      Text(this.t('中文数据源：jaywcjlove/reference/docs', 'ZH source: jaywcjlove/reference/docs')).fontColor(0x64748b);
+      Text(this.t('英文数据源：Fechin/reference/source/_posts', 'EN source: Fechin/reference/source/_posts')).fontColor(0x64748b);
+      Text(this.t('同步脚本：tools/sync_reference_docs.mjs', 'Sync script: tools/sync_reference_docs.mjs')).fontColor(0x64748b);
     }
     .padding(16)
     .height('100%')
@@ -259,22 +324,22 @@ struct Index {
       TabContent() {
         this.DocListTab();
       }
-      .tabBar('文档');
+      .tabBar(this.t('文档', 'Docs'));
 
       TabContent() {
         this.ReadTab();
       }
-      .tabBar('阅读');
+      .tabBar(this.t('阅读', 'Read'));
 
       TabContent() {
         this.SearchTab();
       }
-      .tabBar('搜索');
+      .tabBar(this.t('搜索', 'Search'));
 
       TabContent() {
         this.SettingsTab();
       }
-      .tabBar('设置');
+      .tabBar(this.t('设置', 'Settings'));
     }
     .onChange((index: number) => {
       this.currentTabIndex = index;

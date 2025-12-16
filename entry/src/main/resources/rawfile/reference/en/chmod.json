@@ -1,0 +1,364 @@
+{
+  "id": "chmod",
+  "title": "Chmod",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "This quick reference cheat sheet provides a brief overview of file permissions, and the operation of the chmod command"
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "```shell script\n$ chmod [options] <permissions> <file>"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Example"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod 755 foo.txt\n$ chmod +x cheatsheets.py\n$ chmod u-x cheatsheets.py\n$ chmod u=rwx,g=rx,o= cheatsheets.sh"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Change files and directories recursively"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod -R 755 my_directory"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\nThe `chmod` command stands for \"change mode\"\n\n### Chmod Generator\n\n<widget name=\"chmod\"/>\n\nChmod Generator allows you to quickly and visually generate permissions in numerical and symbolic.\n\n### Common Permissions\n\n| Command | s         | Meaning                      |\n| ------- | --------- | ---------------------------- |\n| `400`   | r-------- | Readable by owner only       |\n| `500`   | r-x------ | Avoid Changing               |\n| `600`   | rw------- | Changeable by user           |\n| `644`   | rw-r--r-- | Read and change by user      |\n| `660`   | rw-rw---- | Changeable by user and group |\n| `700`   | rwx------ | Only user has full access    |\n| `755`   | rwxr-xr-x | Only changeable by user      |\n| `775`   | rwxrwxr-x | Sharing mode for a group     |\n| `777`   | rwxrwxrwx | Everybody can do everything  |\n\n### Explains"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ ls -l\n-rw-r--r--  1 root root 3 Jun 29 15:35 a.log\ndrwxr-xr-x  2 root root 2 Jun 30 18:06 dir"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Permission analysis of \"dir\""
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "d  rwx  r-x  r-x\n┬  ─┬─  ─┬─  ─┬─\n│   │    │    │\n│   │    │    └─ 4. Other｜5 (4+0+1)\n│   │    └────── 3. Group｜5 (4+0+1)\n│   └─────────── 2. User ｜7 (4+2+1)\n└─────────────── 1. File Type | directory"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Permission Modes {.col-span-2}\n\n| Permission | Description             | Octal | Decimal   |\n| ---------- | ----------------------- | ----- | --------- |\n| `---`      | No Permission           | 000   | 0 (0+0+0) |\n| `--x`      | Execute                 | 001   | 1 (0+0+1) |\n| `-w-`      | Write                   | 010   | 2 (0+2+0) |\n| `-wx`      | Execute and Write       | 011   | 3 (0+2+1) |\n| `r--`      | Read                    | 100   | 4 (4+0+0) |\n| `r-x`      | Read and Execute        | 101   | 5 (4+0+1) |\n| `rw-`      | Read and Write          | 110   | 6 (4+2+0) |\n| `rwx`      | Read, Write and Execute | 111   | 7 (4+2+1) |\n\n{.show-header}\n\n### Objects\n\n| Who (abbr.) | Meaning            |\n| ----------- | ------------------ |\n| `u`         | `U`ser             |\n| `g`         | `G`roup            |\n| `o`         | `O`thers           |\n| `a`         | `A`ll, same as ugo |\n\n{.show-header}\n\n### Permissions\n\n| Abbreviation | Permission    | Value |\n| ------------ | ------------- | ----- |\n| `r`          | `R`ead        | 4     |\n| `w`          | `W`rite       | 2     |\n| `x`          | E`x`ecute     | 1     |\n| `-`          | No permission | 0     |\n\n{.show-header}\n\n### File Types\n\n| Abbreviation | File Type       |\n| ------------ | --------------- |\n| `d`          | `D`irectory     |\n| `-`          | Regular file    |\n| `l`          | Symbolic `L`ink |\n\n{.show-header}\n\n## Chmod Examples\n\n### Operators\n\n| Symbol | Description |\n| ------ | ----------- |\n| `+`    | Add         |\n| `-`    | Remove      |\n| `=`    | Set         |\n\n### chmod 600"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod 600 example.txt\n$ chmod u=rw,g=,o= example.txt\n$ chmod a+rwx,u-x,g-rwx,o-rwx example.txt"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### chmod 664"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod 664 example.txt\n$ chmod u=rw,g=rw,o=r example.txt\n$ chmod a+rwx,u-x,g-x,o-wx example.txt"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### chmod 777"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod 777 example.txt\n$ chmod u=rwx,g=rwx,o=rwx example.txt\n$ chmod a=rwx example.txt"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Symbolic mode {.row-span-3}\n\nDeny execute permission to everyone."
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod a-x chmodExampleFile.txt"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\nAllow read permission to everyone."
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod a+r chmodExampleFile.txt"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\nMake a file readable and writable by the group and others."
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod go+rw chmodExampleFile.txt"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\nMake a shell script executable by the user/owner."
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod u+x chmodExampleScript.sh"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\nAllow everyone to read, write, and execute the file and turn on the set group-ID."
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod =rwx,g+s chmodExampleScript.sh"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Removing Permissions {.row-span-3}\n\nIn order to remove read write permissions given to a file, use the following syntax:"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod o-rw example.txt"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\nFor our file example.txt, we can remove read write permissions using chmod for group by running the following command:"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod  g-rx example.txt"
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\nTo remove chmod read write permissions from the group while adding read write permission to public/others, we can use\nthe following command:"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod g-rx, o+rx example.txt"
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\nBut, if you wish to remove all permissions for group and others, you can do so using the go= instead:"
+    },
+    {
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod go= example.txt"
+    },
+    {
+      "id": "s1-34",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Executable"
+    },
+    {
+      "id": "s1-35",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod +x ~/example.py\n$ chmod u+x ~/example.py\n$ chmod a+x ~/example.py"
+    },
+    {
+      "id": "s1-36",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### chmod 754"
+    },
+    {
+      "id": "s1-37",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod 754 foo.sh\n$ chmod u=rwx,g=rx,o=r foo.sh"
+    },
+    {
+      "id": "s1-38",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Chmod Practices\n\n### SSH Permissions"
+    },
+    {
+      "id": "s1-39",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod 700 ~/.ssh\n$ chmod 600 ~/.ssh/authorized_keys\n$ chmod 600 ~/.ssh/id_rsa\n$ chmod 600 ~/.ssh/id_rsa.pub\n$ chmod 400 /path/to/access_key.pem"
+    },
+    {
+      "id": "s1-40",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Web Permissions"
+    },
+    {
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod -R 644 /var/www/html/\n$ chmod 644 .htaccess\n$ chmod 644 robots.txt\n$ chmod 755 /var/www/uploads/\n$ find /var/www/html -type d -exec chmod 755 {} \\;"
+    },
+    {
+      "id": "s1-42",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Batch Change"
+    },
+    {
+      "id": "s1-43",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "$ chmod -R 644 /your_path\n$ find /path -type d -exec chmod 755 {} \\;\n$ find /path -type f -exec chmod 644 {} \\;"
+    },
+    {
+      "id": "s1-44",
+      "sectionId": "s1",
+      "title": "Syntax",
+      "kind": "code",
+      "lang": "",
+      "code": "\nSee: [Command Substitution](https://tldp.org/LDP/abs/html/commandsub.html)\n\n## Also see\n\n- [Modify File Permissions with chmod](https://www.linode.com/docs/guides/modify-file-permissions-with-chmod/)\n  _(linode.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/chmod.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/chmod.md",
+    "generatedAt": "2025-12-16T07:36:11.586Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

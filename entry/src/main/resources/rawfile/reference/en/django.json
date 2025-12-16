@@ -1,0 +1,2343 @@
+{
+  "id": "django",
+  "title": "Django",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Project config",
+      "startIndex": 11
+    },
+    {
+      "id": "s3",
+      "title": "Data Models",
+      "startIndex": 16
+    },
+    {
+      "id": "s4",
+      "title": "Lookup",
+      "startIndex": 28
+    },
+    {
+      "id": "s5",
+      "title": "Static Route and Customize Admin Panel",
+      "startIndex": 68
+    },
+    {
+      "id": "s6",
+      "title": "Views",
+      "startIndex": 70
+    },
+    {
+      "id": "s7",
+      "title": "Templates",
+      "startIndex": 72
+    },
+    {
+      "id": "s8",
+      "title": "Context Processor",
+      "startIndex": 83
+    },
+    {
+      "id": "s9",
+      "title": "Model Managers and Querysets",
+      "startIndex": 90
+    },
+    {
+      "id": "s10",
+      "title": "Form",
+      "startIndex": 92
+    },
+    {
+      "id": "s11",
+      "title": "Flash messages",
+      "startIndex": 102
+    },
+    {
+      "id": "s12",
+      "title": "User Model",
+      "startIndex": 104
+    },
+    {
+      "id": "s13",
+      "title": "Authentication",
+      "startIndex": 106
+    },
+    {
+      "id": "s14",
+      "title": "Create Custom Accounts Model",
+      "startIndex": 125
+    },
+    {
+      "id": "s15",
+      "title": "Send Email",
+      "startIndex": 132
+    },
+    {
+      "id": "s16",
+      "title": "Signals",
+      "startIndex": 133
+    },
+    {
+      "id": "s17",
+      "title": "Seed",
+      "startIndex": 134
+    },
+    {
+      "id": "s18",
+      "title": "Environment Variables",
+      "startIndex": 135
+    },
+    {
+      "id": "s19",
+      "title": "Asynchronous Tasks",
+      "startIndex": 140
+    },
+    {
+      "id": "s20",
+      "title": "Deployment Django in Server",
+      "startIndex": 196
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "A Django cheat sheet."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Start a new Django Project",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Create et access project folder\n~$  mkdir project_name\n~$  cd project_name\n\n# Create Python virtual env\n~$  python3 -m venv venv\n\n# Activate virtual env\n~$  source venv/bin/activate\n\n# If you want to deactivate virtual env\n~$  deactivate\n\n# Install django (~= same as 4.2.*)\n~$  pip install django~=4.2.0\n\n# New django project (from project_name folder)\n~$  django-admin startproject config\n\n# Create app (from project_name folder)\n~$  python manage.py startapp app_name"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Migration:",
+      "kind": "text",
+      "body": "<small>Django create a database table for each models present in your app using those commands:</small>"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Migration:",
+      "kind": "text",
+      "body": "Makemigrations: Create a file under app_name/migrations with the database structure to create"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Migration:",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$  python manage.py makemigrations"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Migration:",
+      "kind": "text",
+      "body": "Migrate: Will read the migrations files and create the actual database and tables"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Migration:",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$  python manage.py migrate"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Create superuser for authenficiation/admin panel",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$  python manage.py createsuperuser"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Start server",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$  python manage.py runserver  => ex.  http://127.0.0.1:8000"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Requirements",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Create a requirements file that contain all your project dependencies\n~$  pip freeze > requirements.txt\n\n# Install your project requirements (if a requirements file exist)\n~$  pip install -r requirements.txt"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Other commands",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Django shell (Run project code directly)\n~$ python manage.py shell\n\n# example of code to run in the shell:\n >>> from app_name.models import User\n >>> user1 = User.objects.first()\n\n# Prepare static folders for production\n~$ python manage.py collectstatic\n\n# Take all data from app blog and export in json\n~$ python manage.py dumpdata blog > myapp.json\n\n# Take all data in json file and import in app data table\n~$ python manage.py loaddata myapp.json\n\n# To Create or Update a message file for Translation, run this command\n~$ django-admin makemessages -l de\n# Updating message files\n~$ django-admin compilemessages"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "Configuration settings",
+      "kind": "text",
+      "body": "##### Project base templates directory and Apps templates directory:"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "Configuration settings",
+      "kind": "text",
+      "body": "• create folder project/templates\n• create folder appfolder/templates/appname"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "Configuration settings",
+      "kind": "text",
+      "body": "##### Create Static folder in base root and separate for apps:"
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "Configuration settings",
+      "kind": "text",
+      "body": "• project_name\\static\\root\n• app_name\\static\\app_name"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "Configuration settings",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Add app to settings.py\nINSTALLED_APPS = [\n         … ,\n         'app_name.apps.App_nameConfig',\n ]\n\n# template directory config\nProject templates settings.py:\n    TEMPLATES = [\n        { …\n           'DIRS': [BASE_DIR / 'templates'],\n        … }\n\n# Static folder:\nSTATIC_URL = '/static/'\nSTATICFILES_DIRS = [ BASE_DIR / 'static' ]\nSTATIC_ROOT = 'static_root'\n# Media folder:\nMEDIA_URL = '/media/'\nSTATICFILES_DIRS = (\n    (BASE_DIR / 'static'),\n)\nMEDIA_ROOT = BASE_DIR / 'media'\n\n# To use PostgresSQL\n# pip install psycopg2\n# settings.py\nDATABASE = {\n    'default': {\n        'ENGINE': 'django.db.backends.postgresql',\n        'NAME': 'blog',\n        'USER': 'admin',\n        'PASSWORD': '123456',\n        'HOST': 'localhost',\n        'PORT': '5432'\n        }\n    }\n\nTIME_INPUT_FORMATS = [\n    '%H:%M:%S',     # '14:30:59'\n    '%H:%M',        # '14:30'\n]\n\nDATE_FORMAT = \"Y/M/d\"\n\n# locale for Translations\nLANGUAGES = [\n    ('en', 'English'),\n    ('de', 'German'),\n]\n\nLOCALE_PATHS = (\n    BASE_DIR / 'locale',\n)\n\n# CK Editor Configuration\nCKEDITOR_UPLOAD_PATH = 'uploads/'\nCKEDITOR_RESTRICT_BY_USER = True\nCKEDITOR_BROWSE_SHOW_DIRS = True\nCKEDITOR_ALLOW_NONIMGE_FILES = True\nCKEDITOR_IMAGE_BACKEND = \"pillow\"\nCKEDITOR_CONFIGS = {\n    'default': {\n        'toolbar': 'full',\n    }}\n\n# SSL\n# If you have an SSL certificate\nSECURE_SSL_REDIRECT = True\n# cookies will only be sent via HTTPS connections\nSESSION_COOKIE_SECURE = True\nCSRF_COOKIE_SECURE = True"
+    },
+    {
+      "id": "s3-16",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "text",
+      "body": "<small>Theses models can be created as database tables with the migrations commands</small>"
+    },
+    {
+      "id": "s3-17",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "# models.py\n# The id fields is automaticly created by Django\n# for each model that why it's not show below\nfrom django.db import models\n\nclass Customer(models.Model)\n    name = models.Charfield('Customer', max_length=120)\n    age = models.IntegerField()\n    note = models.TextField(blank=True, null = True)\n    email = models.EmailField(max_length=255, blank=True, null=True)\n    credit = models.FloatField(blank=True)\n    is_active = models.BooleanField(default=True)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    img = models.ImageField(upload_to ='uploads/')\n    # Select Field (return value, display value)\n    TYPE_CHOICES = (\n        ('Customer', _('Customer')),\n        ('Supplier', _('Supplier')),\n        ('Student', _('Student')),\n    )\n    type = models.CharField(choices=TYPE_CHOICES)\n\n    class Meta:\n        verbose_name = \"Customer\"\n        verbose_name_plural = \"Customers\"\n\n    # Model string representation\n    def __str__(self):\n        return self.name\n\n    # the URL that points to a resource or page on your website\n    def get_absolute_url(self):\n        return reverse(\"customer_detail\", kwargs={\"pk\": self.pk})"
+    },
+    {
+      "id": "s3-18",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "text",
+      "body": "#### We can also use this method to define the ChoiceField value."
+    },
+    {
+      "id": "s3-19",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "  class Customer(models.Model)\n    class TypeList(models.IntegerChoices):\n        customer = (1, _('Customer'))\n        supplier = (2, _('Supplier'))\n        student = (3, _('Student'))\n    .\n    .\n    .\n    type = models.CharField(choices=TypeList.choices, default=1)"
+    },
+    {
+      "id": "s3-20",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "text",
+      "body": "#### To access the ChoiceField value in the template, we need to do the following in the template:"
+    },
+    {
+      "id": "s3-21",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "text",
+      "body": "• In Django templates you can use the \"`get_FOO_display()`\" method, that will return the readable alias for the field,"
+    },
+    {
+      "id": "s3-22",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "text",
+      "body": "where `'FOO'` is the name of the field."
+    },
+    {
+      "id": "s3-23",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "text",
+      "body": "• If the choices are stored in the variable `CHOICES` and the model field storing the selected choice is `'type'` then"
+    },
+    {
+      "id": "s3-24",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "text",
+      "body": "you can directly use"
+    },
+    {
+      "id": "s3-25",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "code",
+      "lang": "html",
+      "code": "<!-- Here, X is the model instance -->\n{{ X.get_type_display }}\n\n<!-- You can even use this method to display its translation. -->\n{% trans X.get_type_display %}"
+    },
+    {
+      "id": "s3-26",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "text",
+      "body": "#### Relationship between models"
+    },
+    {
+      "id": "s3-27",
+      "sectionId": "s3",
+      "title": "Create Data Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "# One-to-Many: (use double quotes if the entity is not yet declare) ex. \"Supplier\"\nsupplier = models.ForeignKey(Supplier, blank=True, null=True, on_delete=models.CASCADE,related_name=\"supplierother\")\n\n# on_delete can be set to models.CASCADE, models.ST_DEFAULT or models.SET_NULL\n# The related_name attribute specifies the name of the reverse relation from the supplier model back to your model\n\n# Many-to-Many:\ntags = models.ManyToManyField(Tag, blank=True)\n\n# One to One\nUser = models.OneToOneField(User, on_delete=models.CASCADE)\n\n# Overwrite save method\ndef save(self, (*args, **kwargs):\n    if not self.slug:\n        self.slug = slugify(self.title)\n    super().save(*args, **kwargs)"
+    },
+    {
+      "id": "s4-28",
+      "sectionId": "s4",
+      "title": "Field Lookups",
+      "kind": "text",
+      "body": "In Django, the `field__lookuptype` syntax is used to perform lookups on fields in queries. The `field` represents the\nname of the field you want to perform the lookup on, and `lookuptype` represents the type of lookup you want to perform."
+    },
+    {
+      "id": "s4-29",
+      "sectionId": "s4",
+      "title": "Field Lookups",
+      "kind": "text",
+      "body": "For example, let's say you have a model called `Book` with a field called `title` . You can use the `field__lookuptype`\nsyntax to perform different types of lookups on the `title` field."
+    },
+    {
+      "id": "s4-30",
+      "sectionId": "s4",
+      "title": "Field Lookups",
+      "kind": "text",
+      "body": "Here are a few examples:"
+    },
+    {
+      "id": "s4-31",
+      "sectionId": "s4",
+      "title": "Field Lookups",
+      "kind": "code",
+      "lang": "python",
+      "code": "\n# 1. Exact Match Lookup:\nBook.objects.filter(title__exact='Python Tricks')\n# 2. Case-insensitive Lookup:\nBook.objects.filter(title__iexact='python tricks')\n# 3. Contains Lookup:\nBook.objects.filter(title__contains='Python')\n# 4. Startswith Lookup:\nBook.objects.filter(title__startswith='Python')\n# 5. Endswith Lookup:\nBook.objects.filter(title__endswith='Tricks')"
+    },
+    {
+      "id": "s4-32",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`contains`",
+      "back": "Contains the phrase"
+    },
+    {
+      "id": "s4-33",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`icontains`",
+      "back": "Same as contains, but case-insensitive"
+    },
+    {
+      "id": "s4-34",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`date`",
+      "back": "Matches a date"
+    },
+    {
+      "id": "s4-35",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`day`",
+      "back": "Matches a date (day of month, 1-31) (for dates)"
+    },
+    {
+      "id": "s4-36",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`endswith`",
+      "back": "Ends with"
+    },
+    {
+      "id": "s4-37",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`iendswith`",
+      "back": "Same as endswidth, but case-insensitive"
+    },
+    {
+      "id": "s4-38",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`exact`",
+      "back": "An exact match"
+    },
+    {
+      "id": "s4-39",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`iexact`",
+      "back": "Same as exact, but case-insensitive"
+    },
+    {
+      "id": "s4-40",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`in`",
+      "back": "Matches one of the values"
+    },
+    {
+      "id": "s4-41",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`isnull`",
+      "back": "Matches NULL values"
+    },
+    {
+      "id": "s4-42",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`gt`",
+      "back": "Greater than"
+    },
+    {
+      "id": "s4-43",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`gte`",
+      "back": "Greater than, or equal to"
+    },
+    {
+      "id": "s4-44",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`hour`",
+      "back": "Matches an hour (for datetimes)"
+    },
+    {
+      "id": "s4-45",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`lt`",
+      "back": "Less than"
+    },
+    {
+      "id": "s4-46",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`lte`",
+      "back": "Less than, or equal to"
+    },
+    {
+      "id": "s4-47",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`minute`",
+      "back": "Matches a minute (for datetimes)"
+    },
+    {
+      "id": "s4-48",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`month`",
+      "back": "Matches a month (for dates)"
+    },
+    {
+      "id": "s4-49",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`quarter`",
+      "back": "Matches a quarter of the year (1-4) (for dates)"
+    },
+    {
+      "id": "s4-50",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`range`",
+      "back": "Match between"
+    },
+    {
+      "id": "s4-51",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`regex`",
+      "back": "Matches a regular expression"
+    },
+    {
+      "id": "s4-52",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`iregex`",
+      "back": "Same as regex, but case-insensitive"
+    },
+    {
+      "id": "s4-53",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`second`",
+      "back": "Matches a second (for datetimes)"
+    },
+    {
+      "id": "s4-54",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`startswith`",
+      "back": "Starts with"
+    },
+    {
+      "id": "s4-55",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`istartswith`",
+      "back": "Same as startswith, but case-insensitive"
+    },
+    {
+      "id": "s4-56",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`time`",
+      "back": "Matches a time (for datetimes)"
+    },
+    {
+      "id": "s4-57",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`week`",
+      "back": "Matches a week number (1-53) (for dates)"
+    },
+    {
+      "id": "s4-58",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`week_day`",
+      "back": "Matches a day of week (1-7) 1 is Sunday"
+    },
+    {
+      "id": "s4-59",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`iso_week_day`",
+      "back": "Matches a ISO 8601 day of week (1-7) 1 is Monday"
+    },
+    {
+      "id": "s4-60",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`year`",
+      "back": "Matches a year (for dates)"
+    },
+    {
+      "id": "s4-61",
+      "sectionId": "s4",
+      "title": "Field Lookups Reference",
+      "kind": "qa",
+      "front": "`iso_year`",
+      "back": "Matches an ISO 8601 year (for dates)"
+    },
+    {
+      "id": "s4-62",
+      "sectionId": "s4",
+      "title": "Admin Panel",
+      "kind": "text",
+      "body": "Every Django projects come with an Admin Panel that can be open at /admin url (ex: localhost:8000/admin)<br> To display\nthe model in the Admin panel register the model in the app_name/admin.py file<br> For each models you can specify the\nfields you want to use</small>"
+    },
+    {
+      "id": "s4-63",
+      "sectionId": "s4",
+      "title": "Admin Panel",
+      "kind": "code",
+      "lang": "python",
+      "code": "from django.contrib import admin\nfrom app_name.models import Blog\n\n# Custom model Admin (admin.py):\n@admin.register(Blog)   # Register app\nclass BlogAdmin(admin.ModelAdmin)\n    fields = (\"title\", \"description\") # Fields to use for add/edit/show page\n    list_display = (\"title\", \"description\") # fields to display in search page\n    list_display_links = (\"title\",) # fields that will be a link in search page\n    ordering = (\"date_created\",) # Ordering allowed in the search page\n    search_fields = (\"title\", \"description\") # Search fields allowed in the search page\n    list_filter =(\"title\",) # define list filters that appear in the right sidebar"
+    },
+    {
+      "id": "s4-64",
+      "sectionId": "s4",
+      "title": "Routing",
+      "kind": "text",
+      "body": "Django routing info is store in project_folder/urls.py file"
+    },
+    {
+      "id": "s4-65",
+      "sectionId": "s4",
+      "title": "Routing",
+      "kind": "code",
+      "lang": "python",
+      "code": "from django.contrib import admin\nfrom django.urls import path, include\n\nurlpatterns = [\n    path('admin/', admin.site.urls), # pre-created admin urls routes\n    path('', include('app_name.urls')) # include your app urls\n]"
+    },
+    {
+      "id": "s4-66",
+      "sectionId": "s4",
+      "title": "Routing",
+      "kind": "text",
+      "body": "The 'include()' method allow to link another urls.py file created in your app folder (app_name/urls.py)"
+    },
+    {
+      "id": "s4-67",
+      "sectionId": "s4",
+      "title": "Routing",
+      "kind": "code",
+      "lang": "python",
+      "code": "from django.urls import path\nfrom app_name import views\n\nurlpatterns = [\n    path('posts', views.index, name='posts.index'),\n    path('posts/create/', views.create, name='posts.create',\n    path('posts/<int:id>/', views.show, name='posts.show'),\n    path('posts/<int:id>/edit/', views.edit, name='posts.edit'),\n    path('posts/<int:id>/delete/', views.delete, name='posts.delete'),\n    path('posts/<int:id>/<int:state>/', views.status, name='posts.status'), # two arguments\n]"
+    },
+    {
+      "id": "s5-68",
+      "sectionId": "s5",
+      "title": "Customizing Admin Panel",
+      "kind": "text",
+      "body": "Header and Title admin panel & Custom `404`, `500`, and `503` Template"
+    },
+    {
+      "id": "s5-69",
+      "sectionId": "s5",
+      "title": "Customizing Admin Panel",
+      "kind": "code",
+      "lang": "python",
+      "code": "# add in project/urls.py\nfrom django.contrib import admin\nfrom django.conf import settings\nfrom django.conf.urls.static import static\n\nurlpatterns = [  ...  ]\n\nif settings.DEBUG == True:\n    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\n    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n\n# Customize Admin Panel Header & Title\nadmin.site.site_header = _('Administrator Control Panel')\nadmin.site.site_title = _('Administrator Control Panel')\nadmin.site.index_title = _('Wellcome to Control Panel')\n\n# Costomize 404 Template page\nhandler404 = 'app_name.views.handler404'\nhandler500 = 'app_name.views.handler500'\nhandler503 = 'app_name.views.handler503'"
+    },
+    {
+      "id": "s6-70",
+      "sectionId": "s6",
+      "title": "Function Based Views",
+      "kind": "code",
+      "lang": "python",
+      "code": "# views.py\nfrom django.shortcuts import render, redirect\nfrom app_name.models import Post\nfrom app_name.forms import PostForm\n\ndef index(request):\n    # Get all Posts\n    posts = Post.objects.all()\n\n    # Render app template with context\n    return render(request, 'appfolder/index.html', {'posts': posts})\n\ndef show(request, id):\n    post = Post.objects.get(id=id)\n    return render(request, 'appfolder/show.html', {'post': post})\n\ndef create(request):\n    form = PostForm(request.POST or None, request.FILES or None)\n    # When the form contains an image or file field, we should use request.FILES\n    if form.is_valid():\n        # optionally we can access form data with form.cleaned_data['first_name']\n        post = form.save(commit=False)\n        post.user = request.user\n        post.save()\n        return redirect('/posts')\n\n    return render(request, 'appfolder/create.html', {'form': form)\n\ndef edit(request, id):\n    post = Post.objects.get(id=id)\n    form = PostForm(request.POST or None, request.FILES or None, instance=post)\n    if form.is_valid():\n        form.save()\n        return redirect('/posts')\n\n    return render(request, 'appfolder/edit.html', {'form': form)\n\ndef delete(request, id):\n    post = Post.objects.get(id=id)\n    post.delete()\n    return redirect('/posts')\n\ndef status(request, id, state):\n    post = Post.objects.get(id=id, state=state)\n    return redirect('appfolder/status.html', {'post': post})"
+    },
+    {
+      "id": "s6-71",
+      "sectionId": "s6",
+      "title": "Class Based Views",
+      "kind": "code",
+      "lang": "python",
+      "code": "from django.views.generic import TemplateView, ListView, DetailView,\n           CreateView, UpdateView, DeleteView\n\nclass LandingPageView(TemplateView):\n    template_name = 'landing.html'\n\n    # Optional: Change context data dict\n    def get_context_data(self, **kwargs):\n        context = super().get_context_data(**kwargs)\n        context['title'] = 'Landing Page'\n        return context\n\n\nclass PostsListView(ListView):\n    queryset = Post.objects.all()\n    # Optional\n    # context_object_name = \"posts\" (default: post_list)\n    # template_name = 'posts.html' (default: posts/post_list.html)\n\n\nclass PostsDetailView(DetailView):\n    model = Post # object var in template\n    # Optional\n    # template_name = 'post.html' (default: posts/post_detail.html)\n\n\nclass PostsCreateView(CreateView):\n    form_class = PostForm\n    template_name = 'posts/post_create.html' # no default value\n\n    def get_success_url(self):\n        return reverse('posts-list')\n\n    # Optional: Overwrite form data (before save)\n    def form_valid(self, form):\n        if self.request.user.is_authenticated:\n            from.instance.author = self.request.user\n        return super().form_valid(form)\n\n\nclass PostsUpdateView(UpdateView):\n    model = Post\n    form_class = PostForm\n    template_name = 'posts/post_update.html'\n\n    def get_success_url(self):\n        return reverse('post-list')\n\n    # Optional: Change context data dict\n    def get_context_data(self, **kwargs):\n        context = super().get_context_data(**kwargs)\n        context['submit_text'] = 'Update'\n        return context\n\n\nclass PostsDeleteView(DeleteView):\n    model = Post\n    template_name = 'posts/post_delete.html'\n    success_url = reverse_lazy('posts-list')\n\n# Urls.py route declaration\npath('<int:pk>/update/', PostsUpdateView.as_view(), name='post-update')"
+    },
+    {
+      "id": "s7-72",
+      "sectionId": "s7",
+      "title": "Basic Template",
+      "kind": "text",
+      "body": "Templates are store in `project_folder/templates` or in your <code>app_folder/templates/app_name/\\*.html</code>"
+    },
+    {
+      "id": "s7-73",
+      "sectionId": "s7",
+      "title": "Basic Template",
+      "kind": "code",
+      "lang": "html",
+      "code": "<!-- Extend from another template -->\n<!-- can use the same parts of your HTML for different template -->\n{% extends 'base.html' %}\n\n<!-- A part of the parent template that is defined and is replaced by a part in the child template -->\n{% block contents %} {% endblock contents %}\n\n<!-- include template-->\n{% include 'partials/header.html' %}\n<!-- include template with One or More Parameters -->\n{% include 'body.html' with key1=value1 key2=value2 %}\n\n<!-- If statement in template -->\n{% if user.username = 'Mike' %}\n<p>Hello Admin</p>\n{% elif user.username = 'john' %}\n<p>Hello John Doe</p>\n{% else %}\n<p>Hello User</p>\n{% endif %}\n\n<!-- for loop in template -->\n{% for product in products %}\n<p>row: {{ forloop.counter }} # starting index 1 {{ forloop.counter0 }} # starting index 0</p>\n<p>The product name is {{ product.name }}</p>\n<p></p>\n<p>The product name is {{ product.price }}</p>\n<p>\n  {% endfor %}\n\n  <!-- Access to the variable in the template -->\n  {{ var_name }}\n\n  <!-- Template variables formating  -->\n  {{ title | lower }} {{ blog.post | truncatwords:50 }} {{ order.date | date:\"D M Y\" }} {{ list_items | slice:\":3\" }} {{\n  total | default:\"nil\" }}\n\n  <!-- Current path (ex. posts/1/show) -->\n  {{ request.path }}\n\n  <!-- URL by name with param -->\n  {% url 'posts.delete' id=post.id %}\n\n  <!-- Use static in template: -->\n  {% load static %} {% static 'css/main.css' %}\n\n  <!-- Define the variable in the template -->\n  {% with name=\"World\" %}\n  <html>\n    <div>Hello {{ name }}!</div>\n  </html>\n  {% endwith %}\n\n  <!-- Template translate text -->\n  {% load i18n %}\n  <title>{% trans \"This is the title.\" %}</title>\n  <!-- Use variable translate in the template -->\n  <title>{% trans object.title %}</title>\n\n  <!-- Define the list in the template -->\n  <input type=\"number\" {% if product.unit in 'kg,milligram,milliliter' %} step=\"0.01\" {% else %} step=\"1\" {% endif %}>\n\n  <!-- Safely Pass Data to JavaScript in a Django Template: -->\n  <!--+ Use data attributes for simple values -->\n  <script data-username=\"{{ username }}\">\n    const data = document.currentScript.dataset;\n    const username = data.username;\n  </script>\n\n  <!-- + Separate script files: can use document.currentScript for separate script files -->\n  <script src=\"{% static 'index.js' %}\" data-username=\"{{ username }}\"></script>\n\n  <!-- + Case conversion -->\n  <script src=\"{% static 'index.js' %}\" data-full-name=\"{{ full_name }}\"></script>\n  <!--  Read it in JavaScript as fullName: -->\n  <script>\n    const data = document.currentScript.dataset;\n    const fullName = data.fullName;\n  </script>\n\n  <!-- + Non-string types -->\n  <script src=\"{% static 'index.js' %}\" data-follower-count=\"{{ follower_count }}\"></script>\n\n  <!--  parseInt() to convert this value from a string: -->\n  <script>\n    const data = document.currentScript.dataset;\n    const followerCount = parseInt(data.followerCount, 10);\n  </script>\n\n  <!-- + There’s no limit: A <script> can have as many data attributes as you like: -->\n  <script\n    src=\"{% static 'index.js' %}\"\n    defer\n    data-settings-url=\"{% url 'settings' %}\"\n    data-configuration-url=\"{% url 'configuration' %}\"\n    data-options-url=\"{% url 'options' %}\"\n    data-preferences-url=\"{% url 'preferences' %}\"\n    data-setup-url=\"{% url 'setup' %}\"\n  ></script>\n</p>"
+    },
+    {
+      "id": "s7-74",
+      "sectionId": "s7",
+      "title": "Custom Template Tags and Filters",
+      "kind": "text",
+      "body": "For example, if your custom tags/filters are in a file called `basetags.py`, your app layout might look like this:"
+    },
+    {
+      "id": "s7-75",
+      "sectionId": "s7",
+      "title": "Custom Template Tags and Filters",
+      "kind": "code",
+      "lang": "",
+      "code": "app_name/\n└─── templatetags/\n     └─── basetags.py\n     __init__.py\n     models.py\n     views.py"
+    },
+    {
+      "id": "s7-76",
+      "sectionId": "s7",
+      "title": "Custom Template Tags and Filters",
+      "kind": "text",
+      "body": "• And in your template you would use the following:"
+    },
+    {
+      "id": "s7-77",
+      "sectionId": "s7",
+      "title": "Custom Template Tags and Filters",
+      "kind": "code",
+      "lang": "html",
+      "code": "{% load basetags %}"
+    },
+    {
+      "id": "s7-78",
+      "sectionId": "s7",
+      "title": "Custom Template Tags and Filters",
+      "kind": "text",
+      "body": "• the module must contain a module-level variable named register that is a template.Library instance, in which all the"
+    },
+    {
+      "id": "s7-79",
+      "sectionId": "s7",
+      "title": "Custom Template Tags and Filters",
+      "kind": "text",
+      "body": "tags and filters are registered. So, near the top of your module, put the following:"
+    },
+    {
+      "id": "s7-80",
+      "sectionId": "s7",
+      "title": "Writing custom template filters",
+      "kind": "text",
+      "body": "Custom filters are Python functions that take one or two arguments: The value of the variable (input) – not necessarily\na string. The value of the argument – this can have a default value, or be left out altogether. For example, in the\nfilter `{{ var|foo:\"bar\" }}`, the filter foo would be passed the variable var and the argument \"bar\"."
+    },
+    {
+      "id": "s7-81",
+      "sectionId": "s7",
+      "title": "Writing custom template filters",
+      "kind": "text",
+      "body": "The Library.filter() method takes two arguments: The name of the filter – a string. The compilation function – a Python\nfunction (not the name of the function as a string). You can use register.filter() as a decorator instead:"
+    },
+    {
+      "id": "s7-82",
+      "sectionId": "s7",
+      "title": "Writing custom template filters",
+      "kind": "code",
+      "lang": "python",
+      "code": "# basetags.py\nfrom django import template\n\nregister = template.Library()\n\n@register.filter(name=\"cut\")\ndef cut(value, arg):\n    \"\"\"Removes all values of arg from the given string\"\"\"\n    return value.replace(arg, \"\")\n\n# Most filters don’t take arguments. In this case, leave the argument out of your function\n@register.filter()\ndef lower(value): # Only one argument.\n    \"\"\"Converts a string into all lowercase\"\"\"\n    return value.lower()\n\n\n@register.simple_tag\ndef to_class_name(object):\n    return str(object.__class__.__name__)\n\n# Template\n# And here’s an example of how that filter would be used in Template:\n{{ somevariable | cut:\"0\" }}\n\n# Put the result of simple tag into a variable\n{% to_class_name object as objectmodel %}\n<p>Model Class Name: {{ objectmodel }}</p>"
+    },
+    {
+      "id": "s8-83",
+      "sectionId": "s8",
+      "title": "Creating custom Context Processor",
+      "kind": "text",
+      "body": "Anywhere, create a `context_processors.py` file"
+    },
+    {
+      "id": "s8-84",
+      "sectionId": "s8",
+      "title": "Creating custom Context Processor",
+      "kind": "code",
+      "lang": "",
+      "code": "project_name\n└───app_name\n    ├───...\n    └───context_processors.pyy"
+    },
+    {
+      "id": "s8-85",
+      "sectionId": "s8",
+      "title": "Creating custom Context Processor",
+      "kind": "text",
+      "body": "Create a function in context_processors.py that accepts a HttpRequest object as an argument and returns a dictionary"
+    },
+    {
+      "id": "s8-86",
+      "sectionId": "s8",
+      "title": "Creating custom Context Processor",
+      "kind": "text",
+      "body": "A context processor is just a function that accepts an HttpRequest object as an argument and returns a dictionary. Like\nthis:"
+    },
+    {
+      "id": "s8-87",
+      "sectionId": "s8",
+      "title": "Creating custom Context Processor",
+      "kind": "code",
+      "lang": "python",
+      "code": "# app_name/context_processors.py\ndef site_email(request):\n    return { 'site_email' : 'example@gmail.com' }"
+    },
+    {
+      "id": "s8-88",
+      "sectionId": "s8",
+      "title": "Creating custom Context Processor",
+      "kind": "text",
+      "body": "• Add this to your context_processors setting in settings.py (at the bottom for security reasons)"
+    },
+    {
+      "id": "s8-89",
+      "sectionId": "s8",
+      "title": "Creating custom Context Processor",
+      "kind": "code",
+      "lang": "python",
+      "code": " TEMPLATES = [\n    { …\n        'OPTIONS': {\n          'context_processors': [\n            …\n              'app_name.context_processors.site_email',\n              # New context processor here\n            …\n          ],\n    … },\n\n# Now be able to access the 'site_email' template variable on every single django template across your whole site."
+    },
+    {
+      "id": "s9-90",
+      "sectionId": "s9",
+      "title": "Model Manager",
+      "kind": "text",
+      "body": "Model manager allow model database reads and writes"
+    },
+    {
+      "id": "s9-91",
+      "sectionId": "s9",
+      "title": "Model Manager",
+      "kind": "code",
+      "lang": "python",
+      "code": "# One line create and save\nArticle.objects.create(name='Item 1', price=19.95)\n\n# Read all\nArticle.objects.all()\n\n# Create\nuser = User.objects.first()\narticle = Article(user=user, name='Item 1', price=19.95)\n\n# Save\narticle.save()\n\n# Read one\nArticle.objects.get(id=1)\n\n# Select Related (to avoid n+1 query)\nposts = Post.objects.select_related('user', 'category').all()\n\n# Read or render a 404 not found page\nfrom django.shortcuts import get_object_or_404\narticle = get_object_or_404(Article, id=512)\n\n# Filter\nArticle.objects.filter(model='dyson', name__icontains='dyson') # __icontains\nArticle.objects.filter(year__gt=2016) # __gt = greater than\nArticle.objects.filter(year__lt=2001) # __lt = less than\n\n# Filter on relationship sub model field\nArticle.objects.get(user__username='mike')\n\n# Ordering\nArticle.objects.order_by('name')     # ascending\nArticle.objects.order_by('-name')   # descending\n\n# Slicing return first\nArticle.objects.all().order_by('name')[0]\n\n# Slicing return last\nArticle.objects.all().order_by('-name')[0]\n\n# Slicing limit/offset\nArticle.objects.all().order_by('name')[1..10]\n\n# Updating\narticle = Article.objects.first()\narticle.name = 'new name'\narticle.save()\n\n# One line update\nArticle.objects.filter(id=4).update(name='new name')\n\n# Deleting\narticle = Article.objects.first()\narticle.delete()\n\n# One line delete\narticle.objects.get(id=1).delete()\n\n# Delete all\nArticle.objects.all().delete()\n\n# Set ForeignKey field value\nmodel1 = Model(name='dyson')\narticle.model = model1\n\n# Get ForeignKey value\narticle1.model.name\nmodel1.article_set.all()\n\n# Add Many-to-Many\narticle1.tags.add(tag1)\narticle1.tags.all()\ntag1.articles_set.all()"
+    },
+    {
+      "id": "s10-92",
+      "sectionId": "s10",
+      "title": "Form creation",
+      "kind": "text",
+      "body": "In HTML, a form is a collection of elements inside `<form>...</form>` that allow a visitor to do things like enter text,\nselect options, manipulate objects or controls, and so on, and then send that information back to the server."
+    },
+    {
+      "id": "s10-93",
+      "sectionId": "s10",
+      "title": "Form creation",
+      "kind": "code",
+      "lang": "python",
+      "code": "# app_name/forms.py\nfrom django import forms\nclass ArticleForm(forms.Form):\n    name = forms.Charfield(max_length=100)\n    description = forms.Charfield(blank=True, null = True)\n\n\n# Model Form\nfrom django.forms import ModelForm\nfrom app_name.models import Article\nclass ArticleForm(ModelForm):\n    class Meta:\n        model = Article\n        fields = ['name', 'description', 'price'] # Use '__all__' for all fields\n        widgets = {\n            'name': forms.TextInput(attrs={'class': 'form-control'}),\n        }\n        labels = {\n            'name': 'First Name',\n        }\n        error_messages = {\n            'name': {'required': 'This field is required',},\n            }\n        help_texts = {\n        'name': 'Enter Your First Name',\n        }"
+    },
+    {
+      "id": "s10-94",
+      "sectionId": "s10",
+      "title": "Form creation",
+      "kind": "code",
+      "lang": "html",
+      "code": "<!-- Render form in template -->\n<form method=\"“post”\" action=\"“”\" novalidate>\n  {% csrf_token %} {{ form }}\n  <button type=\"submit\">Submit</button>\n</form>"
+    },
+    {
+      "id": "s10-95",
+      "sectionId": "s10",
+      "title": "Form creation",
+      "kind": "text",
+      "body": "• NOTE: If the form contains a file field, your form MUST contain `enctype=\"multipart/form-data\"`, eg:"
+    },
+    {
+      "id": "s10-96",
+      "sectionId": "s10",
+      "title": "Form creation",
+      "kind": "code",
+      "lang": "html",
+      "code": "<form action=\"\" method=\"post\" enctype=\"multipart/form-data\">\n  {% csrf_token %} {{ form.as_p }}\n  <button type=\"submit\">{% trans 'Submit' %}</button>\n</form>"
+    },
+    {
+      "id": "s10-97",
+      "sectionId": "s10",
+      "title": "Form creation",
+      "kind": "text",
+      "body": "##### A Tailwind CSS template pack for the wonderful django-crispy-forms."
+    },
+    {
+      "id": "s10-98",
+      "sectionId": "s10",
+      "title": "Form creation",
+      "kind": "code",
+      "lang": "bash",
+      "code": "pip install crispy-tailwind"
+    },
+    {
+      "id": "s10-99",
+      "sectionId": "s10",
+      "title": "Form creation",
+      "kind": "code",
+      "lang": "python",
+      "code": "# settings.py\nINSTALLED_APPS = (\n    ...\n    \"crispy_forms\",\n    \"crispy_tailwind\",\n    ...\n)\nCRISPY_ALLOWED_TEMPLATE_PACKS = 'tailwind'\nCRISPY_TEMPLATE_PACK = 'tailwind'"
+    },
+    {
+      "id": "s10-100",
+      "sectionId": "s10",
+      "title": "Form creation",
+      "kind": "code",
+      "lang": "html",
+      "code": "<!-- template usage -->\n{% load tailwind_filters %} {{ form|crispy }}"
+    },
+    {
+      "id": "s10-101",
+      "sectionId": "s10",
+      "title": "Form Validation",
+      "kind": "code",
+      "lang": "python",
+      "code": "# forms.py\nfrom django.core.exceptions import ValidationError\n\n# field validation\ndef clean_first_name(self):\n    data = self.cleaned_data['first_name']\n    if data = 'Mike':\n        raise ValidationError('Your name must not be Mike')\n    return data\n\n# form validation\ndef clean(self):\n    first_name = self.cleaned_data['first_name']\n    last_name = self.cleaned_data['last_name']\n    if first_name + last_name = 'MikeTaylor':\n        raise ValidationError('Your name must not be Mike Taylor')"
+    },
+    {
+      "id": "s11-102",
+      "sectionId": "s11",
+      "title": "Displaying messages",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Message tags\n# debug, info, success, warning and error\n\nmessages.success(request, 'Login successful')\nmessages.error(request, 'Login error')"
+    },
+    {
+      "id": "s11-103",
+      "sectionId": "s11",
+      "title": "Displaying messages",
+      "kind": "code",
+      "lang": "html",
+      "code": "<!-- Display flash messages in template -->\n{% if messages %} {% for message in messages %} {% message %} {% message.tags %}\n{% endfor %} {% endif %}"
+    },
+    {
+      "id": "s12-104",
+      "sectionId": "s12",
+      "title": "Pre-created",
+      "kind": "text",
+      "body": "User Model (pre-created)"
+    },
+    {
+      "id": "s12-105",
+      "sectionId": "s12",
+      "title": "Pre-created",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Get a reference to Django pre-created User model\nfrom django.contrib.auth import get_user_model\n\nUser = get_user_model()\n\n# Or if you want to custom user model\nfrom django.contrib.auth.models import AbstractUser\n\nclass User(AbstractUser):\n    # add custom fields and methods\n\n# To make Django use that model go to settings.py and add: AUTH_USER_MODEL = 'app_name.User'"
+    },
+    {
+      "id": "s13-106",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "python",
+      "code": "# LoginView is already pre-created by Django\nfrom django.contrib.auth.views import LoginView\n\n# Add a url to reach that view\npath('login/', LoginView.as_view(), name='login')\n\n# By default the LoginView will try to open a template name 'registration/login.html' and send a login form with it."
+    },
+    {
+      "id": "s13-107",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "html",
+      "code": "<!-- Create a template under registration/login.html -->\n{% extends \"base.html\" %} {% block content %}\n<form method=\"post\">\n  {% csrf_token %} {{ form }}\n  <button type=\"submit\">Login</button>\n</form>\n{% endblock content %}\n\n<!-- When user click the Login button, the LoginView will try to authenticate the user with the form username ans password -->\n\n<!-- If successful il will then login the user and redirect to LOGIN_REDIRECT_URL specified in your settings.py -->"
+    },
+    {
+      "id": "s13-108",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "text",
+      "body": "#### Authentication : LogoutView"
+    },
+    {
+      "id": "s13-109",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "python",
+      "code": "# LogoutView is already pre-created by Django\nfrom django.contrib.auth.views import LogoutView\n\n# Add a url to reach that view\npath('logout/', LoginView.as_view(), name='logout')\n\n# Include a link in a template\n<a> href=\"{% url 'logout' %}\">Logout</a>\n\n# After link is execute, the user will be logout and redirect to LOGOUT_REDIRECT_URL specified in your settings.py"
+    },
+    {
+      "id": "s13-110",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "text",
+      "body": "#### Authentication : SignupView"
+    },
+    {
+      "id": "s13-111",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Create a SignupView (that view is not created by default)\n# import sinupview form pre-created by Django\nfrom django.contrib.auth.forms import UserCreationForm\nfrom django.views.generic import CreateView\n\nclass SignupView(CreateView):\n    template_name = 'registration/signup.html'\n    form_class = UserCreationForm\n\n    def get_success_url(self):\n        return reverse(\"login\")"
+    },
+    {
+      "id": "s13-112",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "html",
+      "code": "<!-- Create template: registration/signup.html -->\n{% extends \"base.html\" %} {% block content %}\n<form method=\"post\">\n  {% csrf_token %} {{ form }}\n  <button type=\"submit\">Signup</button>\n</form>\n{% endblock content %}"
+    },
+    {
+      "id": "s13-113",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Add a url to reach that view\nfrom posts.views import SignupView\n\npath('signup/', SignupView.as_view(), name='signup')"
+    },
+    {
+      "id": "s13-114",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Optional: Customize the UserCreationForm\n# (forms.py)\nfrom django.contrib.auth import get_user_model\nfrom django.contrib.auth.forms import UserCreationForm\n\nUser = get_user_model()\nclass CustomUserCreationForm(UserCreattionForm):\n    class Meta:\n        model = User\n        fields = ['username']\n        fields_classes = {'username': UsernameField}"
+    },
+    {
+      "id": "s13-115",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "text",
+      "body": "#### Optional pre-created Authentication routes"
+    },
+    {
+      "id": "s13-116",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "python",
+      "code": "# urls.py\nurlpatterns += path('', include('django.contrib.auth.urls'))\n# /login, /lougout, /signup, etc."
+    },
+    {
+      "id": "s13-117",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "text",
+      "body": "#### Template Authentication helpers"
+    },
+    {
+      "id": "s13-118",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "html",
+      "code": "<!-- Authentication links -->\n<a href=\"{% url 'login' %}\">Login</a>\n<a href=\"{% url 'signup' %}\">Signup</a>\n<a href=\"{% url 'logout' %}\">Logout</a>\n\n<!-- Check if user login -->\n{% if request.user.is_authenticated %} Logged in as: {{ request.user.username }}\n{% endif %}"
+    },
+    {
+      "id": "s13-119",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "text",
+      "body": "#### Authorization: LoginRequiredMixin and login_required"
+    },
+    {
+      "id": "s13-120",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "python",
+      "code": "from django.contrib.auth.mixins import LoginRequiredMixin\n\n# Restrict views to auth user only (views.py)\nclass PostsCreateView(LoginRequiredMixin, generic.CreateView):\n    ...\n    ...\n\n\nfrom django.contrib.auth.decorators import login_required\n\n@login_required(login_url='/login')\ndef search_page(request):\n    ...\n    ..."
+    },
+    {
+      "id": "s13-121",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "text",
+      "body": "#### Manual Authentication , Login and Logout"
+    },
+    {
+      "id": "s13-122",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "python",
+      "code": "from django.contrib.auth import authenticate, login\n\ndef login_page(request):\n    if request.method == \"POST\":\n        username = request.POST.get(\"username\")\n        password = request.POST.get(\"password\")\n        user = authenticate(request, username=username, password=password)\n        if user is not None:\n            login(request, user)\n            return redirect(\"index\")\n\nreturn render(request, \"registration/login.html\", {})\n\n\ndef logout_page(request):\n    logout(request)\n    return redirect(\"index\")"
+    },
+    {
+      "id": "s13-123",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "text",
+      "body": "#### User Change password"
+    },
+    {
+      "id": "s13-124",
+      "sectionId": "s13",
+      "title": "Authentication : LoginView",
+      "kind": "code",
+      "lang": "python",
+      "code": "# set_password will hash the password\nuser.set_password('raw password')"
+    },
+    {
+      "id": "s14-125",
+      "sectionId": "s14",
+      "title": "Create Custom Accounts Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$ python manage.py startapp accounts"
+    },
+    {
+      "id": "s14-126",
+      "sectionId": "s14",
+      "title": "Create Custom Accounts Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "# Add accounts app to settings.py\nINSTALLED_APPS = [ … ,\n         'accounts.apps.AccountsConfig',\n          ]\n.\n.\n.\nAUTH_USER_MODEL = 'accounts.User'"
+    },
+    {
+      "id": "s14-127",
+      "sectionId": "s14",
+      "title": "Create Custom Accounts Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "# accounts/models.py\nfrom django.db import models\nfrom django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin\n\nclass UserManager(BaseUserManager):\n    def create_user(self, username, email, password=None, **extra_fields):\n        if not username:\n            raise ValueError('Users must have an username')\n        if not email:\n            raise ValueError('Users must have an email')\n\n        user = self.model(email=email, **extra_fields)\n        user.set_password(password)\n        user.save(using=self._db)\n        return user\n\n    def create_superuser(self, username,  email, password=None, **extra_fields):\n        extra_fields.setdefault('is_staff', True)\n        extra_fields.setdefault('is_superuser', True)\n        extra_fields.setdefault('is_active', True)\n\n        user = self.create_user(username, email, password=password, **extra_fields)\n        user.save(using=self._db)\n        return user\n\n\nclass User(AbstractBaseUser, PermissionsMixin):\n    username = models.CharField(verbose_name='Username', max_length=255, unique=True)\n    email = models.EmailField(verbose_name='email', max_length=255, unique=True)\n    phone = models.BigIntegerField(verbose_name='Phone Number', unique=True, blank=True, null=True)\n    is_active = models.BooleanField(default=True, verbose_name=\"is_active\")\n    is_staff = models.BooleanField(default=False, verbose_name=\"is_staff\")\n    is_superuser = models.BooleanField(default=False, verbose_name=\"is_superuser\")\n\n    objects = UserManager()\n\n    # We can use any field for username\n    USERNAME_FIELD = 'username'  # or 'email' or 'phone'\n    REQUIRED_FIELDS = ['username', 'email']\n\n    def __str__(self):\n        return self.username\n\n    class Meta:\n        verbose_name = \"User\"\n        verbose_name_plural = \"Users\""
+    },
+    {
+      "id": "s14-128",
+      "sectionId": "s14",
+      "title": "Create Custom Accounts Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "# accounts/forms.py\nfrom django import forms\nfrom django.contrib.auth.forms import ReadOnlyPasswordHashField\nfrom django.core.exceptions import ValidationError\nfrom accounts.models import User\nfrom django.utils.translation import gettext_lazy as _\n\n\nclass UserCreationForm(forms.ModelForm):\n    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)\n    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)\n\n    class Meta:\n        model = User\n        fields = ('username', 'email', 'phone', 'is_active', 'is_staff')\n\n    def clean_password2(self):\n        password1 = self.cleaned_data.get(\"password1\")\n        password2 = self.cleaned_data.get(\"password2\")\n        if password1 and password2 and password1 != password2:\n            raise ValidationError(\"Passwords don't match\")\n        return password2\n\n    def save(self, commit=True):\n        user = super().save(commit=False)\n        user.set_password(self.cleaned_data[\"password1\"])\n        if commit:\n            user.save()\n        return user\n\n\nclass UserChangeForm(forms.ModelForm):\n    password = ReadOnlyPasswordHashField()\n\n    class Meta:\n        model = User\n        fields = ('username', 'email', 'phone', 'is_active', 'is_staff')\n\n    def clean_password(self):\n        return self.initial[\"password\"]\n\n\nclass LoginForm(forms.Form):\n    email = forms.CharField(\n        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}), label='Email')\n    password = forms.CharField(\n        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),label='Password')\n\n\nclass RegisterForm(forms.ModelForm):\n    password1 = forms.CharField(label='Password', widget=forms.PasswordInput(\n        attrs={'class': 'form-control'}))\n    password2 = forms.CharField(label='Password confirmation',\n                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))\n\n    class Meta:\n        model = User\n        fields = ('username', 'email', 'phone')\n\n        widgets = {  # Optional\n            'username': forms.TextInput(attrs={'class': 'form-control'}),\n            'email': forms.EmailInput(attrs={'class': 'form-control'}),\n            'phone': forms.NumberInput(\n                attrs={'class': 'form-control', 'type': 'tel', 'maxlength': '11',\n                       'minlength': '11',  'onkeypress': 'return isNumber(event)', 'required': 'false'})}\n\n    def clean_password2(self):\n        password1 = self.cleaned_data.get(\"password1\")\n        password2 = self.cleaned_data.get(\"password2\")\n        if password1 and password2 and password1 != password2:\n            raise ValidationError(\"Passwords don't match\")\n        else:\n            return password2\n\n    def save(self, commit=True):\n        user = super().save(commit=False)\n        user.set_password(self.cleaned_data[\"password1\"])\n        if commit:\n            user.save()\n        return user\n\nclass EditProfileForm(forms.ModelForm):\n    class Meta:\n        model = User\n        fields = ('username', 'email', 'phone')\n\n\nclass ChangePassword(forms.Form):\n    password1 = forms.CharField(label=_('Password'), widget=forms.PasswordInput(\n        attrs={'class': 'form-control', 'placeholder': 'Password'}))\n    password2 = forms.CharField(label=_('Password confirmation'),\n                                widget=forms.PasswordInput(\n                                    attrs={'class': 'form-control', 'placeholder': 'Re-Enter Password'}))\n\n    def clean_password2(self):\n        password1 = self.cleaned_data.get(\"password1\")\n        password2 = self.cleaned_data.get(\"password2\")\n        if password1 and password2 and password1 != password2:\n            raise ValidationError(\"Passwords don't match\")\n        else:\n            return password2"
+    },
+    {
+      "id": "s14-129",
+      "sectionId": "s14",
+      "title": "Create Custom Accounts Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "# accounts/admin.py\nfrom django import forms\nfrom django.contrib import admin\nfrom django.contrib.auth.admin import UserAdmin as BaseUserAdmin\nfrom django.contrib.auth.forms import ReadOnlyPasswordHashField\nfrom django.core.exceptions import ValidationError\nfrom django.contrib.auth.models import Group\nfrom accounts.models import User\n\n\nclass UserCreationForm(forms.ModelForm):\n    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)\n    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)\n\n    class Meta:\n        model = User\n        fields = ('username', 'email', 'phone')\n\n    def clean_password2(self):\n        # Check that the two password entries match\n        password1 = self.cleaned_data.get(\"password1\")\n        password2 = self.cleaned_data.get(\"password2\")\n        if password1 and password2 and password1 != password2:\n            raise ValidationError(\"Passwords don't match\")\n        return password2\n\n    def save(self, commit=True):\n        user = super().save(commit=False)\n        user.set_password(self.cleaned_data[\"password1\"])\n        if commit:\n            user.save()\n        return user\n\n\nclass UserChangeForm(forms.ModelForm):\n    password = ReadOnlyPasswordHashField()\n\n    class Meta:\n        model = User\n        fields = ('username', 'email', 'phone', 'password', 'is_active', 'is_staff')\n\n\nclass UserAdmin(BaseUserAdmin):\n    form = UserChangeForm\n    add_form = UserCreationForm\n    list_display = ('username', 'email', 'is_active', 'is_staff', 'is_superuser')\n    list_editable = ('is_staff', 'is_active')\n    list_filter = ('is_staff', 'groups')\n    fieldsets = (\n        (None, {'fields': ( 'username', 'email', 'phone', 'password')}),\n        ('Permissions', {'fields': ('is_staff',)}),\n        ('Group Permissions', {\n            'fields': ('is_active', 'is_superuser', 'groups', 'user_permissions'),\n        })\n    )\n    add_fieldsets = (\n        (None, {\n            'classes': ('wide',),\n            'fields': ('username', 'email', 'phone', 'password1', 'password2'),\n        }),\n        ('Group Permissions', {\n            'fields': ('is_active', 'is_superuser', 'groups', 'user_permissions'),\n        })\n    )\n    search_fields = ('username', 'email', 'phone')\n    ordering = ('username', 'email', 'phone')\n    filter_horizontal = ('groups', 'user_permissions',)\n\n\nadmin.site.register(User, UserAdmin)\n# unregister the Group model from admin.\n# admin.site.unregister(Group)"
+    },
+    {
+      "id": "s14-130",
+      "sectionId": "s14",
+      "title": "Create Custom Accounts Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "# accounts/urls.py\nfrom django.urls import path\nfrom accounts import views\n\napp_name = 'accounts'\nurlpatterns = [\n    path('login/', views.userLogin, name='login'),\n    path('register/', views.userRegister, name='register'),\n    path('logout/', views.LogoutPage, name='logout')\n]"
+    },
+    {
+      "id": "s14-131",
+      "sectionId": "s14",
+      "title": "Create Custom Accounts Model",
+      "kind": "code",
+      "lang": "python",
+      "code": "# accounts/views.py\nfrom django.shortcuts import render, redirect\nfrom django.contrib.auth import login, logout, authenticate\nfrom django.contrib.auth.decorators import login_required\nfrom django.utils.translation import gettext_lazy as _\nfrom accounts.forms import LoginForm, RegisterForm\nfrom django.contrib import messages\nfrom accounts.models import User\n\n\ndef userRegister(request):\n    form = RegisterForm()\n    if request.method == 'POST':\n        form = RegisterForm(request.POST)\n        if form.is_valid():\n            cd = form.cleaned_data\n            if not User.objects.filter(email=cd['username']).exists():\n                if not User.objects.filter(email=cd['email']).exists():\n                    user = User.objects.create_user(\n                        username=cd['username'], phone=cd['phone'], email=cd['email'], password=cd['password1'])\n                    user.save()\n                    login(request, user)\n                    messages.success(request, _(\"You successfully registered a user\"), extra_tags=\"success\")\n                    return redirect('app_name:home')\n                else:\n                    messages.error(request, _(\"This Email is exists\"), extra_tags=\"warning\")\n            else:\n                messages.error(request, _(\"This Username is exists\"), extra_tags=\"warning\")\n        else:\n            import json\n            er = json.loads(form.errors.as_json())\n            for e in er:\n                messages.error(request, er[e][0]['message'], 'warning')\n    return render(request, 'accounts/register.html', {'form': form})\n\n\ndef userLogin(request):\n    if not request.user.is_active:\n        if request.method == 'POST':\n            form = LoginForm(request.POST)\n            if form.is_valid():\n                cd = form.cleaned_data\n                if User.objects.filter(username=cd['username']).exists():\n                    user = authenticate(request, username=cd['username'], password=cd['password'])\n                    if user is not None:\n                        login(request, user)\n                        messages.success(request, _(\"logged in successfully\"), extra_tags=\"success\")\n                        return redirect('app_name:home')\n                    else:\n                        messages.error(request, _(\"your username Or Password is wrong\"), extra_tags=\"warning\")\n                else:\n                    messages.error(request, _(\"No account created with this username\"), extra_tags=\"warning\")\n                    return redirect('accounts:login')\n            else:\n                messages.error(request, _(\"Please enter your information correctly\"), extra_tags=\"warning\")\n        else:\n            form = LoginForm()\n        return render(request, 'accounts/login.html', {'form': form})\n    else:\n        return redirect('app_name:home')\n\n\n@login_required()\ndef LogoutPage(request):\n    logout(request)\n    messages.success(request, _(\"You Logged Out successfully\"), extra_tags=\"success\")\n    return redirect('app_name:home')"
+    },
+    {
+      "id": "s15-132",
+      "sectionId": "s15",
+      "title": "Send Email",
+      "kind": "code",
+      "lang": "python",
+      "code": "# settings.py\nEMAIL_BACKEND = \"django.core.mail.backends.console.EmailBackend\"\n\n# Send email function\nfrom django.core.email import send_mail\n\nsend_mail(\n    subject = \"A new post has been created\",\n    message = \"Go to the web site to see the detail\",\n    from_email = \"test@test.com\",\n    recipient_list = [\"test2@text.com\"]\n)"
+    },
+    {
+      "id": "s16-133",
+      "sectionId": "s16",
+      "title": "Signals",
+      "kind": "code",
+      "lang": "python",
+      "code": "# models.py\nfrom django.db.models.signals import post_save, pre_save\n\ndef post_user_created_signal(sender, instance, created, **kwargs):\n    if created:\n        UserProfile.objects.create(user=instance)\n\n# Launch the post_user_created_signal method if User model is save\npost_save.connect(post_user_created_signal, sender=User)"
+    },
+    {
+      "id": "s17-134",
+      "sectionId": "s17",
+      "title": "Seed",
+      "kind": "code",
+      "lang": "python",
+      "code": "from app_name.models import Product, Category\nfrom django.shortcuts import HttpResponse\nfrom faker import Faker\n\n\ndef seed(request):\n    Product.objects.all().delete()\n    Category.objects.all().delete()\n\n    category = Category()\n    category.name = \"Sports\"\n    category.save()\n\n    category = Category()\n    category.name = \"Home\"\n    category.save()\n\n    fake = Faker()\n    for _ in range(100):\n        product = Product()\n        product.name = fake.unique.word()\n        product.short_description = fake.sentence()\n        product.main_picture = fake.image_url()\n        product.price = fake.random_digit() * 10\n        product.category =  Category.objects.order_by('?').first()\n        product.save()\n\n    return HttpResponse('Seeded')"
+    },
+    {
+      "id": "s18-135",
+      "sectionId": "s18",
+      "title": ".env key/value file",
+      "kind": "code",
+      "lang": "python",
+      "code": "$ pip install python-decouple"
+    },
+    {
+      "id": "s18-136",
+      "sectionId": "s18",
+      "title": ".env key/value file",
+      "kind": "text",
+      "body": "Create a file name '.env' in the root folder of your project"
+    },
+    {
+      "id": "s18-137",
+      "sectionId": "s18",
+      "title": ".env key/value file",
+      "kind": "code",
+      "lang": "python",
+      "code": "SECRET_KEY = 'your secret key'\nALLOWED_HOST = 127.0.0.1"
+    },
+    {
+      "id": "s18-138",
+      "sectionId": "s18",
+      "title": ".env key/value file",
+      "kind": "text",
+      "body": "In settings.py change security related settings to point to the .env file"
+    },
+    {
+      "id": "s18-139",
+      "sectionId": "s18",
+      "title": ".env key/value file",
+      "kind": "code",
+      "lang": "python",
+      "code": "from decouple import config\n\nSECRET_KEY = config('SECRET_KEY')\nALLOWED_HOST = config('ALLOWED_HOST')"
+    },
+    {
+      "id": "s19-140",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "Celery is a distributed task queue that can collect, record, schedule, and perform tasks outside of your main program."
+    },
+    {
+      "id": "s19-141",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "#### Step 1: Install Celery Using pip"
+    },
+    {
+      "id": "s19-142",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$ pip install celery       # pip install celery[redis]"
+    },
+    {
+      "id": "s19-143",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "#### Step 2. Add celery.py File in Your Project Module"
+    },
+    {
+      "id": "s19-144",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "# your_project/celery.py\nimport os\nfrom celery import Celery\n\nos.environ.setdefault('DJANGO_SETTINGS_MODULE','your_project_name.settings')\napp = Celery('your_project_name')\napp.config_from_object('django.conf:settings', namespace='CELERY')\napp.autodiscover_tasks()\n\n@app.task(bind=True)\ndef debug_task(self):\n    print(f'Request: {self.request!r}')"
+    },
+    {
+      "id": "s19-145",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "#### Step 3: Import the Celery App to Django"
+    },
+    {
+      "id": "s19-146",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "<small>To ensure that the Celery app is loaded when Django starts, add the following code into the `__init__.py` file\nthat sits on the project module beside on settings.py file.</small>"
+    },
+    {
+      "id": "s19-147",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "# your_project/__init__.py\nfrom .celery import app as celery_app\n\n__all__ = ('celery_app',)"
+    },
+    {
+      "id": "s19-148",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "#### Step 4: Download and Run Redis as a Celery ‘broker’"
+    },
+    {
+      "id": "s19-149",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$ redis-server"
+    },
+    {
+      "id": "s19-150",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "<small>You can test that Redis is working properly by typing this into your terminal:</small>"
+    },
+    {
+      "id": "s19-151",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$ redis-cli ping"
+    },
+    {
+      "id": "s19-152",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "Redis should reply with PONG - try it!"
+    },
+    {
+      "id": "s19-153",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "#### Step 5: Add Redis as a Dependency in the Django Project:"
+    },
+    {
+      "id": "s19-154",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$ pip install redis"
+    },
+    {
+      "id": "s19-155",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "#### Step 6: Celery Stuff Configure to the Django Settings File"
+    },
+    {
+      "id": "s19-156",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "Once Redis is up, add the following code to your settings.py file and use celery-result"
+    },
+    {
+      "id": "s19-157",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$ pip install django-celery-results"
+    },
+    {
+      "id": "s19-158",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "This extension enables you to store Celery task results using the Django ORM.<br> It defines a single model\n(`django_celery_results.models.TaskResult`) used to store task results, and you can query this database table like any\nother Django model."
+    },
+    {
+      "id": "s19-159",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "INSTALLED_APPS = [\n                … ,\n                'django_celery_results',\n                ]\n\nBROKER_URL = 'redis://localhost:6379'\nCELERY_RESULT_BACKEND = 'redis://localhost:6379'\nCELERY_ACCEPT_CONTENT = ['application/json']\nCELERY_TASK_SERIALIZER = 'json'\nCELERY_RESULT_SERIALIZER = 'json'\nCELERY_TIMEZONE = TIME_ZONE\nCELERY_RESULT_BACKEND = 'django-db'\nCELERY_CACHE_BACKEND = 'django-cache'\n\nCACHES = {\n    'default': {\n        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',\n        'LOCATION': 'redis://localhost:6379/1',\n        \"OPTIONS\": {\n                    \"CLIENT_CLASS\": \"django_redis.client.DefaultClient\",\n        }\n    }\n}"
+    },
+    {
+      "id": "s19-160",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "#### That’s it! You should now be able to use Celery with Django"
+    },
+    {
+      "id": "s19-161",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "Test that the Celery worker is ready to receive tasks:"
+    },
+    {
+      "id": "s19-162",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$ celery -A your_project_name worker -l info"
+    },
+    {
+      "id": "s19-163",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "The most important task is: Always run a worker is needed to execute the celery task if any error throws from Redis like\nthis:"
+    },
+    {
+      "id": "s19-164",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "code",
+      "lang": "python",
+      "code": "AttributeError: 'str' object has no attribute 'items'"
+    },
+    {
+      "id": "s19-165",
+      "sectionId": "s19",
+      "title": "Django Celery Redis",
+      "kind": "text",
+      "body": "• the solution is: you have to use Redis old version"
+    },
+    {
+      "id": "s19-166",
+      "sectionId": "s19",
+      "title": "Add a New Task",
+      "kind": "text",
+      "body": "#### Step 1: Add tasks.py File to Your Django App."
+    },
+    {
+      "id": "s19-167",
+      "sectionId": "s19",
+      "title": "Add a New Task",
+      "kind": "code",
+      "lang": "python",
+      "code": "# app_name/tasks.py\nfrom celery import shared_task\nfrom celery.decorators import task\nfrom time import sleep\n\n\n@task(name='my_first_task')\ndef my_first_task(duration):\n    sleep(duration)\n    return('first_task_done')\n\n@shared_task\ndef test_func():\n    for i in range(10):\n        print(i)\n    return 'End_OK'\n\n@shared_task\ndef adding(x, y):\n    time.sleep(10)\n    result = x + y\n    return result"
+    },
+    {
+      "id": "s19-168",
+      "sectionId": "s19",
+      "title": "Add a New Task",
+      "kind": "text",
+      "body": "#### Step 2: Assign Task to the Celery."
+    },
+    {
+      "id": "s19-169",
+      "sectionId": "s19",
+      "title": "Add a New Task",
+      "kind": "text",
+      "body": "You need to assign a task to the celery. To assign this task you need to call this function with something different.\ncelery gives us two methods `delay()` and `apply_async()` to call task."
+    },
+    {
+      "id": "s19-170",
+      "sectionId": "s19",
+      "title": "Add a New Task",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# Normal function call in python\n~$ my_first_task()\n\n# add task to the celery with function call\n~$ my_first_task.delay()"
+    },
+    {
+      "id": "s19-171",
+      "sectionId": "s19",
+      "title": "Add a New Task",
+      "kind": "text",
+      "body": "You can send argument to the function using the delay method. <small>To check celery on the action open a separate tab\nof the terminal then go to the project directory (activate environment if you are using one) and run this command\nagain</small>"
+    },
+    {
+      "id": "s19-172",
+      "sectionId": "s19",
+      "title": "Add a New Task",
+      "kind": "code",
+      "lang": "bash",
+      "code": "~$ celery -A your_project_name worker -l info"
+    },
+    {
+      "id": "s19-173",
+      "sectionId": "s19",
+      "title": "Create a View in your App",
+      "kind": "code",
+      "lang": "python",
+      "code": "# app_name/views.py\nfrom django.http import HttpResponse\nfrom app_name.tasks import my_first_task, test_func, adding\n\ndef index(request):\n    my_first_task.delay(10)\n    result = adding.delay(x=4, y=5)\n    return HttpResponse(f'response done. {result}')\n\ndef test(request):\n    test_func.delay()\n    return HttpResponse(\"Done\")"
+    },
+    {
+      "id": "s19-174",
+      "sectionId": "s19",
+      "title": "Create a View in your App",
+      "kind": "text",
+      "body": "#### Then call the view from your app URL"
+    },
+    {
+      "id": "s19-175",
+      "sectionId": "s19",
+      "title": "Create a View in your App",
+      "kind": "code",
+      "lang": "python",
+      "code": "# app_name/urls.py\nfrom django.urls import path\nfrom app_name.views import index, test\nurlpatterns = [\n    path('celery-index/', index, name='celery_index_url'),\n    path('celery-test/', test, name='celery_test_url'),\n]"
+    },
+    {
+      "id": "s19-176",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "#### Step 1: Install Supervisor on Ubuntu Server"
+    },
+    {
+      "id": "s19-177",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "code",
+      "lang": "bash",
+      "code": "~$ sudo apt-get install supervisor"
+    },
+    {
+      "id": "s19-178",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "#### Step 2: Add .conf File in Supervisor"
+    },
+    {
+      "id": "s19-179",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "code",
+      "lang": "bash",
+      "code": "~$ sudo nano /etc/supervisor/conf.d/app_name.conf"
+    },
+    {
+      "id": "s19-180",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "`app_name` can be anything you like, it should be similar to your project name."
+    },
+    {
+      "id": "s19-181",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "#### Step 3: Add some Configure in app_name.conf"
+    },
+    {
+      "id": "s19-182",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "code",
+      "lang": "bash",
+      "code": "[program:your_app_name]\ncommand=/path/to/env/bin/celery worker -A your_project_name --loglevel=INFO\ndirectory=/path/to/workflow/your_project_name/\nuser=www-data\nautostart=true\nautorestart=true\nstdout_logfile=/path/to/workflow/your_project_name/logs/celeryd.log\nredirect_stderr=true"
+    },
+    {
+      "id": "s19-183",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "Describe the configure file:"
+    },
+    {
+      "id": "s19-184",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "code",
+      "lang": "bash",
+      "code": "[program:your_app_name]\n#The name of your supervisord program\n\ncommand=/path/to/env/bin/celery worker -A your_project_name --loglevel=INFO\n#Set full path to celery program if using virtualenv\n\ndirectory=/path/to/workflow/your_project_name/\n#The directory to your Django project\n\nuser=www-data\n#The web server has to be run under a specific user. That user must exist.\n\nautostart=true\n#If true, this program will start automatically when supervisord is started\n\nautorestart=true\n#May be one of false, unexpected, or true. If false, the process will never be autorestarted. If unexpected, the process will be restart when the program exits with an exit code that is not one of the exit codes associated with this process’ configuration (see exitcodes). If true, the process will be unconditionally restarted when it exits, without regard to its exit code.\n\nstdout_logfile=/path/to/workflow/your_project_name/logs/celeryd.log\n#Put process stdout output in this file\n\nredirect_stderr=true\n#If true, cause the process’ stderr output to be sent back to supervisord on its stdout file descriptor (in UNIX shell terms, this is the equivalent of executing /the/program 2>&1)."
+    },
+    {
+      "id": "s19-185",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "#### Step 4: Inform Configuration to the Server"
+    },
+    {
+      "id": "s19-186",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "After adding a new program, we should run the following two commands, to inform the server to reread the configuration\nfiles and to apply any changes."
+    },
+    {
+      "id": "s19-187",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "code",
+      "lang": "python",
+      "code": "~$ sudo supervisorctl reread\n~$ sudo supervisorctl update"
+    },
+    {
+      "id": "s19-188",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "#### Managing Supervisor App"
+    },
+    {
+      "id": "s19-189",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "code",
+      "lang": "bash",
+      "code": "~$ sudo supervisorctl"
+    },
+    {
+      "id": "s19-190",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "You will be greeted with a list of the registered processes. You will see a process called `your_app_name` with a\n`RUNNING` status."
+    },
+    {
+      "id": "s19-191",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "code",
+      "lang": "bash",
+      "code": "your_app_name                 RUNNING   pid 6853, uptime 0:22:30\nsupervisor>"
+    },
+    {
+      "id": "s19-192",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "Type `help` for a list of available commands."
+    },
+    {
+      "id": "s19-193",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "code",
+      "lang": "bash",
+      "code": "supervisor> help\ndefault commands (type help <topic>):\n=====================================\nadd    exit      open  reload  restart   start   tail\navail  fg        pid   remove  shutdown  status  update\nclear  maintail  quit  reread  signal    stop    version"
+    },
+    {
+      "id": "s19-194",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "text",
+      "body": "In a nutshell, we can `start`, `stop` and `restart` programs bypassing the program name as an argument to the respective\ncommand. We can also take a look at the program output with the `tail` command. Once you are finished, you can `quit`."
+    },
+    {
+      "id": "s19-195",
+      "sectionId": "s19",
+      "title": "Celery In Production Using Supervisor",
+      "kind": "code",
+      "lang": "bash",
+      "code": "~$ supervisor> quit"
+    },
+    {
+      "id": "s20-196",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "#### Step 1 — Installing the Packages from the Ubuntu Repositories"
+    },
+    {
+      "id": "s20-197",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo apt update\nsudo apt install python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl"
+    },
+    {
+      "id": "s20-198",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "#### Step 2 — Creating the PostgreSQL Database and User"
+    },
+    {
+      "id": "s20-199",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo -u postgres psql"
+    },
+    {
+      "id": "s20-200",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• First, create a database for your project:"
+    },
+    {
+      "id": "s20-201",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "postgres=# CREATE DATABASE myproject;"
+    },
+    {
+      "id": "s20-202",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Next, create a database user for our project. Make sure to select a secure password:"
+    },
+    {
+      "id": "s20-203",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "postgres=# CREATE USER myprojectuser WITH PASSWORD 'password';"
+    },
+    {
+      "id": "s20-204",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Afterwards, you’ll modify a few of the connection parameters for the user that you just created"
+    },
+    {
+      "id": "s20-205",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "postgres=# ALTER ROLE myprojectuser SET client_encoding TO 'utf8';\npostgres=# ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';\npostgres=# ALTER ROLE myprojectuser SET timezone TO 'UTC';"
+    },
+    {
+      "id": "s20-206",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Now, you can give the new user access to administer the new database:"
+    },
+    {
+      "id": "s20-207",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "postgres=# GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;"
+    },
+    {
+      "id": "s20-208",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• When you are finished, exit out of the PostgreSQL prompt by typing:"
+    },
+    {
+      "id": "s20-209",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "postgres=# \\q"
+    },
+    {
+      "id": "s20-210",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "#### Step 3 — Creating a Python Virtual Environment for your Project"
+    },
+    {
+      "id": "s20-211",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• thin the project directory, create a Python virtual environment by typing:"
+    },
+    {
+      "id": "s20-212",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "mkdir ~/myprojectdir\ncd ~/myprojectdir"
+    },
+    {
+      "id": "s20-213",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Within the project directory, create a Python virtual environment by typing:"
+    },
+    {
+      "id": "s20-214",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "python3 -m venv myprojectenv"
+    },
+    {
+      "id": "s20-215",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Before installing your project’s Python requirements, you will need to activate the virtual environment. You can do"
+    },
+    {
+      "id": "s20-216",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "that by typing:"
+    },
+    {
+      "id": "s20-217",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "source myprojectenv/bin/activate"
+    },
+    {
+      "id": "s20-218",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• With your virtual environment active, install Django, Gunicorn, and the psycopg2 PostgreSQL adaptor with the local"
+    },
+    {
+      "id": "s20-219",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "instance of pip"
+    },
+    {
+      "id": "s20-220",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "(myprojectenv)$ pip install django gunicorn psycopg2-binary"
+    },
+    {
+      "id": "s20-221",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "#### Step 4 — Creating and Configuring a New Django Project"
+    },
+    {
+      "id": "s20-222",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• With your Python components installed, you can now create the actual Django project files."
+    },
+    {
+      "id": "s20-223",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "(myprojectenv)$ django-admin startproject myproject ~/myprojectdir"
+    },
+    {
+      "id": "s20-224",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• The first thing you should do with your newly created project files is adjust the settings. Open the settings file in"
+    },
+    {
+      "id": "s20-225",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "your text editor:"
+    },
+    {
+      "id": "s20-226",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "(myprojectenv)$ nano ~/myprojectdir/myproject/settings.py"
+    },
+    {
+      "id": "s20-227",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Start by locating the ALLOWED_HOSTS directive."
+    },
+    {
+      "id": "s20-228",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "python",
+      "code": "# ~/myprojectdir/myproject/settings.py\nALLOWED_HOSTS = ['your_server_domain_or_IP', 'second_domain_or_IP', . . ., 'localhost']"
+    },
+    {
+      "id": "s20-229",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Next, find the section that configures database access. It will start with DATABASES. The configuration in the file is"
+    },
+    {
+      "id": "s20-230",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "for a SQLite database."
+    },
+    {
+      "id": "s20-231",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "python",
+      "code": ". . .\nDATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.postgresql_psycopg2',\n        'NAME': 'myproject',\n        'USER': 'myprojectuser',\n        'PASSWORD': 'password',\n        'HOST': 'localhost',\n        'PORT': '',\n    }\n}\n. . ."
+    },
+    {
+      "id": "s20-232",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Next, move down to the bottom of the file and add a setting indicating where the static files should be placed."
+    },
+    {
+      "id": "s20-233",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "python",
+      "code": ". . .\nSTATIC_URL = 'static/'\n\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field\n\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n\nimport os\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')"
+    },
+    {
+      "id": "s20-234",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "#### Step 5 — Completing Initial Project Setup"
+    },
+    {
+      "id": "s20-235",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Now, you can migrate the initial database schema to our PostgreSQL database using the management script:"
+    },
+    {
+      "id": "s20-236",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "(myprojectenv)$ ~/myprojectdir/manage.py makemigrations\n(myprojectenv)$ ~/myprojectdir/manage.py migrate"
+    },
+    {
+      "id": "s20-237",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Create an administrative user for the project by typing:"
+    },
+    {
+      "id": "s20-238",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "(myprojectenv)$ ~/myprojectdir/manage.py createsuperuser"
+    },
+    {
+      "id": "s20-239",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• You can collect all of the static content into the directory location that you configured by typing:"
+    },
+    {
+      "id": "s20-240",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "(myprojectenv)$ ~/myprojectdir/manage.py collectstatic"
+    },
+    {
+      "id": "s20-241",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "#### Step 6 — Testing Gunicorn’s Ability to Serve the Project"
+    },
+    {
+      "id": "s20-242",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "(myprojectenv)$ cd ~/myprojectdir\n(myprojectenv)$ gunicorn --bind 0.0.0.0:8000 myproject.wsgi"
+    },
+    {
+      "id": "s20-243",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• You’re now finished configuring your Django application. You can back out of our virtual environment by typing:"
+    },
+    {
+      "id": "s20-244",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "(myprojectenv)$ deactivate"
+    },
+    {
+      "id": "s20-245",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "#### Step 7 — Creating systemd Socket and Service Files for Gunicorn You have tested tha"
+    },
+    {
+      "id": "s20-246",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo nano /etc/systemd/system/gunicorn.socket"
+    },
+    {
+      "id": "s20-247",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "• Inside, you will create a `[Unit]` section to describe the socket, a `[Socket]` section to define the socket location,"
+    },
+    {
+      "id": "s20-248",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "and an `[Install]` section to make sure the socket is created at the right time:"
+    },
+    {
+      "id": "s20-249",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "```bash /etc/systemd/system/gunicorn.socket\n[Unit]\nDescription=gunicorn socket"
+    },
+    {
+      "id": "s20-250",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "[Socket]\nListenStream=/run/gunicorn.sock"
+    },
+    {
+      "id": "s20-251",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "[Install]\nWantedBy=sockets.target"
+    },
+    {
+      "id": "s20-252",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- Save and close the file when you are finished.\n- Next, create and open a systemd service file for Gunicorn with sudo privileges in your text editor. The service\n  filename should match the socket filename with the exception of the extension:"
+    },
+    {
+      "id": "s20-253",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo nano /etc/systemd/system/gunicorn.service"
+    },
+    {
+      "id": "s20-254",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "[Unit]\nDescription=gunicorn daemon\nRequires=gunicorn.socket\nAfter=network.target"
+    },
+    {
+      "id": "s20-255",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "[Service]\nUser=sammy\nGroup=www-data\nWorkingDirectory=/home/sammy/myprojectdir\nExecStart=/home/sammy/myprojectdir/myprojectenv/bin/gunicorn \\\n--access-logfile - \\\n--workers 3 \\\n--bind unix:/run/gunicorn.sock \\\nmyproject.wsgi:application"
+    },
+    {
+      "id": "s20-256",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "[Install]\nWantedBy=multi-user.target"
+    },
+    {
+      "id": "s20-257",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- You can now start and enable the Gunicorn socket. This will create the socket file at /run/gunicorn.sock now and at\n  boot. When a connection is made to that socket, systemd will automatically start the gunicorn.service to handle it"
+    },
+    {
+      "id": "s20-258",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo systemctl start gunicorn.socket\nsudo systemctl enable gunicorn.socket"
+    },
+    {
+      "id": "s20-259",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Step 8 — Checking for the Gunicorn Socket File\n\n- Check the status of the process to find out whether it was able to start:"
+    },
+    {
+      "id": "s20-260",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo systemctl status gunicorn.socket"
+    },
+    {
+      "id": "s20-261",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- Next, check for the existence of the gunicorn.sock file within the /run directory:"
+    },
+    {
+      "id": "s20-262",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "file /run/gunicorn.sock"
+    },
+    {
+      "id": "s20-263",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Step 9 — Testing Socket Activation"
+    },
+    {
+      "id": "s20-264",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo systemctl status gunicorn"
+    },
+    {
+      "id": "s20-265",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- To test the socket activation mechanism, you can send a connection to the socket through curl by typing:"
+    },
+    {
+      "id": "s20-266",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "curl --unix-socket /run/gunicorn.sock localhost"
+    },
+    {
+      "id": "s20-267",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- You should receive the HTML output from your application in the terminal. This indicates that Gunicorn was started and\n  was able to serve your Django application. You can verify that the Gunicorn service is running by typing:"
+    },
+    {
+      "id": "s20-268",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo systemctl status gunicorn"
+    },
+    {
+      "id": "s20-269",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- Check your /etc/systemd/system/gunicorn.service file for problems. If you make changes to the\n  /etc/systemd/system/gunicorn.service file, reload the daemon to reread the service definition and restart the Gunicorn\n  process by typing"
+    },
+    {
+      "id": "s20-270",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo systemctl daemon-reload\nsudo systemctl restart gunicorn"
+    },
+    {
+      "id": "s20-271",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Step 10 — Configure Nginx to Proxy Pass to Gunicorn\n\n- Start by creating and opening a new server block in Nginx’s sites-available directory:"
+    },
+    {
+      "id": "s20-272",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo nano /etc/nginx/sites-available/myproject"
+    },
+    {
+      "id": "s20-273",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "server {\nlisten 80;\nserver_name server_domain_or_IP;"
+    },
+    {
+      "id": "s20-274",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "location = /favicon.ico { access_log off; log_not_found off; }\nlocation /static/ {\nalias /home/sammy/myprojectdir/staticfiles/;\n}"
+    },
+    {
+      "id": "s20-275",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "location /media {\nautoindex on;\nalias /home/sammy/myprojectdir/media/;\n}"
+    },
+    {
+      "id": "s20-276",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "location / {\ninclude proxy_params;\nproxy_pass http://unix:/run/gunicorn.sock;\n}\n}"
+    },
+    {
+      "id": "s20-277",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- Save and close the file when you are finished. Now, you can enable the file by linking it to the sites-enabled\n  directory:"
+    },
+    {
+      "id": "s20-278",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled"
+    },
+    {
+      "id": "s20-279",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- Test your Nginx configuration for syntax errors by typing:"
+    },
+    {
+      "id": "s20-280",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo nginx -t"
+    },
+    {
+      "id": "s20-281",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- If no errors are reported, go ahead and restart Nginx by typing:"
+    },
+    {
+      "id": "s20-282",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo systemctl restart nginx"
+    },
+    {
+      "id": "s20-283",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- you need to open up your firewall to normal traffic on port 80"
+    },
+    {
+      "id": "s20-284",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo ufw allow 'Nginx Full'"
+    },
+    {
+      "id": "s20-285",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\nYou should now be able to go to your server’s domain or IP address to view your application.\n\n#### Step 11 — Troubleshooting Nginx and Gunicorn\n\n- Nginx Is Showing the Default Page Instead of the Django Application"
+    },
+    {
+      "id": "s20-286",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo tail -F /var/log/nginx/error.log"
+    },
+    {
+      "id": "s20-287",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- Django Is Displaying: “could not connect to server: Connection refused”"
+    },
+    {
+      "id": "s20-288",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo systemctl status postgresql"
+    },
+    {
+      "id": "s20-289",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- If it is not, you can start it and enable it to start automatically at boot (if it is not already configured to do so)\n  by typing:"
+    },
+    {
+      "id": "s20-290",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo systemctl start postgresql\nsudo systemctl enable postgresql"
+    },
+    {
+      "id": "s20-291",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\nIf you change Gunicorn socket or service files, reload the daemon and restart the process by typing:"
+    },
+    {
+      "id": "s20-292",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo systemctl daemon-reload\nsudo systemctl restart gunicorn.socket gunicorn.service"
+    },
+    {
+      "id": "s20-293",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "",
+      "code": "\nIf you change the Nginx server block configuration, test the configuration and then Nginx by typing:"
+    },
+    {
+      "id": "s20-294",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "sudo nginx -t && sudo systemctl restart nginx"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/django.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/django.md",
+    "generatedAt": "2025-12-16T07:36:11.606Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

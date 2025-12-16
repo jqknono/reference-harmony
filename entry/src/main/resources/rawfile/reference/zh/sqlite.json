@@ -1,0 +1,594 @@
+{
+  "id": "sqlite",
+  "title": "sqlite",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "SQLite 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "本备忘单旨在快速理解 [SQLite](https://sqlite.com/) 所涉及的主要概念，提供了最常用的SQL语句，供您参考。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "SQLite 是一个轻量级的嵌入式关系数据库管理系统，遵循 ACID 原则，广泛用于浏览器、操作系统等应用中，实现本地数据存储。"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "#### windows"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "• 从 [SQLite](https://www.sqlite.org/download.html) 下载两个压缩文件：`sqlite-tools-win32-*.zip`、`sqlite-dll-win32-*.zip`\n• 创建文件夹 `C:\\sqlite`，将这两个压缩文件解压到该文件夹下。\n• 解压后，您将看到 3 个文件： `sqlite3.def`、 `sqlite3.dll`、 `sqlite3.exe`\n• 将 C:\\sqlite 添加到 PATH 环境变量中，以便在命令行中使用 SQLite。"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "#### linux"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "linux 自带 `sqlite3`，或者通过 `apt-get/yum/brew` 等安装。"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "#### macOS"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "`brew install sqlite` 安装"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "连接 SQLite 数据库",
+      "kind": "text",
+      "body": "SQLite 通常无需复杂配置，当指定的数据库文件不存在时，它会自动创建一个新文件。"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "连接 SQLite 数据库",
+      "kind": "code",
+      "lang": "bash",
+      "code": "sqlite3 mydatabase.db"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "连接 SQLite 数据库",
+      "kind": "text",
+      "body": "若数据库文件不存在则会自动创建"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "连接 SQLite 数据库",
+      "kind": "text",
+      "body": "数据库操作\n---"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "显示数据库名称及对应文件",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sqlite> .databases\nmain: /home/user/sqlite/database.db r/w"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "备份数据库",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sqlite> .backup back"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "显示已经设置的值",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sqlite> .show \n        echo: off\n         eqp: off\n     explain: auto\n     headers: off\n        mode: list\n   nullvalue: \"\"\n      output: stdout\ncolseparator: \"|\"\nrowseparator: \"\\n\"\n       stats: off\n       width:\n    filename: api.db"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "备份单张表",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sqlite> .dump user"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "退出",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sqlite> .exit"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "以 sql 的形式 dump 数据库",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sqlite> .dump\nPRAGMA foreign_keys=OFF;\nBEGIN TRANSACTION;\nCREATE TABLE api (\n    id INTEGER PRIMARY KEY AUTOINCREMENT,\n    host TEXT NOT NULL,\n    port INTEGER NOT NULL,\n    path TEXT NOT NULL\n);\nINSERT INTO api VALUES(1,'example.com',8080,'/api/v1');"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "导入与导出数据库",
+      "kind": "text",
+      "body": "#### 导出数据库\n<!--rehype:style=text-align: left;-->"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "导入与导出数据库",
+      "kind": "code",
+      "lang": "bash",
+      "code": "sqlite3 mydatabase.db .dump > backup.sql"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "导入与导出数据库",
+      "kind": "text",
+      "body": "#### 导入数据库\n<!--rehype:style=text-align: left;-->"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "导入与导出数据库",
+      "kind": "code",
+      "lang": "bash",
+      "code": "sqlite3 mydatabase.db < backup.sql"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "输出模式设置",
+      "kind": "text",
+      "body": "#### 设置输出模式为 csv"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "输出模式设置",
+      "kind": "code",
+      "lang": "sh",
+      "code": "sqlite> .mode csv\nsqlite> select * from api;\nid,host,port,path\n1,example.com,8080,/api/v1"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "输出模式设置",
+      "kind": "text",
+      "body": "#### 输出为 markdown"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "输出模式设置",
+      "kind": "code",
+      "lang": "sh",
+      "code": "sqlite> select * from api;\n| id |      host       | port |  path   |\n|----|-----------------|------|---------|\n| 1  | example.com     | 8080 | /api/v1 |"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "输出模式设置",
+      "kind": "text",
+      "body": "支持 ascii box column csv html insert json line list markdown qbox quote table tabs tcl 等类型"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "输出模式设置",
+      "kind": "text",
+      "body": "数据表操作\n---"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "text",
+      "body": "#### 创建表\n<!--rehype:style=text-align: left;color: var(--primary-color);-->"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "code",
+      "lang": "sh",
+      "code": "sqlite> create table user(id integer primary key, name text);"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "text",
+      "body": "#### 查看所有表\n<!--rehype:style=text-align: left;color: var(--primary-color);-->"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "code",
+      "lang": "sh",
+      "code": "sqlite> .tables"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "text",
+      "body": "#### 查看表结构\n<!--rehype:style=text-align: left;color: var(--primary-color);-->"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "code",
+      "lang": "sh",
+      "code": "sqlite> .schema user"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "text",
+      "body": "#### 导入文件到表中\n<!--rehype:style=text-align: left;color: var(--primary-color);-->"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "code",
+      "lang": "sh",
+      "code": "sqlite> .import user.csv user"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "text",
+      "body": "#### 设置查询显示列名称\n<!--rehype:style=text-align: left;color: var(--primary-color);-->"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "常用表操作",
+      "kind": "code",
+      "lang": "sh",
+      "code": "sqlite> .head on"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "常用 SQL",
+      "kind": "code",
+      "lang": "sql",
+      "code": "-- 创建表\ncreate table user(id integer primary key, name text);\n\n-- 删除表\ndrop table user;\n\n-- 重命名表\nalter table user rename to user_new;\n\n-- 插入\n-- 单条\ninsert into user(name) values('test');\n-- 多条\ninsert into user(name) values('test1'),('test2');\n\n-- 查询\nselect * from user;\n-- 去重查询\nselect distinct name from user;\n-- 统计\nselect count(id) from user;\n-- limit\nselect * from user limit 2;\n-- 条件查询\nselect * from user where id > 1;\n-- 模糊查询\nselect * from user where name like '%test%';\n-- group by\nselect name, count(id) from user group by name;\n-- 排序\nselect * from user order by id desc;\n-- 聚合函数\nselect max(id) from user;\n\n-- 更新\nupdate user set name='test3' where id=1;\n\n-- 删除\ndelete from user where id=1;"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "事务支持",
+      "kind": "text",
+      "body": "**事务**具有原子性(Atomicity)、一致性(Consistency)、隔离性(Isolation)、持久性(Durability)四个标准属性，缩写为 ACID。"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "事务支持",
+      "kind": "code",
+      "lang": "sql",
+      "code": "-- 开始事务\nbegin transaction;\n-- 操作\nupdate user set name='test4' where id=1;\n-- 回滚\nrollback;\n-- 提交\ncommit;"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".backup ?DB? FILE",
+      "back": "备份 DB 数据库（默认是 \"main\"）到 FILE 文件。"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".bail ON\\",
+      "back": "OFF | 发生错误后停止。默认为 OFF。"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".databases",
+      "back": "列出数据库的名称及其所依附的文件。"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".dump ?TABLE?",
+      "back": "以 SQL 文本格式转储数据库。如果指定了 TABLE 表，则只转储匹配 LIKE 模式的 TABLE 表。"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".echo ON\\",
+      "back": "OFF | 开启或关闭 echo 命令。"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".exit",
+      "back": "退出 SQLite 提示符。"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".explain ON\\",
+      "back": "OFF | 开启或关闭适合于 EXPLAIN 的输出模式。如果没有带参数，则为 EXPLAIN on，即开启 EXPLAIN。"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".header(s) ON\\",
+      "back": "OFF | 开启或关闭头部显示。"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".help",
+      "back": "显示消息。"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".import FILE TABLE",
+      "back": "导入来自 FILE 文件的数据到 TABLE 表中。"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".indices ?TABLE?",
+      "back": "显示所有索引的名称。如果指定了 TABLE 表，则只显示匹配 LIKE 模式的 TABLE 表的索引。"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".load FILE ?ENTRY?",
+      "back": "加载一个扩展库。"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".log FILE\\",
+      "back": "off | 开启或关闭日志。FILE 文件可以是 stderr（标准错误）/stdout（标准输出）。"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".nullvalue STRING",
+      "back": "在 NULL 值的地方输出 STRING 字符串。"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".output FILENAME",
+      "back": "发送输出到 FILENAME 文件。"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".output stdout",
+      "back": "发送输出到屏幕。"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".print STRING...",
+      "back": "逐字地输出 STRING 字符串。"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".prompt MAIN CONTINUE",
+      "back": "替换标准提示符。"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".quit",
+      "back": "退出 SQLite 提示符。"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".read FILENAME",
+      "back": "执行 FILENAME 文件中的 SQL。"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".schema ?TABLE?",
+      "back": "显示 CREATE 语句。如果指定了 TABLE 表，则只显示匹配 LIKE 模式的 TABLE 表。"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".separator STRING",
+      "back": "改变输出模式和 .import 所使用的分隔符。"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".show",
+      "back": "显示各种设置的当前值。"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".stats ON\\",
+      "back": "OFF | 开启或关闭统计。"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".tables ?PATTERN?",
+      "back": "列出匹配 LIKE 模式的表的名称。"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".timeout MS",
+      "back": "尝试打开锁定的表 MS 毫秒。"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".width NUM",
+      "back": "NUM  为 \"column\" 模式设置列宽度。"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".timer ON\\",
+      "back": "OFF | 开启或关闭 CPU 定时器。"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "qa",
+      "front": ".mode MODE",
+      "back": "设置输出模式，MODE 可以是下列之一 `:csv` 逗号分隔的值 <br/>column 左对齐的列 <br/>html HTML 的 \\<table\\> 代码 <br/>insert TABLE 表的 SQL 插入（insert）语句 <br/>line 每行一个值 <br/>list 由 .separator 字符串分隔的值 <br/>tabs 由 Tab 分隔的值 <br/> tcl TCL 列表元素<br/>"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "text",
+      "body": "在命令行中通过 `.help` 命令显示帮助文档"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "text",
+      "body": "另见\n--------"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "命令行帮助",
+      "kind": "text",
+      "body": "• [百科](https://zh.wikipedia.org/wiki/SQLite)\n• [SQLite](https://www.sqlite.org/)\n• [菜鸟教程](https://www.runoob.com/sqlite/sqlite-tutorial.html)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/sqlite.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/sqlite.md",
+    "generatedAt": "2025-12-16T07:36:11.435Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

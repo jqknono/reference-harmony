@@ -1,0 +1,447 @@
+{
+  "id": "kubernetes",
+  "title": "Kubernetes",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Viewing and finding resources",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Updating resources",
+      "startIndex": 33
+    },
+    {
+      "id": "s3",
+      "title": "Create resources",
+      "startIndex": 43
+    },
+    {
+      "id": "s4",
+      "title": "Miscellaneous",
+      "startIndex": 49
+    },
+    {
+      "id": "s5",
+      "title": "Also See",
+      "startIndex": 51
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "This page contains a list of commonly used kubectl commands and flags."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Nodes",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get no # Display all node information\nkubectl get no -o wide # Show more information about all nodes\nkubectl describe no # Display node details\nkubectl get no -o yaml # Display node details in yaml format\nkubectl get node --selector=[label_name] # Filter the node with the specified label\nkubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=\"ExternalIP\")].address}'\n# Output the field information defined by the jsonpath expression\nkubectl top node [node_name] # Display node (CPU/memory/storage) usage"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Nodes",
+      "kind": "text",
+      "body": "Resource name: nodes, abbreviation: no"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Pods",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get po # Display all container group information\nkubectl get po -o wide\nkubectl describe po\nkubectl get po --show-labels # View the labels of the container group\nkubectl get po -l app=nginx\nkubectl get po -o yaml\nkubectl get pod [pod_name] -o yaml --export\nkubectl get pod [pod_name] -o yaml --export > nameoffile.yaml\n# Export container group information to yaml file in yaml format\nkubectl get pods --field-selector status.phase=Running\n# Use the field selector to filter out container group information"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Pods",
+      "kind": "text",
+      "body": "Resource name: pods, abbreviation: po"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Namespaces",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get ns\nkubectl get ns -o yaml\nkubectl describe ns"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Namespaces",
+      "kind": "text",
+      "body": "Resource name: namespaces, abbreviation: ns"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Deployments",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get deploy\nkubectl describe deploy\nkubectl get deploy -o wide\nkubectl get deploy -o yaml"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Deployments",
+      "kind": "text",
+      "body": "Resource name: deployments, abbreviation: deploy"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Services",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get svc\nkubectl describe svc\nkubectl get svc -o wide\nkubectl get svc -o yaml\nkubectl get svc --show-labels"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Services",
+      "kind": "text",
+      "body": "Resource name: services, abbreviation: svc"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Daemon Sets",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get ds\nkubectl describe ds --all-namespaces\nkubectl describe ds [daemonset_name] -n [namespace_name]\nkubectl get ds [ds_name] -n [ns_name] -o yaml"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Daemon Sets",
+      "kind": "text",
+      "body": "Resource name: daemonsets, abbreviation: ds"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Events",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get events\nkubectl get events -n kube-system\nkubectl get events -w"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "Events",
+      "kind": "text",
+      "body": "Resource name: events, abbreviation: ev"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "Logs",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl logs [pod_name]\nkubectl logs --since=1h [pod_name]\nkubectl logs --tail=20 [pod_name]\nkubectl logs -f -c [container_name] [pod_name]\nkubectl logs [pod_name] > pod.log"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "Service Accounts",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get sa\nkubectl get sa -o yaml\nkubectl get serviceaccounts default -o yaml >./sa.yaml\nkubectl replace serviceaccount default -f ./sa.yaml"
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Service Accounts",
+      "kind": "text",
+      "body": "Resource name: serviceaccounts, abbreviation: ev"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Replica Sets",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get rs\nkubectl describe rs\nkubectl get rs -o wide\nkubectl get rs -o yaml"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Replica Sets",
+      "kind": "text",
+      "body": "Resource name: replicasets, abbreviation: rs"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Roles",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get roles --all-namespaces\nkubectl get roles --all-namespaces -o yaml"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Secrets",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get secrets\nkubectl get secrets --all-namespaces\nkubectl get secrets -o yaml"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "Config maps",
+      "kind": "text",
+      "body": "Resource name: configmaps, abbreviation: cm"
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "Config maps",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get cm\nkubectl get cm --all-namespaces\nkubectl get cm --all-namespaces -o yaml"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "Ingresses",
+      "kind": "text",
+      "body": "Resource name: ingresses, abbreviation: ing"
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "Ingresses",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get ing\nkubectl get ing --all-namespaces"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Persistent Volumes",
+      "kind": "text",
+      "body": "Resource name: persistentvolumes, abbreviation: pv"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Persistent Volumes",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get pv\nkubectl describe pv"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Persistent volume declaration",
+      "kind": "text",
+      "body": "Resource name: persistentvolumeclaims, abbreviation: pvc"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Persistent volume declaration",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get pvc\nkubectl describe pvc"
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "storage class",
+      "kind": "text",
+      "body": "Resource name: storageclasses, Abbreviation: sc"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "storage class",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get sc\nkubectl get sc -o yaml"
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Multiple resources",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get svc, po\nkubectl get deploy, no\nkubectl get all\nkubectl get all --all-namespaces"
+    },
+    {
+      "id": "s2-33",
+      "sectionId": "s2",
+      "title": "Taint",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl taint [node_name] [taint_name]"
+    },
+    {
+      "id": "s2-34",
+      "sectionId": "s2",
+      "title": "Label",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl label [node_name] disktype=ssd\nkubectl label [pod_name] env=prod"
+    },
+    {
+      "id": "s2-35",
+      "sectionId": "s2",
+      "title": "Maintain/Schedulable",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl cordon [node_name] # node maintenance\nkubectl uncordon [node_name] # node is schedulable"
+    },
+    {
+      "id": "s2-36",
+      "sectionId": "s2",
+      "title": "clear",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl drain [node_name] # empty the node"
+    },
+    {
+      "id": "s2-37",
+      "sectionId": "s2",
+      "title": "Node/Pod",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl delete node [node_name]\nkubectl delete pod [pod_name]\nkubectl edit node [node_name]\nkubectl edit pod [pod_name]"
+    },
+    {
+      "id": "s2-38",
+      "sectionId": "s2",
+      "title": "Stateless/Namespaced",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl edit deploy [deploy_name]\nkubectl delete deploy [deploy_name]\nkubectl expose deploy [deploy_name] --port=80 --type=NodePort\nkubectl scale deploy [deploy_name] --replicas=5\nkubectl delete ns\nkubectl edit ns [ns_name]"
+    },
+    {
+      "id": "s2-39",
+      "sectionId": "s2",
+      "title": "Service",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl edit svc [svc_name]\nkubectl delete svc [svc_name]"
+    },
+    {
+      "id": "s2-40",
+      "sectionId": "s2",
+      "title": "Daemon set",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl edit ds [ds_name] -n kube-system\nkubectl delete ds [ds_name]"
+    },
+    {
+      "id": "s2-41",
+      "sectionId": "s2",
+      "title": "Service account",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl edit sa [sa_name]\nkubectl delete sa [sa_name]"
+    },
+    {
+      "id": "s2-42",
+      "sectionId": "s2",
+      "title": "Notes",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl annotate po [pod_name] [annotation]\nkubectl annotateno [node_name]"
+    },
+    {
+      "id": "s3-43",
+      "sectionId": "s3",
+      "title": "Create pod",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl create -f [name_of_file]\nkubectl apply -f [name_of_file]\nkubectl run [pod_name] --image=nginx --restart=Never\nkubectl run [pod_name] --generator=run-pod/v1 --image=nginx\nkubectl run [pod_name] --image=nginx --restart=Never"
+    },
+    {
+      "id": "s3-44",
+      "sectionId": "s3",
+      "title": "Create Service",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl create svc nodeport [svc_name] --tcp=8080:80"
+    },
+    {
+      "id": "s3-45",
+      "sectionId": "s3",
+      "title": "Create a stateless application",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl create -f [name_of_file]\nkubectl apply -f [name_of_file]\nkubectl create deploy [deploy_name] --image=nginx"
+    },
+    {
+      "id": "s3-46",
+      "sectionId": "s3",
+      "title": "interaction",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl run [pod_name] --image=busybox --rm -it --restart=Never --sh"
+    },
+    {
+      "id": "s3-47",
+      "sectionId": "s3",
+      "title": "Output YAML",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl create deploy [deploy_name] --image=nginx --dry-run -o yaml > deploy.yaml\nkubectl get po [pod_name] -o yaml --export > pod.yaml"
+    },
+    {
+      "id": "s3-48",
+      "sectionId": "s3",
+      "title": "Help",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl -h\nkubectl create -h\nkubectl run -h\nkubectl explain deploy.spec"
+    },
+    {
+      "id": "s4-49",
+      "sectionId": "s4",
+      "title": "APIs",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl get --raw /apis/metrics.k8s.io/"
+    },
+    {
+      "id": "s4-50",
+      "sectionId": "s4",
+      "title": "Information",
+      "kind": "code",
+      "lang": "bash",
+      "code": "kubectl config\nkubectl cluster-info\nkubectl get componentstatus"
+    },
+    {
+      "id": "s5-51",
+      "sectionId": "s5",
+      "title": "Also See",
+      "kind": "text",
+      "body": "• [Kubernetes Official Documentation](https://kubernetes.io/zh-cn/docs/reference/kubectl/) _(kubernetes.io)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/kubernetes.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/kubernetes.md",
+    "generatedAt": "2025-12-16T07:36:11.710Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

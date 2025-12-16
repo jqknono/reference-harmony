@@ -1,0 +1,1538 @@
+{
+  "id": "golang",
+  "title": "golang",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Golang 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "该备忘单提供了帮助您使用 [Golang](https://golang.org) 的基本语法和方法。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n--------"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "hello.go",
+      "kind": "code",
+      "lang": "go",
+      "code": "package main\nimport \"fmt\"\nfunc main() {\n    fmt.Println(\"Hello, world!\")\n}"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "hello.go",
+      "kind": "text",
+      "body": "直接运行"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "hello.go",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ go run hello.go\nHello, world!"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "hello.go",
+      "kind": "text",
+      "body": "或者在 [Go repl](https://repl.it/languages/go) 中尝试一，`go` 命令[参考](#go-命令)"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "code",
+      "lang": "go",
+      "code": "var s1 string\ns1 = \"Learn Go!\"\n// 一次声明多个变量\nvar b, c int = 1, 2\nvar d = true\n// 匿名赋值\n_ , e = 10, 20"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "text",
+      "body": "简短声明"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "code",
+      "lang": "go",
+      "code": "s1 := \"Learn Go!\"        // string\nb, c := 1, 2             // int\nd := true                // bool"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "text",
+      "body": "参见：[基本类型](#golang-基本类型)"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "函数",
+      "kind": "code",
+      "lang": "go",
+      "code": "package main\nimport \"fmt\"\n// 程序的入口点\nfunc main() {\n  fmt.Println(\"Hello world!\")\n  say(\"Hello Go!\")\n}\nfunc say(message string) {\n  fmt.Println(\"You said: \", message)\n}"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "函数",
+      "kind": "text",
+      "body": "参见：[函数(Functions)](#golang-函数)"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "注释",
+      "kind": "code",
+      "lang": "go",
+      "code": "// 单行注释\n/* 这是\n多行注释 */"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "if 语句",
+      "kind": "code",
+      "lang": "go",
+      "code": "if true {\n  fmt.Println(\"Yes!\")\n}"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "if 语句",
+      "kind": "text",
+      "body": "参见：[条件控制](#golang-条件控制)"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "if 语句",
+      "kind": "text",
+      "body": "Golang 基本类型\n--------"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "字符串 Strings",
+      "kind": "code",
+      "lang": "go",
+      "code": "s1 := \"Hello\" + \"World\"\ns2 := `A \"raw\" string literal\ncan include line breaks.`\n// 输出：10\nfmt.Println(len(s1))\n// 输出：Hello\nfmt.Println(string(s1[0:5]))"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "字符串 Strings",
+      "kind": "text",
+      "body": "字符串的类型为 `字符串`"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "数字 Numbers",
+      "kind": "code",
+      "lang": "go",
+      "code": "num := 3             // int\nnum := 3.            // float64\nnum := 3 + 4i        // complex128\nnum := byte('a')     // byte (alias: uint8)\nvar u uint = 7       // uint (unsigned)\nvar p float32 = 22.7  // 32-bit float"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "数字 Numbers",
+      "kind": "text",
+      "body": "#### 操作符 Operators"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "数字 Numbers",
+      "kind": "code",
+      "lang": "go",
+      "code": "x := 5\nx++\nfmt.Println(\"x + 4 =\", x + 4)\nfmt.Println(\"x * 4 =\", x * 4)"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "数字 Numbers",
+      "kind": "text",
+      "body": "参见：[更多操作符](#运算符和标点符号)"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "布尔值 Booleans",
+      "kind": "code",
+      "lang": "go",
+      "code": "isTrue   := true\nisFalse  := false"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "布尔值 Booleans",
+      "kind": "text",
+      "body": "#### 操作符"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "布尔值 Booleans",
+      "kind": "code",
+      "lang": "go",
+      "code": "fmt.Println(true && true)   // true \nfmt.Println(true && false)  // false\nfmt.Println(true || true)   // true\nfmt.Println(true || false)  // true\nfmt.Println(!true)          // false"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "布尔值 Booleans",
+      "kind": "text",
+      "body": "参见：[更多操作符](#运算符和标点符号)"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "数组 Arrays",
+      "kind": "code",
+      "lang": "go",
+      "code": "┌────┬────┬────┬────┬─────┬─────┐\n| 2  | 3  | 5  | 7  | 11  | 13  |\n└────┴────┴────┴────┴─────┴─────┘\n  0    1    2    3     4     5"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "数组 Arrays",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "数组 Arrays",
+      "kind": "code",
+      "lang": "go",
+      "code": "primes := [...]int{2, 3, 5, 7, 11, 13}\nfmt.Println(len(primes)) // => 6\n// 输出：[2 3 5 7 11 13]\nfmt.Println(primes)\n// 与 [:3] 相同，输出：[2 3 5]\nfmt.Println(primes[0:3])"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "数组 Arrays",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "数组 Arrays",
+      "kind": "code",
+      "lang": "go",
+      "code": "var a [2]string\na[0] = \"Hello\"\na[1] = \"World\"\nfmt.Println(a[0], a[1]) //=> Hello World\nfmt.Println(a)   // => [Hello World]"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "数组 Arrays",
+      "kind": "text",
+      "body": "#### 2d array"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "数组 Arrays",
+      "kind": "code",
+      "lang": "go",
+      "code": "var twoDimension [2][3]int\nfor i := 0; i < 2; i++ {\n    for j := 0; j < 3; j++ {\n        twoDimension[i][j] = i + j\n    }\n}\n// => 2d:  [[0 1 2] [1 2 3]]\nfmt.Println(\"2d: \", twoDimension)"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "指针(Pointers)",
+      "kind": "code",
+      "lang": "go",
+      "code": "func main () {\n  b := *getPointer()\n  fmt.Println(\"Value is\", b)\n}\n\nfunc getPointer () (myPointer *int) {\n  a := 234\n  return &a\n}\n//申明指针的时候，如果没有指向某个变量，默认值为nil\n//不能直接进行操作，包括读写\nvar p *int\n*p = 123      // panic   nil pointer"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "指针(Pointers)",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "指针(Pointers)",
+      "kind": "code",
+      "lang": "go",
+      "code": "//而用new返回的是有默认值的指针, 为数据类型的默认值\nfunc main(){\n  //有一块内存存放了10，它的地址由系统自动分配，别名是a\n  a := 10\n  //内存存放的10变成了20\n  a = 20\n  var p *int\n  p = &a   //或者直接写 p := &a\n  //上面的p是一个指针，通过 *p 的方式同样可以访问 变量a指向 的内存\n\n  /*当你动态申请内存的时候，指针的存在意义之一就被体现出来了*/ \n  ptr := new(int)   \n  //申请了一块内存空间，没有办法指定别名，new()返回内存地址，用指针接收\n  //此时并没有变量能直接指向这块内存，所以只能通过内存地址来访问\n}"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "指针(Pointers)",
+      "kind": "text",
+      "body": "参见：[指针(Pointers)](https://tour.golang.org/moretypes/1)"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "切片(Slices)",
+      "kind": "code",
+      "lang": "go",
+      "code": "s := make([]string, 3)\ns[0] = \"a\"\ns[1] = \"b\"\ns = append(s, \"d\")\ns = append(s, \"e\", \"f\")\nfmt.Println(s)\nfmt.Println(s[1])\nfmt.Println(len(s))\nfmt.Println(s[1:3])\nslice := []int{2, 3, 4}"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "切片(Slices)",
+      "kind": "text",
+      "body": "另见：[切片示例](https://gobyexample.com/slices)"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "常量(Constants)",
+      "kind": "code",
+      "lang": "go",
+      "code": "const s string = \"constant\"\nconst Phi = 1.618\nconst n = 500000000\nconst d = 3e20 / n"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "常量(Constants)",
+      "kind": "text",
+      "body": "常量声明可以使用 iota常量生成器 初始化，它用于\n生成一组以相似规则初始化的常量，但是不用每行都\n写一遍初始化表达式。\n注意："
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "常量(Constants)",
+      "kind": "text",
+      "body": "• 在一个const声明语句中，在第一个声明的常量所在的行，iota被置为0，然后在每一个有常量声明的行加一。\n• 写在同一行的值是相同的"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "常量(Constants)",
+      "kind": "code",
+      "lang": "go",
+      "code": "const (\n    a = iota\n    b\n    c\n)\n// a = 0, b = 1, c = 2"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "类型转换",
+      "kind": "text",
+      "body": "Go语言中不允许隐式转换，所有类型转换必须显式声明（强制转换），而且转换只能发生在两种相互兼容的类型之间。"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "类型转换",
+      "kind": "code",
+      "lang": "go",
+      "code": "i := 90\nf := float64(i)\nu := uint(i)\n// 将等于字符Z\ns := string(i)"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "类型转换",
+      "kind": "text",
+      "body": "#### 字符串与其他类型的相互转换"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "类型转换",
+      "kind": "code",
+      "lang": "go",
+      "code": "// 字符串转其他类型\nstr := \"90\"\n// 整数类型\ni, err := strconv.Atoi(str)\nif err != nil {\n    fmt.Println(\"转换错误:\", err)\n} else {\n    fmt.Println(i)\n}\n// 浮点类型\nf, err := strconv.ParseFloat(str, 64)\n// []byte 类型\nbytes := []byte(str)\n// 其他类型转字符串\nstr = strconv.Itoa(i)\nstr = strconv.FormatFloat(f, 'f', 2, 64)\nstr = string(bytes[:])"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "类型转换",
+      "kind": "text",
+      "body": "Golang 字符串\n--------"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "字符串函数",
+      "kind": "code",
+      "lang": "go",
+      "code": "package main\nimport (\n        \"fmt\"\n        s \"strings\"\n)\nfunc main() {\n    /* 需要将字符串导入为 s */\n        fmt.Println(s.Contains(\"test\", \"e\"))\n    /* 内置 */\n    fmt.Println(len(\"hello\"))  // => 5\n    // 输出: 101\n        fmt.Println(\"hello\"[1])\n    // 输出: e\n        fmt.Println(string(\"hello\"[1]))\n}"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "fmt.Printf",
+      "kind": "code",
+      "lang": "go",
+      "code": "package main\nimport (\n        \"fmt\"\n        \"os\"\n)\ntype point struct {\n        x, y int\n}\nfunc main() {\n        p := point{1, 2}\n        fmt.Printf(\"%v\\n\", p)                        // => {1 2}\n        fmt.Printf(\"%+v\\n\", p)                       // => {x:1 y:2}\n        fmt.Printf(\"%#v\\n\", p)                       // => main.point{x:1, y:2}\n        fmt.Printf(\"%T\\n\", p)                        // => main.point\n        fmt.Printf(\"%t\\n\", true)                     // => TRUE\n        fmt.Printf(\"%d\\n\", 123)                      // => 123\n        fmt.Printf(\"%b\\n\", 14)                       // => 1110\n        fmt.Printf(\"%c\\n\", 33)                       // => !\n        fmt.Printf(\"%x\\n\", 456)                      // => 1c8\n        fmt.Printf(\"%f\\n\", 78.9)                     // => 78.9\n        fmt.Printf(\"%e\\n\", 123400000.0)              // => 1.23E+08\n        fmt.Printf(\"%E\\n\", 123400000.0)              // => 1.23E+08\n        fmt.Printf(\"%s\\n\", \"\\\"string\\\"\")             // => \"string\"\n        fmt.Printf(\"%q\\n\", \"\\\"string\\\"\")             // => \"\\\"string\\\"\"\n        fmt.Printf(\"%x\\n\", \"hex this\")               // => 6.86578E+15\n        fmt.Printf(\"%p\\n\", &p)                       // => 0xc00002c040\n        fmt.Printf(\"|%6d|%6d|\\n\", 12, 345)           // => |    12|   345|\n        fmt.Printf(\"|%6.2f|%6.2f|\\n\", 1.2, 3.45)     // => |  1.20|  3.45|\n        fmt.Printf(\"|%-6.2f|%-6.2f|\\n\", 1.2, 3.45)   // => |1.20  |3.45  |\n        fmt.Printf(\"|%6s|%6s|\\n\", \"foo\", \"b\")        // => |   foo|     b|\n        fmt.Printf(\"|%-6s|%-6s|\\n\", \"foo\", \"b\")      // => |foo   |b     |\n        s := fmt.Sprintf(\"a %s\", \"string\")\n        fmt.Println(s)\n        fmt.Fprintf(os.Stderr, \"an %s\\n\", \"error\")\n}"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "fmt.Printf",
+      "kind": "text",
+      "body": "另见：[fmt](https://golang.org/pkg/fmt/)"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "Contains(\"test\", \"es\")",
+      "back": "true"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "Count(\"test\", \"t\")",
+      "back": "2"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "HasPrefix(\"test\", \"te\")",
+      "back": "true"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "HasSuffix(\"test\", \"st\")",
+      "back": "true"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "Index(\"test\", \"e\")",
+      "back": "1"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "Join([]string{\"a\", \"b\"}, \"-\")",
+      "back": "a-b"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "Repeat(\"a\", 5)",
+      "back": "aaaaa"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "Replace(\"foo\", \"o\", \"0\", -1)",
+      "back": "f00"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "Replace(\"foo\", \"o\", \"0\", 1)",
+      "back": "f0o"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "Split(\"a-b-c-d-e\", \"-\")",
+      "back": "[a b c d e]"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "ToLower(\"TEST\")",
+      "back": "test"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "qa",
+      "front": "ToUpper(\"test\")",
+      "back": "TEST"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "函数实例",
+      "kind": "text",
+      "body": "Golang 条件控制\n--------"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "有条件的",
+      "kind": "code",
+      "lang": "go",
+      "code": "a := 10\nif a > 20 {\n    fmt.Println(\">\")\n} else if a < 20 {\n    fmt.Println(\"<\")\n} else {\n    fmt.Println(\"=\")\n}"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "if 中的语句",
+      "kind": "code",
+      "lang": "go",
+      "code": "x := \"hello go!\"\nif count := len(x); count > 0 {\n    fmt.Println(\"Yes\")\n}"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "if 中的语句",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "if 中的语句",
+      "kind": "code",
+      "lang": "go",
+      "code": "if _, err := doThing(); err != nil {\n    fmt.Println(\"Uh oh\")\n}"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "Switch",
+      "kind": "code",
+      "lang": "go",
+      "code": "x := 42.0\nswitch x {\n  case 0:\n  case 1, 2:\n      fmt.Println(\"Multiple matches\")\n  case 42:   // Don't \"fall through\".\n      fmt.Println(\"reached\")\n  case 43:\n      fmt.Println(\"Unreached\")\n  default:\n      fmt.Println(\"Optional\")\n}"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "Switch",
+      "kind": "text",
+      "body": "参见：[Switch](https://github.com/golang/go/wiki/Switch)"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "For loop",
+      "kind": "code",
+      "lang": "go",
+      "code": "for i := 0; i <= 10; i++ {\n  fmt.Println(\"i: \", i)\n}"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "对于 Range 循环",
+      "kind": "code",
+      "lang": "go",
+      "code": "nums := []int{2, 3, 4}\nsum := 0\nfor _, num := range nums {\n  sum += num\n}\nfmt.Println(\"sum:\", sum)"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "For 循环",
+      "kind": "code",
+      "lang": "go",
+      "code": "i := 1\nfor i <= 3 {\n  fmt.Println(i)\n  i++\n}"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "Continue 关键字",
+      "kind": "code",
+      "lang": "go",
+      "code": "for i := 0; i <= 5; i++ {\n  if i % 2 == 0 {\n      continue\n  }\n  fmt.Println(i)\n}"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "Break 关键字",
+      "kind": "code",
+      "lang": "go",
+      "code": "for {\n  fmt.Println(\"loop\")\n  break\n}"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "Break 关键字",
+      "kind": "text",
+      "body": "Golang 结构和Maps\n--------"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "定义",
+      "kind": "code",
+      "lang": "go",
+      "code": "package main\nimport (\n        \"fmt\"\n)\ntype Vertex struct {\n        X int\n        Y int\n}\nfunc main() {\n        v := Vertex{1, 2}\n        v.X = 4\n        fmt.Println(v.X, v.Y) // => 4 2\n}"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "定义",
+      "kind": "text",
+      "body": "参见：[结构(Structs)](https://tour.golang.org/moretypes/2)"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "字面量",
+      "kind": "code",
+      "lang": "go",
+      "code": "v := Vertex{X: 1, Y: 2}\n// Field names can be omitted\nv := Vertex{1, 2}\n// Y is implicit\nv := Vertex{X: 1}"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "字面量",
+      "kind": "text",
+      "body": "您还可以输入字段名"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "Maps",
+      "kind": "code",
+      "lang": "go",
+      "code": "m := make(map[string]int)\nm[\"k1\"] = 7\nm[\"k2\"] = 13\nfmt.Println(m) // => map[k1:7 k2:13]\nv1 := m[\"k1\"]\nfmt.Println(v1)     // => 7\nfmt.Println(len(m)) // => 2\ndelete(m, \"k2\")\nfmt.Println(m) // => map[k1:7]\n_, prs := m[\"k2\"]\nfmt.Println(prs) // => false\nn := map[string]int{\"foo\": 1, \"bar\": 2}\nfmt.Println(n) // => map[bar:2 foo:1]"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "指向结构的指针",
+      "kind": "code",
+      "lang": "go",
+      "code": "v := &Vertex{1, 2}\nv.X = 2"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "指向结构的指针",
+      "kind": "text",
+      "body": "Doing `v.X` is the same as doing `(*v).X`, when `v` is a pointer."
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "指向结构的指针",
+      "kind": "text",
+      "body": "Golang 函数\n--------"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "多个参数",
+      "kind": "code",
+      "lang": "go",
+      "code": "func plus(a int, b int) int {\n    return a + b\n}\nfunc plusPlus(a, b, c int) int {\n    return a + b + c\n}\nfmt.Println(plus(1, 2))\nfmt.Println(plusPlus(1, 2, 3))"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "多返回值",
+      "kind": "code",
+      "lang": "go",
+      "code": "func vals() (int, int) {\n  return 3, 7\n}\na, b := vals()\nfmt.Println(a)    // => 3\nfmt.Println(b)    // => 7"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "匿名函数",
+      "kind": "code",
+      "lang": "go",
+      "code": "r1, r2 := func() (string, string) {\n    x := []string{\"hello\", \"world\"}\n    return x[0], x[1]\n}()\n// => hello world\nfmt.Println(r1, r2)"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "命名返回值",
+      "kind": "code",
+      "lang": "go",
+      "code": "func split(sum int) (x, y int) {\n  x = sum * 4 / 9\n  y = sum - x\n  return\n}\nx, y := split(17)\nfmt.Println(x)   // => 7\nfmt.Println(y)   // => 10"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "可变参数函数",
+      "kind": "code",
+      "lang": "go",
+      "code": "func sum(nums ...int) {\n  fmt.Print(nums, \" \")\n  total := 0\n  for _, num := range nums {\n      total += num\n  }\n  fmt.Println(total)\n}\nsum(1, 2)     // => [1 2] 3\nsum(1, 2, 3)  // => [1 2 3] 6\nnums := []int{1, 2, 3, 4}\nsum(nums...)  // => [1 2 3 4] 10\n// 不定参在内存中是连续存储的\n// 不定参内部再传递的时候，参数也要是不定的"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "初始化函数",
+      "kind": "code",
+      "lang": "go",
+      "code": "import --> const --> var --> init()"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "初始化函数",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "初始化函数",
+      "kind": "code",
+      "lang": "go",
+      "code": "var num = setNumber()\nfunc setNumber() int {\n  return 42\n}\nfunc init() {\n  num = 0\n}\nfunc main() {\n  fmt.Println(num) // => 0\n}"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "作为值的函数",
+      "kind": "code",
+      "lang": "go",
+      "code": "func main() {\n  // 将函数赋给名称\n  add := func(a, b int) int {\n      return a + b\n  }\n  // 使用名称调用函数\n  fmt.Println(add(3, 4)) // => 7\n}"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "闭包",
+      "kind": "code",
+      "lang": "go",
+      "code": "func outer() (func() int, int) {\n    outer_var := 2\n    inner := func() int {\n        outer_var += 99\n        return outer_var\n    }\n    inner()\n    return inner, outer_var\n}\ninner, val := outer()\nfmt.Println(val)\n// => 101\nfmt.Println(inner())\n// => 200，这里涉及到golang中闭包和内存逃逸的概念，inner()实际上执行了两次，outer()中一次，fmt又一次，\n//但为什么是200呢，编译器不能确定outer_var在后续会不会使用，\n//所以outer_var不会随着outer()结束而释放它的栈（Stack）空间，\n//而会‘逃逸到’堆（Heap）上，那么第二次的inner()中outer_var就会是101。"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "关闭 1",
+      "kind": "code",
+      "lang": "go",
+      "code": "func scope() func() int{\n  outer_var := 2\n  foo := func() int {return outer_var}\n  return foo\n}\n// Outpus: 2\nfmt.Println(scope()())"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "关闭 1",
+      "kind": "text",
+      "body": "Golang 包(Packages)\n--------"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "导入",
+      "kind": "code",
+      "lang": "go",
+      "code": "import \"fmt\"\nimport \"math/rand\""
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "导入",
+      "kind": "text",
+      "body": "#### 等同于"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "导入",
+      "kind": "code",
+      "lang": "go",
+      "code": "import (\n  \"fmt\"        // 给 fmt.Println\n  \"math/rand\"  // 给 rand.Intn\n)"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "导入",
+      "kind": "text",
+      "body": "另见：[导入](https://tour.golang.org/basics/1)"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "别名",
+      "kind": "code",
+      "lang": "go",
+      "code": "import r \"math/rand\""
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "别名",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "别名",
+      "kind": "code",
+      "lang": "go",
+      "code": "import (\n    \"fmt\"\n    r \"math/rand\"\n)"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "别名",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "别名",
+      "kind": "code",
+      "lang": "go",
+      "code": "r.Intn()"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "Packages",
+      "kind": "code",
+      "lang": "go",
+      "code": "package main\n// 一个内部包只能被另一个包导入\n// 那是在以内部目录的父级为根的树内\npackage internal"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "Packages",
+      "kind": "text",
+      "body": "另见：[内部包](https://go.dev/doc/go1.4#internalpackages)"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "导出名称",
+      "kind": "code",
+      "lang": "go",
+      "code": "// 以大写字母开头\nfunc Hello () {\n  ···\n}"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "导出名称",
+      "kind": "text",
+      "body": "另见：[导出的名称](https://tour.golang.org/basics/3)"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "导出名称",
+      "kind": "text",
+      "body": "Golang 并发\n--------"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "协程",
+      "kind": "code",
+      "lang": "go",
+      "code": "package main\nimport (\n    \"fmt\"\n    \"time\"\n)\nfunc f(from string) {\n    for i := 0; i < 3; i++ {\n            fmt.Println(from, \":\", i)\n    }\n}\nfunc main() {\n    f(\"direct\")\n    go f(\"goroutine\")\n    go func(msg string) {\n            fmt.Println(msg)\n    }(\"going\")\n    time.Sleep(time.Second)\n    fmt.Println(\"done\")\n}"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "协程",
+      "kind": "text",
+      "body": "参见：[Goroutines](https://tour.golang.org/concurrency/1), [Channels](https://tour.golang.org/concurrency/2)"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "WaitGroup",
+      "kind": "code",
+      "lang": "go",
+      "code": "package main\nimport (\n    \"fmt\"\n    \"sync\"\n    \"time\"\n)\nfunc w(id int, wg *sync.WaitGroup) {\n    defer wg.Done()\n    fmt.Printf(\"%d starting\\n\", id)\n    time.Sleep(time.Second)\n    fmt.Printf(\"%d done\\n\", id)\n}\nfunc main() {\n    var wg sync.WaitGroup\n    for i := 1; i <= 5; i++ {\n            wg.Add(1)\n            go w(i, &wg)\n    }\n    wg.Wait()\n}"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "WaitGroup",
+      "kind": "text",
+      "body": "参见：[WaitGroup](https://golang.org/pkg/sync/#WaitGroup)"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "Closing channels",
+      "kind": "code",
+      "lang": "go",
+      "code": "ch <- 1\nch <- 2\nch <- 3\nclose(ch) // 关闭频道"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "Closing channels",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "Closing channels",
+      "kind": "code",
+      "lang": "go",
+      "code": "// 迭代通道直到关闭\nfor i := range ch {\n  ···\n}"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "Closing channels",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "Closing channels",
+      "kind": "code",
+      "lang": "go",
+      "code": "// Closed if `ok == false`\nv, ok := <- ch"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "Closing channels",
+      "kind": "text",
+      "body": "参见：[范围和关闭](https://tour.golang.org/concurrency/4)"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "缓冲通道",
+      "kind": "code",
+      "lang": "go",
+      "code": "ch := make(chan int, 2)\nch <- 1\nch <- 2\nch <- 3\n// 致命错误：\n// 所有 goroutine 都处于休眠状态 - 死锁"
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "缓冲通道",
+      "kind": "text",
+      "body": "参见：[缓冲通道](https://tour.golang.org/concurrency/3)"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "Context",
+      "kind": "code",
+      "lang": "go",
+      "code": "package main\n\nimport (\n    \"context\"\n    \"fmt\"\n    \"time\"\n)\n\nfunc main() {\n    // 创建根 context\n    ctx := context.Background() // 空 context，通常作为根 context\n    todo := context.TODO()      // 当不确定使用哪个 context 时使用\n\n    // 创建带取消功能的 context\n    ctx, cancel := context.WithCancel(context.Background())\n    defer cancel() // 确保所有路径都调用取消函数\n\n    // 创建带超时的 context\n    ctx, cancel = context.WithTimeout(context.Background(), 100*time.Millisecond)\n    defer cancel()\n\n    // 创建带截止时间的 context\n    deadline := time.Now().Add(200 * time.Millisecond)\n    ctx, cancel = context.WithDeadline(context.Background(), deadline)\n    defer cancel()\n\n    // 创建带值的 context\n    ctx = context.WithValue(context.Background(), \"key\", \"value\")\n    \n    // 从 context 获取值\n    value := ctx.Value(\"key\")\n    fmt.Println(value)\n    \n    // 检查 context 是否已取消\n    select {\n    case <-ctx.Done():\n        fmt.Println(\"Context canceled:\", ctx.Err())\n    default:\n        fmt.Println(\"Context still valid\")\n    }\n}"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "Context",
+      "kind": "text",
+      "body": "Golang 错误控制\n--------"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "延迟函数",
+      "kind": "code",
+      "lang": "go",
+      "code": "func main() {\n  defer func() {\n    fmt.Println(\"Done\")\n  }()\n  fmt.Println(\"Working...\")\n}"
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "Lambda defer",
+      "kind": "code",
+      "lang": "go",
+      "code": "func main() {\n  var d = int64(0)\n  defer func(d *int64) {\n    fmt.Printf(\"& %v Unix Sec\\n\", *d)\n  }(&d)\n  fmt.Print(\"Done \")\n  d = time.Now().Unix()\n}"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "Lambda defer",
+      "kind": "text",
+      "body": "`defer` 函数使用当前值`d`，除非我们使用指针在 `main` 末尾获取最终值"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "Defer",
+      "kind": "code",
+      "lang": "go",
+      "code": "func main() {\n  defer fmt.Println(\"Done\")\n  fmt.Println(\"Working...\")\n}"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "Defer",
+      "kind": "text",
+      "body": "参见：[Defer, panic and recover](https://blog.golang.org/defer-panic-and-recover)"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "Defer",
+      "kind": "text",
+      "body": "Golang 方法(Methods)\n--------\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "接收器",
+      "kind": "code",
+      "lang": "go",
+      "code": "//Go语言中的方法（Method）是一种作用于特定类型变量的函数。\n//这种特定类型变量叫做接收者（Receiver）。\n//接收者的概念就类似于其他语言中的 this 或者 self。\n//方法的定义格式如下：\nfunc (接收者变量 接收者类型) 方法名(参数列表) (返回参数) {\n    函数体\n}\n// 其中，\n//     1.接收者变量：接收者中的参数变量名在命名时，官方建议使用接收者类型名\n//的第一个小写字母，而不是self、this之类的命名。例如，Person类型的接收者变量\n// 应该命名为 p，Connector类型的接收者变量应该命名为c等。\n//     2.接收者类型：接收者类型和参数类似，可以是指针类型和非指针类型。\n//     3.方法名、参数列表、返回参数：具体格式与函数定义相同。\ntype Vertex struct {\n  X, Y float64\n}\n\nfunc (v Vertex) Abs() float64 {\n  return math.Sqrt(v.X * v.X + v.Y * v.Y)\n}\nfunc (v Vertex) valuechange() float64 {\n  v.X += 1\n  return v.X\n}\nfunc (v *Vertex) pointerchange() float64 {\n  v.X += 1\n  return v.X\n}\nfunc main() {\n  v := Vertex{1, 2}\n  v.Abs()\n\n  v = Vertex{1, 2}\n  fmt.Println(v.valuechange())  // 2\n  fmt.Println(v)                // {1 2}\n\n  v = Vertex{1, 2}\n  fmt.Println(v.pointerchange())// 2\n  fmt.Println(v)                // {2 2}\n}\n//如果在方法里修改receiver的值要对caller生效，使用 pointer receiver。"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "接收器",
+      "kind": "text",
+      "body": "参见：[Methods](https://tour.golang.org/methods/1)，[指针接收器](https://tour.golang.org/methods/4)"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "方法表达式",
+      "kind": "text",
+      "body": "方法表达式相当于提供一种语法将类型方法调用显式地转换为函数调用，接收者(receiver)必须显式地传递进去。"
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": "方法表达式",
+      "kind": "code",
+      "lang": "go",
+      "code": "func (t T) Get(){\n    return t.a\n}\nfunc (t *T) Set(i int){\n    t.a = i\n}\n//表达式`T.Get`和`(*T).Set`被称为方法表达式，\n//需要注意的是在方法表达式中编译器不会做自动转换。\n//值调用会自动转换，表达式调用则不会，例如：\ntype Data struct{}\nfunc (Data) TestValue () {}\nfunc (*Data) TestPointer () {} \n//声明一个类型变量a\nvar a Data= struct{}{}\n//表达式调用编译器不会进行自动转换\nData.TestValue(a) \n//Data.TestValue(&a) \n(*Data).TestPointer (&a) \n//Data.TestPointer(&a) //type Data has no method TestPointer \n//值调用编译器会进行自动转换\ny : = (&a).TestValue //编译器帮助转换a.TestValue\ng : = a.TestPointer //会转换为(&a).TestPointer"
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": "方法表达式",
+      "kind": "text",
+      "body": "#### 组合结构的方法集"
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": "方法表达式",
+      "kind": "text",
+      "body": "内嵌字段的访问不需要使用全路径，只要保证命名是唯一的就可以，尽量避免同名。如果外层字段和内层字段有相同的方法，则使用简化模式访问外层方法会覆盖内层的方法。"
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": "方法表达式",
+      "kind": "code",
+      "lang": "go",
+      "code": "x : = X{a: 1} \ny : = Y{ \n    X : x , \n    b : 2 , \n}\nz : = z { \n    Y : y , \n    c : 3 ,\n}//组合结构，内嵌字段"
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": "方法表达式",
+      "kind": "text",
+      "body": "组合结构的方法集有如下规则："
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": "方法表达式",
+      "kind": "text",
+      "body": "• 若类型 T 包含匿名字段 S ，则 T 的方法集包含S的方法集\n• 若类型 T 包含匿名字段 *S ，则 T 的方法集包含 S 和*S方法集\n• 不管类型 T 中嵌入的匿名字段是 S 还是 *S ，*T 方法集总是包含 S 和 *S 方法集"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": "方法表达式",
+      "kind": "text",
+      "body": "Golang 接口(Interfaces)\n--------\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": "基本接口(Interfaces)",
+      "kind": "code",
+      "lang": "go",
+      "code": "type Shape interface {\n  Area() float64\n  Perimeter() float64\n}"
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": "结构(Struct)",
+      "kind": "code",
+      "lang": "go",
+      "code": "type Rectangle struct {\n  Length, Width float64\n}"
+    },
+    {
+      "id": "intro-143",
+      "sectionId": "intro",
+      "title": "结构(Struct)",
+      "kind": "text",
+      "body": "结构 `Rectangle` 通过实现其所有方法隐式实现接口 `Shape`"
+    },
+    {
+      "id": "intro-144",
+      "sectionId": "intro",
+      "title": "方法(Methods)",
+      "kind": "code",
+      "lang": "go",
+      "code": "func (r Rectangle) Area() float64 {\n  return r.Length * r.Width\n}\nfunc (r Rectangle) Perimeter() float64 {\n  return 2 * (r.Length + r.Width)\n}"
+    },
+    {
+      "id": "intro-145",
+      "sectionId": "intro",
+      "title": "方法(Methods)",
+      "kind": "text",
+      "body": "在 `Shape` 中定义的方法在`Rectangle`中实现"
+    },
+    {
+      "id": "intro-146",
+      "sectionId": "intro",
+      "title": "接口实例",
+      "kind": "code",
+      "lang": "go",
+      "code": "func main() {\n  var r Shape = Rectangle{Length: 3, Width: 4}\n  fmt.Printf(\"Type of r: %T, Area: %v, Perimeter: %v.\", r, r.Area(), r.Perimeter())\n}"
+    },
+    {
+      "id": "intro-147",
+      "sectionId": "intro",
+      "title": "接口实例",
+      "kind": "text",
+      "body": "Golang Embed (Go version >= 1.16)\n---"
+    },
+    {
+      "id": "intro-148",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "``` go\npackage main"
+    },
+    {
+      "id": "intro-149",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "import (\n_ \"embed\"\n\"fmt\"\n)"
+    },
+    {
+      "id": "intro-150",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "//go:embed version.txt\nvar version string"
+    },
+    {
+      "id": "intro-151",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "func main() {\nfmt.Printf(\"version %q\\n\", version)\n}"
+    },
+    {
+      "id": "intro-152",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 嵌入为[]byte"
+    },
+    {
+      "id": "intro-153",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "package main\nimport (\n_ \"embed\"\n\"fmt\"\n)"
+    },
+    {
+      "id": "intro-154",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "//go:embed version.txt\nvar versionByte []byte"
+    },
+    {
+      "id": "intro-155",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "func main() {\nfmt.Printf(\"version %q\\n\", string(versionByte))\n}"
+    },
+    {
+      "id": "intro-156",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 嵌入为embed.FS"
+    },
+    {
+      "id": "intro-157",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "//go:embed hello.txt\nvar f embed.FS\nfunc main() {\ndata, _ := f.ReadFile(\"hello.txt\")\nfmt.Println(string(data))\n}"
+    },
+    {
+      "id": "intro-158",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 嵌入多个文件"
+    },
+    {
+      "id": "intro-159",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "//go:embed hello.txt\n//go:embed hello2.txt\nvar f embed.FS\nfunc main() {\ndata, _ := f.ReadFile(\"hello.txt\")\nfmt.Println(string(data))\ndata, _ = f.ReadFile(\"hello2.txt\")\nfmt.Println(string(data))\n}"
+    },
+    {
+      "id": "intro-160",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 嵌入子文件夹下的文件"
+    },
+    {
+      "id": "intro-161",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "//go:embed p/hello.txt p/hello2.txt\nvar f embed.FS\nfunc main() {\ndata, _ := f.ReadFile(\"p/hello.txt\")\nfmt.Println(string(data))\ndata, _ = f.ReadFile(\"p/hello2.txt\")\nfmt.Println(string(data))\n}"
+    },
+    {
+      "id": "intro-162",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 同一个文件嵌入为多个变量"
+    },
+    {
+      "id": "intro-163",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "//go:embed hello.txt\nvar s string\n//go:embed hello.txt\nvar s2 string\nfunc main() {\nfmt.Println(s)\nfmt.Println(s2)\n}"
+    },
+    {
+      "id": "intro-164",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 匹配模式"
+    },
+    {
+      "id": "intro-165",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "//go:embed p/*\nvar f embed.FS\nfunc main() {\ndata, _ := f.ReadFile(\"p/.hello.txt\")\nfmt.Println(string(data))\ndata, _ = f.ReadFile(\"p/q/.hi.txt\") // 没有嵌入 p/q/.hi.txt\nfmt.Println(string(data))\n}"
+    },
+    {
+      "id": "intro-166",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGolang 泛型 (Go version >= 1.18)\n-------------\n\n### 泛型类型\n<!--rehype:wrap-class=row-span-1-->"
+    },
+    {
+      "id": "intro-167",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type S[T int|float32|float64 ] []T\n┬  ────────┬────────\n┆          ╰─── 2. 类型约束\n╰────────────── 1. 类型形参"
+    },
+    {
+      "id": "intro-168",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n可以使用类型实参 int 或 string 实例化"
+    },
+    {
+      "id": "intro-169",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type MyMap[K int|string, V float32 | float64] map[K]V"
+    },
+    {
+      "id": "intro-170",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "var a MyMap[string, float64] = map[string]float64{\n\"jack_score\": 9.6,\n\"bob_score\":  8.4,\n}"
+    },
+    {
+      "id": "intro-171",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n- **匿名结构体不支持泛型**<!--rehype:style=color: #b43c29;-->\n- **匿名函数不支持泛型**<!--rehype:style=color: #b43c29;-->\n\n### 泛型函数\n<!--rehype:wrap-class=row-span-1-->\n\n任意类型"
+    },
+    {
+      "id": "intro-172",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "func Add[T any](a,b T) T {\nreturn  a+b\n}"
+    },
+    {
+      "id": "intro-173",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\n对类型进行约束"
+    },
+    {
+      "id": "intro-174",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "func Add[T string | int | int8](a,b T) T {\nreturn  a+b\n}"
+    },
+    {
+      "id": "intro-175",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\n类型嵌套"
+    },
+    {
+      "id": "intro-176",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type WowStruct[T int | float32, S []T] struct {\nData     S\nMaxValue T\nMinValue T\n}"
+    },
+    {
+      "id": "intro-177",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "var ws WowStruct[int, []int]"
+    },
+    {
+      "id": "intro-178",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n泛型函数中进行类型声明 (go version >= 1.20)"
+    },
+    {
+      "id": "intro-179",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "func F[T1 any]() {\ntype x struct{}\ntype y = x\n}"
+    },
+    {
+      "id": "intro-180",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 泛型约束\n<!--rehype:wrap-class=row-span-2-->\n\n通过接口实现"
+    },
+    {
+      "id": "intro-181",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type Addable interface{\ntype int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, uintptr, float32, float64, complex64, complex128, string\n}"
+    },
+    {
+      "id": "intro-182",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "func Add[T Addable](a,b T) T {\nreturn  a+b\n}"
+    },
+    {
+      "id": "intro-183",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n使用 ~ 符号"
+    },
+    {
+      "id": "intro-184",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type Int interface {\n~int | ~int8 | ~int16 | ~int32 | ~int64\n}"
+    },
+    {
+      "id": "intro-185",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type Uint interface {\n~uint | ~uint8 | ~uint16 | ~uint32\n}\ntype Float interface {\n~float32 | ~float64\n}"
+    },
+    {
+      "id": "intro-186",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type Slice[T Int | Uint | Float] []T"
+    },
+    {
+      "id": "intro-187",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "var s Slice[int] // 正确"
+    },
+    {
+      "id": "intro-188",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type MyInt int\nvar s2 Slice[MyInt]  // MyInt底层类型是int，所以可以用于实例化"
+    },
+    {
+      "id": "intro-189",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type MyMyInt MyInt\nvar s3 Slice[MyMyInt]  // 正确。MyMyInt 虽然基于 MyInt ，但底层类型也是int，所以也能用于实例化"
+    },
+    {
+      "id": "intro-190",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type MyFloat32 float32  // 正确\nvar s4 Slice[MyFloat32]"
+    },
+    {
+      "id": "intro-191",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n使用 ~ 时的限制：\n<!--rehype:style=color: #b43c29;-->\n1. ~后面的类型不能为接口\n2. ~后面的类型必须为基本类型\n<!--rehype:style=color: #b43c29;-->\n\n### 泛型 Receiver\n<!--rehype:wrap-class=row-span-1-->\n\n定义普通类型支持泛型"
+    },
+    {
+      "id": "intro-192",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type MySlice[T int | float32] []T"
+    },
+    {
+      "id": "intro-193",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "func (s MySlice[T]) Sum() T {\nvar sum T\nfor _, value := range s {\nsum += value\n}\nreturn sum\n}"
+    },
+    {
+      "id": "intro-194",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n结构体支持泛型"
+    },
+    {
+      "id": "intro-195",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type A[T int | float32 | float64] struct {\n}"
+    },
+    {
+      "id": "intro-196",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "func (receiver A[T]) Add(a T, b T) T {\nreturn a + b\n}"
+    },
+    {
+      "id": "intro-197",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n### 泛型接口\n<!--rehype:wrap-class=row-span-1-->"
+    },
+    {
+      "id": "intro-198",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type Uint interface { // 接口 Uint 中有类型，所以是一般接口\n~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64\n}"
+    },
+    {
+      "id": "intro-199",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "type ReadWriter interface {  // ReadWriter 接口既有方法也有类型，所以是一般接口\n~string | ~[]rune"
+    },
+    {
+      "id": "intro-200",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "text",
+      "body": "Read(p []byte) (n int, err error)\nWrite(p []byte) (n int, err error)\n}"
+    },
+    {
+      "id": "intro-201",
+      "sectionId": "intro",
+      "title": "嵌入为string",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n一般接口类型不能用来定义变量，只能用于泛型的类型约束中\n<!--rehype:style=color: #b43c29;-->\n\n杂项\n-------------\n\n### 关键字(Keywords)\n\n- break\n- default\n- func\n- interface\n- select\n- case\n- defer\n- go\n- map\n- struct\n- chan\n- else\n- goto\n- package\n- switch\n- const\n- fallthrough\n- if\n- range\n- type\n- continue\n- for\n- import\n- return\n- var\n<!--rehype:className=cols-3 style-none-->\n\n### 运算符和标点符号\n\n|     |      |       |       |        |      |       |     |     |\n| --- | ---- | ----- | ----- | ------ | ---- | ----- | --- | --- |\n| `+` | `&`  | `+=`  | `&=`  | `&&`   | `==` | `!=`  | `(` | `)` |\n| `-` | `\\|` | `-=`  | `\\|=` | `\\|\\|` | `<`  | `<=`  | `[` | `]` |\n| `*` | `^`  | `*=`  | `^=`  | `<-`   | `>`  | `>=`  | `{` | `}` |\n| `/` | `<<` | `/=`  | `<<=` | `++`   | `=`  | `:=`  | `,` | `;` |\n| `%` | `>>` | `%=`  | `>>=` | `--`   | `!`  | `...` | `.` | `:` |\n|     | `&^` | `&^=` |       |        |      |       |     |     |\n\nGo 命令\n---\n\n### Go 编译器命令\n\n:- | --\n:- | --\n`go command [参数]`  | go 命令 [参数]\n`go build`          | 编译包和依赖包\n`go clean`          | 移除对象和缓存文件\n`go doc`            | 显示包的文档\n`go env`            | 打印go的环境变量信息\n`go bug`            | 报告bug\n`go fix`            | 更新包使用新的api\n`go fmt`            | 格式规范化代码\n`go generate`       | 通过处理资源生成go文件\n`go get`            | 下载并安装包及其依赖\n`go install`        | 编译和安装包及其依赖\n`go list`           | 列出所有包\n`go run`            | 编译和运行go程序\n`go test`           | 测试\n`go tool`           | 运行给定的go工具\n`go version`        | 显示go当前版本\n`go vet`            | 发现代码中可能的错误\n\n### ENV\n\n:- | --\n:- | --\n`GOOS`         | 编译系统\n`GOARCH`       | 编译arch\n`GO111MODULE`  | gomod开关\n`GOPROXY`      | go代理 <https://goproxy.io>  <https://goproxy.cn>  <https://mirrors.aliyun.com/goproxy/>\n`GOSSAFUNC`    | 生成 `SSA.html` 文件，展示代码优化的每一步 `GOSSAFUNC=func_name go build`\n<!--rehype:className=style-list-arrow-->\n\n### Module\n\n:- | --\n:- | --\n`go mod init`         | 初始化当前文件夹，创建go.mod文件\n`go mod download`     | 下载依赖的module到本地\n`go mod tidy`         | 增加缺少的module，删除无用的module\n`go mod vendor`       | 将依赖复制到vendor下\n文件 `go.mod`          |  依赖列表和版本约束\n文件 `go.sum`          |  记录 `module` 文件 `hash` 值，用于安全校验\n<!--rehype:className=style-list-arrow-->\n\n另见\n--------\n\n- [Devhints](https://devhints.io/go) *(devhints.io)*\n- [A tour of Go](https://tour.golang.org/welcome/1) *(tour.golang.org)*\n- [Golang wiki](https://github.com/golang/go/wiki/) *(github.com)*\n- [Effective Go](https://golang.org/doc/effective_go.html) *(golang.org)*\n- [Go by Example](https://gobyexample.com/) *(gobyexample.com)*\n- [Awesome Go](https://awesome-go.com/) *(awesome-go.com)*\n- [JustForFunc Youtube](https://www.youtube.com/channel/UC_BzFbxG2za3bp5NRRRXJSw) *(youtube.com)*\n- [Style Guide](https://github.com/golang/go/wiki/CodeReviewComments) *(github.com)*"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/golang.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/golang.md",
+    "generatedAt": "2025-12-16T07:36:11.247Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

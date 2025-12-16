@@ -1,0 +1,382 @@
+{
+  "id": "nix",
+  "title": "Nix",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Types & Syntax",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Scoping",
+      "startIndex": 14
+    },
+    {
+      "id": "s3",
+      "title": "Conditionals",
+      "startIndex": 22
+    },
+    {
+      "id": "s4",
+      "title": "Attribute Sets",
+      "startIndex": 23
+    },
+    {
+      "id": "s5",
+      "title": "Concatenation & Interpolation",
+      "startIndex": 29
+    },
+    {
+      "id": "s6",
+      "title": "Functions",
+      "startIndex": 32
+    },
+    {
+      "id": "s7",
+      "title": "Sources",
+      "startIndex": 41
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "The Nix quick reference cheat sheet that aims at providing help on writing basic nix code."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "String",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = \"single-line string\";\n  y = ''\n    multi-line string\n  '';\nin"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Integer",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = -123;\n  y - 123;\nin"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Float",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = -0.32;\n  y = 0.45;\nin"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Boolean",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = true;\n  y = false;\nin"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Null",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = null;\nin"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Path",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = /absolute/path;\n  y = ./relative/path;\nin"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Attribute Set",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = {\n    a = 1;\n    b = 2;\n  };\n  y = { c = 3; };\nin"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Attribute Set",
+      "kind": "text",
+      "body": "see [Attribute Sets](#attribute-sets)"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "List",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = [ 1 2.0 ];\n  y = [\n    1\n    \"this is a string\"\n    23.0\n    null\n  ];\nin"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Comment",
+      "kind": "text",
+      "body": "#### ↓ single-line comment"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Comment",
+      "kind": "code",
+      "lang": "nix",
+      "code": "# your comment"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Comment",
+      "kind": "text",
+      "body": "#### ↓ multi-line comment"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Comment",
+      "kind": "code",
+      "lang": "nix",
+      "code": "/*\n  your comment\n*/"
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "Define Local Variable",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = 1;\n  y = 2;\nin\n  x + y # -> returns 3"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "Add Variables Into Scope",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = 1;\nin\n  { inherit x; }"
+    },
+    {
+      "id": "s2-16",
+      "sectionId": "s2",
+      "title": "Add Variables Into Scope",
+      "kind": "text",
+      "body": "#### ↓ desugars to"
+    },
+    {
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "Add Variables Into Scope",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = 1;\nin\n  { x = x; }"
+    },
+    {
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "Add Attributes Into Scope",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = { y = 1; };\nin\n  { inherit (x) y; }"
+    },
+    {
+      "id": "s2-19",
+      "sectionId": "s2",
+      "title": "Add Attributes Into Scope",
+      "kind": "text",
+      "body": "#### ↓ desugars to"
+    },
+    {
+      "id": "s2-20",
+      "sectionId": "s2",
+      "title": "Add Attributes Into Scope",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = { y = 1; };\nin\n  { y = x.y; }"
+    },
+    {
+      "id": "s2-21",
+      "sectionId": "s2",
+      "title": "Add All Attributes Into Scope",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = { y = 1; z = 2;  };\nin\n  with x;\n  y + z # -> returns 3"
+    },
+    {
+      "id": "s3-22",
+      "sectionId": "s3",
+      "title": "Define Conditionals",
+      "kind": "code",
+      "lang": "nix",
+      "code": "if x > 0\nthen 1\nelse -1"
+    },
+    {
+      "id": "s4-23",
+      "sectionId": "s4",
+      "title": "Define Attribute Sets",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = {\n    a = 1;\n    b = 2;\n  };\n  y = { c = 3; };\nin"
+    },
+    {
+      "id": "s4-24",
+      "sectionId": "s4",
+      "title": "Update Attribute Sets",
+      "kind": "code",
+      "lang": "nix",
+      "code": "{ x = 1; } // { y = 2; } # -> returns { x = 1; y = 2; }\n{ x = 1; } // { x = 2; } # -> returns { x = 2; }"
+    },
+    {
+      "id": "s4-25",
+      "sectionId": "s4",
+      "title": "Check For Attribute",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = { y = 1; };\nin\n  x ? y # -> returns true"
+    },
+    {
+      "id": "s4-26",
+      "sectionId": "s4",
+      "title": "Reference Attirbute Keys",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = { y = 1; };\nin\n  x.y # -> returns 1"
+    },
+    {
+      "id": "s4-27",
+      "sectionId": "s4",
+      "title": "Reference Attirbute Keys",
+      "kind": "text",
+      "body": "#### ↓ optional"
+    },
+    {
+      "id": "s4-28",
+      "sectionId": "s4",
+      "title": "Reference Attirbute Keys",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = { y = 1; };\nin\n  x.z or 2 # -> returns 2"
+    },
+    {
+      "id": "s5-29",
+      "sectionId": "s5",
+      "title": "Concatenate Lists",
+      "kind": "code",
+      "lang": "nix",
+      "code": "[ 1 2 ] ++ [ 3 4 ] # -> returns [ 1 2 3 4 ]"
+    },
+    {
+      "id": "s5-30",
+      "sectionId": "s5",
+      "title": "Concatenate Paths & Strings",
+      "kind": "code",
+      "lang": "nix",
+      "code": "/bin + /sh # -> returns /bin/sh\n/bin + \"/sh\" # -> returns /bin/sh\n\"/bin\" + \"/sh\" # -> returns \"/bin/sh\""
+    },
+    {
+      "id": "s5-31",
+      "sectionId": "s5",
+      "title": "Interpolate Strings",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = \"bar\";\nin\n  \"foo ${x} baz\" # -> returns \"foo bar baz\""
+    },
+    {
+      "id": "s6-32",
+      "sectionId": "s6",
+      "title": "Simple Function",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  f = x: x + 1;\nin\n  f 1 # -> returns 2"
+    },
+    {
+      "id": "s6-33",
+      "sectionId": "s6",
+      "title": "Multiple Arguments",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  f = x: y: [ x  y ];\nin\n  f 1 2 # -> returns [ 1 2 ]"
+    },
+    {
+      "id": "s6-34",
+      "sectionId": "s6",
+      "title": "Named Arguments",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  f = {x, y}: x + y;\nin\n  f { x=1; y=2; } # -> returns 3"
+    },
+    {
+      "id": "s6-35",
+      "sectionId": "s6",
+      "title": "Named Arguments",
+      "kind": "text",
+      "body": "#### ↓ ignoring arguments"
+    },
+    {
+      "id": "s6-36",
+      "sectionId": "s6",
+      "title": "Named Arguments",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  f = {x, y, ... }: x + y;\nin\n  f { x=1; y=2; z=3; } # -> returns 3"
+    },
+    {
+      "id": "s6-37",
+      "sectionId": "s6",
+      "title": "Named Arguments",
+      "kind": "text",
+      "body": "#### ↓ default values"
+    },
+    {
+      "id": "s6-38",
+      "sectionId": "s6",
+      "title": "Named Arguments",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  f = {x, y ? 2 }: x + y;\nin\n  f { x=1; } # -> returns 3"
+    },
+    {
+      "id": "s6-39",
+      "sectionId": "s6",
+      "title": "Named Arguments",
+      "kind": "text",
+      "body": "#### ↓ bind to variable"
+    },
+    {
+      "id": "s6-40",
+      "sectionId": "s6",
+      "title": "Named Arguments",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  f = {x, y}@args: args.x + args.y;\nin\n  f { x=1; y=2; } # -> returns 3"
+    },
+    {
+      "id": "s7-41",
+      "sectionId": "s7",
+      "title": "Sources",
+      "kind": "text",
+      "body": "• [NixOS/marketing](https://github.com/nixos/marketing) _(github.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/nix.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/nix.md",
+    "generatedAt": "2025-12-16T07:36:11.748Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

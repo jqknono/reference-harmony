@@ -1,0 +1,706 @@
+{
+  "id": "nginx",
+  "title": "/etc/nginx/snippets/proxy-headers.conf",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Config Structure",
+      "startIndex": 9
+    },
+    {
+      "id": "s3",
+      "title": "Virtual Hosts & Redirects",
+      "startIndex": 14
+    },
+    {
+      "id": "s4",
+      "title": "TLS/SSL",
+      "startIndex": 17
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "nginx quick reference cheat sheet"
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Install & Service",
+      "kind": "text",
+      "body": "• **Ubuntu/Debian**"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Install & Service",
+      "kind": "text",
+      "body": "```shell script\n$ sudo apt update && sudo apt install -y nginx\n```"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Install & Service",
+      "kind": "text",
+      "body": "• **RHEL/CentOS**"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Install & Service",
+      "kind": "text",
+      "body": "```shell script\n$ sudo yum install -y epel-release nginx && sudo systemctl enable --now nginx\n```"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Install & Service",
+      "kind": "text",
+      "body": "• **Service**"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Install & Service",
+      "kind": "text",
+      "body": "```shell script\n$ sudo systemctl status nginx\n$ sudo systemctl reload nginx\n$ sudo systemctl restart nginx\n$ sudo nginx -t   # test config\n$ nginx -V        # built modules\n```"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Key Paths",
+      "kind": "text",
+      "body": "• `/etc/nginx/nginx.conf` _(main config)_\n• `/etc/nginx/conf.d/*.conf` _(drop‑ins)_\n• `/etc/nginx/sites-available/` + `sites-enabled/` _(Debian style)_\n• `/var/www/html` _(default docroot)_\n• `logs`: `/var/log/nginx/access.log`, `/var/log/nginx/error.log`"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Minimal HTTP Server",
+      "kind": "code",
+      "lang": "nginx",
+      "code": "# /etc/nginx/conf.d/example.conf\nserver {\n  listen 80;\n  server_name example.com;\n  root /var/www/example/public;\n\n  location / {\n    try_files $uri $uri/ =404;\n  }\n}"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "Core Blocks",
+      "kind": "text",
+      "body": "• `main` (global)\n• `events` (worker connections)\n• `http` → `server` → `location`\n• `stream` (TCP/UDP)\n• `upstream` (load balancers)"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "Core Blocks",
+      "kind": "code",
+      "lang": "nginx",
+      "code": "user  www-data;\nworker_processes auto;\n\nevents { worker_connections 1024; }\n\nhttp {\n  include       mime.types;\n  default_type  application/octet-stream;\n  sendfile      on;\n  keepalive_timeout 65;\n\n  # servers / includes go here...\n}"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "Context & Order",
+      "kind": "text",
+      "body": "• **`location` match order**:\n• Exact `=`\n• `^~` (no regex if matched)\n• Regex `~` / `~*` (first match)\n• Prefix (longest path)\n• `try_files` evaluates in order then falls back."
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "Context & Order",
+      "kind": "code",
+      "lang": "nginx",
+      "code": "location = /healthz { return 204; }\nlocation ^~ /static/ { expires 7d; }\nlocation ~* \\.(png|jpg|css|js)$ { expires 7d; }\nlocation / { try_files $uri $uri/ /index.html; }"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "Common Includes",
+      "kind": "code",
+      "lang": "nginx",
+      "code": "http {\n  include /etc/nginx/conf.d/*.conf;\n  include /etc/nginx/snippets/*.conf; # Ubuntu/Debian\n}"
+    },
+    {
+      "id": "s3-14",
+      "sectionId": "s3",
+      "title": "Basic Server Block",
+      "kind": "code",
+      "lang": "nginx",
+      "code": "server {\n  listen 80;\n  server_name example.com www.example.com;\n  root /var/www/example/public;\n  index index.html index.htm;\n}"
+    },
+    {
+      "id": "s3-15",
+      "sectionId": "s3",
+      "title": "Redirect HTTP→HTTPS",
+      "kind": "code",
+      "lang": "nginx",
+      "code": "server {\n  listen 80;\n  server_name example.com www.example.com;\n  return 301 https://example.com$request_uri;\n}"
+    },
+    {
+      "id": "s3-16",
+      "sectionId": "s3",
+      "title": "Canonical Host",
+      "kind": "code",
+      "lang": "nginx",
+      "code": "# Force non-www\nserver {\n  listen 80;\n  server_name www.example.com;\n  return 301 $scheme://example.com$request_uri;\n}"
+    },
+    {
+      "id": "s4-17",
+      "sectionId": "s4",
+      "title": "Basic TLS Server",
+      "kind": "code",
+      "lang": "nginx",
+      "code": "server {\n  listen 443 ssl http2;\n  server_name example.com;\n\n  ssl_certificate     /etc/letsencrypt/live/example.com/fullchain.pem;\n  ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;\n\n  ssl_protocols TLSv1.2 TLSv1.3;\n  ssl_prefer_server_ciphers off;\n\n  root /var/www/example/public;\n}"
+    },
+    {
+      "id": "s4-18",
+      "sectionId": "s4",
+      "title": "HSTS & Security Headers",
+      "kind": "code",
+      "lang": "nginx",
+      "code": "add_header Strict-Transport-Security \"max-age=31536000; includeSubDomains; preload\" always;\nadd_header X-Content-Type-Options \"nosniff\" always;\nadd_header X-Frame-Options \"SAMEORIGIN\" always;\nadd_header Referrer-Policy \"no-referrer-when-downgrade\" always;\nadd_header Permissions-Policy \"geolocation=(), microphone=(), camera=()\" always;"
+    },
+    {
+      "id": "s4-19",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "```shell script\n$ sudo apt install -y certbot python3-certbot-nginx\n$ sudo certbot --nginx -d example.com -d www.example.com\n$ sudo systemctl list-timers | grep certbot   # auto-renew"
+    },
+    {
+      "id": "s4-20",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Reverse Proxy {.cols-3}\n\n### Basic Proxy"
+    },
+    {
+      "id": "s4-21",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "upstream app {\nserver 127.0.0.1:3000;\n# server unix:/run/app.sock; # alternative\n}"
+    },
+    {
+      "id": "s4-22",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "server {\nlisten 80;\nserver_name api.example.com;"
+    },
+    {
+      "id": "s4-23",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "location / {\nproxy_set_header Host $host;\nproxy_set_header X-Real-IP $remote_addr;\nproxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\nproxy_set_header X-Forwarded-Proto $scheme;\nproxy_pass http://app;\n}\n}"
+    },
+    {
+      "id": "s4-24",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### WebSockets / HTTP Upgrade"
+    },
+    {
+      "id": "s4-25",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "location /socket.io/ {\nproxy_http_version 1.1;\nproxy_set_header Upgrade $http_upgrade;\nproxy_set_header Connection \"upgrade\";\nproxy_pass http://app;\n}"
+    },
+    {
+      "id": "s4-26",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Timeouts & Buffers"
+    },
+    {
+      "id": "s4-27",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "proxy_connect_timeout 5s;\nproxy_send_timeout    60s;\nproxy_read_timeout    60s;\nproxy_buffering       on;\nproxy_buffers 16 16k;\nproxy_busy_buffers_size 24k;"
+    },
+    {
+      "id": "s4-28",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Static, Compression, Caching {.cols-3}\n\n### Static Files"
+    },
+    {
+      "id": "s4-29",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "location /assets/ {\nalias /var/www/example/assets/;\naccess_log off;\nexpires 7d;\nadd_header Cache-Control \"public, max-age=604800, immutable\";\n}"
+    },
+    {
+      "id": "s4-30",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Gzip"
+    },
+    {
+      "id": "s4-31",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "gzip on;\ngzip_types text/plain text/css application/javascript application/json image/svg+xml;\ngzip_min_length 1024;\ngzip_comp_level 5;"
+    },
+    {
+      "id": "s4-32",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### (Optional) Brotli (if compiled)"
+    },
+    {
+      "id": "s4-33",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "brotli on;\nbrotli_comp_level 5;\nbrotli_types text/plain text/css application/javascript application/json image/svg+xml;"
+    },
+    {
+      "id": "s4-34",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Caching & Microcaching {.cols-3}\n\n### Proxy Cache Zone"
+    },
+    {
+      "id": "s4-35",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "proxy_cache_path /var/cache/nginx levels=1:2 keys_zone=micro:10m max_size=1g inactive=10m use_temp_path=off;\nmap $request_method $no_cache { default 0; POST 1; PUT 1; PATCH 1; DELETE 1; }"
+    },
+    {
+      "id": "s4-36",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Use the Cache"
+    },
+    {
+      "id": "s4-37",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "text",
+      "body": "location /api/ {\nproxy_cache micro;\nproxy_cache_bypass $no_cache;\nproxy_no_cache $no_cache;\nproxy_cache_valid 200 301 302 10s;\nproxy_cache_valid any 1s;\nadd_header X-Cache-Status $upstream_cache_status;\nproxy_pass http://app;\n}"
+    },
+    {
+      "id": "s4-38",
+      "sectionId": "s4",
+      "title": "Let’s Encrypt (Certbot)",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Conditional Bypass"
+    },
+    {
+      "id": "s4-39",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "map $http_cookie $logged_in {\ndefault 0;\n~*\"(session|auth|logged_in)\" 1;\n}\nproxy_cache_bypass $logged_in;\nproxy_no_cache $logged_in;"
+    },
+    {
+      "id": "s4-40",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## PHP‑FPM / FastCGI {.cols-3}\n\n### Basic PHP Handler"
+    },
+    {
+      "id": "s4-41",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "location ~ \\.php$ {\ninclude fastcgi_params;\nfastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;\nfastcgi_param DOCUMENT_ROOT $realpath_root;\nfastcgi_pass unix:/run/php/php8.2-fpm.sock;\nfastcgi_buffers 16 16k;\nfastcgi_read_timeout 60s;\n}"
+    },
+    {
+      "id": "s4-42",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### try_files Front Controller"
+    },
+    {
+      "id": "s4-43",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "location / {\ntry_files $uri $uri/ /index.php?$args;\n}"
+    },
+    {
+      "id": "s4-44",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Security Tips"
+    },
+    {
+      "id": "s4-45",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "location ~* \\.(?:ini|log|sh|sql|bak)$ { deny all; }\nlocation ~ /\\.(?!well-known) { deny all; }"
+    },
+    {
+      "id": "s4-46",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Rewrites & Routing {.cols-3}\n\n### try_files"
+    },
+    {
+      "id": "s4-47",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "location / {\ntry_files $uri $uri/ /index.html;\n}"
+    },
+    {
+      "id": "s4-48",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Regex Rewrites"
+    },
+    {
+      "id": "s4-49",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "if ($request_uri ~* \"^(.+)/+$\") { return 301 $1; }"
+    },
+    {
+      "id": "s4-50",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "rewrite ^/old/(.*)$ /new/$1 permanent;"
+    },
+    {
+      "id": "s4-51",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### SPA / History API"
+    },
+    {
+      "id": "s4-52",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "location / {\ntry_files $uri /index.html;\n}"
+    },
+    {
+      "id": "s4-53",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Rate Limiting & DoS Mitigation {.cols-3}\n\n### Request Rate"
+    },
+    {
+      "id": "s4-54",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "limit_req_zone $binary_remote_addr zone=reqs:10m rate=10r/s;"
+    },
+    {
+      "id": "s4-55",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "server {\nlocation /api/ {\nlimit_req zone=reqs burst=20 nodelay;\n}\n}"
+    },
+    {
+      "id": "s4-56",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Concurrent Connections"
+    },
+    {
+      "id": "s4-57",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "limit_conn_zone $binary_remote_addr zone=conns:10m;\nserver {\nlocation /download/ {\nlimit_conn conns 10;\n}\n}"
+    },
+    {
+      "id": "s4-58",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Body Size & Timeouts"
+    },
+    {
+      "id": "s4-59",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "client_max_body_size 25m;\nclient_body_timeout 30s;\nkeepalive_timeout 65s;"
+    },
+    {
+      "id": "s4-60",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Security Headers & Access {.cols-3}\n\n### Basic Hardening"
+    },
+    {
+      "id": "s4-61",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "server_tokens off;\nadd_header X-Content-Type-Options \"nosniff\" always;\nadd_header X-Frame-Options \"SAMEORIGIN\" always;\nadd_header Referrer-Policy \"no-referrer-when-downgrade\" always;"
+    },
+    {
+      "id": "s4-62",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Allow/Deny"
+    },
+    {
+      "id": "s4-63",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "location /admin/ {\nallow 192.168.0.0/16;\ndeny all;\n}"
+    },
+    {
+      "id": "s4-64",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### CORS (Example)"
+    },
+    {
+      "id": "s4-65",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "location /api/ {\nadd_header Access-Control-Allow-Origin \"https://app.example.com\" always;\nadd_header Access-Control-Allow-Credentials \"true\" always;\nif ($request_method = OPTIONS) {\nadd_header Access-Control-Allow-Methods \"GET, POST, OPTIONS\";\nadd_header Access-Control-Allow-Headers \"Authorization, Content-Type\";\nreturn 204;\n}\nproxy_pass http://app;\n}"
+    },
+    {
+      "id": "s4-66",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Logging & Debug {.cols-3}\n\n### Formats"
+    },
+    {
+      "id": "s4-67",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "log_format main '$remote_addr - $remote_user [$time_local] \"$request\" '\n'$status $body_bytes_sent \"$http_referer\" '\n'\"$http_user_agent\" \"$http_x_forwarded_for\" '\n'$request_time $upstream_response_time';"
+    },
+    {
+      "id": "s4-68",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "access_log /var/log/nginx/access.log main;\nerror_log  /var/log/nginx/error.log warn;"
+    },
+    {
+      "id": "s4-69",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Per‑Location Logging"
+    },
+    {
+      "id": "s4-70",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "location /healthz { access_log off; }"
+    },
+    {
+      "id": "s4-71",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Debugging"
+    },
+    {
+      "id": "s4-72",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "$ sudo nginx -t\n$ sudo nginx -s reload\n$ tail -f /var/log/nginx/error.log"
+    },
+    {
+      "id": "s4-73",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Upstreams & LB {.cols-3}\n\n### Strategies\n\n| Directive     | Meaning                 |\n| ------------- | ----------------------- |\n| (default)     | round‑robin             |\n| `least_conn`  | least connections       |\n| `ip_hash`     | sticky by client IP     |\n| `hash key`    | hash by custom key      |\n\n{.show-header}\n\n### Example Upstream"
+    },
+    {
+      "id": "s4-74",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "upstream api_backends {\nleast_conn;\nserver 10.0.0.11:8080 max_fails=3 fail_timeout=30s;\nserver 10.0.0.12:8080 max_fails=3 fail_timeout=30s;\n# server backup.example:8080 backup;\n}"
+    },
+    {
+      "id": "s4-75",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Health & Failover"
+    },
+    {
+      "id": "s4-76",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "proxy_next_upstream error timeout http_502 http_503 http_504;\nproxy_next_upstream_tries 3;"
+    },
+    {
+      "id": "s4-77",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Useful Variables {.cols-3}\n\n### Request & Client\n\n| Variable               | Description                  |\n| --------------------- | ---------------------------- |\n| `$host`               | Host header / server name    |\n| `$server_name`        | Chosen server_name           |\n| `$remote_addr`        | Client IP                    |\n| `$http_user_agent`    | User‑Agent                   |\n| `$request_method`     | GET/POST/...                 |\n\n{.show-header .bold-first}\n\n### Paths & Files\n\n| Variable                 | Description            |\n| ----------------------- | ---------------------- |\n| `$document_root`        | Current root           |\n| `$realpath_root`        | Symlink‑resolved root  |\n| `$request_uri`          | Path + query           |\n| `$uri`                  | Normalized URI         |\n| `$args`                 | Raw query string       |\n\n{.show-header .bold-first}\n\n### Upstream\n\n| Variable                    | Description        |\n| -------------------------- | ------------------ |\n| `$upstream_addr`           | Upstream server(s) |\n| `$upstream_status`         | Upstream status    |\n| `$upstream_response_time`  | Time from upstream |\n\n{.show-header .bold-first}\n\n## Stream (TCP/UDP) {.cols-3}\n\n### TCP Proxy"
+    },
+    {
+      "id": "s4-78",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "stream {\nupstream db {\nserver 10.0.0.10:5432;\nserver 10.0.0.11:5432;\n}\nserver {\nlisten 5432;\nproxy_pass db;\n}\n}"
+    },
+    {
+      "id": "s4-79",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### UDP Proxy"
+    },
+    {
+      "id": "s4-80",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "stream {\nserver {\nlisten 53 udp;\nproxy_responses 1;\nproxy_timeout 2s;\nproxy_pass 1.1.1.1:53;\n}\n}"
+    },
+    {
+      "id": "s4-81",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Access Control"
+    },
+    {
+      "id": "s4-82",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "stream {\nserver {\nlisten 6379;\nallow 10.0.0.0/8;\ndeny all;\nproxy_pass 127.0.0.1:6379;\n}\n}"
+    },
+    {
+      "id": "s4-83",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Snippets {.cols-3}\n\n### Security Snippet"
+    },
+    {
+      "id": "s4-84",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "server_tokens off;\nadd_header X-Content-Type-Options \"nosniff\" always;\nadd_header X-Frame-Options \"SAMEORIGIN\" always;\nadd_header Referrer-Policy \"no-referrer-when-downgrade\" always;"
+    },
+    {
+      "id": "s4-85",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### PHP Snippet"
+    },
+    {
+      "id": "s4-86",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "location ~ \\.php$ {\ninclude fastcgi_params;\nfastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;\nfastcgi_param DOCUMENT_ROOT $realpath_root;\nfastcgi_pass unix:/run/php/php8.2-fpm.sock;\n}"
+    },
+    {
+      "id": "s4-87",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Proxy Headers Snippet"
+    },
+    {
+      "id": "s4-88",
+      "sectionId": "s4",
+      "title": "TLS/SSL",
+      "kind": "text",
+      "body": "proxy_set_header Host $host;\nproxy_set_header X-Real-IP $remote_addr;\nproxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\nproxy_set_header X-Forwarded-Proto $scheme;"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/nginx.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/nginx.md",
+    "generatedAt": "2025-12-16T07:36:11.745Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

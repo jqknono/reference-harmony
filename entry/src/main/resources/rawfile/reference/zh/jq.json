@@ -1,0 +1,414 @@
+{
+  "id": "jq",
+  "title": "jq",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jq 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这个快速参考备忘单提供了使用 [jq](https://stedolan.github.io/jq/) 命令的各种方法。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n----"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "jq 就像用于 JSON 数据的 [sed](./sed.md) - 您可以使用它来切片、过滤、映射和转换结构化数据"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "• [jq 官网](https://stedolan.github.io/jq/) _(stedolan.github.io)_\n• [jq 命令使用](https://jaywcjlove.github.io/linux-command/c/jq.html) _(jaywcjlove.github.io)_"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "安装"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ sudo apt-get install jq # Debian& Ubuntu\n$ sudo dnf install jq     # Fedora \n$ sudo zypper install jq  # openSUSE\n$ sudo pacman -S jq    # Arch\n$ brew install jq      # macOS & Homebrew\n$ port install jq      # macOS & MacPorts"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "语法"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ jq [options] <jq filter> [file...]\n$ jq [options] --args <jq filter> [strings...]\n$ jq [options] --jsonargs <jq filter> [JSON_TEXTS...]"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "选项",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-c`               | 紧凑而不是漂亮的输出\n`-n`               | 使用`null`作为单个输入值\n`-e`               | 根据输出设置退出状态代码\n`-s`               | 将所有输入读取（吸取）到数组中；应用过滤器\n`-r`               | 输出原始字符串，而不是JSON文本\n`-R`               | 读取原始字符串，而不是JSON文本\n`-C`               | 为 JSON 着色\n`-M`               | 单色（不要为JSON着色）\n`-S`               | 在输出上排序对象的键\n`--tab`            | 使用制表符进行缩进\n`--arg a v`        | 将变量 `$a` 设置为 value `<v>`\n`--argjson a v`    | 将变量 `$a` 设置为 JSON value `<v>`\n`--slurpfile a f`  | 将变量 `$a` 设置为从`<f>`读取的JSON文本数组\n`--rawfile a f`    | 将变量 `$a` 设置为包含`<f>`内容的字符串\n`--args`           | 其余参数是字符串参数，而不是文件\n`--jsonargs`       | 其余的参数是JSON参数，而不是文件\n`--`               | 终止参数处理"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "选项",
+      "kind": "text",
+      "body": "学习示例\n---"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "获取一个键的值",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '{\"foo\": 42, \"bar\": \"less interesting data\"}' | jq '.foo'"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "获取一个键的值",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "获取一个键的值",
+      "kind": "code",
+      "lang": "bash",
+      "code": "42"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "数组运算",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '[{\"name\":\"JSON\", \"good\":true}, {\"name\":\"XML\", \"good\":false}]' | jq '.[1]'"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "数组运算",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "数组运算",
+      "kind": "code",
+      "lang": "bash",
+      "code": "{\n  \"name\": \"XML\",\n  \"good\": false\n}"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "构造一个数组/对象",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '{\"user\":\"stedolan\",\"titles\":[\"JQ Primer\", \"More JQ\"]}' | jq '{user, title: .titles[]}'"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "构造一个数组/对象",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "构造一个数组/对象",
+      "kind": "code",
+      "lang": "bash",
+      "code": "{\n  \"user\": \"stedolan\",\n  \"title\": \"JQ Primer\"\n}\n{\n  \"user\": \"stedolan\",\n  \"title\": \"More JQ\"\n}"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "计算一个值的长度",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '[[1,2], \"string\", {\"a\":2}, null]' | jq '.[] | length'"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "计算一个值的长度",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "计算一个值的长度",
+      "kind": "code",
+      "lang": "bash",
+      "code": "2\n6\n1\n0"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "取出数组中的键",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '{\"abc\": 1, \"abcd\": 2, \"Foo\": 3}' | jq 'keys'"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "取出数组中的键",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "取出数组中的键",
+      "kind": "code",
+      "lang": "bash",
+      "code": "[\n  \"Foo\",\n  \"abc\",\n  \"abcd\"\n]"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "使用多个过滤器",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '{ \"foo\": 42, \"bar\": \"something else\", \"baz\": true}' | jq '.foo, .bar'"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "使用多个过滤器",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "使用多个过滤器",
+      "kind": "code",
+      "lang": "bash",
+      "code": "42\n\"something else\""
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "管道传递给下一个过滤器",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '[{\"name\":\"JSON\", \"good\":true}, {\"name\":\"XML\", \"good\":false}]' | jq '.[] | .name'"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "管道传递给下一个过滤器",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "管道传递给下一个过滤器",
+      "kind": "code",
+      "lang": "bash",
+      "code": "\"JSON\"\n\"XML\""
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "条件语句判断",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '[1,5,3,0,7]' | jq 'map(select(. >= 2))'"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "条件语句判断",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "条件语句判断",
+      "kind": "code",
+      "lang": "bash",
+      "code": "[\n  5,\n  3,\n  7\n]"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "每个输入调用过滤器",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '[1,2,3]' | jq 'map(.+1)'"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "每个输入调用过滤器",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "每个输入调用过滤器",
+      "kind": "code",
+      "lang": "bash",
+      "code": "[\n  2,\n  3,\n  4\n]"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "条件判断",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '2' | jq 'if . == 0 then \"zero\" elif . == 1 then \"one\" else \"many\" end'"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "条件判断",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "条件判断",
+      "kind": "code",
+      "lang": "bash",
+      "code": "\"many\""
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "字符串插入值并进行运算",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo '42' | jq '\"The input was \\(.), which is one less than \\(.+1)\"'"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "字符串插入值并进行运算",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "字符串插入值并进行运算",
+      "kind": "code",
+      "lang": "bash",
+      "code": "\"The input was 42, which is one less than 43\""
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "字符串转 JSON 数组",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo 'a b c d' | jq -R 'split(\" \")'"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "字符串转 JSON 数组",
+      "kind": "text",
+      "body": "输出结果"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "字符串转 JSON 数组",
+      "kind": "code",
+      "lang": "json",
+      "code": "[\n  \"a\",\n  \"b\",\n  \"c\",\n  \"d\"\n]"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "更改发布注册表",
+      "kind": "code",
+      "lang": "bash",
+      "code": "echo \"$(jq '.publishConfig.registry = \"https://npm.pkg.github.com\"' package.json)\" > package.json"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "更改发布注册表",
+      "kind": "text",
+      "body": "将组织范围添加到包名称"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "更改发布注册表",
+      "kind": "code",
+      "lang": "bash",
+      "code": "echo \"$(jq '.name = \"@scope/package\"' package.json)\" > package.json"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "更改发布注册表",
+      "kind": "text",
+      "body": "另见\n----"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "更改发布注册表",
+      "kind": "text",
+      "body": "• [jq 官网](https://stedolan.github.io/jq/) _(stedolan.github.io)_\n• [jq 命令使用](https://jaywcjlove.github.io/linux-command/c/jq.html) _(jaywcjlove.github.io)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/jq.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/jq.md",
+    "generatedAt": "2025-12-16T07:36:11.285Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

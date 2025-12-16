@@ -1,4 +1,5 @@
 export type ReferenceCardKind = 'text' | 'qa' | 'code';
+export type ReferenceLang = 'zh' | 'en';
 
 export interface ReferenceCardData {
   id: string;
@@ -31,6 +32,8 @@ export interface ReferenceManifestSource {
   docsPath: string;
   ref: string;
   generatedAt: string;
+  lang?: ReferenceLang;
+  mode?: string;
 }
 
 export interface ReferenceDocSource {
@@ -39,6 +42,8 @@ export interface ReferenceDocSource {
   ref: string;
   url: string;
   generatedAt: string;
+  lang?: ReferenceLang;
+  mode?: string;
 }
 
 export interface ReferenceManifest {

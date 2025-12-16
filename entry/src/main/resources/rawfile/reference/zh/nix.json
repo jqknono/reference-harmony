@@ -1,0 +1,1018 @@
+{
+  "id": "nix",
+  "title": "shell.nix",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Nix 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Nix 快速参考备忘单，旨在帮助编写基础的 Nix 代码。Nix 是一个纯函数式包管理器和 NixOS 系统的基础语言。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "类型与语法\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "字符串",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = \"单行字符串\";\n  y = ''\n    多行字符串\n    支持换行和缩进\n  '';\n  z = ''\n    前导空格会被自动处理\n      这行会保持缩进\n  '';\nin"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "字符串",
+      "kind": "text",
+      "body": "#### 字符串插值"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "字符串",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  name = \"世界\";\n  greeting = \"你好，${name}！\";\nin"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "字符串",
+      "kind": "text",
+      "body": "#### 转义字符"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "字符串",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  escaped = ''\n    引号：\\\"hello\\\"，换行：\\n，制表符：\\t\n  '';\nin"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "整数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = -123;\n  y = 123;\n  # 支持不同进制\n  hex = 0xFF;          # 十六进制: 255\n  bin = 0b1010;        # 二进制: 10\n  oct = 0o755;         # 八进制: 493\nin"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "浮点数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = -0.32;\n  y = 0.45;\n  scientific = 1.23e-4;    # 科学记数法\n  inf = 1.0 / 0.0;         # 无穷大\nin"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "布尔值",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = true;\n  y = false;\n  # 布尔运算\n  and_result = true && false;   # false\n  or_result = true || false;    # true\n  not_result = !true;           # false\nin"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "空值",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = null;\n  # null 表示缺失值\n  # 类似于其他语言的 None 或 undefined\nin"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "路径",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  absolute = /usr/bin/env;      # 绝对路径\n  relative = ./config.nix;      # 相对路径\n  home = ~/Documents;           # 家目录路径\n  # 路径会在构建时自动复制到 Nix store\nin"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "属性集",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = {\n    name = \"张三\";\n    age = 25;\n    address = {\n      city = \"北京\";\n      district = \"朝阳区\";\n    };\n  };\n  y = { c = 3; };\n  # 递归属性集\n  rec_set = rec {\n    x = 1;\n    y = x + 1;    # 可以引用同级属性\n  };\nin"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "属性集",
+      "kind": "text",
+      "body": "参见 [属性集操作](#属性集)"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "列表",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  numbers = [ 1 2 3 4 5 ];\n  mixed = [\n    1\n    \"这是字符串\"\n    23.0\n    null\n    { name = \"属性集\"; }\n  ];\n  # 列表可以包含任意类型的元素\n  nested = [ [ 1 2 ] [ 3 4 ] ];\nin"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "注释",
+      "kind": "text",
+      "body": "#### ↓ 单行注释"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "注释",
+      "kind": "code",
+      "lang": "nix",
+      "code": "# 这是单行注释\nlet x = 1; in x  # 行末注释"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "注释",
+      "kind": "text",
+      "body": "#### ↓ 多行注释"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "注释",
+      "kind": "code",
+      "lang": "nix",
+      "code": "/*\n  这是多行注释\n  可以跨越多行\n  /* 可以嵌套 */\n*/"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "注释",
+      "kind": "text",
+      "body": "作用域管理\n---"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "定义局部变量",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = 1;\n  y = 2;\n  z = x + y;    # 可以引用前面定义的变量\nin\n  x + y + z     # 返回 6"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "定义局部变量",
+      "kind": "text",
+      "body": "#### 嵌套 let 表达式"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "定义局部变量",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  outer = 10;\nin\n  let\n    inner = 5;\n  in\n    outer + inner   # 返回 15"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "将变量添加到作用域",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = 1;\n  y = 2;\nin\n  { inherit x y; }    # 继承多个变量"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "将变量添加到作用域",
+      "kind": "text",
+      "body": "#### ↓ 等价于"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "将变量添加到作用域",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = 1;\n  y = 2;\nin\n  { x = x; y = y; }"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "从属性集继承属性",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  config = { \n    host = \"localhost\"; \n    port = 8080;\n    ssl = true;\n  };\nin\n  { \n    inherit (config) host port;\n    # 只继承特定属性\n  }"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "从属性集继承属性",
+      "kind": "text",
+      "body": "#### ↓ 等价于"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "从属性集继承属性",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  config = { \n    host = \"localhost\"; \n    port = 8080;\n    ssl = true;\n  };\nin\n  { \n    host = config.host; \n    port = config.port; \n  }"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "将所有属性引入作用域",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  config = { \n    host = \"localhost\"; \n    port = 8080;\n    database = \"myapp\";\n  };\nin\n  with config;\n  \"${host}:${toString port}/${database}\"    # 返回 \"localhost:8080/myapp\""
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "将所有属性引入作用域",
+      "kind": "text",
+      "body": "#### 注意事项"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "将所有属性引入作用域",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = 1;\n  attrs = { x = 2; y = 3; };\nin\n  with attrs;\n  x + y    # x = 1 (局部变量优先级更高), y = 3"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "将所有属性引入作用域",
+      "kind": "text",
+      "body": "条件表达式\n---"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "基本条件表达式",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  x = 10;\n  result = if x > 0\n    then \"正数\"\n    else if x < 0\n    then \"负数\"\n    else \"零\";\nin\n  result"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "基本条件表达式",
+      "kind": "text",
+      "body": "#### 布尔条件判断"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "基本条件表达式",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  isEnabled = true;\n  config = if isEnabled\n    then { port = 8080; debug = true; }\n    else { port = 80; debug = false; };\nin\n  config"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "基本条件表达式",
+      "kind": "text",
+      "body": "#### 字符串条件判断"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "基本条件表达式",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  env = \"production\";\n  database = if env == \"production\"\n    then \"prod-db.example.com\"\n    else if env == \"staging\"\n    then \"staging-db.example.com\"\n    else \"localhost\";\nin\n  database"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "复杂条件判断",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  user = { name = \"张三\"; age = 25; isAdmin = true; };\n  message = if user.isAdmin && user.age >= 18\n    then \"管理员用户: ${user.name}\"\n    else \"普通用户: ${user.name}\";\nin\n  message"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "条件表达式中的属性集",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  env = \"production\";\n  config = if env == \"development\"\n    then {\n      debug = true;\n      logLevel = \"debug\";\n      database.host = \"localhost\";\n    }\n    else {\n      debug = false;\n      logLevel = \"info\";\n      database.host = \"prod-db.example.com\";\n    };\nin\n  config"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "条件表达式中的属性集",
+      "kind": "text",
+      "body": "属性集\n---"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "定义属性集",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  person = {\n    name = \"李四\";\n    age = 30;\n    skills = [ \"编程\" \"设计\" \"管理\" ];\n    contact = {\n      email = \"lisi@example.com\";\n      phone = \"138-0000-0000\";\n    };\n  };\nin\n  person"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "动态属性名",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  key = \"dynamicKey\";\n  attrs = {\n    ${key} = \"动态值\";\n    \"static-key\" = \"静态值\";\n  };\nin\n  attrs    # { dynamicKey = \"动态值\"; static-key = \"静态值\"; }"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "更新属性集",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  base = { x = 1; y = 2; };\n  updated = base // { y = 3; z = 4; };   # 合并属性集\nin\n  updated    # { x = 1; y = 3; z = 4; }"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "更新属性集",
+      "kind": "text",
+      "body": "#### 深度合并"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "更新属性集",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  config1 = {\n    server = { host = \"localhost\"; port = 8080; };\n    database = { name = \"test\"; };\n  };\n  config2 = {\n    server = { port = 9000; ssl = true; };\n    cache = { enabled = true; };\n  };\n  # 注意：// 操作符只进行浅合并\n  merged = config1 // config2;\n  # server 属性会被完全替换，而不是深度合并\nin\n  merged"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "检查属性是否存在",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  person = { name = \"王五\"; age = 28; };\nin\n  {\n    hasName = person ? name;      # true\n    hasEmail = person ? email;    # false\n    hasNested = person ? contact.email;  # false (嵌套检查)\n  }"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "访问属性",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  config = {\n    server = {\n      host = \"localhost\";\n      port = 8080;\n    };\n  };\nin\n  {\n    host = config.server.host;     # 访问嵌套属性\n    port = config.server.port;\n  }"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "访问属性",
+      "kind": "text",
+      "body": "#### 可选属性访问"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "访问属性",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  config = { server = { host = \"localhost\"; }; };\nin\n  {\n    port = config.server.port or 3000;        # 如果不存在则使用默认值\n    timeout = config.timeout or 30;           # 30\n    ssl = config.server.ssl or false;         # false\n  }"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "访问属性",
+      "kind": "text",
+      "body": "连接与插值\n---"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "连接列表",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  list1 = [ 1 2 3 ];\n  list2 = [ 4 5 6 ];\n  combined = list1 ++ list2;     # [ 1 2 3 4 5 6 ]\n  \n  # 多个列表连接\n  all = [ 0 ] ++ list1 ++ list2 ++ [ 7 8 ];\nin\n  all    # [ 0 1 2 3 4 5 6 7 8 ]"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "连接路径与字符串",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  base = /usr/bin;\n  executable = base + /python3;           # /usr/bin/python3\n  \n  # 路径与字符串连接\n  config_path = /etc + \"/nginx/nginx.conf\";   # /etc/nginx/nginx.conf\n  \n  # 字符串连接\n  greeting = \"你好\" + \"，世界！\";            # \"你好，世界！\"\nin\n  { inherit executable config_path greeting; }"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "字符串插值",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  name = \"张三\";\n  age = 25;\n  score = 95.5;\nin\n  {\n    greeting = \"你好，${name}！\";\n    info = \"姓名：${name}，年龄：${toString age}\";\n    result = \"考试成绩：${toString score}分\";\n    \n    # 复杂表达式插值\n    status = \"用户 ${name} ${if age >= 18 then \"已成年\" else \"未成年\"}\";\n    \n    # 路径插值\n    config_file = \"${./configs}/${name}.conf\";\n  }"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "字符串插值",
+      "kind": "text",
+      "body": "函数\n---"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "简单函数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  # 单参数函数\n  increment = x: x + 1;\n  double = x: x * 2;\n  \n  # 使用函数\n  result1 = increment 5;    # 6\n  result2 = double 3;       # 6\nin\n  { inherit result1 result2; }"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "命名参数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  # 基本命名参数\n  createUser = {name, age, email}: {\n    inherit name age email;\n    id = builtins.hashString \"md5\" email;\n  };\n  \n  user = createUser {\n    name = \"张三\";\n    age = 25;\n    email = \"zhangsan@example.com\";\n  };\nin\n  user"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "命名参数",
+      "kind": "text",
+      "body": "#### 忽略额外参数"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "命名参数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  # 使用 ... 忽略额外的参数\n  processConfig = {host, port, ...}: {\n    url = \"${host}:${toString port}\";\n  };\n  \n  result = processConfig {\n    host = \"localhost\";\n    port = 8080;\n    ssl = true;        # 会被忽略\n    timeout = 30;      # 会被忽略\n  };\nin\n  result    # { url = \"localhost:8080\"; }"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "命名参数",
+      "kind": "text",
+      "body": "#### 默认参数值"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "命名参数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  # 为参数提供默认值\n  createServer = {\n    host ? \"localhost\", \n    port ? 8080, \n    ssl ? false\n  }: {\n    inherit host port ssl;\n    url = \n      let proto = if ssl then \"https\" else \"http\";\n      in \"${proto}://${host}:${toString port}\";\n  };\n  \n  # 使用所有默认值\n  server1 = createServer {};\n  # 只覆盖 port  \n  server2 = createServer {port = 3000;};\n  # 覆盖多个参数\n  server3 = createServer {                      \n    host = \"example.com\";\n    port = 443;\n    ssl = true;\n  };\nin\n  { inherit server1 server2 server3; }"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "命名参数",
+      "kind": "text",
+      "body": "#### 绑定到变量"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "命名参数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  # 将整个参数集绑定到变量，同时解构部分参数\n  logMessage = {\n    level, \n    message, \n    timestamp ? null\n  }@args: {\n    formatted = \"[${level}] ${message}\";\n    raw = args;  # 保留原始参数集\n    hasTimestamp = \n      args ? timestamp && timestamp != null;\n  };\n  \n  log = logMessage {\n    level = \"INFO\";\n    message = \"服务器启动成功\";\n    user = \"admin\";  # 额外参数也会保存在 args 中\n  };\nin\n  log"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "多参数函数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  # 柯里化函数\n  add = x: y: x + y;\n  multiply = x: y: z: x * y * z;\n  \n  # 部分应用\n  add10 = add 10;  # 等价于 y: 10 + y\n  \n  # 使用示例\n  result1 = add 3 4;        # 7\n  result2 = add10 5;        # 15\n  result3 = multiply 2 3 4; # 24\nin\n  { inherit result1 result2 result3; }"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "高阶函数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  # 接受函数作为参数的高阶函数\n  applyTwice = f: x: f (f x);\n  \n  # 返回函数的高阶函数\n  createMultiplier = factor: x: x * factor;\n  \n  # 函数组合\n  compose = f: g: x: f (g x);\n  \n  # 使用示例\n  double = x: x * 2;\n  increment = x: x + 1;\n  \n  result1 = applyTwice double 3;    # 12\n  triple = createMultiplier 3;\n  result2 = triple 5;               # 15\n  doubleAndIncrement = \n    compose increment double;\n  result3 = doubleAndIncrement 4;   # 9\nin\n  { inherit result1 result2 result3; }"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "递归函数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let\n  # 计算阶乘\n  factorial = n:\n    if n <= 1\n    then 1\n    else n * factorial (n - 1);\n  \n  # 斐波那契数列\n  fibonacci = n:\n    if n <= 1\n    then n\n    else fibonacci (n - 1) + fibonacci (n - 2);\n  \n  # 列表长度计算\n  listLength = list:\n    if list == []\n    then 0\n    else 1 + listLength (builtins.tail list);\n  \n  # 使用示例\n  fact5 = factorial 5;        # 120\n  fib7 = fibonacci 7;         # 13\n  len = listLength [1 2 3 4]; # 4\nin\n  { inherit fact5 fib7 len; }"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "code",
+      "lang": "nix",
+      "code": "let"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "let\n# 根据条件选择不同的处理函数\nprocessData = condition: data:\nlet\nuppercaseProcessor = str:\nbuiltins.replaceStrings\n[\"a\" \"e\" \"i\" \"o\" \"u\"]\n[\"A\" \"E\" \"I\" \"O\" \"U\"] str;"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "lengthProcessor = str:\ntoString (builtins.stringLength str);"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "reverseProcessor = str:\nlet\nlen = builtins.stringLength str;\nchars = builtins.genList\n(i: builtins.substring\n(len - 1 - i) 1 str) len;\nin\nbuiltins.concatStringsSep \"\" chars;\nin\nif condition == \"uppercase\"\nthen uppercaseProcessor data\nelse if condition == \"length\"\nthen lengthProcessor data\nelse if condition == \"reverse\"\nthen reverseProcessor data\nelse data;"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 使用示例\ntext = \"hello world\";\nresult1 = processData \"uppercase\" text;\nresult2 = processData \"length\" text;\nresult3 = processData \"reverse\" text;\nin\n{ inherit result1 result2 result3; }"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 函数工厂"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "let\n# 创建验证器函数的工厂\ncreateValidator = rules: value:\nlet\ncheckRule = rule:\nif rule.type == \"minLength\"\nthen\nbuiltins.stringLength value >= rule.value\nelse if rule.type == \"maxLength\"\nthen\nbuiltins.stringLength value <= rule.value\nelse if rule.type == \"contains\"\nthen\nbuiltins.match \".*${rule.value}.*\" value\n!= null\nelse true;"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "results = map checkRule rules;\nallValid = builtins.all (x: x) results;\nin\n{\nvalid = allValid;\nvalue = value;\nerrors = builtins.filter\n(rule: !checkRule rule) rules;\n};"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 创建特定的验证器\nemailValidator = createValidator [\n{ type = \"minLength\"; value = 5; }\n{ type = \"contains\"; value = \"@\"; }\n{ type = \"contains\"; value = \".\"; }\n];"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "passwordValidator = createValidator [\n{ type = \"minLength\"; value = 8; }\n{ type = \"maxLength\"; value = 32; }\n];"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 使用示例\nemail_result = emailValidator \"user@example.com\";\npassword_result = passwordValidator \"mypassword123\";\nin\n{ inherit email_result password_result; }"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 函数式编程工具"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "let\n# 映射函数\nmapList = f: list:\nif list == []\nthen []\nelse\nlet head = f (builtins.head list);\ntail = mapList f (builtins.tail list);\nin [ head ] ++ tail;"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 过滤函数\nfilterList = predicate: list:\nif list == []\nthen []\nelse\nlet\nhead = builtins.head list;\ntail = builtins.tail list;\nfiltered_tail =\nfilterList predicate tail;\nin\nif predicate head\nthen [ head ] ++ filtered_tail\nelse filtered_tail;"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 归约函数\nreduceList = f: initial: list:\nif list == []\nthen initial\nelse\nlet head = builtins.head list;\ntail = builtins.tail list;\nin reduceList f (f initial head) tail;"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 使用示例\nnumbers = [ 1 2 3 4 5 ];\ndoubled = mapList (x: x * 2) numbers;\nevens = filterList (x: x mod 2 == 0) numbers;\nsum = reduceList (acc: x: acc + x) 0 numbers;\nproduct = reduceList (acc: x: acc * x) 1 numbers;\nin\n{ inherit doubled evens sum product; }"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "code",
+      "lang": "",
+      "code": "\n内置函数\n---\n\n### 类型检查函数"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "let\nvalue = \"hello\";\nin\n{\nisString = builtins.isString value;\n# true\nisInt = builtins.isInt value;\n# false\nisBool = builtins.isBool true;\n# true\nisList = builtins.isList [1 2 3];\n# true\nisAttrs = builtins.isAttrs {x = 1;};\n# true\nisFunction = builtins.isFunction (x: x);\n# true\n}"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 字符串操作函数\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "let\ntext = \"Hello, Nix World!\";\nin\n{\nlength = builtins.stringLength text;     # 18\nsubstring = builtins.substring 7 3 text; # \"Nix\"\nsplit = builtins.split \" \" text;         # 分割字符串\nreplace = builtins.replaceStrings [\"Nix\"] [\"世界\"] text;  # \"Hello, 世界 World!\""
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 大小写转换需要自定义实现\ntoLower = builtins.replaceStrings\n[\"A\" \"B\" \"C\" \"D\" \"E\" \"F\" \"G\" \"H\" \"I\" \"J\" \"K\" \"L\" \"M\"\n\"N\" \"O\" \"P\" \"Q\" \"R\" \"S\" \"T\" \"U\" \"V\" \"W\" \"X\" \"Y\" \"Z\"]\n[\"a\" \"b\" \"c\" \"d\" \"e\" \"f\" \"g\" \"h\" \"i\" \"j\" \"k\" \"l\" \"m\"\n\"n\" \"o\" \"p\" \"q\" \"r\" \"s\" \"t\" \"u\" \"v\" \"w\" \"x\" \"y\" \"z\"]\n\"HELLO\";\n}"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 列表操作函数"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "let\nnumbers = [1 2 3 4 5];\nstrings = [\"apple\" \"banana\" \"cherry\"];\nin\n{\nlength = builtins.length numbers;        # 5\nhead = builtins.head numbers;            # 1\ntail = builtins.tail numbers;            # [2 3 4 5]"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 映射函数\ndoubled = map (x: x * 2) numbers;        # [2 4 6 8 10]\n# 过滤函数\nevens = builtins.filter (x: x mod 2 == 0) numbers;  # [2 4]\n# 折叠函数\nsum = builtins.foldl' (acc: x: acc + x) 0 numbers;  # 15\n# 元素查找\nhasThree = builtins.elem 3 numbers;      # true\n# 排序\nsorted = builtins.sort (a: b: a < b) [3 1 4 1 5 9];  # [1 1 3 4 5 9]\n}"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 属性集操作函数\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "let\nattrs = { a = 1; b = 2; c = 3; };\nin\n{\nkeys = builtins.attrNames attrs;         # [\"a\" \"b\" \"c\"]\nvalues = builtins.attrValues attrs;      # [1 2 3]\nhasAttr = builtins.hasAttr \"b\" attrs;    # true"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 映射属性值\ndoubled = builtins.mapAttrs (name: value: value * 2) attrs;\n# { a = 2; b = 4; c = 6; }"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 过滤属性\nfiltered = builtins.filterAttrs (name: value: value > 1) attrs;\n# { b = 2; c = 3; }"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 移除属性\nremoved = builtins.removeAttrs attrs [\"b\"];  # { a = 1; c = 3; }\n}"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "code",
+      "lang": "",
+      "code": "\n导入与模块\n---\n\n### 导入文件"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "let\n# 导入其他 Nix 文件\nutils = import ./utils.nix;\nconfig = import ./config.nix;"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 带参数导入\nlib = import <nixpkgs/lib>;"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "text",
+      "body": "# 导入并传递参数\nmyModule = import ./module.nix {\npkgs = import <nixpkgs> {};\nconfig = { enableFeature = true; };\n};\nin\n{\ninherit utils config lib myModule;\n}"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "条件函数",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 模块定义\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{ pkgs, config, ... }:"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{\n# 模块选项\noptions = {\nservices.myapp = {\nenable = lib.mkOption {\ntype = lib.types.bool;\ndefault = false;\ndescription = \"启用 MyApp 服务\";\n};"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "port = lib.mkOption {\ntype = lib.types.int;\ndefault = 8080;\ndescription = \"MyApp 监听端口\";\n};\n};\n};"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 模块配置\nconfig = lib.mkIf config.services.myapp.enable {\nsystemd.services.myapp = {\ndescription = \"MyApp 服务\";\nafter = [\"network.target\"];\nserviceConfig = {\nExecStart = \"${pkgs.myapp}/bin/myapp --port ${toString config.services.myapp.port}\";\nRestart = \"always\";\n};\n};\n};\n}"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n包管理\n---\n\n### 基本包定义"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{ pkgs ? import <nixpkgs> {} }:"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "pkgs.stdenv.mkDerivation {\npname = \"my-app\";\nversion = \"1.0.0\";"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "src = ./.;  # 当前目录作为源码"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "buildInputs = with pkgs; [\nnodejs\nyarn\n];"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "buildPhase = ''\nyarn install\nyarn build\n'';"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "installPhase = ''\nmkdir -p $out/bin\ncp -r dist/* $out/\nmakeWrapper ${pkgs.nodejs}/bin/node $out/bin/my-app \\\n--add-flags \"$out/index.js\"\n'';"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "meta = with pkgs.lib; {\ndescription = \"我的应用程序\";\nhomepage = \"https://example.com\";\nlicense = licenses.mit;\nmaintainers = with maintainers; [ \"your-name\" ];\n};\n}"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 开发环境\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{ pkgs ? import <nixpkgs> {} }:"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "pkgs.mkShell {\nbuildInputs = with pkgs; [\n# 开发工具\ngit\nnodejs\nyarn\npython3"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 系统库\npkg-config\nopenssl"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 数据库\npostgresql\nredis\n];"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 环境变量\nshellHook = ''\necho \"欢迎进入开发环境！\"\nexport DATABASE_URL=\"postgresql://localhost/myapp\"\nexport REDIS_URL=\"redis://localhost:6379\""
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 自动启动服务\nif ! pgrep -f \"postgres\" > /dev/null; then\necho \"启动 PostgreSQL...\"\npostgres -D $HOME/postgres-data &\nfi\n'';\n}"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n常用工具函数\n---\n\n### 递归函数\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "let\n# 计算阶乘\nfactorial = n:\nif n <= 1\nthen 1\nelse n * factorial (n - 1);"
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 列表求和\nsumList = list:\nif list == []\nthen 0\nelse builtins.head list + sumList (builtins.tail list);"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 深度合并属性集\ndeepMerge = a: b:\nlet\nmergeAttr = name:\nlet\naVal = a.${name};\nbVal = b.${name};\nin\nif builtins.isAttrs aVal && builtins.isAttrs bVal\nthen deepMerge aVal bVal\nelse bVal;\nin\na // b // builtins.listToAttrs (\nmap (name: { inherit name; value = mergeAttr name; })\n(builtins.filter (name: builtins.hasAttr name a) (builtins.attrNames b))\n);\nin\n{\nfact5 = factorial 5;           # 120\nlistSum = sumList [1 2 3 4 5]; # 15\nmerged = deepMerge\n{ a = { x = 1; y = 2; }; c = 3; }\n{ a = { y = 9; z = 4; }; d = 5; };\n}"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n错误处理\n---\n\n### 断言"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "let\nversion = \"1.2.3\";"
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 基本断言\nvalidVersion = assert builtins.stringLength version > 0; version;"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 带消息的断言（通过 throw 实现）\ncheckPort = port:\nif port < 1 || port > 65535\nthen throw \"端口号必须在 1-65535 之间，当前值: ${toString port}\"\nelse port;"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 条件检查\nconfig = {\nport = checkPort 8080;\nhost = if builtins.getEnv \"HOST\" != \"\"\nthen builtins.getEnv \"HOST\"\nelse \"localhost\";\n};\nin\nconfig"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 异常处理\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "let\n# 安全的属性访问\nsafeGet = attrs: path: default:\nlet\nkeys = builtins.split \"\\\\.\" path;\ngetValue = obj: keyList:\nif keyList == [] then obj\nelse if !builtins.isAttrs obj then default\nelse if !builtins.hasAttr (builtins.head keyList) obj then default\nelse getValue (obj.${builtins.head keyList}) (builtins.tail keyList);\nin\ngetValue attrs keys;"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "config = {\ndatabase = {\nhost = \"localhost\";\nport = 5432;\n};\n};"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 安全访问嵌套属性\ndbHost = safeGet config \"database.host\" \"default-host\";      # \"localhost\"\ndbUser = safeGet config \"database.user\" \"default-user\";      # \"default-user\"\nin\n{ inherit dbHost dbUser; }"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n来源\n---\n\n- [Nix 手册](https://nixos.org/manual/nix/stable/) - 官方用户手册\n- [NixOS 手册](https://nixos.org/manual/nixos/stable/) - NixOS 系统配置指南\n- [Nixpkgs 手册](https://nixos.org/manual/nixpkgs/stable/) - 包管理指南\n- [NixOS/nixpkgs](https://github.com/NixOS/nixpkgs) - 官方包仓库\n- [NixOS/nix](https://github.com/NixOS/nix) - Nix 包管理器源码\n- [Nix Pills](https://nixos.org/guides/nix-pills/) - 深入学习 Nix 的教程\n- [nix-shell](https://nixos.org/manual/nix/stable/command-ref/nix-shell.html) - 创建开发环境\n- [nix-build](https://nixos.org/manual/nix/stable/command-ref/nix-build.html) - 构建包\n- [nix-env](https://nixos.org/manual/nix/stable/command-ref/nix-env.html) - 用户环境管理\n- [nixos-rebuild](https://nixos.org/manual/nixos/stable/administration/administration.html) - 系统重构建\n- [NixOS/marketing](https://github.com/nixos/marketing) _(github.com)_\n- [Nix 语言官方文档](https://nixos.org/manual/nix/stable/expressions/language-values.html) _(nixos.org)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/nix.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/nix.md",
+    "generatedAt": "2025-12-16T07:36:11.347Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

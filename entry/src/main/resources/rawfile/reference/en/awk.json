@@ -1,0 +1,897 @@
+{
+  "id": "awk",
+  "title": "=> hel",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "This is a one page quick reference cheat sheet to the [GNU awk](https://www.gnu.org/software/gawk/manual/gawk.html), which covers commonly used awk expressions and commands."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Have a try",
+      "kind": "text",
+      "body": "```shell script {.wrap}\n$ awk -F: '{print $1, $NF}' /etc/passwd"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Have a try",
+      "kind": "code",
+      "lang": "",
+      "code": "\n---\n\n| -             | -                         |\n| ------------- | ------------------------- |\n| `-F:`         | Colon as a separator      |\n| `{...}`       | Awk program               |\n| `print`       | Prints the current record |\n| `$1`          | First field               |\n| `$NF`         | Last field                |\n| `/etc/passwd` | Input data file           |\n\n{.left-text}\n\n### Awk program"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Have a try",
+      "kind": "text",
+      "body": "BEGIN          {<initializations>}\n<pattern 1> {<program actions>}\n<pattern 2> {<program actions>}\n...\nEND            {< final actions >}"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Have a try",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Example"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Have a try",
+      "kind": "text",
+      "body": "awk '\nBEGIN { print \"\\n>>>Start\" }\n!/(login|shutdown)/ { print NR, $0 }\nEND { print \"<<<END\\n\" }\n' /etc/passwd"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Have a try",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Variables {.row-span-2}"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Have a try",
+      "kind": "text",
+      "body": "$1      $2/$(NF-1)    $3/$NF\n▼          ▼           ▼\n┌──────┬──────────────────┬───────┐\n$0/NR ▶ │  ID  │  WEBSITE         │  URI  │\n├──────┼──────────────────┼───────┤\n$0/NR ▶ │  1   │  cheatsheets.zip │  awk  │\n├──────┼──────────────────┼───────┤\n$0/NR ▶ │  2   │  google.com      │  25   │\n└──────┴──────────────────┴───────┘"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Have a try",
+      "kind": "code",
+      "lang": "",
+      "code": "\n---"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{print $1,$NF}' /etc/passwd"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{print NR, $0}' /etc/passwd"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{print $(NF-1)}' /etc/passwd"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{print $1 \"=\" $6}' /etc/passwd"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nSee: [Variables](#awk-variables)\n\n### Awk program examples {.col-span-2 .row-span-2}"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {print \"hello world\"}'        # Prints \"hello world\"\nawk -F: '{print $1}' /etc/passwd         # -F: Specify field separator"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '/root/ {print $1}' /etc/passwd"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: 'BEGIN { print \"uid\"} { print $1 }' /etc/passwd"
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{print $1} END { print \"-done-\"}' /etc/passwd"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Conditions"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '$3>30 {print $1}' /etc/passwd"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nSee: [Conditions](#awk-conditions)\n\n### Generate 1000 spaces"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN{\nwhile (a++ < 1000)\ns=s \" \";\nprint s\n}'"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nSee: [Loops](#awk-loops)\n\n### Arrays"
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nfruits[\"mango\"] = \"yellow\";\nfruits[\"orange\"] = \"orange\"\nfor(fruit in fruits) {\nprint \"The color of \" fruit \" is \" fruits[fruit]\n}\n}'"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nSee: [Arrays](#awk-arrays)\n\n### Functions"
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN{print length(\"hello\")}'"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN{print toupper(\"hello\")}'"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN{print substr(\"hello\", 1, 3)}'"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nSee: [Functions](#awk-functions)\n\n## Awk Variables\n\n### Build-in variables\n\n| -              | -                                                   |\n| -------------- | --------------------------------------------------- |\n| `$0`           | Whole line                                          |\n| `$1, $2...$NF` | First, second… last field                           |\n| `NR`           | `N`umber of `R`ecords                               |\n| `NF`           | `N`umber of `F`ields                                |\n| `OFS`          | `O`utput `F`ield `S`eparator <br> _(default \" \")_   |\n| `FS`           | input `F`ield `S`eparator <br> _(default \" \")_      |\n| `ORS`          | `O`utput `R`ecord `S`eparator <br> _(default \"\\n\")_ |\n| `RS`           | input `R`ecord `S`eparator <br> _(default \"\\n\")_    |\n| `FILENAME`     | Name of the file                                    |\n\n### Expressions\n\n| -                   | -                                  |\n| ------------------- | ---------------------------------- |\n| `$1 == \"root\"`      | First field equals root            |\n| `{print $(NF-1)}`   | Second last field                  |\n| `NR!=1{print $0}`   | From 2nd record                    |\n| `NR > 3`            | From 4th record                    |\n| `NR == 1`           | First record                       |\n| `END{print NR}`     | Total records                      |\n| `BEGIN{print OFMT}` | Output format                      |\n| `{print NR, $0}`    | Line number                        |\n| `{print NR \"\t\" $0}`  | Line number (tab)                  |\n| `{$1 = NR; print}`  | Replace 1st field with line number |\n| `$NF > 4`           | Last field > 4                     |\n| `NR % 2 == 0`       | Even records                       |\n| `NR==10, NR==20`    | Records 10 to 20                   |\n| `BEGIN{print ARGC}` | Total arguments                    |\n| `ORS=NR%5?\",\":\"\\n\"` | Concatenate records                |\n\n### Examples\n\nPrint sum and average"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{sum += $3}\nEND { print sum, sum/NR }\n' /etc/passwd"
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nPrinting parameters"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nfor (i = 1; i < ARGC; i++)\nprint ARGV[i] }' a b c"
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nOutput field separator as a comma"
+    },
+    {
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN { FS=\":\";OFS=\",\"}\n{print $1,$2,$3,$4}' /etc/passwd"
+    },
+    {
+      "id": "s1-34",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nPosition of match"
+    },
+    {
+      "id": "s1-35",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nif (match(\"One Two Three\", \"Tw\"))\nprint RSTART }'"
+    },
+    {
+      "id": "s1-36",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nLength of match"
+    },
+    {
+      "id": "s1-37",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nif (match(\"One Two Three\", \"re\"))\nprint RLENGTH }'"
+    },
+    {
+      "id": "s1-38",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Environment Variables\n\n| -         | -                                                         |\n| --------- | --------------------------------------------------------- |\n| `ARGC`    | Number or arguments                                       |\n| `ARGV`    | Array of arguments                                        |\n| `FNR`     | `F`ile `N`umber of `R`ecords                              |\n| `OFMT`    | Format for numbers <br> _(default \"%.6g\")_                |\n| `RSTART`  | Location in the string                                    |\n| `RLENGTH` | Length of match                                           |\n| `SUBSEP`  | Multi-dimensional array separator <br> _(default \"\\034\")_ |\n| `ARGIND`  | Argument Index                                            |\n\n### GNU awk only\n\n| -             | -                     |\n| ------------- | --------------------- |\n| `ENVIRON`     | Environment variables |\n| `IGNORECASE`  | Ignore case           |\n| `CONVFMT`     | Conversion format     |\n| `ERRNO`       | System errors         |\n| `FIELDWIDTHS` | Fixed width fields    |\n\n### Defining variable"
+    },
+    {
+      "id": "s1-39",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -v var1=\"Hello\" -v var2=\"Wold\" '\nEND {print var1, var2}\n' </dev/null"
+    },
+    {
+      "id": "s1-40",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Use shell variables"
+    },
+    {
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -v varName=\"$PWD\" '\nEND {print varName}' </dev/null"
+    },
+    {
+      "id": "s1-42",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Awk Operators\n\n### Operators\n\n| -                | -           |\n| ---------------- | ----------- |\n| `{print $1}`     | First field |\n| `$2 == \"foo\"`    | Equals      |\n| `$2 != \"foo\"`    | Not equals  |\n| `\"foo\" in array` | In array    |\n\n#### Regular expression\n\n| -               | -                 |\n| --------------- | ----------------- |\n| `/regex/`       | Line matches      |\n| `!/regex/`      | Line not matches  |\n| `$1 ~ /regex/`  | Field matches     |\n| `$1 !~ /regex/` | Field not matches |\n\n#### More conditions\n\n| -                        | -   |\n| ------------------------ | --- |\n| `($2 <= 4 \\|\\| $3 < 20)` | Or  |\n| `($1 == 4 && $3 < 20)`   | And |\n\n### Operations\n\n#### Arithmetic operations\n\n- `+`\n- `-`\n- `*`\n- `/`\n- `%`\n- `++`\n- `--`\n\n{.cols-3 .marker-none}\n\n#### Shorthand assignments\n\n- `+=`\n- `-=`\n- `*=`\n- `/=`\n- `%=`\n\n{.cols-3 .marker-none}\n\n#### Comparison operators\n\n- `==`\n- `!=`\n- `<`\n- `>`\n- `<=`\n- `>=`\n\n{.cols-3 .marker-none}\n\n### Examples"
+    },
+    {
+      "id": "s1-43",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nif (\"foo\" ~ \"^fo+$\")\nprint \"Fooey!\";\n}'"
+    },
+    {
+      "id": "s1-44",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Not match"
+    },
+    {
+      "id": "s1-45",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nif (\"boo\" !~ \"^fo+$\")\nprint \"Boo!\";\n}'"
+    },
+    {
+      "id": "s1-46",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### if in array"
+    },
+    {
+      "id": "s1-47",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nassoc[\"foo\"] = \"bar\";\nassoc[\"bar\"] = \"baz\";\nif (\"foo\" in assoc)\nprint \"Fooey!\";\n}'"
+    },
+    {
+      "id": "s1-48",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Awk Functions\n\n### Common functions {.col-span-2}\n\n| Function              | Description                                                                     |\n| --------------------- | ------------------------------------------------------------------------------- |\n| `index(s,t)`          | Position in string s where string t occurs, 0 if not found                      |\n| `length(s)`           | Length of string s (or $0 if no arg)                                            |\n| `rand`                | Random number between 0 and 1                                                   |\n| `substr(s,index,len)` | Return len-char substring of s that begins at index (counted from 1)            |\n| `srand`               | Set seed for rand and return previous seed                                      |\n| `int(x)`              | Truncate x to integer value                                                     |\n| `split(s,a,fs)`       | Split string s into array a split by fs, returning length of a                  |\n| `match(s,r)`          | Position in string s where regex r occurs, or 0 if not found                    |\n| `sub(r,t,s)`          | Substitute t for first occurrence of regex r in string s (or $0 if s not given) |\n| `gsub(r,t,s)`         | Substitute t for all occurrences of regex r in string s                         |\n| `system(cmd)`         | Execute cmd and return exit status                                              |\n| `tolower(s)`          | String s to lowercase                                                           |\n| `toupper(s)`          | String s to uppercase                                                           |\n| `getline`             | Set $0 to next input record from current input file.                            |\n\n### User defined function"
+    },
+    {
+      "id": "s1-49",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk '\n# Returns minimum number\nfunction find_min(num1, num2){\nif (num1 < num2)\nreturn num1\nreturn num2\n}\n# Returns maximum number\nfunction find_max(num1, num2){\nif (num1 > num2)\nreturn num1\nreturn num2\n}\n# Main function\nfunction main(num1, num2){\nresult = find_min(num1, num2)\nprint \"Minimum =\", result"
+    },
+    {
+      "id": "s1-50",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "result = find_max(num1, num2)\nprint \"Maximum =\", result\n}\n# Script execution starts here\nBEGIN {\nmain(10, 60)\n}\n'"
+    },
+    {
+      "id": "s1-51",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Awk Arrays\n\n### Array with index"
+    },
+    {
+      "id": "s1-52",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\narr[0] = \"foo\";\narr[1] = \"bar\";\nprint(arr[0]); # => foo\ndelete arr[0];\nprint(arr[0]); # => \"\"\n}'"
+    },
+    {
+      "id": "s1-53",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Array with key"
+    },
+    {
+      "id": "s1-54",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nassoc[\"foo\"] = \"bar\";\nassoc[\"bar\"] = \"baz\";\nprint(\"baz\" in assoc); # => 0\nprint(\"foo\" in assoc); # => 1\n}'"
+    },
+    {
+      "id": "s1-55",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Array with split"
+    },
+    {
+      "id": "s1-56",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nsplit(\"foo:bar:baz\", arr, \":\");\nfor (key in arr)\nprint arr[key];\n}'"
+    },
+    {
+      "id": "s1-57",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Array with asort"
+    },
+    {
+      "id": "s1-58",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\narr[0] = 3\narr[1] = 2\narr[2] = 4\nn = asort(arr)\nfor (i = 1; i <= n ; i++)\nprint(arr[i])\n}'"
+    },
+    {
+      "id": "s1-59",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Multi-dimensional"
+    },
+    {
+      "id": "s1-60",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nmultidim[0,0] = \"foo\";\nmultidim[0,1] = \"bar\";\nmultidim[1,0] = \"baz\";\nmultidim[1,1] = \"boo\";\n}'"
+    },
+    {
+      "id": "s1-61",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Multi-dimensional iteration"
+    },
+    {
+      "id": "s1-62",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\narray[1,2]=3;\narray[2,3]=5;\nfor (comb in array) {\nsplit(comb,sep,SUBSEP);\nprint sep[1], sep[2],\narray[sep[1],sep[2]]\n}\n}'"
+    },
+    {
+      "id": "s1-63",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Awk Conditions\n\n### if-else statement"
+    },
+    {
+      "id": "s1-64",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -v count=2 'BEGIN {\nif (count == 1)\nprint \"Yes\";\nelse\nprint \"Huh?\";\n}'"
+    },
+    {
+      "id": "s1-65",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Ternary operator"
+    },
+    {
+      "id": "s1-66",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -v count=2 'BEGIN {\nprint (count==1) ? \"Yes\" : \"Huh?\";\n}'"
+    },
+    {
+      "id": "s1-67",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Exists"
+    },
+    {
+      "id": "s1-68",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nassoc[\"foo\"] = \"bar\";\nassoc[\"bar\"] = \"baz\";\nif (\"foo\" in assoc)\nprint \"Fooey!\";\n}'"
+    },
+    {
+      "id": "s1-69",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Not exists"
+    },
+    {
+      "id": "s1-70",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nassoc[\"foo\"] = \"bar\";\nassoc[\"bar\"] = \"baz\";\nif (\"Huh\" in assoc == 0 )\nprint \"Huh!\";\n}'"
+    },
+    {
+      "id": "s1-71",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### switch"
+    },
+    {
+      "id": "s1-72",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{\nswitch (NR * 2 + 1) {\ncase 3:\ncase \"11\":\nprint NR - 1\nbreak"
+    },
+    {
+      "id": "s1-73",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "case /2[[:digit:]]+/:\nprint NR"
+    },
+    {
+      "id": "s1-74",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "default:\nprint NR + 1"
+    },
+    {
+      "id": "s1-75",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "case -1:\nprint NR * -1\n}\n}' /etc/passwd"
+    },
+    {
+      "id": "s1-76",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Awk Loops\n\n### for...i"
+    },
+    {
+      "id": "s1-77",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nfor (i = 0; i < 10; i++)\nprint \"i=\" i;\n}'"
+    },
+    {
+      "id": "s1-78",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Powers of two between 1 and 100"
+    },
+    {
+      "id": "s1-79",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nfor (i = 1; i <= 100; i *= 2)\nprint i\n}'"
+    },
+    {
+      "id": "s1-80",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### for...in"
+    },
+    {
+      "id": "s1-81",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nassoc[\"key1\"] = \"val1\"\nassoc[\"key2\"] = \"val2\"\nfor (key in assoc)\nprint assoc[key];\n}'"
+    },
+    {
+      "id": "s1-82",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Arguments"
+    },
+    {
+      "id": "s1-83",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nfor (argnum in ARGV)\nprint ARGV[argnum];\n}' a b c"
+    },
+    {
+      "id": "s1-84",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Examples {.row-span-3}\n\n#### Reverse records"
+    },
+    {
+      "id": "s1-85",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{ x[NR] = $0 }\nEND {\nfor (i = NR; i > 0; i--)\nprint x[i]\n}\n' /etc/passwd"
+    },
+    {
+      "id": "s1-86",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Reverse fields"
+    },
+    {
+      "id": "s1-87",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{\nfor (i = NF; i > 0; i--)\nprintf(\"%s \",$i);\nprint \"\"\n}' /etc/passwd"
+    },
+    {
+      "id": "s1-88",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Sum by record"
+    },
+    {
+      "id": "s1-89",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{\ns=0;\nfor (i = 1; i <= NF; i++)\ns += $i;\nprint s\n}' /etc/passwd"
+    },
+    {
+      "id": "s1-90",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Sum whole file"
+    },
+    {
+      "id": "s1-91",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '\n{for (i = 1; i <= NF; i++)\ns += $i;\n};\nEND{print s}\n' /etc/passwd"
+    },
+    {
+      "id": "s1-92",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### while {.row-span-2}"
+    },
+    {
+      "id": "s1-93",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nwhile (a < 10) {\nprint \"- \" \" concatenation: \" a\na++;\n}\n}'"
+    },
+    {
+      "id": "s1-94",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### do...while"
+    },
+    {
+      "id": "s1-95",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk '{\ni = 1\ndo {\nprint $0\ni++\n} while (i <= 5)\n}' /etc/passwd"
+    },
+    {
+      "id": "s1-96",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Break"
+    },
+    {
+      "id": "s1-97",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nbreak_num = 5\nfor (i = 0; i < 10; i++) {\nprint i\nif (i == break_num)\nbreak\n}\n}'"
+    },
+    {
+      "id": "s1-98",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Continue"
+    },
+    {
+      "id": "s1-99",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN {\nfor (x = 0; x <= 10; x++) {\nif (x == 5 || x == 6)\ncontinue\nprintf \"%d \", x\n}\nprint \"\"\n}'"
+    },
+    {
+      "id": "s1-100",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Awk Formatted Printing\n\n### Usage\n\n#### Right align"
+    },
+    {
+      "id": "s1-101",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN{printf \"|%10s|\\n\", \"hello\"}'"
+    },
+    {
+      "id": "s1-102",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "|     hello|"
+    },
+    {
+      "id": "s1-103",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Left align"
+    },
+    {
+      "id": "s1-104",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk 'BEGIN{printf \"|%-10s|\\n\", \"hello\"}'"
+    },
+    {
+      "id": "s1-105",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "|hello     |"
+    },
+    {
+      "id": "s1-106",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Common specifiers\n\n| Character     | Description           |\n| ------------- | --------------------- |\n| `c`           | ASCII character       |\n| `d`           | Decimal integer       |\n| `e`, `E`, `f` | Floating-point format |\n| `o`           | Unsigned octal value  |\n| `s`           | String                |\n| `%`           | Literal %             |\n\n### Space"
+    },
+    {
+      "id": "s1-107",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: '{\nprintf \"%-10s %s\\n\", $1, $(NF-1)\n}' /etc/passwd | head -n 3"
+    },
+    {
+      "id": "s1-108",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nOutputs"
+    },
+    {
+      "id": "s1-109",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "root       /root\nbin        /bin\ndaemon     /sbin"
+    },
+    {
+      "id": "s1-110",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Header"
+    },
+    {
+      "id": "s1-111",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "awk -F: 'BEGIN {\nprintf \"%-10s %s\\n\", \"User\", \"Home\"\nprintf \"%-10s %s\\n\", \"----\",\"----\"}\n{ printf \"%-10s %s\\n\", $1, $(NF-1) }\n' /etc/passwd | head -n 5"
+    },
+    {
+      "id": "s1-112",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\nOutputs"
+    },
+    {
+      "id": "s1-113",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "User       Home\n----       ----\nroot       /root\nbin        /bin\ndaemon     /sbin"
+    },
+    {
+      "id": "s1-114",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Miscellaneous\n\n### Regex Metacharacters\n\n- `\\`\n- `^`\n- `$`\n- `.`\n- `[`\n- `]`\n- `|`\n- `(`\n- `)`\n- `*`\n- `+`\n- `?`\n\n{.cols-3 .marker-none}\n\n### Escape Sequences\n\n| -    | -                   |\n| ---- | ------------------- |\n| `\\b` | Backspace           |\n| `\\f` | Form feed           |\n| `\\n` | Newline (line feed) |\n| `\\r` | Carriage return     |\n| `\\t` | Horizontal tab      |\n| `\\v` | Vertical tab        |\n\n### Run script"
+    },
+    {
+      "id": "s1-115",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "text",
+      "body": "$ cat demo.awk\n#!/usr/bin/awk -f\nBEGIN { x = 23 }\n{ x += 2 }\nEND   { print x }\n$ awk -f demo.awk /etc/passwd\n69"
+    },
+    {
+      "id": "s1-116",
+      "sectionId": "s1",
+      "title": "Getting Started",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## Also see\n\n- [The GNU Awk User's Guide](https://www-zeuthen.desy.de/dv/documentation/unixguide/infohtml/gawk/gawk.html)\n  _(www-zeuthen.desy.de)_\n- [AWK cheatsheet](https://gist.github.com/Rafe/3102414) _(gist.github.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/awk.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/awk.md",
+    "generatedAt": "2025-12-16T07:36:11.564Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

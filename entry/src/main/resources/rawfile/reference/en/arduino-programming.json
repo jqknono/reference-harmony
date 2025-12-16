@@ -1,0 +1,386 @@
+{
+  "id": "arduino-programming",
+  "title": "Arduino Programming",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Basic Structure",
+      "startIndex": 8
+    },
+    {
+      "id": "s3",
+      "title": "Serial Communication",
+      "startIndex": 14
+    },
+    {
+      "id": "s4",
+      "title": "Control Structures",
+      "startIndex": 17
+    },
+    {
+      "id": "s5",
+      "title": "Libraries",
+      "startIndex": 21
+    },
+    {
+      "id": "s6",
+      "title": "Common Functions",
+      "startIndex": 23
+    },
+    {
+      "id": "s7",
+      "title": "Sensors and Modules",
+      "startIndex": 28
+    },
+    {
+      "id": "s8",
+      "title": "Wireless Communication with NRF24L01",
+      "startIndex": 38
+    },
+    {
+      "id": "s9",
+      "title": "Also Read",
+      "startIndex": 40
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "Ardunio programming cheat-sheet for I/O programming and  ardunio board programming."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Gather Necessary Materials",
+      "kind": "text",
+      "body": "• Arduino Board: Any model, such as Arduino Uno, Mega, Nano, etc.\n• USB Cable: Compatible with your Arduino board (commonly USB Type-A to Type-B for Uno).\n• Computer: Windows, macOS, or Linux."
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Install the Arduino IDE",
+      "kind": "text",
+      "body": "• windows/mac/linux\n• Go to the Arduino Software page.\n• Download the os installer.\n• Run the installer and follow the instructions."
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Connect Your Arduino Board",
+      "kind": "text",
+      "body": "• Connect the Arduino board to your computer using the USB cable.\n• The power LED on the Arduino should light up, indicating it’s receiving power."
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Configure the Arduino IDE",
+      "kind": "text",
+      "body": "• Open the Arduino IDE.\n• Select Your Board:\n• Go to Tools > Board and select the model of your Arduino board (e.g., Arduino Uno)."
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Configure the Arduino IDE",
+      "kind": "text",
+      "body": "• Select the Port:"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Configure the Arduino IDE",
+      "kind": "text",
+      "body": "• Go to Tools > Port and select the port that the Arduino is connected to (it usually shows as COMx on Windows,"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Configure the Arduino IDE",
+      "kind": "text",
+      "body": "/dev/cu.usbmodemxxxx on macOS, and /dev/ttyUSBx on Linux)."
+    },
+    {
+      "id": "s2-8",
+      "sectionId": "s2",
+      "title": "Setup and Loop",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "void setup() {\n  // Code here runs once\n}\n\nvoid loop() {\n  // Code here runs repeatedly\n}"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "Comment",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "// Single-line comment\n\n/*\nMulti-line\ncomment\n*/"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "Variable",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "int ledPin = 13; // Integer\nfloat voltage = 5.0; // Floating-point number\nchar letter = 'A'; // Character\nString text = \"Hello\"; // String"
+    },
+    {
+      "id": "s2-11",
+      "sectionId": "s2",
+      "title": "Pin Modes",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "pinMode(pin, mode);"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "Digital I/O",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "digitalWrite(pin, value);\nint value = digitalRead(pin);"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "Analog I/O",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "analogWrite(pin, value);\nint value = analogRead(pin);"
+    },
+    {
+      "id": "s3-14",
+      "sectionId": "s3",
+      "title": "Begin Serial Communication",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "Serial.begin(baudRate);"
+    },
+    {
+      "id": "s3-15",
+      "sectionId": "s3",
+      "title": "Print to Serial Monitor",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "Serial.print(data);\nSerial.println(data);"
+    },
+    {
+      "id": "s3-16",
+      "sectionId": "s3",
+      "title": "Read from Serial Monitor",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "if (Serial.available()) {\n  char data = Serial.read();\n}"
+    },
+    {
+      "id": "s4-17",
+      "sectionId": "s4",
+      "title": "If Statement",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "if (condition) {\n  // Code to execute if condition is true\n} else {\n  // Code to execute if condition is false\n}"
+    },
+    {
+      "id": "s4-18",
+      "sectionId": "s4",
+      "title": "For Loop",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "for (initialization; condition; increment) {\n  // Code to execute\n}"
+    },
+    {
+      "id": "s4-19",
+      "sectionId": "s4",
+      "title": "While Loop",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "while (condition) {\n  // Code to execute\n}"
+    },
+    {
+      "id": "s4-20",
+      "sectionId": "s4",
+      "title": "Functions",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "returnType functionName(parameters) {\n  // Code to execute\n  return value;\n}"
+    },
+    {
+      "id": "s5-21",
+      "sectionId": "s5",
+      "title": "Include a Library",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "#include <LibraryName.h>"
+    },
+    {
+      "id": "s5-22",
+      "sectionId": "s5",
+      "title": "Using a Library",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "#include <Servo.h>\n\nServo myServo;\n\nvoid setup() {\n  myServo.attach(9); // Attach servo to pin 9\n}\n\nvoid loop() {\n  myServo.write(90); // Set servo to 90 degrees\n  delay(1000);\n  myServo.write(0); // Set servo to 0 degrees\n  delay(1000);\n}"
+    },
+    {
+      "id": "s6-23",
+      "sectionId": "s6",
+      "title": "Delay",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "delay(milliseconds);"
+    },
+    {
+      "id": "s6-24",
+      "sectionId": "s6",
+      "title": "Millis",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "unsigned long currentTime = millis();"
+    },
+    {
+      "id": "s6-25",
+      "sectionId": "s6",
+      "title": "Map",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "long outputValue = map(inputValue, fromLow, fromHigh, toLow, toHigh);"
+    },
+    {
+      "id": "s6-26",
+      "sectionId": "s6",
+      "title": "Random",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "long randomValue = random(max);\nlong randomValue = random(min, max);"
+    },
+    {
+      "id": "s6-27",
+      "sectionId": "s6",
+      "title": "Random Seed",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "randomSeed(analogRead(0)); // Seed from analog pin 0"
+    },
+    {
+      "id": "s7-28",
+      "sectionId": "s7",
+      "title": "Reading Temperature with DHT Sensor",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "#include <DHT.h>\n\n#define DHTPIN 2     // Pin which is connected to the DHT sensor\n#define DHTTYPE DHT11   // DHT 11\n\nDHT dht(DHTPIN, DHTTYPE);\n\nvoid setup() {\n  Serial.begin(9600);\n  dht.begin();\n}\n\nvoid loop() {\n  float humidity = dht.readHumidity();\n  float temperature = dht.readTemperature();\n\n  Serial.print(\"Humidity: \");\n  Serial.print(humidity);\n  Serial.print(\" %\\t\");\n  Serial.print(\"Temperature: \");\n  Serial.print(temperature);\n  Serial.println(\" *C\");\n\n  delay(2000);\n}"
+    },
+    {
+      "id": "s7-29",
+      "sectionId": "s7",
+      "title": "Blinking LED",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "const int ledPin = 13;\n\nvoid setup() {\n  pinMode(ledPin, OUTPUT);\n}\n\nvoid loop() {\n  digitalWrite(ledPin, HIGH);  // Turn the LED on\n  delay(1000);                 // Wait for 1 second\n  digitalWrite(ledPin, LOW);   // Turn the LED off\n  delay(1000);                 // Wait for 1 second\n}"
+    },
+    {
+      "id": "s7-30",
+      "sectionId": "s7",
+      "title": "Read Button Input",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "const int buttonPin = 2;  // Pin where the push button is connected\nconst int ledPin = 13;    // Pin where the LED is connected\n\nvoid setup() {\n  pinMode(buttonPin, INPUT);  // Set the button pin as an input\n  pinMode(ledPin, OUTPUT);    // Set the LED pin as an output\n}\n\nvoid loop() {\n  int buttonState = digitalRead(buttonPin);  // Read the state of the button\n\n  if (buttonState == HIGH) {\n    digitalWrite(ledPin, HIGH);  // Turn the LED on\n  } else {\n    digitalWrite(ledPin, LOW);   // Turn the LED off\n  }\n}"
+    },
+    {
+      "id": "s7-31",
+      "sectionId": "s7",
+      "title": "Analog Input",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "const int potPin = A0;    // Pin where the potentiometer is connected\nconst int ledPin = 9;     // Pin where the LED is connected\n\nvoid setup() {\n  pinMode(ledPin, OUTPUT);  // Set the LED pin as an output\n}\n\nvoid loop() {\n  int potValue = analogRead(potPin);  // Read the potentiometer value\n  int ledBrightness = map(potValue, 0, 1023, 0, 255);  // Map the value to a range from 0 to 255\n\n  analogWrite(ledPin, ledBrightness);  // Set the brightness of the LED\n  delay(10);  // Small delay to make the LED change smoothly\n}"
+    },
+    {
+      "id": "s7-32",
+      "sectionId": "s7",
+      "title": "Serial Communication",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "void setup() {\n  Serial.begin(9600);  // Start the serial communication at 9600 baud rate\n}\n\nvoid loop() {\n  Serial.println(\"Hello, world!\");  // Send a message to the serial monitor\n  delay(1000);  // Wait for 1 second\n}"
+    },
+    {
+      "id": "s7-33",
+      "sectionId": "s7",
+      "title": "Temperature Sensor",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "const int tempPin = A0;  // Pin where the TMP36 sensor is connected\n\nvoid setup() {\n  Serial.begin(9600);  // Start the serial communication at 9600 baud rate\n}\n\nvoid loop() {\n  int tempValue = analogRead(tempPin);  // Read the sensor value\n  float voltage = tempValue * (5.0 / 1023.0);  // Convert the value to voltage\n  float temperatureC = (voltage - 0.5) * 100;  // Convert the voltage to temperature in Celsius\n\n  Serial.print(\"Temperature: \");\n  Serial.print(temperatureC);\n  Serial.println(\" C\");\n  delay(1000);  // Wait for 1 second\n}"
+    },
+    {
+      "id": "s7-34",
+      "sectionId": "s7",
+      "title": "RGB LED Control",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "const int redPin = 9;\nconst int greenPin = 10;\nconst int bluePin = 11;\n\nconst int potRedPin = A0;\nconst int potGreenPin = A1;\nconst int potBluePin = A2;\n\nvoid setup() {\n  pinMode(redPin, OUTPUT);\n  pinMode(greenPin, OUTPUT);\n  pinMode(bluePin, OUTPUT);\n}\n\nvoid loop() {\n  int redValue = analogRead(potRedPin);\n  int greenValue = analogRead(potGreenPin);\n  int blueValue = analogRead(potBluePin);\n\n  analogWrite(redPin, map(redValue, 0, 1023, 0, 255));\n  analogWrite(greenPin, map(greenValue, 0, 1023, 0, 255));\n  analogWrite(bluePin, map(blueValue, 0, 1023, 0, 255));\n\n  delay(10);\n}"
+    },
+    {
+      "id": "s7-35",
+      "sectionId": "s7",
+      "title": "Ultrasonic Sensor",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "const int trigPin = 9;\nconst int echoPin = 10;\n\nvoid setup() {\n  Serial.begin(9600);\n  pinMode(trigPin, OUTPUT);\n  pinMode(echoPin, INPUT);\n}\n\nvoid loop() {\n  long duration;\n  int distance;\n\n  digitalWrite(trigPin, LOW);\n  delayMicroseconds(2);\n  digitalWrite(trigPin, HIGH);\n  delayMicroseconds(10);\n  digitalWrite(trigPin, LOW);\n\n  duration = pulseIn(echoPin, HIGH);\n  distance = duration * 0.034 / 2;\n\n  Serial.print(\"Distance: \");\n  Serial.print(distance);\n  Serial.println(\" cm\");\n  delay(1000);\n}"
+    },
+    {
+      "id": "s7-36",
+      "sectionId": "s7",
+      "title": "Controlling a Servo Motor",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "#include <Servo.h>\n\nServo myServo;\nconst int potPin = A0;\n\nvoid setup() {\n  myServo.attach(9);  // Attach the servo to pin 9\n}\n\nvoid loop() {\n  int potValue = analogRead(potPin);  // Read the potentiometer value\n  int angle = map(potValue, 0, 1023, 0, 180);  // Map the value to an angle between 0 and 180\n\n  myServo.write(angle);  // Set the servo position\n  delay(15);  // Small delay for the servo to reach the position\n}"
+    },
+    {
+      "id": "s7-37",
+      "sectionId": "s7",
+      "title": "Displaying Text on an LCD",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "#include <LiquidCrystal.h>\n\n// Initialize the library with the numbers of the interface pins\nLiquidCrystal lcd(12, 11, 5, 4, 3, 2);\n\nvoid setup() {\n  // Set up the LCD's number of columns and rows\n  lcd.begin(16, 2);\n  // Print a message to the LCD\n  lcd.print(\"Hello, World!\");\n}\n\nvoid loop() {\n  // Set the cursor to column 0, line 1 (second row)\n  lcd.setCursor(0, 1);\n  // Print the number of seconds since reset\n  lcd.print(millis() / 1000);\n}"
+    },
+    {
+      "id": "s8-38",
+      "sectionId": "s8",
+      "title": "Transmitter Code",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "#include <SPI.h>\n#include <nRF24L01.h>\n#include <RF24.h>\n\nRF24 radio(9, 10);  // CE, CSN pins\n\nconst byte address[6] = \"00001\";  // Address\n\nvoid setup() {\n  radio.begin();\n  radio.openWritingPipe(address);\n  radio.setPALevel(RF24_PA_MIN);\n  radio.stopListening();\n}\n\nvoid loop() {\n  const char text[] = \"Hello\";\n  radio.write(&text, sizeof(text));\n  delay(1000);\n}"
+    },
+    {
+      "id": "s8-39",
+      "sectionId": "s8",
+      "title": "Receiver Code",
+      "kind": "code",
+      "lang": "cpp",
+      "code": "#include <SPI.h>\n#include <nRF24L01.h>\n#include <RF24.h>\n\nRF24 radio(9, 10);  // CE, CSN pins\n\nconst byte address[6] = \"00001\";  // Address\n\nvoid setup() {\n  Serial.begin(9600);\n  radio.begin();\n  radio.openReadingPipe(0, address);\n  radio.setPALevel(RF24_PA_MIN);\n  radio.startListening();\n}\n\nvoid loop() {\n  if (radio.available()) {\n    char text[32] = \"\";\n    radio.read(&text, sizeof(text));\n    Serial.println(text);\n  }\n}"
+    },
+    {
+      "id": "s9-40",
+      "sectionId": "s9",
+      "title": "Also Read",
+      "kind": "text",
+      "body": "• [Ardunio](https://www.arduino.cc/en/software)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/arduino-programming.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/arduino-programming.md",
+    "generatedAt": "2025-12-16T07:36:11.552Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

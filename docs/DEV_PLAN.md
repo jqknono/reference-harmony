@@ -1,7 +1,8 @@
 # 快速参考（Quick Reference）鸿蒙应用开发计划（MVP）
 
 ## 目标
-- 将 `https://github.com/jaywcjlove/reference/tree/main/docs` 下的 Markdown 转成“便于手机阅读/记忆”的卡片。
+- 支持中英双语文档：中文数据源 `https://github.com/jaywcjlove/reference/tree/main/docs`，英文数据源 `https://github.com/Fechin/reference/tree/main/source/_posts`。
+- 将上游 Markdown 转成“便于手机阅读/记忆”的卡片 JSON，并离线打包到 `rawfile`。
 - App 底部提供导航（Tabs），并在阅读页底部提供“章节快速跳转”。
 
 ## MVP 范围（1~3 天可跑通）
@@ -12,10 +13,13 @@
 - 基础脚手架脚本：拉取 GitHub docs 并生成 JSON（后续再优化解析质量）。
 
 ## 数据流设计
-1) `tools/sync_reference_docs.mjs` 从 GitHub 拉取 `docs/**/*.md`
+1) `tools/sync_reference_docs.mjs` 优先从本地 submodule 读取 Markdown（没有则通过 GitHub API 拉取）
 2) 解析 Markdown -> `{ sections[], cards[] }` JSON
-3) 输出到 `entry/src/main/resources/rawfile/reference/*.json` + `manifest.json`
+3) 输出到 `entry/src/main/resources/rawfile/reference/{zh|en}/*.json` + `manifest.json`
 4) App 运行时通过 `resourceManager.getRawFileContent()` 读取 JSON 并渲染
+
+## Submodules（推荐）
+- 初始化/更新：`git submodule update --init --recursive`
 
 ## 迭代路线（建议）
 1. **解析增强**：更好识别表格/代码块/多级标题，减少“碎卡片”
@@ -29,10 +33,10 @@
 - 数据模型：`entry/src/main/ets/common/referenceModels.ets`
 - 数据读取：`entry/src/main/ets/common/referenceRepository.ets`
 - 卡片组件：`entry/src/main/ets/components/ReferenceCard.ets`
-- 示例数据：`entry/src/main/resources/rawfile/reference/manifest.json`
+- 示例数据：`entry/src/main/resources/rawfile/reference/zh/manifest.json`、`entry/src/main/resources/rawfile/reference/en/manifest.json`
 
 ## 常用命令
-- 同步并生成数据：`node tools/sync_reference_docs.mjs`
+- 同步并生成数据：`node tools/sync_reference_docs.mjs`（默认 `--mode=auto`，有 submodule 就走本地）
 - 构建（需要 Java/JDK）：`F:\\huawei\\command-line-tools\\bin\\hvigorw.bat --cwd . assembleApp -p product=default -p buildMode=debug`
 
 ## 开发环境（建议）

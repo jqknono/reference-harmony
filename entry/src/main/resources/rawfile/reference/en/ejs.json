@@ -1,0 +1,663 @@
+{
+  "id": "ejs",
+  "title": "EJS",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Get Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Docs",
+      "startIndex": 27
+    },
+    {
+      "id": "s3",
+      "title": "Client-side support",
+      "startIndex": 33
+    },
+    {
+      "id": "s4",
+      "title": "Options",
+      "startIndex": 35
+    },
+    {
+      "id": "s5",
+      "title": "Tags",
+      "startIndex": 53
+    },
+    {
+      "id": "s6",
+      "title": "CLI",
+      "startIndex": 62
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "EJS(Embedded JavaScript) is a simple templating language that lets you generate HTML markup with plain JavaScript."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Hello world",
+      "kind": "text",
+      "body": "#### install"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Hello world",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ npm install ejs"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Hello world",
+      "kind": "text",
+      "body": "#### hello.ejs"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Hello world",
+      "kind": "code",
+      "lang": "html",
+      "code": "<% if (user.email) { %>\n  <h1><%= user.email %></h1>\n<% } %>"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Hello world",
+      "kind": "text",
+      "body": "#### CLI"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Hello world",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ejs hello.ejs -o hello.html"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Render with Data",
+      "kind": "code",
+      "lang": "js",
+      "code": "let ejs = require('ejs');\n\nlet people = ['geddy', 'neil', 'alex'];\nlet tpl = '<%= people.join(\", \"); %>';\n\nlet html = ejs.render(tpl, { people: people });\nconsole.log(html);"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Render with Data",
+      "kind": "text",
+      "body": "Pass EJS a template string and some data."
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Browser Support",
+      "kind": "code",
+      "lang": "html",
+      "code": "<script src=\"https://unpkg.com/ejs\"></script>\n<script>\n  let people = ['geddy', 'neil', 'alex'];\n  let html = ejs.render('<%= people.join(\", \"); %>', { people: people });\n  console.log(html);\n</script>"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Browser Support",
+      "kind": "text",
+      "body": "Use ejs in a script tag."
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Variables",
+      "kind": "qa",
+      "front": "`<%= var %>`",
+      "back": "Prints the value of the variable"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Variables",
+      "kind": "qa",
+      "front": "`<%- var %>`",
+      "back": "Prints without HTML escaping"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "CLI",
+      "kind": "text",
+      "body": "Render and specify an output file."
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "CLI",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ejs hello.ejs -o hello.html"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "CLI",
+      "kind": "text",
+      "body": "Feed it a template file and a data file"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "CLI",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ejs hello.ejs -f data.json -o hello.html"
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Comments",
+      "kind": "code",
+      "lang": "html",
+      "code": "<%# This line will denote a comment %>"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Comments",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Comments",
+      "kind": "code",
+      "lang": "html",
+      "code": "<%# This is a multi-line EJS comment.\n    It can span multiple lines,\n    but will not be displayed\n    in the final HTML output.\n%>"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Method",
+      "kind": "code",
+      "lang": "js",
+      "code": "let ejs = require('ejs');\nlet template = ejs.compile(str, options);\n\ntemplate(data);\n// => Rendered HTML string\n\nejs.render(str, data, options);\n// => Rendered HTML string\n\nejs.renderFile(filename, data, options, function (err, str) {\n  // str => Rendered HTML string\n});"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Including Files",
+      "kind": "code",
+      "lang": "html",
+      "code": "<%- include('partials/navbar.ejs') %>"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "Including Files",
+      "kind": "text",
+      "body": "Include a template with data:"
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "Including Files",
+      "kind": "code",
+      "lang": "html",
+      "code": "<% include('header', { title: 'My Page' }) %>"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "Including Files",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "Including Files",
+      "kind": "code",
+      "lang": "html",
+      "code": "<ul>\n  <% users.forEach(function(user){ %>\n    <%- include('item', {user: user}); %>\n  <% }); %>\n</ul>"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Including Files",
+      "kind": "text",
+      "body": "To include a template, needs a file name option, paths are relative"
+    },
+    {
+      "id": "s2-27",
+      "sectionId": "s2",
+      "title": "Conditionals",
+      "kind": "code",
+      "lang": "html",
+      "code": "<% if (userLoggedIn) { %>\n  <p>Welcome, <%= username %>!</p>\n<% } else { %>\n  <p>Please log in.</p>\n<% } %>"
+    },
+    {
+      "id": "s2-28",
+      "sectionId": "s2",
+      "title": "Using loops",
+      "kind": "code",
+      "lang": "html",
+      "code": "<ul>\n  <% for(i=0; i < users.length; i++) { %>\n    <li><%= users[i].username %></li>\n  <% } %>\n</ul>"
+    },
+    {
+      "id": "s2-29",
+      "sectionId": "s2",
+      "title": "Custom delimiters",
+      "kind": "code",
+      "lang": "js",
+      "code": "let ejs = require('ejs'),\n  users = ['geddy', 'neil', 'alex'];\n\n// Just one template\nejs.render('<?= users.join(\" | \"); ?>', { users: users }, { delimiter: '?' });\n// => 'geddy | neil | alex'\n\n// Or globally\nejs.delimiter = '$';\nejs.render('<$= users.join(\" | \"); $>', { users: users });\n// => 'geddy | neil | alex'"
+    },
+    {
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "Caching",
+      "kind": "code",
+      "lang": "js",
+      "code": "let ejs = require('ejs'),\n  LRU = require('lru-cache');\n\n// LRU cache with 100-item limit\nejs.cache = LRU(100);"
+    },
+    {
+      "id": "s2-31",
+      "sectionId": "s2",
+      "title": "Custom file loader",
+      "kind": "code",
+      "lang": "js",
+      "code": "let ejs = require('ejs');\nlet myFileLoader = function (filePath) {\n  return 'myFileLoader: ' + fs.readFileSync(filePath);\n};\n\nejs.fileLoader = myFileLoader;"
+    },
+    {
+      "id": "s2-32",
+      "sectionId": "s2",
+      "title": "Layouts",
+      "kind": "code",
+      "lang": "html",
+      "code": "<%- include('header'); -%>\n<h1>\n  Title\n</h1>\n<p>\n  My page\n</p>\n<%- include('footer'); -%>"
+    },
+    {
+      "id": "s3-33",
+      "sectionId": "s3",
+      "title": "Example",
+      "kind": "code",
+      "lang": "html",
+      "code": "<div id=\"output\"></div>\n<script src=\"ejs.min.js\"></script>\n<script>\n  let people = ['geddy', 'neil', 'alex'],\n    html = ejs.render('<%= people.join(\", \"); %>', { people: people });\n  // With jQuery:\n  $('#output').html(html);\n  // Vanilla JS:\n  document.getElementById('output').innerHTML = html;\n</script>"
+    },
+    {
+      "id": "s3-34",
+      "sectionId": "s3",
+      "title": "Caveats",
+      "kind": "code",
+      "lang": "js",
+      "code": "let str = \"Hello <%= include('file', {person: 'John'}); %>\",\n  fn = ejs.compile(str, { client: true });\n\n// include callback\nfn(data, null, function (path, d) {\n  // path -> 'file'\n  // d -> {person: 'John'}\n  // Put your code here\n  // Return the contents of file as a string\n}); // returns rendered string"
+    },
+    {
+      "id": "s4-35",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "cache",
+      "back": "Compiled functions are cached, requires filename"
+    },
+    {
+      "id": "s4-36",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "filename",
+      "back": "Used by cache to key caches, and for includes"
+    },
+    {
+      "id": "s4-37",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "root",
+      "back": "Set project root for includes with an absolute path (e.g. `/file.ejs`). Can be an array to try to resolve include from multiple directories."
+    },
+    {
+      "id": "s4-38",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "views",
+      "back": "An array of paths to use when resolving includes with relative paths."
+    },
+    {
+      "id": "s4-39",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "context",
+      "back": "Function execution context"
+    },
+    {
+      "id": "s4-40",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "compileDebug",
+      "back": "When false, no debug instrumentation is compiled"
+    },
+    {
+      "id": "s4-41",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "client",
+      "back": "Returns standalone compiled function"
+    },
+    {
+      "id": "s4-42",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "delimiter",
+      "back": "Character to use for inner delimiter, by default `%`"
+    },
+    {
+      "id": "s4-43",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "openDelimiter",
+      "back": "Character to use for opening delimiter, by default `<`"
+    },
+    {
+      "id": "s4-44",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "closeDelimiter",
+      "back": "Character to use for closing delimiter, by default `>`"
+    },
+    {
+      "id": "s4-45",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "debug",
+      "back": "Outputs generated function body"
+    },
+    {
+      "id": "s4-46",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "strict",
+      "back": "When set to `true`, generated function is in strict mode"
+    },
+    {
+      "id": "s4-47",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "\\_with",
+      "back": "Whether or not to use with() {} constructs. If `false`, then the locals will be stored in the locals object. (Implies `--strict`)"
+    },
+    {
+      "id": "s4-48",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "localsName",
+      "back": "Name to use for the object storing local variables when not using with defaults to `locals`"
+    },
+    {
+      "id": "s4-49",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "rmWhitespace",
+      "back": "Remove all safe-to-remove whitespace, including leading and trailing whitespace. It also enables a safer version of `-%> `line slurping for all scriptlet tags (it does not strip new lines of tags in the middle of a line)."
+    },
+    {
+      "id": "s4-50",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "escape",
+      "back": "The escaping function used with `<%=` construct. It is used in rendering and is `.toString()`ed in the generation of client functions. (By default escapes XML)."
+    },
+    {
+      "id": "s4-51",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "outputFunctionName",
+      "back": "Set to a string (e.g., 'echo' or 'print') for a function to print output inside scriptlet tags."
+    },
+    {
+      "id": "s4-52",
+      "sectionId": "s4",
+      "title": "Options list",
+      "kind": "qa",
+      "front": "async",
+      "back": "When true, EJS will use an async function for rendering. (Depends on async/await support in the JS runtime."
+    },
+    {
+      "id": "s5-53",
+      "sectionId": "s5",
+      "title": "Tags list",
+      "kind": "qa",
+      "front": "`<%`",
+      "back": "'Scriptlet' tag, for control-flow, no output"
+    },
+    {
+      "id": "s5-54",
+      "sectionId": "s5",
+      "title": "Tags list",
+      "kind": "qa",
+      "front": "<code><%\\_</code>",
+      "back": "'Whitespace Slurping' Scriptlet tag, strips all whitespace before it"
+    },
+    {
+      "id": "s5-55",
+      "sectionId": "s5",
+      "title": "Tags list",
+      "kind": "qa",
+      "front": "`<%=`",
+      "back": "Outputs the value into the template (HTML escaped)"
+    },
+    {
+      "id": "s5-56",
+      "sectionId": "s5",
+      "title": "Tags list",
+      "kind": "qa",
+      "front": "`<%-`",
+      "back": "Outputs the unescaped value into the template"
+    },
+    {
+      "id": "s5-57",
+      "sectionId": "s5",
+      "title": "Tags list",
+      "kind": "qa",
+      "front": "`<%#`",
+      "back": "Comment tag, no execution, no output"
+    },
+    {
+      "id": "s5-58",
+      "sectionId": "s5",
+      "title": "Tags list",
+      "kind": "qa",
+      "front": "`<%%`",
+      "back": "Outputs a literal `<%`"
+    },
+    {
+      "id": "s5-59",
+      "sectionId": "s5",
+      "title": "Tags list",
+      "kind": "qa",
+      "front": "`%>`",
+      "back": "Plain ending tag"
+    },
+    {
+      "id": "s5-60",
+      "sectionId": "s5",
+      "title": "Tags list",
+      "kind": "qa",
+      "front": "`-%>`",
+      "back": "Trim-mode ('newline slurp') tag, trims following newline"
+    },
+    {
+      "id": "s5-61",
+      "sectionId": "s5",
+      "title": "Tags list",
+      "kind": "qa",
+      "front": "<code>\\_%></code>",
+      "back": "'Whitespace Slurping' ending tag, removes all whitespace after it"
+    },
+    {
+      "id": "s6-62",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`cache`",
+      "back": "Compiled functions are cached, requires filename"
+    },
+    {
+      "id": "s6-63",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-o` / `--output-file FILE`",
+      "back": "Write the rendered output to FILE rather than stdout."
+    },
+    {
+      "id": "s6-64",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-f` / `--data-file FILE`",
+      "back": "Must be JSON-formatted. Use parsed input from FILE as data for rendering."
+    },
+    {
+      "id": "s6-65",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-i` / `--data-input STRING`",
+      "back": "Must be JSON-formatted and URI-encoded. Use parsed input from STRING as data for rendering."
+    },
+    {
+      "id": "s6-66",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-m` / `--delimiter CHARACTER`",
+      "back": "Use CHARACTER with angle brackets for open/close (defaults to %)."
+    },
+    {
+      "id": "s6-67",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-p` / `--open-delimiter CHARACTER`",
+      "back": "Use CHARACTER instead of left angle bracket to open."
+    },
+    {
+      "id": "s6-68",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-c` / `--close-delimiter CHARACTER`",
+      "back": "Use CHARACTER instead of right angle bracket to close."
+    },
+    {
+      "id": "s6-69",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-s` / `--strict`",
+      "back": "When set to `true`, generated function is in strict mode"
+    },
+    {
+      "id": "s6-70",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-n` / `--no-with`",
+      "back": "Use `locals` object for vars rather than using `with` (implies --strict)."
+    },
+    {
+      "id": "s6-71",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-l` / `--locals-name`",
+      "back": "Name to use for the object storing local variables when not using `with`."
+    },
+    {
+      "id": "s6-72",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-w` / `--rm-whitespace`",
+      "back": "Remove all safe-to-remove whitespace, including leading and trailing whitespace."
+    },
+    {
+      "id": "s6-73",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-d` / `--debug`",
+      "back": "Outputs generated function body"
+    },
+    {
+      "id": "s6-74",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-h` / `--help`",
+      "back": "Display this help message."
+    },
+    {
+      "id": "s6-75",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "qa",
+      "front": "`-V` / `-v` / `--version`",
+      "back": "Display the EJS version."
+    },
+    {
+      "id": "s6-76",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "text",
+      "body": "Examples of use :"
+    },
+    {
+      "id": "s6-77",
+      "sectionId": "s6",
+      "title": "CLI list",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ejs -p [ -c ] ./template_file.ejs -o ./output.html\n$ ejs ./test/fixtures/user.ejs name=Lerxst\n$ ejs -n -l _ ./some_template.ejs -f ./data_file.json"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/ejs.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/ejs.md",
+    "generatedAt": "2025-12-16T07:36:11.611Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

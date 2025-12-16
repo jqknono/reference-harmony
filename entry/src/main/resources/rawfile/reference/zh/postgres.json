@@ -1,0 +1,1163 @@
+{
+  "id": "postgres",
+  "title": "postgres",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "PostgreSQL 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "[PostgreSQL](https://www.postgresql.org/docs/current/) 备忘清单为您提供了常用的 PostgreSQL 命令和语句。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---------------"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "入门",
+      "kind": "text",
+      "body": "切换和连接"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "入门",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sudo -u postgres psql"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "入门",
+      "kind": "text",
+      "body": "列出所有数据库"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "入门",
+      "kind": "code",
+      "lang": "shell",
+      "code": "postgres=# \\l"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "入门",
+      "kind": "text",
+      "body": "连接到名为 postgres 的数据库"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "入门",
+      "kind": "code",
+      "lang": "shell",
+      "code": "postgres=# \\c postgres"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "入门",
+      "kind": "text",
+      "body": "断开"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "入门",
+      "kind": "code",
+      "lang": "shell",
+      "code": "postgres=# \\q\npostgres=# \\!"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "psql 命令",
+      "kind": "text",
+      "body": "参数 | 示例 | 说明\n:- |- | -\n`[-d] <database>`   | psql -d mydb                                 | 连接到数据库\n`-U`                | psql -U john mydb                            | 以特定用户身份连接\n`-h` `-p`           | psql -h localhost -p 5432 mydb               | 连接到主机/端口\n`-U` `-h` `-p` `-d` | psql -U admin -h 192.168.1.5 -p 2506 -d mydb | 连接远程 PostgreSQL\n`-W`                | psql -W mydb                                 | 强制密码\n`-c`                | psql -c '\\c postgres' -c '\\dt'               | 执行 SQL 查询或命令\n`-H`                | psql -c \"\\l+\" -H postgres > database.html    | 生成 HTML 报告\n`-l`                | psql -l                                      | 列出所有数据库\n`-f`                | psql mydb -f file.sql                        | 从文件执行命令\n`-V`                | psql -V                                      | 打印 psql 版本\n<!--rehype:className=show-header-->"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "获得帮助",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`\\h`        | SQL 命令语法帮助\n`\\h` DELETE | DELETE SQL 语句语法\n`\\?`        | PostgreSQL 命令列表"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "获得帮助",
+      "kind": "text",
+      "body": "在 PostgreSQL 控制台中运行"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "获得帮助",
+      "kind": "text",
+      "body": "PostgreSQL 工作\n-------"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "text",
+      "body": "显示版本"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SHOW SERVER_VERSION;"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "text",
+      "body": "显示系统状态"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\conninfo"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "text",
+      "body": "显示环境变量"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SHOW ALL;"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "text",
+      "body": "列出用户"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT rolname FROM pg_roles;"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "text",
+      "body": "显示当前用户"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT current_user;"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "text",
+      "body": "显示当前用户的权限"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\du"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "text",
+      "body": "显示当前数据库"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT current_database();"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "text",
+      "body": "显示数据库中的所有表"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\dt"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "text",
+      "body": "列出函数"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "Recon 观察",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\df <schema>"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "text",
+      "body": "列出数据库"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\l"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "text",
+      "body": "连接到数据库"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\c <database_name>"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "text",
+      "body": "显示当前数据库"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT current_database();"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "text",
+      "body": "[创建数据库](http://www.postgresql.org/docs/current/static/sql-createdatabase.html)"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE DATABASE <database_name> WITH OWNER <username>;"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "text",
+      "body": "[删除数据库](http://www.postgresql.org/docs/current/static/sql-dropdatabase.html)"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DROP DATABASE IF EXISTS <database_name>;"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "text",
+      "body": "[重命名数据库](http://www.postgresql.org/docs/current/static/sql-alterdatabase.html)"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "Databases 数据库",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER DATABASE <old_name> RENAME TO <new_name>;"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "text",
+      "body": "列出当前数据库中的表"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\dt\nSELECT table_schema,table_name FROM information_schema.tables ORDER BY table_schema,table_name;"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "text",
+      "body": "全局列表"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\dt *.*.\nSELECT * FROM pg_catalog.pg_tables"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "text",
+      "body": "列出表结构"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\d <table_name>\n\\d+ <table_name>\nSELECT column_name, data_type, character_maximum_length\nFROM INFORMATION_SCHEMA.COLUMNS\nWHERE table_name = '<table_name>';"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "text",
+      "body": "[创建表](http://www.postgresql.org/docs/current/static/sql-createtable.html)"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE TABLE <table_name>(\n  <column_name> <column_type>,\n  <column_name> <column_type>\n);"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "text",
+      "body": "创建表，主键自增"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE TABLE <table_name> (\n  <column_name> SERIAL PRIMARY KEY\n);"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "text",
+      "body": "[删除表](http://www.postgresql.org/docs/current/static/sql-droptable.html)"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "Tables 表",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DROP TABLE IF EXISTS <table_name> CASCADE;"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "text",
+      "body": "成为 postgres 用户，如果您有权限错误"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sudo su - postgres\npsql"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "text",
+      "body": "[授予](http://www.postgresql.org/docs/current/static/sql-grant.html) 对数据库的所有权限"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "code",
+      "lang": "sql",
+      "code": "GRANT ALL PRIVILEGES ON DATABASE <db_name> TO <user_name>;"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "text",
+      "body": "授予数据库连接权限"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "code",
+      "lang": "sql",
+      "code": "GRANT CONNECT ON DATABASE <db_name> TO <user_name>;"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "text",
+      "body": "授予架构权限"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "code",
+      "lang": "sql",
+      "code": "GRANT USAGE ON SCHEMA public TO <user_name>;"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "text",
+      "body": "授予函数权限"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "code",
+      "lang": "sql",
+      "code": "GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO <user_name>;"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "text",
+      "body": "授予在所有表上选择、更新、插入、删除的权限"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "code",
+      "lang": "sql",
+      "code": "GRANT SELECT, UPDATE, INSERT ON ALL TABLES IN SCHEMA public TO <user_name>;"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "text",
+      "body": "在表上授予权限"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "code",
+      "lang": "sql",
+      "code": "GRANT SELECT, UPDATE, INSERT ON <table_name> TO <user_name>;"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "text",
+      "body": "授予对表的选择权限"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "Permissions 权限",
+      "kind": "code",
+      "lang": "sql",
+      "code": "GRANT SELECT ON ALL TABLES IN SCHEMA public TO <user_name>;"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "text",
+      "body": "[添加栏目](http://www.postgresql.org/docs/current/static/sql-altertable.html)"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE <table_name> IF EXISTS\nADD <column_name> <data_type> [<constraints>];"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "text",
+      "body": "更新栏"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE <table_name> IF EXISTS\nALTER <column_name> TYPE <data_type> [<constraints>];"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "text",
+      "body": "删除列"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE <table_name> IF EXISTS\nDROP <column_name>;"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "text",
+      "body": "将列更新为自增主键"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER TABLE <table_name>\nADD COLUMN <column_name> SERIAL PRIMARY KEY;"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "text",
+      "body": "使用自动递增的主键插入表中"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "Columns 列",
+      "kind": "code",
+      "lang": "sql",
+      "code": "INSERT INTO <table_name>\nVALUES (DEFAULT, <value1>);\nINSERT INTO <table_name> (<column1_name>,<column2_name>)\nVALUES ( <value1>,<value2> );"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "text",
+      "body": "[选择](http://www.postgresql.org/docs/current/static/sql-select.html) 所有数据"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT * FROM <table_name>;"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "text",
+      "body": "读取一行数据"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT * FROM <table_name> LIMIT 1;"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "text",
+      "body": "搜索数据"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT * FROM <table_name> WHERE <column_name> = <value>;"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "text",
+      "body": "[插入](http://www.postgresql.org/docs/current/static/sql-insert.html) 数据"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "code",
+      "lang": "sql",
+      "code": "INSERT INTO <table_name> VALUES( <value_1>, <value_2> );"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "text",
+      "body": "[更新](http://www.postgresql.org/docs/current/static/sql-update.html) 数据"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "code",
+      "lang": "sql",
+      "code": "UPDATE <table_name>\nSET <column_1> = <value_1>, <column_2> = <value_2>\nWHERE <column_1> = <value>;"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "text",
+      "body": "[删除](http://www.postgresql.org/docs/current/static/sql-delete.html) 所有数据"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DELETE FROM <table_name>;"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "text",
+      "body": "删除特定数据"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "Data 数据",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DELETE FROM <table_name>\nWHERE <column_name> = <value>;"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "Users 用户",
+      "kind": "text",
+      "body": "列出角色"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "Users 用户",
+      "kind": "code",
+      "lang": "sql",
+      "code": "SELECT rolname FROM pg_roles;"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "Users 用户",
+      "kind": "text",
+      "body": "[创建用户](http://www.postgresql.org/docs/current/static/sql-createuser.html)"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "Users 用户",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE USER <user_name> WITH PASSWORD '<password>';"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "Users 用户",
+      "kind": "text",
+      "body": "[删除用户](http://www.postgresql.org/docs/current/static/sql-dropuser.html)"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "Users 用户",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DROP USER IF EXISTS <user_name>;"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "Users 用户",
+      "kind": "text",
+      "body": "[更改](http://www.postgresql.org/docs/current/static/sql-alterrole.html) 用户密码"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "Users 用户",
+      "kind": "code",
+      "lang": "sql",
+      "code": "ALTER ROLE <user_name> WITH PASSWORD '<password>';"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "Schema",
+      "kind": "text",
+      "body": "列出 Schemas"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "Schema",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\dn\nSELECT schema_name FROM information_schema.schemata;\nSELECT nspname FROM pg_catalog.pg_namespace;"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "Schema",
+      "kind": "text",
+      "body": "[创建架构](http://www.postgresql.org/docs/current/static/sql-createschema.html)"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "Schema",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE SCHEMA IF NOT EXISTS <schema_name>;"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "Schema",
+      "kind": "text",
+      "body": "[删除模式](http://www.postgresql.org/docs/current/static/sql-dropschema.html)"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "Schema",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DROP SCHEMA IF EXISTS <schema_name> CASCADE;"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "Schema",
+      "kind": "text",
+      "body": "PostgreSQL 命令\n-----------"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "表",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`\\d <table>`     | 描述表\n`\\d+ <table>`    | 详细描述表格\n`\\dt`            | 列出当前模式中的表\n`\\dt *.*`        | 列出所有模式中的表\n`\\dt <schema>.*` | 列出架构的表\n`\\dp`            | 列出表访问权限\n`\\det[+]`        | 列出外部表"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "查询缓冲区",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`\\e [FILE]`  | 编辑查询缓冲区(或文件)\n`\\ef [FUNC]` | 编辑函数定义\n`\\p`         | 显示内容\n`\\r`         | 重置(清除)查询缓冲区\n`\\s [FILE]`  | 显示历史记录或保存到文件\n`\\w FILE`    | 将查询缓冲区写入文件"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "信息",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`\\l[+]`         | 列出所有数据库\n`\\dn[S+]`       | 列出架构\n`\\di[S+]`       | 列出索引\n`\\du[+]`        | 列出角色\n`\\ds[S+]`       | 列出序列\n`\\df[antw][S+]` | 列出函数\n`\\deu[+]`       | 列出用户映射\n`\\dv[S+]`       | 列表视图\n`\\dl`           | 列出大对象\n`\\dT[S+]`       | 列出数据类型\n`\\da[S]`        | 列出聚合\n`\\db[+]`        | 列出表空间\n`\\dc[S+]`       | 列出转化\n`\\dC[+]`        | 列出演员表\n`\\ddp`          | 列出默认权限\n`\\dd[S]`        | 显示对象描述\n`\\dD[S+]`       | 列出域\n`\\des[+]`       | 列出国外服务器\n`\\dew[+]`       | 列出外部数据包装器\n`\\dF[+]`        | 列出文本搜索配置\n`\\dFd[+]`       | 列出文本搜索词典\n`\\dFp[+]`       | 列出文本搜索解析器\n`\\dFt[+]`       | 列出文本搜索模板\n`\\dL[S+]`       | 列出程序语言\n`\\do[S]`        | 列出运算符\n`\\dO[S+]`       | 列出排序规则\n`\\drds`         | 列出每个数据库的角色设置\n`\\dx[+]`        | 列出扩展"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "信息",
+      "kind": "text",
+      "body": "`S`：显示系统对象，`+`：附加细节"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "连接",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`\\c [DBNAME]`          | 连接到新数据库\n`\\encoding [ENCODING]` | 显示或设置客户端编码\n`\\password [USER]`     | 更改密码\n`\\conninfo`            | 显示信息"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "格式化",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`\\a`           | 在未对齐和对齐之间切换\n`\\C [STRING]`  | 设置表格标题，如果没有则取消设置\n`\\f [STRING]`  | 显示或设置未对齐的字段分隔符\n`\\H`           | 切换 HTML 输出模式\n`\\t [on\\|off]` | 仅显示行\n`\\T [STRING]`  | 设置或取消设置 HTML \\<table\\> 标签属性\n`\\x [on\\|off]` | 切换扩展输出"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "输入输出",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`\\copy ...`       | 导入/导出表 _另见：_ [复制](#导入导出-csv)\n`\\echo [STRING]`  | 打印字符串\n`\\i FILE`         | 执行文件\n`\\o [FILE]`       | 将所有结果导出到文件\n`\\qecho [STRING]` | 输出流的字符串"
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`\\prompt [TEXT] NAME` | 设置变量\n`\\set [NAME [VALUE]]` | 设置变量 _(如果没有参数，则列出所有变量)_\n`\\unset NAME`         | 删除变量"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "杂项",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`\\cd [DIR]`        | 更改目录\n`\\timing [on\\|off]` | 切换时间\n`\\! [COMMAND]`     | 在shell中执行\n`\\! ls -l`         | 在shell中列出所有"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "大对象",
+      "kind": "text",
+      "body": "• `\\lo_export LOBOID FILE`\n• `\\lo_import FILE [COMMENT]`\n• `\\lo_list`\n• `\\lo_unlink LOBOID`"
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "大对象",
+      "kind": "text",
+      "body": "各种各样的\n-------------"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "备份",
+      "kind": "text",
+      "body": "使用 pg_dumpall 备份所有数据库"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "备份",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ pg_dumpall -U postgres > all.sql"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "备份",
+      "kind": "text",
+      "body": "使用 pg_dump 备份数据库"
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "备份",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ pg_dump -d mydb -f mydb_backup.sql"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "备份",
+      "kind": "text",
+      "body": "• &nbsp; `-a` &nbsp; 只转储数据，而不是模式(schema)\n• &nbsp; `-s` &nbsp; 只转储模式，不转储数据\n• &nbsp; `-c` &nbsp; 在重新创建之前删除数据库\n• &nbsp; `-C` &nbsp; 还原前创建数据库\n• &nbsp; `-t` &nbsp; 仅转储命名表\n• &nbsp; `-F` &nbsp; 格式(`c`：自定义，`d`：目录，`t`：tar)"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "备份",
+      "kind": "text",
+      "body": "使用 `pg_dump -?` 获取完整的选项列表"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "恢复",
+      "kind": "text",
+      "body": "使用 psql 恢复数据库"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "恢复",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ psql -U user mydb < mydb_backup.sql"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "恢复",
+      "kind": "text",
+      "body": "使用 pg_restore 恢复数据库"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "恢复",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ pg_restore -d mydb mydb_backup.sql -c"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "恢复",
+      "kind": "text",
+      "body": "• &nbsp; `-U` &nbsp; 指定数据库用户\n• &nbsp; `-c` &nbsp; 在重新创建之前删除数据库\n• &nbsp; `-C` &nbsp; 还原前创建数据库\n• &nbsp; `-e` &nbsp; 如果遇到错误退出\n• &nbsp; `-F` &nbsp; 格式(`c`:自定义，`d`:目录，`t`:tar，`p`:纯文本sql(默认))"
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": "恢复",
+      "kind": "text",
+      "body": "使用 `pg_restore -?` 获取完整的选项列表"
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": "远程访问",
+      "kind": "text",
+      "body": "获取 postgresql.conf 的位置"
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": "远程访问",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ psql -U postgres -c 'SHOW config_file'"
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": "远程访问",
+      "kind": "text",
+      "body": "附加到 postgresql.conf"
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": "远程访问",
+      "kind": "code",
+      "lang": "shell",
+      "code": "listen_addresses = '*'"
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": "远程访问",
+      "kind": "text",
+      "body": "附加到 pg_hba.conf(与 postgresql.conf 相同的位置)"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": "远程访问",
+      "kind": "code",
+      "lang": "shell",
+      "code": "host  all  all  0.0.0.0/0  md5\nhost  all  all  ::/0       md5"
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": "远程访问",
+      "kind": "text",
+      "body": "重启 PostgreSQL 服务器"
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": "远程访问",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sudo systemctl restart postgresql"
+    },
+    {
+      "id": "intro-143",
+      "sectionId": "intro",
+      "title": "导入/导出 CSV",
+      "kind": "text",
+      "body": "将表格导出为 CSV 文件"
+    },
+    {
+      "id": "intro-144",
+      "sectionId": "intro",
+      "title": "导入/导出 CSV",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\copy table TO '<path>' CSV\n\\copy table(col1,col1) TO '<path>' CSV\n\\copy (SELECT...) TO '<path>' CSV"
+    },
+    {
+      "id": "intro-145",
+      "sectionId": "intro",
+      "title": "导入/导出 CSV",
+      "kind": "text",
+      "body": "将 CSV 文件导入表格"
+    },
+    {
+      "id": "intro-146",
+      "sectionId": "intro",
+      "title": "导入/导出 CSV",
+      "kind": "code",
+      "lang": "sql",
+      "code": "\\copy table FROM '<path>' CSV\n\\copy table(col1,col1) FROM '<path>' CSV"
+    },
+    {
+      "id": "intro-147",
+      "sectionId": "intro",
+      "title": "导入/导出 CSV",
+      "kind": "text",
+      "body": "另见：[复制](https://www.postgresql.org/docs/current/sql-copy.html)"
+    },
+    {
+      "id": "intro-148",
+      "sectionId": "intro",
+      "title": "跨版本升级",
+      "kind": "text",
+      "body": "pg_upgrade 跨版本升级"
+    },
+    {
+      "id": "intro-149",
+      "sectionId": "intro",
+      "title": "跨版本升级",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ /usr/lib/postgresql/16/bin/pg_upgrade \\\n  -b /usr/lib/postgresql/15/bin \\\n  -B /usr/lib/postgresql/16/bin \\\n  -d /var/lib/postgresql/15/main \\\n  -D /var/lib/postgresql/16/main \\\n  -o \" -c config_file=/etc/postgresql/15/main/postgresql.conf\" \\\n  -O \" -c config_file=/etc/postgresql/16/main/postgresql.conf\""
+    },
+    {
+      "id": "intro-150",
+      "sectionId": "intro",
+      "title": "跨版本升级",
+      "kind": "text",
+      "body": "• &nbsp; `-b` &nbsp; 旧版本二进制文件目录\n• &nbsp; `-B` &nbsp; 新版本二进制文件目录\n• &nbsp; `-d` &nbsp; 旧版本数据目录\n• &nbsp; `-D` &nbsp; 新版本数据目录\n• &nbsp; `-o` &nbsp; 旧版本主配置文件\n• &nbsp; `-O` &nbsp; 新版本主配置文件\n• &nbsp; `-c` &nbsp; 仅`check`，不执行升级，可先加`-c`检查是否有报错，没有报错再运行升级"
+    },
+    {
+      "id": "intro-151",
+      "sectionId": "intro",
+      "title": "跨版本升级",
+      "kind": "text",
+      "body": "使用 `pg_upgrade -?` 获取完整的选项列表"
+    },
+    {
+      "id": "intro-152",
+      "sectionId": "intro",
+      "title": "跨版本升级",
+      "kind": "text",
+      "body": "另见\n----"
+    },
+    {
+      "id": "intro-153",
+      "sectionId": "intro",
+      "title": "跨版本升级",
+      "kind": "text",
+      "body": "• [Posgres-cheatsheet](https://gist.github.com/apolloclark/ea5466d5929e63043dcf#posgres-cheatsheet) _(gist.github.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/postgres.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/postgres.md",
+    "generatedAt": "2025-12-16T07:36:11.377Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

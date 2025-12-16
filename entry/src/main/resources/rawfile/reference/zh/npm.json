@@ -1,0 +1,583 @@
+{
+  "id": "npm",
+  "title": "npm",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "npm 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这个 [npm](https://www.npmjs.com/) 快速参考备忘单显示了它的常用命令使用清单"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "常用命令\n----\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "包管理",
+      "kind": "text",
+      "body": "命令 | 描述\n:- |:-\n`npm init -y`                      | 创建 `package.json` 文件\n`npm install` 或 `npm i`           | 安装 `package.json` 中的所有内容\n`npm install --production`         | 安装 `package.json` 中的所有内容 <br /> _(除了 `devDependecies`)_\n`npm install lodash`               | 安装一个包\n`npm install --save-dev lodash`    | 安装为 `devDependency`\n`npm install --save-exact lodash`  | 准确安装\n`npm install @scope/package-name`  | 安装一个作用域的公共包\n`npm install <package_name>@<tag>` | 使用 `dist-tags` 安装包\n`npm install -g <package_name>`    | 全局安装包\n`npm uninstall <package_name>`     | 卸载包\n`npm uninstall -g <package_name>`  | 全局卸载包\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "命令 | 描述\n:- |:-\n`npm i sax`                          | `NPM` 包\n`npm i sax@latest`                   | 指定标签 `最新`\n`npm i sax@3.0.0`                    | 指定版本 `3.0.0`\n`npm i sax@\">=1 <2.0\"`               | 指定版本范围\n`npm i @org/sax`                     | 范围内的 `NPM` 包\n`npm i user/repo`                    | GitHub\n`npm i user/repo#master`             | GitHub\n`npm i github:user/repo`             | GitHub\n`npm i gitlab:user/repo`             | GitLab\n`npm i /path/to/repo`                | 绝对路径\n`npm i ./archive.tgz`                | 压缩包\n`npm i https://site.com/archive.tgz` | 通过 `HTTP` 压缩包\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "安装依赖的可用参数"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "• `-P`, `--save-prod` 包将出现在您的依赖项中，这是默认值(npm v8)，除非存在 `-D` 或 `-O`\n• `-D`, `--save-dev` 包会出现在你的 `devDependencies` 中\n• `-O`, `--save-optional` 包将出现在您的 `optionalDependencies` 中\n• `--no-save` 防止保存到依赖项\n• `-E`, `--save-exact` 依赖项将使用精确的版本进行配置，而不是使用 `npm` 的默认 [`semver`](./semver.md) 范围运算符\n• `-B`, `--save-bundle` 依赖项也将添加到您的 [`bundleDependencies`](./package.json.md#bundleddependencies) 列表中"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "命令 `npm i` 是 `npm install` 的别名"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "清单",
+      "kind": "text",
+      "body": "命令 | 描述\n:- |:-\n`npm list`              | 列出此软件中所有依赖项的已安装版本\n`npm list -g --depth 0` | 列出所有全局安装包的安装版本\n`npm view`              | 列出此软件中所有依赖项的最新版本\n`npm outdated`          | 仅列出此软件中已过时的依赖项\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "缓存 cache",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm cache add <package-spec>    # 将指定的包添加到本地缓存\n$ npm cache clean [<key>]         # 删除缓存文件夹中的所有数据\n$ npm cache ls [<name>@<version>]\n$ npm cache verify # 验证缓存文件夹的内容，垃圾收集任何不需要的数据，\n                 # 并验证缓存索引和所有缓存数据的完整性"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "缓存 cache",
+      "kind": "text",
+      "body": "用于添加、列出或清理 [npm](https://www.npmjs.com/) 缓存文件夹"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "更新",
+      "kind": "text",
+      "body": "命令 | 描述\n:- | -\n`npm version <version>` | 要更改 `package.json` 中的版本号\n`npm update`            | 更新生产包\n`npm update --dev`      | 更新开发包\n`npm update -g`         | 更新全局包\n`npm update lodash`     | 更新 `lodash` 包"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "杂项功能",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 将某人添加为所有者\n$ npm owner add USERNAME PACKAGENAME\n# 列出包\n$ npm ls\n# 向安装旧版本软件包的用户添加警告(弃用)\n$ npm deprecate PACKAGE@\"< 0.2.0\" \"critical bug fixed in v0.2.0\"\n# 更新所有包或选定的包\n$ npm update [-g] PACKAGE\n# 检查过时的包\n$ npm outdated [PACKAGE]"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "取消发布包",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm unpublish <package-name> -f\n# 取消指定版本\n$ npm unpublish <package-name>@<version>"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "取消发布包",
+      "kind": "text",
+      "body": "注意：如果您取消发布整个包，则必须在 24 小时后才能发布该包的任何新版本"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "更改包裹可见性",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 将公共包设为私有\n$ npm access restricted <package-name>\n# 公开私有包\n$ npm access public <package-name>\n# 授予私有包访问权限\n$ npm owner add <user> <your-package-name>"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "要将包转移到 npm 用户帐户",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 新维护者接受邀请\n$ npm owner add <their-username> <package-name>\n# 删除维护者\n$ npm owner rm <your-username> <package-name>\n# 写入启用了双因素身份验证\n$ npm owner add <their-username> <package-name> --otp=123456"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "发布包 npmjs.org",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm publish\n# 第一次需要指定公开参数\n$ npm publish --access public\n$ npm publish --access public --tag previous"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "发布包 npmjs.org",
+      "kind": "text",
+      "body": "发布公开包，到 [npmjs.org](https://docs.npmjs.com)"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "使用 nrm 切换 registry",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm install -g nrm # 安装 nrm 包\n# 查看 registry 列表\n$ nrm ls             \n# 将注册表切换到 cnpm\n$ nrm use cnpm"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "init",
+      "kind": "text",
+      "body": "用于设置新的或现有的 `npm` 包"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "init",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm init <package-spec> # (如同 `npx <package-spec>)\n$ npm init <@scope>       # (如同 `npx <@scope>/create`)"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "init",
+      "kind": "text",
+      "body": "别名: `create`, `innit`"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "init",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n`npm init foo` | `npm exec create-foo`\n`npm init @usr/foo` | `npm exec @usr/create-foo`\n`npm init @usr` | `npm exec @usr/create`\n`npm init @usr@2.0.0` | `npm exec @usr/create@2.0.0`\n`npm init @usr/foo@2.0.0` | `npm exec @usr/create-foo@2.0.0`\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "exec",
+      "kind": "text",
+      "body": "命令允许您在与通过 `npm run` 运行它类似的上下文中从 npm 包"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "exec",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm exec -- <pkg>[@<version>] [args...]\n$ npm exec --package=<pkg>[@<version>] -- <cmd> [args...]\n$ npm exec -c '<cmd> [args...]'\n$ npm exec --package=foo -c '<cmd> [args...]'"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "exec",
+      "kind": "text",
+      "body": "别名: x"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "exec",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm exec --package yo --package generator-node --call \"yo node\"\n\n$ npm exec --package=foo -- bar --bar-argument\n# ~ or ~\n$ npx --package=foo bar --bar-argument"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "exec",
+      "kind": "text",
+      "body": "npx\n---"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "从本地或远程 npm 包运行命令"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "bash",
+      "code": "npx -- <pkg>[@<version>] [args...]\nnpx --package=<pkg>[@<version>] -- <cmd> [args...]\nnpx -c '<cmd> [args...]'\nnpx --package=foo -c '<cmd> [args...]'"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "`npx` 二进制文件在 `npm v7.0.0` 中被重写，并且当时不推荐使用独立的 `npx` 包"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm install eslint\n# 运行：\n$ ./node_modules/.bin/eslint"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "上面命令简化，直接运行下面👇命令"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npx eslint"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "命令 `npx` 将自动安装并运行 `eslint`"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "npx VS npm exec",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npx foo@latest bar --package=@npmcli/foo\n# npm 将解析 foo 包名，并运行以下命令：\n$ foo bar --package=@npmcli/foo"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "npx VS npm exec",
+      "kind": "text",
+      "body": "由于 npm 的参数解析逻辑，运行这个命令是不同的:"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "npx VS npm exec",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm exec foo@latest bar --package=@npmcli/foo\n# npm 将首先解析 --package 选项\n# 解析 @npmcli/foo 包\n# 然后，它将在该上下文中执行以下命令：\n$ foo@latest bar"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "npx VS npm exec",
+      "kind": "text",
+      "body": "下面命令是与 `npx` 等效的"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "npx VS npm exec",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm exec -- foo@latest bar --package=@npmcli/foo\n# 等效的\n$ npx foo@latest bar --package=@npmcli/foo"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "npx VS npm exec 示例",
+      "kind": "text",
+      "body": "使用提供的参数在本地依赖项中运行 `tap` 版本："
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "npx VS npm exec 示例",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm exec -- tap --bail test/foo.js\n$ npx tap --bail test/foo.js"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "npx VS npm exec 示例",
+      "kind": "text",
+      "body": "通过指定 `--package` 选项运行名称与包名称匹配的命令以外的命令："
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "npx VS npm exec 示例",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm exec --package=foo -- bar --bar-argument\n# ~ or ~\n$ npx --package=foo bar --bar-argument"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "npx VS npm exec 示例",
+      "kind": "text",
+      "body": "在当前项目的上下文中运行任意 `shell` 脚本："
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "npx VS npm exec 示例",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm x -c 'eslint && say \"hooray, lint passed\"'\n$ npx -c 'eslint && say \"hooray, lint passed\"'"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "创建一个 React Naive 项目",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npx react-native init AwesomeProject\n$ npx react-native init AwesomeTSProject --template react-native-template-typescript"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "创建一个 React Naive 项目",
+      "kind": "text",
+      "body": "使用 `npx` 直接创建一个  [React Native](https://reactnative.dev/docs/environment-setup#creating-a-new-application) 应用"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "创建一个 React 应用",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npx create-react-app my-app\n$ npx create-react-app my-app --template typescript"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "创建一个 React 应用",
+      "kind": "text",
+      "body": "使用 `npx` 跳过安装 [CRA](https://reactnative.dev/docs/environment-setup#creating-a-new-application)，直接创建一个 [React](./react.md) 应用"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "创建一个 React 应用",
+      "kind": "text",
+      "body": "配置\n---"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": ".npmrc",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`/path/to/project/.npmrc` | 每个项目的配置文件\n`~/.npmrc` | 每个用户的配置文件\n`$PREFIX/etc/npmrc` | 全局配置文件\n`/path/to/npm/npmrc` | npm 内置配置文件\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "配置内容",
+      "kind": "code",
+      "lang": "ini",
+      "code": "# last modified: 01 Jan 2016\n; Set a new registry for a scoped package\n@myscope:registry=https://registry.npmmirror.com"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "配置内容",
+      "kind": "text",
+      "body": "注释使用 `#`, `;` 放置到一行的开头， [`.npmrc`](https://docs.npmjs.com/cli/v8/configuring-npm/npmrc) 文件由指定此注释语法的 [`npm/ini`](https://github.com/npm/ini) 解析"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "registry",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`npm` | <https://registry.npmjs.org/>\n`yarn` | <https://registry.yarnpkg.com/>\n`tencent` | <https://mirrors.cloud.tencent.com/npm/>\n`cnpm` | <https://r.cnpmjs.org/>\n`taobao` | <https://registry.npmmirror.com/>\n`npmMirror` | <https://skimdb.npmjs.com/registry/>\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "`.npmignore`",
+      "kind": "text",
+      "body": "将下面内容存放到 `.npmignore` 文件中，放置在项目的根目录中。"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "`.npmignore`",
+      "kind": "code",
+      "lang": "gitignore",
+      "code": ".git\n.svn\n# 忽略 .swp 后缀的文件\n.*.swp\n/logs/*\n\n# “！” 意思是不要忽视\n!logs/.gitkeep"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "`.npmignore`",
+      "kind": "text",
+      "body": "`.npmignore` 文件就像 [`.gitignore`](./git.md#忽略文件) 一样工作。它不能覆盖 `package.json#files` 字段。"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 临时使用\n$ npm install -g <package-name> --registry=https://registry.npmmirror.com"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "text",
+      "body": "将配置放置在 [`.npmrc`](https://docs.npmjs.com/cli/v8/configuring-npm/npmrc) 全局配置文件中，或者在项目的根目录中。"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "code",
+      "lang": "ini",
+      "code": "; registry=https://registry.npmjs.org/\nregistry=https://registry.npmmirror.com"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "text",
+      "body": "或者配置到 [`package.json#publishConfig`](./package.json.md#publishconfig) 字段上"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "code",
+      "lang": "json",
+      "code": "\"publishConfig\":{\n  \"registry\": \"https://registry.npmmirror.com\"\n}"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "text",
+      "body": "替换 npm 仓库地址为 npmmirror(淘宝) 镜像地址"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm config set registry https://registry.npmmirror.com"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "text",
+      "body": "请参阅：[npmmirror 中国镜像站](https://npmmirror.com/)"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "text",
+      "body": "#### electronjs 镜像和缓存"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "中国镜像站安装",
+      "kind": "code",
+      "lang": "ini",
+      "code": "ELECTRON_MIRROR=\"https://npmmirror.com/mirrors/electron/\"\nELECTRON_BUILDER_BINARIES_MIRROR=https://npmmirror.com/mirrors/electron-builder-binaries/\n; ELECTRON_CUSTOM_DIR=\"{{ version }}\""
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "身份验证相关配置",
+      "kind": "code",
+      "lang": "ini",
+      "code": "//registry.npmjs.org/:_authToken=MYTOKEN\n; 将适用于 @myorg 和 @another\n//somewhere.com/:_authToken=MYTOKEN\n; 将适用于 @myorg\n//somewhere.com/myorg/:_authToken=MYTOKEN1\n; 将适用于 @another\n//somewhere.com/another/:_authToken=MYTOKEN2"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "身份验证相关配置",
+      "kind": "text",
+      "body": "纯 ESM 包\n----"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "CommonJS 项目移动到 ESM",
+      "kind": "text",
+      "body": "• 将 `\"type\": \"module\"` 添加到您的 [package.json](./package.json.md)\n• 将 [package.json](./package.json.md) 中的 `\"main\": \"index.js\"` 替换为 `\"exports\": \"./index.js\"`。\n• 将 [package.json](./package.json.md) 中的 `\"engines\"` 字段更新为 Node.js 14: `\"node\": \">=14.16\"`。(不包括 <red>~~Node.js 12~~</red>，因为它不再受支持)\n• 删除 `\"use strict\"`；来自所有 JavaScript 文件\n• 将所有 `require()` / `module.export` 替换为 `import` / `export`\n• 仅使用完整的相对文件路径进行导入：`import x from '.';` → `import x from './index.js';`\n• 如果您有 `TypeScript` 类型定义（例如 `index.d.ts`），请将其更新为使用 ESM 导入/导出\n• 可选但推荐使用 `node:` 导入[协议](https://nodejs.org/api/esm.html#esm_node_imports)"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "TypeScript 项目输出 ESM",
+      "kind": "text",
+      "body": "• 确保您使用的是 TypeScript 4.7 或更高版本\n• 将 `\"type\": \"module\"` 添加到您的 [package.json](./package.json.md)\n• 将 [package.json](./package.json.md) 中的 `\"main\": \"index.js\"` 替换为 `\"exports\": \"./index.js\"`\n• 将 [package.json](./package.json.md) 中的 `\"engines\"` 字段更新为 Node.js 14: `\"node\": \">=14.16\"`。 （不包括 <red>~~Node.js 12~~</red>，因为它不再受支持）\n• 将 `\"module\": \"node16\"`, `\"moduleResolution\": \"node16\"` 添加到您的 [tsconfig.json](./typescript.md) ([列子](https://github.com/sindresorhus/tsconfig/blob/main/tsconfig.json))\n• 仅使用完整的相对文件路径进行导入：`import x from '.';` → `import x from './index.js';`\n• 删除 `namespace` 使用并改用 `export`\n• 可选但推荐使用 `node:` 导入[协议](https://nodejs.org/api/esm.html#esm_node_imports)\n• **即使您正在导入 `.ts` 文件，也必须在相对导入中使用 `.js` 扩展名**"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "TypeScript 项目输出 ESM",
+      "kind": "text",
+      "body": "阅读[官方 ESM 指南](https://www.typescriptlang.org/docs/handbook/esm-node.html)"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "TypeScript 项目输出 ESM",
+      "kind": "text",
+      "body": "另见\n----"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "TypeScript 项目输出 ESM",
+      "kind": "text",
+      "body": "• [npm 仓库、网站和命令行界面的文档](https://docs.npmjs.com/) _(npmjs.com)_\n• [npmmirror 中国镜像站](https://npmmirror.com/) _(npmmirror.com)_\n• [Dev Cheatsheets npx](https://michaelcurrin.github.io/dev-cheatsheets/cheatsheets/package-managers/javascript/npm/commands/npx.html) _(michaelcurrin.github.io)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/npm.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/npm.md",
+    "generatedAt": "2025-12-16T07:36:11.349Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

@@ -1,0 +1,1727 @@
+{
+  "id": "nextjs",
+  "title": "becomes \"pre$A\"",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Next.js 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "[![NPM version](https://img.shields.io/npm/v/next.svg?style=flat)](https://www.npmjs.com/package/next)\n[![Downloads](https://img.shields.io/npm/dm/next.svg?style=flat)](https://www.npmjs.com/package/next)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/vercel/next.js)](https://github.com/vercel/next.js/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/vercel/next.js)"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这是一份快速参考备忘单，包含 [Next.js](https://nextjs.org/) 的 API 参考列表和一些示例\n<!--rehype:style=padding-top: 12px;-->"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n----"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "创建项目",
+      "kind": "code",
+      "lang": "shell",
+      "code": "npx create-next-app@latest\n# or\nyarn create next-app\n# or\npnpm create next-app"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "创建项目",
+      "kind": "text",
+      "body": "或者创建 [TypeScript](./typescript.md) 项目"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "创建项目",
+      "kind": "code",
+      "lang": "shell",
+      "code": "npx create-next-app@latest --typescript\n# or\nyarn create next-app --typescript\n# or\npnpm create next-app --typescript"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "创建项目",
+      "kind": "text",
+      "body": "运行 `npm run dev` 或 `yarn dev` 或 `pnpm dev` 以在 <http://localhost:3000> 上启动开发服务器"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "添加首页",
+      "kind": "text",
+      "body": "使用以下内容填充 `pages/index.js`："
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "添加首页",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "function HomePage() {\n  return <div>Welcome to Next.js!</div>\n}\n\nexport default HomePage"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "添加首页",
+      "kind": "text",
+      "body": "`Next.js` 是围绕页面的概念构建的。 页面是从 `pages` 目录中的 `.js`、`.jsx`、`.ts` 或 `.tsx` 文件导出的 `React` 组件"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "getServerSideProps",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "function Page({ data }) {\n  // 渲染数据...\n}\n\n// 每个请求都会调用它\nexport async function getServerSideProps() {\n  // 从外部 API 获取数据\n  const res = await fetch(`https://.../data`)\n  const data = await res.json()\n\n  // 通过 props 向页面传递数据\n  return { props: { data } }\n}\n\nexport default Page"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "getServerSideProps",
+      "kind": "text",
+      "body": "如果您从页面导出一个名为 `getServerSideProps`（服务器端渲染）的函数，`Next.js` 将使用 `getServerSideProps` 返回的数据在每个请求上预渲染该页面"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "getServerSideProps",
+      "kind": "text",
+      "body": "• 当您直接请求此页面时，`getServerSideProps` 在请求时运行，此页面将使用返回的 props 进行预渲染\n• 当您通过 `next/link` 或 `next/router` 在客户端页面转换上请求此页面时，`Next.js` 会向服务器发送 API 请求，服务器运行 `getServerSideProps`"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "getStaticPaths",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// pages/posts/[id].js\nexport async function getStaticPaths() {\n  // 当这是真的时（在预览环境中）不要预呈现任何静态页面（更快的构建，但更慢的初始页面加载）\n  if (process.env.SKIP_BUILD_STATIC_GENERATION) {\n    return {\n      paths: [],\n      fallback: 'blocking',\n    }\n  }\n\n  // 调用外部 API 端点以获取帖子\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  // 根据帖子获取我们要预渲染的路径 在生产环境中，预渲染所有页面\n  // （构建速度较慢，但初始页面加载速度较快）\n  const paths = posts.map((post) => ({\n    params: { id: post.id },\n  }))\n\n  // { fallback: false } 表示其他路由应该 404\n  return { paths, fallback: false }\n}"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "getStaticPaths",
+      "kind": "text",
+      "body": "如果页面具有动态路由并使用 `getStaticProps`，则需要定义要静态生成的路径列表"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "getStaticPaths",
+      "kind": "text",
+      "body": "• 数据来自无头 CMS\n• 数据来自数据库\n• 数据来自文件系统\n• 数据可以公开缓存（非用户特定）\n• 页面必须预渲染（用于 SEO）并且速度非常快 —— `getStaticProps` 生成 HTML 和 JSON 文件，这两种文件都可以由 CDN 缓存以提高性能"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "getStaticProps",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// 帖子将在构建时由 getStaticProps() 填充\nfunction Blog({ posts }) {\n  return (\n    <ul>\n      {posts.map((post) => (\n        <li>{post.title}</li>\n      ))}\n    </ul>\n  )\n}\n\n// 这个函数在服务器端的构建时被调用。\n// 它不会在客户端调用，因此您甚至可以直接进行数据库查询。\nexport async function getStaticProps() {\n  // 调用外部 API 端点以获取帖子。 您可以使用任何数据获取库\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  // 通过返回 { props: { posts } }，Blog 组件将在构建时接收 `posts` 作为 prop\n  return {\n    props: {\n      posts,\n    },\n  }\n}\n\nexport default Blog"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "getStaticProps",
+      "kind": "text",
+      "body": "在服务器端的构建时被调用"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "增量静态再生",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "function Blog({ posts }) {\n  return (\n    <ul>\n      {posts.map((post) => (\n        <li key={post.id}>{post.title}</li>\n      ))}\n    </ul>\n  )\n}\n\n// 这个函数在服务器端的构建时被调用\n// 如果启用了重新验证并且有新请求进入，它可能会在无服务器功能上再次调用\nexport async function getStaticProps() {\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  return {\n    props: {\n      posts,\n    },\n    // Next.js 将尝试重新生成页面：\n    // - 当请求进来时\n    // - 最多每 10 秒一次\n    revalidate: 10, // 片刻之间\n  }\n}\n\n// 这个函数在服务器端的构建时被调用\n// 如果尚未生成路径，则可能会在无服务器函数上再次调用它\nexport async function getStaticPaths() {\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  // 根据帖子获取我们要预渲染的路径\n  const paths = posts.map((post) => ({\n    params: { id: post.id },\n  }))\n\n  // 我们将在构建时仅预渲染这些路径\n  // { fallback: blocking } 如果路径不存在，服务器将按需呈现页面\n  return { paths, fallback: 'blocking' }\n}\n\nexport default Blog"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "增量静态再生",
+      "kind": "text",
+      "body": "• 在初始请求之后和 10 秒之前对页面的任何请求也会被缓存和即时\n• 在 10 秒窗口之后，下一个请求仍将显示缓存的（陈旧的）页面\n• Next.js 在后台触发页面的重新生成\n• 一旦页面生成成功，Next.js 将使缓存失效并显示更新后的页面。如果后台重新生成失败，旧页面仍将保持不变"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "使用 useEffect 客户端数据获取",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "import { useState, useEffect } from 'react'\n\nfunction Profile() {\n  const [data, setData] = useState(null)\n  const [isLoading, setLoading] = useState(false)\n\n  useEffect(() => {\n    setLoading(true)\n    fetch('/api/profile-data')\n      .then((res) => res.json())\n      .then((data) => {\n        setData(data)\n        setLoading(false)\n      })\n  }, [])\n\n  if (isLoading) return <p>Loading...</p>\n  if (!data) return <p>No profile data</p>\n\n  return (\n    <div>\n      <h1>{data.name}</h1>\n      <p>{data.bio}</p>\n    </div>\n  )\n}"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "使用 SWR 获取客户端数据",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "import useSWR from 'swr'\n\nconst fetcher = (...args) => fetch(...args).then((res) => res.json())\n\nfunction Profile() {\n  const { data, error } = useSWR('/api/profile-data', fetcher)\n\n  if (error) return <div>Failed to load</div>\n  if (!data) return <div>Loading...</div>\n\n  return (\n    <div>\n      <h1>{data.name}</h1>\n      <p>{data.bio}</p>\n    </div>\n  )\n}"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "静态文件服务",
+      "kind": "text",
+      "body": "Next.js 可以在根目录中名为 `public` 的文件夹下提供静态文件，如图像。 然后，您的代码可以从基本 URL (`/`) 开始引用 `public` 中的文件"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "静态文件服务",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "import Image from 'next/image'\n\nfunction Avatar() {\n  return (\n    <Image\n      src=\"/me.png\"\n      alt=\"me\"\n      width=\"64\"\n      height=\"64\"\n    />\n  )\n}\n\nexport default Avatar"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "支持的浏览器和功能",
+      "kind": "text",
+      "body": "Next.js 支持零配置的现代浏览器"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "支持的浏览器和功能",
+      "kind": "text",
+      "body": "• Chrome 64+\n• Edge 79+\n• Firefox 67+\n• Opera 51+\n• Safari 12+"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "支持的浏览器和功能",
+      "kind": "text",
+      "body": "Next.js 支持在 `package.json` 文件中配置 `Browserslist`"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "支持的浏览器和功能",
+      "kind": "code",
+      "lang": "js",
+      "code": "{\n  \"browserslist\": [\n    \"chrome 64\",\n    \"edge 79\",\n    \"firefox 67\",\n    \"opera 51\",\n    \"safari 12\"\n  ]\n}"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "支持的浏览器和功能",
+      "kind": "text",
+      "body": "内置 CSS 支持\n---"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "添加全局样式表",
+      "kind": "text",
+      "body": "如果不存在，请创建一个 `pages/_app.js` 文件。 然后，导入 `styles.css` 文件"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "添加全局样式表",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "import '../styles.css';\n\n// 在新的“pages/_app.js”文件中需要此默认导出\nexport default function MyApp({\n  Component, pageProps\n}) {\n  return <Component {...pageProps} />\n}"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "添加全局样式表",
+      "kind": "text",
+      "body": "例如，考虑以下名为 `styles.css` 的样式表"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "添加全局样式表",
+      "kind": "code",
+      "lang": "css",
+      "code": "body {\n  font-family:\n    'SF Pro Text', 'SF Pro Icons',\n    'Helvetica Neue', 'Helvetica',\n    'Arial', sans-serif;\n  margin: 0 auto;\n}"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "从 node_modules 导入样式",
+      "kind": "text",
+      "body": "对于全局样式表，如 `bootstrap` 或 `nprogress`，您应该在 `pages/_app.js` 中导入文件"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "从 node_modules 导入样式",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// pages/_app.js\nimport 'bootstrap/dist/css/bootstrap.css'\n\nexport default function MyApp({\n  Component, pageProps\n}) {\n  return <Component {...pageProps} />\n}"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "从 node_modules 导入样式",
+      "kind": "text",
+      "body": "从 <red>Next.js 9.5.4</red> 开始，您的应用程序中的任何地方都允许从 `node_modules` 导入 CSS 文件"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "添加组件级 CSS (CSS Modules)",
+      "kind": "text",
+      "body": "您无需担心 .error {} 与任何其他 `.css` 或 `.module.css` 文件！他将被生成 `hash` 名称"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "添加组件级 CSS (CSS Modules)",
+      "kind": "code",
+      "lang": "css",
+      "code": ".error {\n  color: white;\n  background-color: red;\n}"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "添加组件级 CSS (CSS Modules)",
+      "kind": "text",
+      "body": "然后，创建 `components/Button.js`，导入并使用上面的 CSS 文件："
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "添加组件级 CSS (CSS Modules)",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "import styles from './Button.module.css'\n\nexport function Button() {\n  return (\n    <button\n      type=\"button\"\n      // 请注意“error”类\n      // 是如何作为导入的“styles”对象的属性访问的\n      className={styles.error}\n    >\n      Destroy\n    </button>\n  )\n}"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "Sass 支持",
+      "kind": "text",
+      "body": "Next.js 允许您使用 `.scss` 和 `.sass` 扩展名导入 Sass，可以通过 CSS 模块和 `.module.scss` 或 `.module.sass` 扩展名使用组件级 `Sass`"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "Sass 支持",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ npm install --save-dev sass"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "Sass 支持",
+      "kind": "text",
+      "body": "在使用 Next.js 的内置 `Sass` 支持之前，请务必<pur>安装 `sass`</pur>"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "自定义 Sass 选项",
+      "kind": "text",
+      "body": "通过在 `next.config.js` 中使用 `sassOptions` 来实现配置 `Sass` 编译器。例如添加 `includePaths`："
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "自定义 Sass 选项",
+      "kind": "code",
+      "lang": "js",
+      "code": "const path = require('path')\n\nmodule.exports = {\n  sassOptions: {\n    includePaths:\n        [path.join(__dirname, 'styles')],\n  },\n}"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "自定义 Sass 选项",
+      "kind": "text",
+      "body": "#### Sass 变量"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "自定义 Sass 选项",
+      "kind": "code",
+      "lang": "sass",
+      "code": "/* variables.module.scss */\n$primary-color: #64ff00;\n\n:export {\n  primaryColor: $primary-color;\n}"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "自定义 Sass 选项",
+      "kind": "text",
+      "body": "在 `pages/_app.js` 中导入 `variables.module.scss`"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "自定义 Sass 选项",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "import variables from '../styles/variables.module.scss'\n\nexport default function MyApp({ Component, pageProps }) {\n  return (\n    <Layout color={variables.primaryColor}>\n      <Component {...pageProps} />\n    </Layout>\n  )\n}"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "CSS-in-JS",
+      "kind": "text",
+      "body": "最简单的一种是内联样式："
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "CSS-in-JS",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "function HiThere() {\n  return (\n    <p style={{ color: 'red' }}>hi 这里</p>\n  )\n}\n\nexport default HiThere"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "CSS-in-JS",
+      "kind": "text",
+      "body": "使用 [styled-jsx](https://github.com/vercel/styled-jsx) 的组件如下所示："
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "CSS-in-JS",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "function HelloWorld() {\n  return (\n    <div>\n      Hello world\n      <p>scoped!</p>\n      <style jsx>{`\n        p { color: blue; }\n        div { background: red; }\n        @media (max-width: 600px) {\n          div { background: blue; }\n        }\n      `}</style>\n      <style global jsx>{`\n        body { background: black; }\n      `}</style>\n    </div>\n  )\n}\n\nexport default HelloWorld"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "CSS-in-JS",
+      "kind": "text",
+      "body": "当然，你也可以使用 [styled-components](./styled-components.md)"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "CSS-in-JS",
+      "kind": "text",
+      "body": "Layouts\n---"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "基础示例",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// components/layout.js\nimport Navbar from './navbar'\nimport Footer from './footer'\n\nexport default function Layout({ children }) {\n  return (\n    <>\n      <Navbar />\n      <main>{children}</main>\n      <Footer />\n    </>\n  )\n}"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "带有自定义应用程序的单一共享布局",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// pages/_app.js\nimport Layout from '../components/layout'\n\nexport default function MyApp({ Component, pageProps }) {\n  return (\n    <Layout>\n      <Component {...pageProps} />\n    </Layout>\n  )\n}"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "使用 TypeScript",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// pages/index.tsx\nimport type { ReactElement } from 'react'\nimport Layout from '../components/layout'\nimport NestedLayout from '../components/nested-layout'\nimport type { NextPageWithLayout } from './_app'\n\nconst Page: NextPageWithLayout = () => {\n  return <p>hello world</p>\n}\n\nPage.getLayout = function getLayout(page: ReactElement) {\n  return (\n    <Layout>\n      <NestedLayout>{page}</NestedLayout>\n    </Layout>\n  )\n}\n\nexport default Page"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "使用 TypeScript",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// pages/_app.tsx\n\nimport type { ReactElement, ReactNode } from 'react'\nimport type { NextPage } from 'next'\nimport type { AppProps } from 'next/app'\n\nexport type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {\n  getLayout?: (page: ReactElement) => ReactNode\n}\n\ntype AppPropsWithLayout = AppProps & {\n  Component: NextPageWithLayout\n}\n\nexport default function MyApp({ Component, pageProps }: AppPropsWithLayout) {\n  // 使用在页面级别定义的布局（如果可用）\n  const getLayout = Component.getLayout ?? ((page) => page)\n\n  return getLayout(<Component {...pageProps} />)\n}"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "每页布局",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// pages/index.js\nimport Layout from '../components/layout'\nimport NestedLayout from '../components/nested-layout'\n\nexport default function Page() {\n  return (\n    /** Your content */\n  )\n}\n\nPage.getLayout = function getLayout(page) {\n  return (\n    <Layout>\n      <NestedLayout>{page}</NestedLayout>\n    </Layout>\n  )\n}"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "每页布局",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// pages/_app.js\nexport default function MyApp({ Component, pageProps }) {\n  // 使用在页面级别定义的布局（如果可用）\n  const getLayout = Component.getLayout || ((page) => page)\n  return getLayout(<Component {...pageProps} />)\n}"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "数据请求",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// components/layout.js\nimport useSWR from 'swr'\nimport Navbar from './navbar'\nimport Footer from './footer'\n\nexport default function Layout({ children }) {\n  const { data, error } = useSWR('/api/navigation', fetcher)\n  if (error) return <div>Failed to load</div>\n  if (!data) return <div>Loading...</div>\n  return (\n    <>\n      <Navbar links={data.links} />\n      <main>{children}</main>\n      <Footer />\n    </>\n  )\n}"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "数据请求",
+      "kind": "text",
+      "body": "图片优化\n---"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "本地图片",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "import Image from 'next/image'\nimport profilePic from '../public/me.png'\n\nfunction Home() {\n  return (\n    <>\n      <h1>My Homepage</h1>\n      <Image\n        src={profilePic}\n        alt=\"Picture of the author\"\n        // width={500} 自动提供\n        // height={500} 自动提供\n        // blurDataURL=\"data:...\" 自动提供\n        // placeholder=\"blur\" // 加载时可选的模糊处理\n      />\n      <p>Welcome to my homepage!</p>\n    </>\n  )\n}"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "远程图片",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "import Image from 'next/image'\n\nexport default function Home() {\n  return (\n    <>\n      <h1>My Homepage</h1>\n      <Image\n        src=\"/me.png\"\n        alt=\"Picture of the author\"\n        width={500}\n        height={500}\n      />\n      <p>Welcome to my homepage!</p>\n    </>\n  )\n}"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "远程图片",
+      "kind": "text",
+      "body": "要使用远程图像，`src` 属性应该是一个 `URL` 字符串，可以是相对的也可以是绝对的"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "Priority",
+      "kind": "text",
+      "body": "您应该将优先级属性添加到将成为每个页面的 [Largest Contentful Paint (LCP) 元素](https://web.dev/lcp/#what-elements-are-considered)的图像。 这样做允许 Next.js 专门确定要加载的图像的优先级（例如，通过预加载标签或优先级提示），从而显着提高 LCP"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "Priority",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "import Image from 'next/image'\n\nexport default function Home() {\n  return (\n    <>\n      <h1>My Homepage</h1>\n      <Image\n        src=\"/me.png\"\n        alt=\"Picture of the author\"\n        width={500}\n        height={500}\n        priority\n      />\n      <p>Welcome to my homepage!</p>\n    </>\n  )\n}"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "Priority",
+      "kind": "text",
+      "body": "优化字体\n---"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "Google 字体",
+      "kind": "text",
+      "body": "自动托管任何 Google 字体。 字体包含在部署中，并从与您的部署相同的域提供服务。 浏览器不会向 Google 发送任何请求"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "Google 字体",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "// pages/_app.js\nimport { Inter } from '@next/font/google'\n\n// 如果加载可变字体，则无需指定字体粗细\nconst inter = Inter({ subsets: ['latin'] })\n\nexport default function MyApp({\n  Component, pageProps\n}) {\n  return (\n    <main className={inter.className}>\n      <Component {...pageProps} />\n    </main>\n  )\n}"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "如果不能使用可变字体，则需要指定粗细："
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "```jsx {5}\n// pages/_app.js\nimport { Roboto } from '@next/font/google'"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "const roboto = Roboto({\nweight: '400',\nsubsets: ['latin'],\n})"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "export default function MyApp({\nComponent, pageProps\n}) {\nreturn (\n<main className={roboto.className}>\n<Component {...pageProps} />\n</main>\n)\n}"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 数组指定多个 weight 或 style"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "const roboto = Roboto({\nweight: ['400', '700'],\nstyle: ['normal', 'italic'],\nsubsets: ['latin'],\n})"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 在 \\<head> 中应用字体"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "// pages/_app.js\nimport { Inter } from '@next/font/google'\nconst inter = Inter({ subsets: ['latin'] })\nexport default function MyApp({ Component, pageProps }) {\nreturn (\n<>\n<style jsx global>{`\nhtml {\nfont-family: ${inter.style.fontFamily};\n}\n`}</style>\n<Component {...pageProps} />\n</>\n)\n}"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 单页使用"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "// pages/index.js\nimport { Inter } from '@next/font/google'"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "const inter = Inter({ subsets: ['latin'] })"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "export default function Home() {\nreturn (\n<div className={inter.className}>\n<p>Hello World</p>\n</div>\n)\n}"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 指定一个子集"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "// pages/_app.js\nconst inter = Inter({ subsets: ['latin'] })"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在 `next.config.js` 中全局使用所有字体"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "// next.config.js\nmodule.exports = {\nexperimental: {\nfontLoaders: [\n{\nloader: '@next/font/google',\noptions: { subsets: ['latin'] }\n},\n],\n},\n}"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n如果两者都配置，则使用函数调用中的子集\n\n### 本地字体\n<!--rehype:wrap-class=row-span-2-->"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "// pages/_app.js\nimport localFont from '@next/font/local'"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "// 字体文件可以位于“pages”内\nconst myFont = localFont({\nsrc: './my-font.woff2'\n})"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "export default function MyApp({\nComponent, pageProps\n}) {\nreturn (\n<main className={myFont.className}>\n<Component {...pageProps} />\n</main>\n)\n}"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n如果要为单个字体系列使用多个文件，`src` 可以是一个数组："
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "const roboto = localFont({\nsrc: [\n{\npath: './Roboto-Regular.woff2',\nweight: '400',\nstyle: 'normal',\n},\n{\npath: './Roboto-Italic.woff2',\nweight: '400',\nstyle: 'italic',\n},\n{\npath: './Roboto-Bold.woff2',\nweight: '700',\nstyle: 'normal',\n},\n{\npath: './Roboto-BoldItalic.woff2',\nweight: '700',\nstyle: 'italic',\n},\n],\n})"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 使用 Tailwind CSS\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "// pages/_app.js\nimport { Inter } from '@next/font/google'\nconst inter = Inter({\nsubsets: ['latin'],\nvariable: '--font-inter',\n});\nexport default function MyApp({ Component, pageProps }) {\nreturn (\n<main className={`${inter.variable} font-sans`}>\n<Component {...pageProps} />\n</main>\n)\n}"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n最后，将 CSS 变量添加到您的 Tailwind CSS 配置中："
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "// tailwind.config.js\nconst { fontFamily } = require('tailwindcss/defaultTheme')"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "module.exports = {\ncontent: [\n'./pages/**/*.{js,ts,jsx,tsx}',\n'./components/**/*.{js,ts,jsx,tsx}',\n],\ntheme: {\nextend: {\nfontFamily: {\nsans: ['var(--font-inter)', ...fontFamily.sans],\n},\n},\n},\nplugins: [],\n}"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n优化 Scripts\n---\n\n### 页面脚本"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "import Script from 'next/script'"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "export default function Dashboard() {\nreturn (\n<>\n<Script\nsrc=\"https://example.com/script.js\"\n/>\n</>\n)\n}"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### App 脚本\n<!--rehype:wrap-class=row-span-2-->\n\n要为所有路由加载第三方脚本，导入 `next/script` 并将脚本直接包含在 `pages/_app.js` 中"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "import Script from 'next/script'"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "export default function MyApp({\nComponent, pageProps\n}) {\nreturn (\n<>\n<Script\nsrc=\"https://example.com/script.js\"\n/>\n<Component {...pageProps} />\n</>\n)\n}"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 将脚本卸载到 Web Worker（实验性的）\n<!--rehype:wrap-class=row-span-2-->\n\n此策略仍处于试验阶段，只有在 `next.config.js` 中启用了 `nextScriptWorkers` 标志时才能使用："
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "module.exports = {\nexperimental: {\nnextScriptWorkers: true,\n},\n}"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n设置完成后，定义 `strategy=\"worker\"` 将自动在您的应用程序中实例化 `Partytown` 并将脚本卸载到网络工作者"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "import Script from 'next/script'"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "export default function Home() {\nreturn (\n<>\n<Script\nsrc=\"https://example.com/script.js\"\nstrategy=\"worker\"\n/>\n</>\n)\n}"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 其他属性"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "import Script from 'next/script'"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "export default function Page() {\nreturn (\n<>\n<Script\nsrc=\"https://example.com/script.js\"\nid=\"example-script\"\nnonce=\"XUENAJFW\"\ndata-test=\"script\"\n/>\n</>\n)\n}"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 内联脚本\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "<Script id=\"show-banner\">\n{`document.getElementById('banner').classList.remove('hidden')`}\n</Script>"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "<Script\nid=\"show-banner\"\ndangerouslySetInnerHTML={{\n__html: `document.getElementById('banner').classList.remove('hidden')`,\n}}\n/>"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 执行附加代码"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "import Script from 'next/script'"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "export default function Page() {\nreturn (\n<>\n<Script\nsrc=\"https://example.com/script.js\"\nonLoad={() => {\nconsole.log('Script has loaded')\n}}\n/>\n</>\n)\n}"
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\nESLint\n---\n\n### 集成 ESLint"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "\"scripts\": {\n\"lint\": \"next lint\"\n}"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "code",
+      "lang": "",
+      "code": "\n然后运行 `npm run lint` 或 `yarn lint`："
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "指定粗细",
+      "kind": "text",
+      "body": "yarn lint"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "#"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "#"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Strict\n\nStrict 严格配置：包括 Next.js 的基本 ESLint 配置以及更严格的 [Core Web Vitals 规则集](https://nextjs.org/docs/basic-features/eslint#core-web-vitals)"
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{\n\"extends\": \"next/core-web-vitals\"\n}"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nBase 基础配置：包括 Next.js 的基本 ESLint 配置"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{\n\"extends\": \"next\"\n}"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n项目的根目录中创建一个包含所选配置的 `.eslintrc.json` 文件\n\n### 自定义设置"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{\n\"extends\": \"next\",\n\"settings\": {\n\"next\": {\n\"rootDir\": \"packages/my-app/\"\n}\n}\n}"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n`rootDir` 可以是路径（相对或绝对）、glob（即“`packages/*/`”）或路径和/或 `glob` 数组\n\n### 对自定义目录和文件进行检查\n<!--rehype:wrap-class=row-span-2-->"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "module.exports = {\neslint: {\ndirs: ['pages', 'utils'],\n},\n}"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在生产构建期间（`next build`）仅在“`pages`”和“`utils`”目录上运行 `ESLint`，或者使用命令"
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "$ next lint --dir pages --dir utils --file bar.js"
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text-->\n\n### 禁用规则\n<!--rehype:wrap-class=row-span-2-->\n\n您可以使用 `.eslintrc` 中的 `rules` 属性直接更改它们："
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{\n\"extends\": \"next\",\n\"rules\": {\n\"react/no-unescaped-entities\": \"off\",\n\"@next/next/no-page-custom-font\": \"off\"\n}\n}"
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n修改或禁用受支持的插件（`react`、`react-hooks`、`next`）提供的任何规则\n\n### Core Web Vitals"
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{\n\"extends\": \"next/core-web-vitals\"\n}"
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Prettier"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "npm install -S eslint-config-prettier"
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "yarn add --dev eslint-config-prettier"
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n---"
+    },
+    {
+      "id": "intro-143",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{\n\"extends\": [\"next\", \"prettier\"]\n}"
+    },
+    {
+      "id": "intro-144",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### lint-staged\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-145",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "const path = require('path')"
+    },
+    {
+      "id": "intro-146",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "const buildEslintCommand = (filenames) =>\n`next lint --fix --file ${filenames\n.map((f) => path.relative(process.cwd(), f))\n.join(' --file ')}`;"
+    },
+    {
+      "id": "intro-147",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "module.exports = {\n'*.{js,jsx,ts,tsx}': [buildEslintCommand],\n}"
+    },
+    {
+      "id": "intro-148",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n内容添加到项目根目录中的 `.lintstagedrc.js` 文件中，以指定 `--file` 标志\n\nTypeScript\n---\n\n### create-next-app"
+    },
+    {
+      "id": "intro-149",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "npx create-next-app@latest --ts"
+    },
+    {
+      "id": "intro-150",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "yarn create next-app --typescript"
+    },
+    {
+      "id": "intro-151",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "pnpm create next-app --ts"
+    },
+    {
+      "id": "intro-152",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 静态生成和服务端渲染\n<!--rehype:wrap-class=col-span-2 row-span-2-->"
+    },
+    {
+      "id": "intro-153",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'\nexport const getStaticProps: GetStaticProps = async (context) => {\n// ...\n}\nexport const getStaticPaths: GetStaticPaths = async () => {\n// ...\n}\nexport const getServerSideProps: GetServerSideProps = async (context) => {\n// ...\n}"
+    },
+    {
+      "id": "intro-154",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 现有项目添加 ts 配置"
+    },
+    {
+      "id": "intro-155",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "touch tsconfig.json"
+    },
+    {
+      "id": "intro-156",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n您还可以通过在 `next.config.js` 文件中设置 `typescript.tsconfigPath` 属性来提供 `tsconfig.json` 文件的相对路径\n\n### API 路由\n<!--rehype:wrap-class=row-span-2-->"
+    },
+    {
+      "id": "intro-157",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import type {\nNextApiRequest, NextApiResponse\n} from 'next'"
+    },
+    {
+      "id": "intro-158",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default (\nreq: NextApiRequest,\nres: NextApiResponse\n) => {\nres.status(200).json({ name:'John Doe' })\n}"
+    },
+    {
+      "id": "intro-159",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n您还可以键入响应数据："
+    },
+    {
+      "id": "intro-160",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import type {\nNextApiRequest, NextApiResponse\n} from 'next'"
+    },
+    {
+      "id": "intro-161",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "type Data = {\nname: string\n}"
+    },
+    {
+      "id": "intro-162",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default (\nreq: NextApiRequest,\nres: NextApiResponse<Data>\n) => {\nres.status(200).json({ name:'John Doe' })\n}"
+    },
+    {
+      "id": "intro-163",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 自定义应用\n\n使用内置类型 `AppProps` 并将文件名更改为 `./pages/_app.tsx`，如下所示："
+    },
+    {
+      "id": "intro-164",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import type { AppProps } from 'next/app'"
+    },
+    {
+      "id": "intro-165",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default function MyApp({\nComponent, pageProps\n}: AppProps) {\nreturn <Component {...pageProps} />\n}"
+    },
+    {
+      "id": "intro-166",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 类型检查 next.config.js"
+    },
+    {
+      "id": "intro-167",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "// @ts-check\n/**"
+    },
+    {
+      "id": "intro-168",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• @type {import('next').NextConfig}"
+    },
+    {
+      "id": "intro-169",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "**/\nconst nextConfig = {\n/* 配置选项在这里 */\n}"
+    },
+    {
+      "id": "intro-170",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "module.exports = nextConfig"
+    },
+    {
+      "id": "intro-171",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 忽略 TypeScript 错误"
+    },
+    {
+      "id": "intro-172",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "module.exports = {\ntypescript: {\nignoreBuildErrors: true,\n},\n}"
+    },
+    {
+      "id": "intro-173",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n危险地允许生产构建成功完成，即使您的项目有类型错误\n\n环境变量\n---\n\n### 加载环境变量\n\n将环境变量从 `.env.local` 加载到 `process.env` 中"
+    },
+    {
+      "id": "intro-174",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "DB_HOST=localhost\nDB_USER=myuser\nDB_PASS=mypassword"
+    },
+    {
+      "id": "intro-175",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用环境变量"
+    },
+    {
+      "id": "intro-176",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "// pages/index.js\nexport async function getStaticProps() {\nconst db = await myDB.connect({\nhost: process.env.DB_HOST,\nusername: process.env.DB_USER,\npassword: process.env.DB_PASS,\n})\n// ...\n}"
+    },
+    {
+      "id": "intro-177",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 自动扩展 .env* 文件中的变量"
+    },
+    {
+      "id": "intro-178",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "HOSTNAME=localhost\nPORT=8080\nHOST=http://$HOSTNAME:$PORT"
+    },
+    {
+      "id": "intro-179",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n如果您尝试使用实际值中带有 `$` 的变量，则需要像这样对其进行转义：`\\$`"
+    },
+    {
+      "id": "intro-180",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "A=abc"
+    },
+    {
+      "id": "intro-181",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "WRONG=pre$A"
+    },
+    {
+      "id": "intro-182",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "CORRECT=pre\\$A"
+    },
+    {
+      "id": "intro-183",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 向浏览器公开环境变量\n\n为了向浏览器公开变量，您必须在变量前加上 `NEXT_PUBLIC_` 前缀"
+    },
+    {
+      "id": "intro-184",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk"
+    },
+    {
+      "id": "intro-185",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n`NEXT_PUBLIC_ANALYTICS_ID` 可以在此处使用，因为它的前缀是 `NEXT_PUBLIC_`"
+    },
+    {
+      "id": "intro-186",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "// pages/index.js\nimport setupAnalyticsService from '../lib/my-analytics-service'"
+    },
+    {
+      "id": "intro-187",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "//\n// 它将在构建时转换为 `setupAnalyticsService('abcdefghijk')`\nsetupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID)"
+    },
+    {
+      "id": "intro-188",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "function HomePage() {\nreturn <h1>Hello World</h1>\n}"
+    },
+    {
+      "id": "intro-189",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default HomePage"
+    },
+    {
+      "id": "intro-190",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n路由\n---\n\n### 介绍\n<!--rehype:wrap-class=row-span-2-->\n\n路由器将自动将名为 `index` 的文件路由到目录的根目录\n\n:-- | --\n:-- | --\n`pages/index.js` | <pur>`/`</pur>\n`pages/blog/index.js` | <pur>`/blog`</pur>\n\n路由器支持嵌套文件。如果创建嵌套文件夹结构，文件将以同样的方式自动路由\n\n:-- | --\n:-- | --\n`pages/blog/first-post.js` | <pur>`/blog/first-post`</pur>\n`pages/dashboard/settings/username.js` | <pur>`/dashboard/settings/username`</pur>\n<!--rehype:className=style-list-->\n\n动态路由\n\n:-- | --\n:-- | --\n`pages/blog/[slug].js` | <pur>`/blog/:slug`</pur> (<yel>`/blog/hello-world`</yel>)\n`pages/[username]/settings.js` | <pur>`/:username/settings`</pur> (<yel>`/foo/settings`</yel>)\n`pages/post/[...all].js` | <pur>`/post/*`</pur> (<yel>`/post/2020/id/title`</yel>)\n<!--rehype:className=style-list-->\n\n### 具有动态路由的页面\n\n如果您创建一个名为 `pages/posts/[pid].js` 的文件，那么它可以在 `posts/1`、`posts/2` 等处访问"
+    },
+    {
+      "id": "intro-191",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import { useRouter } from 'next/router'"
+    },
+    {
+      "id": "intro-192",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "const Post = () => {\nconst router = useRouter()\nconst { pid } = router.query"
+    },
+    {
+      "id": "intro-193",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "return <p>Post: {pid}</p>\n}"
+    },
+    {
+      "id": "intro-194",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default Post"
+    },
+    {
+      "id": "intro-195",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用 `useRouter` 获取动态路由参数 `pid`\n\n### 页面之间的链接\n<!--rehype:wrap-class=row-span-2-->"
+    },
+    {
+      "id": "intro-196",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import Link from 'next/link'"
+    },
+    {
+      "id": "intro-197",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default function Home() {\nreturn (\n<ul>\n<li>\n<Link href=\"/\">首页</Link>\n</li>\n<li>\n<Link href=\"/about\">关于我们</Link>\n</li>\n<li>\n<Link href=\"/blog/hello-world\">\n博文\n</Link>\n</li>\n</ul>\n)\n}"
+    },
+    {
+      "id": "intro-198",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n---\n\n:-- | --\n:-- | --\n`/` | <pur>`pages/index.js`</pur>\n`/about` | <pur>`pages/about.js`</pur>\n`/blog/hello-world` | <pur>`pages/blog/[slug].js`</pur>\n\n### 链接到动态路径"
+    },
+    {
+      "id": "intro-199",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import Link from 'next/link'"
+    },
+    {
+      "id": "intro-200",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default function Posts({ posts }) {\nreturn (\n<Link href={`/blog/${encodeURIComponent(post.slug)}`}>\n标题\n</Link>\n)\n}"
+    },
+    {
+      "id": "intro-201",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### URL 对象"
+    },
+    {
+      "id": "intro-202",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import Link from 'next/link'"
+    },
+    {
+      "id": "intro-203",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default function Posts({ posts }) {\nreturn (\n<Link\nhref={{\npathname: '/blog/[slug]',\nquery: { slug: posts.slug },\n}}\n>\n标题\n</Link>\n)\n}"
+    },
+    {
+      "id": "intro-204",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 动态路由\n<!--rehype:wrap-class=row-span-2-->\n\n考虑以下页面 `pages/post/[pid].js`："
+    },
+    {
+      "id": "intro-205",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import { useRouter } from 'next/router'"
+    },
+    {
+      "id": "intro-206",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "const Post = () => {\nconst router = useRouter()\nconst { pid } = router.query"
+    },
+    {
+      "id": "intro-207",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "return <p>Post: {pid}</p>\n}"
+    },
+    {
+      "id": "intro-208",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default Post"
+    },
+    {
+      "id": "intro-209",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n到动态路由的客户端导航由 `next/link` 处理"
+    },
+    {
+      "id": "intro-210",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import Link from 'next/link'"
+    },
+    {
+      "id": "intro-211",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default function Home() {\nreturn (\n<div>\n<Link href=\"/post/abc\">\n转到 pages/post/[pid].js\n</Link>\n<Link href=\"/post/abc?foo=bar\">\n也转到 pages/post/[pid].js\n</Link>\n<Link href=\"/post/abc/a-comment\">\n转到 pages/post/[pid]/[comment].js\n</Link>\n</div>\n)\n}"
+    },
+    {
+      "id": "intro-212",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 多个动态路由\n\n工作方式相同。 页面 `pages/post/[pid]/[comment].js` 将匹配路由 `/post/abc/a-comment` 并且它的查询对象将是："
+    },
+    {
+      "id": "intro-213",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "{ \"pid\": \"abc\", \"comment\": \"a-comment\" }"
+    },
+    {
+      "id": "intro-214",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 捕捉所有路由\n\n可以通过在括号内添加三个点 (`...`) 来扩展动态路由以捕获所有路径，`pages/post/[...slug].js` 匹配 `/post/a`，也匹配 `/post/a/b`、`/post/a/b/c` 等"
+    },
+    {
+      "id": "intro-215",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "// /post/a\n{ \"slug\": [\"a\"] }"
+    },
+    {
+      "id": "intro-216",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "// /post/a/b\n{ \"slug\": [\"a\", \"b\"] }"
+    },
+    {
+      "id": "intro-217",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 可选捕获所有路由\n\n使用 `[[...slug]]`，`pages/post/[[...slug]].js` 将匹配 `/post`、`/post/a`、`/post/a/b` 等"
+    },
+    {
+      "id": "intro-218",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "// GET `/post` (empty object)\n{ }\n// `GET /post/a` (single-element array)\n{ \"slug\": [\"a\"] }\n// `GET /post/a/b` (multi-element array)\n{ \"slug\": [\"a\", \"b\"] }"
+    },
+    {
+      "id": "intro-219",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 事件执行调整页面"
+    },
+    {
+      "id": "intro-220",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import { useRouter } from 'next/router'"
+    },
+    {
+      "id": "intro-221",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "export default function ReadMore() {\nconst router = useRouter()"
+    },
+    {
+      "id": "intro-222",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "return (\n<button\nonClick={() => router.push('/about')}\n>\n点击这里阅读更多\n</button>\n)\n}"
+    },
+    {
+      "id": "intro-223",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 浅路由\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-224",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "import { useEffect } from 'react'\nimport { useRouter } from 'next/router'"
+    },
+    {
+      "id": "intro-225",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "// 当前网址为“/”\nexport default function Page() {\nconst router = useRouter()"
+    },
+    {
+      "id": "intro-226",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "useEffect(() => {\n// 始终在第一次渲染后进行导航\nrouter.push('/?counter=10', undefined, { shallow: true })\n}, [])"
+    },
+    {
+      "id": "intro-227",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "useEffect(() => {\n// counter 变了！\n}, [router.query.counter])\n}"
+    },
+    {
+      "id": "intro-228",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 注意事项\n\n浅路由仅适用于当前页面中的 URL 更改。 例如，假设我们有另一个名为 `pages/about.js` 的页面，并且您运行以下命令："
+    },
+    {
+      "id": "intro-229",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "router.push('/?counter=10', '/about?counter=10', { shallow: true })"
+    },
+    {
+      "id": "intro-230",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n由于这是一个新页面，它会卸载当前页面，加载新页面并等待数据获取，即使我们要求进行浅层路由\n\n另见\n---\n\n- [Next.js 文档](https://nextjs.org/docs/getting-started)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/nextjs.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/nextjs.md",
+    "generatedAt": "2025-12-16T07:36:11.341Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

@@ -1,0 +1,2391 @@
+{
+  "id": "vue",
+  "title": "vue",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Vue 3 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "[![NPM version](https://img.shields.io/npm/v/vue.svg?style=flat)](https://npmjs.org/package/vue)\n[![Downloads](https://img.shields.io/npm/dm/vue.svg?style=flat)](https://www.npmjs.com/package/vue)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/vuejs/core)](https://github.com/vuejs/core/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/vuejs/core)"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "渐进式 JavaScript 框架 [Vue 3](https://cn.vuejs.org/) 备忘清单的快速参考列表，包含常用 API 和示例\n<!--rehype:style=padding-top: 12px;-->"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "Vue 是一套用于构建用户界面的渐进式框架"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "• [Vue 3.x 官方文档](https://cn.vuejs.org/) _(cn.vuejs.org)_\n• [Vue Router 4.x 官方文档](https://router.vuejs.org/zh/) _(router.vuejs.org)_\n• [Vue 2 备忘清单](./vue2.md)"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "注意：Vue 3.x 版本对应 Vue Router 4.x 路由版本"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "创建应用",
+      "kind": "text",
+      "body": "已安装 `16.0` 或更高版本的 Node.js"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "创建应用",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm init vue@latest"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "创建应用",
+      "kind": "text",
+      "body": "指令将会安装并执行 [create-vue](https://www.npmjs.com/package/create-vue)，它是 Vue 官方的项目脚手架工具"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "创建应用",
+      "kind": "code",
+      "lang": "bash",
+      "code": "✔ Project name: … <your-project-name>\n✔ Add TypeScript? … No/Yes\n✔ Add JSX Support? … No/Yes\n✔ Add Vue Router for Single Page Application development? … No/Yes\n✔ Add Pinia for state management? … No/Yes\n✔ Add Vitest for Unit testing? … No/Yes\n✔ Add Cypress for both Unit and End-to-End testing? … No/Yes\n✔ Add ESLint for code quality? … No/Yes\n✔ Add Prettier for code formatting? … No/Yes\n\nScaffolding project in ./<your-project-name>...\nDone."
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "创建应用",
+      "kind": "text",
+      "body": "安装依赖并启动开发服务器"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "创建应用",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ cd <your-project-name>\n$ npm install\n$ npm run dev"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "创建应用",
+      "kind": "text",
+      "body": "当你准备将应用发布到生产环境时，请运行："
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "创建应用",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ npm run build"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "创建应用",
+      "kind": "text",
+      "body": "此命令会在 `./dist` 文件夹中为你的应用创建一个生产环境的构建版本"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "应用实例",
+      "kind": "code",
+      "lang": "js",
+      "code": "import { createApp, ref } from 'vue'\n\nconst app = createApp({\n  setup() {\n    const message = ref(\"Hello Vue3\")\n    return {\n      message\n    }\n  }\n})\napp.mount('#app')"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "应用实例",
+      "kind": "text",
+      "body": "挂载应用"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "应用实例",
+      "kind": "code",
+      "lang": "html",
+      "code": "<div id=\"app\">\n  <button @click=\"count++\">\n    {{ count }}\n  </button>\n</div>"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "通过 CDN 使用 Vue",
+      "kind": "code",
+      "lang": "html",
+      "code": "<script src=\"https://unpkg.com/vue@3/dist/vue.global.js\"></script>\n<div id=\"app\">{{ message }}</div>\n<script>\n  const { createApp, ref } = Vue\n  createApp({\n    setup() {\n      const message = ref(\"Hello Vue3\")\n      return {\n        message\n      }\n    }\n  }).mount('#app')\n</script>"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "使用 ES 模块构建版本",
+      "kind": "code",
+      "lang": "html",
+      "code": "<div id=\"app\">{{ message, ref }}</div>\n<script type=\"module\">\n  import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'\n  createApp({\n    setup() {\n      const message = ref(\"Hello Vue3\")\n      return {\n        message\n      }\n    }\n  }).mount('#app')\n</script>"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "使用 ES 模块构建版本",
+      "kind": "text",
+      "body": "模板语法\n---"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "文本插值",
+      "kind": "code",
+      "lang": "html",
+      "code": "<span>Message: {{ msg }}</span>"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "文本插值",
+      "kind": "text",
+      "body": "使用的是 `Mustache` 语法 (即双大括号)，每次 `msg` 属性更改时它也会同步更新"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "原始 HTML",
+      "kind": "code",
+      "lang": "html",
+      "code": "<p>Using text interpolation: {{ rawHtml }}</p>\n<p>Using v-html directive: <span v-html=\"rawHtml\"></span></p>"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "原始 HTML",
+      "kind": "text",
+      "body": "双大括号`{{}}`会将数据解释为纯文本，使用 `v-html` 指令，将插入 HTML"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "Attribute 绑定",
+      "kind": "code",
+      "lang": "html",
+      "code": "<div v-bind:id=\"dynamicId\"></div>"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "Attribute 绑定",
+      "kind": "text",
+      "body": "简写"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "Attribute 绑定",
+      "kind": "code",
+      "lang": "html",
+      "code": "<div :id=\"dynamicId\"></div>"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "布尔型 Attribute",
+      "kind": "code",
+      "lang": "html",
+      "code": "<button :disabled=\"isButtonDisabled\">\n  Button\n</button>"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "动态绑定多个值",
+      "kind": "text",
+      "body": "通过不带参数的 `v-bind`，你可以将它们绑定到单个元素上"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "动态绑定多个值",
+      "kind": "code",
+      "lang": "html",
+      "code": "<script setup>\n  import comp from \"./Comp.vue\"\n  import {ref} from \"vue\"\n  const a = ref(\"hello\")\n  const b = ref(\"world\")\n</script>\n\n<template>\n  <comp v-bind=\"{a, b}\"></comp>\n</template>"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "动态绑定多个值",
+      "kind": "text",
+      "body": "如果你是使用的 `setup` 语法糖。需要使用 `defineprops` 声名（可以直接使用`a`/`b`）"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "动态绑定多个值",
+      "kind": "code",
+      "lang": "js",
+      "code": "const props = defineProps({\n  a: String,\n  b: String\n})"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "使用 JavaScript 表达式",
+      "kind": "code",
+      "lang": "html",
+      "code": "{{ number + 1 }}\n{{ ok ? 'YES' : 'NO' }}\n{{ message.split('').reverse().join('') }}\n\n<div :id=\"`list-${id}`\"></div>"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "仅支持表达式(例子都是无效)",
+      "kind": "code",
+      "lang": "html",
+      "code": "<!-- 这是一个语句，而非表达式 -->\n{{ var a = 1 }}\n<!-- 条件控制也不支持，请使用三元表达式 -->\n{{ if (ok) { return message } }}"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "调用函数",
+      "kind": "code",
+      "lang": "html",
+      "code": "<span :title=\"toTitleDate(date)\">\n  {{ formatDate(date) }}\n</span>"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "指令 Directives",
+      "kind": "code",
+      "lang": "html",
+      "code": "<p v-if=\"seen\">Now you see me</p>"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "参数 Arguments",
+      "kind": "code",
+      "lang": "html",
+      "code": "<a v-bind:href=\"url\"> ... </a>\n<!-- 简写 -->\n<a :href=\"url\"> ... </a>"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "绑定事件",
+      "kind": "code",
+      "lang": "html",
+      "code": "<a v-on:click=\"doSomething\"> ... </a>\n<!-- 简写 -->\n<a @click=\"doSomething\"> ... </a>"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "动态参数",
+      "kind": "code",
+      "lang": "html",
+      "code": "<a v-bind:[attributeName]=\"url\"> ... </a>\n<!-- 简写 -->\n<a :[attributeName]=\"url\"> ... </a>"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "动态参数",
+      "kind": "text",
+      "body": "这里的 `attributeName` 会作为一个 JS 表达式被动态执行"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "动态的事件名称",
+      "kind": "code",
+      "lang": "html",
+      "code": "<a v-on:[eventName]=\"doSomething\"> ... </a>\n<!-- 简写 -->\n<a @[eventName]=\"doSomething\">"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "修饰符 Modifiers",
+      "kind": "code",
+      "lang": "html",
+      "code": "<form @submit.prevent=\"onSubmit\">\n  ...\n</form>"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "修饰符 Modifiers",
+      "kind": "text",
+      "body": "`.prevent` 修饰符会告知 `v-on` 指令对触发的事件调用 `event.preventDefault()`"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "指令语法",
+      "kind": "code",
+      "lang": "bash",
+      "code": "v-on:submit.prevent=\"onSubmit\"\n──┬─ ─┬──── ─┬─────  ─┬──────\n  ┆   ┆      ┆        ╰─ Value 解释为JS表达式\n  ┆   ┆      ╰─ Modifiers 由前导点表示\n  ┆   ╰─ Argument 跟随冒号或速记符号\n  ╰─ Name 以 v- 开头使用速记时可以省略"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "指令语法",
+      "kind": "text",
+      "body": "响应式基础\n---"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "html",
+      "code": "<div>{{ state.count }}</div>"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "```js {6,7,11}\nimport { defineComponent, reactive } from 'vue';"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// `defineComponent`用于IDE推导类型\nexport default defineComponent({\n// setup 用于组合式 API 的特殊钩子函数\nsetup() {\nconst state = reactive({ count: 0 });"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 暴露 state 到模板\nreturn {\nstate\n};\n},\n});"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text-->\n\n### 声明方法"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<button @click=\"increment\">\n{{ state.count }}\n</button>"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n---"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { defineComponent, reactive } from 'vue';"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\nsetup() {\nconst state = reactive({ count: 0 });"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "function increment() {\nstate.count++;\n}"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 不要忘记同时暴露 increment 函数\nreturn {\nstate,\nincrement\n};\n},\n})"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text-->\n\n### `<script setup>` setup语法糖"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { reactive } from 'vue';"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const state = reactive({ count: 0 })"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "function increment() {\nstate.count++\n}\n</script>"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<button @click=\"increment\">\n{{ state.count }}\n</button>\n</template>"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n**`setup`** 语法糖用于简化代码，尤其是当需要暴露的状态和方法越来越多时\n\n### 用 `ref()` 定义响应式变量\n<!--rehype:wrap-class=row-span-2-->\n\n`reactive`只能用于对象、数组和 `Map`、`Set` 这样的集合类型，对 string、number 和 boolean 这样的原始类型则需要使用`ref`"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { ref } from 'vue';"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const count = ref(0);"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "console.log(count); // { value: 0 }\nconsole.log(count.value); // 0\ncount.value++;\nconsole.log(count.value); // 1\nconst objectRef = ref({ count: 0 });"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 这是响应式的替换\nobjectRef.value = { count: 1 };\nconst obj = {\nfoo: ref(1),\nbar: ref(2)\n};\n// 该函数接收一个 ref\n// 需要通过 .value 取值\n// 但它会保持响应性\ncallSomeFunction(obj.foo);"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 仍然是响应式的\nconst { foo, bar } = obj;"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在 html 模板中不需要带 `.value` 就可以使用"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref } from 'vue';"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const count = ref(0);\n</script>"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<div>\n{{ count }}\n</div>\n</template>"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 有状态方法\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { reactive, defineComponent, onUnmounted } from 'vue';\nimport { debounce } from 'lodash-es';"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\nsetup() {\n// 每个实例都有了自己的预置防抖的处理函数\nconst debouncedClick = debounce(click, 500);"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "function click() {\n// ... 对点击的响应 ...\n}"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 最好是在组件卸载时\n// 清除掉防抖计时器\nonUnmounted(() => {\ndebouncedClick.cancel();\n});\n},\n});"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 响应式样式\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref } from 'vue'\nconst open = ref(false);\n</script>"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<button @click=\"open = !open\">Toggle</button>\n<div>Hello Vue!</div>\n</template>"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<style scope>\ndiv{\ntransition: height 0.1s linear;\noverflow: hidden;\nheight: v-bind(open ? '30px' : '0px');\n}\n</style>"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n响应式进阶 —— watch 和 computed\n---\n\n### 监听状态\n<!--rehype:wrap-class=row-span-2-->"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref, watch } from 'vue';"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const count = ref(0)\nconst isEvent = ref(false)"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "function increment() {\nstate.count++\n}"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "watch(count, function() {\nisEvent.value = count.value % 2 === 0\n})\n</script>"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<button @click=\"increment\">\n{{ count }}\n</button>\n<p>\nis event: {{ isEvent ? 'yes' : 'no' }}\n</p>\n</template>"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 立即监听状态\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "watch(count, function() {\nisEvent.value = count.value % 2 === 0\n}, {\n// 上例中的 watch 不会立即执行，导致 isEvent 状态的初始值不准确。配置立即执行，会在一开始的时候立即执行一次\nimmediate: true\n})"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text-->\n\n### 监听多个值\n<!--rehype:wrap-class=col-span-2 row-span-2-->"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<h1> {{ count1 }} </h1>\n<h1> {{ count2 }} </h1>\n<button @click=\"count1++\">count1</button>\n<button @click=\"count2++\">count2</button>\n</template>"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { watch, ref } from 'vue';"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const count1 = ref(0)\nconst count2 = ref(0)"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "watch(\n// 监听的表达式或函数\n() => ({\ncount1: count1.value,\ncount2: count2.value\n}),\n// 回调函数\n(newValue, oldValue) => {\n// 在这里执行需要的逻辑\nconsole.log('count1 或 count2 变化了：', newValue);\n},\n// immediate: true 表示在初始渲染时立即执行一次回调函数，以便处理初始的状态。\n// deep: true 表示深度监听，即对 newValue 和 oldValue 进行深层比较，而不是简单的引用比较。\n{ immediate: true, deep: true }\n);\n</script>"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<style scoped>\n</style>"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 计算状态"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref, computed } from 'vue';"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const text = ref('')\n// computed 的回调函数里\n// 会根据已有并用到的状态计算出新的状态\nconst capital = computed(function(){\nreturn text.value.toUpperCase();\n})\n</script>"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<input v-model=\"text\" />\n<p>to capital: {{ capital }}</p>\n</template>"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n组件通信\n---\n\n### defineProps"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { defineProps } from 'vue';"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 这里可以将 `username` 解构出来，\n// 但是一旦解构出来再使用，就不具备响应式能力\ndefineProps({\nusername: String\n})\n</script>"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<p>username: {{ username }}</p>\n</template>"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n子组件定义需要的参数"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nconst username = 'vue'\n</script>"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<children :username=\"username\" />\n</template>"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n父组件参入参数\n\n### defineEmits"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { defineEmits, ref } from 'vue';"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const emit = defineEmits(['search'])\nconst keyword = ref('')\nconst onSearch = function() {\nemit('search', keyword.value)\n}\n</script>"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<input v-model=\"keyword\" />\n<button @click=\"onSearch\">search</button>\n</template>"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n子组件定义支持 `emit` 的函数"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nconst onSearch = function(keyword){\nconsole.log(keyword)\n}\n</script>"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<children @search=\"onSearch\" />\n</template>"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n父组件绑定子组件定义的事件\n\n### defineExpose"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { defineExpose, ref } from 'vue';"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const keyword = ref('')\nconst onSearch = function() {\nconsole.log(keyword.value)\n}"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "defineExpose({ onSearch })\n</script>"
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<input v-model=\"keyword\" />\n</template>"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n子组件对父组件暴露方法"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref } from 'vue'"
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const childrenRef = ref(null)\nconst onSearch = function() {\nchildrenRef.value.onSearch()\n}\n</script>"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<children ref='childrenRef' />\n<button @click=\"onSearch\">search</button>\n</template>"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n父组件调用子组件的方法\n\n### Provide / Inject"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import type { InjectionKey, Ref } from 'vue'"
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export const ProvideKey = Symbol() as InjectionKey<Ref<string>>"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text-->\n\n在应用中使用 `ProvideKey`"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup lang=\"ts\">\nimport { provide, ref } from 'vue'\nimport { ProvideKey } from './types'"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const text = ref<string>('123')\nprovide(ProvideKey, text)\n</script>"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<input v-model=\"text\" />\n</template>"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n父组件为后代组件提供数据"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup lang=\"ts\">\nimport { inject } from 'vue'\nimport { ProvideKey } from './types'"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const value = inject(ProvideKey)\n</script>"
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<h4>{{value}}</h4>\n</template>"
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n后代组件注入父组件提供的数据\n\n<!--rehype:className=wrap-text -->\n\n## 路由\n\n### 1. 路由的基本使用\n\n#### 开启命名空间后，组件中读取state数据\n\n方式一：自己直接读取"
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "this.$store.state.personAbout.list"
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n方式二：借助 mapState 读取："
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "...mapState('countAbout',[\n'sum','school','subject'\n]),"
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 开启命名空间后，组件中读取getters数据\n\n方式一：自己直接读取"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "this.$store.getters[\n'personAbout/firstPersonName'\n]"
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n方式二：借助 mapGetters 读取："
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "...mapGetters('countAbout',['bigSum'])"
+    },
+    {
+      "id": "intro-143",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 开启命名空间后，组件中调用dispatch\n\n方式一：自己直接 dispatch"
+    },
+    {
+      "id": "intro-144",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "this.$store.dispatch(\n'personAbout/addPersonWang', person\n)"
+    },
+    {
+      "id": "intro-145",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n方式二：借助mapActions:"
+    },
+    {
+      "id": "intro-146",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "...mapActions('countAbout',{\nincrementOdd:'jia0dd',\nincrementWait:'jiaWait'\n})"
+    },
+    {
+      "id": "intro-147",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 开启命名空间后，组件中调用commit\n\n方式一：自己直接 commit"
+    },
+    {
+      "id": "intro-148",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "this.$store.commit(\n'personAbout/ADD_PERSON', person\n)"
+    },
+    {
+      "id": "intro-149",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n方式二：借助 mapMutations:"
+    },
+    {
+      "id": "intro-150",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "...mapMutations('countAbout', {\nincrement:'JIA',decrement:'JIAN'\n}),"
+    },
+    {
+      "id": "intro-151",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 2. 路由的使用"
+    },
+    {
+      "id": "intro-152",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import VueRouter from 'vue-router'\n// 引入Luyou 组件\nimport About from '../components/About'\nimport Home from '../components/Home'\n// 创建router实例对象，去管理一组一组的路由规则\nconst router = new VueRouter({\nroutes: [\npath: '/about',\ncomponent: About\npath: '/home',\ncomponent: Home\n]\n})\n// 暴露 router\nexport default router"
+    },
+    {
+      "id": "intro-153",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n实现切换（active-class可配置高亮样式）"
+    },
+    {
+      "id": "intro-154",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<router-link\nactive-class=\"active\"\nto=\"/about\">\nAbout\n</router-link>"
+    },
+    {
+      "id": "intro-155",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n指定展示位置"
+    },
+    {
+      "id": "intro-156",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<router-diew></router-view>"
+    },
+    {
+      "id": "intro-157",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n几个注意点\n\n- 路由组件通常存放在pages文件夹，一般组件通常存放在components文件夹。\n- 通过切换，“隐藏”了的路由组件，默认是被销毁掉的，需要的时候再去挂载。\n- 每个组件都有自己的$route属性，里面存储着自己的路由信息。\n- 整个应用只有一个router，可以通过组件的srouter 属性获取到。\n<!--rehype:className=style-list-arrow-->\n\n### 3.路由的query"
+    },
+    {
+      "id": "intro-158",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { useRoute } from 'vue-router';\nconst route = useRoute();\n</script>"
+    },
+    {
+      "id": "intro-159",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n> 接收参数 `{{route.query.id}}`\n\n#### 跳转路由并携带参数"
+    },
+    {
+      "id": "intro-160",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<li v-for=\"item of data\" :key=\"item.id\">\n<router-link\nclass=\"link\"\n:to=\"`/home/message/mes?id=${item.id}&title=${item.mes}`\"\n>\n{{item.mes}}\n</router-link>\n</li>"
+    },
+    {
+      "id": "intro-161",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 4. 命名路由"
+    },
+    {
+      "id": "intro-162",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "routes:[\n{ path:'/about', component:AboutBody },\n{\npath:'/home',\ncomponent:HomeBody,\nchildren:[\n{ path:'news', component:HomeChild },\n{\npath:'message',\ncomponent:HomeChild1,\n//多级路由\nchildren:[\n{ name:'richu', path:'mes', component:HomeMessage }\n]\n}\n]\n}\n]"
+    },
+    {
+      "id": "intro-163",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用"
+    },
+    {
+      "id": "intro-164",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<router-link :to=\"{\nname:'',\npath:'/home/message/mes',\n​  query:{ id:item.id,title:item.mes }\n}\">"
+    },
+    {
+      "id": "intro-165",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 5.params参数的使用\n\n#### 1. 声明接收"
+    },
+    {
+      "id": "intro-166",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "children:[\n{\nname:'richu',\npath:'mes/:id/:title',\ncomponent:HomeMessage\n}\n]"
+    },
+    {
+      "id": "intro-167",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 2. 传递"
+    },
+    {
+      "id": "intro-168",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<li v-for=\"item of data\" :key=\"item.id\">\n<router-link\nclass=\"link\"\n:to=\"`/home/message/mes/${item.id}/${item.mes}`\"\n>{{item.mes}}\n</router-link>\n</li>"
+    },
+    {
+      "id": "intro-169",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 3. 接收"
+    },
+    {
+      "id": "intro-170",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<li>编号{{$route.params.id}}</li>\n<li>标题{{$route.params.title}}</li>"
+    },
+    {
+      "id": "intro-171",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 6.props的使用\n\n路由的props配置"
+    },
+    {
+      "id": "intro-172",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "{\nname: 'xiangqing',\npath:'detail/:id',\ncomponent:Detail\n}"
+    },
+    {
+      "id": "intro-173",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n作用：让路由组件更方便的收到参数"
+    },
+    {
+      "id": "intro-174",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "//第一种写法：props值为对象，该对象中所有的key-value的组合最终都会通过props传给Detai1组件\n// props:{a:900]\n//第二种写法：props值为布尔值，布尔值为true，则把路由收到的所有params参数通过props传给Detai1组件\n// props:true\n//第三种写法：props值为函数，该函数返回的对象中每一组key-value都会通过props传给Detail组件\nprops(route){\nreturn {\nid:route.query.id,\ntitle:route.query.title\n}\n}"
+    },
+    {
+      "id": "intro-175",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n\\<router-link> 的 replace 属性\n\n1. 作用：控制路由跳转时操作浏览器历史记录的模式\n2. 浏览器的历史记录有两种写入方式：分别为 push和replace,默认为push\n3. 如何开启replace 模式： `push` 是追加历史记录,`replace` 是替换当前记录[路由跳转时候 `<router-link replace>News\\</router-link>`]\n\n### 7. 编程式路由导航\n\n作用：不借助router-link实现路由跳转，让跳转更加灵活"
+    },
+    {
+      "id": "intro-176",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "this.$router.push({\nname:'xiangqing',\nparams:{\nid: xxx,\ntitle: xxx\n// 实现路由跳转，让路由跳转更加灵活\n}\n})\nthis.$router.replace({\nname:'xiangqing',\nparams:{\nid:xxx,\ntitle:xxx\n}\n})\nthis.$router.forward();\nthis.$router.back();\nthis.$router.go(3);"
+    },
+    {
+      "id": "intro-177",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 8.缓存路由组件\n\n让不展示的路由组件保持挂载，不被销毁，示例："
+    },
+    {
+      "id": "intro-178",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<keep-alive include=\"news\">\n<router-view></router-view>\n</keep-alive>"
+    },
+    {
+      "id": "intro-179",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n- `include` 里面写模块名,用于保存指定的模块\n\n### 9.新生命周期钩子\n\n> 作用：路由组件独有的，用于捕获路由组件的激活状态\n\n- `activated` 路由组件被激活时触发\n- `deactivated` 路由组件失活时触发\n\n## 路由守卫\n\n### 1.前置路由守卫"
+    },
+    {
+      "id": "intro-180",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "route.beforeEach((from,to,next)=>{\nif (to.meta.isAuth){\nalert(\"1\");\nnext();\n}else{\nnext();\n}\n})"
+    },
+    {
+      "id": "intro-181",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n前置路由\n\n### 2.后置路由守卫"
+    },
+    {
+      "id": "intro-182",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "route.afterEach((from,to)=>{\nconsole.log(to);\ndocument.title=from.meta.title;\n})"
+    },
+    {
+      "id": "intro-183",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n后置路由\n\n### 3.独享路由守卫"
+    },
+    {
+      "id": "intro-184",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "{\npath:'news',\ncomponent:HomeChild,\nmeta:{title:\"新闻\"},\nbeforeEnter: (from,to,next)=>{"
+    },
+    {
+      "id": "intro-185",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "}\n},"
+    },
+    {
+      "id": "intro-186",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n独享路由守卫只有前置路由守卫没有后置路由守卫\n\n### 4.组件内路由守卫\n\n通过路由规则，进入该组件时被调用"
+    },
+    {
+      "id": "intro-187",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "beforeRouteEnter (to, from, next) {\n// ...\n}"
+    },
+    {
+      "id": "intro-188",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n通过路由规则，离开组件时被调用"
+    },
+    {
+      "id": "intro-189",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "beforeRouteLeave (to, from, next) {\n// ...\n}"
+    },
+    {
+      "id": "intro-190",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\nVue 中使用 TypeScript\n---\n\n### 为组件的 props 标注类型\n<!--rehype:wrap-class=row-span-4-->\n\n当使用 `<script setup>` 时，`defineProps()` 宏函数支持从它的参数中推导类型"
+    },
+    {
+      "id": "intro-191",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup lang=\"ts\">\nconst props = defineProps({\nfoo: { type: String, required: true },\nbar: Number\n})"
+    },
+    {
+      "id": "intro-192",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "props.foo // string\nprops.bar // number | undefined\n</script>"
+    },
+    {
+      "id": "intro-193",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n对同一个文件中的一个接口或对象类型字面量的引用："
+    },
+    {
+      "id": "intro-194",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "interface Props {/* ... */}"
+    },
+    {
+      "id": "intro-195",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "defineProps<Props>()"
+    },
+    {
+      "id": "intro-196",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### Props 解构默认值"
+    },
+    {
+      "id": "intro-197",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export interface Props {\nmsg?: string\nlabels?: string[]\n}"
+    },
+    {
+      "id": "intro-198",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const props = withDefaults(defineProps<Props>(), {\nmsg: 'hello',\nlabels: () => ['one', 'two']\n})"
+    },
+    {
+      "id": "intro-199",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用目前为实验性的响应性语法糖"
+    },
+    {
+      "id": "intro-200",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup lang=\"ts\">\ninterface Props {\nname: string\ncount?: number\n}"
+    },
+    {
+      "id": "intro-201",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 对 defineProps() 的响应性解构\n// 默认值会被编译为等价的运行时选项\nconst {\nname, count = 100\n} = defineProps<Props>()\n</script>"
+    },
+    {
+      "id": "intro-202",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 为组件的 emits 标注类型"
+    },
+    {
+      "id": "intro-203",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup lang=\"ts\">\n// 运行时\nconst emit = defineEmits(['change', 'update'])"
+    },
+    {
+      "id": "intro-204",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 基于类型\nconst emit = defineEmits<{\n(e: 'change', id: number): void\n(e: 'update', value: string): void\n}>()\n</script>"
+    },
+    {
+      "id": "intro-205",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 为 ref() 标注类型\n\nref 会根据初始化时的值推导其类型："
+    },
+    {
+      "id": "intro-206",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { ref } from 'vue'\nimport type { Ref } from 'vue'"
+    },
+    {
+      "id": "intro-207",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const year: Ref<string | number> = ref('2020')"
+    },
+    {
+      "id": "intro-208",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "year.value = 2020 // 成功！"
+    },
+    {
+      "id": "intro-209",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 为 reactive() 标注类型"
+    },
+    {
+      "id": "intro-210",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { reactive } from 'vue'"
+    },
+    {
+      "id": "intro-211",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "interface Book {\ntitle: string\nyear?: number\n}"
+    },
+    {
+      "id": "intro-212",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const book: Book = reactive({\ntitle: 'Vue 3 指引'\n})"
+    },
+    {
+      "id": "intro-213",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 为 computed() 标注类型\n\n你还可以通过泛型参数显式指定类型："
+    },
+    {
+      "id": "intro-214",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const double = computed<number>(() => {\n// 若返回值不是 number 类型则会报错\n})"
+    },
+    {
+      "id": "intro-215",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 为事件处理函数标注类型\n<!--rehype:wrap-class=row-span-2-->"
+    },
+    {
+      "id": "intro-216",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup lang=\"ts\">\nfunction handleChange(event) {\n// `event` 隐式地标注为 `any` 类型\nconsole.log(event.target.value)\n}\n</script>"
+    },
+    {
+      "id": "intro-217",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<input\ntype=\"text\"\n@change=\"handleChange\" />\n</template>"
+    },
+    {
+      "id": "intro-218",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n显式地为事件处理函数的参数标注类型"
+    },
+    {
+      "id": "intro-219",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "function handleChange(event: Event) {\nconst target = event.target as HTMLInputElement\nconsole.log(target.value)\n}"
+    },
+    {
+      "id": "intro-220",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 为 provide / inject 标注类型"
+    },
+    {
+      "id": "intro-221",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { provide, inject } from 'vue'\nimport type { InjectionKey } from 'vue'"
+    },
+    {
+      "id": "intro-222",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const key = Symbol() as InjectionKey<string>\n// 若提供的是非字符串值会导致错误\nprovide(key, 'foo')\n// foo 的类型：string | undefined\nconst foo = inject(key)"
+    },
+    {
+      "id": "intro-223",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 为模板引用标注类型"
+    },
+    {
+      "id": "intro-224",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup lang=\"ts\">\nimport { ref, onMounted } from 'vue'"
+    },
+    {
+      "id": "intro-225",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const el = ref<HTMLInputElement | null>(null)"
+    },
+    {
+      "id": "intro-226",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "onMounted(() => {\nel.value?.focus()\n})\n</script>"
+    },
+    {
+      "id": "intro-227",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<input ref=\"el\" />\n</template>"
+    },
+    {
+      "id": "intro-228",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 为组件模板引用标注类型"
+    },
+    {
+      "id": "intro-229",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup lang=\"ts\">\nimport { ref } from 'vue'"
+    },
+    {
+      "id": "intro-230",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const isContentShown = ref(false)\nconst open =\n() => (isContentShown.value = true)"
+    },
+    {
+      "id": "intro-231",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "defineExpose({\nopen\n})\n</script>"
+    },
+    {
+      "id": "intro-232",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用 TypeScript 内置的 `InstanceType` 工具类型来获取其实例类"
+    },
+    {
+      "id": "intro-233",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup lang=\"ts\">\nimport MyModal from './MyModal.vue'"
+    },
+    {
+      "id": "intro-234",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "type Modal = InstanceType<typeof MyModal>"
+    },
+    {
+      "id": "intro-235",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const modal = ref<Modal | null>(null)"
+    },
+    {
+      "id": "intro-236",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const openModal = () => {\nmodal.value?.open()\n}\n</script>"
+    },
+    {
+      "id": "intro-237",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 选项式 API 为组件的 props 标注类型\n<!--rehype:wrap-class=row-span-2-->"
+    },
+    {
+      "id": "intro-238",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { defineComponent } from 'vue'"
+    },
+    {
+      "id": "intro-239",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\n// 启用了类型推导\nprops: {\nname: String,\nid: [Number, String],\nmsg: { type: String, required: true },\nmetadata: null\n},\nmounted() {\n// 类型：string | undefined\nthis.name\n// 类型：number|string|undefined\nthis.id\n// 类型：string\nthis.msg\n// 类型：any\nthis.metadata\n}\n})"
+    },
+    {
+      "id": "intro-240",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用 PropType 这个工具类型来标记更复杂的 props 类型"
+    },
+    {
+      "id": "intro-241",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { defineComponent } from 'vue'\nimport type { PropType } from 'vue'"
+    },
+    {
+      "id": "intro-242",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "interface Book {\ntitle: string\nauthor: string\nyear: number\n}"
+    },
+    {
+      "id": "intro-243",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\nprops: {\nbook: {\n// 提供相对 `Object` 更确定的类型\ntype: Object as PropType<Book>,\nrequired: true\n},\n// 也可以标记函数\ncallback: Function as PropType<(id: number) => void>\n},\nmounted() {\nthis.book.title // string\nthis.book.year // number"
+    },
+    {
+      "id": "intro-244",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// TS Error: argument of type 'string' is not\n// assignable to parameter of type 'number'\nthis.callback?.('123')\n}\n})"
+    },
+    {
+      "id": "intro-245",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 选项式 API 为组件的 emits 标注类型"
+    },
+    {
+      "id": "intro-246",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { defineComponent } from 'vue'"
+    },
+    {
+      "id": "intro-247",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "type Payload = { bookName: string }"
+    },
+    {
+      "id": "intro-248",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\nemits: {\naddBook(payload: Payload) {\n// 执行运行时校验\nreturn payload.bookName.length > 0\n}\n},\nmethods: {\nonSubmit() {\nthis.$emit('addBook', {\nbookName: 123 // 类型错误\n})\n// 类型错误\nthis.$emit('non-declared-event')\n}\n}\n})"
+    },
+    {
+      "id": "intro-249",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 选项式 API 为计算属性标记类型\n<!--rehype:wrap-class=row-span-2-->\n\n计算属性会自动根据其返回值来推导其类型："
+    },
+    {
+      "id": "intro-250",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { defineComponent } from 'vue'"
+    },
+    {
+      "id": "intro-251",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\ndata() {\nreturn {\nmessage: 'Hello!'\n}\n},\ncomputed: {\ngreeting() {\nreturn this.message + '!'\n}\n},\nmounted() {\nthis.greeting // 类型：string\n}\n})"
+    },
+    {
+      "id": "intro-252",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在某些场景中，你可能想要显式地标记出计算属性的类型以确保其实现是正确的："
+    },
+    {
+      "id": "intro-253",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { defineComponent } from 'vue'"
+    },
+    {
+      "id": "intro-254",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\ndata() {\nreturn {\nmessage: 'Hello!'\n}\n},\ncomputed: {\n// 显式标注返回类型\ngreeting(): string {\nreturn this.message + '!'\n},"
+    },
+    {
+      "id": "intro-255",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 标注一个可写的计算属性\ngreetingUppercased: {\nget(): string {\nreturn this.greeting.toUpperCase()\n},\nset(newValue: string) {\nthis.message = newValue.toUpperCase()\n}\n}\n}\n})"
+    },
+    {
+      "id": "intro-256",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 选项式 API 为事件处理函数标注类型"
+    },
+    {
+      "id": "intro-257",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { defineComponent } from 'vue'"
+    },
+    {
+      "id": "intro-258",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\nmethods: {\nhandleChange(event: Event) {\nconsole.log((event.target as HTMLInputElement).value)\n}\n}\n})"
+    },
+    {
+      "id": "intro-259",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 选项式 API 扩展全局属性"
+    },
+    {
+      "id": "intro-260",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import axios from 'axios'"
+    },
+    {
+      "id": "intro-261",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "declare module 'vue' {\ninterface ComponentCustomProperties {\n$http: typeof axios\n$translate: (key: string) => string\n}\n}"
+    },
+    {
+      "id": "intro-262",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 类型扩展的位置\n\n我们可以将这些类型扩展放在一个 `.ts` 文件，或是一个影响整个项目的 `*.d.ts` 文件中"
+    },
+    {
+      "id": "intro-263",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 不工作，将覆盖原始类型。\ndeclare module 'vue' {\ninterface ComponentCustomProperties {\n$translate: (key: string) => string\n}\n}"
+    },
+    {
+      "id": "intro-264",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n---"
+    },
+    {
+      "id": "intro-265",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 正常工作。\nexport {}"
+    },
+    {
+      "id": "intro-266",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "declare module 'vue' {\ninterface ComponentCustomProperties {\n$translate: (key: string) => string\n}\n}"
+    },
+    {
+      "id": "intro-267",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 选项式 API 扩展自定义选项\n\n某些插件，比如 vue-router，提供了一些自定义的组件选项，比如 beforeRouteEnter："
+    },
+    {
+      "id": "intro-268",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { defineComponent } from 'vue'"
+    },
+    {
+      "id": "intro-269",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\nbeforeRouteEnter(to, from, next) {\n// ...\n}\n})"
+    },
+    {
+      "id": "intro-270",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n如果没有确切的类型标注，这个钩子函数的参数会隐式地标注为 `any` 类型。我们可以为 `ComponentCustomOptions` 接口扩展自定义的选项来支持："
+    },
+    {
+      "id": "intro-271",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "import { Route } from 'vue-router'"
+    },
+    {
+      "id": "intro-272",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "declare module 'vue' {\ninterface ComponentCustomOptions {\nbeforeRouteEnter?(\nto: Route,\nfrom: Route,\nnext: () => void\n): void"
+    },
+    {
+      "id": "intro-273",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "}"
+    },
+    {
+      "id": "intro-274",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n## 性能优化\n\n### 介绍\n\n性能优化是构建高效 Vue 应用的关键。以下是一些特殊的优化策略，结合 Vue 的特性，可以大幅减少渲染开销、提升加载速度和用户体验。这些方法不仅限于单一 API，而是从整体架构和开发实践出发，提供通用的性能提升思路。\n\n### 条件渲染与缓存结合\n\n通过结合 `v-if` 和 `<KeepAlive>`，可以避免频繁销毁和重建组件，尤其是在切换视图或路由时。搭配 `defineAsyncComponent` 实现懒加载，进一步减少初次加载的开销。"
+    },
+    {
+      "id": "intro-275",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<div>\n<button @click=\"toggle\">Toggle View</button>\n<keep-alive>\n<component :is=\"currentView\" />\n</keep-alive>\n</div>\n</template>"
+    },
+    {
+      "id": "intro-276",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref, defineAsyncComponent } from 'vue';"
+    },
+    {
+      "id": "intro-277",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const currentView = ref('ViewA');\nconst toggle = () => {\ncurrentView.value = currentView.value === 'ViewA' ? 'ViewB' : 'ViewA';\n};"
+    },
+    {
+      "id": "intro-278",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const ViewA = defineAsyncComponent(() => import('./ViewA.vue'));\nconst ViewB = defineAsyncComponent(() => import('./ViewB.vue'));\n</script>\n//<KeepAlive> 缓存动态组件，防止重复创建和销毁。\n//defineAsyncComponent 实现组件懒加载，仅在需要时加载模块。\n//效果：减少 DOM 操作和组件初始化的性能消耗，特别适合复杂组件切换或路由场景。"
+    },
+    {
+      "id": "intro-279",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 路由前置优化（beforeRouteEnter）\n\n在路由进入前执行数据预取或条件检查，可以避免不必要的渲染和请求，提升页面加载效率。"
+    },
+    {
+      "id": "intro-280",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script>\nimport { defineComponent } from 'vue';"
+    },
+    {
+      "id": "intro-281",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "export default defineComponent({\nname: 'Profile',\nbeforeRouteEnter(to, from, next) {\n// 模拟数据预取\nfetchUserData(to.params.id).then((user) => {\nnext((vm) => {\nvm.user = user; // 将数据传递给组件实例\n});\n}).catch(() => {\nnext(false); // 阻止路由进入\n});\n},\ndata() {\nreturn {\nuser: null,\n};\n},\n});\n</script>"
+    },
+    {
+      "id": "intro-282",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<div v-if=\"user\">\n<h1>{{ user.name }}</h1>\n</div>\n</template>"
+    },
+    {
+      "id": "intro-283",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 响应式对象的精简\n\n避免将大型对象直接用 reactive 包裹，而是按需拆分，使用 ref 或 toRef 精细控制响应式范围，减少依赖追踪的开销。"
+    },
+    {
+      "id": "intro-284",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref, toRef, reactive } from 'vue';"
+    },
+    {
+      "id": "intro-285",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const largeData = {\nuser: { name: 'Alice', age: 25 },\nsettings: { theme: 'dark', fontSize: 16 },\nitems: Array(1000).fill({ id: 0, value: 'test' }),\n};"
+    },
+    {
+      "id": "intro-286",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "// 仅将需要的部分设为响应式\nconst userName = ref(largeData.user.name);\nconst settings = reactive(largeData.settings);\nconst firstItem = toRef(largeData.items[0], 'value');\n</script>"
+    },
+    {
+      "id": "intro-287",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<div>\n<input v-model=\"userName\" />\n<p>Theme: {{ settings.theme }}</p>\n<p>First Item: {{ firstItem }}</p>\n</div>\n</template>"
+    },
+    {
+      "id": "intro-288",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 计算属性的延迟执行\n\n通过封装计算属性并结合 watchEffect，实现按需计算，避免不必要的开销。"
+    },
+    {
+      "id": "intro-289",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref, computed, watchEffect } from 'vue';"
+    },
+    {
+      "id": "intro-290",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const items = ref([]);\nconst filterText = ref('');\nconst filteredItems = computed(() => {\nreturn items.value.filter((item) => item.includes(filterText.value));\n});"
+    },
+    {
+      "id": "intro-291",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "watchEffect(() => {\nif (filterText.value) {\n// 仅在 filterText 不为空时触发计算\nfilteredItems.value;\n}\n});\n</script>"
+    },
+    {
+      "id": "intro-292",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<div>\n<input v-model=\"filterText\" placeholder=\"Filter items\" />\n<ul>\n<li v-for=\"item in filteredItems\" :key=\"item\">{{ item }}</li>\n</ul>\n</div>\n</template>"
+    },
+    {
+      "id": "intro-293",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### v-memo 缓存子树\n\nv-memo 用于缓存模板子树，仅在依赖项变化时更新，常用于优化列表或静态内容。"
+    },
+    {
+      "id": "intro-294",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<div v-for=\"item in items\" :key=\"item.id\" v-memo=\"[item.updated]\">\n{{ item.name }} - {{ expensiveComputation(item) }}\n</div>\n</template>"
+    },
+    {
+      "id": "intro-295",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref } from 'vue';"
+    },
+    {
+      "id": "intro-296",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const items = ref([\n{ id: 1, name: 'Item 1', updated: false },\n{ id: 2, name: 'Item 2', updated: false },\n]);"
+    },
+    {
+      "id": "intro-297",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const expensiveComputation = (item) => {\nreturn item.name.toUpperCase(); // 模拟复杂计算\n};\n</script>"
+    },
+    {
+      "id": "intro-298",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 事件节流与防抖\n\n通过在事件处理中引入节流（throttle）或防抖（debounce），减少高频事件的触发频率。"
+    },
+    {
+      "id": "intro-299",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref } from 'vue';\nimport { debounce } from 'lodash-es';"
+    },
+    {
+      "id": "intro-300",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const searchText = ref('');\nconst search = debounce((value) => {\nconsole.log('Search:', value); // 模拟搜索请求\n}, 300);"
+    },
+    {
+      "id": "intro-301",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const handleInput = (e) => {\nsearchText.value = e.target.value;\nsearch(searchText.value);\n};\n</script>"
+    },
+    {
+      "id": "intro-302",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<input\n:value=\"searchText\"\n@input=\"handleInput\"\nplaceholder=\"Type to search\"\n/>\n</template>"
+    },
+    {
+      "id": "intro-303",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 虚拟列表（Virtual Scrolling）\n\n对于长列表（如包含数千条数据的列表），可以使用虚拟列表技术，只渲染可视区域内的元素，减少 DOM 节点数量。"
+    },
+    {
+      "id": "intro-304",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<div class=\"list-container\" ref=\"list\">\n<div class=\"list-viewport\" :style=\"{ height: totalHeight + 'px' }\">\n<div\nclass=\"list-content\"\n:style=\"{ transform: `translateY(${scrollTop}px)` }\"\n>\n<div\nv-for=\"item in visibleItems\"\n:key=\"item.id\"\nclass=\"list-item\"\n>\n{{ item.name }}\n</div>\n</div>\n</div>\n</div>\n</template>"
+    },
+    {
+      "id": "intro-305",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref, computed, onMounted, onUnmounted } from 'vue';"
+    },
+    {
+      "id": "intro-306",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const items = ref(\nArray.from({ length: 10000 }, (_, i) => ({\nid: i,\nname: `Item ${i}`,\n}))\n);\nconst itemHeight = 40; // 每项高度\nconst viewportHeight = 400; // 视口高度\nconst totalHeight = computed(() => items.value.length * itemHeight);\nconst scrollTop = ref(0);\nconst visibleCount = Math.ceil(viewportHeight / itemHeight) + 2; // 多渲染2项作为缓冲"
+    },
+    {
+      "id": "intro-307",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const visibleItems = computed(() => {\nconst start = Math.floor(scrollTop.value / itemHeight);\nconst end = Math.min(start + visibleCount, items.value.length);\nreturn items.value.slice(start, end);\n});"
+    },
+    {
+      "id": "intro-308",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const list = ref(null);\nconst onScroll = () => {\nscrollTop.value = list.value.scrollTop;\n};"
+    },
+    {
+      "id": "intro-309",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "onMounted(() => {\nlist.value.addEventListener('scroll', onScroll);\n});\nonUnmounted(() => {\nlist.value.removeEventListener('scroll', onScroll);\n});\n</script>"
+    },
+    {
+      "id": "intro-310",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<style>\n.list-container {\nheight: 400px;\noverflow-y: auto;\n}\n.list-item {\nheight: 40px;\nline-height: 40px;\nborder-bottom: 1px solid #ddd;\n}\n</style>"
+    },
+    {
+      "id": "intro-311",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 按需加载资源（Lazy Loading Resources）\n\n通过动态导入（Dynamic Import）按需加载非关键资源（如图片、第三方库），可以减少初次加载的开销，提升首屏渲染速度。"
+    },
+    {
+      "id": "intro-312",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<div>\n<button @click=\"loadChart\">Load Chart</button>\n<div v-if=\"ChartComponent\">\n<ChartComponent :data=\"chartData\" />\n</div>\n</div>\n</template>"
+    },
+    {
+      "id": "intro-313",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref } from 'vue';"
+    },
+    {
+      "id": "intro-314",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const ChartComponent = ref(null);\nconst chartData = ref([10, 20, 30, 40]);"
+    },
+    {
+      "id": "intro-315",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const loadChart = async () => {\n// 动态导入第三方库（如 Chart.js）\nconst { default: Chart } = await import('chart.js/auto');\n// 模拟动态加载的图表组件\nChartComponent.value = {\nprops: ['data'],\ntemplate: `<canvas ref=\"chart\"></canvas>`,\nmounted() {\nnew Chart(this.$refs.chart, {\ntype: 'bar',\ndata: {\nlabels: ['A', 'B', 'C', 'D'],\ndatasets: [{ data: this.data }],\n},\n});\n},\n};\n};\n</script>"
+    },
+    {
+      "id": "intro-316",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 优化事件监听（Event Delegation）\n\n通过事件委托（Event Delegation）将事件监听器绑定到父元素，减少直接绑定到每个子元素的事件监听器数量，适合动态列表或大量元素场景。"
+    },
+    {
+      "id": "intro-317",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<template>\n<div class=\"item-list\" @click=\"handleItemClick\">\n<div\nv-for=\"item in items\"\n:key=\"item.id\"\n:data-id=\"item.id\"\nclass=\"item\"\n>\n{{ item.name }}\n</div>\n</div>\n</template>"
+    },
+    {
+      "id": "intro-318",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<script setup>\nimport { ref } from 'vue';"
+    },
+    {
+      "id": "intro-319",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const items = ref([\n{ id: 1, name: 'Item 1' },\n{ id: 2, name: 'Item 2' },\n{ id: 3, name: 'Item 3' },\n]);"
+    },
+    {
+      "id": "intro-320",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "const handleItemClick = (event) => {\nconst itemId = event.target.dataset.id;\nif (itemId) {\nconsole.log(`Clicked item with ID: ${itemId}`);\n}\n};\n</script>"
+    },
+    {
+      "id": "intro-321",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "text",
+      "body": "<style>\n.item-list {\npadding: 10px;\n}\n.item {\npadding: 10px;\nborder-bottom: 1px solid #ddd;\ncursor: pointer;\n}\n</style>"
+    },
+    {
+      "id": "intro-322",
+      "sectionId": "intro",
+      "title": "声明状态",
+      "kind": "code",
+      "lang": "",
+      "code": "\nAPI 参考\n---\n\n### 全局 API - 应用实例\n<!--rehype:wrap-class=row-span-3-->\n\n:- | :-\n:- | :-\n`createApp()` | 创建一个应用实例 [#](https://cn.vuejs.org/api/application.html#create-app)\n`createSSRApp()` | 以 [SSR 激活](https://cn.vuejs.org/guide/scaling-up/ssr.html#client-hydration)模式创建一个应用实例 [#](https://cn.vuejs.org/api/application.html#create-ssr-app)\n`app.mount()` | 将应用实例挂载在一个容器元素中 [#](https://cn.vuejs.org/api/application.html#app-mount)\n`app.unmount()` | 卸载一个已挂载的应用实例 [#](https://cn.vuejs.org/api/application.html#app-unmount)\n`app.provide()` | 提供一个可以在应用中的所有后代组件中注入使用的值 [#](https://cn.vuejs.org/api/application.html#app-provide)\n`app.component()` | 注册或获取全局组件 [#](https://cn.vuejs.org/api/application.html#app-component)\n`app.directive()` | 注册或获取全局指令 [#](https://cn.vuejs.org/api/application.html#app-directive)\n`app.use()` | 安装一个插件 [#](https://cn.vuejs.org/api/application.html#app-use)\n`app.mixin()` | 全局注册一个混入 [#](https://cn.vuejs.org/api/application.html#app-mixin)\n`app.version` | 当前应用所使用的 Vue 版本号 [#](https://cn.vuejs.org/api/application.html#app-version)\n`app.config` | 获得应用实例的配置设定 [#](https://cn.vuejs.org/api/application.html#app-config)\n`app.config.errorHandler` | 为应用内抛出的未捕获错误指定一个全局处理函数 [#](https://cn.vuejs.org/api/application.html#app-config-errorhandler)\n`app.config.warnHandler` | 为 Vue 的运行时警告指定一个自定义处理函数 [#](https://cn.vuejs.org/api/application.html#app-config-warnhandler)\n`app.config.performance` | 在浏览器开发工具中追踪性能表现 [#](https://cn.vuejs.org/api/application.html#app-config-performance)\n`app.config.compilerOptions` | 配置运行时编译器的选项 [#](https://cn.vuejs.org/api/application.html#app-config-compileroptions)\n`app.config.globalProperties` | 注册全局属性对象 [#](https://cn.vuejs.org/api/application.html#app-config-globalproperties)\n`app.config.optionMergeStrategies` | 定义自定义组件选项的合并策略的对象 [#](https://cn.vuejs.org/api/application.html#app-config-optionmergestrategies)\n<!--rehype:className=style-list-->\n\n### 全局 API - 通用\n<!--rehype:wrap-class=row-span-2-->\n\n:- | :-\n:- | :-\n`version` | Vue 版本号 [#](https://cn.vuejs.org/api/general.html#version)\n`nextTick()` | 等待下一次 DOM 更新后执行回调 [#](https://cn.vuejs.org/api/general.html#nexttick)\n`defineComponent()` | 在定义 Vue 组件时提供类型推导的辅助函数 [#](https://cn.vuejs.org/api/general.html#definecomponent)\n`defineAsyncComponent()` | 定义一个异步组件 [#](https://cn.vuejs.org/api/general.html#defineasynccomponent)\n`defineCustomElement()` | 和 `defineComponent` 接受的参数相同，不同的是会返回一个原生自定义元素类的构造器 [#](https://cn.vuejs.org/api/general.html#definecustomelement)\n<!--rehype:className=style-list-->\n\n### 组合式 API - setup()\n\n:- | :-\n:- | :-\n`基本使用` | [#](https://cn.vuejs.org/api/composition-api-setup.html#basic-usage)\n`访问 Props` | [#](https://cn.vuejs.org/api/composition-api-setup.html#accessing-props)\n`Setup 上下文` | [#](https://cn.vuejs.org/api/composition-api-setup.html#setup-context)\n`与渲染函数一起使用` | [#](https://cn.vuejs.org/api/composition-api-setup.html#usage-with-render-functions)\n\n### 组合式 API - 依赖注入\n\n:- | :-\n:- | :-\n`provide()` | 提供一个可以被后代组件中注入使用的值 [#](https://cn.vuejs.org/api/composition-api-dependency-injection.html#provide)\n`inject()` | 注入一个由祖先组件提供的值 [#](https://cn.vuejs.org/api/composition-api-dependency-injection.html#inject)\n\n### 组合式 API - 生命周期钩子\n\n:- | :-\n:- | :-\n`onMounted()` | 组件挂载完成后执行 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onmounted)\n`onUpdated()` | 状态变更而更新其 DOM 树之后调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onupdated)\n`onUnmounted()` | 组件实例被卸载之后调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onunmounted)\n`onBeforeMount()` | 组件被挂载之前被调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onbeforemount)\n`onBeforeUpdate()` | 状态变更而更新其 DOM 树之前调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onbeforeupdate)\n`onBeforeUnmount()` | 组件实例被卸载之前调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onbeforeunmount)\n`onErrorCaptured()` | 捕获了后代组件传递的错误时调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onerrorcaptured)\n`onRenderTracked()` | 组件渲染过程中追踪到响应式依赖时调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onrendertracked)\n`onRenderTriggered()` | 响应式依赖的变更触发了组件渲染时调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onrendertriggered)\n`onActivated()` | 若组件实例是 \\<KeepAlive> 缓存树的一部分，当组件被插入到 DOM 中时调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onactivated)\n`onDeactivated()` | 若组件实例是 \\<KeepAlive> 缓存树的一部分，当组件从 DOM 中被移除时调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#ondeactivated)\n`onServerPrefetch()` | 组件实例在服务器上被渲染之前调用 [#](https://cn.vuejs.org/api/composition-api-lifecycle.html#onserverprefetch)\n<!--rehype:className=style-list-->\n\n### 组合式 API - 响应式: 工具\n\n:- | :-\n:- | :-\n`isRef()` | 判断是否为 ref [#](https://cn.vuejs.org/api/reactivity-utilities.html#isref)\n`unref()` | 是 ref，返回内部值，否则返回参数本身 [#](https://cn.vuejs.org/api/reactivity-utilities.html#unref)\n`toRef()` | 创建一个属性对应的 ref [#](https://cn.vuejs.org/api/reactivity-utilities.html#toref)\n`toRefs()` | 将对象上的每一个可枚举属性转换为 ref [#](https://cn.vuejs.org/api/reactivity-utilities.html#torefs)\n`isProxy()` | 检查一个对象是否是由 `reactive()`、`readonly()`、`shallowReactive()` 或 `shallowReadonly()` 创建的代理 [#](https://cn.vuejs.org/api/reactivity-utilities.html#isproxy)\n`isReactive()` | 检查一个对象是否是由 `reactive()` 或 `shallowReactive()` 创建的代理。  [#](https://cn.vuejs.org/api/reactivity-utilities.html#isreactive)\n`isReadonly()` | 检查传入的值是否为只读对象 [#](https://cn.vuejs.org/api/reactivity-utilities.html#isreadonly)\n<!--rehype:className=style-list-->\n\n### 组合式 API - 响应式: 核心\n\n:- | :-\n:- | :-\n`ref()` | 返回一个 ref 对象 [#](https://cn.vuejs.org/api/reactivity-core.html#ref)\n`computed ()` | 定义一个计算属性 [#](https://cn.vuejs.org/api/reactivity-core.html#computed)\n`reactive()` | 返回一个对象的响应式代理 [#](https://cn.vuejs.org/api/reactivity-core.html#reactive)\n`readonly()` | 返回一个原值的只读代理 [#](https://cn.vuejs.org/api/reactivity-core.html#readonly)\n`watchEffect()` | 立即运行一个函数，同时监听 [#](https://cn.vuejs.org/api/reactivity-core.html#watcheffect)\n`watchPostEffect()` | `watchEffect()` 使用 `flush: 'post'` 选项时的别名。 [#](https://cn.vuejs.org/api/reactivity-core.html#watchposteffect)\n`watchSyncEffect()` | `watchEffect()` 使用 `flush: 'sync'` 选项时的别名。 [#](https://cn.vuejs.org/api/reactivity-core.html#watchsynceffect)\n`watch()` | 侦听一个或多个响应式数据源 [#](https://cn.vuejs.org/api/reactivity-core.html#watch)\n<!--rehype:className=style-list-->\n\n### 选项式 API - 状态选项\n\n:- | :-\n:- | :-\n`data` | 声明组件初始响应式状态 [#](https://cn.vuejs.org/api/options-state.html#data)\n`props` | 声明一个组件的 props [#](https://cn.vuejs.org/api/options-state.html#props)\n`computed` | 声明要在组件实例上暴露的计算属性 [#](https://cn.vuejs.org/api/options-state.html#computed)\n`methods` | 声明要混入到组件实例中的方法 [#](https://cn.vuejs.org/api/options-state.html#methods)\n`watch` | 声明在数据更改时调用的侦听回调 [#](https://cn.vuejs.org/api/options-state.html#watch)\n`emits` | 声明由组件触发的自定义事件 [#](https://cn.vuejs.org/api/options-state.html#emits)\n`expose` | 声明当组件实例被父组件通过模板引用访问时暴露的公共属性 [#](https://cn.vuejs.org/api/options-state.html#expose)\n<!--rehype:className=style-list-->\n\n### 选项式 API - 生命周期选项\n<!--rehype:wrap-class=row-span-3-->\n\n:- | :-\n:- | :-\n`beforeCreate` | 组件实例初始化完成之后立即调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#beforecreate)\n`created` | 组件实例处理完所有与状态相关的选项后调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#created)\n`beforeMount` | 组件被挂载之前调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#beforemount)\n`mounted` | 组件被挂载之后调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#mounted)\n`beforeUpdate` | 状态变更而更新其 DOM 树之前调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#beforeupdate)\n`updated` | 状态变更而更新其 DOM 树之后调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#updated)\n`beforeUnmount` | 组件实例被卸载之前调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#beforeunmount)\n`unmounted` | 组件实例被卸载之后调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#unmounted)\n`errorCaptured` | 捕获了后代组件传递的错误时调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#errorcaptured)\n`renderTracked` _Dev only_ | 组件渲染过程中追踪到响应式依赖时调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#rendertracked)\n`renderTriggered` _Dev only_ | 响应式依赖的变更触发了组件渲染时调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#rendertriggered-sup-classvt-badge-dev-only)\n`activated` | 若组件实例是 <KeepAlive> 缓存树的一部分，当组件被插入到 DOM 中时调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#activated)\n`deactivated` | 若组件实例是 <KeepAlive> 缓存树的一部分，当组件从 DOM 中被移除时调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#deactivated)\n`serverPrefetch` _SSR only_ | 组件实例在服务器上被渲染之前调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#serverprefetch)\n<!--rehype:className=style-list-->\n\n### 选项式 API - 其他杂项\n\n:- | :-\n:- | :-\n`name` | 显式声明组件展示时的名称 [#](https://cn.vuejs.org/api/options-misc.html#name)\n`inheritAttrs` | 是否启用默认的组件 `attribute` 透传行为 [#](https://cn.vuejs.org/api/options-misc.html#inheritattrs)\n`components` | 注册对当前组件实例可用的组件 [#](https://cn.vuejs.org/api/options-misc.html#components)\n`directives` | 注册对当前组件实例可用的指令 [#](https://cn.vuejs.org/api/options-misc.html#directives)\n<!--rehype:className=style-list-->\n\n### 选项式 API - 渲染选项\n\n:- | :-\n:- | :-\n`template` | 声明组件的字符串模板 [#](https://cn.vuejs.org/api/options-rendering.html#template)\n`render` | 编程式地创建组件虚拟 DOM 树的函数 [#](https://cn.vuejs.org/api/options-rendering.html#render)\n`compilerOptions` | 配置组件模板的运行时编译器选项 [#](https://cn.vuejs.org/api/options-rendering.html#compileroptions)\n<!--rehype:className=style-list-->\n\n### 选项式 API - 组件实例\n<!--rehype:wrap-class=row-span-2-->\n\n:- | :-\n:- | :-\n`$data` | 观察的数据对象 [#](https://cn.vuejs.org/api/component-instance.html#data)\n`$props` | 组件已解析的 props 对象 [#](https://cn.vuejs.org/api/component-instance.html#props)\n`$el` | 实例管理的 DOM 根节点 [#](https://cn.vuejs.org/api/component-instance.html#el)\n`$options` | 实例的初始化选项 [#](https://cn.vuejs.org/api/component-instance.html#options)\n`$parent` | 父实例 [#](https://cn.vuejs.org/api/component-instance.html#parent)\n`$root` | 当前组件树的根实例 [#](https://cn.vuejs.org/api/component-instance.html#root)\n`$slots` | 访问被插槽分发的内容 [#](https://cn.vuejs.org/api/component-instance.html#slots)\n`$refs` | DOM 元素和组件实例 [#](https://cn.vuejs.org/api/component-instance.html#refs)\n`$attrs` | 包含了组件所有[透传 attributes](https://cn.vuejs.org/guide/components/attrs.html) [#](https://cn.vuejs.org/api/component-instance.html#attrs)\n`$watch()` | 观察 Vue 实例上的一个表达式或者一个函数计算结果的变化 [#](https://cn.vuejs.org/api/component-instance.html#watch)\n`$emit()` | 触发一个自定义事件 [#](https://cn.vuejs.org/api/component-instance.html#emit)\n`$forceUpdate()` | 强制该组件重新渲染 [#](https://cn.vuejs.org/api/component-instance.html#forceupdate)\n`$nextTick()` | 回调延迟执行 [#](https://cn.vuejs.org/api/component-instance.html#nexttick)\n\n### 选项式 API - 组合选项\n\n:- | :-\n:- | :-\n`provide` | 提供可以被后代组件注入的值 [#](https://cn.vuejs.org/api/options-composition.html#provide)\n`inject` | 注入一个由祖先组件提供的值 [#](https://cn.vuejs.org/api/options-composition.html#inject)\n`mixins` | 接收一个混入对象的数组 [#](https://cn.vuejs.org/api/options-composition.html#mixins)\n`extends` | 要继承的“基类”组件 [#](https://cn.vuejs.org/api/options-composition.html#extends)\n\n### 内置内容 - 指令\n<!--rehype:wrap-class=row-span-2-->\n\n:- | :-\n:- | :-\n`v-text` | 更新元素的 `textContent` [#](https://cn.vuejs.org/api/built-in-directives.html#v-text)\n`v-html` | 更新元素的 `innerHTML` [#](https://cn.vuejs.org/api/built-in-directives.html#v-html)\n`v-show` | 切换元素的 `display` css 属性 [#](https://cn.vuejs.org/api/built-in-directives.html#v-show)\n`v-if` | 有条件地渲染元素 [#](https://cn.vuejs.org/api/built-in-directives.html#v-if)\n`v-else` | [#](https://cn.vuejs.org/api/built-in-directives.html#v-else)\n`v-else-if` | [#](https://cn.vuejs.org/api/built-in-directives.html#v-else-if)\n`v-for` | 多次渲染元素或模板块 [#](https://cn.vuejs.org/api/built-in-directives.html#v-for)\n`v-on` | 绑定事件监听器 [#](https://cn.vuejs.org/api/built-in-directives.html#v-on)\n`v-bind` | 动态地绑定一个或多个属性 [#](https://cn.vuejs.org/api/built-in-directives.html#v-bind)\n`v-model` | 创建双向绑定 [#](https://cn.vuejs.org/api/built-in-directives.html#v-model)\n`v-slot` | 提供插槽或接收 props 的插槽 [#](https://cn.vuejs.org/api/built-in-directives.html#v-slot)\n`v-pre` | 跳过元素和它的子元素编译过程 [#](https://cn.vuejs.org/api/built-in-directives.html#v-pre)\n`v-once` | 只渲染元素和组件一次 [#](https://cn.vuejs.org/api/built-in-directives.html#v-once)\n`v-memo` _(3.2+)_ | 缓存一个模板的子树 [#](https://cn.vuejs.org/api/built-in-directives.html#v-memo)\n`v-cloak` | 保持在元素上直到实例结束编译 [#](https://cn.vuejs.org/api/built-in-directives.html#v-cloak)\n`serverPrefetch` _SSR only_ | 组件实例在服务器上被渲染之前调用 [#](https://cn.vuejs.org/api/options-lifecycle.html#serverprefetch)\n\n### 内置内容 - 组件\n\n:- | :-\n:- | :-\n`<Transition>` | 单个元素/组件的过渡效果 [#](https://cn.vuejs.org/api/built-in-components.html#transition)\n`<TransitionGroup>` | 多个元素/组件的过渡效果 [#](https://cn.vuejs.org/api/built-in-components.html#transitiongroup)\n`<KeepAlive>` | 缓存包裹在其中的动态切换组件 [#](https://cn.vuejs.org/api/built-in-components.html#keepalive)\n`<Teleport>` | 将其插槽内容渲染到 DOM 中的另一个位置 [#](https://cn.vuejs.org/api/built-in-components.html#teleport)\n`<Suspense>` _(Experimental)_ | 协调对组件树中嵌套的异步依赖的处理 [#](https://cn.vuejs.org/api/built-in-components.html#suspense)\n<!--rehype:className=style-list-->\n\n### 内置内容 - 特殊 Attributes\n\n:- | :-\n:- | :-\n`key` | 用在 Vue 的虚拟 DOM 算法 [#](https://cn.vuejs.org/api/built-in-special-attributes.html#key)\n`ref` | 元素或子组件注册引用信息 [#](https://cn.vuejs.org/api/built-in-special-attributes.html#ref)\n`is` | 绑定动态组件 [#](https://cn.vuejs.org/api/built-in-special-attributes.html#is)\n\n### 内置内容 - 特殊元素\n\n:- | :-\n:- | :-\n`<component>` | 渲染一个“元组件”用于动态组件或元素 [#](https://cn.vuejs.org/api/built-in-special-elements.html#component)\n`<slot>` | 组件模板中的插槽内容出口 [#](https://cn.vuejs.org/api/built-in-special-elements.html#slot)\n\n### 单文件组件 - 语法定义\n<!--rehype:wrap-class=row-span-2-->\n\n:- | :-\n:- | :-\n`总览` | [#](https://cn.vuejs.org/api/sfc-spec.html#overview)\n`相应语言块` | [#](https://cn.vuejs.org/api/sfc-spec.html#language-blocks)\n`自动名称推导` | [#](https://cn.vuejs.org/api/sfc-spec.html#automatic-name-inference)\n`预处理器` | [#](https://cn.vuejs.org/api/sfc-spec.html#pre-processors)\n`Src 导入` | [#](https://cn.vuejs.org/api/sfc-spec.html#src-imports)\n`注释` | [#](https://cn.vuejs.org/api/sfc-spec.html#comments)\n\n### 单文件组件 - \\<script setup>\n<!--rehype:wrap-class=row-span-2-->\n\n:- | :-\n:- | :-\n`基本语法` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#basic-syntax)\n`响应式` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#reactivity)\n`使用组件` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#using-components)\n`使用自定义指令` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#using-custom-directives)\n`defineProps() 和 defineEmits()` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#defineprops-defineemits)\n`defineExpose` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#defineexpose)\n`useSlots() 和 useAttrs()` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#useslots-useattrs)\n`与普通的 &lt;script&gt; 一起使用` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#usage-alongside-normal-script)\n`顶层 await` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#top-level-await)\n`针对 TypeScript 的功能` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#typescript-only-features)\n`限制` | [#](https://cn.vuejs.org/api/sfc-script-setup.html#restrictions)\n\n### 单文件组件 - CSS 功能\n\n:- | :-\n:- | :-\n`组件作用域 CSS` | [#](https://cn.vuejs.org/api/sfc-css-features.html#scoped-css)\n`CSS Modules` | [#](https://cn.vuejs.org/api/sfc-css-features.html#css-modules)\n`CSS 中的 v-bind()` | [#](https://cn.vuejs.org/api/sfc-css-features.html#v-bind-in-css)\n\n### 进阶 API - 渲染函数\n\n:- | :-\n:- | :-\n`h()` | 创建虚拟 DOM 节点 [#](https://cn.vuejs.org/api/render-function.html#h)\n`mergeProps()` | 合并多个 props 对象 [#](https://cn.vuejs.org/api/render-function.html#mergeprops)\n`cloneVNode()` | 克隆一个 vnode [#](https://cn.vuejs.org/api/render-function.html#clonevnode)\n`isVNode()` | 判断一个值是否为 vnode 类型 [#](https://cn.vuejs.org/api/render-function.html#isvnode)\n`resolveComponent()` | 按名称手动解析已注册的组件 [#](https://cn.vuejs.org/api/render-function.html#resolvecomponent)\n`resolveDirective()` | 按名称手动解析已注册的指令 [#](https://cn.vuejs.org/api/render-function.html#resolvedirective)\n`withDirectives()` | 用于给 vnode 增加自定义指令 [#](https://cn.vuejs.org/api/render-function.html#withdirectives)\n`withModifiers()` | 用于向事件处理函数添加内置 `v-on 修饰符` [#](https://cn.vuejs.org/api/render-function.html#withmodifiers)\n\n### 进阶 API - 服务端渲染\n\n:- | :-\n:- | :-\n`renderToString()` | [#](https://cn.vuejs.org/api/ssr.html#rendertostring)\n`renderToNodeStream()` | [#](https://cn.vuejs.org/api/ssr.html#rendertonodestream)\n`pipeToNodeWritable()` | [#](https://cn.vuejs.org/api/ssr.html#pipetonodewritable)\n`renderToWebStream()` | [#](https://cn.vuejs.org/api/ssr.html#rendertowebstream)\n`pipeToWebWritable()` | [#](https://cn.vuejs.org/api/ssr.html#pipetowebwritable)\n`renderToSimpleStream()` | [#](https://cn.vuejs.org/api/ssr.html#rendertosimplestream)\n`useSSRContext()` | [#](https://cn.vuejs.org/api/ssr.html#usessrcontext)\n\n### 进阶 API - TypeScript 工具类型\n\n:- | :-\n:- | :-\n`PropType<T>` | 在用运行时 props 声明时给一个 prop 标注更复杂的类型定义 [#](https://cn.vuejs.org/api/utility-types.html#proptypet)\n`ComponentCustomProperties` | 增强组件实例类型以支持自定义全局属性 [#](https://cn.vuejs.org/api/utility-types.html#componentcustomproperties)\n`ComponentCustomOptions` | 扩展组件选项类型以支持自定义选项 [#](https://cn.vuejs.org/api/utility-types.html#componentcustomoptions)\n`ComponentCustomProps` | 扩展全局可用的 TSX props [#](https://cn.vuejs.org/api/utility-types.html#componentcustomprops)\n`CSSProperties` | 扩展在样式属性绑定上允许的值的类型 [#](https://cn.vuejs.org/api/utility-types.html#cssproperties)\n<!--rehype:className=style-list-->\n\n### 进阶 API - 自定义渲染\n\n:- | :-\n:- | :-\n`createRenderer()` | 创建一个自定义渲染器 [#](https://cn.vuejs.org/api/custom-renderer.html#create-renderer)\n\n另见\n---\n\n- [Vue 3.x 官方文档](https://cn.vuejs.org/)\n- [Vue Router 4.x 官方文档](https://router.vuejs.org/zh/)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/vue.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/vue.md",
+    "generatedAt": "2025-12-16T07:36:11.490Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

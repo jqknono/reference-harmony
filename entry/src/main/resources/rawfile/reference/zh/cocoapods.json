@@ -1,0 +1,353 @@
+{
+  "id": "cocoapods",
+  "title": "cocoapods",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "CocoaPods 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "[CocoaPods](https://en.wikipedia.org/wiki/Cron) 是 [Swift](./swift.md) 和 Objective-C Cocoa 项目的依赖管理器，此快速参考备忘单显示了它的常用命令使用清单。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ sudo gem install cocoapods\n# OR\n$ brew install cocoapods"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "无 Sudo 安装，不想为此过程授予 `RubyGems` 管理员权限"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "code",
+      "lang": "bash",
+      "code": "export GEM_HOME=$HOME/.gem\nexport PATH=$GEM_HOME/bin:$PATH"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "编辑 `.bash_profile` 配置文件，添加上面内容"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ gem install cocoapods --user-install\n$ gem which cocoapods\n/Users/wcj/.gem/ruby/2.0.0/gems/cocoapods-0.29.0/lib/cocoapods.rb\n$ /Users/wcj/.gem/ruby/2.0.0/bin/pod install"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "更新 CocoaPods",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ gem install cocoapods"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "更新 CocoaPods",
+      "kind": "text",
+      "body": "或者对于预发布版本"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "更新 CocoaPods",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ gem install cocoapods --pre"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ pod install"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "在您的项目中安装新的 `pod`，即使你已经有一个 `Podfile` 并且之前运行过 `pod install`； 因此，即使您只是在已经使用 `CocoaPods` 的项目中添加/删除 `pod`"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "• 会在 `Podfile.lock` 文件中为每个 pod 写入已安装的版本，此文件跟踪每个 pod 的已安装版本并锁定这些版本\n• 它只会解析 `Podfile.lock` 中尚未列出的 pod 的依赖关系\n• 对于 `Podfile.lock` 中列出的 pod，会下载 `Podfile.lock` 中列出的显式版本，而不尝试检查是否有更新的版本可用"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "下载 `Podfile` 中定义的所有依赖项，并在 `./Pods` 中创建一个 `Xcode Pods` 库项目"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "更新过时的依赖",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ pod outdated"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "更新过时的依赖",
+      "kind": "text",
+      "body": "显示当前 `Podfile.lock` 中过时的 `pod`，但仅显示来自规范 `repos` 的那些，而不是来自本地/外部来源的那些"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "更新依赖",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ pod update\n$ pod update PODNAME"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "更新依赖",
+      "kind": "text",
+      "body": "更新由指定 `pod` 名称标识的 `Pod`。 如果没有指定 `Pod` 名称，它会更新所有 `Pod`，而忽略 `Podfile.lock` 的内容。 此命令保留用于更新依赖项，应使用 `pod install` 安装对 `Podfile` 的更改"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "清理 Pods 依赖",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ pod deintegrate"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "清理 Pods 依赖",
+      "kind": "text",
+      "body": "从 `CocoaPods` 中分离您的项目。 从您的 `Xcode` 项目中删除所有 `CocoaPods` 的痕迹。如果未指定 `xcodeproj`，则将在当前目录中搜索 `Xcode` 项目"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "pod env",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ pod env"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "pod env",
+      "kind": "text",
+      "body": "显示 pod 环境"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "将 Pod 添加到 Xcode 项目",
+      "kind": "text",
+      "body": "• 创建一个 Podfile，并添加您的依赖项"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "将 Pod 添加到 Xcode 项目",
+      "kind": "text",
+      "body": "```ruby\n# Podfile\ntarget 'MyApp' do\npod 'AFNetworking', '~> 3.0'\npod 'FBSDKCoreKit', '~> 4.9'\nend\n```"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "将 Pod 添加到 Xcode 项目",
+      "kind": "text",
+      "body": "• 在您的项目目录中运行 `$ pod install`\n• 打开 `App.xcworkspace` 并构建"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "创建一个新的 Cocoapod",
+      "kind": "text",
+      "body": "命令 | 说明\n:-- | --\n`pod lib create pod_name` | 为您创建一个新的 pod 项目\n`pod trunk push pod_name.podspec` | 将 podspec 推送到 trunk\n`pod spec create pod_name` | 为您创建 podspec 模板\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "浏览",
+      "kind": "text",
+      "body": "• `pod search QUERY` 搜索名称、摘要、描述或作者与 QUERY 匹配的 pod，忽略大小写。 如果指定了 --simple 选项，这将只搜索 pod 的名称\n• `pod list` 列出所有可用的 pod\n• `pod try NAME|URL` 下载具有给定名称（或 Git URL）的 Pod，如果需要，安装其依赖项并打开其演示项目。 如果提供了 Git URL，则使用 repo 的头部。 如果指定了 Git URL，则可以提供 --podspec_name，如果 podspec 名称由于某种原因与 git 存储库不同"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "规格",
+      "kind": "text",
+      "body": "• `pod spec create [NAME\\|https://github.com/USER/REPO]` 在当前工作目录中创建一个名为 NAME.podspec 的 PodSpec。如果传递了 GitHub url，则预先填充规范。\n• `pod spec lint [NAME.podspec|DIRECTORY|http://PATH/NAME.podspec ...]` 验证 NAME.podspec。 如果提供了 DIRECTORY，它会验证找到的 podspec 文件，包括子文件夹。 如果省略参数，则默认为当前工作目录。\n• `pod spec cat [QUERY]` 将名称与 QUERY 匹配的 podspec 的内容打印到标准输出。\n• `pod spec which [QUERY]` 打印名称与 QUERY 匹配的 .podspec 文件的路径\n• `pod spec edit [QUERY]` 打开要编辑的与 QUERY 匹配的 podspec。"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "Repos",
+      "kind": "text",
+      "body": "命令 | 说明\n:-- | --\n`pod repo add NAME URL [BRANCH]` | 在 `~/.cocoapods/repos/` 的本地 spec-repos 目录中克隆 URL。远程可以稍后由 NAME 引用\n`pod repo update [NAME]` | 更新 spec-repo NAME 的本地克隆。如果 NAME 被省略，这将更新 ~/.cocoapods/repos 中的所有 spec-repos\n`pod repo lint [NAME\\|DIRECTORY]` | 对 spec-repo NAME 进行 lints。如果提供了目录，则假定它是存储库的根目录。最后，如果没有提供 NAME，这将 lint CocoaPods 已知的所有规范库\n`pod repo list` | 从 `~/.cocoapods/repos/` 的本地 spec-repos 目录中列出 repos\n`pod repo remove NAME` | 从 `~/.cocoapods/repos/` 的本地 spec-repos 目录中删除名为 NAME 的远程\n`pod repo push REPO [NAME.podspec]` | 验证当前工作目录中的 `NAME.podspec` 或 \\*.podspec，在 REPO 的本地副本 (`~/.cocoapods/repos/[REPO]`) 中为 pod 创建目录和版本文件夹，将 podspec 文件复制到版本中目录，最后它将 REPO 推送到其远程\n`pod setup` | 在 `~/.cocoapods/repos` 创建一个目录，该目录将保存您的规范存储库。它将在这里创建公共主规范仓库的克隆：<https://github.com/CocoaPods/Specs> 如果克隆已经存在，它将确保它是最新的\n<!--rehype:className=style-list-arrow-->"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "Trunk",
+      "kind": "text",
+      "body": "• `pod trunk add-owner POD OWNER-EMAIL` 将具有指定 OWNER-EMAIL 的注册用户添加为给定 POD 的 `owner`\n• `pod trunk info NAME` 返回有关 Pod 的信息\n• `pod trunk me` 包括有关您的注册的信息，然后是您的所有会话\n• `pod trunk push [PATH]` 在 PATH 发布 podspec 以使其可供 `master` 规范存储库的所有用户使用\n• `pod trunk register EMAIL [NAME]` 注册一个新帐户，或创建一个新会话\n• `pod trunk remove-owner POD OWNER-EMAIL` 将具有指定 OWNER-EMAIL 的用户从给定 POD 的 owner 中移除\n• `pod trunk deprecate NAME` 弃用 pod\n• `pod trunk delete NAME VERSION` *警告*：删除其他人所依赖的 Pod 版本通常被认为是不良行为！请考虑改用 <red>`deprecate`</red> 命令"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "Trunk",
+      "kind": "text",
+      "body": "什么是 Podfile？\n---"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "简单配置",
+      "kind": "code",
+      "lang": "ruby",
+      "code": "target 'MyApp' do\n  use_frameworks!\n  pod 'Alamofire', '~> 3.0'\nend"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "简单配置",
+      "kind": "text",
+      "body": "Podfile 可以非常简单，这会将 Alamofire 添加到单个目标"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "添加测试",
+      "kind": "code",
+      "lang": "ruby",
+      "code": "source 'https://github.com/CocoaPods/Specs.git'\nsource 'https://github.com/Artsy/Specs.git'\n\nplatform :ios, '9.0'\ninhibit_all_warnings!\n\ntarget 'MyApp' do\n  pod 'GoogleAnalytics', '~> 3.1'\n  \n  # 拥有自己的 OCMock 副本\n  # 并且可以通过应用访问 GoogleAnalytics\n  # 承载测试目标\n\n  target 'MyAppTests' do\n    inherit! :search_paths\n    pod 'OCMock', '~> 2.0.1'\n  end\nend\n\npost_install do |installer|\n  installer.pods_project.targets.each do |target|\n    puts target.name\n  end\nend"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "添加测试",
+      "kind": "text",
+      "body": "链接应用程序及其测试包的更复杂 Podfile 的示例"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "指定 pod 版本",
+      "kind": "text",
+      "body": "在开始一个项目时，希望使用最新版本的 Pod。这种情况，只需忽略版本要求"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "指定 pod 版本",
+      "kind": "code",
+      "lang": "ruby",
+      "code": "pod 'SSZipArchive'"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "指定 pod 版本",
+      "kind": "text",
+      "body": "稍后在项目中，您可能希望冻结到特定版本的 Pod，在这种情况下，您可以指定该版本号"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "指定 pod 版本",
+      "kind": "code",
+      "lang": "ruby",
+      "code": "pod 'Objection', '0.9'"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "隐式抽象目标",
+      "kind": "text",
+      "body": "Podfile 的根目录存在隐式抽象目标，因此您可以将上面的示例编写为"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "隐式抽象目标",
+      "kind": "code",
+      "lang": "ruby",
+      "code": "pod 'ShowsKit'\npod 'Fabric'\n\n# 拥有自己的 ShowsKit + ShowWebAuth 副本\ntarget 'ShowsiOS' do\n  pod 'ShowWebAuth'\nend\n\n# 拥有自己的 ShowsKit + ShowTVAuth 副本\ntarget 'ShowsTV' do\n  pod 'ShowTVAuth'\nend"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "多个目标共享同一个 pod",
+      "kind": "code",
+      "lang": "ruby",
+      "code": "# 在任何 Xcode 项目中都没有名为“Shows”的目标\nabstract_target 'Shows' do\n  pod 'ShowsKit'\n  pod 'Fabric'\n  # 拥有自己的 ShowsKit + ShowWebAuth 副本\n  target 'ShowsiOS' do\n    pod 'ShowWebAuth'\n  end\n  # 拥有自己的 ShowsKit + ShowTVAuth 副本\n  target 'ShowsTV' do\n    pod 'ShowTVAuth'\n  end\nend"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "多个目标共享同一个 pod",
+      "kind": "text",
+      "body": "另见\n----"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "多个目标共享同一个 pod",
+      "kind": "text",
+      "body": "• [CocoaPods 官方网站](https://cocoapods.org/) *(cocoapods.org)*\n• [Cocoapods Cheatsheet](https://github.com/SebastianBoldt/Cocoapods-Cheatsheet) *(github.com)*"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/cocoapods.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/cocoapods.md",
+    "generatedAt": "2025-12-16T07:36:11.148Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

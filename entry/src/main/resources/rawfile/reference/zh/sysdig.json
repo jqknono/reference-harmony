@@ -1,0 +1,890 @@
+{
+  "id": "sysdig",
+  "title": "sysdig",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Sysdig 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "该备忘单提供了使用 [Sysdig](https://sysdig.com/) 的常用命令参数和使用案例清单"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n----"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "命令安装",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sudo rpm --import https://download.sysdig.com/DRAIOS-GPG-KEY.public  \nsudo curl -s -o /etc/yum.repos.d/draios.repo https://download.sysdig.com/stable/rpm/draios.repo\nsudo yum -y install sysdig"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "常用参数",
+      "kind": "text",
+      "body": "参数 | 说明\n:--|:---\n`-C 5` | 每个文件不超过5M\n`-W 10` | 保留不超过10个文件\n`-G 60` | 每个文件只保留一分钟内的系统活动\n`-w  dump.pcap` | 保存到文件\n`-e 1000` | 每个文件只有1000个事件\n`-z` | 参数对保存的内容进行压缩\n`-A --print-ascii` |  把buffer中数据按照ASCII格式打印，方便阅读\n`-x --print-hex`  |  把buffer中数据按照十六进制打印\n`-X --printhex-ascii` | 把buffer中数据同时按照ASCII格式和十六进制打印\n`-s 1024` | 捕获buffer的数据大小，默认为80，设置过大，文件会很大\n`-N` | 不用把端口号转成可读名字\n`-r` | 从文件读取\n<!--rehype:className=show-header-->"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "输出含义",
+      "kind": "text",
+      "body": "事件 | 说明\n:--|:---\n`evt.num` | 递增的事件号\n`evt.time` | 事件发生的时间\n`evt.cpu` | 事件被捕获时所在cpu\n`proc.name` | 生成事件的进程名字\n`thread.tid` | 线程id，单线程则为进程id\n`evt.dir` | 事件方向(direction), > 代表进入事件， < 代表退出事件\n`evt.type` | 事件的名称，比如open、stat等，一般为系统调用\n`evt.args` | 事件的参数。如果为系统调用，则对应系统调用的参数\n<!--rehype:className=show-header-->"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "chisels常用工具",
+      "kind": "text",
+      "body": "事件 | 说明\n:--|:---\n`httplog`  |  输出所有的http请求\n`topprocs_cpu` |  输出按照cpu使用率排序\n`topprocs_net` |  按照网络使用情况对进程排序\n`fdcount_by` |  按照建立连接书对进程排序\n`echo_fds`  |     输出进程读写数据\n`netsata`   |    列出网络连接情况\n`spy_file`  |   输出文件的读写数据，可以提供某个文件名作为参数\n`spy_ip`    |   抓取给定ip的数据交换\n`spy_port`  |   抓取给定端口的数据交换\n<!--rehype:className=show-header-->"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "命令帮助",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sysdig -l   #事件类型\nsysdig -cl  #chisels工具类型"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "捕获每个系统事件并将其写入标准输出",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "自定义输出",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -p\"user:%user.name dir:%evt.arg.path\" evt.type=chdir\nuser:ubuntu dir:/root\nuser:ubuntu dir:/root/tmp\nuser:ubuntu dir:/root/Download"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "自定义输出",
+      "kind": "text",
+      "body": "字段必须用 `%` 作为前缀，所有 `sysdig -l` 列出来的字段都可以使用\n如果某个字段在时间中不存在，默认这个事件会过滤掉，在这个字符串最前面加上 `*` 符号，会打印所有事件，不存在的字段会变成 `<NA>`"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "自定义输出",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -p\"*%evt.type %evt.dir %evt.arg.name\" evt.type=open\nopen > <NA>\nopen < /proc/1285/task/1399/stat\nopen > <NA>\nopen < /proc/1285/task/1400/io\nopen > <NA>\nopen < /proc/1285/task/1400/statm\nopen > <NA>"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "抓取 `kubernetes pod` 客户端 `ip` 的 `udp` 请求",
+      "kind": "code",
+      "lang": "shell",
+      "code": "# 列出容器监听端口\n$ sudo sysdig -pc -A -c netstat container.name=aaa\n\n# 抓取kubernetes pod 的客户端ip为172.119.100.16，3000端口的的请求内容\n$ sudo sysdig -A -c echo_fds  k8s.pod.name contains datacenter-web-dev  and fd.port=3000 and evt.type=read and fd.cip=172.119.100.16 fd.proto=UDP\n\n# 按照建立连接数量对进程排序 并保存到sysdig.pcap文件中\n$ sysdig  -c fdcount_by fd.sport \"evt.type=accept\"  -w sysdig.pcap"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "抓取 `kubernetes pod` 客户端 `ip` 的 `udp` 请求",
+      "kind": "text",
+      "body": "抓取 `kubernetes pod` 客户端 `ip` 为 `172.119.100.16` 的 `udp` 请求"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看 io 错误最多的进程"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topprocs_errors"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看io错误最多的文件"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topfiles_errors"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看磁盘io失败的调用"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig fd.type=file and evt.failed=true"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看httpd打开失败的文件"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig \"proc.name=httpd and evt.type=open and evt.failed=true\""
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看最花费时间的系统调用"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topscalls_time"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看系统调用失败返回最多的系统调用"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topscalls \"evt.failed=true\""
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看打开文件失败"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -p \"%12user.name %6proc.pid %12proc.name %3fd.num %fd.typechar %fd.name\" evt.type=open and evt.failed=true"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "打印延迟大于1ms的文件I/O调用"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c fileslower 1"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看使用硬盘带宽最多的进程"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topprocs_file"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "列出大量使用文件描述符的进程"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c fdcount_by proc.name \"fd.type=file\""
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看读写bytes最多的文件"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topfiles_bytes"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "打印httpd进程已经读取中和写入中的文件"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topfiles_bytes proc.name=httpd"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "基本 opensnoop:snoop 文件在发生时打开"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -p \"%12user.name %6proc.pid %12proc.name %3fd.num %fd.typechar %fd.name\" evt.type=open"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看活跃中的读和写最多的目录"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sysdig -c fdbytes_by fd.directory \"fd.type=file\""
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看目录/tmp活跃中的读写最多的文件"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sysdig -c fdbytes_by fd.filename \"fd.directory=/tmp/\""
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "查看所有文件名为passwd的i/O活动"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sysdig -A -c echo_fds \"fd.filename=passwd\""
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "text",
+      "body": "展示FD类型的活跃I/O"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "io案例",
+      "kind": "code",
+      "lang": "shell",
+      "code": "sysdig -c fdbytes_by fd.type"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "text",
+      "body": "抓取 `kubernetes pod` 的客户端 `ip` 为 `172.119.100.17`，`3000` 端口的的请求内容"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sudo sysdig -A -c echo_fds  k8s.pod.name contains datacenter-web-dev  and fd.port=3000 and evt.type=read and fd.cip=172.119.100.17 fd.proto=UDP"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "text",
+      "body": "查看占用网络带宽最多的进程"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topprocs_net\n#显示主机192.168.0.1的网络传输数据\n#作为二进制：\n$ sysdig -s2000 -X -c echo_fds fd.cip=192.168.0.1\n#作为 ASCII：\n$ sysdig -s2000 -A -c echo_fds fd.cip=192.168.0.1"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "text",
+      "body": "查看连接最多的服务器端口"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "code",
+      "lang": "shell",
+      "code": "#在已建立的连接方面：\n$ sysdig -c fdcount_by fd.sport \"evt.type=accept\"\n#就总字节数而言：\n$ sysdig -c fdbytes_by fd.sport"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "text",
+      "body": "查看客户端连接最多的ip"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "code",
+      "lang": "shell",
+      "code": "#在已建立的联系方面\n$ sysdig -c fdcount_by fd.cip \"evt.type=accept\"\n#就总字节数而言\n$ sysdig -c fdbytes_by fd.cip"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "text",
+      "body": "列出所有不是访问apache服务的访问连接"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -p\"%proc.name %fd.name\" \"evt.type=accept and proc.name!=httpd\""
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "text",
+      "body": "显示 wordpress1 容器在端口 80 上发送和接收的数据："
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -A -cecho_fds container.name=wordpress1 and fd.port=80"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "text",
+      "body": "实时打印 `mysql` 容器接收的所有新连接"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "网络",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -p\"%fd.name\" container.name=mysql and evt.type=accept"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "查看哪些文件花费时间做多"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topfiles_time"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "查看httpd进程哪些文件花费最多时间"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topfiles_time proc.name=httpd"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "查看io错误最多的进程"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topprocs_errors"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "查看io错误最多的文件"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topfiles_errors"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "查看磁盘io失败的调用"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig fd.type=file and evt.failed=true"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "查看httpd打开失败的文件"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig \"proc.name=httpd and evt.type=open and evt.failed=true\""
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "查看最花费时间的系统调用"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topscalls_time"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "查看系统调用失败返回最多的系统调用"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topscalls \"evt.failed=true\""
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "查看打开文件失败"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -p \"%12user.name %6proc.pid %12proc.name %3fd.num %fd.typechar %fd.name\" evt.type=open and evt.failed=true"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "text",
+      "body": "打印延迟大于1ms的文件I/O调用"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "进程",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c fileslower 1"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "text",
+      "body": "将事件捕获到跟踪文件以供以后分析"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig –w myfile.scap"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "text",
+      "body": "从跟踪文件中读取事件"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig –r myfile.scap"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "text",
+      "body": "根据特定字段过滤事件"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig proc.name=httpd and evt.type!=open"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "text",
+      "body": "运行凿子以获得高级功能"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c topprocs_cpu"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "text",
+      "body": "列出所有可用字段"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -l"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "text",
+      "body": "列出所有可用的凿子"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "基本用法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -cl"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "容器",
+      "kind": "text",
+      "body": "查看具有容器上下文的进程列表"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "容器",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -pc"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "容器",
+      "kind": "text",
+      "body": "查看 `wordpress1` 容器中运行的进程的CPU使用率"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "容器",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -pc -c topprocs_cpu container.name=wordpress1"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "容器",
+      "kind": "text",
+      "body": "查看对基于 `Kubernetes` 的 `mySQL` 服务发出的热门 `HTTP` 请求"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "容器",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -k http://127.0.0.1:8080 -c httptop k8s.svc.name=mysql"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "文件系统",
+      "kind": "text",
+      "body": "列出使用最多文件数的进程"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "文件系统",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c fdcount_by proc.name \"fd.type=file\""
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "文件系统",
+      "kind": "text",
+      "body": "观察名为“passwd”的所有文件的 I/O 活动"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "文件系统",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -A -c echo_fds \"fd.filename=passwd\""
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "安全",
+      "kind": "text",
+      "body": "显示 `root` 访问的目录"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "安全",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -p \"%evt.arg.path\" \"evt.type=chdir and user.name=root\""
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "安全",
+      "kind": "text",
+      "body": "观察 `ssh` 活动"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "安全",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -A -c echo_fds fd.name=/dev/ptmx and proc.name=sshd"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "日志",
+      "kind": "text",
+      "body": "显示来自 python 的所有系统日志消息"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "日志",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c spy_syslog proc.name=python"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "日志",
+      "kind": "text",
+      "body": "超尾系统中的所有日志文件"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "日志",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ sysdig -c spy_logs"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "CSysdig",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ csysdig -m http://127.0.0.1:8080"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "CSysdig",
+      "kind": "text",
+      "body": "使用 Mesos 元数据运行 Csysdig，Sysdig 基于 curses 的 UI"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "CSysdig",
+      "kind": "text",
+      "body": "另见\n----------"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "CSysdig",
+      "kind": "text",
+      "body": "• [sysdig wiki](https://github.com/draios/sysdig/wiki) _(github.com)_\n• [sysdig 官网](https://sysdig.com/) _(sysdig.com)_\n• [Linux 故障排除速查表：strace、htop、lsof、tcpdump、iftop 和 sysdig](https://sysdig.com/blog/linux-troubleshooting-cheatsheet/) _(sysdig.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/sysdig.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/sysdig.md",
+    "generatedAt": "2025-12-16T07:36:11.455Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

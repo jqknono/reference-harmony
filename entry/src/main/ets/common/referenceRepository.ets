@@ -1,7 +1,7 @@
 import util from '@ohos.util';
 import type resourceManager from '@ohos.resourceManager';
 
-import type { ReferenceDoc, ReferenceDocSummary, ReferenceManifest } from './referenceModels';
+import type { ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest } from './referenceModels';
 
 export class ReferenceRepository {
   private readonly decoder: util.TextDecoder = new util.TextDecoder();
@@ -29,12 +29,46 @@ export class ReferenceRepository {
     }
   }
 
+  private async tryReadJson<T>(rawPath: string): Promise<T | undefined> {
+    try {
+      return await this.readJson<T>(rawPath);
+    } catch {
+      return undefined;
+    }
+  }
+
   async getManifest(): Promise<ReferenceManifest> {
-    return this.readJson<ReferenceManifest>('reference/manifest.json');
+    return this.getManifestByLang('zh');
+  }
+
+  async getManifestByLang(lang: ReferenceLang): Promise<ReferenceManifest> {
+    const p = `reference/${lang}/manifest.json`;
+    const primary = await this.tryReadJson<ReferenceManifest>(p);
+    if (primary !== undefined) return primary;
+
+    // backward-compat: old single-language location
+    if (lang === 'zh') {
+      return await this.readJson<ReferenceManifest>('reference/manifest.json');
+    }
+
+    throw new Error(`读取 manifest 失败：${p}`);
   }
 
   async getDoc(docId: string): Promise<ReferenceDoc> {
-    return this.readJson<ReferenceDoc>(`reference/${docId}.json`);
+    return this.getDocByLang('zh', docId);
+  }
+
+  async getDocByLang(lang: ReferenceLang, docId: string): Promise<ReferenceDoc> {
+    const p = `reference/${lang}/${docId}.json`;
+    const primary = await this.tryReadJson<ReferenceDoc>(p);
+    if (primary !== undefined) return primary;
+
+    // backward-compat: old single-language location
+    if (lang === 'zh') {
+      return await this.readJson<ReferenceDoc>(`reference/${docId}.json`);
+    }
+
+    throw new Error(`读取文档失败：${p}`);
   }
 
   async getDocBySummary(summary: ReferenceDocSummary): Promise<ReferenceDoc> {

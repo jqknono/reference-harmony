@@ -1,0 +1,423 @@
+{
+  "id": "mongodb",
+  "title": "MongoDB",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 0
+    },
+    {
+      "id": "s2",
+      "title": "Crud",
+      "startIndex": 13
+    },
+    {
+      "id": "s3",
+      "title": "Databases and Collections",
+      "startIndex": 34
+    },
+    {
+      "id": "s4",
+      "title": "Indexes",
+      "startIndex": 37
+    },
+    {
+      "id": "s5",
+      "title": "Others",
+      "startIndex": 44
+    }
+  ],
+  "cards": [
+    {
+      "id": "s1-0",
+      "sectionId": "s1",
+      "title": "Connect MongoDB Shell",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "mongo # connects to mongodb://127.0.0.1:27017 by default"
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Connect MongoDB Shell",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "mongo --host <host> --port <port> -u <user> -p <pwd> # omit the password if you want a prompt"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Connect MongoDB Shell",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "mongo \"mongodb://192.168.1.1:27017\""
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Connect MongoDB Shell",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "mongo \"mongodb+srv://cluster-name.abcde.mongodb.net/<dbname>\" --username <username> # MongoDB Atlas"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Helpers",
+      "kind": "text",
+      "body": "Show dbs :"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Helpers",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db // prints the current database"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Helpers",
+      "kind": "text",
+      "body": "Switch database :"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Helpers",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "use <database_name>"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Helpers",
+      "kind": "text",
+      "body": "Show collections :"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Helpers",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "show collections"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Helpers",
+      "kind": "text",
+      "body": "Run JavaScript file :"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Helpers",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "load(\"myScript.js\")"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Helpers",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "Create",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.insertOne({name: \"Max\"})\ndb.coll.insertMany([{name: \"Max\"}, {name:\"Alex\"}]) // ordered bulk insert\ndb.coll.insertMany([{name: \"Max\"}, {name:\"Alex\"}], {ordered: false}) // unordered bulk insert\ndb.coll.insertOne({date: ISODate()})\ndb.coll.insertMany({name: \"Max\"}, {\"writeConcern\": {\"w\": \"majority\", \"wtimeout\": 5000}})"
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "Delete",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.deleteOne({name: \"Max\"})\ndb.coll.deleteMany( $and: [{name: \"Max\"}, {justOne: true}]) //delete all entries which contain both values\ndb.coll.deleteMany( $or: [{name: \"Max\"}, {justOne: true}])  //delete all entries which contain any of the specified values\ndb.coll.deleteMany({}) // WARNING! Deletes all the docs but not the collection itself and its index definitions\ndb.coll.deleteMany({name: \"Max\"}, {\"writeConcern\": {\"w\": \"majority\", \"wtimeout\": 5000}})\ndb.coll.findOneAndDelete({\"name\": \"Max\"})"
+    },
+    {
+      "id": "s2-15",
+      "sectionId": "s2",
+      "title": "Update",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.updateMany({\"_id\": 1}, {$set: {\"year\": 2016}}) // WARNING! Replaces the entire document where \"_id\" = 1\ndb.coll.updateOne({\"_id\": 1}, {$set: {\"year\": 2016, name: \"Max\"}})\ndb.coll.updateOne({\"_id\": 1}, {$unset: {\"year\": 1}})\ndb.coll.updateOne({\"_id\": 1}, {$rename: {\"year\": \"date\"} })\ndb.coll.updateOne({\"_id\": 1}, {$inc: {\"year\": 5}})\ndb.coll.updateOne({\"_id\": 1}, {$mul: {price: 2}})\ndb.coll.updateOne({\"_id\": 1}, {$min: {\"imdb\": 5}})\ndb.coll.updateOne({\"_id\": 1}, {$max: {\"imdb\": 8}})\ndb.coll.updateMany({\"_id\": {$lt: 10}}, {$set: {\"lastModified\": ISODate()}})"
+    },
+    {
+      "id": "s2-16",
+      "sectionId": "s2",
+      "title": "Array",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.updateOne({\"_id\": 1}, {$push :{\"array\": 1}})\ndb.coll.updateOne({\"_id\": 1}, {$pull :{\"array\": 1}})\ndb.coll.updateOne({\"_id\": 1}, {$addToSet :{\"array\": 2}})\ndb.coll.updateOne({\"_id\": 1}, {$pop: {\"array\": 1}})  // last element\ndb.coll.updateOne({\"_id\": 1}, {$pop: {\"array\": -1}}) // first element\ndb.coll.updateOne({\"_id\": 1}, {$pullAll: {\"array\" :[3, 4, 5]}})\ndb.coll.updateOne({\"_id\": 1}, {$push: {scores: {$each: [90, 92, 85]}}})\ndb.coll.updateOne({\"_id\": 1, \"grades\": 80}, {$set: {\"grades.$\": 82}})\ndb.coll.updateMany({}, {$inc: {\"grades.$[]\": 10}})\ndb.coll.updateMany({}, {$set: {\"grades.$[element]\": 100}}, {arrayFilters: [{\"element\": {$gte: 100}}]})"
+    },
+    {
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "Update many",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.updateMany({\"year\": 1999}, {$set: {\"decade\": \"90's\"}})"
+    },
+    {
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "FindOneAndUpdate",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.findOneAndUpdate({\"name\": \"Max\"}, {$inc: {\"points\": 5}}, {returnNewDocument: true})"
+    },
+    {
+      "id": "s2-19",
+      "sectionId": "s2",
+      "title": "Upsert",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.updateOne({\"_id\": 1}, {$set: {item: \"apple\"}, $setOnInsert: {defaultQty: 100}}, {upsert: true})"
+    },
+    {
+      "id": "s2-20",
+      "sectionId": "s2",
+      "title": "Replace",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.replaceOne({\"name\": \"Max\"}, {\"firstname\": \"Maxime\", \"surname\": \"Beugnet\"})"
+    },
+    {
+      "id": "s2-21",
+      "sectionId": "s2",
+      "title": "Write concern",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.updateMany({}, {$set: {\"x\": 1}}, {\"writeConcern\": {\"w\": \"majority\", \"wtimeout\": 5000}})"
+    },
+    {
+      "id": "s2-22",
+      "sectionId": "s2",
+      "title": "Find",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.findOne() // returns a single document\ndb.coll.find()    // returns a cursor - show 20 results - \"it\" to display more\ndb.coll.find().pretty()\ndb.coll.find({name: \"Max\", age: 32}) // implicit logical \"AND\".\ndb.coll.find({date: ISODate(\"2020-09-25T13:57:17.180Z\")})\ndb.coll.find({name: \"Max\", age: 32}).explain(\"executionStats\") // or \"queryPlanner\" or \"allPlansExecution\"\ndb.coll.distinct(\"name\")"
+    },
+    {
+      "id": "s2-23",
+      "sectionId": "s2",
+      "title": "Count",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.estimatedDocumentCount()  // estimation based on collection metadata\ndb.coll.countDocuments({age: 32}) // alias for an aggregation pipeline - accurate count"
+    },
+    {
+      "id": "s2-24",
+      "sectionId": "s2",
+      "title": "Comparison",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.find({\"year\": {$gt: 1970}})\ndb.coll.find({\"year\": {$gte: 1970}})\ndb.coll.find({\"year\": {$lt: 1970}})\ndb.coll.find({\"year\": {$lte: 1970}})\ndb.coll.find({\"year\": {$ne: 1970}})\ndb.coll.find({\"year\": {$in: [1958, 1959]}})\ndb.coll.find({\"year\": {$nin: [1958, 1959]}})"
+    },
+    {
+      "id": "s2-25",
+      "sectionId": "s2",
+      "title": "Logical",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.find({name:{$not: {$eq: \"Max\"}}})\ndb.coll.find({$or: [{\"year\" : 1958}, {\"year\" : 1959}]})\ndb.coll.find({$nor: [{price: 1.99}, {sale: true}]})\ndb.coll.find({\n$and: [\n    {$or: [{qty: {$lt :10}}, {qty :{$gt: 50}}]},\n{$or: [{sale: true}, {price: {$lt: 5 }}]}\n]\n})"
+    },
+    {
+      "id": "s2-26",
+      "sectionId": "s2",
+      "title": "Element",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.find({name: {$exists: true}})\ndb.coll.find({\"zipCode\": {$type: 2 }})\ndb.coll.find({\"zipCode\": {$type: \"string\"}})"
+    },
+    {
+      "id": "s2-27",
+      "sectionId": "s2",
+      "title": "Aggregation Pipeline",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.aggregate([\n{$match: {status: \"A\"}},\n{$group: {_id: \"$cust_id\", total: {$sum: \"$amount\"}}},\n{$sort: {total: -1}}\n])"
+    },
+    {
+      "id": "s2-28",
+      "sectionId": "s2",
+      "title": "Text search with a \"text\" index",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.find({$text: {$search: \"cake\"}}, {score: {$meta: \"textScore\"}}).sort({score: {$meta: \"textScore\"}})"
+    },
+    {
+      "id": "s2-29",
+      "sectionId": "s2",
+      "title": "Regex",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.find({name: /^Max/}) // regex: starts by letter \"M\"\ndb.coll.find({name: /^Max$/i}) // regex case insensitive"
+    },
+    {
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "Array",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.find({tags: {$all: [\"Realm\", \"Charts\"]}})\ndb.coll.find({field: {$size: 2}}) // impossible to index - prefer storing the size of the array & update it\ndb.coll.find({results: {$elemMatch: {product: \"xyz\", score: {$gte: 8}}}})"
+    },
+    {
+      "id": "s2-31",
+      "sectionId": "s2",
+      "title": "Projections",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.find({\"x\": 1}, {\"actors\": 1}) // actors + \\_id\ndb.coll.find({\"x\": 1}, {\"actors\": 1, \"\\_id\": 0}) // actors\ndb.coll.find({\"x\": 1}, {\"actors\": 0, \"summary\": 0}) // all but \"actors\" and \"summary\""
+    },
+    {
+      "id": "s2-32",
+      "sectionId": "s2",
+      "title": "Sort, skip, limit",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.find({}).sort({\"year\": 1, \"rating\": -1}).skip(10).limit(3)"
+    },
+    {
+      "id": "s2-33",
+      "sectionId": "s2",
+      "title": "Read Concern",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.find().readConcern(\"majority\")"
+    },
+    {
+      "id": "s3-34",
+      "sectionId": "s3",
+      "title": "Drop",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.drop()    // removes the collection and its index definitions\ndb.dropDatabase() // double check that you are *NOT* on the PROD cluster... :-)"
+    },
+    {
+      "id": "s3-35",
+      "sectionId": "s3",
+      "title": "Create Collection",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.createCollection(\"contacts\", {\n   validator: {$jsonSchema: {\n      bsonType: \"object\",\n      required: [\"phone\"],\n      properties: {\n         phone: {\n            bsonType: \"string\",\n            description: \"must be a string and is required\"\n         },\n         email: {\n            bsonType: \"string\",\n            pattern: \"@mongodb\\.com$\",\n            description: \"must be a string and match the regular expression pattern\"\n         },\n         status: {\n            enum: [ \"Unknown\", \"Incomplete\" ],\n            description: \"can only be one of the enum values\"\n         }\n      }\n   }}\n})"
+    },
+    {
+      "id": "s3-36",
+      "sectionId": "s3",
+      "title": "Other Collection Functions",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.stats()\ndb.coll.storageSize()\ndb.coll.totalIndexSize()\ndb.coll.totalSize()\ndb.coll.validate({full: true})\ndb.coll.renameCollection(\"new_coll\", true) // 2nd parameter to drop the target collection if exists"
+    },
+    {
+      "id": "s4-37",
+      "sectionId": "s4",
+      "title": "Basics",
+      "kind": "text",
+      "body": "#### List"
+    },
+    {
+      "id": "s4-38",
+      "sectionId": "s4",
+      "title": "Basics",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.getIndexes()\ndb.coll.getIndexKeys()"
+    },
+    {
+      "id": "s4-39",
+      "sectionId": "s4",
+      "title": "Basics",
+      "kind": "text",
+      "body": "#### Drop Indexes"
+    },
+    {
+      "id": "s4-40",
+      "sectionId": "s4",
+      "title": "Basics",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.dropIndex(\"name_1\")"
+    },
+    {
+      "id": "s4-41",
+      "sectionId": "s4",
+      "title": "Basics",
+      "kind": "text",
+      "body": "#### Hide/Unhide Indexes"
+    },
+    {
+      "id": "s4-42",
+      "sectionId": "s4",
+      "title": "Basics",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "db.coll.hideIndex(\"name_1\")\ndb.coll.unhideIndex(\"name_1\")"
+    },
+    {
+      "id": "s4-43",
+      "sectionId": "s4",
+      "title": "Create Indexes",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "// Index Types\ndb.coll.createIndex({\"name\": 1})                // single field index\ndb.coll.createIndex({\"name\": 1, \"date\": 1})     // compound index\ndb.coll.createIndex({foo: \"text\", bar: \"text\"}) // text index\ndb.coll.createIndex({\"$**\": \"text\"})            // wildcard text index\ndb.coll.createIndex({\"userMetadata.$**\": 1})    // wildcard index\ndb.coll.createIndex({\"loc\": \"2d\"})              // 2d index\ndb.coll.createIndex({\"loc\": \"2dsphere\"})        // 2dsphere index\ndb.coll.createIndex({\"_id\": \"hashed\"})          // hashed index\n\n// Index Options\ndb.coll.createIndex({\"lastModifiedDate\": 1}, {expireAfterSeconds: 3600})      // TTL index\ndb.coll.createIndex({\"name\": 1}, {unique: true})\ndb.coll.createIndex({\"name\": 1}, {partialFilterExpression: {age: {$gt: 18}}}) // partial index\ndb.coll.createIndex({\"name\": 1}, {collation: {locale: 'en', strength: 1}})    // case insensitive index with strength = 1 or 2\ndb.coll.createIndex({\"name\": 1 }, {sparse: true})"
+    },
+    {
+      "id": "s5-44",
+      "sectionId": "s5",
+      "title": "Handy commands",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "use admin\ndb.createUser({\"user\": \"root\", \"pwd\": passwordPrompt(), \"roles\": [\"root\"]})\ndb.dropUser(\"root\")\ndb.auth( \"user\", passwordPrompt() )\n\nuse test\ndb.getSiblingDB(\"dbname\")\ndb.currentOp()\ndb.killOp(123) // opid\n\ndb.fsyncLock()\ndb.fsyncUnlock()\n\ndb.getCollectionNames()\ndb.getCollectionInfos()\ndb.printCollectionStats()\ndb.stats()\n\ndb.getReplicationInfo()\ndb.printReplicationInfo()\ndb.isMaster()\ndb.hostInfo()\ndb.printShardingStatus()\ndb.shutdownServer()\ndb.serverStatus()\n\ndb.setSlaveOk()\ndb.getSlaveOk()\n\ndb.getProfilingLevel()\ndb.getProfilingStatus()\ndb.setProfilingLevel(1, 200) // 0 == OFF, 1 == ON with slowms, 2 == ON\n\ndb.enableFreeMonitoring()\ndb.disableFreeMonitoring()\ndb.getFreeMonitoringStatus()\n\ndb.createView(\"viewName\", \"sourceColl\", [{$project:{department: 1}}])"
+    },
+    {
+      "id": "s5-45",
+      "sectionId": "s5",
+      "title": "Replica Set",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "rs.status()\nrs.initiate({\"_id\": \"replicaTest\",\n  members: [\n    { _id: 0, host: \"127.0.0.1:27017\" },\n    { _id: 1, host: \"127.0.0.1:27018\" },\n    { _id: 2, host: \"127.0.0.1:27019\", arbiterOnly:true }]\n})\nrs.add(\"mongodbd1.example.net:27017\")\nrs.addArb(\"mongodbd2.example.net:27017\")\nrs.remove(\"mongodbd1.example.net:27017\")\nrs.conf()\nrs.isMaster()\nrs.printReplicationInfo()\nrs.printSlaveReplicationInfo()\nrs.reconfig(<valid_conf>)\nrs.slaveOk()\nrs.stepDown(20, 5) // (stepDownSecs, secondaryCatchUpPeriodSecs)"
+    },
+    {
+      "id": "s5-46",
+      "sectionId": "s5",
+      "title": "Sharded Cluster",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "sh.status()\nsh.addShard(\"rs1/mongodbd1.example.net:27017\")\nsh.shardCollection(\"mydb.coll\", {zipcode: 1})\n\nsh.moveChunk(\"mydb.coll\", { zipcode: \"53187\" }, \"shard0019\")\nsh.splitAt(\"mydb.coll\", {x: 70})\nsh.splitFind(\"mydb.coll\", {x: 70})\nsh.disableAutoSplit()\nsh.enableAutoSplit()\n\nsh.startBalancer()\nsh.stopBalancer()\nsh.disableBalancing(\"mydb.coll\")\nsh.enableBalancing(\"mydb.coll\")\nsh.getBalancerState()\nsh.setBalancerState(true/false)\nsh.isBalancerRunning()\n\nsh.addTagRange(\"mydb.coll\", {state: \"NY\", zip: MinKey }, { state: \"NY\", zip: MaxKey }, \"NY\")\nsh.removeTagRange(\"mydb.coll\", {state: \"NY\", zip: MinKey }, { state: \"NY\", zip: MaxKey }, \"NY\")\nsh.addShardTag(\"shard0000\", \"NYC\")\nsh.removeShardTag(\"shard0000\", \"NYC\")\n\nsh.addShardToZone(\"shard0000\", \"JFK\")\nsh.removeShardFromZone(\"shard0000\", \"NYC\")\nsh.removeRangeFromZone(\"mydb.coll\", {a: 1, b: 1}, {a: 10, b: 10})"
+    },
+    {
+      "id": "s5-47",
+      "sectionId": "s5",
+      "title": "Change Streams",
+      "kind": "code",
+      "lang": "mongosh",
+      "code": "watchCursor = db.coll.watch( [ { $match : {\"operationType\" : \"insert\" } } ] )\n\nwhile (!watchCursor.isExhausted()){\n   if (watchCursor.hasNext()){\n      print(tojson(watchCursor.next()));\n   }\n}"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/mongodb.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/mongodb.md",
+    "generatedAt": "2025-12-16T07:36:11.734Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

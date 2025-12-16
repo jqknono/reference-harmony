@@ -1,0 +1,2444 @@
+{
+  "id": "github-actions",
+  "title": "https://www.basefactor.com/github-actions-docker",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Github Actions 备忘清单\n===="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "本备忘单总结了 [Github Actions](https://github.com/actions) 常用的配置说明，以供快速参考。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "GitHub [Actions](https://github.com/actions) 的仓库中自动化、自定义和执行软件开发工作流程，有四个基本的概念，如下："
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`workflow` _(工作流程)_ | 持续集成一次运行的过程，就是一个 `workflow`\n`job` _(任务)_ | 一个 `workflow` 由一个或多个 `jobs` 构成，含义是一次持续集成的运行，可以完成多个任务\n`step` _(步骤)_ | 每个 `job` 由多个 `step` 构成，一步步完成\n`action` _(动作)_ | 每个 `step` 可以依次执行一个或多个命令(`action`)\n<!--rehype:className=style-list-arrow-->"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "• 采用 [YAML](./yaml.md) 格式定义配置文件\n• 存放在代码仓库的 `.github/workflows` 目录中\n• 后缀名统一为 `.yml`，比如 `ci.yml`\n• 一个库可以有多个 `workflow` 文件\n• 根据配置事件自动运行配置文件"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "配置文件",
+      "kind": "text",
+      "body": "```yaml {3,5,10}\nname: GitHub Actions Demo\non:\npush:\nbranches:"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "配置文件",
+      "kind": "text",
+      "body": "• main"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\nbuild:\nruns-on: ubuntu-latest\n# 步骤 根据步骤执行任务\nsteps:"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• uses: actions/checkout@v3\n• uses: actions/setup-node@v3"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "with:\nnode-version: 16"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: npm install\n• run: npm run build"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n存放到 `.github/workflows` 目录中，命名为 `ci.yml`，当 `push` 代码到仓库 `main` 分支中，该配置自动运行配置。\n\n### 指定触发\n<!--rehype:wrap-class=row-span-2-->\n\n`push` 事件触发 `workflow`"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "on: push"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n`push` 事件或 `pull_request` 事件都可以触发 `workflow`"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "on: [push, pull_request]"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n只有在 `main` 分支 `push` 事件触发 `workflow`"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "on:\npush:\nbranches:"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• main"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n`push` 事件触发 `workflow`，`docs` 目录下的更改 `push` 事件不触发 `workflow`"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "on:\npush:\npaths-ignore:"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• 'docs/**'"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\npush 事件触发 workflow，包括 sub-project 目录或其子目录中的文件触发 workflow，除非该文件在 sub-project/docs 目录中，不触发 workflow"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "on:\npush:\npaths:"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• 'sub-project/**'\n• '!sub-project/docs/**'"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n版本发布为 `published` 时运行工作流程。"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "on:\nrelease:\ntypes: [published]"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 多项任务"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\nmy_first_job:  # 第一个任务\nname: My first job"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "my_second_job: # 第二个任务\nname: My second job"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n通过 jobs `(jobs.<job_id>.name)`字段，配置一项或多项需要执行的任务\n\n### 多项任务依赖关系\n\n通过 needs `(jobs.<job_id>.needs)`字段，指定当前任务的依赖关系"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\njob1:\njob2:\nneeds: job1\njob3:\nneeds: [job1, job2]"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n上面配置中，`job1` 必须先于 `job2` 完成，而 `job3` 等待 `job1` 和 `job2` 的完成才能运行。因此，这个 `workflow` 的运行顺序依次为：`job1`、`job2`、`job3`\n\n### 多项任务传递参数\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\njob1:\nruns-on: ubuntu-latest\n# 将步骤输出映射到作业输出\noutputs:\noutput1: ${{ steps.step1.outputs.test }}\noutput2: ${{ steps.step2.outputs.test }}\nsteps:"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• id: step1"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: echo \"::set-output name=test::hello\""
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• id: step2"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: echo \"::set-output name=test::world\"\njob2:\nruns-on: ubuntu-latest\nneeds: job1\nsteps:"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: echo ${{needs.job1.outputs.output1}} ${{needs.job1.outputs.output2}}"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 定时触发\n\n可以使用 cron 表达式配置周期性任务，定时执行"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "name: schedule task"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "env:\nTZ: Asia/Shanghai"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "on:\n# push 到 main 分支时执行任务\npush:\nbranches:"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• main"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 每隔两小时自动执行任务\nschedule:"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• cron: '0 0/2 * * *'"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 指定每项任务的虚拟机环境"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "runs-on: ubuntu-latest"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n指定运行所需要的虚拟机环境，⚠️ 它是必填字段"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\nbuild: # 任务名称\nruns-on: ubuntu-latest # 虚拟机环境配置"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n---\n\n- `Windows Server 2022` _(windows-latest)_ 或 _(windows-2022)_\n- `Ubuntu 20.04` _(ubuntu-latest)_ 或 _(ubuntu-20.04)_\n- `macOS Monterey 12` _(macos-12)_\n- `macOS Big Sur 11` _(macos-latest)_,_(macos-11)_\n<!--rehype:className=style-arrow-->\n\n另见: [选择 GitHub 托管的运行器](https://docs.github.com/cn/actions/using-workflows/workflow-syntax-for-github-actions#选择-github-托管的运行器)\n\n### 指定每项任务的步骤\n\n每个步骤都可以指定以下三个字段"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs.<job_id>.steps.name # 步骤名称"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs.<job_id>.steps.run"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs.<job_id>.steps.env"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n`steps` 字段指定每个 `Job` 的运行步骤，可以包含一个或多个步骤(`steps`)"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\nbuild:\nruns-on: ubuntu-latest\nsteps:"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• uses: actions/checkout@v3\n• uses: actions/setup-node@v3"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "with:\nnode-version: 16"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: npm install\n• run: npm run build"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 环境变量"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs.<job_id>.environment"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用单一环境名称的示例"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "environment: staging_environment"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用环境名称和 URL 的示例"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "environment:\nname: production_environment\nurl: https://github.com"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 自定义环境变量\n\n`GitHub` 会保留 `GITHUB_` 环境变量前缀供 `GitHub` 内部使用。设置有 `GITHUB_` 前缀的环境变量或密码将导致错误。"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 测试 nodejs 获取环境变量"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "env:\nAPI_TOKEN: ${{ secrets.API_TOKEN }}"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在 `https://github.com/<用户名>/<项目名称>/settings/secrets` 中添加 `secrets` `API_TOKEN`，在工作流中设置环境变量 [`API_TOKEN`](https://github.com/jaywcjlove/github-actions/blob/799b232fca3d9df0272eaa12610f9ebfca51b288/.github/workflows/ci.yml#L46)\n\n### 表达式\n\n在 `if` 条件下使用表达式时，可以省略表达式语法 (`${{ }}`)，因为 GitHub 会自动将 `if` 条件作为表达式求值"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "steps:"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• uses: actions/hello-world-action@v1.1"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "if: github.repository == 'uiw/uiw-repo'\n# if: ${{ <expression> }}"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n设置环境变量的示例"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "env:\nMY_ENV_VAR: ${{ <expression> }}"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 操作符\n\n- `( )` _(逻辑分组)_\n- `[ ]` _(索引)_\n- `.` _(属性解引用)_\n- `!` _(非)_\n- `<` _(小于)_\n- `<=` _(小于或等于)_\n- `>` _(大于)_\n- `>=` _(大于或等于)_\n- `==` _(相等)_\n- `!=` _(不等)_\n- `&&` _(和)_\n- `||` _(或)_\n<!--rehype:className=cols-2 style-none-->\n\n### Github 上下文\n<!--rehype:wrap-class=col-span-2 row-span-3-->\n\n属性名称 | 类型 | 描述\n---- | ---- | ----\n`github` _(object)_ | 工作流程中任何作业或步骤期间可用的顶层上下文。\n`github.event` _(object)_ | 完整事件 web 挂钩有效负载。 更多信息请参阅“触发工作流程的事件”。\n`github.event_path` _(string)_ | 运行器上完整事件 web 挂钩有效负载的路径。\n`github.workflow` _(string)_ | 工作流程的名称。 如果工作流程文件未指定 name，此属性的值将是仓库中工作流程文件的完整路径。\n`github.job` _(string)_ | 当前作业的 job_id。\n`github.run_id` _(string)_ | 仓库中每个运行的唯一编号。 如果您重新执行工作流程运行，此编号不变。\n`github.run_number` _(string)_ | 仓库中特定工作流程每个运行的唯一编号。 此编号从 1（对应于工作流程的第一个运行）开始，然后随着每个新的运行而递增。 如果您重新执行工作流程运行，此编号不变。\n`github.actor` _(string)_ | 发起工作流程运行的用户的登录名。\n`github.repository` _(string)_ | 所有者和仓库名称。 例如 Codertocat/Hello-World。\n`github.repository_owner` _(string)_ | 仓库所有者的名称。 例如 Codertocat。\n`github.event_name` _(string)_ | 触发工作流程运行的事件的名称。\n`github.sha` _(string)_ | 触发工作流程的提交 SHA。\n`github.ref` _(string)_ | 触发工作流程的分支或标记参考。\n`github.head_ref` _(string)_ | 工作流程运行中拉取请求的 head_ref 或来源分支。 此属性仅在触发工作流程运行的事件为 pull_request 时才可用。\n`github.base_ref` _(string)_ | 工作流程运行中拉取请求的 base_ref 或目标分支。 此属性仅在触发工作流程运行的事件为 pull_request 时才可用。\n`github.token` _(string)_ | 代表仓库上安装的 GitHub 应用程序进行身份验证的令牌。 这在功能上等同于 GITHUB_TOKEN 密码。 更多信息请参阅“使用 GITHUB_TOKEN 验证身份”。\n`github.workspace` _(string)_ | 使用 checkout 操作时步骤的默认工作目录和仓库的默认位置。\n`github.action` _(string)_ | 正在运行的操作的名称。 在当前步骤运行脚本时，GitHub 删除特殊字符或使用名称 run。 如果在同一作业中多次使用相同的操作，则名称将包括带有序列号的后缀。 例如，运行的第一个脚本名称为 run1，则第二个脚本将命名为 run2。 同样，actions/checkout 第二次调用时将变成 actionscheckout2。\n<!--rehype:className=style-list-arrow-->\n\n[Github 上下文](https://help.github.com/cn/actions/reference/context-and-expression-syntax-for-github-actions)是访问有关工作流运行、运行器环境、作业和步骤的信息的一种方式\n\n### 直接常量\n\n作为表达式的一部分，可以使用 `boolean`, `null`, `number` 或 `string`数据类型"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "env:\nmyNull: ${{ null }}\nmyBoolean: ${{ false }}\nmyIntegerNumber: ${{ 711 }}\nmyFloatNumber: ${{ -9.2 }}\nmyHexNumber: ${{ 0xff }}\nmyExponentialNumber: ${{ -2.99e-2 }}\nmyString: Mona the Octocat\nmyStringInBraces: ${{ 'It''s source!' }}"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 函数 contains\n\n使用字符串的示例"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "contains('Hello world', 'llo') // 返回 true"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用对象过滤器的示例返回 true"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "contains(github.event.issue.labels.*.name, 'bug')"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n另见: [函数 contains](https://docs.github.com/cn/actions/learn-github-actions/expressions#contains)\n\n### 函数 startsWith"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "startsWith('Hello world', 'He') // 返回 true"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n另见: [函数 startsWith](https://docs.github.com/cn/actions/learn-github-actions/expressions#startswith)，此函数不区分大小写\n\n### 默认环境变量\n<!--rehype:wrap-class=row-span-8 col-span-2-->\n\n环境变量 | 描述\n---- | ----\n`CI` | 始终设置为 `true`\n`HOME` | 用于存储用户数据的 GitHub 主目录路径。 例如 `/github/home`\n`GITHUB_WORKFLOW` | 工作流程的名称。\n`GITHUB_RUN_ID` | 仓库中每个运行的唯一编号。 如果您重新执行工作流程运行，此编号不变。\n`GITHUB_RUN_NUMBER` | 仓库中特定工作流程每个运行的唯一编号。 此编号从 1（对应于工作流程的第一个运行）开始，然后随着每个新的运行而递增。 如果您重新执行工作流程运行，此编号不变。\n`GITHUB_ACTION` | 操作唯一的标识符 (id)。\n`GITHUB_ACTIONS` |  当 GitHub 操作 运行工作流程时，始终设置为 true。 您可以使用此变量来区分测试是在本地运行还是通过 GitHub 操作 运行。\n`GITHUB_ACTION_PATH` | GitHub 操作所在的路径\n`GITHUB_ACTOR` | 发起工作流程的个人或应用程序的名称。 例如 octocat\n`GITHUB_API_URL` | 返回 `API URL`。例如：`https://api.github.com`\n`GITHUB_REPOSITORY` | 所有者和仓库名称。 例如 octocat/Hello-World\n`GITHUB_EVENT_NAME` | 触发工作流程的 web 挂钩事件的名称\n`GITHUB_EVENT_PATH` | 具有完整 web 挂钩事件有效负载的文件路径。 例如 /github/workflow/event.json\n`GITHUB_WORKSPACE` | GitHub 工作空间目录路径。 如果您的工作流程使用 [actions/checkout](https://github.com/actions/checkout) 操作，工作空间目录将包含存储仓库副本的子目录。 如果不使用 [actions/checkout](https://github.com/actions/checkout) 操作，该目录将为空。 例如 /home |/runner/work/my-repo-name/my-repo-name\n`GITHUB_SHA` | 触发工作流程的提交 SHA。 例如 ffac537e6cbbf9\n`GITHUB_REF` | 触发工作流程的分支或标记参考。 例如 refs/heads/feature-branch-1。 如果分支或标记都不适用于事件类型，则变量不会存在\n`GITHUB_HEAD_REF` | 仅为复刻的仓库设置。头部仓库的分支\n`GITHUB_BASE_REF` | 仅为复刻的仓库设置。基础仓库的分支\n<!--rehype:className=style-list-arrow-->\n\n另见: [默认环境变量](https://docs.github.com/cn/actions/learn-github-actions/environment-variables#default-environment-variables)\n\n### 函数 format"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat')\n// 返回 '{Hello Mona the Octocat!}'."
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n另见: [函数 format](https://docs.github.com/cn/actions/learn-github-actions/expressions#format)\n\n### 函数 join"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "join(github.event.issue.labels.*.name,', ')\n// 也许返回 'bug, help wanted'."
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n另见: [函数 join](https://docs.github.com/cn/actions/learn-github-actions/expressions#join)\n\n### 函数 toJSON"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "toJSON(job)\n// 也许返回 { \"status\": \"Success\" }."
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n另见: [函数 toJSON](https://docs.github.com/cn/actions/learn-github-actions/expressions#tojson)\n\n### 函数\n<!--rehype:wrap-class=row-span-2-->\n\n:- | :-\n:- | :-\n`fromJSON` | 返回 JSON 对象或 JSON 数据类型的值 [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#fromjson)\n`hashFiles` | 返回与路径模式匹配的文件集的单个哈希 [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#hashfiles)\n`success` | 当前面的步骤都没失败或被取消时返回 true [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#success)\n`always` | 使步骤始终执行，返回 `true` 即使取消也是如此 [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#always)\n`cancelled` | 如果工作流被取消，则返回 true [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#cancelled)\n`failure` | 当作业的任何先前步骤失败时返回 true [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#failure)\n\n### 函数 success()"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "steps:\n..."
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 作业已成功"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "if: ${{ success() }}"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 函数 failure()"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "steps:\n..."
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 作业失败"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "if: ${{ failure() }}"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n常用实例\n----\n\n### 获取版本信息\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Test"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: |\n# Strip git ref prefix from version\necho \"${{ github.ref }}\"\n# VERSION=$(echo \"${{ github.ref }}\" | sed -e 's,.*/\\(.*\\),\\1,')"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# # Strip \"v\" prefix from tag name\n# [[ \"${{ github.ref }}\" == \"refs/tags/\"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')\necho \"$VERSION\""
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n### 提交到 gh-pages 分支"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Deploy"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: peaceiris/actions-gh-pages@v3\nwith:\ngithub_token: ${{secrets.GITHUB_TOKEN}}\npublish_dir: ./build"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 修改 package.json"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Modify Version"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "shell: bash\nrun: |\nnode -e 'var pkg = require(\"./package.json\"); pkg.version= (new Date().getFullYear().toString().substr(2)) + \".\" + (new Date().getMonth() + 1) + \".\" + (new Date().getDate()); require(\"fs\").writeFileSync(\"./package.json\", JSON.stringify(pkg, null, 2))'"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n使用 [github-action-package](https://github.com/jaywcjlove/github-action-package) 修改 `name` 字段"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: package.json info"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: jaywcjlove/github-action-package@main\nwith:\nrename: '@wcj/github-package-test'"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 克隆带有 Submodule 的仓库"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Checkout"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: actions/checkout@v3\nwith:\npath: main\nsubmodules: true"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n`submodules`：`true` 检出子模块或 `recursive` 递归检出子模块"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Clone sub repository"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "shell: bash\nrun: |\nauth_header=\"$(git config --local --get http.https://github.com/.extraheader)\"\n# git submodule sync --recursive\n# git -c \"http.extraheader=$auth_header\" -c protocol.version=2 submodule update --init --remote --force --recursive --checkout ant.design"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 步骤依赖作业\n<!--rehype:wrap-class=row-span-2-->\n\n使用 `jobs.<job_id>.needs` 识别在此作业运行之前必须成功完成的任何作业。它可以是一个字符串，也可以是字符串数组。 如果某个作业失败，则所有需要它的作业都会被跳过，除非这些作业使用让该作业继续的条件表达式。"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\njob1:\njob2:\nneeds: job1\njob3:\nneeds: [job1, job2]"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在此示例中，`job1` 必须在 `job2` 开始之前成功完成，而 `job3` 要等待 `job1` 和 `job2` 完成。此示例中的作业按顺序运行："
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "❶ job1\n❷ job2\n❸ job3"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n配置如下"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\njob1:\njob2:\nneeds: job1\njob3:\nif: ${{ always() }}\nneeds: [job1, job2]"
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在此示例中，`job3` 使用 `always()` 条件表达式，因此它始终在 `job1` 和 `job2` 完成后运行，不管它们是否成功。\n\n### 同步 Gitee\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Sync to Gitee"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: |\nmirror() {\ngit clone \"https://github.com/$1/$2\"\ncd \"$2\"\ngit remote add gitee \"https://jaywcjlove:${{ secrets.GITEE_TOKEN }}@gitee.com/uiw/$2\"\ngit remote set-head origin -d\ngit push gitee --prune +refs/remotes/origin/*:refs/heads/* +refs/tags/*:refs/tags/*\ncd ..\n}\nmirror uiwjs uiw"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n### 提交 NPM 包"
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: npm publish --access public"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "continue-on-error: true\nenv:\nNODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n获取 `NPM_TOKEN`，可以通过 [npm](https://www.npmjs.com/settings/wcjiang/tokens) 账号创建 `token`"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "npm token list [--json|--parseable] # 查看\nnpm token create [--read-only] [--cidr=1.1.1.1/24,2.2.2.2/16] # 创建\nnpm token revoke <id|token> # 撤销"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n可以使用 [JS-DevTools/npm-publish](https://github.com/JS-DevTools/npm-publish) 提交"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name:  📦 @province-city-china/data"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: JS-DevTools/npm-publish@v1\nwith:\ntoken: ${{ secrets.NPM_TOKEN }}\npackage: packages/data/package.json"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n它有个好处，检测 `package.json` 中版本号是否发生变更，来决定是否提交版本，不会引发流程错误。\n\n### 步骤作业文件共享\n\nArtifacts 是 GitHub Actions 为您提供持久文件并在运行完成后使用它们或在作业（文档）之间共享的一种方式。\n\n- 要创建工件并使用它，您将需要不同的操作：上传和下载\n\n要上传文件或目录，您只需像这样使用它："
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "steps:"
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• uses: actions/checkout@v2\n• run: mkdir -p path/to/artifact\n• run: echo hello > path/to/file/a.txt\n• uses: actions/upload-artifact@v2"
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "with:\nname: my-artifact\npath: path/to/artifact/a.txt"
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n然后下载 `artifact` 以使用它："
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "steps:"
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• uses: actions/checkout@v2\n• uses: actions/download-artifact@v2"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "with:\nname: my-artifact"
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Node.js"
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Setup Node"
+    },
+    {
+      "id": "intro-143",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: actions/setup-node@v2\nwith:\nnode-version: 14"
+    },
+    {
+      "id": "intro-144",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用[矩阵策略](https://docs.github.com/cn/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategy) 在 nodejs 不同版本中运行"
+    },
+    {
+      "id": "intro-145",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "strategy:\nmatrix:\nnode-version: [10.x, 12.x, 14.x]"
+    },
+    {
+      "id": "intro-146",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "steps:"
+    },
+    {
+      "id": "intro-147",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• uses: actions/checkout@v2\n• name: 使用 Node ${{ matrix.node-version }}"
+    },
+    {
+      "id": "intro-148",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: actions/setup-node@v1\nwith:\nnode-version: ${{ matrix.node-version }}"
+    },
+    {
+      "id": "intro-149",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: npm ci\n• run: npm run build --if-present\n• run: npm test"
+    },
+    {
+      "id": "intro-150",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 提交 docker 镜像\n<!--rehype:wrap-class=col-span-2 row-span-2-->"
+    },
+    {
+      "id": "intro-151",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Docker login"
+    },
+    {
+      "id": "intro-152",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}"
+    },
+    {
+      "id": "intro-153",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Build ant.design image"
+    },
+    {
+      "id": "intro-154",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: |\ncd ./ant\\.design\ndocker build -t ant.design ."
+    },
+    {
+      "id": "intro-155",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Tags & Push docs"
+    },
+    {
+      "id": "intro-156",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: |\n# Strip git ref prefix from version\nVERSION=$(echo \"${{ github.ref }}\" | sed -e 's,.*/\\(.*\\),\\1,')"
+    },
+    {
+      "id": "intro-157",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# Strip \"v\" prefix from tag name\n[[ \"${{ github.ref }}\" == \"refs/tags/\"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')"
+    },
+    {
+      "id": "intro-158",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "docker tag ant.design ${{ secrets.DOCKER_USER }}/ant.design:$VERSION\ndocker tag ant.design ${{ secrets.DOCKER_USER }}/ant.design:latest\ndocker push ${{ secrets.DOCKER_USER }}/ant.design:$VERSION\ndocker push ${{ secrets.DOCKER_USER }}/ant.design:latest"
+    },
+    {
+      "id": "intro-159",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 创建一个 tag"
+    },
+    {
+      "id": "intro-160",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Create Tag"
+    },
+    {
+      "id": "intro-161",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "id: create_tag\nuses: jaywcjlove/create-tag-action@main\nwith:\npackage-path: ./package.json"
+    },
+    {
+      "id": "intro-162",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n根据 `package-path` 指定的 `package.json` 检测 `version` 是否发生变化来创建 `tag`\n\n### 生成 git 提交日志"
+    },
+    {
+      "id": "intro-163",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Generate Changelog"
+    },
+    {
+      "id": "intro-164",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "id: changelog\nuses: jaywcjlove/changelog-generator@main\nwith:\nfilter-author: (小弟调调™)"
+    },
+    {
+      "id": "intro-165",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Get the changelog"
+    },
+    {
+      "id": "intro-166",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: echo \"${{ steps.changelog.outputs.changelog }}\""
+    },
+    {
+      "id": "intro-167",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n### 提交到 GitHub docker 镜像仓库\n<!--rehype:wrap-class=col-span-3-->"
+    },
+    {
+      "id": "intro-168",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: '登录到 GitHub 注册表'"
+    },
+    {
+      "id": "intro-169",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: echo ${{ github.token }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin"
+    },
+    {
+      "id": "intro-170",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: '编译 docker image'"
+    },
+    {
+      "id": "intro-171",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: docker build -t ghcr.io/jaywcjlove/reference:latest ."
+    },
+    {
+      "id": "intro-172",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: '推送到 GitHub 注册表中'"
+    },
+    {
+      "id": "intro-173",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: docker push ghcr.io/jaywcjlove/reference:latest"
+    },
+    {
+      "id": "intro-174",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: '标记 docker 镜像并发布到 GitHub 注册表'"
+    },
+    {
+      "id": "intro-175",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "if: steps.create_tag.outputs.successful\nrun: |\necho \"version: v${{ steps.changelog.outputs.version }}\"\ndocker tag ghcr.io/jaywcjlove/reference:latest ghcr.io/jaywcjlove/reference:${{steps.changelog.outputs.version}}\ndocker push ghcr.io/jaywcjlove/reference:${{steps.changelog.outputs.version}}"
+    },
+    {
+      "id": "intro-176",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 提交 commit 到 master 分支\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-177",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 生成一个文件，并将它提交到 master 分支"
+    },
+    {
+      "id": "intro-178",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: |\n# Strip git ref prefix from version\nVERSION=$(echo \"${{ github.ref }}\" | sed -e 's,.*/\\(.*\\),\\1,')\nCOMMIT=released-${VERSION}\n# Strip \"v\" prefix from tag name\n[[ \"${{ github.ref }}\" == \"refs/tags/\"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')\necho \"输出版本号：$VERSION\"\n# 将版本输出到当前 VERSION 文件中\necho \"$VERSION\" > VERSION\necho \"1. 输出Commit：$commit\"\necho \"2. Released $VERSION\"\ngit fetch\ngit config --local user.email \"action@github.com\"\ngit config --local user.name \"GitHub Action\"\ngit add .\ngit commit -am $COMMIT\ngit branch -av\ngit pull origin master"
+    },
+    {
+      "id": "intro-179",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 将上面的提交 push 到 master 分支"
+    },
+    {
+      "id": "intro-180",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: ad-m/github-push-action@master\nwith:\ngithub_token: ${{ secrets.GITHUB_TOKEN }}"
+    },
+    {
+      "id": "intro-181",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 作业之间共享数据\n\n创建一个文件，然后将其作为构件上传"
+    },
+    {
+      "id": "intro-182",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\nexample-job:\nname: Save output\nsteps:"
+    },
+    {
+      "id": "intro-183",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• shell: bash"
+    },
+    {
+      "id": "intro-184",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: |\nexpr 1 + 1 > output.log"
+    },
+    {
+      "id": "intro-185",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Upload output file"
+    },
+    {
+      "id": "intro-186",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: actions/upload-artifact@v3\nwith:\nname: output-log-file\npath: output.log"
+    },
+    {
+      "id": "intro-187",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n可以下载名为 `output-log-file` 的工件"
+    },
+    {
+      "id": "intro-188",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\nexample-job:\nsteps:"
+    },
+    {
+      "id": "intro-189",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Download a single artifact"
+    },
+    {
+      "id": "intro-190",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: actions/download-artifact@v3\nwith:\nname: output-log-file"
+    },
+    {
+      "id": "intro-191",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 指定运行命令的工作目录"
+    },
+    {
+      "id": "intro-192",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Clean temp directory"
+    },
+    {
+      "id": "intro-193",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: rm -rf *\nworking-directory: ./temp"
+    },
+    {
+      "id": "intro-194",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用 `working-directory` 关键字，您可以指定运行命令的工作目录(`./temp`)\n\n#### defaults.run"
+    },
+    {
+      "id": "intro-195",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\njob1:\nruns-on: ubuntu-latest\ndefaults:\nrun:\nshell: bash\nworking-directory: scripts"
+    },
+    {
+      "id": "intro-196",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n作业中的所有 `run` 步骤提供默认的 `shell` 和 `working-directory`\n\n### jobs.<job_id>.steps[*].shell\n\n使用 `bash` 运行脚本"
+    },
+    {
+      "id": "intro-197",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "steps:"
+    },
+    {
+      "id": "intro-198",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Display the path"
+    },
+    {
+      "id": "intro-199",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: echo $PATH\nshell: bash"
+    },
+    {
+      "id": "intro-200",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n运行 `python` 脚本"
+    },
+    {
+      "id": "intro-201",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "steps:"
+    },
+    {
+      "id": "intro-202",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Display the path"
+    },
+    {
+      "id": "intro-203",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: |\nimport os\nprint(os.environ['PATH'])\nshell: python"
+    },
+    {
+      "id": "intro-204",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n您可以使用 `shell` 关键字覆盖运行器操作系统中的默认 `shell` 设置\n\n### 一些 actions 推荐\n<!--rehype:wrap-class=row-span-2-->\n\n:- | :-\n:- | :-\n[`create-tag-action`](https://github.com/jaywcjlove/create-tag-action) | 根据 package.json 创建 `Tag` / `Release`\n[`changelog-generator`](https://github.com/jaywcjlove/changelog-generator) | 生成 `changelog` 日志\n[`github-action-modify-file-content`](https://github.com/jaywcjlove/github-action-modify-file-content) | 修改仓库文件内容\n[`github-action-contributors`](https://github.com/jaywcjlove/github-action-contributors) | 生成贡献(contributors.svg)图片\n[`generated-badges`](https://github.com/jaywcjlove/generated-badges) | 生成徽章(Badges)图片\n[`coverage-badges-cli`](https://github.com/jaywcjlove/coverage-badges-cli) | 生成覆盖率徽章(Badges)图片\n[`action-ejs`](https://github.com/jaywcjlove/action-ejs) | 基于 ejs 生成 HTML\n[`github-action-package`](https://github.com/jaywcjlove/github-action-package) | 修改 JSON 文件内容\n[`github-action-read-file`](https://github.com/jaywcjlove/github-action-read-file) | 读取文件内容\n[`markdown-to-html-cli`](https://github.com/jaywcjlove/markdown-to-html-cli) | Markdown 转换成 HTML\n[`ncipollo/release-action`](https://github.com/ncipollo/release-action) | 创建 `Release`\n[`peaceiris/actions-gh-pages`](https://github.com/peaceiris/actions-gh-pages) | 将文件或文件夹内容提交到 `gh-pages` 分支\n<!--rehype:className=style-list-->\n\n### 在 Github 中创建 Docker 镜像\n<!--rehype:wrap-class=row-span-2 col-span-2-->"
+    },
+    {
+      "id": "intro-205",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Set up Docker Buildx"
+    },
+    {
+      "id": "intro-206",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: docker/setup-buildx-action@v2"
+    },
+    {
+      "id": "intro-207",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 登录 GitHub 容器注册表"
+    },
+    {
+      "id": "intro-208",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: docker/login-action@v2\nwith:\nregistry: ghcr.io\nusername: ${{ github.actor }}\npassword: ${{ secrets.GITHUB_TOKEN }}"
+    },
+    {
+      "id": "intro-209",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 构建并推送 image:latest"
+    },
+    {
+      "id": "intro-210",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: docker/build-push-action@v3\nwith:\npush: true\ncontext: .\nplatforms: linux/amd64,linux/arm64\ntags: ghcr.io/jaywcjlove/reference:latest"
+    },
+    {
+      "id": "intro-211",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 构建并推送 image:tags"
+    },
+    {
+      "id": "intro-212",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: docker/build-push-action@v3\nif: steps.create_tag.outputs.successful\nwith:\npush: true\ncontext: .\nplatforms: linux/amd64,linux/arm64\ntags: ghcr.io/jaywcjlove/reference:${{steps.changelog.outputs.version}}"
+    },
+    {
+      "id": "intro-213",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 生成贡献者头像列表"
+    },
+    {
+      "id": "intro-214",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Generate Contributors Images"
+    },
+    {
+      "id": "intro-215",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: jaywcjlove/github-action-contributors@main\nid: contributors\nwith:\noutput: dist/CONTRIBUTORS.svg\navatarSize: 42"
+    },
+    {
+      "id": "intro-216",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 在 Docker Hub 中创建 Docker 镜像\n<!--rehype:wrap-class=row-span-3 col-span-2-->"
+    },
+    {
+      "id": "intro-217",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Set up Docker Buildx"
+    },
+    {
+      "id": "intro-218",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: docker/setup-buildx-action@v2"
+    },
+    {
+      "id": "intro-219",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 登录到 Docker Hub"
+    },
+    {
+      "id": "intro-220",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: docker/login-action@v2\nwith:\nusername: ${{ secrets.DOCKER_USER }}\npassword: ${{ secrets.DOCKER_PASSWORD }}"
+    },
+    {
+      "id": "intro-221",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 构建并推送 image:latest"
+    },
+    {
+      "id": "intro-222",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: docker/build-push-action@v3\nwith:\npush: true\ncontext: .\nplatforms: linux/amd64,linux/arm64\ntags: ${{ secrets.DOCKER_USER }}/reference:latest"
+    },
+    {
+      "id": "intro-223",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: 构建并推送 image:tags"
+    },
+    {
+      "id": "intro-224",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: docker/build-push-action@v3\nif: steps.create_tag.outputs.successful\nwith:\npush: true\ncontext: .\nplatforms: linux/amd64,linux/arm64\ntags: ${{ secrets.DOCKER_USER }}/reference:${{steps.changelog.outputs.version}}"
+    },
+    {
+      "id": "intro-225",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 检查签出仓库并安装 nodejs"
+    },
+    {
+      "id": "intro-226",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• uses: actions/checkout@v3\n• uses: actions/setup-node@v3"
+    },
+    {
+      "id": "intro-227",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "with:\nnode-version: 16"
+    },
+    {
+      "id": "intro-228",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 忽略失败"
+    },
+    {
+      "id": "intro-229",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: npm publish"
+    },
+    {
+      "id": "intro-230",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "continue-on-error: true\nenv:\nNODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}"
+    },
+    {
+      "id": "intro-231",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n当 `npm` 推送包失败不影响整个流程，可用于自动发包\n\n### 安装 yarn"
+    },
+    {
+      "id": "intro-232",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Setup Yarn"
+    },
+    {
+      "id": "intro-233",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: threeal/setup-yarn-action@v2.0.0\nwith:\ncache: false\nversion: 1.22.21"
+    },
+    {
+      "id": "intro-234",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 传递环境变量\n<!--rehype:wrap-class=col-span-2-->\n\n在 `ci.yml` 上保存环境变量"
+    },
+    {
+      "id": "intro-235",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Save commit message to environment variable"
+    },
+    {
+      "id": "intro-236",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: echo \"COMMIT_MESSAGE=${{ github.event.head_commit.message }}\" >> $GITHUB_ENV"
+    },
+    {
+      "id": "intro-237",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在 `tag.yml` 上获取环境变量"
+    },
+    {
+      "id": "intro-238",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Read commit message"
+    },
+    {
+      "id": "intro-239",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: |\necho \"Commit: ${{ github.event.workflow_run.head_commit.message }}\""
+    },
+    {
+      "id": "intro-240",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 触发下一个工作流\n\n在 `tag.yml` 上添加判断 `tag` 创建成功触发 `tag-creation-success` 的工作流"
+    },
+    {
+      "id": "intro-241",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Trigger next workflow if successful"
+    },
+    {
+      "id": "intro-242",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "if: steps.check_success.outputs.success == 'true'\nrun: |\ncurl -X POST \\\n-H \"Accept: application/vnd.github.v3+json\" \\\n-H \"Authorization: token ${{ secrets.GITHUB_TOKEN }}\" \\\n-d '{\"event_type\": \"tag-creation-success\"}' \\\nhttps://api.github.com/repos/${{ github.repository }}/dispatches"
+    },
+    {
+      "id": "intro-243",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在 `success.yml` 上监听"
+    },
+    {
+      "id": "intro-244",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "on:\nrepository_dispatch:\ntypes: [tag-creation-success]"
+    },
+    {
+      "id": "intro-245",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGitLab CI/CD 迁移到 GitHub Actions\n---\n\n### 语法示例\n\n<yel>GitLab CI/CD</yel>"
+    },
+    {
+      "id": "intro-246",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "job1:\nvariables:\nGIT_CHECKOUT: \"true\"\nscript:"
+    },
+    {
+      "id": "intro-247",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• echo \"Run your script here\""
+    },
+    {
+      "id": "intro-248",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGitHub Actions"
+    },
+    {
+      "id": "intro-249",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\njob1:\nsteps:"
+    },
+    {
+      "id": "intro-250",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• uses: actions/checkout@v3\n• run: echo \"Run your script here\""
+    },
+    {
+      "id": "intro-251",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 运行程序\n<!--rehype:wrap-class=row-span-2-->\n\n<yel>GitLab CI/CD</yel>"
+    },
+    {
+      "id": "intro-252",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "windows_job:\ntags:"
+    },
+    {
+      "id": "intro-253",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• windows"
+    },
+    {
+      "id": "intro-254",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "script:"
+    },
+    {
+      "id": "intro-255",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• echo Hello, %USERNAME%!"
+    },
+    {
+      "id": "intro-256",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "linux_job: tags:"
+    },
+    {
+      "id": "intro-257",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• linux script:\n• echo \"Hello, $USER!\""
+    },
+    {
+      "id": "intro-258",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGitHub Actions"
+    },
+    {
+      "id": "intro-259",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "windows_job:\nruns-on: windows-latest\nsteps:"
+    },
+    {
+      "id": "intro-260",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: echo Hello, %USERNAME%!"
+    },
+    {
+      "id": "intro-261",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "linux_job:\nruns-on: ubuntu-latest\nsteps:"
+    },
+    {
+      "id": "intro-262",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: echo \"Hello, $USER!\""
+    },
+    {
+      "id": "intro-263",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n在不同的平台上运行作业\n\n### Docker 映像\n\n<yel>GitLab CI/CD</yel>"
+    },
+    {
+      "id": "intro-264",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "my_job:\nimage: node:10.16-jessie"
+    },
+    {
+      "id": "intro-265",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGitHub Actions"
+    },
+    {
+      "id": "intro-266",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\nmy_job:\ncontainer: node:10.16-jessie"
+    },
+    {
+      "id": "intro-267",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 条件和表达式语法\n\n<yel>GitLab CI/CD</yel>"
+    },
+    {
+      "id": "intro-268",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "deploy_prod:\nstage: deploy\nscript:"
+    },
+    {
+      "id": "intro-269",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• echo \"部署到生产服务器\""
+    },
+    {
+      "id": "intro-270",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "rules:"
+    },
+    {
+      "id": "intro-271",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• if: '$CI_COMMIT_BRANCH == \"master\"'"
+    },
+    {
+      "id": "intro-272",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGitHub Actions"
+    },
+    {
+      "id": "intro-273",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\ndeploy_prod:\nif: contains( github.ref, 'master')\nruns-on: ubuntu-latest\nsteps:"
+    },
+    {
+      "id": "intro-274",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: echo \"部署到生产服务器\""
+    },
+    {
+      "id": "intro-275",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Artifacts\n\n<yel>GitLab CI/CD</yel>"
+    },
+    {
+      "id": "intro-276",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "script:\nartifacts:\npaths:"
+    },
+    {
+      "id": "intro-277",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• math-homework.txt"
+    },
+    {
+      "id": "intro-278",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGitHub Actions"
+    },
+    {
+      "id": "intro-279",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Upload math result for job 1"
+    },
+    {
+      "id": "intro-280",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: actions/upload-artifact@v3\nwith:\nname: homework\npath: math-homework.txt"
+    },
+    {
+      "id": "intro-281",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 作业之间的依赖关系\n\n<yel>GitLab CI/CD</yel>"
+    },
+    {
+      "id": "intro-282",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "stages:"
+    },
+    {
+      "id": "intro-283",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• build\n• test\n• deploy"
+    },
+    {
+      "id": "intro-284",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "build_a: stage: build script:"
+    },
+    {
+      "id": "intro-285",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• echo \"该作业将首先运行\""
+    },
+    {
+      "id": "intro-286",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "build_b: stage: build script:"
+    },
+    {
+      "id": "intro-287",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• echo \"该作业将首先运行，与 build_a 并行\""
+    },
+    {
+      "id": "intro-288",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "test_ab: stage: test script:"
+    },
+    {
+      "id": "intro-289",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• echo \"此作业将在 build_a 和 build_b 完成后运行\""
+    },
+    {
+      "id": "intro-290",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "deploy_ab: stage: deploy script:"
+    },
+    {
+      "id": "intro-291",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• echo \"此作业将在 test_ab 完成后运行\""
+    },
+    {
+      "id": "intro-292",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGitHub Actions"
+    },
+    {
+      "id": "intro-293",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\nbuild_a:\nruns-on: ubuntu-latest\nsteps:"
+    },
+    {
+      "id": "intro-294",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: echo \"该作业将首先运行\""
+    },
+    {
+      "id": "intro-295",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "build_b:\nruns-on: ubuntu-latest\nsteps:"
+    },
+    {
+      "id": "intro-296",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: echo \"该作业将首先运行，与 build_a 并行\""
+    },
+    {
+      "id": "intro-297",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "test_ab:\nruns-on: ubuntu-latest\nneeds: [build_a,build_b]\nsteps:"
+    },
+    {
+      "id": "intro-298",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: echo \"此作业将在 build_a 和 build_b 完成后运行\""
+    },
+    {
+      "id": "intro-299",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "deploy_ab:\nruns-on: ubuntu-latest\nneeds: [test_ab]\nsteps:"
+    },
+    {
+      "id": "intro-300",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• run: echo \"此作业将在 test_ab 完成后运行\""
+    },
+    {
+      "id": "intro-301",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 缓存\n\n<yel>GitLab CI/CD</yel>"
+    },
+    {
+      "id": "intro-302",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "image: node:latest"
+    },
+    {
+      "id": "intro-303",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "cache: key: $CI_COMMIT_REF_SLUG paths:"
+    },
+    {
+      "id": "intro-304",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• .npm/"
+    },
+    {
+      "id": "intro-305",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "before_script:"
+    },
+    {
+      "id": "intro-306",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• npm ci --cache .npm --prefer-offline"
+    },
+    {
+      "id": "intro-307",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "test_async: script:"
+    },
+    {
+      "id": "intro-308",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• node ./specs/start.js ./specs/async.spec.js"
+    },
+    {
+      "id": "intro-309",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGitHub Actions"
+    },
+    {
+      "id": "intro-310",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\ntest_async:\nruns-on: ubuntu-latest\nsteps:"
+    },
+    {
+      "id": "intro-311",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Cache node modules"
+    },
+    {
+      "id": "intro-312",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: actions/cache@v3\nwith:\npath: ~/.npm\nkey: v1-npm-deps-${{ hashFiles('**/package-lock.json') }}\nrestore-keys: v1-npm-deps-"
+    },
+    {
+      "id": "intro-313",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 数据库和服务容器\n\n<yel>GitLab CI/CD</yel>"
+    },
+    {
+      "id": "intro-314",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "container-job:\nvariables:\nPOSTGRES_PASSWORD: postgres\n# PostgreSQL 服务容器通信的主机名\nPOSTGRES_HOST: postgres\n# 默认的 PostgreSQL 端口\nPOSTGRES_PORT: 5432\nimage: node:10.18-jessie\nservices:"
+    },
+    {
+      "id": "intro-315",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• postgres"
+    },
+    {
+      "id": "intro-316",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "script:\n# 执行 package.json 文件中\n# 所有依赖项的全新安装"
+    },
+    {
+      "id": "intro-317",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• npm ci"
+    },
+    {
+      "id": "intro-318",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 运行创建 PostgreSQL 客户端的脚本，\n# 用数据填充客户端，并检索数据"
+    },
+    {
+      "id": "intro-319",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• node client.js"
+    },
+    {
+      "id": "intro-320",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "tags:"
+    },
+    {
+      "id": "intro-321",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• docker"
+    },
+    {
+      "id": "intro-322",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\nGitHub Actions"
+    },
+    {
+      "id": "intro-323",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "jobs:\ncontainer-job:\nruns-on: ubuntu-latest\ncontainer: node:10.18-jessie"
+    },
+    {
+      "id": "intro-324",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "services:\npostgres:\nimage: postgres\nenv:\nPOSTGRES_PASSWORD: postgres"
+    },
+    {
+      "id": "intro-325",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "steps:"
+    },
+    {
+      "id": "intro-326",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Check out repository code"
+    },
+    {
+      "id": "intro-327",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "uses: actions/checkout@v3"
+    },
+    {
+      "id": "intro-328",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 执行 package.json 文件中\n# 所有依赖项的全新安装"
+    },
+    {
+      "id": "intro-329",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Install dependencies"
+    },
+    {
+      "id": "intro-330",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "run: npm ci"
+    },
+    {
+      "id": "intro-331",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "• name: Connect to PostgreSQL"
+    },
+    {
+      "id": "intro-332",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "# 运行创建 PostgreSQL 客户端的脚本，\n# 用数据填充客户端，并检索数据\nrun: node client.js\nenv:\n# PostgreSQL 服务容器通信的主机名\nPOSTGRES_HOST: postgres\n# 默认的 PostgreSQL 端口\nPOSTGRES_PORT: 5432"
+    },
+    {
+      "id": "intro-333",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "code",
+      "lang": "",
+      "code": "\n另见\n---\n\n- [Github Actions 学习笔记](https://jaywcjlove.github.io/github-actions) _(jaywcjlove.github.io)_\n- [了解 GitHub Actions](https://docs.github.com/cn/actions/learn-github-actions) _(docs.github.com)_\n- [从 GitLab CI/CD 迁移到 GitHub Actions](https://docs.github.com/cn/actions/migrating-to-github-actions/migrating-from-gitlab-cicd-to-github-actions) _(docs.github.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/github-actions.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/github-actions.md",
+    "generatedAt": "2025-12-16T07:36:11.231Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

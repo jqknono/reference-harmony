@@ -1,0 +1,343 @@
+{
+  "id": "curl",
+  "title": "curl",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Curl 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "此 [Curl](https://github.com/curl/curl) 备忘清单包含命令和一些常见的 Curl 技巧示例。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n----"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "Curl 是一种在服务器之间传输数据的工具，支持协议，包括 HTTP/FTP/IMAP/LDAP/POP3/SCP/SFTP/SMB/SMTP 等"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "• [Curl GitHub 源码仓库](https://github.com/curl/curl) _(github.com)_\n• [Curl 官方网站](https://curl.se/) _(curl.se)_"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "Options",
+      "kind": "code",
+      "lang": "bash",
+      "code": "-o <file>    # --output: 写入文件\n-u user:pass # --user: 验证"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "Options",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "Options",
+      "kind": "code",
+      "lang": "bash",
+      "code": "-v           # --verbose: 在操作期间使 curl 冗长\n-vv          # 更冗长\n-s           # --silent: 不显示进度表或错误\n-S           # --show-error: 与 --silent (-sS) 一起使用时，显示错误但没有进度表"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "Options",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "Options",
+      "kind": "code",
+      "lang": "bash",
+      "code": "-i           # --include: 在输出中包含 HTTP 标头\n-I           # --head: 仅标头"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "请求",
+      "kind": "code",
+      "lang": "bash",
+      "code": "-X POST # --request\n-L  # 如果页面重定向，请点击链接\n-F  # --form: multipart/form-data 的 HTTP POST 数据"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "数据",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# --data: HTTP post 数据\n# URL 编码(例如，status=\"Hello\")\n-d 'data'\n\n# --data 通过文件\n-d @file\n\n# --get: 通过 get 发送 -d 数据\n-G"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "头信息 Headers",
+      "kind": "code",
+      "lang": "bash",
+      "code": "-A <str>     # --user-agent\n-b name=val  # --cookie\n\n# 从 URL 的指定文件加载 cookie\n-b, --cookie FILE\n# 将 cookie 从 URL 保存到指定文件\n-c, --cookie-jar FILE\n\n-b FILE          # --cookie\n-H \"X-Foo: y\"    # --header\n--compressed     # 使用 deflate/gzip"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "SSL",
+      "kind": "code",
+      "lang": "bash",
+      "code": "    --cacert <file>\n    --capath <dir>"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "SSL",
+      "kind": "code",
+      "lang": "bash",
+      "code": "-E, --cert <cert>     # --cert: 客户端证书文件\n    --cert-type       # der/pem/eng\n-k, --insecure        # 对于自签名证书"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "SSL",
+      "kind": "text",
+      "body": "#### 安装"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "SSL",
+      "kind": "code",
+      "lang": "bash",
+      "code": "apk add --update curl  # alpine linux 中安装"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "SSL",
+      "kind": "text",
+      "body": "示例\n----\n<!--rehype:body-class=cols-6-->"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "CURL GET/HEAD",
+      "kind": "text",
+      "body": "命令 | 说明\n:- | :-\n`curl -I https://www.baidu.com` | `curl` 发请求\n`curl -v -I https://www.baidu.com` | 带有详细信息的 `curl` 发请求\n`curl -X GET https://www.baidu.com` | 使用显式 http 方法进行 `curl`\n`curl --noproxy 127.0.0.1 http://www.stackoverflow.com` | 没有 http 代理的 `curl`\n`curl --connect-timeout 10 -I -k https://www.baidu.com` | `curl` 默认没有超时\n`curl --verbose --header \"Host: www.mytest.com:8182\" www.baidu.com` | `curl` 得到额外的标题\n`curl -k -v https://www.google.com` | `curl` 获取带有标题的响应\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "多文件上传",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ curl -v -include \\\n    --form key1=value1 \\\n    --form upload=@localfilename URL"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "为 curl 响应美化 json 输出",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ curl -XGET http://${elasticsearch_ip}:9200/_cluster/nodes | python -m json.tool"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "CURL POST",
+      "kind": "text",
+      "body": "命令 | 说明\n:- | :-\n`curl -d \"name=username&password=123456\" <URL>` | `curl` 发请求\n`curl <URL> -H \"content-type: application/json\" -d \"{ \\\"woof\\\": \\\"bark\\\"}\"` | `curl` 发送 json\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "CURL 脚本安装 rvm",
+      "kind": "code",
+      "lang": "shell",
+      "code": "curl -sSL https://get.rvm.io | bash"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "CURL 高级",
+      "kind": "text",
+      "body": "命令 | 说明\n:- | :-\n`curl -L -s http://ipecho.net/plain, curl -L -s http://whatismijnip.nl` | 获取我的公共 `IP`\n`curl -u $username:$password http://repo.dennyzhang.com/README.txt` | 带凭证的 `curl`\n`curl -v -F key1=value1 -F upload=@localfilename <URL>` | `curl` 上传\n`curl -k -v --http2 https://www.google.com/` | 使用 http2 curl\n`curl -T cryptopp552.zip -u test:test ftp://10.32.99.187/` | curl `ftp` 上传\n`curl -u test:test ftp://10.32.99.187/cryptopp552.zip -o cryptopp552.zip` | curl `ftp` 下载\n`curl -v -u admin:admin123 --upload-file package1.zip http://mysever:8081/dir/package1.zip` | 使用凭证 `curl` 上传\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "检查网站响应时间",
+      "kind": "code",
+      "lang": "shell",
+      "code": "curl -s -w \\\n     '\\nLookup time:\\t%{time_namelookup}\\nConnect time:\\t%{time_connect}\\nAppCon time:\\t%{time_appconnect}\\nRedirect time:\\t%{time_redirect}\\nPreXfer time:\\t%{time_pretransfer}\\nStartXfer time:\\t%{time_starttransfer}\\n\\nTotal time:\\t%{time_total}\\n' \\\n     -o /dev/null https://www.google.com"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "使用 Curl 检查远程资源是否可用",
+      "kind": "code",
+      "lang": "bash",
+      "code": "curl -o /dev/null --silent -Iw \"%{http_code}\" https://example.com/my.remote.tarball.gz"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "正在下载文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "curl https://example.com | \\\ngrep --only-matching 'src=\"[^\"]*.[png]\"' | \\\ncut -d\\\" -f2 | \\\nwhile read i; do curl https://example.com/\"${i}\" \\\n-o \"${i##*/}\"; done"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "正在下载文件",
+      "kind": "text",
+      "body": "从站点下载所有 PNG 文件（使用GNU grep）"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "下载文件，保存文件而不更改其名称",
+      "kind": "code",
+      "lang": "bash",
+      "code": "curl --remote-name \"https://example.com/linux-distro.iso\""
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "下载文件，保存文件而不更改其名称",
+      "kind": "text",
+      "body": "重命名文件"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "下载文件，保存文件而不更改其名称",
+      "kind": "code",
+      "lang": "bash",
+      "code": "curl --remote-name \"http://example.com/index.html\" --output foo.html"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "继续部分下载",
+      "kind": "code",
+      "lang": "bash",
+      "code": "curl --remote-name --continue-at - \"https://example.com/linux-distro.iso\""
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "从多个域下载文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "curl \"https://www.{example,w3,iana}.org/index.html\" --output \"file_#1.html\""
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "下载一系列文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "curl \"https://{foo,bar}.com/file_[1-4].webp\" --output \"#1_#2.webp\""
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "下载一系列文件",
+      "kind": "text",
+      "body": "下载一系列文件（输出`foo_file1.webp`、`foo_file2.webp…bar_file1_webp`等）"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "将输出重定向到文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ curl http://url/file > file"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "基本认证",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ curl --user username:password http://example.com/\n$ curl -u username:password http://example.com/"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "写入文件而不是标准输出",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ curl -o file http://url/file\n$ curl --output file http://url/file"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "下载头信息",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ curl -I url\n# 显示头信息"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "将输出写入名为远程文件的文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ curl -o file http://url/file\n$ curl --output file http://url/file"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "执行远程脚本",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ curl -s http://url/myscript.sh"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "配置文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "curl -K file\n# 从文件中读取配置\ncurl --config file\n$HOME/.curlrc # 类 UNIX 系统中的默认配置文件"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/curl.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/curl.md",
+    "generatedAt": "2025-12-16T07:36:11.167Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

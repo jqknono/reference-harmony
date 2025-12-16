@@ -1,0 +1,387 @@
+{
+  "id": "dockerfile",
+  "title": "dockerfile",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "也可以看看",
+      "startIndex": 47
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Dockerfile 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这是 [Dockerfile](https://docs.docker.com/engine/reference/builder/) 的快速参考备忘单。包含用户可以在命令行上调用以组装镜像的所有命令。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "参考\n----"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "text",
+      "body": "默认 `Dockerfile` 位于上下文的根目录中。"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "text",
+      "body": "• [Docker 备忘清单](./docker.md) _(github.io)_"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "code",
+      "lang": "shell",
+      "code": "docker build -f /path/to/a/Dockerfile ."
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "text",
+      "body": "使用 `-f` 指向文件系统中任何位置的 `Dockerfile`。"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "FROM [--platform=<platform>] <image> [AS <name>]"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "text",
+      "body": "示例"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "FROM ruby:3.3.0\nFROM golang:1.20-alpine3.16 AS build-env"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "变量 ENV",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ENV <key>=<value> ..."
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "变量 ENV",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ENV APP_HOME /myapp\nRUN mkdir $APP_HOME"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "变量 ENV",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ENV MY_NAME=\"John Doe\" MY_DOG=Rex\\ The\\ Dog \\\n    MY_CAT=fluffy"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "初始化",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "RUN bundle install"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "初始化",
+      "kind": "text",
+      "body": "`WORKDIR` 指令为任何 `RUN`、`CMD`、`ENTRYPOINT`、`COPY` 和 `ADD` 指令设置工作目录。"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "初始化",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "WORKDIR /myapp"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "初始化",
+      "kind": "text",
+      "body": "`VOLUME` 指令创建一个具有指定名称的挂载点，并将其标记为保存来自本机主机或其他容器的外部挂载卷。"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "初始化",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "VOLUME [\"/data\"]\n# 安装点规范"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "初始化",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ADD file.xyz /file.xyz\n# 复制\nCOPY --chown=user:group host_file.xyz /path/container_file.xyz"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "Onbuild",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ONBUILD RUN bundle install\n# 与另一个文件一起使用时\n\nONBUILD ADD . /app/src\nONBUILD RUN /usr/local/bin/python-build --dir /app/src"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "Onbuild",
+      "kind": "text",
+      "body": "指令将触发指令添加到镜像中，以便稍后执行，此时镜像用作另一个构建的基础。"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "在严格的 shell 中运行命令",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ENV my_var\nSHELL [\"/bin/bash\", \"-euo\", \"pipefail\", \"-c\"]\n# 使用严格模式：\nRUN false         # ails 像使用 && 一样构建\nRUN echo \"$myvar\" # 由于拼写错误会抛出错误\nRUN true | false  # 将脱离管道"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "在严格的 shell 中运行命令",
+      "kind": "text",
+      "body": "使用 `shell` 将为 shell 命令打开严格模式。"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "命令 CMD",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`CMD [\"executable\",\"param1\",\"param2\"]` | (exec 形式，这是首选形式)\n`CMD [\"param1\",\"param2\"]` | (作为 ENTRYPOINT 的默认参数)\n`CMD command param1 param2` | (shell形式)\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "命令 CMD",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "EXPOSE 5900\nCMD [\"bundle\", \"exec\", \"rails\", \"server\"]"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "入口点 ENTRYPOINT",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ENTRYPOINT [\"executable\", \"param1\", \"param2\"]\nENTRYPOINT command param1 param2"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "入口点 ENTRYPOINT",
+      "kind": "text",
+      "body": "配置将作为可执行文件运行的容器。"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "入口点 ENTRYPOINT",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ENTRYPOINT exec top -b"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "入口点 ENTRYPOINT",
+      "kind": "text",
+      "body": "这将使用 shell 处理来替换 shell 变量，并将忽略任何 `CMD` 或 `docker run` 命令行参数。"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "元数据 LABEL",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "LABEL version=\"1.0\""
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "元数据 LABEL",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "LABEL \"com.example.vendor\"=\"ACME Incorporated\"\nLABEL com.example.label-with-value=\"foo\"\nLABEL version=\"1.0\""
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "元数据 LABEL",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "LABEL description=\"本文说明\\\n标签值可以跨越多行。\"\nLABEL multi.label1=\"value1\" \\\n      multi.label2=\"value2\" \\\n      other=\"value3\""
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "ARG",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ARG <name>[=<default value>]"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "ARG",
+      "kind": "text",
+      "body": "指令定义了一个变量，在构建时通过 `docker build` 命令使用 --build-arg `<varname>=<value>` 标志将其传递给构建器。"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "ARG",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "FROM busybox\n# user1 默认值为 someuser\nARG user1=someuser\nARG buildno=1"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": ".dockerignore 文件",
+      "kind": "code",
+      "lang": "ignore",
+      "code": "# 注释说明\n*/temp*\n*/*/temp*\ntemp?"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": ".dockerignore 文件",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": ".dockerignore 文件",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`# comment` | 忽略\n`*/temp*` | 在根的任何直接子目录中<br />排除名称以 `temp` 开头的文件和目录\n`*/*/temp*` | 从根以下两级的任何子目录中<br />排除以 `temp` 开头的文件和目录\n`temp?` | 排除根目录中名称为<br /> `temp` 的单字符扩展名的文件和目录\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": ".dockerignore 文件",
+      "kind": "text",
+      "body": "如果此文件存在，排除与其中的模式匹配的文件和目录，有利于避免 `ADD` 或 `COPY` 将敏感文件添加到镜像中。匹配是使用 Go 的 [filepath.Match](https://golang.org/pkg/path/filepath#Match) 规则完成的。"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "主要命令",
+      "kind": "text",
+      "body": "命令 | 说明\n:- | -\n`FROM image` | 构建的基础镜像\n~~`MAINTAINER email`~~ | (已弃用)维护者的名字\n`COPY [--chown=<user>:<group>] <src>... <dest>` | 将上下文中的路径复制到位置 `dest` 的容器中\n`ADD [--chown=<user>:<group>] <src>... <dest>` | 与 `COPY` 相同，但解压缩存档并接受 http url。\n`RUN <command>` | 在容器内运行任意命令。\n`USER <user>[:<group>]` | 设置默认用户名。\n`WORKDIR /path/to/workdir` | 设置默认工作目录。\n`CMD command param1 param2` | 设置默认命令\n`ENV <key>=<value> ...` | 设置环境变量\n`EXPOSE <port> [<port>/<protocol>...]` | 运行时侦听指定的网络端口\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "主要命令",
+      "kind": "text",
+      "body": "Dockerfile 示例\n----\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "服务静态网站的最小 Docker 镜像",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "FROM wcjiang/docker-static-website:latest\n# 使用 .dockerignore 文件来控制镜像中的内容！\n# 复制当前目录内容，到容器中\nCOPY ./ ."
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "服务静态网站的最小 Docker 镜像",
+      "kind": "text",
+      "body": "这会产生一个 **`154KB +`** 的单层镜像。 如果您需要以不同的方式配置 `httpd`，您可以覆盖 CMD 行："
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "服务静态网站的最小 Docker 镜像",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "FROM wcjiang/docker-static-website:latest\nCOPY . .\n\nCMD [\"/busybox\",\"httpd\",\"-f\",\"-v\",\"-p\",\"3000\",\"-c\",\"httpd.conf\"]"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "服务静态网站的最小 Docker 镜像",
+      "kind": "text",
+      "body": "缩小镜像过程[查看原文](https://lipanski.com/posts/smallest-docker-image-static-website)，镜像 [Dockerfile 源码](https://github.com/forksss/docker-static-website)。"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "Docker 镜像多阶段构建",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "FROM golang:alpine as builder\nRUN apk --no-cache add git\nWORKDIR /go/src/github.com/go/helloworld/\nRUN go get -d -v github.com/go-sql-driver/mysql\nCOPY app.go .\nRUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .\n\nFROM alpine:latest as prod\nRUN apk --no-cache add ca-certificates\nWORKDIR /root/\nCOPY --from=builder /go/src/github.com/go/helloworld/app .\nCMD [\"./app\"]"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "Docker 镜像多阶段构建",
+      "kind": "text",
+      "body": "使用多阶段构建能将构建依赖留在 builder 镜像中，只将编译完成后的二进制文件拷贝到运行环境中，大大减少镜像体积。"
+    },
+    {
+      "id": "s1-47",
+      "sectionId": "s1",
+      "title": "也可以看看",
+      "kind": "text",
+      "body": "• [Dockerfile reference](https://docs.docker.com/engine/reference/builder/) _(docker.com)_\n• [Docker 备忘清单](./docker.md) _(github.io)_\n• [Docker入门学习笔记](https://jaywcjlove.github.io/docker-tutorial) _(github.io)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/dockerfile.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/dockerfile.md",
+    "generatedAt": "2025-12-16T07:36:11.180Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

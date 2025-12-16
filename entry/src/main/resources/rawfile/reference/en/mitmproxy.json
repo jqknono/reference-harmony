@@ -1,0 +1,1068 @@
+{
+  "id": "mitmproxy",
+  "title": "Mitmproxy",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Mitmproxy Filter",
+      "startIndex": 79
+    },
+    {
+      "id": "s3",
+      "title": "Mitmproxy Scripts",
+      "startIndex": 126
+    },
+    {
+      "id": "s4",
+      "title": "Also see",
+      "startIndex": 130
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "[mitmproxy](https://mitmproxy.org/) is a free and open source interactive HTTPS proxy. This is a quick reference cheat sheet to the mitmproxy."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "qa",
+      "front": "`-p`",
+      "back": "mitmproxy -p 8001 | Start proxy on port 8001"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "qa",
+      "front": "`-m`",
+      "back": "mitmproxy -p 8001 -m reverse:http://127.0.0.1:4000 | Reverse proxy on port 8001 to port 4000"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "qa",
+      "front": "`-w`",
+      "back": "mitmproxy -p 8001 -w traffic.mitm | Stream flows to file as they arrive"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "qa",
+      "front": "`-r`",
+      "back": "mitmproxy -r traffic.mitm | Read flows from file"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "qa",
+      "front": "`-C`",
+      "back": "mitmproxy -C traffic.mitm | Replay client requests from a saved file"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "qa",
+      "front": "`-S`",
+      "back": "mitmproxy -S traffic.mitm | Replay server responses from a saved file"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "qa",
+      "front": "`-s`",
+      "back": "mitmproxy -s myScript.py | Execute a script"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Usage",
+      "kind": "qa",
+      "front": "`-h`",
+      "back": "mitmproxy -h | mitmproxy quick help"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Movement",
+      "kind": "code",
+      "lang": "",
+      "code": "        k                 Ctrl b\n        ▲                   ▲▲\n        │                   ││\nh ◀ ─── + ─── ▶ l           ││ page\n        │                   ││\n        ▼                   ▼▼\n        j             Ctrl f / Space"
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Movement",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Movement",
+      "kind": "qa",
+      "front": "`h`, `j`, `k` ,`l`",
+      "back": "Left, Down, Up, Right"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Movement",
+      "kind": "qa",
+      "front": "`Ctrl` `b`",
+      "back": "Page up"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Movement",
+      "kind": "qa",
+      "front": "`Space` / `Ctrl` `f`",
+      "back": "Page down"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "Movement",
+      "kind": "qa",
+      "front": "`g` / `G`",
+      "back": "Go to beginning / end"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "Movement",
+      "kind": "qa",
+      "front": "`Arrows`",
+      "back": "Up, Down, Left, Right"
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "text",
+      "body": "Command Syntax:"
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "code",
+      "lang": "",
+      "code": ":export.clip format flow"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "text",
+      "body": "Example:"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "qa",
+      "front": "1. Copy as a curl command",
+      "back": "`:export.clip curl @focus`"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "qa",
+      "front": "2. Copy as a httpie",
+      "back": "`:export.clip httpie @focus`"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "qa",
+      "front": "2. Copy as a raw",
+      "back": "`:export.clip raw @focus`"
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "qa",
+      "front": "2. Copy as a raw HTTP request",
+      "back": "`:export.clip raw_request @focus`"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "qa",
+      "front": "2. Copy as a raw HTTP response",
+      "back": "`:export.clip raw_response @focus`"
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "Copy to Clipboard",
+      "kind": "text",
+      "body": "Export a flow to the system clipboard."
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "text",
+      "body": "Command Syntax:"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "code",
+      "lang": "",
+      "code": ":export.file format flow path"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "text",
+      "body": "Example:"
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "qa",
+      "front": "1. Export to /tmp/a.curl",
+      "back": "`:export.file curl @focus /tmp/a.curl`"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "qa",
+      "front": "2. Export to /tmp/a.httpie",
+      "back": "`:export.file httpie @focus /tmp/a.httpie`"
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "qa",
+      "front": "2. Export to /tmp/a.raw",
+      "back": "`:export.file raw @focus  /tmp/a.raw`"
+    },
+    {
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "qa",
+      "front": "2. Export to /tmp/a.request",
+      "back": "`:export.file raw_request @focus /tmp/a.request`"
+    },
+    {
+      "id": "s1-34",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "qa",
+      "front": "2. Export to /tmp/a.response",
+      "back": "`:export.file raw_response @focus /tmp/a.response`"
+    },
+    {
+      "id": "s1-35",
+      "sectionId": "s1",
+      "title": "Save to File",
+      "kind": "text",
+      "body": "Export a flow to the system clipboard."
+    },
+    {
+      "id": "s1-36",
+      "sectionId": "s1",
+      "title": "Common Keybindings",
+      "kind": "qa",
+      "front": "`q`",
+      "back": "Back / Exit"
+    },
+    {
+      "id": "s1-37",
+      "sectionId": "s1",
+      "title": "Common Keybindings",
+      "kind": "qa",
+      "front": "`z`",
+      "back": "Clear flow list"
+    },
+    {
+      "id": "s1-38",
+      "sectionId": "s1",
+      "title": "Common Keybindings",
+      "kind": "qa",
+      "front": "`:`",
+      "back": "Command prompt"
+    },
+    {
+      "id": "s1-39",
+      "sectionId": "s1",
+      "title": "Common Keybindings",
+      "kind": "qa",
+      "front": "`E`",
+      "back": "View event log"
+    },
+    {
+      "id": "s1-40",
+      "sectionId": "s1",
+      "title": "Common Keybindings",
+      "kind": "qa",
+      "front": "`O`",
+      "back": "View options"
+    },
+    {
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "Common Keybindings",
+      "kind": "qa",
+      "front": "`r`",
+      "back": "Replay this flow"
+    },
+    {
+      "id": "s1-42",
+      "sectionId": "s1",
+      "title": "Common Keybindings",
+      "kind": "qa",
+      "front": "`Tab`",
+      "back": "Next"
+    },
+    {
+      "id": "s1-43",
+      "sectionId": "s1",
+      "title": "Common Keybindings",
+      "kind": "qa",
+      "front": "`Enter`",
+      "back": "Select"
+    },
+    {
+      "id": "s1-44",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`-`",
+      "back": "Cycle to next layout"
+    },
+    {
+      "id": "s1-45",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`?`",
+      "back": "View help"
+    },
+    {
+      "id": "s1-46",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`B`",
+      "back": "Start an attached browser"
+    },
+    {
+      "id": "s1-47",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`C`",
+      "back": "View commands"
+    },
+    {
+      "id": "s1-48",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`I`",
+      "back": "Toggle intercept"
+    },
+    {
+      "id": "s1-49",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`K`",
+      "back": "View key bindings"
+    },
+    {
+      "id": "s1-50",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`P`",
+      "back": "View flow details"
+    },
+    {
+      "id": "s1-51",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`Q`",
+      "back": "Exit immediately"
+    },
+    {
+      "id": "s1-52",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`W`",
+      "back": "Stream to file"
+    },
+    {
+      "id": "s1-53",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`i`",
+      "back": "Set intercept"
+    },
+    {
+      "id": "s1-54",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`Ctrl` `right`",
+      "back": "Focus next layout pane"
+    },
+    {
+      "id": "s1-55",
+      "sectionId": "s1",
+      "title": "Global Keybindings",
+      "kind": "qa",
+      "front": "`Shift` `tab`",
+      "back": "Focus next layout pane"
+    },
+    {
+      "id": "s1-56",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`A`",
+      "back": "Resume all intercepted flows"
+    },
+    {
+      "id": "s1-57",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`D`",
+      "back": "Duplicate flow"
+    },
+    {
+      "id": "s1-58",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`F`",
+      "back": "Set focus follow"
+    },
+    {
+      "id": "s1-59",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`L`",
+      "back": "Load flows from file"
+    },
+    {
+      "id": "s1-60",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`M`",
+      "back": "Toggle viewing marked flows"
+    },
+    {
+      "id": "s1-61",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`S`",
+      "back": "Start server replay"
+    },
+    {
+      "id": "s1-62",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`U`",
+      "back": "Un-set all marks"
+    },
+    {
+      "id": "s1-63",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`V`",
+      "back": "Revert changes to this flow"
+    },
+    {
+      "id": "s1-64",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`X`",
+      "back": "Kill this flow"
+    },
+    {
+      "id": "s1-65",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`Z`",
+      "back": "Purge all flows not showing"
+    },
+    {
+      "id": "s1-66",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`a`",
+      "back": "Resume this intercepted flow"
+    },
+    {
+      "id": "s1-67",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`b`",
+      "back": "Save response body to file"
+    },
+    {
+      "id": "s1-68",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`d`",
+      "back": "Delete flow from view"
+    },
+    {
+      "id": "s1-69",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`e`",
+      "back": "Export this flow to file"
+    },
+    {
+      "id": "s1-70",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`f`",
+      "back": "Set view filter"
+    },
+    {
+      "id": "s1-71",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`m`",
+      "back": "Toggle mark on this flow"
+    },
+    {
+      "id": "s1-72",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`n`",
+      "back": "Create a new flow"
+    },
+    {
+      "id": "s1-73",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`o`",
+      "back": "Set flow list order"
+    },
+    {
+      "id": "s1-74",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`r`",
+      "back": "Replay this flow"
+    },
+    {
+      "id": "s1-75",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`v`",
+      "back": "Reverse flow list order"
+    },
+    {
+      "id": "s1-76",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`w`",
+      "back": "Save listed flows to file"
+    },
+    {
+      "id": "s1-77",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "<code>\\",
+      "back": "</code> | Run a script on this flow"
+    },
+    {
+      "id": "s1-78",
+      "sectionId": "s1",
+      "title": "Flow (View)",
+      "kind": "qa",
+      "front": "`Ctrl` `l`",
+      "back": "Send cuts to clipboard"
+    },
+    {
+      "id": "s2-79",
+      "sectionId": "s2",
+      "title": "Filter",
+      "kind": "qa",
+      "front": "`f`",
+      "back": "Set view filter _(on flow view page)_"
+    },
+    {
+      "id": "s2-80",
+      "sectionId": "s2",
+      "title": "Filter",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s2-81",
+      "sectionId": "s2",
+      "title": "Filter",
+      "kind": "text",
+      "body": "• [RegEX cheatsheet](/regex) _(cheatsheets.zip)_"
+    },
+    {
+      "id": "s2-82",
+      "sectionId": "s2",
+      "title": "Filter",
+      "kind": "text",
+      "body": "The regex are Python-style, it can be specified as quoted strings"
+    },
+    {
+      "id": "s2-83",
+      "sectionId": "s2",
+      "title": "Operators",
+      "kind": "qa",
+      "front": "`!`",
+      "back": "unary not"
+    },
+    {
+      "id": "s2-84",
+      "sectionId": "s2",
+      "title": "Operators",
+      "kind": "qa",
+      "front": "`&`",
+      "back": "and"
+    },
+    {
+      "id": "s2-85",
+      "sectionId": "s2",
+      "title": "Operators",
+      "kind": "qa",
+      "front": "`",
+      "back": "` | or"
+    },
+    {
+      "id": "s2-86",
+      "sectionId": "s2",
+      "title": "Operators",
+      "kind": "qa",
+      "front": "`(...)`",
+      "back": "grouping"
+    },
+    {
+      "id": "s2-87",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~a`",
+      "back": "Match asset in response: CSS, Javascript, Flash, images."
+    },
+    {
+      "id": "s2-88",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~b` `regex`",
+      "back": "Body"
+    },
+    {
+      "id": "s2-89",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~bq` `regex`",
+      "back": "Request body"
+    },
+    {
+      "id": "s2-90",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~bs` `regex`",
+      "back": "Response body"
+    },
+    {
+      "id": "s2-91",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~c` `int`",
+      "back": "HTTP response code"
+    },
+    {
+      "id": "s2-92",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~d` `regex`",
+      "back": "Domain"
+    },
+    {
+      "id": "s2-93",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~dst` `regex`",
+      "back": "Match destination address"
+    },
+    {
+      "id": "s2-94",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~e`",
+      "back": "Match error"
+    },
+    {
+      "id": "s2-95",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~h` `regex`",
+      "back": "Header"
+    },
+    {
+      "id": "s2-96",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~hq` `regex`",
+      "back": "Request header"
+    },
+    {
+      "id": "s2-97",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~hs` `regex`",
+      "back": "Response header"
+    },
+    {
+      "id": "s2-98",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~http`",
+      "back": "Match HTTP flows"
+    },
+    {
+      "id": "s2-99",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~m` `regex`",
+      "back": "Method"
+    },
+    {
+      "id": "s2-100",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~marked`",
+      "back": "Match marked flows"
+    },
+    {
+      "id": "s2-101",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~q`",
+      "back": "Match request with no response"
+    },
+    {
+      "id": "s2-102",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~s`",
+      "back": "Match response"
+    },
+    {
+      "id": "s2-103",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~src` `regex`",
+      "back": "Match source address"
+    },
+    {
+      "id": "s2-104",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~t` `regex`",
+      "back": "Content-type header"
+    },
+    {
+      "id": "s2-105",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~tcp`",
+      "back": "Match TCP flows"
+    },
+    {
+      "id": "s2-106",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~tq` `regex`",
+      "back": "Request Content-Type header"
+    },
+    {
+      "id": "s2-107",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~ts` `regex`",
+      "back": "Response Content-Type header"
+    },
+    {
+      "id": "s2-108",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~u` `regex`",
+      "back": "URL"
+    },
+    {
+      "id": "s2-109",
+      "sectionId": "s2",
+      "title": "Expressions",
+      "kind": "qa",
+      "front": "`~websocket`",
+      "back": "Match WebSocket flows (and HTTP-WebSocket handshake flows)"
+    },
+    {
+      "id": "s2-110",
+      "sectionId": "s2",
+      "title": "Flow selectors",
+      "kind": "text",
+      "body": "Expressions"
+    },
+    {
+      "id": "s2-111",
+      "sectionId": "s2",
+      "title": "Flow selectors",
+      "kind": "qa",
+      "front": "`@all     `",
+      "back": "All flows"
+    },
+    {
+      "id": "s2-112",
+      "sectionId": "s2",
+      "title": "Flow selectors",
+      "kind": "qa",
+      "front": "`@focus   `",
+      "back": "The currently focused flow"
+    },
+    {
+      "id": "s2-113",
+      "sectionId": "s2",
+      "title": "Flow selectors",
+      "kind": "qa",
+      "front": "`@shown   `",
+      "back": "All flows currently shown"
+    },
+    {
+      "id": "s2-114",
+      "sectionId": "s2",
+      "title": "Flow selectors",
+      "kind": "qa",
+      "front": "`@hidden  `",
+      "back": "All flows currently hidden"
+    },
+    {
+      "id": "s2-115",
+      "sectionId": "s2",
+      "title": "Flow selectors",
+      "kind": "qa",
+      "front": "`@marked  `",
+      "back": "All marked flows"
+    },
+    {
+      "id": "s2-116",
+      "sectionId": "s2",
+      "title": "Flow selectors",
+      "kind": "qa",
+      "front": "`@unmarked`",
+      "back": "All unmarked flows"
+    },
+    {
+      "id": "s2-117",
+      "sectionId": "s2",
+      "title": "Flow selectors",
+      "kind": "text",
+      "body": "mitmproxy has a set of convenient flow selectors that operate on the current view"
+    },
+    {
+      "id": "s2-118",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "text",
+      "body": "URL containing \"google.com\""
+    },
+    {
+      "id": "s2-119",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "code",
+      "lang": "",
+      "code": "google\\.com"
+    },
+    {
+      "id": "s2-120",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "text",
+      "body": "Requests whose body contains the string \"test\""
+    },
+    {
+      "id": "s2-121",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "code",
+      "lang": "",
+      "code": "~q ~b test"
+    },
+    {
+      "id": "s2-122",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "text",
+      "body": "Anything but requests with a text/html content type:"
+    },
+    {
+      "id": "s2-123",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "code",
+      "lang": "",
+      "code": "!(~q & ~t \"text/html\")"
+    },
+    {
+      "id": "s2-124",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "text",
+      "body": "Replace entire GET string in a request (quotes required to make it work):"
+    },
+    {
+      "id": "s2-125",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "code",
+      "lang": "",
+      "code": "\":~q ~m GET:.*:/replacement.html\""
+    },
+    {
+      "id": "s3-126",
+      "sectionId": "s3",
+      "title": "Custom response",
+      "kind": "code",
+      "lang": "python",
+      "code": "from mitmproxy import http\n\n\ndef request(flow: http.HTTPFlow) -> None:\n    if flow.request.pretty_url == \"http://example.com/path\":\n        flow.response = http.HTTPResponse.make(\n            200,  # (optional) status code\n            b\"Hello World\",  # (optional) content\n            {\"Content-Type\": \"text/html\"}  # (optional) headers\n        )"
+    },
+    {
+      "id": "s3-127",
+      "sectionId": "s3",
+      "title": "Custom response",
+      "kind": "text",
+      "body": "Send a reply from the proxy without sending any data to the remote server"
+    },
+    {
+      "id": "s3-128",
+      "sectionId": "s3",
+      "title": "Add header",
+      "kind": "code",
+      "lang": "python",
+      "code": "class AddHeader:\n    def __init__(self):\n        self.num = 0\n\n    def response(self, flow):\n        self.num = self.num + 1\n        flow.response.headers[\"count\"] = str(self.num)\n\n\naddons = [\n    AddHeader()\n]"
+    },
+    {
+      "id": "s3-129",
+      "sectionId": "s3",
+      "title": "Add header",
+      "kind": "text",
+      "body": "Add an HTTP header to each response"
+    },
+    {
+      "id": "s4-130",
+      "sectionId": "s4",
+      "title": "Also see",
+      "kind": "text",
+      "body": "• [mitmproxy addons](https://github.com/mitmproxy/mitmproxy/tree/master/examples/addons) _(github.com)_\n• [mitmproxy docs](https://docs.mitmproxy.org/) _(mitmproxy.org)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/mitmproxy.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/mitmproxy.md",
+    "generatedAt": "2025-12-16T07:36:11.731Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

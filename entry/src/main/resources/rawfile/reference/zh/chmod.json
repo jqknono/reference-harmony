@@ -1,0 +1,409 @@
+{
+  "id": "chmod",
+  "title": "chmod",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Chmod 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这份快速参考备忘单提供了文件权限的简要概述，以及 chmod 命令的操作"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n--------"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "语法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ chmod [options] <permissions> <file>"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "语法",
+      "kind": "text",
+      "body": "#### 示例"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "语法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ chmod 755 foo.txt\n$ chmod +x quickref.py\n$ chmod u-x quickref.py\n$ chmod u=rwx,g=rx,o= quickref.sh"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "语法",
+      "kind": "text",
+      "body": "#### 递归更改文件和目录"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "语法",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ chmod -R 755 my_directory"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "语法",
+      "kind": "text",
+      "body": "`chmod` 命令代表“更改模式”"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "```html preview\n<div>\n权限：<input type=\"text\" id=\"num\" placeholder=\"777\" maxlength=\"3\" style=\"padding: 0.3rem 0.3rem;\" /> <input type=\"text\" id=\"let\" placeholder=\"rwxrwxrwx\" maxlength=\"9\" style=\"padding: 0.3rem 0.3rem;\" />\n</div>"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n---\n\n&nbsp; | User | Group | Other\n:- | :- | :- | :-\n读 _(Read)_ | <input checked id=\"1\" type=\"checkbox\"></input> | <input checked id=\"4\" type=\"checkbox\"></input> | <input checked id=\"7\" type=\"checkbox\"></input>\n写 _(Write)_ | <input checked id=\"2\" type=\"checkbox\"></input> | <input checked id=\"5\" type=\"checkbox\"></input> | <input checked id=\"8\" type=\"checkbox\"></input>\n执行 _(Execute)_ | <input checked id=\"3\" type=\"checkbox\"></input> | <input checked id=\"6\" type=\"checkbox\"></input> | <input checked id=\"9\" type=\"checkbox\"></input>\n<!--rehype:className=show-header-->\n\nChmod 生成器允许您以数字和符号的形式快速、直观地生成权限。\n\n### 通用权限\n\n命令 | s | 含义\n:-|:-|:-\n`400`   | r-------- | 仅所有者可读\n`500`   | r-x------ | 避免改变\n`600`   | rw------- | 可由用户更改\n`644`   | rw-r--r-- | 由用户读取和更改\n`660`   | rw-rw---- | 可由用户和组更改\n`700`   | rwx------ | 只有用户具有完全访问权限\n`755`   | rwxr-xr-x | 只能由用户更改\n`775`   | rwxrwxr-x | 群组共享模式\n`777`   | rwxrwxrwx | 每个人都可以做任何事\n\n### 解释"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ ls -l\n-rw-r--r--  1 root root 3 Jun 29 15:35 a.log\ndrwxr-xr-x  2 root root 2 Jun 30 18:06 dir"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### `dir` 的权限分析"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "d  rwx  r-x  r-x\n┬  ─┬─  ─┬─  ─┬─\n┆   ┆    ┆    ┆\n┆   ┆    ┆    ╰─ 4. Other｜5 (4+0+1)\n┆   ┆    ╰────── 3. Group｜5 (4+0+1)\n┆   ╰─────────── 2. User ｜7 (4+2+1)\n╰─────────────── 1. File Type | directory"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 权限模式\n<!--rehype:wrap-class=col-span-2-->\n\n| 权限 | 描述             | 八进制 | 十进制   |\n|------------|-------------------------|-------|-----------|\n`---`      | 没有权限        | 000   | 0 (0+0+0)\n`--x`      | 执行           | 001   | 1 (0+0+1)\n`-w-`      | 写             | 010   | 2 (0+2+0)\n`-wx`      | 执行和写入      | 011   | 3 (0+2+1)\n`r--`      | 读             | 100   | 4 (4+0+0)\n`r-x`      | 读取和执行      | 101   | 5 (4+0+1)\n`rw-`      | 读和写          | 110   | 6 (4+2+0)\n`rwx`      | 读取、写入和执行 | 111   | 7 (4+2+1)\n<!--rehype:className=show-header-->\n\n### Objects\n\n| 谁（缩写）    | 含义            |\n|-------------|--------------------|\n| `u`         | 用户             |\n| `g`         | 组            |\n| `o`         | 其它           |\n| `a`         | 全部，和 ugo 一样 |\n<!--rehype:className=show-header-->\n\n### 权限\n\n| 缩写 | 权限    | 值 |\n|--------------|---------------|-------|\n| `r`          | 读      | 4     |\n| `w`          | 写      | 2     |\n| `x`          | 执行     | 1     |\n| `-`          | 没有权限  | 0     |\n<!--rehype:className=show-header-->\n\n### 文件类型\n\n| 缩写 | 文件类型    |\n|--------------|----------|\n| `d`          | 目录      |\n| `-`          | 常规文件   |\n| `l`          | 符号链接   |\n<!--rehype:className=show-header-->\n\nChmod 示例\n--------\n\n### 操作符\n\n| Symbol | Description |\n|--------|-------------|\n| `+`    | 添加         |\n| `-`    | 删除      |\n| `=`    | 设置        |\n\n### chmod 600"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod 600 example.txt\n$ chmod u=rw,g=,o= example.txt\n$ chmod a+rwx,u-x,g-rwx,o-rwx example.txt"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### chmod 664"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod 664 example.txt\n$ chmod u=rw,g=rw,o=r example.txt\n$ chmod a+rwx,u-x,g-x,o-wx example.txt"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### chmod 777"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod 777 example.txt\n$ chmod u=rwx,g=rwx,o=rwx example.txt\n$ chmod a=rwx example.txt"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 符号模式\n<!--rehype:wrap-class=row-span-3-->\n\n拒绝所有人的执行权限。"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod a-x chmodExampleFile.txt"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n向所有人授予读取权限。"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod a+r chmodExampleFile.txt"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使文件可由组和其他人读写。"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod go+rw chmodExampleFile.txt"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用户/所有者可执行 shell。"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod u+x chmodExampleScript.sh"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n允许每个人读取、写入和执行文件并打开设置的 group-ID。"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod =rwx,g+s chmodExampleScript.sh"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 删除权限\n<!--rehype:wrap-class=row-span-3-->\n\n要删除赋予文件的读写权限，请使用以下语法："
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod o-rw example.txt"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n对于我们的文件 example.txt，我们可以通过运行以下命令使用 chmod for group 删除读写权限："
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod  g-rx example.txt"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n要从组中删除 chmod 读写权限，同时向 public/others 添加读写权限，我们可以使用以下命令："
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod g-rx, o+rx example.txt"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n但是，如果你想删除组和其他人的所有权限，你可以使用 go= 来代替："
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod go= example.txt"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 可执行文件"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod +x ~/example.py\n$ chmod u+x ~/example.py\n$ chmod a+x ~/example.py"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### chmod 754"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod 754 foo.sh\n$ chmod u=rwx,g=rx,o=r foo.sh"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\nChmod 实践\n---------------\n\n### SSH 权限"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod 700 ~/.ssh\n$ chmod 600 ~/.ssh/authorized_keys\n$ chmod 600 ~/.ssh/id_rsa\n$ chmod 600 ~/.ssh/id_rsa.pub\n$ chmod 400 /path/to/access_key.pem"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 网络权限"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod -R 644 /var/www/html/\n$ chmod 644 .htaccess\n$ chmod 644 robots.txt\n$ chmod 755 /var/www/uploads/\n$ find /var/www/html -type d -exec chmod 755 {} \\;"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 批量更改"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "$ chmod -R 644 /your_path\n$ find /path -type d -exec chmod 755 {} \\;\n$ find /path -type f -exec chmod 644 {} \\;"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "code",
+      "lang": "",
+      "code": "\n请参阅：[命令替换](https://tldp.org/LDP/abs/html/commandsub.html)\n\n另见\n----\n\n* [使用 chmod 修改文件权限](https://www.linode.com/docs/guides/modify-file-permissions-with-chmod/) _(linode.com)_\n\n<!--rehype:ignore:start-->\n以下是 Chmod 生成器 JS 代码（代码用于网站请忽略不要删除）\n---\n<!--rehype:ignore:end-->"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "<script type=\"text/javascript\">\nconst reg_num = /^[0-7]{3}$/; // 一些正则表达式来检查 num 输入\nconst reg_let = /^([r\\-]{1}[w\\-]{1}[x\\-]{1}){3}$/; // 一些正则表达式来检查文本输入\nfunction checkBoxHandle() {\nchange_occured(true, false, false);\n// get rid of bad input classes\ndocument.getElementById('num').classList.remove('bad-input');\ndocument.getElementById('let').classList.remove('bad-input');\n}\nwindow.addEventListener(\"DOMContentLoaded\", function () {\n// loop over all the check boxes\nfor (let i = 1; i < 10; i++) {\nlet checkBox = document.getElementById(`${i}`);\ncheckBox.addEventListener('change', function () {\nchange_occured(true, false, false);"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "// get rid of bad input classes\ndocument.getElementById('num').classList.remove('bad-input');"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "Chmod 生成器",
+      "kind": "text",
+      "body": "document.getElementById('let').classList.remove('bad-input');\n});\n}\n// the octal input\nlet num_input = document.getElementById('num');\nlet num_fn = function () {\n// check for bad input\nif (!reg_num.test(this.value)) {\nthis.classList.add('bad-input');\n} else {\nthis.classList.remove('bad-input');\nchange_occured(false, true, false);\n}\n};\nnum_input.addEventListener('change', num_fn);\nnum_input.addEventListener('keyup', num_fn);\n// the let input\nlet let_input = document.getElementById('let');\nlet let_fn = function () {\n// check for bad input\nif (!reg_let.test(this.value)) {\nthis.classList.add('bad-input');\n} else {\nthis.classList.remove('bad-input');\nchange_occured(false, false, true);\n}\n};\nlet_input.addEventListener('change',let_fn);\nlet_input.addEventListener('keyup',let_fn);\n});\n/* SETUP\nr-4-1  r-4-4  r-4-7\nw-2-2  w-2-5  w-2-8\nx-1-3  x-1-6  x-1-9\n*/\n// define a function that runs when a change occures\nfunction change_occured(caller_was_check, caller_was_num, caller_was_let) {\nlet num1 = 0, num2 = 0, num3 = 0; // these are the three numbers for the octal\nlet perm_string = ''; // holds the permision string ex. rw-x--r--\nif (caller_was_check) {\n// loop over all the check boxes and get the permisions\nfor (let i = 1; i < 10; i++) {\nlet checkBox = document.getElementById(`${i}`);\nif (checkBox.checked) { // if checked\nlet current_perm = check_to_octal_and_text(i);\nperm_string += `${current_perm.perm_let}`;\nif (i <= 3) {\nnum1 += current_perm.perm_num;\n} else if (i <= 6) {\nnum2 += current_perm.perm_num;\n} else {\nnum3 += current_perm.perm_num;\n}\n} else { // if not checked\nperm_string += '-';\n}\n}\n// set the permision input text\ndocument.getElementById('let').value = perm_string;\ndocument.getElementById('num').value = `${num1}${num2}${num3}`;\n} else if (caller_was_num) {\n// get the individual numbers\nlet num_input_val = document.getElementById('num').value;\nnum1 = num_input_val.substring(0, 1);\nnum2 = num_input_val.substring(1, 2);\nnum3 = num_input_val.substring(2, 3);\n// set the checkboxes and get the perm string\nperm_string += octal_to_check_and_txt(num1, 0); //Owner\nperm_string += octal_to_check_and_txt(num2, 1); //Owner\nperm_string += octal_to_check_and_txt(num3, 2); //Owner\n// set the permision input text\ndocument.getElementById('let').value = perm_string;\n} else if (caller_was_let) {\n// get the text input\nlet perm_text = document.getElementById('let').value;\nnum1 = text_to_check_and_octal(perm_text.substring(0, 3), 0)\nnum2 = text_to_check_and_octal(perm_text.substring(3, 6), 3)\nnum3 = text_to_check_and_octal(perm_text.substring(6, 9), 6)\n// set the octal value\ndocument.getElementById('num').value = `${num1}${num2}${num3}`;\n}\n}\n// define a function to converts the checkbox # to the respective permissions\n// returns perm_num, perm_let\nfunction check_to_octal_and_text(check_num) {\nlet perm_num = 0;\nlet perm_let = '-';\nswitch (check_num) {\ncase 1:\ncase 4:\ncase 7:\nperm_num = 4;\nperm_let = 'r';\nbreak;\ncase 2:\ncase 5:\ncase 8:\nperm_num = 2;\nperm_let = 'w';\nbreak;\ncase 3:\ncase 6:\ncase 9:\nperm_num = 1;\nperm_let = 'x';\nbreak;\ndefault:\nperm_num = 0;\nperm_let = '-';\n}\n// return values\nreturn {\nperm_num,\nperm_let\n};\n}\n/**\nTakes a number 1-7 and which class it is in:\n0 = owner\n1 = Group\n2 = Public\nReturns: perm text (ex. \"rwx\") and sets the appropriate checkboxes\n*/\nfunction octal_to_check_and_txt(octal_num, class_num) {\nlet perm_text = '';\nlet offset = class_num * 3;\nswitch (octal_num) {\ncase '1':\ndocument.getElementById(`${1 + offset}`).checked = false;\ndocument.getElementById(`${2 + offset}`).checked = false;\ndocument.getElementById(`${3 + offset}`).checked = true;\nperm_text = '--x';\nbreak;\ncase '2':\ndocument.getElementById(`${1 + offset}`).checked = false;\ndocument.getElementById(`${2 + offset}`).checked = true;\ndocument.getElementById(`${3 + offset}`).checked = false;\nperm_text = '-w-';\nbreak;\ncase '3':\ndocument.getElementById(`${1 + offset}`).checked = false;\ndocument.getElementById(`${2 + offset}`).checked = true;\ndocument.getElementById(`${3 + offset}`).checked = true;\nperm_text = '-wx';\nbreak;\ncase '4':\ndocument.getElementById(`${1 + offset}`).checked = true;\ndocument.getElementById(`${2 + offset}`).checked = false;\ndocument.getElementById(`${3 + offset}`).checked = false;\nperm_text = 'r--';\nbreak;\ncase '5':\ndocument.getElementById(`${1 + offset}`).checked = true;\ndocument.getElementById(`${2 + offset}`).checked = false;\ndocument.getElementById(`${3 + offset}`).checked = true;\nperm_text = 'r-x';\nbreak;\ncase '6':\ndocument.getElementById(`${1 + offset}`).checked = true;\ndocument.getElementById(`${2 + offset}`).checked = true;\ndocument.getElementById(`${3 + offset}`).checked = false;\nperm_text = 'rw-';\nbreak;\ncase '7':\ndocument.getElementById(`${1 + offset}`).checked = true;\ndocument.getElementById(`${2 + offset}`).checked = true;\ndocument.getElementById(`${3 + offset}`).checked = true;\nperm_text = 'rwx';\nbreak;\ndefault:\ndocument.getElementById(`${1 + offset}`).checked = false;\ndocument.getElementById(`${2 + offset}`).checked = false;\ndocument.getElementById(`${3 + offset}`).checked = false;\nperm_text = '---';\n}\nreturn perm_text;\n}\n/**\nTakes 3 letters (r, w, x, -    ex. 'rw-') and an offset (0,3,6)\nReturns the octal num and sets the appropriate checkboxes\n*/\nfunction text_to_check_and_octal(letters, offset) {\nlet perm_num = 0; // the octal number to return\n// add up the oct num and set the check boxes\nfor (let i = 0; i < 3; i++) {\ncurrent_let = letters.substring(i, i + 1);\nif (current_let == 'r') {\ndocument.getElementById(`${i + 1 + offset}`).checked = true;\nperm_num += 4;\n} else if (current_let == 'w') {\ndocument.getElementById(`${i + 1 + offset}`).checked = true;\nperm_num += 2;\n} else if (current_let == 'x') {\ndocument.getElementById(`${i + 1 + offset}`).checked = true;\nperm_num += 1;\n} else {\ndocument.getElementById(`${i + 1 + offset}`).checked = false;\n}\n}\nreturn perm_num;\n}\n</script>"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/chmod.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/chmod.md",
+    "generatedAt": "2025-12-16T07:36:11.138Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

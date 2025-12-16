@@ -1,0 +1,256 @@
+{
+  "id": "flask",
+  "title": "Flask",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "App Config & Environment",
+      "startIndex": 4
+    },
+    {
+      "id": "s3",
+      "title": "Routing & Methods",
+      "startIndex": 7
+    },
+    {
+      "id": "s4",
+      "title": "Request & Response",
+      "startIndex": 10
+    },
+    {
+      "id": "s5",
+      "title": "Templates & Static",
+      "startIndex": 13
+    },
+    {
+      "id": "s6",
+      "title": "Sessions & Cookies",
+      "startIndex": 16
+    },
+    {
+      "id": "s7",
+      "title": "JSON API & Middleware",
+      "startIndex": 18
+    },
+    {
+      "id": "s8",
+      "title": "Error Handling & Blueprints",
+      "startIndex": 20
+    },
+    {
+      "id": "s9",
+      "title": "Project Structure",
+      "startIndex": 22
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "A concise cheatsheet for Flask, a lightweight WSGI web application framework for Python."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Install Flask",
+      "kind": "code",
+      "lang": "bash",
+      "code": "pip install flask"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Hello World",
+      "kind": "code",
+      "lang": "python",
+      "code": "from flask import Flask\napp = Flask(__name__)\n\n@app.route(\"/\")\ndef hello():\n    return \"Hello, World!\"\n\napp.run(debug=True)"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Flask CLI",
+      "kind": "code",
+      "lang": "bash",
+      "code": "export FLASK_APP=app.py\nflask run"
+    },
+    {
+      "id": "s2-4",
+      "sectionId": "s2",
+      "title": "App Object",
+      "kind": "code",
+      "lang": "python",
+      "code": "from flask import Flask\napp = Flask(__name__)"
+    },
+    {
+      "id": "s2-5",
+      "sectionId": "s2",
+      "title": "Configuration",
+      "kind": "code",
+      "lang": "python",
+      "code": "app.config[\"DEBUG\"] = True\napp.config.from_pyfile(\"config.py\")"
+    },
+    {
+      "id": "s2-6",
+      "sectionId": "s2",
+      "title": "Common Config Keys",
+      "kind": "text",
+      "body": "| Key | Description |\n| | -- |\n| `DEBUG` | Enable debug mode |\n| `SECRET_KEY` | For sessions/cookies |\n| `ENV` | Set to 'development' |"
+    },
+    {
+      "id": "s3-7",
+      "sectionId": "s3",
+      "title": "Basic Route",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.route(\"/\")\ndef home():\n    return \"Home\""
+    },
+    {
+      "id": "s3-8",
+      "sectionId": "s3",
+      "title": "Methods",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.route(\"/login\", methods=[\"GET\", \"POST\"])\ndef login():\n    return \"Login\""
+    },
+    {
+      "id": "s3-9",
+      "sectionId": "s3",
+      "title": "Dynamic Routes",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.route(\"/user/<name>\")\ndef user(name):\n    return f\"User: {name}\""
+    },
+    {
+      "id": "s4-10",
+      "sectionId": "s4",
+      "title": "Request Object",
+      "kind": "code",
+      "lang": "python",
+      "code": "from flask import request\n\n@app.route(\"/data\", methods=[\"POST\"])\ndef data():\n    return request.json"
+    },
+    {
+      "id": "s4-11",
+      "sectionId": "s4",
+      "title": "Request Attributes",
+      "kind": "text",
+      "body": "• `request.args`: Query params\n• `request.form`: Form data\n• `request.json`: JSON body"
+    },
+    {
+      "id": "s4-12",
+      "sectionId": "s4",
+      "title": "Custom Response",
+      "kind": "code",
+      "lang": "python",
+      "code": "from flask import make_response\n\n@app.route(\"/custom\")\ndef custom():\n    res = make_response(\"Custom\", 200)\n    res.headers[\"X-Test\"] = \"True\"\n    return res"
+    },
+    {
+      "id": "s5-13",
+      "sectionId": "s5",
+      "title": "Render Template",
+      "kind": "code",
+      "lang": "python",
+      "code": "from flask import render_template\n\n@app.route(\"/\")\ndef page():\n    return render_template(\"index.html\", name=\"Flask\")"
+    },
+    {
+      "id": "s5-14",
+      "sectionId": "s5",
+      "title": "Jinja Syntax",
+      "kind": "code",
+      "lang": "html",
+      "code": "<h1>Hello {{ name }}</h1>\n{% if name %}\n<p>Hi!</p>\n{% endif %}"
+    },
+    {
+      "id": "s5-15",
+      "sectionId": "s5",
+      "title": "Static Files",
+      "kind": "code",
+      "lang": "html",
+      "code": "<link href=\"{{ url_for('static', filename='style.css') }}\" />"
+    },
+    {
+      "id": "s6-16",
+      "sectionId": "s6",
+      "title": "Using Sessions",
+      "kind": "code",
+      "lang": "python",
+      "code": "from flask import session\napp.secret_key = \"secret\"\n\n@app.route(\"/login\")\ndef login():\n    session[\"user\"] = \"admin\"\n    return \"Logged in\""
+    },
+    {
+      "id": "s6-17",
+      "sectionId": "s6",
+      "title": "Access Cookies",
+      "kind": "code",
+      "lang": "python",
+      "code": "from flask import request, make_response\n\n@app.route(\"/cookie\")\ndef cookie():\n    resp = make_response(\"Set cookie\")\n    resp.set_cookie(\"site\", \"Flask\")\n    return resp"
+    },
+    {
+      "id": "s7-18",
+      "sectionId": "s7",
+      "title": "JSON Response",
+      "kind": "code",
+      "lang": "python",
+      "code": "from flask import jsonify\n\n@app.route(\"/api\")\ndef api():\n    return jsonify(message=\"Hello\")"
+    },
+    {
+      "id": "s7-19",
+      "sectionId": "s7",
+      "title": "Middleware",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.before_request\ndef before():\n    print(\"Before\")\n\n@app.after_request\ndef after(res):\n    print(\"After\")\n    return res"
+    },
+    {
+      "id": "s8-20",
+      "sectionId": "s8",
+      "title": "Error Handling",
+      "kind": "code",
+      "lang": "python",
+      "code": "@app.errorhandler(404)\ndef not_found(e):\n    return \"Page not found\", 404"
+    },
+    {
+      "id": "s8-21",
+      "sectionId": "s8",
+      "title": "Blueprint",
+      "kind": "code",
+      "lang": "python",
+      "code": "from flask import Blueprint\n\nadmin = Blueprint(\"admin\", __name__, url_prefix=\"/admin\")\n\n@admin.route(\"/\")\ndef dash():\n    return \"Admin\"\n\napp.register_blueprint(admin)"
+    },
+    {
+      "id": "s9-22",
+      "sectionId": "s9",
+      "title": "File Structure",
+      "kind": "code",
+      "lang": "bash",
+      "code": "project/\n├── app.py\n├── templates/\n│   └── index.html\n├── static/\n│   └── style.css\n└── config.py"
+    },
+    {
+      "id": "s9-23",
+      "sectionId": "s9",
+      "title": "Run Server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "python app.py\n# or using CLI\nexport FLASK_APP=app.py\nflask run"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/flask.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/flask.md",
+    "generatedAt": "2025-12-16T07:36:11.639Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

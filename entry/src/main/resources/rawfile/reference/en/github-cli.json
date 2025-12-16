@@ -1,0 +1,683 @@
+{
+  "id": "github-cli",
+  "title": "Github CLI",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Getting Started",
+      "startIndex": 1
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "kind": "text",
+      "body": "A quick reference to Github CLI, an open-source command line tool that enables GitHub on your terminal."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "text",
+      "body": "**Windows**"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "qa",
+      "front": "WinGet",
+      "back": "`winget install --id Github.cli` | `winget upgrade --id GitHub.cli`"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "qa",
+      "front": "Scoop",
+      "back": "`scoop install gh` | `scoop update gh`"
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "qa",
+      "front": "Choco",
+      "back": "`choco install gh` | `choco upgrade gh`"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "text",
+      "body": "**Mac OS**"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "qa",
+      "front": "Brew",
+      "back": "`brew install gh` | `brew upgrade gh`"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "qa",
+      "front": "MacPorts",
+      "back": "`sudo port install gh` | `sudo port selfupdate && sudo port upgrade gh`"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "text",
+      "body": "**Linux**"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "text",
+      "body": "See the [install instructions](https://github.com/cli/cli/blob/trunk/docs/install_linux.md) for other Linux\ndistributions."
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "text",
+      "body": "Installation Script:"
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "code",
+      "lang": "bash",
+      "code": "type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)\ncurl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \\\n&& sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \\\n&& echo \"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \\\n&& sudo apt update \\\n&& sudo apt install gh -y"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "Installation",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "text",
+      "body": "**Help and Documentation**"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "text",
+      "body": "Display command options:"
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "qa",
+      "front": "`gh help [command]`",
+      "back": "Help provides help for any command in the application. Simply type gh help [path to command] for full details."
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "text",
+      "body": "**Authentication**"
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "qa",
+      "front": "`gh auth login`",
+      "back": "Default authentication with web-based browser"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "qa",
+      "front": "`gh auth logout`",
+      "back": "Removes the authentication configuration for a host"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "qa",
+      "front": "`gh auth refresh`",
+      "back": "Expand or fix the permission scopes for stored credentials"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "qa",
+      "front": "`gh auth setup-git`",
+      "back": "Configures git to use GitHub CLI as a credential helper"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "qa",
+      "front": "`gh auth status`",
+      "back": "Verifies and displays information about your authentication state"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "qa",
+      "front": "`gh auth token`",
+      "back": "Print the auth token gh is configured to use"
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "text",
+      "body": "With Github token:"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "Basic Usage",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ gh auth --with-token < token.txt"
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "text",
+      "body": "**General**"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo create`",
+      "back": "Create a new GitHub repository"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo list [target]`",
+      "back": "List repositories owned by a user or organization"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "text",
+      "body": "**Targets**"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo archive [repo]`",
+      "back": "Archive a GitHub repository"
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo clone [dir]`",
+      "back": "Clone a GitHub repository locally"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo delete [repo]`",
+      "back": "Delete a GitHub repository"
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo deploy-key`",
+      "back": "Manage deploy keys in a repository"
+    },
+    {
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo edit [repo]`",
+      "back": "Edit repository settings"
+    },
+    {
+      "id": "s1-34",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo fork [repo]`",
+      "back": "Create a fork of a repository"
+    },
+    {
+      "id": "s1-35",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo rename [name]`",
+      "back": "Rename a GitHub repository"
+    },
+    {
+      "id": "s1-36",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo set-default [repo]`",
+      "back": "This command sets the default remote repository"
+    },
+    {
+      "id": "s1-37",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo sync [dest-repo]`",
+      "back": "Sync destination repository from source repository"
+    },
+    {
+      "id": "s1-38",
+      "sectionId": "s1",
+      "title": "Repository Management",
+      "kind": "qa",
+      "front": "`gh repo view [repo]`",
+      "back": "Display the description and the README of a GitHub repository."
+    },
+    {
+      "id": "s1-39",
+      "sectionId": "s1",
+      "title": "Issues",
+      "kind": "text",
+      "body": "**Search Issues**"
+    },
+    {
+      "id": "s1-40",
+      "sectionId": "s1",
+      "title": "Issues",
+      "kind": "qa",
+      "front": "`gh search issues [query]`",
+      "back": "Search for issues on GitHub"
+    },
+    {
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "Issues",
+      "kind": "text",
+      "body": "**Examples**"
+    },
+    {
+      "id": "s1-42",
+      "sectionId": "s1",
+      "title": "Issues",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# search issues matching set of keywords \"readme\" and \"typo\"\n$ gh search issues readme typo\n\n# search issues matching phrase \"broken feature\"\n$ gh search issues \"broken feature\"\n\n# search issues and pull requests in cli organization\n$ gh search issues --include-prs --owner=cli\n\n# search open issues assigned to yourself\n$ gh search issues --assignee=@me --state=open\n\n# search issues with numerous comments\n$ gh search issues --comments=\">100\"\n\n# search issues without label \"bug\"\n$ gh search issues -- -label:bug"
+    },
+    {
+      "id": "s1-43",
+      "sectionId": "s1",
+      "title": "Pull Requests",
+      "kind": "text",
+      "body": "**Pull Request Actions**"
+    },
+    {
+      "id": "s1-44",
+      "sectionId": "s1",
+      "title": "Pull Requests",
+      "kind": "qa",
+      "front": "`gh pr create`",
+      "back": "Create a pull request on GitHub"
+    },
+    {
+      "id": "s1-45",
+      "sectionId": "s1",
+      "title": "Pull Requests",
+      "kind": "qa",
+      "front": "`gh pr list`",
+      "back": "List pull requests in a GitHub repository"
+    },
+    {
+      "id": "s1-46",
+      "sectionId": "s1",
+      "title": "Pull Requests",
+      "kind": "qa",
+      "front": "`gh pr status`",
+      "back": "Show status of relevant pull requests"
+    },
+    {
+      "id": "s1-47",
+      "sectionId": "s1",
+      "title": "Pull Requests",
+      "kind": "text",
+      "body": "**Example**"
+    },
+    {
+      "id": "s1-48",
+      "sectionId": "s1",
+      "title": "Pull Requests",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ gh pr status"
+    },
+    {
+      "id": "s1-49",
+      "sectionId": "s1",
+      "title": "Pull Requests",
+      "kind": "text",
+      "body": "Sample Output:"
+    },
+    {
+      "id": "s1-50",
+      "sectionId": "s1",
+      "title": "Pull Requests",
+      "kind": "code",
+      "lang": "",
+      "code": "Current branch\n  #12 Remove the test feature [user:patch-2]\n   - All checks failing - Review required\n\nCreated by you\n  You have no open pull requests\n\nRequesting a code review from you\n  #13 Fix tests [branch]\n  - 3/4 checks failing - Review required\n  #15 New feature [branch]\n   - Checks passing - Approved"
+    },
+    {
+      "id": "s1-51",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "text",
+      "body": "**General Actions**"
+    },
+    {
+      "id": "s1-52",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh workflow disable`",
+      "back": "Disable a workflow, preventing it from running or showing up when listing workflows"
+    },
+    {
+      "id": "s1-53",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh workflow enable`",
+      "back": "Enable a workflow, allowing it to be run and show up when listing workflows"
+    },
+    {
+      "id": "s1-54",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh workflow list`",
+      "back": "List workflow files, hiding disabled workflows by default"
+    },
+    {
+      "id": "s1-55",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh workflow run`",
+      "back": "Create a workflow_dispatch event for a given workflow"
+    },
+    {
+      "id": "s1-56",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh workflow view`",
+      "back": "View the summary of a workflow"
+    },
+    {
+      "id": "s1-57",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "text",
+      "body": "**Running Actions**"
+    },
+    {
+      "id": "s1-58",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh run cancel`",
+      "back": "Cancel a workflow run"
+    },
+    {
+      "id": "s1-59",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh run delete`",
+      "back": "Delete a workflow run"
+    },
+    {
+      "id": "s1-60",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh run download`",
+      "back": "Download artifacts generated by a GitHub Actions workflow run"
+    },
+    {
+      "id": "s1-61",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh run list`",
+      "back": "List recent workflow runs"
+    },
+    {
+      "id": "s1-62",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh run rerun`",
+      "back": "Rerun an entire run, only failed jobs, or a specific job from a run"
+    },
+    {
+      "id": "s1-63",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh run view`",
+      "back": "View a summary of a workflow run"
+    },
+    {
+      "id": "s1-64",
+      "sectionId": "s1",
+      "title": "Github Actions",
+      "kind": "qa",
+      "front": "`gh run watch`",
+      "back": "Watch a run until it completes, showing its progress"
+    },
+    {
+      "id": "s1-65",
+      "sectionId": "s1",
+      "title": "Aliases",
+      "kind": "text",
+      "body": "**General Alias Settings**"
+    },
+    {
+      "id": "s1-66",
+      "sectionId": "s1",
+      "title": "Aliases",
+      "kind": "qa",
+      "front": "`gh alias delete`",
+      "back": "Delete set aliases"
+    },
+    {
+      "id": "s1-67",
+      "sectionId": "s1",
+      "title": "Aliases",
+      "kind": "qa",
+      "front": "`gh alias import`",
+      "back": "Import aliases from the contents of a YAML file"
+    },
+    {
+      "id": "s1-68",
+      "sectionId": "s1",
+      "title": "Aliases",
+      "kind": "qa",
+      "front": "`gh alias list`",
+      "back": "Prints out all of the aliases gh is configured to use"
+    },
+    {
+      "id": "s1-69",
+      "sectionId": "s1",
+      "title": "Aliases",
+      "kind": "qa",
+      "front": "`gh alias set`",
+      "back": "Define a word that will expand to a full gh command when invoked"
+    },
+    {
+      "id": "s1-70",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "text",
+      "body": "**General Actions**"
+    },
+    {
+      "id": "s1-71",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "qa",
+      "front": "`gh release create`",
+      "back": "Create a new GitHub Release for a repository"
+    },
+    {
+      "id": "s1-72",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "qa",
+      "front": "`gh release list`",
+      "back": "List releases in a repository"
+    },
+    {
+      "id": "s1-73",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "text",
+      "body": "**Target Commands**"
+    },
+    {
+      "id": "s1-74",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "qa",
+      "front": "`gh release delete`",
+      "back": "Delete a release"
+    },
+    {
+      "id": "s1-75",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "qa",
+      "front": "`gh release delete-asset`",
+      "back": "Delete an asset from a release"
+    },
+    {
+      "id": "s1-76",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "qa",
+      "front": "`gh release download`",
+      "back": "Download assets from a GitHub release"
+    },
+    {
+      "id": "s1-77",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "qa",
+      "front": "`gh release edit`",
+      "back": "Edit a release"
+    },
+    {
+      "id": "s1-78",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "qa",
+      "front": "`gh release upload`",
+      "back": "Upload asset files to a GitHub Release"
+    },
+    {
+      "id": "s1-79",
+      "sectionId": "s1",
+      "title": "Releases",
+      "kind": "qa",
+      "front": "`gh release view`",
+      "back": "View information about a GitHub Release"
+    },
+    {
+      "id": "s1-80",
+      "sectionId": "s1",
+      "title": "Configuration",
+      "kind": "text",
+      "body": "**Targeted Settings**"
+    },
+    {
+      "id": "s1-81",
+      "sectionId": "s1",
+      "title": "Configuration",
+      "kind": "qa",
+      "front": "`gh config clear-cache`",
+      "back": "Clear the cli cache"
+    },
+    {
+      "id": "s1-82",
+      "sectionId": "s1",
+      "title": "Configuration",
+      "kind": "qa",
+      "front": "`gh config get`",
+      "back": "Print the value of a given configuration key"
+    },
+    {
+      "id": "s1-83",
+      "sectionId": "s1",
+      "title": "Configuration",
+      "kind": "qa",
+      "front": "`gh config list`",
+      "back": "Print a list of configuration keys and values"
+    },
+    {
+      "id": "s1-84",
+      "sectionId": "s1",
+      "title": "Configuration",
+      "kind": "qa",
+      "front": "`gh config set`",
+      "back": "Update configuration with a value for the given key"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/github-cli.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/github-cli.md",
+    "generatedAt": "2025-12-16T07:36:11.654Z",
+    "lang": "en",
+    "mode": "local"
+  }
+}

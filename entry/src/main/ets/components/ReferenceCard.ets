@@ -1,8 +1,9 @@
-import type { ReferenceCardData } from '../common/referenceModels';
+import type { ReferenceCardData, ReferenceLang } from '../common/referenceModels';
 
 @Component
 export struct ReferenceCard {
   @Prop card: ReferenceCardData;
+  @Prop lang: ReferenceLang;
 
   @State private showBack: boolean = false;
 
@@ -40,13 +41,13 @@ export struct ReferenceCard {
           .layoutWeight(1);
 
         if (this.card.kind === 'qa') {
-          Text(this.showBack ? '背面' : '正面')
+          Text(this.showBack ? (this.lang === 'en' ? 'Back' : '背面') : (this.lang === 'en' ? 'Front' : '正面'))
             .fontSize(12)
             .fontColor(0x64748b);
         }
       }
 
-      this.Body();
+      this.Body()
     }
     .padding(14)
     .backgroundColor(0xffffff)

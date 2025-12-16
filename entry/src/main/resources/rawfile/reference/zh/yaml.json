@@ -1,0 +1,683 @@
+{
+  "id": "yaml",
+  "title": "yaml",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "YAML 备忘清单\n===="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这是理解和编写 YAML 格式配置文件的快速参考备忘单。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n-----------"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "[YAML](https://yaml.org/) 是一种数据序列化语言，旨在供人类直接读写"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "• YAML 不允许使用制表符\n• 元素部分之间必须有空间\n• YAML 区分大小写\n• 以 `.yaml` 或 `.yml` 扩展名结束您的 YAML 文件\n• YAML 是 JSON 的超集\n• Ansible playbook 是 YAML 文件"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "标量类型",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "n1: 1            # 整数\nn2: 1.234        # 浮点\ns1: 'abc'        # 字符串\ns2: \"abc\"        # 字符串\ns3: abc          # 字符串\nb: false         # 布尔类型\nd: 2015-04-05    # 日期类型"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "标量类型",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "标量类型",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"n1\": 1,\n  \"n2\": 1.234,\n  \"s1\": \"abc\",\n  \"s2\": \"abc\",\n  \"s3\": \"abc\",\n  \"b\": false,\n  \"d\": \"2015-04-05\"\n}"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "标量类型",
+      "kind": "text",
+      "body": "使用空格缩进。 元素部分之间必须有空间。"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "some_thing: &VAR_NAME foobar\nother_thing: *VAR_NAME"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"some_thing\": \"foobar\",\n  \"other_thing\": \"foobar\"\n}"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "注释",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "# A single line comment example\n# block level comment example\n# comment line 1\n# comment line 2\n# comment line 3"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "多行字符串",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "description: |\n  hello\n  world"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "多行字符串",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "多行字符串",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\"description\": \"hello\\nworld\\n\"}"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "parent: &defaults\n  a: 2\n  b: 3\nchild:\n  <<: *defaults\n  b: 4"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "继承",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"parent\": {\n    \"a\": 2,\n    \"b\": 3\n  },\n  \"child\": {\n    \"a\": 2,\n    \"b\": 4\n  }\n}"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "参考",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "values: &ref\n  - Will be\n  - reused below\n  \nother_values:\n  i_am_ref: *ref"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "参考",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "参考",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"values\": [\n    \"Will be\",\n    \"reused below\"\n  ],\n  \"other_values\": {\n    \"i_am_ref\": [\n      \"Will be\",\n      \"reused below\"\n    ]\n  }\n}"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "折叠的字符串",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "description: >\n  hello\n  world"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "折叠的字符串",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "折叠的字符串",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\"description\": \"hello world\\n\"}"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "两份文件",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "---\ndocument: this is doc 1\n---\ndocument: this is doc 2"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "两份文件",
+      "kind": "text",
+      "body": "YAML使用`---`将指令与文档内容分开。"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "两份文件",
+      "kind": "text",
+      "body": "YAML Collections\n-----------"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "序列",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "- Mark McGwire\n- Sammy Sosa\n- Ken Griffey"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "序列",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "序列",
+      "kind": "code",
+      "lang": "json",
+      "code": "[\n  \"Mark McGwire\",\n  \"Sammy Sosa\",\n  \"Ken Griffey\"\n]"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "映射",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "hr:  65       # Home runs\navg: 0.278    # Batting average\nrbi: 147      # Runs Batted In"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "映射",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "映射",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"hr\": 65,\n  \"avg\": 0.278,\n  \"rbi\": 147\n}"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "映射到序列",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "attributes:\n  - a1\n  - a2\nmethods: [getter, setter]"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "映射到序列",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "映射到序列",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"attributes\": [\"a1\", \"a2\"],\n  \"methods\": [\"getter\", \"setter\"]\n}"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "映射序列",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "children:\n  - name: Jimmy Smith\n    age: 15\n  - name: Jimmy Smith\n    age: 15\n  -\n    name: Sammy Sosa\n    age: 12"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "映射序列",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "映射序列",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"children\": [\n    {\"name\": \"Jimmy Smith\", \"age\": 15},\n    {\"name\": \"Jimmy Smith\", \"age\": 15},\n    {\"name\": \"Sammy Sosa\", \"age\": 12}\n  ]\n}"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "序列的序列",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "my_sequences:\n  - [1, 2, 3]\n  - [4, 5, 6]\n  -  \n    - 7\n    - 8\n    - 9\n    - 0"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "序列的序列",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "序列的序列",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"my_sequences\": [\n    [1, 2, 3],\n    [4, 5, 6],\n    [7, 8, 9, 0]\n  ]\n}"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "映射的映射",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "Mark McGwire: {hr: 65, avg: 0.278}\nSammy Sosa: {\n    hr: 63,\n    avg: 0.288\n  }"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "映射的映射",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "映射的映射",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"Mark McGwire\": {\n    \"hr\": 65,\n    \"avg\": 0.278\n  },\n  \"Sammy Sosa\": {\n    \"hr\": 63,\n    \"avg\": 0.288\n  }\n}"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "嵌套集合",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "Jack:\n  id: 1\n  name: Franc\n  salary: 25000\n  hobby:\n    - a\n    - b\n  location: {country: \"A\", city: \"A-A\"}"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "嵌套集合",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "嵌套集合",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"Jack\": {\n    \"id\": 1,\n    \"name\": \"Franc\",\n    \"salary\": 25000,\n    \"hobby\": [\"a\", \"b\"],\n    \"location\": {\n        \"country\": \"A\", \"city\": \"A-A\"\n    }\n  }\n}"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "无序集",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "set1: !!set\n  ? one\n  ? two\nset2: !!set {'one', \"two\"}"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "无序集",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "无序集",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"set1\": {\"one\": null, \"two\": null},\n  \"set2\": {\"one\": null, \"two\": null}\n}"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "无序集",
+      "kind": "text",
+      "body": "集合表示为一个映射，其中每个键都与一个空值相关联"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "有序映射",
+      "kind": "code",
+      "lang": "yaml",
+      "code": "ordered: !!omap\n- Mark McGwire: 65\n- Sammy Sosa: 63\n- Ken Griffy: 58"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "有序映射",
+      "kind": "text",
+      "body": "#### ↓ 等效的 JSON"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "有序映射",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"ordered\": [\n     {\"Mark McGwire\": 65},\n     {\"Sammy Sosa\": 63},\n     {\"Ken Griffy\": 58}\n  ]\n}"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "有序映射",
+      "kind": "text",
+      "body": "YAML 参考\n--------------"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "条款",
+      "kind": "text",
+      "body": "• 序列又名数组或列表\n• 标量又名字符串或数字\n• 映射又名哈希或字典"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "条款",
+      "kind": "text",
+      "body": "基于 YAML.org [refcard](https://yaml.org/refcard.html)。"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "文档指标",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`%`   | 指令指标\n`---` | 文档标题\n`...` | 文档终结者"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "收集指标",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`?`  | 关键指标\n`:`  | 价值指标\n`-`  | 嵌套系列条目指示器\n`,`  | 单独的内联分支条目\n`[]` | 环绕串联系列分支\n`{}` | 环绕在线键控分支"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "别名指标",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`&` | 锚属性\n`*` | 别名指示符"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "特殊键",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`=`  | 默认“值”映射键\n`<<` | 合并来自另一个映射的键"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "标量指标",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`''`  | 环绕内联未转义标量\n`\"`   | 环绕内嵌转义标量\n`|`   | 块标量指示器\n`>`   | 折叠标量指示器\n`-`   | 剥离 chomp 修饰符（`\\|-` 或 `>-`）\n`+`   | 保留 chomp 修饰符（`\\|+` 或 `>+`）\n`1-9` | 显式缩进修饰符（`\\|1` 或 `>2`）。 <br/> 修饰符可以组合（`\\|2-`, `>+1`）"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "标签属性（通常未指定）",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`none`   | 未指定的标签（由应用程序自动解析）\n`!`      | 非特定标签（默认情况下，`!!map`/`!!seq`/`!!str`）\n`!foo`   | 主要（按照惯例，表示本地 `!foo` 标记）\n`!!foo`  | 次要的（按照惯例，表示 `tag:yaml.org,2002:foo`）\n`!h!foo` | 需要 `%TAG !h! <prefix>`（然后表示 `<prefix>foo`）\n`!<foo>` | 逐字标记（始终表示“foo”）\n<!--rehype:class=auto-wrap-->"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "杂项指标",
+      "kind": "qa",
+      "front": "`#`",
+      "back": "一次性评论指示器"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "杂项指标",
+      "kind": "qa",
+      "front": "<code>\\`@</code>",
+      "back": "两者都保留供将来使用"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "核心类型（默认自动标签）",
+      "kind": "qa",
+      "front": "`!!map`",
+      "back": "`{Hash table, dictionary, mapping}`"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "核心类型（默认自动标签）",
+      "kind": "qa",
+      "front": "`!!seq`",
+      "back": "`{List, array, tuple, vector, sequence}`"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "核心类型（默认自动标签）",
+      "kind": "qa",
+      "front": "`!!str`",
+      "back": "Unicode 字符串"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "转义码",
+      "kind": "text",
+      "body": "#### Numeric"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "转义码",
+      "kind": "text",
+      "body": "• `\\x12` (8-bit)\n• `\\u1234` (16-bit)\n• `\\U00102030` (32-bit)"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "转义码",
+      "kind": "text",
+      "body": "#### Protective"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "转义码",
+      "kind": "text",
+      "body": "• `\\\\` (\\\\)\n• `\\\"` (\")\n• `\\` ( )\n• `\\<TAB>` (TAB)"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "转义码",
+      "kind": "text",
+      "body": "#### C"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "转义码",
+      "kind": "text",
+      "body": "• `\\0` (NUL)\n• `\\a` (BEL)\n• `\\b` (BS)\n• `\\f` (FF)\n• `\\n` (LF)\n• `\\r` (CR)\n• `\\t` (TAB)\n• `\\v` (VTAB)"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "转义码",
+      "kind": "text",
+      "body": "#### 额外的"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "转义码",
+      "kind": "text",
+      "body": "• `\\e` (ESC)\n• `\\_` (NBSP)\n• `\\N` (NEL)\n• `\\L` (LS)\n• `\\P` (PS)"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "更多类型",
+      "kind": "qa",
+      "front": "`!!set`",
+      "back": "`{cherries, plums, apples}`"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "更多类型",
+      "kind": "qa",
+      "front": "`!!omap`",
+      "back": "`[one: 1, two: 2]`"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "与语言无关的标量类型",
+      "kind": "qa",
+      "front": "`{~, null}`",
+      "back": "空（无值）。"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "与语言无关的标量类型",
+      "kind": "qa",
+      "front": "`[1234, 0x4D2, 02333]`",
+      "back": "[十进制整数、十六进制整数、八进制整数]"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "与语言无关的标量类型",
+      "kind": "qa",
+      "front": "`[1_230.15, 12.3015e+02]`",
+      "back": "[固定浮点数，指数浮点数]"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "与语言无关的标量类型",
+      "kind": "qa",
+      "front": "`[.inf, -.Inf, .NAN]`",
+      "back": "[无穷大（浮点数），负数，不是数字]"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "与语言无关的标量类型",
+      "kind": "qa",
+      "front": "`{Y, true, Yes, ON}`",
+      "back": "布尔真"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "与语言无关的标量类型",
+      "kind": "qa",
+      "front": "`{n, FALSE, No, off}`",
+      "back": "布尔假"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "与语言无关的标量类型",
+      "kind": "text",
+      "body": "另见\n---"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "与语言无关的标量类型",
+      "kind": "text",
+      "body": "• [YAML Reference Card](https://yaml.org/refcard.html) _(yaml.org)_\n• [Learn X in Y minutes](https://learnxinyminutes.com/docs/zh-cn/yaml-cn/) _(learnxinyminutes.com)_\n• [YAML lint online](http://www.yamllint.com/) _(yamllint.com)_\n• [INI 格式配置文件备忘清单](./ini.md) _(jaywcjlove.github.io)_\n• [TOML 格式配置文件备忘清单](./toml.md) _(jaywcjlove.github.io)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/yaml.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/yaml.md",
+    "generatedAt": "2025-12-16T07:36:11.503Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

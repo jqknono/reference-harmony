@@ -1,0 +1,537 @@
+{
+  "id": "ansible",
+  "title": "ansible",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "命令行(ad-hoc)",
+      "startIndex": 18
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Ansible 备忘清单\n===="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "此快速参考备忘单提供了使用 [Ansible](https://ansible.com) 的各种方法。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "安装命令 | 环境\n:-|-\n`brew install ansible`   | macos\n`yum install -y ansible` | centos\n`pip install ansible`    | python"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "安装",
+      "kind": "text",
+      "body": "• [Ansible 官方文档](https://docs.ansible.com)"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "配置位置",
+      "kind": "text",
+      "body": "文件路径 | 说明\n:-|-\n`/etc/ansible/ansible.cfg`  | 系统范围的配置\n`~/ansible.cfg`             | 用户特定的配置\n`$pwd/ansible.cfg`          | 当前目录下的配置"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "配置位置",
+      "kind": "text",
+      "body": "配置文件优先级"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "配置位置",
+      "kind": "text",
+      "body": "• 如果没有任何其他配置文件，默认使用 `/etc/ansible/ansible.cfg`\n• `~/.ansible.cfg` `家`目录下的 `.ansible.cfg`\n• 当前目录下的 `ansible.cfg`，即在同一目录下 `ansible.cfg` 优先级高于 `~/.ansible.cfg`\n• 环境变量 `exoport ANSIBLE_CONFIG=/$DIR/ansible.cfg`"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "配置位置",
+      "kind": "text",
+      "body": "查看正在使用的 `ansible` 配置文件："
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "配置位置",
+      "kind": "code",
+      "lang": "bash",
+      "code": "ansible --version | grep \"config file\""
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "Inventory文件(hosts列表)",
+      "kind": "text",
+      "body": "#### 静态Inventory"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "Inventory文件(hosts列表)",
+      "kind": "text",
+      "body": "`/etc/ansible/hosts`"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "Inventory文件(hosts列表)",
+      "kind": "code",
+      "lang": "ini",
+      "code": "mail.example.com\n\n[webservers]\nfoo.example.com\nbar.example.com"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "Inventory 主机组使用多个IP和域名",
+      "kind": "code",
+      "lang": "ini",
+      "code": "[web]\n172.18.12.5[1:4]\n[webservers]\nwww[01:50].example.com"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "Inventory 主机组使用子主机组",
+      "kind": "code",
+      "lang": "ini",
+      "code": "[usa:children]\nsoutheast\nnortheast\nsouthwest\nnorthwest"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "给多台主机设置变量",
+      "kind": "text",
+      "body": "`group variables`\n如果组中的所有主机共享一个变量值，则可以一次将该变量应用于整个组"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "给多台主机设置变量",
+      "kind": "code",
+      "lang": "ini",
+      "code": "[atlanta]\nhost1\nhost2\n\n[atlanta:vars]\nntp_server=ntp.atlanta.example.com\nproxy=proxy.atlanta.example.com"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "text",
+      "body": "检查Inventory是否生效"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ansible all --list-hosts"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "text",
+      "body": "ping所有目标"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ansible all -m ping"
+    },
+    {
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "text",
+      "body": "ping本地(不使用SSH连接)"
+    },
+    {
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ansible all -i localhost, -e '{\"ansible_connection\": \"local\"}' -m ping"
+    },
+    {
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "text",
+      "body": "本地执行命令"
+    },
+    {
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ansible all -i localhost, -e '{\"ansible_connection\": \"local\"}' -a 'hostname'"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "text",
+      "body": "获取本地主机的信息"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ansible all -i localhost, -e '{\"ansible_connection\": \"local\"}' -m setup"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "text",
+      "body": "获取远程到本地"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ansible target -m fetch -a \"src=/tmp/seq dest=/tmp/seq\""
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "text",
+      "body": "拷贝本地到远程"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "ansible",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ansible target -m copy -a \"src=/tmp/seq dest=/tmp/seq\""
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Ansible 命令帮助",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ ansible\n$ ansible <host-pattern> [options]"
+    },
+    {
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "Ansible 命令帮助",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-34",
+      "sectionId": "s1",
+      "title": "Ansible 命令帮助",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-a MODULE_ARGS`, `--args=MODULE_ARGS` | 模块参数\n`--ask-vault-pass` | 询问保险库密码\n`-B SECONDS`, `--background=SECONDS` | 异步运行，X 秒后失败 (默认=N/A)\n`-C`, `--check` | 不要做任何改变；相反，尝试预测可能发生的一些变化\n`-D`, `--diff` | 更改(小)文件和模板时，显示这些文件中的差异； 与 `--check` 配合使用效果很好\n`-e EXTRA_VARS`, `--extra-vars=EXTRA_VARS` | 将附加变量设置为 key=value 或 YAML/JSON\n`-f FORKS`, `--forks=FORKS` | 指定要使用的并行进程数 (default=5)\n`-h`, `--help` | 显示此帮助信息并退出\n`-i INVENTORY`, `--inventory-file=INVENTORY` | 指定清单主机路径(默认=/etc/ansible/hosts)或逗号分隔的主机列表\n`-l SUBSET`, `--limit=SUBSET` | 进一步将选定主机限制为其他模式\n`--list-hosts` | 输出匹配主机列表；不执行任何其他操作\n`-m MODULE_NAME`, `--module-name=MODULE_NAME` | 要执行的模块名称 (default=command)\n`-M MODULE_PATH`, `--module-path=MODULE_PATH` | 指定模块库的路径 (default=None)\n`--new-vault-password-file=NEW_VAULT_PASSWORD_FILE` | 用于重新生成密钥的新保管库密码文件\n`-o`, `--one-line` | 压缩输出\n`--output=OUTPUT_FILE` | 用于加密或解密的输出文件名； 使用 - 用于标准输出\n`-P POLL_INTERVAL`, `--poll=POLL_INTERVAL` | 如果使用 -B 则设置轮询间隔(default=15)\n`--syntax-check` | 对 playbook 执行语法检查，但不要执行它\n`-t TREE`, `--tree=TREE` | 将输出记录到此目录\n`--vault-password-file=VAULT_PASSWORD_FILE` | 保险库密码文件\n`-v`, `--verbose` | 详细模式(-vvv 更多，-vvvv 启用连接调试)\n`--version` | 显示程序的版本号并退出\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "s1-35",
+      "sectionId": "s1",
+      "title": "Ansible 命令帮助",
+      "kind": "text",
+      "body": "控制谁以及如何连接到主机，连接选项："
+    },
+    {
+      "id": "s1-36",
+      "sectionId": "s1",
+      "title": "Ansible 命令帮助",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-k`, `--ask-pass` | 询问连接密码\n`--private-key=PRIVATE_KEY_FILE`, `--key-file=PRIVATE_KEY_FILE` | 使用此文件来验证连接\n`-u REMOTE_USER`, `--user=REMOTE_USER` | 以此用户身份连接(default=None)\n`-c CONNECTION`, `--connection=CONNECTION` | 要使用的连接类型 (default=smart)\n`-T TIMEOUT`, `--timeout=TIMEOUT` | 以秒为单位覆盖连接超时 (default=10)\n`--ssh-common-args=SSH_COMMON_ARGS` | 指定要传递给 sftp/scp/ssh 的常用参数 (e.g. ProxyCommand)\n`--sftp-extra-args=SFTP_EXTRA_ARGS` | 指定仅传递给 `sftp` 的额外参数 (e.g. -f, -l)\n`--scp-extra-args=SCP_EXTRA_ARGS` | 指定仅传递给 `scp` 的额外参数 (e.g. -l)\n`--ssh-extra-args=SSH_EXTRA_ARGS` | 指定仅传递给 `ssh` 的额外参数 (e.g. -R)\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "s1-37",
+      "sectionId": "s1",
+      "title": "Ansible 命令帮助",
+      "kind": "text",
+      "body": "控制您成为目标主机上的用户的方式和用户，特权升级选项："
+    },
+    {
+      "id": "s1-38",
+      "sectionId": "s1",
+      "title": "Ansible 命令帮助",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n~~`-s`~~, ~~`--sudo`~~ | 使用 sudo (nopasswd) 运行操作(已弃用，使用 become)\n~~`-U SUDO_USER`~~, ~~`--sudo-user=SUDO_USER`~~ | 所需的 sudo 用户(默认=root)(已弃用，使用 become)\n~~`-S`~~, ~~`--su`~~ | 使用 su 运行操作(已弃用，使用 become)\n~~`-R SU_USER`~~, ~~`--su-user=SU_USER`~~ | 以该用户身份使用 su 运行操作(默认 = root)(已弃用，使用 become)\n`-b`, `--become` | 使用 become 运行操作(不暗示密码提示)\n`--become-method=BECOME_METHOD` | 要使用的权限提升方法(默认=sudo)，有效选择：\\[ `sudo` \\| `su` \\| `pbrun` \\| `pfexec` \\| `runas` \\| `doas` \\| `dzdo` \\]\n`--become-user=BECOME_USER` | 以该用户身份运行操作(默认=root)\n~~`--ask-sudo-pass`~~ | 询问 sudo 密码(已弃用，使用 become)\n~~`--ask-su-pass`~~ | 询问 su 密码(已弃用，使用 become)\n`-K`, `--ask-become-pass` | 要求提权密码\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "s1-39",
+      "sectionId": "s1",
+      "title": "Ansible Galaxy 工具",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ansible-galaxy [delete|import|info|init|install|list|login|remove|search|setup] [--help] [options] ..."
+    },
+    {
+      "id": "s1-40",
+      "sectionId": "s1",
+      "title": "Ansible Galaxy 工具",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "Ansible Galaxy 工具",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-h`, `--help` | 显示此帮助信息并退出\n`-v`, `--verbose` | 详细模式(-vvv 更多，-vvvv 启用连接调试)\n`--version` | 显示程序的版本号并退出\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "s1-42",
+      "sectionId": "s1",
+      "title": "Ansible Galaxy 工具",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-43",
+      "sectionId": "s1",
+      "title": "Ansible Galaxy 工具",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ansible-galaxy search --author <AUTHOR>\n$ ansible-galaxy search --platforms <PLATFORM>\n$ ansible-galaxy search --galaxy-tags <TAG>\n$ ansible-galaxy info <ROLE>\n$ ansible-galaxy install <ROLE> -p <ROLE_DIRECTORY>\n$ ansible-galaxy install -r <ROLE1> <ROLE2> <ROLE3> ...\n$ ansible-galaxy list\n$ ansible-galaxy remove <ROLE>\n$ ansible-galaxy init <ROLE>\n$ ansible-galaxy init --offline <ROLE>"
+    },
+    {
+      "id": "s1-44",
+      "sectionId": "s1",
+      "title": "ansible-doc",
+      "kind": "text",
+      "body": "在本地访问文档"
+    },
+    {
+      "id": "s1-45",
+      "sectionId": "s1",
+      "title": "ansible-doc",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ansible-doc\n$ ansible-doc [options] [module...]"
+    },
+    {
+      "id": "s1-46",
+      "sectionId": "s1",
+      "title": "ansible-doc",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-47",
+      "sectionId": "s1",
+      "title": "ansible-doc",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-h`, `--help` | 显示此帮助信息并退出\n`-l`, `--list` | 列出可用模块\n`-M MODULE_PATH`, `--module-path=MODULE_PATH` | 指定模块库的路径 (default=None)\n`-s`, `--snippet` | 显示指定模块的剧本片段\n`-v`, `--verbose` | 详细模式(-vvv 更多，-vvvv 启用连接调试)\n`--version` | 显示程序的版本号并退出\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "s1-48",
+      "sectionId": "s1",
+      "title": "ansible-vault",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ansible-vault\n$ ansible-vault [create|decrypt|edit|encrypt|rekey|view] [--help] [options] vaultfile.yml"
+    },
+    {
+      "id": "s1-49",
+      "sectionId": "s1",
+      "title": "ansible-vault",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-50",
+      "sectionId": "s1",
+      "title": "ansible-vault",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`--ask-vault-pass` | 询问保险库密码\n`-h`, `--help` | 显示此帮助信息并退出\n`--new-vault-password-file=NEW_VAULT_PASSWORD_FILE` | 用于重新生成密钥的新保管库密码文件\n`--output=OUTPUT_FILE` | 用于加密或解密的输出文件名； 使用 - 用于标准输出\n`--vault-password-file=VAULT_PASSWORD_FILE` | 保险库密码文件\n`-v`, `--verbose` | 详细模式(-vvv 更多，-vvvv 启用连接调试)\n`--version` | 显示程序的版本号并退出\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "s1-51",
+      "sectionId": "s1",
+      "title": "ansible-playbook",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ansible-playbook\n$ ansible-playbook playbook.yml"
+    },
+    {
+      "id": "s1-52",
+      "sectionId": "s1",
+      "title": "ansible-playbook",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-53",
+      "sectionId": "s1",
+      "title": "ansible-playbook",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`--ask-vault-pass` | 询问保险库密码\n`-C`, `--check` | 不要做任何改变；相反，尝试预测可能发生的一些变化\n`-D`, `--diff` | 更改（小）文件和模板时，显示这些文件中的差异；与 `--check` 配合使用效果很好\n`-e EXTRA_VARS`, `--extra-vars=EXTRA_VARS` | 将附加变量设置为 key=value 或 YAML/JSON\n`--flush-cache` | 清除事实缓存\n`--force-handlers` | 即使任务失败也运行处理程序\n`-f FORKS`, `--forks=FORKS` | 指定要使用的并行进程数（默认值=5）\n`-h`, `--help` | 显示此帮助信息并退出\n`-i INVENTORY`, `--inventory-file=INVENTORY` | 指定清单主机路径（默认=/etc/ansible/hosts）或逗号分隔的主机列表\n`-l SUBSET`, `--limit=SUBSET` | 进一步将选定主机限制为其他模式\n`--list-hosts` | 输出匹配主机列表；不执行任何其他操作\n`--list-tags` | 列出所有可用的标签\n`--list-tasks` | 列出所有将要执行的任务\n`-M MODULE_PATH`, `--module-path=MODULE_PATH` | 指定模块库的路径（默认=无）\n`--new-vault-password-file=NEW_VAULT_PASSWORD_FILE` | 用于重新生成密钥的新保管库密码文件\n`--output=OUTPUT_FILE` | 用于加密或解密的输出文件名；使用 - 用于标准输出\n`--skip-tags=SKIP_TAGS` | 只运行标签与这些值不匹配的播放和任务\n`--start-at-task=START_AT_TASK` | 在匹配此名称的任务处启动剧本\n`--step` | 一步一步：在运行前确认每个任务\n`--syntax-check` | 对 playbook 执行语法检查，但不要执行它\n`-t TAGS`, `--tags=TAGS` | 只运行带有这些值标记的播放和任务\n`--vault-password-file=VAULT_PASSWORD_FILE` | 保险库密码文件\n`-v`, `--verbose` | 详细模式（-vvv 更多，-vvvv 启用连接调试）\n`--version` | 显示程序的版本号并退出\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "s1-54",
+      "sectionId": "s1",
+      "title": "ansible-playbook",
+      "kind": "text",
+      "body": "连接选项："
+    },
+    {
+      "id": "s1-55",
+      "sectionId": "s1",
+      "title": "ansible-playbook",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-k`, `--ask-pass` | 询问连接密码\n`--private-key=PRIVATE_KEY_FILE`, `--key-file=PRIVATE_KEY_FILE` | 使用此文件来验证连接\n`-u REMOTE_USER`, `--user=REMOTE_USER` | 以此用户身份连接(默认=None)\n`-c CONNECTION`, `--connection=CONNECTION` | 要使用的连接类型(默认=smart)\n`-T TIMEOUT`, `--timeout=TIMEOUT` | 以秒为单位覆盖连接超时(默认值 = 10)\n`--ssh-common-args=SSH_COMMON_ARGS` | 指定要传递给 sftp/scp/ssh 的常用参数(例如 ProxyCommand)\n`--sftp-extra-args=SFTP_EXTRA_ARGS` | 指定仅传递给 sftp 的额外参数(例如 -f、-l)\n`--scp-extra-args=SCP_EXTRA_ARGS` | 指定仅传递给 scp 的额外参数(例如 -l)\n`--ssh-extra-args=SSH_EXTRA_ARGS` | 指定仅传递给 ssh 的额外参数(例如 -R)\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "s1-56",
+      "sectionId": "s1",
+      "title": "ansible-playbook",
+      "kind": "text",
+      "body": "特权升级选项："
+    },
+    {
+      "id": "s1-57",
+      "sectionId": "s1",
+      "title": "ansible-playbook",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-s`, `--sudo` | 使用 sudo (nopasswd) 运行操作(已弃用，使用 become)\n`-U SUDO_USER`, `--sudo-user=SUDO_USER` | 所需的 sudo 用户(默认=root)(已弃用，使用become)\n`-S`, `--su` | 使用 su 运行操作(已弃用，使用 become)\n`-R SU_USER`, `--su-user=SU_USER` | 以该用户身份使用 su 运行操作(默认 = root)(已弃用，使用become)\n`-b`, `--become` | 使用 become 运行操作(不暗示密码提示)\n`--become-method=BECOME_METHOD` | 要使用的权限提升方法(默认=sudo)，有效选择：[ sudo \\| su \\| pbrun \\| pfexec \\| runas \\| doas \\| dzdo ]\n`--become-user=BECOME_USER` | 以该用户身份运行操作(默认=root)\n`--ask-sudo-pass` | 询问 sudo 密码(已弃用，使用 become)\n`--ask-su-pass` | 询问 su 密码(已弃用，使用 become)\n`-K`, `--ask-become-pass` | 要求提权密码\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "s1-58",
+      "sectionId": "s1",
+      "title": "ansible-pull",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ ansible-pull \n$ ansible-pull -U <repository> [options]"
+    },
+    {
+      "id": "s1-59",
+      "sectionId": "s1",
+      "title": "ansible-pull",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s1-60",
+      "sectionId": "s1",
+      "title": "ansible-pull",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`--accept-host-key` | 如果尚未添加，则添加 repo url 的主机密钥\n`--ask-vault-pass` | 询问保险库密码\n`-C CHECKOUT`, `--checkout=CHECKOUT` | 分支/标签/提交结帐。默认为存储库模块的行为。\n`-d DEST`, `--directory=DEST` | 签出存储库的目录\n`-e EXTRA_VARS`, `--extra-vars=EXTRA_VARS` | 将附加变量设置为 key=value 或 YAML/JSON\n`-f`, `--force` | 即使无法更新存储库也运行 playbook\n`--full` | 做一个完整的克隆，而不是一个浅的\n`-h`, `--help` | 显示此帮助信息并退出\n`-i INVENTORY`, `--inventory-file=INVENTORY` | 指定清单主机路径(默认=/etc/ansible/hosts)或逗号分隔的主机列表\n`-l SUBSET`, `--limit=SUBSET` | 进一步将选定主机限制为其他模式\n`--list-hosts` | 输出匹配主机列表；不执行任何其他操作\n`-m MODULE_NAME`, `--module-name=MODULE_NAME` | 存储库模块名称，ansible 将使用它来签出 repo。默认是 git\n`-M MODULE_PATH`, `--module-path=MODULE_PATH` | 指定模块库的路径(默认=无)\n`--new-vault-password-file=NEW_VAULT_PASSWORD_FILE` | 用于重新生成密钥的新保管库密码文件\n`-o`, `--only-if-changed` | 仅在存储库已更新时才运行 playbook\n`--output=OUTPUT_FILE` | 用于加密或解密的输出文件名；使用 - 用于标准输出\n`--purge` | 剧本运行后清除结帐\n`--skip-tags=SKIP_TAGS` | 只运行标签与这些值不匹配的播放和任务\n`-s SLEEP`, `--sleep=SLEEP` | 在开始之前休眠随机间隔(在 0 到 n 秒之间)。这是分散 git 请求的有用方法\n`-t TAGS`, `--tags=TAGS` | 只运行带有这些值标记的播放和任务\n`-U URL`, `--url=URL` | 剧本存储库的 URL\n`--vault-password-file=VAULT_PASSWORD_FILE` | 保险库密码文件\n`-v`, `--verbose` | 详细模式(-vvv 更多，-vvvv 启用连接调试)\n`--verify-commit` | 验证签出提交的 GPG 签名，如果失败则中止运行 playbook。这就需要对应的VCS模块来支持这样的操作\n`--version` | 显示程序的版本号并退出\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "s1-61",
+      "sectionId": "s1",
+      "title": "ansible-pull",
+      "kind": "text",
+      "body": "连接选项："
+    },
+    {
+      "id": "s1-62",
+      "sectionId": "s1",
+      "title": "ansible-pull",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`-k`, `--ask-pass` | 询问连接密码\n`--private-key=PRIVATE_KEY_FILE`, `--key-file=PRIVATE_KEY_FILE` | 使用此文件来验证连接\n`-u REMOTE_USER`, `--user=REMOTE_USER` | 以此用户身份连接(默认=无)\n`-c CONNECTION`, `--connection=CONNECTION` | 要使用的连接类型(默认=智能)\n`-T TIMEOUT`, `--timeout=TIMEOUT` | 以秒为单位覆盖连接超时(默认值 = 10)\n`--ssh-common-args=SSH_COMMON_ARGS` | 指定要传递给 sftp/scp/ssh 的常用参数(例如 ProxyCommand)\n`--sftp-extra-args=SFTP_EXTRA_ARGS` | 指定仅传递给 sftp 的额外参数(例如 -f、-l)\n`--scp-extra-args=SCP_EXTRA_ARGS` | 指定仅传递给 scp 的额外参数(例如 -l)\n`--ssh-extra-args=SSH_EXTRA_ARGS` | 指定仅传递给 ssh 的额外参数(例如 -R)\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "s1-63",
+      "sectionId": "s1",
+      "title": "ansible-pull",
+      "kind": "text",
+      "body": "特权升级选项："
+    },
+    {
+      "id": "s1-64",
+      "sectionId": "s1",
+      "title": "ansible-pull",
+      "kind": "text",
+      "body": ":- | -\n:- | -\n`--ask-sudo-pass` | 询问 sudo 密码(已弃用，使用become)\n`--ask-su-pass` | 询问 su 密码(已弃用，使用become)\n`-K`, `--ask-become-pass` | 要求提权密码\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "s1-65",
+      "sectionId": "s1",
+      "title": "ansible常用模块",
+      "kind": "text",
+      "body": "`Ansible` 的模块已经高达 `3000+` 之多。但是个人在日常工作中，比较常见的大约 `20` 多个"
+    },
+    {
+      "id": "s1-66",
+      "sectionId": "s1",
+      "title": "ansible常用模块",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$  ansible-doc --list  #查询所有模块\n$  ansible <host-pattern> [options] # 标准使用方式"
+    },
+    {
+      "id": "s1-67",
+      "sectionId": "s1",
+      "title": "ansible常用模块",
+      "kind": "text",
+      "body": "---\n| :-               | -                                                | -                                                            |\n| ---------------- | ------------------------------------------------ | ------------------------------------------------------------ |\n| ping             | 检查指定节点机器是否还能连通                     | `ansible all -m ping`                                        |\n| command          | 用于在各受控端节点运行指定的命令                 | `ansible all -m command -a 'hostname'`                       |\n| shell            | shell模块可以特殊字符，而command是不支持         | `ansible all -m shell -a 'hostname && date'`                 |\n| hostname         | 修改远程受控节点的主机名的模块                   | `ansible -i /opt/hosts xx -m hostname -a 'name=ansible-client-199'` |\n| copy             | 在远程主机执行复制操作文件                       | `ansible all -m copy -a 'src=/etc/hosts dest=/opt/hosts backup=yes'` |\n| fetch            | 从远程主机获取文件到管理节点，但是不支持目录操作 | `ansible all -m fetch -a \"src=/etc/yum.repos.d/epel.repo dest=/usr/local/src\"` |\n| script           | 管理端一个脚本，然后在远程服务器上执行           | `ansible all  -m script -a '/root/time.sh'`                  |\n| file             | 主要用于远程主机上的文件和目录操作               | `ansible all -m file -a \"path=/root/rsync.password mode=600 state=touch\"` |\n| cron             | 管理执行任务计划模块（增删改查）                 | `ansible all -m cron -a \"name='test a job' user=root job='/bin/sh /server/scripts/test.sh' minute=* hour=* day=* month=* weekday=*\"` |\n| yum              | RedHat和CentOS的软件包安装和管理                 | 安装<br />`ansible all -m yum -a \"name=httpd state=present\"`<br/>`ansible all -m yum -a \"name=httpd state=installed\"`<br />卸载<br />`ansible all -m yum -a \"name=httpd state=absent\"`<br/>`ansible all -m yum -a \"name=httpd state=removed\"` |\n| `service`和`systemd` | 用于管理远程主机的服务                           | `ansible all -m systemd -a \"name=httpd state=started enabled=yes\"`<br />`ansible all -m systemd -a \"name=httpd state=restarted\"` |\n| user             | useradd, userdel, usermod                        | `ansible all -m user -a 'name=haha remove=no state=absent'`  |\n| group            | groupadd, groupdel, groupmod                     | `ansible all -m group -a 'name=mygroup state=absent'`        |\n| setup            | 可收集远程主机的facts变量的信息                  | `ansible all -m setup -a 'filter=ansible_default_ipv4'`      |\n| authorized_key   | 为特定的用户账号添加或删除 SSH authorized keys   | `ansible all -m authorized_key -a \"user=root key='{{lookup('file','/root/.ssh/id_rsa.pub')}}' path=/root/.ssh/authorized_keys manage_dir=no\"` |\n| replace          | 和 sed 命令比较类似，用于正则匹配和替换          | `ansible all -m replace -a \"path=/etc/fstab regexp=^(UUID.*) replace='#\\1'\"` |\n| lineinfile       | 正则匹配，更改某个关键参数值                     | `ansible all -m lineinfile -a \"path=/etc/selinux/config regexp='^SELINUX=' line='SELINUX=disabled'\"` |\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "s1-68",
+      "sectionId": "s1",
+      "title": "ansible常用模块",
+      "kind": "text",
+      "body": "另见\n---"
+    },
+    {
+      "id": "s1-69",
+      "sectionId": "s1",
+      "title": "ansible常用模块",
+      "kind": "text",
+      "body": "• [Getting started with Ansible](https://docs.ansible.com/ansible/latest/getting_started/index.html)\n• [Introduction to ad hoc commands](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html)\n• [Ansible cheatsheet](https://github.com/luckylittle/ansible-cheatsheet/blob/master/ansible-cheatsheet.txt)\n• [Ansible Tutorial for Beginners: Ultimate Playbook & Examples](https://spacelift.io/blog/ansible-tutorial)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/ansible.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/ansible.md",
+    "generatedAt": "2025-12-16T07:36:11.111Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

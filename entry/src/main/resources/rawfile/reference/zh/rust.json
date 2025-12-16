@@ -1,0 +1,1752 @@
+{
+  "id": "rust",
+  "title": "rust",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Rust 备忘清单\n===="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Rust 快速参考备忘单，旨在为编写基本语法和方法提供帮助。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "配置 vscode 调试",
+      "kind": "text",
+      "body": "[配置参考](https://github.com/vadimcn/vscode-lldb/blob/master/MANUAL.md#source-path-remapping)。下载 CodeLLDB，选择 rust 自动生成 launch.json 文件"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "配置 vscode 调试",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"configurations\": [\n    // 添加一下行，使 vec/hashmap 等类型显示正常\n    \"sourceLanguages\": [\"rust\"]\n  ]\n}"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "配置 vscode 调试",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "配置 vscode 调试",
+      "kind": "text",
+      "body": "将编译文件与标准库的位置进行映射"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "配置 vscode 调试",
+      "kind": "code",
+      "lang": "json",
+      "code": "{\n  \"lldb.launch.sourceMap\": {\n    // 你自己的映射 hash 和映射路径\n    \"/rustc/4b91a6ea7258a947e59c6522cd5898e7c0a6a88f\": \"/Users/feiwu/.rustup/toolchains/stable-aarch64-apple-darwin/lib/rustlib/src/rust\"\n  }\n}"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "Hello_World.rs",
+      "kind": "code",
+      "lang": "rust",
+      "code": "fn main() {\n  println!(\"Hello, World!\");\n}"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "Hello_World.rs",
+      "kind": "text",
+      "body": "#### 编译运行"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "Hello_World.rs",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ rustc Hello_World.rs\n$ ./Hello_World\n\nHello, World!"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "原始类型",
+      "kind": "text",
+      "body": ":-| :-\n:-| :-\n`bool`                    | 布尔值 (`true` _/_ `false`)\n`char`                    | 字符\n`f32`, `f64`              | 32 位、64 位浮点数\n`i64`, `i32`, `i16`, `i8` | 有符号 16- ... 整数\n`u64`, `u32`, `u16`, `u8` | 无符号 16 位，... 整数\n`isize`                   | 指针大小的有符号整数\n`usize`                   | 指针大小的无符号整数"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "原始类型",
+      "kind": "text",
+      "body": "查看: [Rust 类型](#rust-类型)"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "格式化",
+      "kind": "code",
+      "lang": "rust",
+      "code": "// 单个占位符\nprintln!(\"{}\", 1);\n// 多个占位符\nprintln!(\"{} {}\", 1, 3);\n// 位置参数\nprintln!(\"{0} 是 {1} {2}，{0} 也是 {3} 编程语言\", \"Rust\", \"cool\", \"language\", \"safe\");\n// 命名参数\nprintln!(\"{country} 是一个团结的国家\", country = \"China\");\n// 占位符特征 :b 表示二进制， :0x 表示十六进制， :o 表示八进制\nprintln!(\"让我们打印 76 是二进制的 {:b} ，十六进制等价物是 {:0x} 八进制等价物是 {:o}\", 76, 76, 76);\n// 调试特征\nprintln!(\"使用调试特征 {:?} 在此处打印我们想要的任何内容\", (76, 'A', 90));\n\n// 1.58 中的新格式字符串\nlet x = \"world\";\nprintln!(\"Hello {x}!\");"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "打印风格",
+      "kind": "code",
+      "lang": "rust",
+      "code": "// 打印输出\nprint!(\"Hello World\\n\");\n// 打印后追加新行\nprintln!(\"追加新行\");\n// 打印为错误\neprint!(\"这是一个错误\\n\");\n// 打印为新行错误\neprintln!(\"这是新行的错误\");"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "变量",
+      "kind": "code",
+      "lang": "rust",
+      "code": "// 初始化和声明变量\nlet some_variable = \"This_is_a_variable\";\n// 使变量可变\nlet mut mutable_variable = \"Mutable\";\n// 分配多个变量\nlet (name, age) = (\"ElementalX\", 20);\n// （全局）常量\nconst SCREAMING_SNAKE_CASE:i64 = 9;"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "注释",
+      "kind": "code",
+      "lang": "rust",
+      "code": "// 行注释\n/*.............块注释 */\n/// 外部文档注释\n//! 内部文档评论"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "注释",
+      "kind": "text",
+      "body": "另见: [注释](https://doc.rust-lang.org/reference/comments.html) _(doc.rust-lang.org)_"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "函数",
+      "kind": "code",
+      "lang": "rust",
+      "code": "fn test(){\n  println!(\"这是一个函数!\");\n}\nfn main(){\n  test();\n}"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "函数",
+      "kind": "text",
+      "body": "查看: [Functions](#rust-函数)"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "声明宏",
+      "kind": "code",
+      "lang": "rust",
+      "code": "macro_rules! foo {\n  ($l:tt) => { bar!($l); }\n}\nmacro_rules! bar {\n  (3) => {}\n}\nfoo!(3);"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "元变量",
+      "kind": "text",
+      "body": ":- | :-\n:- | :-\n`item` | 程序项\n`block` | 块表达式\n`stmt` | 语句<br/> _(注意此选择器不匹配句尾的分号)_\n`pat` | 模式\n`expr` | 表达式\n`ty` | 类型\n`ident` | 标识符或关键字\n`path` | 类型表达式 形式的路径\n`tt` | `token` 树<br/> _(单个 `token` 或宏匹配定界符 `()`、`[]` 或 `{}` 中的标记)_\n`meta` | 属性，属性中的内容\n`lifetime` | 生存期 `token`\n`vis` | 可能为空的可见性限定符\n`literal` | 匹配 `-?` 字面量表达式"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "结构体",
+      "kind": "text",
+      "body": "结构体是一个使用关键字 `struct` 定义的标称型(nominal)结构体类型"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "结构体",
+      "kind": "code",
+      "lang": "rust",
+      "code": "struct Point { x: i32, y: i32 }\nlet p = Point { x: 10, y: 11 };\nlet px: i32 = p.x;"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "结构体",
+      "kind": "text",
+      "body": "#### 元组结构体"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "结构体",
+      "kind": "code",
+      "lang": "rust",
+      "code": "struct Color (i32, i32, i32);\nlet black = Color(0,0,0);"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "结构体",
+      "kind": "text",
+      "body": "#### 单元结构体"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "结构体",
+      "kind": "text",
+      "body": "不关心该类型的内容, 只关心它的行为。"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "结构体",
+      "kind": "code",
+      "lang": "rust",
+      "code": "struct Solution;\nimpl Solution{\n    // ...\n}"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "语句与表达式",
+      "kind": "text",
+      "body": "在 rust 中，语句无需返回值，而表达式总要返回值"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "语句与表达式",
+      "kind": "text",
+      "body": "#### 语句"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "语句与表达式",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let a = \"hello\".to_string();\nlet b = a + \" world\";\nprintln!(\"{}\", b);"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "语句与表达式",
+      "kind": "text",
+      "body": "#### 表达式"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "语句与表达式",
+      "kind": "code",
+      "lang": "rust",
+      "code": "fn main(){\n    let x = {\n        let a = \"hello\".to_string();\n        a + \" world\"\n    };\n    println!(\"{}\", x);\n    // hello world\n}"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "区间表达式",
+      "kind": "text",
+      "body": "产生式/句法规则         | 句法         | 类型                        | 区间语义\n:-                   | :-           | :-                         | :-\nRangeExpr            | `start..end` | std::ops::Range            | start ≤ x < end\nRangeFromExpr        | `start..`    | std::ops::RangeFrom        | start ≤ x\nRangeToExpr          | `..end`      | std::ops::RangeTo          | x < end\nRangeFullExpr        | `..`         | std::ops::RangeFull        | -\nRangeInclusiveExpr   | `start..=end`| std::ops::RangeInclusive   | start ≤ x ≤ end\nRangeToInclusiveExpr | `..=end`     | std::ops::RangeToInclusive | x ≤ end"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "区间表达式",
+      "kind": "text",
+      "body": "Rust 类型\n--------"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "类型别名",
+      "kind": "code",
+      "lang": "rust",
+      "code": "type Point = (u8, u8);\nlet p: Point = (41, 68);"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "整数",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let mut a: u32 = 8;\nlet b = 877_u64;\nlet c = 8999i64;\nlet d = -90;"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "浮点数",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let mut sixty_bit_float: f64 = 89.90;\nlet thirty_two_bit_float: f32 = 7.90;\nlet just_a_float = 69.69;"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "布尔值",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let true_val: bool = true;\nlet false_val: bool = false;\nlet just_a_bool = true;\nlet is_true = 8 < 5;  // => false"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "字符",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let first_letter_of_alphabet = 'a';\nlet explicit_char: char = 'F';\nlet implicit_char = '8';\nlet emoji = \"\\u{1f600}\";   // => 😀"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "字符串字面量",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let community_name = \"AXIAL\";\nlet no_of_members: &str = \"ten\";\nprintln!(\"社区的名称是 {community_name}，它有 {no_of_members} 个成员\");"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "字符串字面量",
+      "kind": "text",
+      "body": "查看: [字符串](#rust-字符串)"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "text",
+      "body": "这里介绍的是固定长度的数组。rust 中常用的是集合类型 vec 表示的[动态数组](#rust-动态数组)"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "code",
+      "lang": "rust",
+      "code": "┌─────┬─────┬─────┬─────┬─────┬─────┐\n| 92  | 97  | 98  | 99  | 98  | 94  |\n└─────┴─────┴─────┴─────┴─────┴─────┘\n   0     1     2     3     4     5"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let array: [i64; 6] = [92,97,98,99,98,94];"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "text",
+      "body": "----"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let mut array: [i32 ; 3] = [2,6,10];\narray[1] = 4;\narray[2] = 6;"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "数组",
+      "kind": "text",
+      "body": "使用 `mut` 关键字使其可变"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "切片",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let mut array: [ i64; 4] = [1,2,3,4];\n// 下限包括在内，上限不包括在内\nlet mut slices: &[i64] = &array[0..3]\nprintln!(\"切片的元素是：{slices:?}\");"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "元组",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let tuple = (1, 'A' , \"Cool\", 78, true);"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "元组",
+      "kind": "text",
+      "body": "Rust 字符串\n--------------"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "字符串字面量",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let cs:&str = \"备忘清单\";\n// => 为开发者分享备忘单\nprintln!(\"为开发者分享 {cs}\");"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "字符串对象",
+      "kind": "code",
+      "lang": "rust",
+      "code": "// 创建一个空字符串对象\nlet my_string = String::new();\n// 转换为字符串对象\nlet S_string = a_string.to_string()\n// 创建一个初始化的字符串对象\nlet lang = String::from(\"Rust\");  \nprintln!(\"First language is {lang}\");"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "```rust\nlet rand = String::from(\"Random String\");\nrand.capacity()  // => 13"
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n以字节为单位计算字符串的容量\n\n### with_capacity()"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let s = String::with_capacity(10);"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n指定一个足够大的容量值,来减少内存拷贝\n\n### .contains()"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let name = String::from(\"ElementalX\");\nname.contains(\"Element\") // => true"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n检查子字符串是否包含在原始字符串中\n\n### 添加单个字符"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut half_text = String::from(\"Hal\");\nhalf_text.push('f');    // => Half"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 添加整个字符串"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut hi = String::from(\"Hey there...\");\nhi.push_str(\"How are you doing??\");\n// => Hey there...How are you doing??\nprintln!(\"{hi}\");"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 原生字符串"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let str1 = r#\"\\hello\"#;\nprintln!(\"{}\", str1);\n// \\hello"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n原生字符串，无需增加转义字符（`\\`）转义\n\n### 字节和字节串"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let str2 = b'a';\nprintln!(\"{}\", str2);\n// 97\nlet str3 = b\"\\\\hello\";\nprintln!(\"{:?}\", str3);\n// [92, 104, 101, 108, 108, 111]\nlet str4 = br#\"\\hello\"#;\nprintln!(\"{:?}\", str4);\n// [92, 104, 101, 108, 108, 111]"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\nRust 动态数组\n-----------\n\n### 创建动态数组"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let v: Vec<i32> = Vec::new();\n// 使用宏\nlet v1 = vec![1, 2, 3];"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 读取元素"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let v = vec![1, 2, 3, 4, 5];"
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let element = &v[100];\n// panic，越界\nlet element2 = v.get(100);\nprintln!(\"{:?}\", element2);\n//None"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 遍历数组\n\n1. 只读取数组中的元素\n\n   ```rust\n   let v = vec![1, 2, 3];\n   for i in &v {\n       println!(\"{}\", i);\n   }\n   ```\n\n2. 遍历的同时修改数组中的元素\n\n   ```rust\n   let mut v = vec![1, 2, 3];\n   for i in &mut v {\n       *i += 10\n   }\n   ```\n\n### 多维数组"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "j0   j1   j2   j3   j4   j5\n┌────┬────┬────┬────┬────┬────┐\ni0 | 1  | 2  | 3  | 4  | 5  | 6  |\n├────┼────┼────┼────┼────┼────┤\ni1 | 6  | 5  | 4  | 3  | 2  | 1  |\n└────┴────┴────┴────┴────┴────┘"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n----"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let arr = vec![\nvec![1, 2, 3, 4, 5, 6],\nvec![6, 5, 4, 3, 2, 1]\n];"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 常用方法\n<!--rehype:wrap-class=col-span-2-->\n\n-|:-\n-|:-\n`len()`                   | 返回 `vec` 的长度\n`is_empty()`              | `vec` 是否为空\n`push(value)`             | 在 `vec` 尾部插入元素\n`pop()`                   | 删除并返回 `vec` 尾部的元素或者返回 `None`\n`insert(index,element)`   | 在指定索引处插入元素\n`remove(index)`           | 删除指定索引处的元素并返回被删除的元素，索引越界将 panic 报错退出\n`clear()`                 | 清空 `vec`\n`append(vec)`             | 将另一个 `vec` 中的所有元素追加移入 `vec` 中，移动的 `vec` 变为空\n`truncate(len)`           | 将 `vec` 截断到指定长度,多余的元素被删除\n`retain(f)`               | 根据给定的函数，保留满足条件的元素\n`drain(range)`            | 删除 `vec` 中指定范围的元素,同时返回一个迭代该范围所有元素的迭代器\n`split_off(index)`        | 切分 `vec`，索引左边的元素保留在原 `vec` 中(含索引)，索引右边的元素(不含索引)在返回的 `vec` 中\n\nRust HashMap\\<K,V>\n--------\n\n### 使用"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "use std::collections::HashMap;"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn main() {\nlet mut map: HashMap<String, i32> = HashMap::new();\nmap.insert(String::from(\"blue\"), 100);\n// 查询Yellow对应的值，若不存在则插入默认值\nlet v: &mut i32 =\nmap.entry(\"Yellow\".to_string()).or_insert(5);\nlet v: &mut i32 =\nmap.entry(\"Yellow\".to_string()).or_insert(50); // 不会修改值\n}"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 获取元素"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut scores = HashMap::new();"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "scores.insert(String::from(\"Blue\"), 10);\nscores.insert(String::from(\"Yellow\"), 50);"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let team_name = String::from(\"Blue\");\nlet score: Option<&i32> = scores.get(&team_name);"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 遍历"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut scores = HashMap::new();"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "scores.insert(String::from(\"Blue\"), 10);\nscores.insert(String::from(\"Yellow\"), 50);"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "for (key, value) in &scores {\nprintln!(\"{}: {}\", key, value);\n}"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### vec -> HashMap"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let teams_list = vec![\n(\"中国队\".to_string(), 100),\n(\"美国队\".to_string(), 10),\n(\"日本队\".to_string(), 50),\n];\nlet teams_map: HashMap<_,_> =\nteams_list.into_iter().collect();"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n----"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let teams = vec![String::from(\"blue\"),String::from(\"red\")];\nlet intial_scores = vec![10,50];\nlet scores:HashMap<_,_> =\nteams.iter().zip(intial_scores.iter()).collect();"
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\nOption & Result\n--------\n\n### Option"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "enum Option<T> {\nSome(T),\nNone,\n}"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 使用"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn main(){\nlet a = Some(5);\n// 直接获取原始值\nprintln!(\"{}\", a.unwrap());\n// 给出错误信息\nlet x: Option<&str> = None;\nx.expect(\"fruits are healthy\"); // panics 带有 `fruits are healthy`\n}"
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Result"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "enum Result<T, E> {\nOk(T),\nErr(E),\n}"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n#### 使用"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "use std::fs::File;"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn main() {\nlet f: Result<File,Error> = File::open(\"hello.txt\");\nlet f = match f {\nOk(file) => file,\nErr(error) => {\npanic!(\"Problem opening the file: {:?}\", error)\n},\n};\n}"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 宏 `?`\n\n`?` 只能用于返回结果是 Result 或者 Option 的函数,或者实现了 Try 类型"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "use std::fs::File;\nuse std::io::{self, Read};"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn read_username_from_file() -> Result<String, io::Error> {\nlet mut s = String::new();\nFile::open(\"hello.txt\")?.read_to_string(&mut s)?;\nOk(s)\n}"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n----"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn first(arr: &[i32]) -> Option<&i32> {\nlet v = arr.get(0)?;\nSome(v)\n}"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n<!--rehype:className=wrap-text -->\n\n枚举\n--------\n\n### 在结构体中使用枚举"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "enum IpAddrKind {\nV4,\nV6,\n}\nstruct IpAddr {\nkind: IpAddrKind,\naddress: String,\n}"
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn main(){\nlet ip = IpAddr{\nkind: IpAddrKind::V4,\naddress: String::from(\"127.0.0.1\")\n};\n}"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n### 枚举的变体"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "enum IpAddrKind {\nV4(u8, u8, u8, u8),\nV6(String),\n}"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn main() {\nlet home = IpAddrKind::V4(127, 0, 0, 1);\nlet loopback = IpAddrKind::V6(String::from(\"::1\"));\n}"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n----"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "enum Message{\nQuit,\nMove {x:i32, y:i32},\nWrite(String),\nChangeColor(i32, i32, i32),\n}\nfn main(){\nlet q = Message::Quit;\nlet m = Message::Move {x:10, y:20};\nlet w = Message:: Write(String::from(\"hello\"));\nlet c = Message::ChangeColor(10, 20, 30);\n}"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n### 模式匹配结构体"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "#[derive(Debug)]\nenum Grade {\nA,\nB,\nC,\n}\nenum Subject {\nMath(Grade),\nEnglish(Grade),\n}"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn subject_grade(sub: Subject) {\nmatch sub {\nSubject::Math(grade) => println!(\"The Math is {:?}\", grade),\nSubject::English(grade) => println!(\"The Math is {:?}\", grade),\n}\n}"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn main() {\nsubject_grade(Subject::Math(Grade::A));\n}"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\nRust 运算符\n-----------\n\n### 比较运算符\n\n:-|:-\n:-|:-\n`e == f` | `e` 等于 `f`\n`e != f` | `e` 不等于 `f`\n`e < f`  | `e` 小于 `f`\n`e > f`  | `e` 大于 `f`\n`e <= f` | `e` 小于或等于 `f`\n`e >= f` | `e` 大于或等于 `f`\n\n----"
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let (e, f) = (1, 100);\nlet greater = f > e;        // => true\nlet less = f < e;           // => false\nlet greater_equal = f >= e; // => true\nlet less_equal = e <= f;    // => true\nlet equal_to = e == f;      // => false\nlet not_equal_to = e != f;  // => true"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 算术运算符\n\n:-|:-\n:-|:-\n`a +  b` | `a` 被添加到 `b`\n`a -  b` | 从 `a` 中减去`b`\n`a /  b` | `a` 除以 `b`\n`a % b`  | 通过与 `b` 相除得到 `a` 的余数\n`a * b`  | `a` 与 `b` 相乘\n\n----"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let (a, b) = (4, 5);\nlet sum: i32 = a + b;            // => 9\nlet subtractions: i32 = a - b;   // => -1\nlet multiplication: i32 = a * b; // => 20\nlet division: i32 = a / b;       // => 0\nlet modulus: i32 = a % b;        // => 4"
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 位运算符\n\n运算符 | 描述\n:- | :-\n`g & h`  | 二进制与\n`g \\| h`  | 二进制或\n`g ^ h`  | 二进制异或\n`g ~ h`  | 二进制补码\n`g << h` | 二进制左移\n`g >> h` | 二进制右移\n\n----"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let (g, h) = (0x1, 0x2);\nlet bitwise_and = g & h;  // => 0\nlet bitwise_or = g | h;   // => 3\nlet bitwise_xor = g ^ h;  // => 3\nlet right_shift = g >> 2; // => 0\nlet left_shift = h << 4;  // => 32"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 逻辑运算符\n\n示例 | 意义\n:- | :-\n`c && d` | 两者都是真的_(AND)_\n`c \\|\\| d` | 要么是真的_(OR)_\n`!c`     | `c` 为假 _(NOT)_\n\n----"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let (c, d) = (true, false);\nlet and = c && d;  // => false\nlet or  = c || d;  // => true\nlet not = !c;      // => false"
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 复合赋值运算符"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut k = 9;\nlet mut l = k;"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n----\n\n运算符 | 描述\n:- | :-\n`k += l`  | 添加一个值并赋值，然后 `k=9`\n`k -= l`  | `Substrate` 一个值并赋值，然后 `k=18`\n`k /= l`  | 除以一个值并赋值，然后 `k=9`\n`k *= l`  | 乘一个值并赋值，然后 `k=81`\n`k \\|= l`  | 按位或并赋值，则 `k=89`\n\nRust 流程控制\n------------\n\n### If 表达式"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let foo = 12;\nlet bar = 13;\nif foo == bar {\nprintln!(\"foo 等于 bar\");\n} else if foo < bar {\nprintln!(\"foo 小于 bar\");\n} else if foo != bar {\nprintln!(\"foo 不等于 bar\");\n} else {\nprintln!(\"Nothing\");\n}"
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### For 循环\n<!--rehype:wrap-class=col-span-2-->"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut vec = [1, 2, 3];\nfor v in &mut vec {\n*v -= 1;\nprintln!(\"v 的值为：{v}\");\n}"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n使用方法                      | 等价使用方式                         | 所有权\n:-|:-:|:-\nfor item in collection      | for item in collection.into_iter() | 转移所有权\nfor item in &collection     | for item in collection.iter()      | 不可变借用\nfor item in &mut collection | for item in collection.iter_mut()  | 可变借用\n\n### While 循环"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut check =  0;\nwhile check < 11{\nprintln!(\"check 是：{check}\");\ncheck += 1;\nprintln!(\"递增后：{check}\");\nif check == 10{\nbreak; // 停止 while\n}\n}"
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Loop 循环"
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "loop {\nprintln!(\"你好，世界永远！\");\n}"
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n无限循环表示\n\n### Continue 继续声明"
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "for (v, c) in (0..10+1).enumerate(){\nprintln!(\"{c} 数字循环\");\nif v == 9{\nprintln!(\"我们继续？\");\ncontinue;\n}\nprintln!{\"v 的值为：{v}\"};\n}"
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Break 中断语句\n\n`break` 可以单独使用，也可以带一个返回值"
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut i = 1;\nlet res = loop {\nprintln!(\"i 是 {i}\");\nif i > 100 {\nbreak i - 100;\n}\ni *= 2;\n}"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "println!(\"{res}\"); // 28"
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\nRust 模式匹配\n--------\n\n### match\n<!--rehype:wrap-class=row-span-2-->\n\nmatch 模式匹配，使用 `a | b` 表示匹配 a **或** b，使用 `_`，表示匹配剩余所有选项"
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn main(){\nlet grade = Grade::A;\nmatch grade {\nGrade::A => println!(\"Good\"),\nGrade::B => println!(\"Not bad\"),\nGrade::C | Grade::D => println!(\"Come on\"),\n_ => println!(\"emmm\"),\n}\n}"
+    },
+    {
+      "id": "intro-143",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "enum Grade {\nA,\nB,\nC,\nD,\nE,\nF,\n}"
+    },
+    {
+      "id": "intro-144",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n#### `matches!` 宏\n\n它可以将一个表达式跟模式进行匹配，然后返回匹配的结果 `true` 或 `false`"
+    },
+    {
+      "id": "intro-145",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "assert!(matches!('x' ',A'..='Z' | 'a'..='z'));\nassert!(matches!(Some(101), Some(x) if x > 100));"
+    },
+    {
+      "id": "intro-146",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n### if let 匹配\n\nmatch 表达式需要匹配所有的枚举才能结束，但通常我们只需要匹配我们需要的值"
+    },
+    {
+      "id": "intro-147",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let x = 3;\nmatch Some(x) {\nSome(3) => println!(\"I guess that x is 3\"),\n_ => ()\n}"
+    },
+    {
+      "id": "intro-148",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n使用 `if let`"
+    },
+    {
+      "id": "intro-149",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let x = 3;\nif let Some(3) = Some(x) {\nprintln!(\"I guess that x is 3\");\n}"
+    },
+    {
+      "id": "intro-150",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### while let"
+    },
+    {
+      "id": "intro-151",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut stack = vec![];"
+    },
+    {
+      "id": "intro-152",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "stack.push(1);\nstack.push(2);\nstack.push(3);"
+    },
+    {
+      "id": "intro-153",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "while let Some(top) = stack.pop() {\nprintln!(\"{}\", top);\n}"
+    },
+    {
+      "id": "intro-154",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 其它模式匹配\n\n#### for 循环迭代器"
+    },
+    {
+      "id": "intro-155",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "for (i, v) in collection.iter().enumerate(){}"
+    },
+    {
+      "id": "intro-156",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n#### let"
+    },
+    {
+      "id": "intro-157",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let (x, _, y) = (1, 2, 3);\nprintln!(\"{x},{y}\");"
+    },
+    {
+      "id": "intro-158",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n----"
+    },
+    {
+      "id": "intro-159",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn get_count_item(s: &str) -> (&str, &str) {\nlet mut it = s.split(' ');\nlet (Some(str1),Some(str2)) = (it.next(),it.next()) else {\npanic!(\"Can't segment count item pair\");\n};\n(str1, str2)\n}"
+    },
+    {
+      "id": "intro-160",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 函数中的模式匹配"
+    },
+    {
+      "id": "intro-161",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn add((x, y): (i32, i32)) -> i32 {\nx + y\n}"
+    },
+    {
+      "id": "intro-162",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn main(){\nlet sum = add(1, 2);\nprintln!(\"{sum}\");\n}"
+    },
+    {
+      "id": "intro-163",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 忽略参数\n<!--rehype:wrap-class=row-span-2-->\n\n#### 使用 `..` 忽略剩余参数"
+    },
+    {
+      "id": "intro-164",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "struct Point {\nx: i32,\ny: i32,\nz: i32,\n}"
+    },
+    {
+      "id": "intro-165",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let origin = Point { x: 0, y: 0, z: 0 };"
+    },
+    {
+      "id": "intro-166",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "match origin {\nPoint { x, .. } => println!(\"x is {}\", x),\n}"
+    },
+    {
+      "id": "intro-167",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n#### 使用 `_` 忽略部分参数"
+    },
+    {
+      "id": "intro-168",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let hello = ('h', 'e', 'l', 'l', 'o');"
+    },
+    {
+      "id": "intro-169",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "match hello {\n(h, _, _, l, o) => {\nprintln!(\"char: {}, {}, {}\", h, l, o)\n},\n}"
+    },
+    {
+      "id": "intro-170",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n### 匹配命名变量\n\n以下代码，只要给定的 x 是 Some 类型，但 Some 中的值不是 1，都会匹配到 y"
+    },
+    {
+      "id": "intro-171",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let x = Some(10);\nmatch x {\nSome(1) => println!(\"x = 1\"),\nSome(y) => println!(\"y = {:?}\", y),\n_ => println!(\"None\"),\n}// y = 10"
+    },
+    {
+      "id": "intro-172",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### `@` 绑定\n<!--rehype:wrap-class=row-span-2-->\n\n`@` 运算符允许为一个字段绑定另外一个变量。"
+    },
+    {
+      "id": "intro-173",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let grade = 'A';\nmatch grade {\ngood @ 'A'..='C' => println!(\"your grade is {}\", good),\n_ => println!(\"Come on\"),\n}"
+    },
+    {
+      "id": "intro-174",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n----"
+    },
+    {
+      "id": "intro-175",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "#[derive(Debug)]\nstruct Point {\nx: i32,\ny: i32,\n}\nfn main(){\nlet p @ Point {x: px, y: py } = Point {x: 10, y: 23};\nprintln!(\"x: {}, y: {}\", px, py);\nprintln!(\"{:?}\", p);\n}"
+    },
+    {
+      "id": "intro-176",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n----\n\n如果使用 `|`，需要使用 `()`，进行多个模式的绑定"
+    },
+    {
+      "id": "intro-177",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "match 1 {\nnum @ (1 | 2) => {\nprintln!(\"{}\", num);\n}\n_ => {}\n}"
+    },
+    {
+      "id": "intro-178",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 使用匹配守卫"
+    },
+    {
+      "id": "intro-179",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let x = Some(2);\nmatch x {\nSome(1) => println!(\"x = 1\"),\nSome(y) if y == 2 => println!(\"y = {:?}\", y),\n_ => println!(\"No match\"),\n}// y = 2"
+    },
+    {
+      "id": "intro-180",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\nRust 函数\n--------\n\n### 函数命名\n\nrust 的函数使用蛇形命名法（snake case）"
+    },
+    {
+      "id": "intro-181",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn print_message(){\nprintln!(\"Hello, Quick Reference!\");\n}"
+    },
+    {
+      "id": "intro-182",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 参数值\n\nrust 需要为函数的参数标明确定的类型"
+    },
+    {
+      "id": "intro-183",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn another_fn(a:u8, b: &str){\nprintln!(\"我是 u8:{}\", a);\nprintln!(\"我是 &str:{}\", b);\n}"
+    },
+    {
+      "id": "intro-184",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn main(){\nanother_fn(10, \"hello\")\n}"
+    },
+    {
+      "id": "intro-185",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 返回值\n\n如果不指定返回值，rust 默认返回 `()` 类型"
+    },
+    {
+      "id": "intro-186",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "// 在 bin 中的入口函数默认返回 ()\nfn main(){}"
+    },
+    {
+      "id": "intro-187",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n----\n\n使用 `->` 指定返回值，如果**表达式**在最后一行，无需使用 return"
+    },
+    {
+      "id": "intro-188",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn add(a:i32, b:i32) -> i32 {\nif a + b < 100 {\nreturn a - b;\n}\na + b\n}"
+    },
+    {
+      "id": "intro-189",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### 永不返回 `!`"
+    },
+    {
+      "id": "intro-190",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "fn dead_end() -> ! {\npanic!(\"panic!!!!!\");\n}"
+    },
+    {
+      "id": "intro-191",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "<!--rehype:className=wrap-text -->\n\n惯用转换\n-----\n\n### &str -> String"
+    },
+    {
+      "id": "intro-192",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "String::from(\"str\");\n\"str\".to_string();\n\"str\".to_owned();"
+    },
+    {
+      "id": "intro-193",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### &str -> &[u8]"
+    },
+    {
+      "id": "intro-194",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "\"str\".as_bytes();"
+    },
+    {
+      "id": "intro-195",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n或者你也可以使用 `b\"\"`"
+    },
+    {
+      "id": "intro-196",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "println!(\"{:?}\", b\"str\");"
+    },
+    {
+      "id": "intro-197",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### &str -> Vec<u8>"
+    },
+    {
+      "id": "intro-198",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "\"str\".as_bytes().to_vec();\n\"str\".as_bytes().to_owned();"
+    },
+    {
+      "id": "intro-199",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### String -> &str"
+    },
+    {
+      "id": "intro-200",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let s = String::from(\"str\");\nlet r = s.as_str();"
+    },
+    {
+      "id": "intro-201",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### String -> &[u8]"
+    },
+    {
+      "id": "intro-202",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let s = String::from(\"str\");\nlet v = s.as_bytes();"
+    },
+    {
+      "id": "intro-203",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### String -> Vec<u8>"
+    },
+    {
+      "id": "intro-204",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let s = String::from(\"str\");\nlet v = s.into_bytes();"
+    },
+    {
+      "id": "intro-205",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### &[u8] -> &str"
+    },
+    {
+      "id": "intro-206",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let b = \"str\".as_bytes();\nlet str = std::str::from_utf8(b).unwrap();"
+    },
+    {
+      "id": "intro-207",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### &[u8] -> String"
+    },
+    {
+      "id": "intro-208",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let b = \"str\".as_bytes();\nlet str = String::from_utf8(b.to_vec()).unwrap();"
+    },
+    {
+      "id": "intro-209",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### &[u8] -> Vec<u8>"
+    },
+    {
+      "id": "intro-210",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let b = \"str\".as_bytes();\nlet str = b.to_vec();"
+    },
+    {
+      "id": "intro-211",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n----"
+    },
+    {
+      "id": "intro-212",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let b = \"str\".as_bytes();\nlet str = b.to_owned();"
+    },
+    {
+      "id": "intro-213",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Vec<u8> -> &str"
+    },
+    {
+      "id": "intro-214",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let b = \"str\".as_bytes().to_vec();\nlet s = std::str::from_utf8(&b).unwrap();"
+    },
+    {
+      "id": "intro-215",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Vec<u8> -> &[u8]"
+    },
+    {
+      "id": "intro-216",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let b = \"str\".as_bytes().to_vec();\nlet s = b.as_slice();"
+    },
+    {
+      "id": "intro-217",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Vec<u8> -> String"
+    },
+    {
+      "id": "intro-218",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let b = \"str\".as_bytes().to_vec();\nlet s = String::from_utf8(b).unwrap();"
+    },
+    {
+      "id": "intro-219",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n杂项\n-----\n\n### 类型断言 type-casting"
+    },
+    {
+      "id": "intro-220",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let a_int = 90; // int\n// int 到 float\nlet mut type_cast = (a_int as f64);"
+    },
+    {
+      "id": "intro-221",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n----"
+    },
+    {
+      "id": "intro-222",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let orginal: char = 'I';\n// char 到 int => 73\nlet type_casted: i64 = orginal as i64;"
+    },
+    {
+      "id": "intro-223",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n要在 `Rust` 中执行类型转换，必须使用 `as` 关键字\n\n### 借用"
+    },
+    {
+      "id": "intro-224",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut foo = 4;\nlet mut borrowed_foo = &foo;\nprintln!(\"{borrowed_foo}\");"
+    },
+    {
+      "id": "intro-225",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n----"
+    },
+    {
+      "id": "intro-226",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut bar = 3;\nlet mut mutable_borrowed_bar = &mut bar;\nprintln!(\"{mutable_borrowed_bar}\");"
+    },
+    {
+      "id": "intro-227",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n这里借用的值使用 `&` 运算符从值一中借用值\n\n### 解引用"
+    },
+    {
+      "id": "intro-228",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "let mut borrow = 10;\nlet deref = &mut borrow;\nprintln!(\"{}\", *deref);"
+    },
+    {
+      "id": "intro-229",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n`*` 操作符用于解引用\n\n### 作用域"
+    },
+    {
+      "id": "intro-230",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "text",
+      "body": "{\n// 范围仅限于此大括号\nlet a_number = 1;\n}\nprintln!(\"{a_number}\");"
+    },
+    {
+      "id": "intro-231",
+      "sectionId": "intro",
+      "title": ".capacity()",
+      "kind": "code",
+      "lang": "",
+      "code": "\n这将产生错误，因为变量 `a_number` 的生命周期在大括号处结束\n\n另见\n--------\n\n- [Cargo 备忘清单](./cargo.md) _(jaywcjlove.github.io)_\n- [The Rust Document](https://doc.rust-lang.org/book/ch00-00-introduction.html) _(doc.rust-lang.org)_\n- [The Rust Reference](https://doc.rust-lang.org/reference/introduction.html) _(doc.rust-lang.org)_\n- [Rust Cheatsheet](https://phaiax.github.io/rust-cheatsheet/) _(phaiax.github.io)_\n- [Rust 标准库文档中文版](https://jaywcjlove.github.io/rust-cn-document-for-docker/std/std/) _(jaywcjlove.github.io)_\n- [Rust 程序设计语言 中文版](https://jaywcjlove.github.io/rust-cn-document-for-docker/book/) _(jaywcjlove.github.io)_\n- [Rust By Example 中文版](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-by-example-cn/) _(jaywcjlove.github.io)_\n- [Rust 参考手册中文版](https://jaywcjlove.github.io/rust-cn-document-for-docker/reference/) _(jaywcjlove.github.io)_\n- [RustDoc 手册中文版](https://jaywcjlove.github.io/rust-cn-document-for-docker/rustdoc/) _(jaywcjlove.github.io)_\n- [Rust Cookbook 中文版](https://jaywcjlove.github.io/rust-cn-document-for-docker/rust-cookbook/) _(jaywcjlove.github.io)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/rust.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/rust.md",
+    "generatedAt": "2025-12-16T07:36:11.417Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

@@ -1,0 +1,4620 @@
+{
+  "id": "redis",
+  "title": "redis",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Redis 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "本备忘单旨在快速理解 [redis](https://redis.io/) 所涉及的主要概念，提供了最常用的SQL语句，供您参考。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "Redis 是一个 `key-value` 存储系统类似 Memcached"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "• 它支持存储的 value 类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set 有序集合)和hash(哈希类型)\n• 数据类型都支持 push/pop、add/remove 及取交集并集和差集及更丰富的操作"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "启动 Redis"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ redis-server &"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "使用 CLI 登陆 redis"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ redis-cli"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "text",
+      "body": "使用 Telnet 的登陆 redis"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "介绍",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ telnet 127.0.0.1 6379"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "小试",
+      "kind": "text",
+      "body": "#### Ping 测试"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "小试",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> PING\nPONG"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "小试",
+      "kind": "text",
+      "body": "#### 经典 Hello World"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "小试",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello world\"\nOK\nredis> GET mykey\n\"Hello world\""
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "数据类型",
+      "kind": "text",
+      "body": "• [Strings(字符串)](#redis-字符串类型设置)\n• [Lists(列表)](#redis-列表类型设置)\n• [Hashes(哈希)](#redis-哈希类型设置)\n• [Sets(集合)](#redis-集合类型设置)\n• [Sorted Sets(有序集合)](#redis-排序集类型设置)"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "数据类型",
+      "kind": "text",
+      "body": "Redis 支持以上 5 种数据类型"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "数据类型",
+      "kind": "text",
+      "body": "Redis服务相关的命令设置\n------------"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "COMMAND",
+      "kind": "code",
+      "lang": "",
+      "code": "COMMAND"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "COMMAND",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "COMMAND",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> COMMAND\n1) 1) \"georadius_ro\"\n     2) (integer) -6\n     3) 1) \"readonly\"\n        2) \"movablekeys\"\n     4) (integer) 1\n     5) (integer) 1\n     6) (integer) 1\n     7) 1) \"@read\"\n        2) \"@geo\"\n        3) \"@slow\"\n  2) 1) \"zpopmin\"\n     2) (integer) -2\n     3) 1) \"write\"\n        2) \"fast\"\n  ........"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "COMMAND",
+      "kind": "text",
+      "body": "获取 Redis 命令详细信息的数组"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "一些引用(可能有帮助)",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[ACL LOAD](https://redis.io/commands/acl-load)                       | 从配置的 ACL 文件重新加载 ACL\n[ACL SAVE](https://redis.io/commands/acl-save)                       | 将当前的 ACL 规则保存在配置的 ACL 文件中\n[ACL LIST](https://redis.io/commands/acl-list)                       | 以 ACL 配置文件格式列出当前的 ACL 规则\n[ACL USERS](https://redis.io/commands/acl-users)                     | 列出所有配置的ACL规则的用户名\n[ACL GETUSER](https://redis.io/commands/acl-getuser)                | 获取特定 ACL 用户的规则\n[ACL SETUSER](https://redis.io/commands/acl-setuser)                | 修改或创建特定 ACL 用户的规则\n[ACL DELUSER](https://redis.io/commands/acl-deluser)                | 删除指定的 ACL 用户和关联的规则\n[ACL CAT](https://redis.io/commands/acl-cat)                        | 列出 ACL 类别或类别内的命令\n[ACL GENPASS](https://redis.io/commands/acl-genpass)                | 生成用于 ACL 用户的伪随机安全密码\n[ACL WHOAMI](https://redis.io/commands/acl-whoami)                   | 返回关联到当前连接的用户的名称\n[ACL LOG](https://redis.io/commands/acl-log)                        | 列出由于 ACL 到位而被拒绝的最新事件\n[ACL HELP](https://redis.io/commands/acl-help)                       | 显示有关ACL访问控制的帮助信息\n[BGREWRITEAOF](https://redis.io/commands/bgrewriteaof)               | 异步重写 append-only 文件\n[BGSAVE](https://redis.io/commands/bgsave)                          | 将数据集异步保存到磁盘\n[CONFIG GET](https://redis.io/commands/config-get)                  | 获取配置参数的值\n[CONFIG REWRITE](https://redis.io/commands/config-rewrite)           | 用内存中的配置重写配置文件\n[CONFIG SET](https://redis.io/commands/config-set)                  | 将配置参数设置为给定值\n[CONFIG RESETSTAT](https://redis.io/commands/config-resetstat)       | 重置 INFO 返回的统计数据\n[DBSIZE](https://redis.io/commands/dbsize)                           | 返回所选数据库中的键数\n[DEBUG OBJECT](https://redis.io/commands/debug-object)              | 获取某个key的调试信息\n[DEBUG SEGFAULT](https://redis.io/commands/debug-segfault)           | 使服务器崩溃\n[FLUSHALL](https://redis.io/commands/flushall)                      | 从所有数据库中删除所有密钥\n[FLUSHDB](https://redis.io/commands/flushdb)                        | 从当前数据库中删除所有键\n[LOLWUT](https://redis.io/commands/lolwut)                          | 显示一些计算机信息和 Redis 版本\n[LASTSAVE](https://redis.io/commands/lastsave)                       | 获取上次成功保存到磁盘的 UNIX 时间戳\n[MEMORY DOCTOR](https://redis.io/commands/memory-doctor)             | 输出内存问题报告\n[MEMORY HELP](https://redis.io/commands/memory-help)                 | 显示有关内存的使用帮助\n[MEMORY MALLOC-STATS](https://redis.io/commands/memory-malloc-stats) | 显示分配器内部统计\n[MEMORY PURGE](https://redis.io/commands/memory-purge)               | 要求分配器释放内存\n[MEMORY STATS](https://redis.io/commands/memory-stats)               | 显示内存使用详情(该死，运维的我经常用到)\n[MEMORY USAGE](https://redis.io/commands/memory-usage)              | 估计一个键的内存使用\n[MODULE LIST](https://redis.io/commands/module-list)                 | 列出服务器加载的所有模块\n[MODULE LOAD](https://redis.io/commands/module-load)                | 加载模块\n[MODULE UNLOAD](https://redis.io/commands/module-unload)            | 卸载模块\n[MONITOR](https://redis.io/commands/monitor)                         | 实时监听服务器收到的所有请求\n[SAVE](https://redis.io/commands/save)                               | 将数据集同步保存到磁盘\n[SHUTDOWN](https://redis.io/commands/shutdown)                      | 将数据集同步保存到磁盘，然后关闭服务器\n[~~SLAVEOF~~](https://redis.io/commands/slaveof)   | 使服务器成为另一个实例的副本，或将其提升为主服务器<br> _(从Redis 5开始<red>弃用</red>，改成 `REPLICAOF`了)_\n[REPLICAOF](https://redis.io/commands/replicaof)                    | 使服务器成为另一个实例的副本，或将其提升为主服务器\n[SLOWLOG](https://redis.io/commands/slowlog)                        | 管理 Redis 慢查询日志\n[SWAPDB](https://redis.io/commands/swapdb)                          | 交换两个Redis数据库\n[SYNC](https://redis.io/commands/sync)                               | 用于复制的内部命令(主)\n[PSYNC](https://redis.io/commands/psync)                            | 用于复制的内部命令(备)\n[LATENCY DOCTOR](https://redis.io/commands/latency-doctor)           | 返回人类可读的延迟分析报告\n[LATENCY GRAPH](https://redis.io/commands/latency-graph)            | 返回事件的延迟图\n[LATENCY HISTORY](https://redis.io/commands/latency-history)        | 返回事件的时间戳延迟样本\n[LATENCY LATEST](https://redis.io/commands/latency-latest)           | 返回所有事件的最新延迟样本\n[LATENCY RESET](https://redis.io/commands/latency-reset)            | 重置一个或多个事件的延迟数据\n[LATENCY HELP](https://redis.io/commands/latency-help)               | 显示有关不同子命令的有用文本"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "COMMAND COUNT",
+      "kind": "code",
+      "lang": "",
+      "code": "COMMAND COUNT"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "COMMAND COUNT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "COMMAND COUNT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> COMMAND COUNT\n(integer) 217"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "COMMAND COUNT",
+      "kind": "text",
+      "body": "获取 Redis 命令总数"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "COMMAND GETKEYS",
+      "kind": "code",
+      "lang": "",
+      "code": "COMMAND GETKEYS"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "COMMAND GETKEYS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "COMMAND GETKEYS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> COMMAND GETKEYS MSET a b c d e f\n1) \"a\"\n2) \"c\"\n3) \"e\"\nredis> COMMAND GETKEYS EVAL \"not consulted\" 3 key1 key2 key3 arg1 arg2 arg3 argN\n1) \"key1\"\n2) \"key2\"\n3) \"key3\"\nredis> COMMAND GETKEYS SORT mylist ALPHA STORE outlist\n1) \"mylist\"\n2) \"outlist\""
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "COMMAND GETKEYS",
+      "kind": "text",
+      "body": "给定完整的 Redis 命令提取密钥"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "COMMAND INFO",
+      "kind": "code",
+      "lang": "",
+      "code": "COMMAND INFO command-name [command-name ...]"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "COMMAND INFO",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "COMMAND INFO",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> COMMAND INFO get set eval\n1) 1) \"get\"\n   2) (integer) 2\n   3) 1) \"readonly\"\n      2) \"fast\"\n   4) (integer) 1\n   5) (integer) 1\n   6) (integer) 1\n   7) 1) \"@read\"\n      2) \"@string\"\n      3) \"@fast\"\n2) 1) \"set\"\n   2) (integer) -3\n   3) 1) \"write\"\n      2) \"denyoom\"\n   4) (integer) 1\n   5) (integer) 1\n   6) (integer) 1\n   7) 1) \"@write\"\n      2) \"@string\"\n      3) \"@slow\"\n3) 1) \"eval\"\n   2) (integer) -3\n   3) 1) \"noscript\"\n      2) \"movablekeys\"\n   4) (integer) 0\n   5) (integer) 0\n   6) (integer) 0\n   7) 1) \"@slow\"\n      2) \"@scripting\""
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "COMMAND INFO",
+      "kind": "text",
+      "body": "获取特定 Redis 命令详细信息的数组"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "INFO",
+      "kind": "code",
+      "lang": "",
+      "code": "INFO [section]"
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "INFO",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "INFO",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> INFO\n# Server\nredis_version:6.1.240\nredis_git_sha1:00000000\nredis_git_dirty:0\nredis_build_id:a26db646ea64a07c\nredis_mode:standalone\nos:Linux 5.4.0-1017-aws x86_64\n......"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "INFO",
+      "kind": "text",
+      "body": "获取有关服务器的信息和统计信息"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "ROLE",
+      "kind": "code",
+      "lang": "",
+      "code": "ROLE"
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "ROLE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "ROLE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ROLE\n1) \"master\"\n2) (integer) 0\n3) (empty list or set)"
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "ROLE",
+      "kind": "text",
+      "body": "返回实例在复制上下文中的角色"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "TIME",
+      "kind": "code",
+      "lang": "",
+      "code": "TIME"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "TIME",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-45",
+      "sectionId": "intro",
+      "title": "TIME",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> TIME\n1) \"1609040690\"\n2) \"558952\"\nredis> TIME\n1) \"1609040690\"\n2) \"559206\""
+    },
+    {
+      "id": "intro-46",
+      "sectionId": "intro",
+      "title": "TIME",
+      "kind": "text",
+      "body": "返回当前服务器时间"
+    },
+    {
+      "id": "intro-47",
+      "sectionId": "intro",
+      "title": "TIME",
+      "kind": "text",
+      "body": "Redis一些通用的命令\n------------"
+    },
+    {
+      "id": "intro-48",
+      "sectionId": "intro",
+      "title": "一些引用(可能有帮助)",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[COPY](https://redis.io/commands/copy)       | 复制键值对\n[MIGRATE](https://redis.io/commands/migrate) | 以原子方式将键值对从 Redis 实例传输到另一个实例\n[MOVE](https://redis.io/commands/move)       | 将键值对移动到另一个数据库\n[OBJECT](https://redis.io/commands/object)   | 检查 Redis 对象的内部结构\n[RESTORE](https://redis.io/commands/restore) | 使用提供的序列化值创建键值对，之前使用 DUMP 获得\n[SORT](https://redis.io/commands/sort)       | 对列表、集合或有序集合中的元素进行排序\n[WAIT](https://redis.io/commands/wait)       | 等待在当前连接的上下文中发送的所有写命令的同步复制\n[SCAN](https://redis.io/commands/scan)       | 增量迭代键空间"
+    },
+    {
+      "id": "intro-49",
+      "sectionId": "intro",
+      "title": "DEL",
+      "kind": "code",
+      "lang": "",
+      "code": "DEL key [key ...]"
+    },
+    {
+      "id": "intro-50",
+      "sectionId": "intro",
+      "title": "DEL",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-51",
+      "sectionId": "intro",
+      "title": "DEL",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET key1 \"Hello\"\n\"OK\"\nredis> SET key2 \"World\"\n\"OK\"\nredis> DEL key1 key2 key3\n(integer) 2"
+    },
+    {
+      "id": "intro-52",
+      "sectionId": "intro",
+      "title": "DEL",
+      "kind": "text",
+      "body": "删除键值对"
+    },
+    {
+      "id": "intro-53",
+      "sectionId": "intro",
+      "title": "DUMP",
+      "kind": "code",
+      "lang": "",
+      "code": "DUMP key"
+    },
+    {
+      "id": "intro-54",
+      "sectionId": "intro",
+      "title": "DUMP",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-55",
+      "sectionId": "intro",
+      "title": "DUMP",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey 10\n\"OK\"\nredis> DUMP mykey\n\"\\u0000\\xC0\\n\\t\\u0000\\xBEm\\u0006\\x89Z(\\u0000\\n\""
+    },
+    {
+      "id": "intro-56",
+      "sectionId": "intro",
+      "title": "DUMP",
+      "kind": "text",
+      "body": "返回存储在指定键中的值的序列化版本"
+    },
+    {
+      "id": "intro-57",
+      "sectionId": "intro",
+      "title": "EXISTS",
+      "kind": "code",
+      "lang": "",
+      "code": "EXISTS key [key ...]"
+    },
+    {
+      "id": "intro-58",
+      "sectionId": "intro",
+      "title": "EXISTS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-59",
+      "sectionId": "intro",
+      "title": "EXISTS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET key1 \"Hello\"\n\"OK\"\nredis> EXISTS key1\n(integer) 1\nredis> EXISTS nosuchkey\n(integer) 0\nredis> SET key2 \"World\"\n\"OK\"\nredis> EXISTS key1 key2 nosuchkey\n(integer) 2"
+    },
+    {
+      "id": "intro-60",
+      "sectionId": "intro",
+      "title": "EXISTS",
+      "kind": "text",
+      "body": "判断键值对是否存在"
+    },
+    {
+      "id": "intro-61",
+      "sectionId": "intro",
+      "title": "EXPIRE",
+      "kind": "code",
+      "lang": "",
+      "code": "EXPIRE key seconds"
+    },
+    {
+      "id": "intro-62",
+      "sectionId": "intro",
+      "title": "EXPIRE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-63",
+      "sectionId": "intro",
+      "title": "EXPIRE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> EXPIRE mykey 10\n(integer) 1\nredis> TTL mykey\n(integer) 10\nredis> SET mykey \"Hello World\"\n\"OK\"\nredis> TTL mykey\n(integer) -1"
+    },
+    {
+      "id": "intro-64",
+      "sectionId": "intro",
+      "title": "EXPIRE",
+      "kind": "text",
+      "body": "设置键值对的生存时间(以秒为单位)"
+    },
+    {
+      "id": "intro-65",
+      "sectionId": "intro",
+      "title": "EXPIREAT",
+      "kind": "code",
+      "lang": "",
+      "code": "EXPIREAT key timestamp"
+    },
+    {
+      "id": "intro-66",
+      "sectionId": "intro",
+      "title": "EXPIREAT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-67",
+      "sectionId": "intro",
+      "title": "EXPIREAT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> EXISTS mykey\n(integer) 1\nredis> EXPIREAT mykey 1293840000\n(integer) 1\nredis> EXISTS mykey\n(integer) 0"
+    },
+    {
+      "id": "intro-68",
+      "sectionId": "intro",
+      "title": "EXPIREAT",
+      "kind": "text",
+      "body": "将键值对的到期时间设置为 UNIX 时间戳"
+    },
+    {
+      "id": "intro-69",
+      "sectionId": "intro",
+      "title": "KEYS",
+      "kind": "code",
+      "lang": "",
+      "code": "KEYS pattern"
+    },
+    {
+      "id": "intro-70",
+      "sectionId": "intro",
+      "title": "KEYS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-71",
+      "sectionId": "intro",
+      "title": "KEYS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> MSET firstname Jack lastname Stuntman age 35\n\"OK\"\nredis> KEYS *name*\n1) \"firstname\"\n2) \"lastname\"\nredis> KEYS a??\n1) \"age\"\nredis> KEYS *\n1) \"firstname\"\n2) \"age\"\n3) \"lastname\""
+    },
+    {
+      "id": "intro-72",
+      "sectionId": "intro",
+      "title": "KEYS",
+      "kind": "text",
+      "body": "查找与给定模式匹配的所有键"
+    },
+    {
+      "id": "intro-73",
+      "sectionId": "intro",
+      "title": "PERSIST",
+      "kind": "code",
+      "lang": "",
+      "code": "PERSIST key"
+    },
+    {
+      "id": "intro-74",
+      "sectionId": "intro",
+      "title": "PERSIST",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-75",
+      "sectionId": "intro",
+      "title": "PERSIST",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> EXPIRE mykey 10\n(integer) 1\nredis> TTL mykey\n(integer) 10\nredis> PERSIST mykey\n(integer) 1\nredis> TTL mykey\n(integer) -1"
+    },
+    {
+      "id": "intro-76",
+      "sectionId": "intro",
+      "title": "PERSIST",
+      "kind": "text",
+      "body": "从键值对中删除过期时间"
+    },
+    {
+      "id": "intro-77",
+      "sectionId": "intro",
+      "title": "PEXPIRE",
+      "kind": "code",
+      "lang": "",
+      "code": "PEXPIRE key milliseconds"
+    },
+    {
+      "id": "intro-78",
+      "sectionId": "intro",
+      "title": "PEXPIRE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-79",
+      "sectionId": "intro",
+      "title": "PEXPIRE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> PEXPIRE mykey 1500\n(integer) 1\nredis> TTL mykey\n(integer) 1\nredis> PTTL mykey\n(integer) 1499"
+    },
+    {
+      "id": "intro-80",
+      "sectionId": "intro",
+      "title": "PEXPIRE",
+      "kind": "text",
+      "body": "设置键的生存时间(以毫秒为单位)"
+    },
+    {
+      "id": "intro-81",
+      "sectionId": "intro",
+      "title": "PEXPIREAT",
+      "kind": "code",
+      "lang": "",
+      "code": "PEXPIREAT key milliseconds-timestamp"
+    },
+    {
+      "id": "intro-82",
+      "sectionId": "intro",
+      "title": "PEXPIREAT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-83",
+      "sectionId": "intro",
+      "title": "PEXPIREAT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> PEXPIREAT mykey 1555555555005\n(integer) 1\nredis> TTL mykey\n(integer) -2\nredis> PTTL mykey\n(integer) -2"
+    },
+    {
+      "id": "intro-84",
+      "sectionId": "intro",
+      "title": "PEXPIREAT",
+      "kind": "text",
+      "body": "将键值对的到期时间设置为以毫秒为单位指定的 UNIX 时间戳"
+    },
+    {
+      "id": "intro-85",
+      "sectionId": "intro",
+      "title": "PTTL",
+      "kind": "code",
+      "lang": "",
+      "code": "PTTL key"
+    },
+    {
+      "id": "intro-86",
+      "sectionId": "intro",
+      "title": "PTTL",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-87",
+      "sectionId": "intro",
+      "title": "PTTL",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> EXPIRE mykey 1\n(integer) 1\nredis> PTTL mykey\n(integer) 1000"
+    },
+    {
+      "id": "intro-88",
+      "sectionId": "intro",
+      "title": "PTTL",
+      "kind": "text",
+      "body": "以毫秒为单位获取键值对的生存时间"
+    },
+    {
+      "id": "intro-89",
+      "sectionId": "intro",
+      "title": "RENAME",
+      "kind": "code",
+      "lang": "",
+      "code": "RENAME key newkey"
+    },
+    {
+      "id": "intro-90",
+      "sectionId": "intro",
+      "title": "RENAME",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-91",
+      "sectionId": "intro",
+      "title": "RENAME",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> RENAME mykey myotherkey\n\"OK\"\nredis> GET myotherkey\n\"Hello\""
+    },
+    {
+      "id": "intro-92",
+      "sectionId": "intro",
+      "title": "RENAME",
+      "kind": "text",
+      "body": "重命名键值对"
+    },
+    {
+      "id": "intro-93",
+      "sectionId": "intro",
+      "title": "RENAMENX",
+      "kind": "code",
+      "lang": "",
+      "code": "RENAMENX key newkey"
+    },
+    {
+      "id": "intro-94",
+      "sectionId": "intro",
+      "title": "RENAMENX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-95",
+      "sectionId": "intro",
+      "title": "RENAMENX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> SET myotherkey \"World\"\n\"OK\"\nredis> RENAMENX mykey myotherkey\n(integer) 0\nredis> GET myotherkey\n\"World\""
+    },
+    {
+      "id": "intro-96",
+      "sectionId": "intro",
+      "title": "RENAMENX",
+      "kind": "text",
+      "body": "重命名键值对，仅当新键值对不存在时"
+    },
+    {
+      "id": "intro-97",
+      "sectionId": "intro",
+      "title": "TOUCH",
+      "kind": "code",
+      "lang": "",
+      "code": "TOUCH key [key ...]"
+    },
+    {
+      "id": "intro-98",
+      "sectionId": "intro",
+      "title": "TOUCH",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-99",
+      "sectionId": "intro",
+      "title": "TOUCH",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET key1 \"Hello\"\n\"OK\"\nredis> SET key2 \"World\"\n\"OK\"\nredis> TOUCH key1 key2\n(integer) 2"
+    },
+    {
+      "id": "intro-100",
+      "sectionId": "intro",
+      "title": "TOUCH",
+      "kind": "text",
+      "body": "更改键值对的最后访问时间。返回指定的现有键的数量"
+    },
+    {
+      "id": "intro-101",
+      "sectionId": "intro",
+      "title": "TTL",
+      "kind": "code",
+      "lang": "",
+      "code": "TTL key"
+    },
+    {
+      "id": "intro-102",
+      "sectionId": "intro",
+      "title": "TTL",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-103",
+      "sectionId": "intro",
+      "title": "TTL",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> EXPIRE mykey 10\n(integer) 1\nredis> TTL mykey\n(integer) 10"
+    },
+    {
+      "id": "intro-104",
+      "sectionId": "intro",
+      "title": "TTL",
+      "kind": "text",
+      "body": "获得一个键的值的时间(有点绕口，但意思是对的)"
+    },
+    {
+      "id": "intro-105",
+      "sectionId": "intro",
+      "title": "TYPE",
+      "kind": "code",
+      "lang": "",
+      "code": "TYPE key"
+    },
+    {
+      "id": "intro-106",
+      "sectionId": "intro",
+      "title": "TYPE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-107",
+      "sectionId": "intro",
+      "title": "TYPE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET key1 \"value\"\n\"OK\"\nredis> LPUSH key2 \"value\"\n(integer) 1\nredis> SADD key3 \"value\"\n(integer) 1\nredis> TYPE key1\n\"string\"\nredis> TYPE key2\n\"list\"\nredis> TYPE key3\n\"set\""
+    },
+    {
+      "id": "intro-108",
+      "sectionId": "intro",
+      "title": "TYPE",
+      "kind": "text",
+      "body": "确定存储在键中的类型"
+    },
+    {
+      "id": "intro-109",
+      "sectionId": "intro",
+      "title": "UNLINK",
+      "kind": "code",
+      "lang": "",
+      "code": "UNLINK key [key ...]"
+    },
+    {
+      "id": "intro-110",
+      "sectionId": "intro",
+      "title": "UNLINK",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-111",
+      "sectionId": "intro",
+      "title": "UNLINK",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET key1 \"Hello\"\n\"OK\"\nredis> SET key2 \"World\"\n\"OK\"\nredis> UNLINK key1 key2 key3\n(integer) 2"
+    },
+    {
+      "id": "intro-112",
+      "sectionId": "intro",
+      "title": "UNLINK",
+      "kind": "text",
+      "body": "在另一个线程中异步删除一个键。否则它就像 DEL，但不是阻塞的"
+    },
+    {
+      "id": "intro-113",
+      "sectionId": "intro",
+      "title": "UNLINK",
+      "kind": "text",
+      "body": "Redis 连接相关的命令\n------"
+    },
+    {
+      "id": "intro-114",
+      "sectionId": "intro",
+      "title": "一些引用(可能有帮助)",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[AUTH](https://redis.io/commands/auth)                       | 向服务器进行身份验证\n[CLIENT CACHING](https://redis.io/commands/client-caching)   | 指示服务器在下一个请求中是否跟踪键\n[CLIENT KILL](https://redis.io/commands/client-kill)         | 终止客户端的连接\n[CLIENT LIST](https://redis.io/commands/client-list)         | 获取客户端连接列表\n[CLIENT GETNAME](https://redis.io/commands/client-getname)    | 获取当前连接名称\n[CLIENT GETREDIR](https://redis.io/commands/client-getredir)  | 获取跟踪通知重定向客户端 ID(如果有)\n[CLIENT PAUSE](https://redis.io/commands/client-pause)       | 停止处理来自客户端的命令一段时间\n[CLIENT REPLY](https://redis.io/commands/client-reply)       | 指示服务器是否回复命令\n[CLIENT SETNAME](https://redis.io/commands/client-setname)   | 设置当前连接名称\n[CLIENT TRACKING](https://redis.io/commands/client-tracking) | 启用或禁用服务器辅助客户端缓存支持\n[CLIENT UNBLOCK](https://redis.io/commands/client-unblock)   | 取消阻止来自不同连接的阻塞命令中阻塞的客户端\n[HELLO](https://redis.io/commands/hello)                     | 切换Redis协议\n[QUIT](https://redis.io/commands/quit)                        | 关闭连接\n[RESET](https://redis.io/commands/reset)                      | 重置连接\n[SELECT](https://redis.io/commands/select)                   | 更改为当前连接选择的数据库"
+    },
+    {
+      "id": "intro-115",
+      "sectionId": "intro",
+      "title": "CLIENT ID",
+      "kind": "code",
+      "lang": "shell",
+      "code": "CLIENT ID"
+    },
+    {
+      "id": "intro-116",
+      "sectionId": "intro",
+      "title": "CLIENT ID",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-117",
+      "sectionId": "intro",
+      "title": "CLIENT ID",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> CLIENT ID\nERR Unknown or disabled command 'CLIENT'"
+    },
+    {
+      "id": "intro-118",
+      "sectionId": "intro",
+      "title": "CLIENT ID",
+      "kind": "text",
+      "body": "返回当前连接的客户端 ID"
+    },
+    {
+      "id": "intro-119",
+      "sectionId": "intro",
+      "title": "CLIENT INFO",
+      "kind": "code",
+      "lang": "shell",
+      "code": "CLIENT INFO"
+    },
+    {
+      "id": "intro-120",
+      "sectionId": "intro",
+      "title": "CLIENT INFO",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-121",
+      "sectionId": "intro",
+      "title": "CLIENT INFO",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> CLIENT INFO\n\"id=55542 addr=127.0.0.1:58710 laddr=127.0.0.1:6379 fd=8 name= age=114920 idle=0 flags=N db=0 sub=0 psub=0 multi=-1 qbuf=26 qbuf-free=40928 argv-mem=10 obl=0 oll=0 omem=0 tot-mem=61466 events=r cmd=client user=default redir=-1\\n\""
+    },
+    {
+      "id": "intro-122",
+      "sectionId": "intro",
+      "title": "CLIENT INFO",
+      "kind": "text",
+      "body": "返回有关当前客户端连接的信息。"
+    },
+    {
+      "id": "intro-123",
+      "sectionId": "intro",
+      "title": "ECHO",
+      "kind": "code",
+      "lang": "shell",
+      "code": "ECHO message"
+    },
+    {
+      "id": "intro-124",
+      "sectionId": "intro",
+      "title": "ECHO",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-125",
+      "sectionId": "intro",
+      "title": "ECHO",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ECHO \"Hello World!\"\n\"Hello World!\""
+    },
+    {
+      "id": "intro-126",
+      "sectionId": "intro",
+      "title": "ECHO",
+      "kind": "text",
+      "body": "回显给定的字符串"
+    },
+    {
+      "id": "intro-127",
+      "sectionId": "intro",
+      "title": "PING",
+      "kind": "code",
+      "lang": "shell",
+      "code": "PING [message]"
+    },
+    {
+      "id": "intro-128",
+      "sectionId": "intro",
+      "title": "PING",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-129",
+      "sectionId": "intro",
+      "title": "PING",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> PING\n\"PONG\"\nredis> PING \"hello world\"\n\"hello world\""
+    },
+    {
+      "id": "intro-130",
+      "sectionId": "intro",
+      "title": "PING",
+      "kind": "text",
+      "body": "ping 服务器"
+    },
+    {
+      "id": "intro-131",
+      "sectionId": "intro",
+      "title": "PING",
+      "kind": "text",
+      "body": "Redis 字符串类型设置\n------------"
+    },
+    {
+      "id": "intro-132",
+      "sectionId": "intro",
+      "title": "APPEND",
+      "kind": "code",
+      "lang": "shell",
+      "code": "APPEND key value"
+    },
+    {
+      "id": "intro-133",
+      "sectionId": "intro",
+      "title": "APPEND",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-134",
+      "sectionId": "intro",
+      "title": "APPEND",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> EXISTS mykey\n(integer) 0\nredis> APPEND mykey \"Hello\"\n(integer) 5\nredis> APPEND mykey \" World\"\n(integer) 11\nredis> GET mykey\n\"Hello World\""
+    },
+    {
+      "id": "intro-135",
+      "sectionId": "intro",
+      "title": "APPEND",
+      "kind": "text",
+      "body": "将值附加到键,可以理解为追加作用"
+    },
+    {
+      "id": "intro-136",
+      "sectionId": "intro",
+      "title": "BITCOUNT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "BITCOUNT key [start end]"
+    },
+    {
+      "id": "intro-137",
+      "sectionId": "intro",
+      "title": "BITCOUNT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-138",
+      "sectionId": "intro",
+      "title": "BITCOUNT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"foobar\"\n\"OK\"\nredis> BITCOUNT mykey\n(integer) 26\nredis> BITCOUNT mykey 0 0\n(integer) 4\nredis> BITCOUNT mykey 1 1\n(integer) 6"
+    },
+    {
+      "id": "intro-139",
+      "sectionId": "intro",
+      "title": "BITCOUNT",
+      "kind": "text",
+      "body": "计算字符串中的集合位"
+    },
+    {
+      "id": "intro-140",
+      "sectionId": "intro",
+      "title": "BITFIELD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "BITFIELD key [GET type offset] [SET type offset value] \n[INCRBY type offset increment] [OVERFLOW WRAP|SAT|FAIL]"
+    },
+    {
+      "id": "intro-141",
+      "sectionId": "intro",
+      "title": "BITFIELD",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-142",
+      "sectionId": "intro",
+      "title": "BITFIELD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> BITFIELD mykey INCRBY i5 100 1 GET u4 0\n1) (integer) 1\n2) (integer) 0"
+    },
+    {
+      "id": "intro-143",
+      "sectionId": "intro",
+      "title": "BITFIELD",
+      "kind": "text",
+      "body": "对字符串执行任意位域整数运算"
+    },
+    {
+      "id": "intro-144",
+      "sectionId": "intro",
+      "title": "BITOP",
+      "kind": "code",
+      "lang": "shell",
+      "code": "BITOP operation destkey key [key ...]"
+    },
+    {
+      "id": "intro-145",
+      "sectionId": "intro",
+      "title": "BITOP",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-146",
+      "sectionId": "intro",
+      "title": "BITOP",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET key1 \"foobar\"\n\"OK\"\nredis> SET key2 \"abcdef\"\n\"OK\"\nredis> BITOP AND dest key1 key2\n(integer) 6\nredis> GET dest\n\"`bc`ab\""
+    },
+    {
+      "id": "intro-147",
+      "sectionId": "intro",
+      "title": "BITOP",
+      "kind": "text",
+      "body": "在字符串之间执行按位运算"
+    },
+    {
+      "id": "intro-148",
+      "sectionId": "intro",
+      "title": "BITPOS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "BITPOS key bit [start] [end]"
+    },
+    {
+      "id": "intro-149",
+      "sectionId": "intro",
+      "title": "BITPOS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-150",
+      "sectionId": "intro",
+      "title": "BITPOS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"\\xff\\xf0\\x00\"\n\"OK\"\nredis> BITPOS mykey 0\n(integer) 12\nredis> SET mykey \"\\x00\\xff\\xf0\"\n\"OK\"\nredis> BITPOS mykey 1 0\n(integer) 8\nredis> BITPOS mykey 1 2\n(integer) 16\nredis> set mykey \"\\x00\\x00\\x00\"\n\"OK\"\nredis> BITPOS mykey 1\n(integer) -1"
+    },
+    {
+      "id": "intro-151",
+      "sectionId": "intro",
+      "title": "BITPOS",
+      "kind": "text",
+      "body": "查找字符串中设置或清除的第一位"
+    },
+    {
+      "id": "intro-152",
+      "sectionId": "intro",
+      "title": "DECR",
+      "kind": "code",
+      "lang": "shell",
+      "code": "DECR key"
+    },
+    {
+      "id": "intro-153",
+      "sectionId": "intro",
+      "title": "DECR",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-154",
+      "sectionId": "intro",
+      "title": "DECR",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"10\"\n\"OK\"\nredis> DECR mykey\n(integer) 9\nredis> SET mykey \"234293482390480948029348230948\"\n\"OK\"\nredis> DECR mykey\nERR ERR value is not an integer or out of range"
+    },
+    {
+      "id": "intro-155",
+      "sectionId": "intro",
+      "title": "DECR",
+      "kind": "text",
+      "body": "将键的整数值减一"
+    },
+    {
+      "id": "intro-156",
+      "sectionId": "intro",
+      "title": "DECRBY",
+      "kind": "code",
+      "lang": "shell",
+      "code": "DECRBY key decrement"
+    },
+    {
+      "id": "intro-157",
+      "sectionId": "intro",
+      "title": "DECRBY",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-158",
+      "sectionId": "intro",
+      "title": "DECRBY",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"10\"\n\"OK\"\nredis> DECRBY mykey 3\n(integer) 7"
+    },
+    {
+      "id": "intro-159",
+      "sectionId": "intro",
+      "title": "DECRBY",
+      "kind": "text",
+      "body": "将键的整数值减去给定的数字"
+    },
+    {
+      "id": "intro-160",
+      "sectionId": "intro",
+      "title": "GET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "GET key"
+    },
+    {
+      "id": "intro-161",
+      "sectionId": "intro",
+      "title": "GET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-162",
+      "sectionId": "intro",
+      "title": "GET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> GET nonexisting\n(nil)\nredis> SET mykey \"Hello\"\n\"OK\"\nredis> GET mykey\n\"Hello\""
+    },
+    {
+      "id": "intro-163",
+      "sectionId": "intro",
+      "title": "GET",
+      "kind": "text",
+      "body": "获取key的值"
+    },
+    {
+      "id": "intro-164",
+      "sectionId": "intro",
+      "title": "GETBIT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "GETBIT key offset"
+    },
+    {
+      "id": "intro-165",
+      "sectionId": "intro",
+      "title": "GETBIT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-166",
+      "sectionId": "intro",
+      "title": "GETBIT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SETBIT mykey 7 1\n(integer) 0\nredis> GETBIT mykey 0\n(integer) 0\nredis> GETBIT mykey 7\n(integer) 1\nredis> GETBIT mykey 100\n(integer) 0"
+    },
+    {
+      "id": "intro-167",
+      "sectionId": "intro",
+      "title": "GETBIT",
+      "kind": "text",
+      "body": "返回存储在 `key` 处的字符串值中 `offset` 处的位值"
+    },
+    {
+      "id": "intro-168",
+      "sectionId": "intro",
+      "title": "GETRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "GETRANGE key start end"
+    },
+    {
+      "id": "intro-169",
+      "sectionId": "intro",
+      "title": "GETRANGE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-170",
+      "sectionId": "intro",
+      "title": "GETRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"This is a string\"\n\"OK\"\nredis> GETRANGE mykey 0 3\n\"This\"\nredis> GETRANGE mykey -3 -1\n\"ing\"\nredis> GETRANGE mykey 0 -1\n\"This is a string\"\nredis> GETRANGE mykey 10 100\n\"string\""
+    },
+    {
+      "id": "intro-171",
+      "sectionId": "intro",
+      "title": "GETRANGE",
+      "kind": "text",
+      "body": "获取存储在键中的字符串的子字符串"
+    },
+    {
+      "id": "intro-172",
+      "sectionId": "intro",
+      "title": "GETSET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "GETSET key value"
+    },
+    {
+      "id": "intro-173",
+      "sectionId": "intro",
+      "title": "GETSET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-174",
+      "sectionId": "intro",
+      "title": "GETSET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> INCR mycounter\n(integer) 1\nredis> GETSET mycounter \"0\"\n\"1\"\nredis> GET mycounter\n\"0\""
+    },
+    {
+      "id": "intro-175",
+      "sectionId": "intro",
+      "title": "GETSET",
+      "kind": "text",
+      "body": "设置键的字符串值并返回其旧值"
+    },
+    {
+      "id": "intro-176",
+      "sectionId": "intro",
+      "title": "INCR",
+      "kind": "code",
+      "lang": "shell",
+      "code": "INCR key"
+    },
+    {
+      "id": "intro-177",
+      "sectionId": "intro",
+      "title": "INCR",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-178",
+      "sectionId": "intro",
+      "title": "INCR",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"10\"\n\"OK\"\nredis> INCR mykey\n(integer) 11\nredis> GET mykey\n\"11\""
+    },
+    {
+      "id": "intro-179",
+      "sectionId": "intro",
+      "title": "INCR",
+      "kind": "text",
+      "body": "将键的整数值加一"
+    },
+    {
+      "id": "intro-180",
+      "sectionId": "intro",
+      "title": "MSETNX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "MSETNX key value [key value ...]"
+    },
+    {
+      "id": "intro-181",
+      "sectionId": "intro",
+      "title": "MSETNX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-182",
+      "sectionId": "intro",
+      "title": "MSETNX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> MSETNX key1 \"Hello\" key2 \"there\"\n(integer) 1\nredis> MSETNX key2 \"new\" key3 \"world\"\n(integer) 0\nredis> MGET key1 key2 key3\n1) \"Hello\"\n2) \"there\"\n3) (nil)"
+    },
+    {
+      "id": "intro-183",
+      "sectionId": "intro",
+      "title": "MSETNX",
+      "kind": "text",
+      "body": "仅当不存在任何键时，将多个键设置为多个值"
+    },
+    {
+      "id": "intro-184",
+      "sectionId": "intro",
+      "title": "INCRBYFLOAT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "INCRBYFLOAT key increment"
+    },
+    {
+      "id": "intro-185",
+      "sectionId": "intro",
+      "title": "INCRBYFLOAT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-186",
+      "sectionId": "intro",
+      "title": "INCRBYFLOAT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey 10.50\n\"OK\"\nredis> INCRBYFLOAT mykey 0.1\n\"10.6\"\nredis> INCRBYFLOAT mykey -5\n\"5.6\"\nredis> SET mykey 5.0e3\n\"OK\"\nredis> INCRBYFLOAT mykey 2.0e2\n\"5200\""
+    },
+    {
+      "id": "intro-187",
+      "sectionId": "intro",
+      "title": "INCRBYFLOAT",
+      "kind": "text",
+      "body": "将键的浮点值增加给定的数量"
+    },
+    {
+      "id": "intro-188",
+      "sectionId": "intro",
+      "title": "MGET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "MGET key [key ...]"
+    },
+    {
+      "id": "intro-189",
+      "sectionId": "intro",
+      "title": "MGET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-190",
+      "sectionId": "intro",
+      "title": "MGET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET key1 \"Hello\"\n\"OK\"\nredis> SET key2 \"World\"\n\"OK\"\nredis> MGET key1 key2 nonexisting\n1) \"Hello\"\n2) \"World\"\n3) (nil)"
+    },
+    {
+      "id": "intro-191",
+      "sectionId": "intro",
+      "title": "MGET",
+      "kind": "text",
+      "body": "获取所有给定键的值"
+    },
+    {
+      "id": "intro-192",
+      "sectionId": "intro",
+      "title": "MSET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "MSET key value [key value ...]"
+    },
+    {
+      "id": "intro-193",
+      "sectionId": "intro",
+      "title": "MSET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-194",
+      "sectionId": "intro",
+      "title": "MSET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> MSET key1 \"Hello\" key2 \"World\"\n\"OK\"\nredis> GET key1\n\"Hello\"\nredis> GET key2\n\"World\""
+    },
+    {
+      "id": "intro-195",
+      "sectionId": "intro",
+      "title": "MSET",
+      "kind": "text",
+      "body": "将多个键设置为多个值"
+    },
+    {
+      "id": "intro-196",
+      "sectionId": "intro",
+      "title": "INCRBY",
+      "kind": "code",
+      "lang": "shell",
+      "code": "INCRBY key increment"
+    },
+    {
+      "id": "intro-197",
+      "sectionId": "intro",
+      "title": "INCRBY",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-198",
+      "sectionId": "intro",
+      "title": "INCRBY",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"10\"\n\"OK\"\nredis> INCRBY mykey 5\n(integer) 15"
+    },
+    {
+      "id": "intro-199",
+      "sectionId": "intro",
+      "title": "INCRBY",
+      "kind": "text",
+      "body": "将键的整数值增加给定的数量"
+    },
+    {
+      "id": "intro-200",
+      "sectionId": "intro",
+      "title": "PSETEX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "PSETEX key milliseconds value"
+    },
+    {
+      "id": "intro-201",
+      "sectionId": "intro",
+      "title": "PSETEX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-202",
+      "sectionId": "intro",
+      "title": "PSETEX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> PSETEX mykey 1000 \"Hello\"\n\"OK\"\nredis> PTTL mykey\n(integer) 1000\nredis> GET mykey\n\"Hello\""
+    },
+    {
+      "id": "intro-203",
+      "sectionId": "intro",
+      "title": "PSETEX",
+      "kind": "text",
+      "body": "设置键的值和过期时间(以毫秒为单位)"
+    },
+    {
+      "id": "intro-204",
+      "sectionId": "intro",
+      "title": "SET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SET key value [EX seconds|PX milliseconds|KEEPTTL] [NX|XX] \n[GET]"
+    },
+    {
+      "id": "intro-205",
+      "sectionId": "intro",
+      "title": "SET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-206",
+      "sectionId": "intro",
+      "title": "SET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello\"\n\"OK\"\nredis> GET mykey\n\"Hello\"\nredis> SET anotherkey \"will expire in a minute\" EX 60\n\"OK\""
+    },
+    {
+      "id": "intro-207",
+      "sectionId": "intro",
+      "title": "SET",
+      "kind": "text",
+      "body": "设置键的字符串值,可以理解为创建、设置、重设的作用"
+    },
+    {
+      "id": "intro-208",
+      "sectionId": "intro",
+      "title": "SETBIT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SETBIT key offset value"
+    },
+    {
+      "id": "intro-209",
+      "sectionId": "intro",
+      "title": "SETBIT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-210",
+      "sectionId": "intro",
+      "title": "SETBIT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SETBIT mykey 7 1\n(integer) 0\nredis> SETBIT mykey 7 0\n(integer) 1\nredis> GET mykey\n\"\\u0000\""
+    },
+    {
+      "id": "intro-211",
+      "sectionId": "intro",
+      "title": "SETBIT",
+      "kind": "text",
+      "body": "设置或清除存储在键中的字符串值中偏移量处的位"
+    },
+    {
+      "id": "intro-212",
+      "sectionId": "intro",
+      "title": "SETEX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SETEX key seconds value"
+    },
+    {
+      "id": "intro-213",
+      "sectionId": "intro",
+      "title": "SETEX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-214",
+      "sectionId": "intro",
+      "title": "SETEX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SETEX mykey 10 \"Hello\"\n\"OK\"\nredis> TTL mykey\n(integer) 10\nredis> GET mykey\n\"Hello\""
+    },
+    {
+      "id": "intro-215",
+      "sectionId": "intro",
+      "title": "SETEX",
+      "kind": "text",
+      "body": "设置密钥的值和过期时间"
+    },
+    {
+      "id": "intro-216",
+      "sectionId": "intro",
+      "title": "SETNX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SETNX key value"
+    },
+    {
+      "id": "intro-217",
+      "sectionId": "intro",
+      "title": "SETNX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-218",
+      "sectionId": "intro",
+      "title": "SETNX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SETNX mykey \"Hello\"\n(integer) 1\nredis> SETNX mykey \"World\"\n(integer) 0\nredis> GET mykey\n\"Hello\""
+    },
+    {
+      "id": "intro-219",
+      "sectionId": "intro",
+      "title": "SETNX",
+      "kind": "text",
+      "body": "设置键的值，仅当键不存在时"
+    },
+    {
+      "id": "intro-220",
+      "sectionId": "intro",
+      "title": "SETRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SETRANGE key offset value"
+    },
+    {
+      "id": "intro-221",
+      "sectionId": "intro",
+      "title": "SETRANGE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-222",
+      "sectionId": "intro",
+      "title": "SETRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET key1 \"Hello World\"\n\"OK\"\nredis> SETRANGE key1 6 \"Redis\"\n(integer) 11\nredis> GET key1\n\"Hello Redis\""
+    },
+    {
+      "id": "intro-223",
+      "sectionId": "intro",
+      "title": "SETRANGE",
+      "kind": "text",
+      "body": "覆盖从指定偏移量开始的键处的字符串的一部分"
+    },
+    {
+      "id": "intro-224",
+      "sectionId": "intro",
+      "title": "STRLEN",
+      "kind": "code",
+      "lang": "shell",
+      "code": "STRLEN key"
+    },
+    {
+      "id": "intro-225",
+      "sectionId": "intro",
+      "title": "STRLEN",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-226",
+      "sectionId": "intro",
+      "title": "STRLEN",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SET mykey \"Hello world\"\n\"OK\"\nredis> STRLEN mykey\n(integer) 11\nredis> STRLEN nonexisting\n(integer) 0"
+    },
+    {
+      "id": "intro-227",
+      "sectionId": "intro",
+      "title": "STRLEN",
+      "kind": "text",
+      "body": "获取存储在键中的值的长度"
+    },
+    {
+      "id": "intro-228",
+      "sectionId": "intro",
+      "title": "STRALGO",
+      "kind": "code",
+      "lang": "shell",
+      "code": "STRALGO LCS algo-specific-argument [algo-specific-argument \n...]"
+    },
+    {
+      "id": "intro-229",
+      "sectionId": "intro",
+      "title": "STRALGO",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-230",
+      "sectionId": "intro",
+      "title": "STRALGO",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> STRALGO LCS KEYS key1 key2 IDX\n1) \"matches\"\n2) 1) 1) 1) (integer) 4\n         2) (integer) 7\n      2) 1) (integer) 5\n         2) (integer) 8\n   2) 1) 1) (integer) 2\n         2) (integer) 3\n      2) 1) (integer) 0\n         2) (integer) 1\n3) \"len\"\n4) (integer) 6"
+    },
+    {
+      "id": "intro-231",
+      "sectionId": "intro",
+      "title": "STRALGO",
+      "kind": "text",
+      "body": "针对字符串运行算法(目前为 LCS)"
+    },
+    {
+      "id": "intro-232",
+      "sectionId": "intro",
+      "title": "STRALGO",
+      "kind": "text",
+      "body": "Redis 集合类型设置\n------------"
+    },
+    {
+      "id": "intro-233",
+      "sectionId": "intro",
+      "title": "SADD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SADD key member [member ...]"
+    },
+    {
+      "id": "intro-234",
+      "sectionId": "intro",
+      "title": "SADD",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-235",
+      "sectionId": "intro",
+      "title": "SADD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD myset \"Hello\"\n(integer) 1\nredis> SADD myset \"World\"\n(integer) 1\nredis> SADD myset \"World\"\n(integer) 0\nredis> SMEMBERS myset\n1) \"Hello\"\n2) \"World\""
+    },
+    {
+      "id": "intro-236",
+      "sectionId": "intro",
+      "title": "SADD",
+      "kind": "text",
+      "body": "将一个或多个成员添加到集合"
+    },
+    {
+      "id": "intro-237",
+      "sectionId": "intro",
+      "title": "SCARD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SCARD key"
+    },
+    {
+      "id": "intro-238",
+      "sectionId": "intro",
+      "title": "SCARD",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-239",
+      "sectionId": "intro",
+      "title": "SCARD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD myset \"Hello\"\n(integer) 1\nredis> SADD myset \"World\"\n(integer) 1\nredis> SCARD myset\n(integer) 2"
+    },
+    {
+      "id": "intro-240",
+      "sectionId": "intro",
+      "title": "SCARD",
+      "kind": "text",
+      "body": "获取集合中的成员数"
+    },
+    {
+      "id": "intro-241",
+      "sectionId": "intro",
+      "title": "SDIFF",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SDIFF key [key ...]"
+    },
+    {
+      "id": "intro-242",
+      "sectionId": "intro",
+      "title": "SDIFF",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-243",
+      "sectionId": "intro",
+      "title": "SDIFF",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD key1 \"a\"\n(integer) 1\nredis> SADD key1 \"b\"\n(integer) 1\nredis> SADD key1 \"c\"\n(integer) 1\nredis> SADD key2 \"c\"\n(integer) 1\nredis> SADD key2 \"d\"\n(integer) 1\nredis> SADD key2 \"e\"\n(integer) 1\nredis> SDIFF key1 key2\n1) \"a\"\n2) \"b\""
+    },
+    {
+      "id": "intro-244",
+      "sectionId": "intro",
+      "title": "SDIFF",
+      "kind": "text",
+      "body": "减去多组"
+    },
+    {
+      "id": "intro-245",
+      "sectionId": "intro",
+      "title": "SDIFFSTORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SDIFFSTORE destination key [key ...]"
+    },
+    {
+      "id": "intro-246",
+      "sectionId": "intro",
+      "title": "SDIFFSTORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-247",
+      "sectionId": "intro",
+      "title": "SDIFFSTORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD key1 \"a\"\n(integer) 1\nredis> SADD key1 \"b\"\n(integer) 1\nredis> SADD key1 \"c\"\n(integer) 1\nredis> SADD key2 \"c\"\n(integer) 1\nredis> SADD key2 \"d\"\n(integer) 1\nredis> SADD key2 \"e\"\n(integer) 1\nredis> SDIFFSTORE key key1 key2\n(integer) 2\nredis> SMEMBERS key\n1) \"a\"\n2) \"b\""
+    },
+    {
+      "id": "intro-248",
+      "sectionId": "intro",
+      "title": "SDIFFSTORE",
+      "kind": "text",
+      "body": "减去多个集合并将结果集合存储在一个键中"
+    },
+    {
+      "id": "intro-249",
+      "sectionId": "intro",
+      "title": "SINTER",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SINTER key [key ...]"
+    },
+    {
+      "id": "intro-250",
+      "sectionId": "intro",
+      "title": "SINTER",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-251",
+      "sectionId": "intro",
+      "title": "SINTER",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD key1 \"a\"\n(integer) 1\nredis> SADD key1 \"b\"\n(integer) 1\nredis> SADD key1 \"c\"\n(integer) 1\nredis> SADD key2 \"c\"\n(integer) 1\nredis> SADD key2 \"d\"\n(integer) 1\nredis> SADD key2 \"e\"\n(integer) 1\nredis> SINTER key1 key2\n1) \"c\""
+    },
+    {
+      "id": "intro-252",
+      "sectionId": "intro",
+      "title": "SINTER",
+      "kind": "text",
+      "body": "交叉多个集合"
+    },
+    {
+      "id": "intro-253",
+      "sectionId": "intro",
+      "title": "SINTERSTORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SINTERSTORE destination key [key ...]"
+    },
+    {
+      "id": "intro-254",
+      "sectionId": "intro",
+      "title": "SINTERSTORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-255",
+      "sectionId": "intro",
+      "title": "SINTERSTORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD key1 \"a\"\n(integer) 1\nredis> SADD key1 \"b\"\n(integer) 1\nredis> SADD key1 \"c\"\n(integer) 1\nredis> SADD key2 \"c\"\n(integer) 1\nredis> SADD key2 \"d\"\n(integer) 1\nredis> SADD key2 \"e\"\n(integer) 1\nredis> SINTERSTORE key key1 key2\n(integer) 1\nredis> SMEMBERS key\n1) \"c\""
+    },
+    {
+      "id": "intro-256",
+      "sectionId": "intro",
+      "title": "SINTERSTORE",
+      "kind": "text",
+      "body": "将多个集合相交并将结果集合存储在一个键中"
+    },
+    {
+      "id": "intro-257",
+      "sectionId": "intro",
+      "title": "SISMEMBER",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SISMEMBER key member"
+    },
+    {
+      "id": "intro-258",
+      "sectionId": "intro",
+      "title": "SISMEMBER",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-259",
+      "sectionId": "intro",
+      "title": "SISMEMBER",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD myset \"one\"\n(integer) 1\nredis> SISMEMBER myset \"one\"\n(integer) 1\nredis> SISMEMBER myset \"two\"\n(integer) 0"
+    },
+    {
+      "id": "intro-260",
+      "sectionId": "intro",
+      "title": "SISMEMBER",
+      "kind": "text",
+      "body": "确定给定值是否是集合的成员"
+    },
+    {
+      "id": "intro-261",
+      "sectionId": "intro",
+      "title": "SMISMEMBER",
+      "kind": "code",
+      "lang": "shell",
+      "code": "SMISMEMBER key member [member ...]"
+    },
+    {
+      "id": "intro-262",
+      "sectionId": "intro",
+      "title": "SMISMEMBER",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-263",
+      "sectionId": "intro",
+      "title": "SMISMEMBER",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD myset \"one\"\n(integer) 1\nredis> SADD myset \"one\"\n(integer) 0\nredis> SMISMEMBER myset \"one\" \"notamember\"\n1) (integer) 1\n2) (integer) 0"
+    },
+    {
+      "id": "intro-264",
+      "sectionId": "intro",
+      "title": "SMISMEMBER",
+      "kind": "text",
+      "body": "返回与集合的给定元素关联的成员资格"
+    },
+    {
+      "id": "intro-265",
+      "sectionId": "intro",
+      "title": "SMEMBERS",
+      "kind": "code",
+      "lang": "",
+      "code": "SMEMBERS key"
+    },
+    {
+      "id": "intro-266",
+      "sectionId": "intro",
+      "title": "SMEMBERS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-267",
+      "sectionId": "intro",
+      "title": "SMEMBERS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD myset \"Hello\"\n(integer) 1\nredis> SADD myset \"World\"\n(integer) 1\nredis> SMEMBERS myset\n1) \"Hello\"\n2) \"World\""
+    },
+    {
+      "id": "intro-268",
+      "sectionId": "intro",
+      "title": "SMEMBERS",
+      "kind": "text",
+      "body": "获取集合中的所有成员"
+    },
+    {
+      "id": "intro-269",
+      "sectionId": "intro",
+      "title": "SMOVE",
+      "kind": "code",
+      "lang": "",
+      "code": "SMOVE source destination member"
+    },
+    {
+      "id": "intro-270",
+      "sectionId": "intro",
+      "title": "SMOVE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-271",
+      "sectionId": "intro",
+      "title": "SMOVE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD myset \"one\"\n(integer) 1\nredis> SADD myset \"two\"\n(integer) 1\nredis> SADD myotherset \"three\"\n(integer) 1\nredis> SMOVE myset myotherset \"two\"\n(integer) 1\nredis> SMEMBERS myset\n1) \"one\"\nredis> SMEMBERS myotherset\n1) \"two\"\n2) \"three\""
+    },
+    {
+      "id": "intro-272",
+      "sectionId": "intro",
+      "title": "SMOVE",
+      "kind": "text",
+      "body": "将成员从一组移到另一组"
+    },
+    {
+      "id": "intro-273",
+      "sectionId": "intro",
+      "title": "SPOP",
+      "kind": "code",
+      "lang": "",
+      "code": "SPOP key [count]"
+    },
+    {
+      "id": "intro-274",
+      "sectionId": "intro",
+      "title": "SPOP",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-275",
+      "sectionId": "intro",
+      "title": "SPOP",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD myset \"one\"\n(integer) 1\nredis> SADD myset \"two\"\n(integer) 1\nredis> SADD myset \"three\"\n(integer) 1\nredis> SPOP myset\n\"two\"\nredis> SMEMBERS myset\n1) \"one\"\n2) \"three\"\nredis> SADD myset \"four\"\n(integer) 1\nredis> SADD myset \"five\"\n(integer) 1\nredis> SPOP myset 3\n1) \"four\"\n2) \"five\"\n3) \"three\"\nredis> SMEMBERS myset\n1) \"one\""
+    },
+    {
+      "id": "intro-276",
+      "sectionId": "intro",
+      "title": "SPOP",
+      "kind": "text",
+      "body": "从集合中删除并返回一个或多个随机成员"
+    },
+    {
+      "id": "intro-277",
+      "sectionId": "intro",
+      "title": "SRANDMEMBER",
+      "kind": "code",
+      "lang": "",
+      "code": "SRANDMEMBER key [count]"
+    },
+    {
+      "id": "intro-278",
+      "sectionId": "intro",
+      "title": "SRANDMEMBER",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-279",
+      "sectionId": "intro",
+      "title": "SRANDMEMBER",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD myset one two three\n(integer) 3\nredis> SRANDMEMBER myset\n\"three\"\nredis> SRANDMEMBER myset 2\n1) \"two\"\n2) \"three\"\nredis> SRANDMEMBER myset -5\n1) \"one\"\n2) \"two\"\n3) \"three\"\n4) \"three\"\n5) \"one\""
+    },
+    {
+      "id": "intro-280",
+      "sectionId": "intro",
+      "title": "SRANDMEMBER",
+      "kind": "text",
+      "body": "从一组中获取一个或多个随机成员"
+    },
+    {
+      "id": "intro-281",
+      "sectionId": "intro",
+      "title": "SREM",
+      "kind": "code",
+      "lang": "",
+      "code": "SREM key member [member ...]"
+    },
+    {
+      "id": "intro-282",
+      "sectionId": "intro",
+      "title": "SREM",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-283",
+      "sectionId": "intro",
+      "title": "SREM",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD myset \"one\"\n(integer) 1\nredis> SADD myset \"two\"\n(integer) 1\nredis> SADD myset \"three\"\n(integer) 1\nredis> SREM myset \"one\"\n(integer) 1\nredis> SREM myset \"four\"\n(integer) 0\nredis> SMEMBERS myset\n1) \"two\"\n2) \"three\""
+    },
+    {
+      "id": "intro-284",
+      "sectionId": "intro",
+      "title": "SREM",
+      "kind": "text",
+      "body": "从集合中删除一个或多个成员"
+    },
+    {
+      "id": "intro-285",
+      "sectionId": "intro",
+      "title": "SUNION",
+      "kind": "code",
+      "lang": "",
+      "code": "SUNION key [key ...]"
+    },
+    {
+      "id": "intro-286",
+      "sectionId": "intro",
+      "title": "SUNION",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-287",
+      "sectionId": "intro",
+      "title": "SUNION",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD key1 \"a\"\n(integer) 1\nredis> SADD key1 \"b\"\n(integer) 1\nredis> SADD key1 \"c\"\n(integer) 1\nredis> SADD key2 \"c\"\n(integer) 1\nredis> SADD key2 \"d\"\n(integer) 1\nredis> SADD key2 \"e\"\n(integer) 1\nredis> SUNION key1 key2\n1) \"a\"\n2) \"c\"\n3) \"e\"\n4) \"b\"\n5) \"d\""
+    },
+    {
+      "id": "intro-288",
+      "sectionId": "intro",
+      "title": "SUNION",
+      "kind": "text",
+      "body": "添加多组"
+    },
+    {
+      "id": "intro-289",
+      "sectionId": "intro",
+      "title": "SUNIONSTORE",
+      "kind": "code",
+      "lang": "",
+      "code": "SUNIONSTORE destination key [key ...]"
+    },
+    {
+      "id": "intro-290",
+      "sectionId": "intro",
+      "title": "SUNIONSTORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-291",
+      "sectionId": "intro",
+      "title": "SUNIONSTORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> SADD key1 \"a\"\n(integer) 1\nredis> SADD key1 \"b\"\n(integer) 1\nredis> SADD key1 \"c\"\n(integer) 1\nredis> SADD key2 \"c\"\n(integer) 1\nredis> SADD key2 \"d\"\n(integer) 1\nredis> SADD key2 \"e\"\n(integer) 1\nredis> SUNIONSTORE key key1 key2\n(integer) 5\nredis> SMEMBERS key\n1) \"a\"\n2) \"c\"\n3) \"e\"\n4) \"b\"\n5) \"d\""
+    },
+    {
+      "id": "intro-292",
+      "sectionId": "intro",
+      "title": "SUNIONSTORE",
+      "kind": "text",
+      "body": "添加多个集合并将结果集合存储在一个键中"
+    },
+    {
+      "id": "intro-293",
+      "sectionId": "intro",
+      "title": "SUNIONSTORE",
+      "kind": "text",
+      "body": "Redis 列表类型设置\n------------"
+    },
+    {
+      "id": "intro-294",
+      "sectionId": "intro",
+      "title": "一些引用(可能有帮助)",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[BRPOPLPUSH](https://redis.io/commands/brpoplpush) | 从列表中弹出一个元素，将其推入另一个列表并返回；或阻塞直到有一个可用\n[BLMOVE](https://redis.io/commands/blmove)         | 从列表中弹出一个元素，将其推入另一个列表并返回；或阻塞直到有一个可用"
+    },
+    {
+      "id": "intro-295",
+      "sectionId": "intro",
+      "title": "BLPOP",
+      "kind": "code",
+      "lang": "",
+      "code": "BLPOP key [key ...] timeout"
+    },
+    {
+      "id": "intro-296",
+      "sectionId": "intro",
+      "title": "BLPOP",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-297",
+      "sectionId": "intro",
+      "title": "BLPOP",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> DEL list1 list2\n(integer) 0\nredis> RPUSH list1 a b c\n(integer) 3\nredis> BLPOP list1 list2 0\n1) \"list1\"\n2) \"a\""
+    },
+    {
+      "id": "intro-298",
+      "sectionId": "intro",
+      "title": "BLPOP",
+      "kind": "text",
+      "body": "删除并获取列表中的第一个元素，或者阻塞直到有一个元素可用"
+    },
+    {
+      "id": "intro-299",
+      "sectionId": "intro",
+      "title": "BRPOP",
+      "kind": "code",
+      "lang": "",
+      "code": "BRPOP key [key ...] timeout"
+    },
+    {
+      "id": "intro-300",
+      "sectionId": "intro",
+      "title": "BRPOP",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-301",
+      "sectionId": "intro",
+      "title": "BRPOP",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> DEL list1 list2\n(integer) 0\nredis> RPUSH list1 a b c\n(integer) 3\nredis> BRPOP list1 list2 0\n1) \"list1\"\n2) \"c\""
+    },
+    {
+      "id": "intro-302",
+      "sectionId": "intro",
+      "title": "BRPOP",
+      "kind": "text",
+      "body": "删除并获取列表中的最后一个元素，或者阻塞直到有一个可用"
+    },
+    {
+      "id": "intro-303",
+      "sectionId": "intro",
+      "title": "LINDEX",
+      "kind": "code",
+      "lang": "",
+      "code": "LINDEX key index"
+    },
+    {
+      "id": "intro-304",
+      "sectionId": "intro",
+      "title": "LINDEX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-305",
+      "sectionId": "intro",
+      "title": "LINDEX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> LPUSH mylist \"World\"\n(integer) 1\nredis> LPUSH mylist \"Hello\"\n(integer) 2\nredis> LINDEX mylist 0\n\"Hello\"\nredis> LINDEX mylist -1\n\"World\"\nredis> LINDEX mylist 3\n(nil)"
+    },
+    {
+      "id": "intro-306",
+      "sectionId": "intro",
+      "title": "LINDEX",
+      "kind": "text",
+      "body": "通过索引从列表中获取元素"
+    },
+    {
+      "id": "intro-307",
+      "sectionId": "intro",
+      "title": "LINSERT",
+      "kind": "code",
+      "lang": "",
+      "code": "LINSERT key BEFORE|AFTER pivot element"
+    },
+    {
+      "id": "intro-308",
+      "sectionId": "intro",
+      "title": "LINSERT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-309",
+      "sectionId": "intro",
+      "title": "LINSERT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"Hello\"\n(integer) 1\nredis> RPUSH mylist \"World\"\n(integer) 2\nredis> LINSERT mylist BEFORE \"World\" \"There\"\n(integer) 3\nredis> LRANGE mylist 0 -1\n1) \"Hello\"\n2) \"There\"\n3) \"World\""
+    },
+    {
+      "id": "intro-310",
+      "sectionId": "intro",
+      "title": "LINSERT",
+      "kind": "text",
+      "body": "在列表中的另一个元素之前或之后插入一个元素"
+    },
+    {
+      "id": "intro-311",
+      "sectionId": "intro",
+      "title": "LLEN",
+      "kind": "code",
+      "lang": "",
+      "code": "LLEN key"
+    },
+    {
+      "id": "intro-312",
+      "sectionId": "intro",
+      "title": "LLEN",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-313",
+      "sectionId": "intro",
+      "title": "LLEN",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> LPUSH mylist \"World\"\n(integer) 1\nredis> LPUSH mylist \"Hello\"\n(integer) 2\nredis> LLEN mylist\n(integer) 2"
+    },
+    {
+      "id": "intro-314",
+      "sectionId": "intro",
+      "title": "LLEN",
+      "kind": "text",
+      "body": "获取列表的长度"
+    },
+    {
+      "id": "intro-315",
+      "sectionId": "intro",
+      "title": "LPOP",
+      "kind": "code",
+      "lang": "",
+      "code": "LPOP key [count]"
+    },
+    {
+      "id": "intro-316",
+      "sectionId": "intro",
+      "title": "LPOP",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-317",
+      "sectionId": "intro",
+      "title": "LPOP",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"one\"\n(integer) 1\nredis> RPUSH mylist \"two\"\n(integer) 2\nredis> RPUSH mylist \"three\"\n(integer) 3\nredis> LPOP mylist\n\"one\"\nredis> LRANGE mylist 0 -1\n1) \"two\"\n2) \"three\""
+    },
+    {
+      "id": "intro-318",
+      "sectionId": "intro",
+      "title": "LPOP",
+      "kind": "text",
+      "body": "删除并获取列表中的第一个元素"
+    },
+    {
+      "id": "intro-319",
+      "sectionId": "intro",
+      "title": "LPOS",
+      "kind": "code",
+      "lang": "",
+      "code": "LPOS key element [RANK rank] [COUNT num-matches] [MAXLEN len]"
+    },
+    {
+      "id": "intro-320",
+      "sectionId": "intro",
+      "title": "LPOS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-321",
+      "sectionId": "intro",
+      "title": "LPOS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist a b c d 1 2 3 4 3 3 3\n(integer) 11\nredis> LPOS mylist 3\n(integer) 6\nredis> LPOS mylist 3 COUNT 0 RANK 2\n1) (integer) 8\n2) (integer) 9\n3) (integer) 10"
+    },
+    {
+      "id": "intro-322",
+      "sectionId": "intro",
+      "title": "LPOS",
+      "kind": "text",
+      "body": "返回列表中匹配元素的索引"
+    },
+    {
+      "id": "intro-323",
+      "sectionId": "intro",
+      "title": "LPUSH",
+      "kind": "code",
+      "lang": "",
+      "code": "LPUSH key element [element ...]"
+    },
+    {
+      "id": "intro-324",
+      "sectionId": "intro",
+      "title": "LPUSH",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-325",
+      "sectionId": "intro",
+      "title": "LPUSH",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> LPUSH mylist \"world\"\n(integer) 1\nredis> LPUSH mylist \"hello\"\n(integer) 2\nredis> LRANGE mylist 0 -1\n1) \"hello\"\n2) \"world\""
+    },
+    {
+      "id": "intro-326",
+      "sectionId": "intro",
+      "title": "LPUSH",
+      "kind": "text",
+      "body": "将一个或多个元素添加到列表中"
+    },
+    {
+      "id": "intro-327",
+      "sectionId": "intro",
+      "title": "LPUSHX",
+      "kind": "code",
+      "lang": "",
+      "code": "LPUSHX key element [element ...]"
+    },
+    {
+      "id": "intro-328",
+      "sectionId": "intro",
+      "title": "LPUSHX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-329",
+      "sectionId": "intro",
+      "title": "LPUSHX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> LPUSH mylist \"World\"\n(integer) 1\nredis> LPUSHX mylist \"Hello\"\n(integer) 2\nredis> LPUSHX myotherlist \"Hello\"\n(integer) 0\nredis> LRANGE mylist 0 -1\n1) \"Hello\"\n2) \"World\"\nredis> LRANGE myotherlist 0 -1\n(empty list or set)"
+    },
+    {
+      "id": "intro-330",
+      "sectionId": "intro",
+      "title": "LPUSHX",
+      "kind": "text",
+      "body": "仅当列表存在时才将元素添加到列表中"
+    },
+    {
+      "id": "intro-331",
+      "sectionId": "intro",
+      "title": "LRANGE",
+      "kind": "code",
+      "lang": "",
+      "code": "LRANGE key start stop"
+    },
+    {
+      "id": "intro-332",
+      "sectionId": "intro",
+      "title": "LRANGE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-333",
+      "sectionId": "intro",
+      "title": "LRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"one\"\n(integer) 1\nredis> RPUSH mylist \"two\"\n(integer) 2\nredis> RPUSH mylist \"three\"\n(integer) 3\nredis> LRANGE mylist 0 0\n1) \"one\"\nredis> LRANGE mylist -3 2\n1) \"one\"\n2) \"two\"\n3) \"three\"\nredis> LRANGE mylist -100 100\n1) \"one\"\n2) \"two\"\n3) \"three\"\nredis> LRANGE mylist 5 10\n(empty list or set)"
+    },
+    {
+      "id": "intro-334",
+      "sectionId": "intro",
+      "title": "LRANGE",
+      "kind": "text",
+      "body": "从列表中获取一系列元素"
+    },
+    {
+      "id": "intro-335",
+      "sectionId": "intro",
+      "title": "LREM",
+      "kind": "code",
+      "lang": "",
+      "code": "LREM key count element"
+    },
+    {
+      "id": "intro-336",
+      "sectionId": "intro",
+      "title": "LREM",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-337",
+      "sectionId": "intro",
+      "title": "LREM",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"hello\"\n(integer) 1\nredis> RPUSH mylist \"hello\"\n(integer) 2\nredis> RPUSH mylist \"foo\"\n(integer) 3\nredis> RPUSH mylist \"hello\"\n(integer) 4\nredis> LREM mylist -2 \"hello\"\n(integer) 2\nredis> LRANGE mylist 0 -1\n1) \"hello\"\n2) \"foo\""
+    },
+    {
+      "id": "intro-338",
+      "sectionId": "intro",
+      "title": "LREM",
+      "kind": "text",
+      "body": "从列表中删除元素"
+    },
+    {
+      "id": "intro-339",
+      "sectionId": "intro",
+      "title": "LSET",
+      "kind": "code",
+      "lang": "",
+      "code": "LSET key index element"
+    },
+    {
+      "id": "intro-340",
+      "sectionId": "intro",
+      "title": "LSET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-341",
+      "sectionId": "intro",
+      "title": "LSET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"one\"\n(integer) 1\nredis> RPUSH mylist \"two\"\n(integer) 2\nredis> RPUSH mylist \"three\"\n(integer) 3\nredis> LSET mylist 0 \"four\"\n\"OK\"\nredis> LSET mylist -2 \"five\"\n\"OK\"\nredis> LRANGE mylist 0 -1\n1) \"four\"\n2) \"five\"\n3) \"three\""
+    },
+    {
+      "id": "intro-342",
+      "sectionId": "intro",
+      "title": "LSET",
+      "kind": "text",
+      "body": "通过索引设置列表中元素的值"
+    },
+    {
+      "id": "intro-343",
+      "sectionId": "intro",
+      "title": "LTRIM",
+      "kind": "code",
+      "lang": "",
+      "code": "LTRIM key start stop"
+    },
+    {
+      "id": "intro-344",
+      "sectionId": "intro",
+      "title": "LTRIM",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-345",
+      "sectionId": "intro",
+      "title": "LTRIM",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"one\"\n(integer) 1\nredis> RPUSH mylist \"two\"\n(integer) 2\nredis> RPUSH mylist \"three\"\n(integer) 3\nredis> LTRIM mylist 1 -1\n\"OK\"\nredis> LRANGE mylist 0 -1\n1) \"two\"\n2) \"three\""
+    },
+    {
+      "id": "intro-346",
+      "sectionId": "intro",
+      "title": "LTRIM",
+      "kind": "text",
+      "body": "将列表修剪到指定范围"
+    },
+    {
+      "id": "intro-347",
+      "sectionId": "intro",
+      "title": "RPOP",
+      "kind": "code",
+      "lang": "",
+      "code": "RPOP key [count]"
+    },
+    {
+      "id": "intro-348",
+      "sectionId": "intro",
+      "title": "RPOP",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-349",
+      "sectionId": "intro",
+      "title": "RPOP",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"one\"\n(integer) 1\nredis> RPUSH mylist \"two\"\n(integer) 2\nredis> RPUSH mylist \"three\"\n(integer) 3\nredis> RPOP mylist\n\"three\"\nredis> LRANGE mylist 0 -1\n1) \"one\"\n2) \"two\""
+    },
+    {
+      "id": "intro-350",
+      "sectionId": "intro",
+      "title": "RPOP",
+      "kind": "text",
+      "body": "删除并获取列表中的最后一个元素"
+    },
+    {
+      "id": "intro-351",
+      "sectionId": "intro",
+      "title": "RPOPLPUSH",
+      "kind": "code",
+      "lang": "",
+      "code": "RPOPLPUSH source destination"
+    },
+    {
+      "id": "intro-352",
+      "sectionId": "intro",
+      "title": "RPOPLPUSH",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-353",
+      "sectionId": "intro",
+      "title": "RPOPLPUSH",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"one\"\n(integer) 1\nredis> RPUSH mylist \"two\"\n(integer) 2\nredis> RPUSH mylist \"three\"\n(integer) 3\nredis> RPOPLPUSH mylist myotherlist\n\"three\"\nredis> LRANGE mylist 0 -1\n1) \"one\"\n2) \"two\"\nredis> LRANGE myotherlist 0 -1\n1) \"three\""
+    },
+    {
+      "id": "intro-354",
+      "sectionId": "intro",
+      "title": "RPOPLPUSH",
+      "kind": "text",
+      "body": "删除列表中的最后一个元素，将其添加到另一个列表中并返回"
+    },
+    {
+      "id": "intro-355",
+      "sectionId": "intro",
+      "title": "LMOVE",
+      "kind": "code",
+      "lang": "",
+      "code": "LMOVE source destination LEFT|RIGHT LEFT|RIGHT"
+    },
+    {
+      "id": "intro-356",
+      "sectionId": "intro",
+      "title": "LMOVE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-357",
+      "sectionId": "intro",
+      "title": "LMOVE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"one\"\n(integer) 1\nredis> RPUSH mylist \"two\"\n(integer) 2\nredis> RPUSH mylist \"three\"\n(integer) 3\nredis> LMOVE mylist myotherlist RIGHT LEFT\n\"three\"\nredis> LMOVE mylist myotherlist LEFT RIGHT\n\"one\"\nredis> LRANGE mylist 0 -1\n1) \"two\"\nredis> LRANGE myotherlist 0 -1\n1) \"three\"\n2) \"one\""
+    },
+    {
+      "id": "intro-358",
+      "sectionId": "intro",
+      "title": "LMOVE",
+      "kind": "text",
+      "body": "从列表中弹出一个元素，将其推入另一个列表并返回"
+    },
+    {
+      "id": "intro-359",
+      "sectionId": "intro",
+      "title": "RPUSH",
+      "kind": "code",
+      "lang": "",
+      "code": "RPUSH key element [element ...]"
+    },
+    {
+      "id": "intro-360",
+      "sectionId": "intro",
+      "title": "RPUSH",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-361",
+      "sectionId": "intro",
+      "title": "RPUSH",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"hello\"\n(integer) 1\nredis> RPUSH mylist \"world\"\n(integer) 2\nredis> LRANGE mylist 0 -1\n1) \"hello\"\n2) \"world\""
+    },
+    {
+      "id": "intro-362",
+      "sectionId": "intro",
+      "title": "RPUSH",
+      "kind": "text",
+      "body": "将一个或多个元素附加到列表"
+    },
+    {
+      "id": "intro-363",
+      "sectionId": "intro",
+      "title": "RPUSHX",
+      "kind": "code",
+      "lang": "",
+      "code": "RPUSHX key element [element ...]"
+    },
+    {
+      "id": "intro-364",
+      "sectionId": "intro",
+      "title": "RPUSHX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-365",
+      "sectionId": "intro",
+      "title": "RPUSHX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> RPUSH mylist \"Hello\"\n(integer) 1\nredis> RPUSHX mylist \"World\"\n(integer) 2\nredis> RPUSHX myotherlist \"World\"\n(integer) 0\nredis> LRANGE mylist 0 -1\n1) \"Hello\"\n2) \"World\"\nredis> LRANGE myotherlist 0 -1\n(empty list or set)"
+    },
+    {
+      "id": "intro-366",
+      "sectionId": "intro",
+      "title": "RPUSHX",
+      "kind": "text",
+      "body": "仅当列表存在时才将元素附加到列表"
+    },
+    {
+      "id": "intro-367",
+      "sectionId": "intro",
+      "title": "RPUSHX",
+      "kind": "text",
+      "body": "Redis 哈希类型设置\n------------"
+    },
+    {
+      "id": "intro-368",
+      "sectionId": "intro",
+      "title": "HDEL",
+      "kind": "code",
+      "lang": "",
+      "code": "HDEL key field [field ...]"
+    },
+    {
+      "id": "intro-369",
+      "sectionId": "intro",
+      "title": "HDEL",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-370",
+      "sectionId": "intro",
+      "title": "HDEL",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field1 \"foo\"\n(integer) 1\nredis> HDEL myhash field1\n(integer) 1\nredis> HDEL myhash field2\n(integer) 0"
+    },
+    {
+      "id": "intro-371",
+      "sectionId": "intro",
+      "title": "HDEL",
+      "kind": "text",
+      "body": "删除一个或多个哈希字段"
+    },
+    {
+      "id": "intro-372",
+      "sectionId": "intro",
+      "title": "HEXISTS",
+      "kind": "code",
+      "lang": "",
+      "code": "HEXISTS key field"
+    },
+    {
+      "id": "intro-373",
+      "sectionId": "intro",
+      "title": "HEXISTS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-374",
+      "sectionId": "intro",
+      "title": "HEXISTS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field1 \"foo\"\n(integer) 1\nredis> HEXISTS myhash field1\n(integer) 1\nredis> HEXISTS myhash field2\n(integer) 0"
+    },
+    {
+      "id": "intro-375",
+      "sectionId": "intro",
+      "title": "HEXISTS",
+      "kind": "text",
+      "body": "判断哈希字段是否存在"
+    },
+    {
+      "id": "intro-376",
+      "sectionId": "intro",
+      "title": "HGET",
+      "kind": "code",
+      "lang": "",
+      "code": "HGET key field"
+    },
+    {
+      "id": "intro-377",
+      "sectionId": "intro",
+      "title": "HGET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-378",
+      "sectionId": "intro",
+      "title": "HGET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field1 \"foo\"\n(integer) 1\nredis> HGET myhash field1\n\"foo\"\nredis> HGET myhash field2\n(nil)"
+    },
+    {
+      "id": "intro-379",
+      "sectionId": "intro",
+      "title": "HGET",
+      "kind": "text",
+      "body": "获取哈希字段的值"
+    },
+    {
+      "id": "intro-380",
+      "sectionId": "intro",
+      "title": "HGETALL",
+      "kind": "code",
+      "lang": "",
+      "code": "HGETALL key"
+    },
+    {
+      "id": "intro-381",
+      "sectionId": "intro",
+      "title": "HGETALL",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-382",
+      "sectionId": "intro",
+      "title": "HGETALL",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field1 \"Hello\"\n(integer) 1\nredis> HSET myhash field2 \"World\"\n(integer) 1\nredis> HGETALL myhash\n1) \"field1\"\n2) \"Hello\"\n3) \"field2\"\n4) \"World\""
+    },
+    {
+      "id": "intro-383",
+      "sectionId": "intro",
+      "title": "HGETALL",
+      "kind": "text",
+      "body": "获取哈希中的所有字段和值"
+    },
+    {
+      "id": "intro-384",
+      "sectionId": "intro",
+      "title": "HINCRBY",
+      "kind": "code",
+      "lang": "",
+      "code": "HINCRBY key field increment"
+    },
+    {
+      "id": "intro-385",
+      "sectionId": "intro",
+      "title": "HINCRBY",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-386",
+      "sectionId": "intro",
+      "title": "HINCRBY",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field 5\n(integer) 1\nredis> HINCRBY myhash field 1\n(integer) 6\nredis> HINCRBY myhash field -1\n(integer) 5\nredis> HINCRBY myhash field -10\n(integer) -5"
+    },
+    {
+      "id": "intro-387",
+      "sectionId": "intro",
+      "title": "HINCRBY",
+      "kind": "text",
+      "body": "将哈希字段的整数值增加给定的数字"
+    },
+    {
+      "id": "intro-388",
+      "sectionId": "intro",
+      "title": "HINCRBYFLOAT",
+      "kind": "code",
+      "lang": "",
+      "code": "HINCRBYFLOAT key field increment"
+    },
+    {
+      "id": "intro-389",
+      "sectionId": "intro",
+      "title": "HINCRBYFLOAT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-390",
+      "sectionId": "intro",
+      "title": "HINCRBYFLOAT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET mykey field 10.50\n(integer) 1\nredis> HINCRBYFLOAT mykey field 0.1\n\"10.6\"\nredis> HINCRBYFLOAT mykey field -5\n\"5.6\"\nredis> HSET mykey field 5.0e3\n(integer) 0\nredis> HINCRBYFLOAT mykey field 2.0e2\n\"5200\""
+    },
+    {
+      "id": "intro-391",
+      "sectionId": "intro",
+      "title": "HINCRBYFLOAT",
+      "kind": "text",
+      "body": "将哈希字段的浮点值增加给定的数量"
+    },
+    {
+      "id": "intro-392",
+      "sectionId": "intro",
+      "title": "HKEYS",
+      "kind": "code",
+      "lang": "",
+      "code": "HKEYS key"
+    },
+    {
+      "id": "intro-393",
+      "sectionId": "intro",
+      "title": "HKEYS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-394",
+      "sectionId": "intro",
+      "title": "HKEYS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field1 \"Hello\"\n(integer) 1\nredis> HSET myhash field2 \"World\"\n(integer) 1\nredis> HKEYS myhash\n1) \"field1\"\n2) \"field2\""
+    },
+    {
+      "id": "intro-395",
+      "sectionId": "intro",
+      "title": "HKEYS",
+      "kind": "text",
+      "body": "获取哈希中的所有字段"
+    },
+    {
+      "id": "intro-396",
+      "sectionId": "intro",
+      "title": "HLEN",
+      "kind": "code",
+      "lang": "",
+      "code": "HLEN key"
+    },
+    {
+      "id": "intro-397",
+      "sectionId": "intro",
+      "title": "HLEN",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-398",
+      "sectionId": "intro",
+      "title": "HLEN",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field1 \"Hello\"\n(integer) 1\nredis> HSET myhash field2 \"World\"\n(integer) 1\nredis> HLEN myhash\n(integer) 2"
+    },
+    {
+      "id": "intro-399",
+      "sectionId": "intro",
+      "title": "HLEN",
+      "kind": "text",
+      "body": "获取哈希中的字段数"
+    },
+    {
+      "id": "intro-400",
+      "sectionId": "intro",
+      "title": "HMGET",
+      "kind": "code",
+      "lang": "",
+      "code": "HMGET key field [field ...]"
+    },
+    {
+      "id": "intro-401",
+      "sectionId": "intro",
+      "title": "HMGET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-402",
+      "sectionId": "intro",
+      "title": "HMGET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field1 \"Hello\"\n(integer) 1\nredis> HSET myhash field2 \"World\"\n(integer) 1\nredis> HMGET myhash field1 field2 nofield\n1) \"Hello\"\n2) \"World\"\n3) (nil)"
+    },
+    {
+      "id": "intro-403",
+      "sectionId": "intro",
+      "title": "HMGET",
+      "kind": "text",
+      "body": "获取所有给定哈希字段的值"
+    },
+    {
+      "id": "intro-404",
+      "sectionId": "intro",
+      "title": "HMSET",
+      "kind": "code",
+      "lang": "",
+      "code": "HMSET key field value [field value ...]"
+    },
+    {
+      "id": "intro-405",
+      "sectionId": "intro",
+      "title": "HMSET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-406",
+      "sectionId": "intro",
+      "title": "HMSET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HMSET myhash field1 \"Hello\" field2 \"World\"\n\"OK\"\nredis> HGET myhash field1\n\"Hello\"\nredis> HGET myhash field2\n\"World\""
+    },
+    {
+      "id": "intro-407",
+      "sectionId": "intro",
+      "title": "HMSET",
+      "kind": "text",
+      "body": "将多个哈希字段设置为多个值"
+    },
+    {
+      "id": "intro-408",
+      "sectionId": "intro",
+      "title": "HSET",
+      "kind": "code",
+      "lang": "",
+      "code": "HSET key field value [field value ...]"
+    },
+    {
+      "id": "intro-409",
+      "sectionId": "intro",
+      "title": "HSET",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-410",
+      "sectionId": "intro",
+      "title": "HSET",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field1 \"Hello\"\n(integer) 1\nredis> HGET myhash field1\n\"Hello\""
+    },
+    {
+      "id": "intro-411",
+      "sectionId": "intro",
+      "title": "HSET",
+      "kind": "text",
+      "body": "设置哈希字段的字符串值"
+    },
+    {
+      "id": "intro-412",
+      "sectionId": "intro",
+      "title": "HSETNX",
+      "kind": "code",
+      "lang": "",
+      "code": "HSETNX key field value"
+    },
+    {
+      "id": "intro-413",
+      "sectionId": "intro",
+      "title": "HSETNX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-414",
+      "sectionId": "intro",
+      "title": "HSETNX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSETNX myhash field \"Hello\"\n(integer) 1\nredis> HSETNX myhash field \"World\"\n(integer) 0\nredis> HGET myhash field\n\"Hello\""
+    },
+    {
+      "id": "intro-415",
+      "sectionId": "intro",
+      "title": "HSETNX",
+      "kind": "text",
+      "body": "设置哈希字段的值，仅当该字段不存在时"
+    },
+    {
+      "id": "intro-416",
+      "sectionId": "intro",
+      "title": "HSTRLEN",
+      "kind": "code",
+      "lang": "",
+      "code": "HSTRLEN key field"
+    },
+    {
+      "id": "intro-417",
+      "sectionId": "intro",
+      "title": "HSTRLEN",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-418",
+      "sectionId": "intro",
+      "title": "HSTRLEN",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HMSET myhash f1 HelloWorld f2 99 f3 -256\n\"OK\"\nredis> HSTRLEN myhash f1\n(integer) 10\nredis> HSTRLEN myhash f2\n(integer) 2\nredis> HSTRLEN myhash f3\n(integer) 4"
+    },
+    {
+      "id": "intro-419",
+      "sectionId": "intro",
+      "title": "HSTRLEN",
+      "kind": "text",
+      "body": "获取哈希字段值的长度"
+    },
+    {
+      "id": "intro-420",
+      "sectionId": "intro",
+      "title": "HVALS",
+      "kind": "code",
+      "lang": "",
+      "code": "HVALS key"
+    },
+    {
+      "id": "intro-421",
+      "sectionId": "intro",
+      "title": "HVALS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-422",
+      "sectionId": "intro",
+      "title": "HVALS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> HSET myhash field1 \"Hello\"\n(integer) 1\nredis> HSET myhash field2 \"World\"\n(integer) 1\nredis> HVALS myhash\n1) \"Hello\"\n2) \"World\""
+    },
+    {
+      "id": "intro-423",
+      "sectionId": "intro",
+      "title": "HVALS",
+      "kind": "text",
+      "body": "获取哈希中的所有值"
+    },
+    {
+      "id": "intro-424",
+      "sectionId": "intro",
+      "title": "HVALS",
+      "kind": "text",
+      "body": "Redis 排序集类型设置\n------------"
+    },
+    {
+      "id": "intro-425",
+      "sectionId": "intro",
+      "title": "BZPOPMIN",
+      "kind": "code",
+      "lang": "",
+      "code": "BZPOPMIN key [key ...] timeout"
+    },
+    {
+      "id": "intro-426",
+      "sectionId": "intro",
+      "title": "BZPOPMIN",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-427",
+      "sectionId": "intro",
+      "title": "BZPOPMIN",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> DEL zset1 zset2\n(integer) 0\nredis> ZADD zset1 0 a 1 b 2 c\n(integer) 3\nredis> BZPOPMIN zset1 zset2 0\n1) \"zset1\"\n2) \"a\"\n3) \"0\""
+    },
+    {
+      "id": "intro-428",
+      "sectionId": "intro",
+      "title": "BZPOPMIN",
+      "kind": "text",
+      "body": "从一个或多个排序集合中删除并返回得分最低的成员，或者阻塞直到一个可用"
+    },
+    {
+      "id": "intro-429",
+      "sectionId": "intro",
+      "title": "BZPOPMAX",
+      "kind": "code",
+      "lang": "",
+      "code": "BZPOPMAX key [key ...] timeout"
+    },
+    {
+      "id": "intro-430",
+      "sectionId": "intro",
+      "title": "BZPOPMAX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-431",
+      "sectionId": "intro",
+      "title": "BZPOPMAX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> DEL zset1 zset2\n(integer) 0\nredis> ZADD zset1 0 a 1 b 2 c\n(integer) 3\nredis> BZPOPMAX zset1 zset2 0\n1) \"zset1\"\n2) \"c\"\n3) \"2\""
+    },
+    {
+      "id": "intro-432",
+      "sectionId": "intro",
+      "title": "BZPOPMAX",
+      "kind": "text",
+      "body": "从一个或多个排序集合中删除并返回得分最高的成员，或者阻塞直到一个可用"
+    },
+    {
+      "id": "intro-433",
+      "sectionId": "intro",
+      "title": "ZADD",
+      "kind": "code",
+      "lang": "",
+      "code": "ZADD key [NX|XX] [GT|LT] [CH] [INCR] score member [score \nmember ...]"
+    },
+    {
+      "id": "intro-434",
+      "sectionId": "intro",
+      "title": "ZADD",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-435",
+      "sectionId": "intro",
+      "title": "ZADD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 1 \"uno\"\n(integer) 1\nredis> ZADD myzset 2 \"two\" 3 \"three\"\n(integer) 2\nredis> ZRANGE myzset 0 -1 WITHSCORES\n1) \"one\"\n2) \"1\"\n3) \"uno\"\n4) \"1\"\n5) \"two\"\n6) \"2\"\n7) \"three\"\n8) \"3\""
+    },
+    {
+      "id": "intro-436",
+      "sectionId": "intro",
+      "title": "ZADD",
+      "kind": "text",
+      "body": "将一个或多个成员添加到有序集合中，或者更新其分数(如果它已经存在)"
+    },
+    {
+      "id": "intro-437",
+      "sectionId": "intro",
+      "title": "ZCARD",
+      "kind": "code",
+      "lang": "",
+      "code": "ZCARD key"
+    },
+    {
+      "id": "intro-438",
+      "sectionId": "intro",
+      "title": "ZCARD",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-439",
+      "sectionId": "intro",
+      "title": "ZCARD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZCARD myzset\n(integer) 2"
+    },
+    {
+      "id": "intro-440",
+      "sectionId": "intro",
+      "title": "ZCARD",
+      "kind": "text",
+      "body": "获取有序集合中的成员数"
+    },
+    {
+      "id": "intro-441",
+      "sectionId": "intro",
+      "title": "ZSCORE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZSCORE key member"
+    },
+    {
+      "id": "intro-442",
+      "sectionId": "intro",
+      "title": "ZSCORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-443",
+      "sectionId": "intro",
+      "title": "ZSCORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZSCORE myzset \"one\"\n\"1\""
+    },
+    {
+      "id": "intro-444",
+      "sectionId": "intro",
+      "title": "ZSCORE",
+      "kind": "text",
+      "body": "获取与排序集中给定成员关联的分数"
+    },
+    {
+      "id": "intro-445",
+      "sectionId": "intro",
+      "title": "ZCOUNT",
+      "kind": "code",
+      "lang": "",
+      "code": "ZCOUNT key min max"
+    },
+    {
+      "id": "intro-446",
+      "sectionId": "intro",
+      "title": "ZCOUNT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-447",
+      "sectionId": "intro",
+      "title": "ZCOUNT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZCOUNT myzset -inf +inf\n(integer) 3\nredis> ZCOUNT myzset (1 3\n(integer) 2"
+    },
+    {
+      "id": "intro-448",
+      "sectionId": "intro",
+      "title": "ZCOUNT",
+      "kind": "text",
+      "body": "计算得分在给定值内的排序集中的成员"
+    },
+    {
+      "id": "intro-449",
+      "sectionId": "intro",
+      "title": "ZDIFF",
+      "kind": "code",
+      "lang": "",
+      "code": "ZDIFF numkeys key [key ...] [WITHSCORES]"
+    },
+    {
+      "id": "intro-450",
+      "sectionId": "intro",
+      "title": "ZDIFF",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-451",
+      "sectionId": "intro",
+      "title": "ZDIFF",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD zset1 1 \"one\"\n(integer) 1\nredis> ZADD zset1 2 \"two\"\n(integer) 1\nredis> ZADD zset1 3 \"three\"\n(integer) 1\nredis> ZADD zset2 1 \"one\"\n(integer) 1\nredis> ZADD zset2 2 \"two\"\n(integer) 1\nredis> ZDIFF 2 zset1 zset2\n1) \"three\"\nredis> ZDIFF 2 zset1 zset2 WITHSCORES\n1) \"three\"\n2) \"3\""
+    },
+    {
+      "id": "intro-452",
+      "sectionId": "intro",
+      "title": "ZDIFF",
+      "kind": "text",
+      "body": "减去多个排序集"
+    },
+    {
+      "id": "intro-453",
+      "sectionId": "intro",
+      "title": "ZDIFFSTORE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZDIFFSTORE destination numkeys key [key ...]"
+    },
+    {
+      "id": "intro-454",
+      "sectionId": "intro",
+      "title": "ZDIFFSTORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-455",
+      "sectionId": "intro",
+      "title": "ZDIFFSTORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD zset1 1 \"one\"\n(integer) 1\nredis> ZADD zset1 2 \"two\"\n(integer) 1\nredis> ZADD zset1 3 \"three\"\n(integer) 1\nredis> ZADD zset2 1 \"one\"\n(integer) 1\nredis> ZADD zset2 2 \"two\"\n(integer) 1\nredis> ZDIFFSTORE out 2 zset1 zset2\n(integer) 1\nredis> ZRANGE out 0 -1 WITHSCORES\n1) \"three\"\n2) \"3\""
+    },
+    {
+      "id": "intro-456",
+      "sectionId": "intro",
+      "title": "ZDIFFSTORE",
+      "kind": "text",
+      "body": "减去多个排序集并将生成的排序集存储在新键中"
+    },
+    {
+      "id": "intro-457",
+      "sectionId": "intro",
+      "title": "ZINCRBY",
+      "kind": "code",
+      "lang": "",
+      "code": "ZINCRBY key increment member"
+    },
+    {
+      "id": "intro-458",
+      "sectionId": "intro",
+      "title": "ZINCRBY",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-459",
+      "sectionId": "intro",
+      "title": "ZINCRBY",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZINCRBY myzset 2 \"one\"\n\"3\"\nredis> ZRANGE myzset 0 -1 WITHSCORES\n1) \"two\"\n2) \"2\"\n3) \"one\"\n4) \"3\""
+    },
+    {
+      "id": "intro-460",
+      "sectionId": "intro",
+      "title": "ZINCRBY",
+      "kind": "text",
+      "body": "增加排序集中成员的分数"
+    },
+    {
+      "id": "intro-461",
+      "sectionId": "intro",
+      "title": "ZINTER",
+      "kind": "code",
+      "lang": "",
+      "code": "ZINTER numkeys key [key ...] [WEIGHTS weight [weight ...]] \n[AGGREGATE SUM|MIN|MAX] [WITHSCORES]"
+    },
+    {
+      "id": "intro-462",
+      "sectionId": "intro",
+      "title": "ZINTER",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-463",
+      "sectionId": "intro",
+      "title": "ZINTER",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD zset1 1 \"one\"\n(integer) 1\nredis> ZADD zset1 2 \"two\"\n(integer) 1\nredis> ZADD zset2 1 \"one\"\n(integer) 1\nredis> ZADD zset2 2 \"two\"\n(integer) 1\nredis> ZADD zset2 3 \"three\"\n(integer) 1\nredis> ZINTER 2 zset1 zset2\n1) \"one\"\n2) \"two\"\nredis> ZINTER 2 zset1 zset2 WITHSCORES\n1) \"one\"\n2) \"2\"\n3) \"two\"\n4) \"4\""
+    },
+    {
+      "id": "intro-464",
+      "sectionId": "intro",
+      "title": "ZINTER",
+      "kind": "text",
+      "body": "与多个排序集相交"
+    },
+    {
+      "id": "intro-465",
+      "sectionId": "intro",
+      "title": "ZINTERSTORE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZINTERSTORE destination numkeys key [key ...] [WEIGHTS weight \n[weight ...]] [AGGREGATE SUM|MIN|MAX]"
+    },
+    {
+      "id": "intro-466",
+      "sectionId": "intro",
+      "title": "ZINTERSTORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-467",
+      "sectionId": "intro",
+      "title": "ZINTERSTORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD zset1 1 \"one\"\n(integer) 1\nredis> ZADD zset1 2 \"two\"\n(integer) 1\nredis> ZADD zset2 1 \"one\"\n(integer) 1\nredis> ZADD zset2 2 \"two\"\n(integer) 1\nredis> ZADD zset2 3 \"three\"\n(integer) 1\nredis> ZINTERSTORE out 2 zset1 zset2 WEIGHTS 2 3\n(integer) 2\nredis> ZRANGE out 0 -1 WITHSCORES\n1) \"one\"\n2) \"5\"\n3) \"two\"\n4) \"10\""
+    },
+    {
+      "id": "intro-468",
+      "sectionId": "intro",
+      "title": "ZINTERSTORE",
+      "kind": "text",
+      "body": "将多个排序集相交并将生成的排序集存储在新键中"
+    },
+    {
+      "id": "intro-469",
+      "sectionId": "intro",
+      "title": "ZLEXCOUNT",
+      "kind": "code",
+      "lang": "",
+      "code": "ZLEXCOUNT key min max"
+    },
+    {
+      "id": "intro-470",
+      "sectionId": "intro",
+      "title": "ZLEXCOUNT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-471",
+      "sectionId": "intro",
+      "title": "ZLEXCOUNT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 0 a 0 b 0 c 0 d 0 e\n(integer) 5\nredis> ZADD myzset 0 f 0 g\n(integer) 2\nredis> ZLEXCOUNT myzset - +\n(integer) 7\nredis> ZLEXCOUNT myzset [b [f\n(integer) 5"
+    },
+    {
+      "id": "intro-472",
+      "sectionId": "intro",
+      "title": "ZLEXCOUNT",
+      "kind": "text",
+      "body": "计算给定词典范围之间的有序集合中的成员数"
+    },
+    {
+      "id": "intro-473",
+      "sectionId": "intro",
+      "title": "ZPOPMAX",
+      "kind": "code",
+      "lang": "",
+      "code": "ZPOPMAX key [count]"
+    },
+    {
+      "id": "intro-474",
+      "sectionId": "intro",
+      "title": "ZPOPMAX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-475",
+      "sectionId": "intro",
+      "title": "ZPOPMAX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZPOPMAX myzset\n1) \"three\"\n2) \"3\""
+    },
+    {
+      "id": "intro-476",
+      "sectionId": "intro",
+      "title": "ZPOPMAX",
+      "kind": "text",
+      "body": "删除并返回排序集中得分最高的成员"
+    },
+    {
+      "id": "intro-477",
+      "sectionId": "intro",
+      "title": "ZPOPMIN",
+      "kind": "code",
+      "lang": "",
+      "code": "ZPOPMIN key [count]"
+    },
+    {
+      "id": "intro-478",
+      "sectionId": "intro",
+      "title": "ZPOPMIN",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-479",
+      "sectionId": "intro",
+      "title": "ZPOPMIN",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZPOPMIN myzset\n1) \"one\"\n2) \"1\""
+    },
+    {
+      "id": "intro-480",
+      "sectionId": "intro",
+      "title": "ZPOPMIN",
+      "kind": "text",
+      "body": "删除并返回排序集中得分最低的成员"
+    },
+    {
+      "id": "intro-481",
+      "sectionId": "intro",
+      "title": "ZRANGE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZRANGE key start stop [WITHSCORES]"
+    },
+    {
+      "id": "intro-482",
+      "sectionId": "intro",
+      "title": "ZRANGE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-483",
+      "sectionId": "intro",
+      "title": "ZRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZRANGE myzset 0 -1\n1) \"one\"\n2) \"two\"\n3) \"three\"\nredis> ZRANGE myzset 2 3\n1) \"three\"\nredis> ZRANGE myzset -2 -1\n1) \"two\"\n2) \"three\""
+    },
+    {
+      "id": "intro-484",
+      "sectionId": "intro",
+      "title": "ZRANGE",
+      "kind": "text",
+      "body": "按索引返回排序集中的一系列成员"
+    },
+    {
+      "id": "intro-485",
+      "sectionId": "intro",
+      "title": "ZRANGEBYLEX",
+      "kind": "code",
+      "lang": "",
+      "code": "ZRANGEBYLEX key min max [LIMIT offset count]"
+    },
+    {
+      "id": "intro-486",
+      "sectionId": "intro",
+      "title": "ZRANGEBYLEX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-487",
+      "sectionId": "intro",
+      "title": "ZRANGEBYLEX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 0 a 0 b 0 c 0 d 0 e 0 f 0 g\n(integer) 7\nredis> ZRANGEBYLEX myzset - [c\n1) \"a\"\n2) \"b\"\n3) \"c\"\nredis> ZRANGEBYLEX myzset - (c\n1) \"a\"\n2) \"b\"\nredis> ZRANGEBYLEX myzset [aaa (g\n1) \"b\"\n2) \"c\"\n3) \"d\"\n4) \"e\"\n5) \"f\""
+    },
+    {
+      "id": "intro-488",
+      "sectionId": "intro",
+      "title": "ZRANGEBYLEX",
+      "kind": "text",
+      "body": "按词典顺序返回排序集中的一系列成员"
+    },
+    {
+      "id": "intro-489",
+      "sectionId": "intro",
+      "title": "ZREVRANGEBYLEX",
+      "kind": "code",
+      "lang": "",
+      "code": "ZREVRANGEBYLEX key max min [LIMIT offset count]"
+    },
+    {
+      "id": "intro-490",
+      "sectionId": "intro",
+      "title": "ZREVRANGEBYLEX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-491",
+      "sectionId": "intro",
+      "title": "ZREVRANGEBYLEX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 0 a 0 b 0 c 0 d 0 e 0 f 0 g\n(integer) 7\nredis> ZREVRANGEBYLEX myzset [c -\n1) \"c\"\n2) \"b\"\n3) \"a\"\nredis> ZREVRANGEBYLEX myzset (c -\n1) \"b\"\n2) \"a\"\nredis> ZREVRANGEBYLEX myzset (g [aaa\n1) \"f\"\n2) \"e\"\n3) \"d\"\n4) \"c\"\n5) \"b\""
+    },
+    {
+      "id": "intro-492",
+      "sectionId": "intro",
+      "title": "ZREVRANGEBYLEX",
+      "kind": "text",
+      "body": "返回排序集中的一系列成员，按字典范围，从高到低的字符串排序。"
+    },
+    {
+      "id": "intro-493",
+      "sectionId": "intro",
+      "title": "ZRANGEBYSCORE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZRANGEBYSCORE key min max [WITHSCORES] [LIMIT offset count]"
+    },
+    {
+      "id": "intro-494",
+      "sectionId": "intro",
+      "title": "ZRANGEBYSCORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-495",
+      "sectionId": "intro",
+      "title": "ZRANGEBYSCORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZRANGEBYSCORE myzset -inf +inf\n1) \"one\"\n2) \"two\"\n3) \"three\"\nredis> ZRANGEBYSCORE myzset 1 2\n1) \"one\"\n2) \"two\"\nredis> ZRANGEBYSCORE myzset (1 2\n1) \"two\"\nredis> ZRANGEBYSCORE myzset (1 (2\n(empty list or set)"
+    },
+    {
+      "id": "intro-496",
+      "sectionId": "intro",
+      "title": "ZRANGEBYSCORE",
+      "kind": "text",
+      "body": "按分数返回排序集中的一系列成员"
+    },
+    {
+      "id": "intro-497",
+      "sectionId": "intro",
+      "title": "ZRANK",
+      "kind": "code",
+      "lang": "",
+      "code": "ZRANK key member"
+    },
+    {
+      "id": "intro-498",
+      "sectionId": "intro",
+      "title": "ZRANK",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-499",
+      "sectionId": "intro",
+      "title": "ZRANK",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZRANK myzset \"three\"\n(integer) 2\nredis> ZRANK myzset \"four\"\n(nil)"
+    },
+    {
+      "id": "intro-500",
+      "sectionId": "intro",
+      "title": "ZRANK",
+      "kind": "text",
+      "body": "确定有序集合中成员的索引"
+    },
+    {
+      "id": "intro-501",
+      "sectionId": "intro",
+      "title": "ZREM",
+      "kind": "code",
+      "lang": "",
+      "code": "ZREM key member [member ...]"
+    },
+    {
+      "id": "intro-502",
+      "sectionId": "intro",
+      "title": "ZREM",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-503",
+      "sectionId": "intro",
+      "title": "ZREM",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZREM myzset \"two\"\n(integer) 1\nredis> ZRANGE myzset 0 -1 WITHSCORES\n1) \"one\"\n2) \"1\"\n3) \"three\"\n4) \"3\""
+    },
+    {
+      "id": "intro-504",
+      "sectionId": "intro",
+      "title": "ZREM",
+      "kind": "text",
+      "body": "从有序集合中移除一个或多个成员"
+    },
+    {
+      "id": "intro-505",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYLEX",
+      "kind": "code",
+      "lang": "",
+      "code": "ZREMRANGEBYLEX key min max"
+    },
+    {
+      "id": "intro-506",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYLEX",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-507",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYLEX",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 0 aaaa 0 b 0 c 0 d 0 e\n(integer) 5\nredis> ZADD myzset 0 foo 0 zap 0 zip 0 ALPHA 0 alpha\n(integer) 5\nredis> ZRANGE myzset 0 -1\n1) \"ALPHA\"\n 2) \"aaaa\"\n 3) \"alpha\"\n 4) \"b\"\n 5) \"c\"\n 6) \"d\"\n 7) \"e\"\n 8) \"foo\"\n 9) \"zap\"\n10) \"zip\"\nredis> ZREMRANGEBYLEX myzset [alpha [omega\n(integer) 6\nredis> ZRANGE myzset 0 -1\n1) \"ALPHA\"\n2) \"aaaa\"\n3) \"zap\"\n4) \"zip\""
+    },
+    {
+      "id": "intro-508",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYLEX",
+      "kind": "text",
+      "body": "删除给定词典范围之间的排序集中的所有成员"
+    },
+    {
+      "id": "intro-509",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYRANK",
+      "kind": "code",
+      "lang": "",
+      "code": "ZREMRANGEBYRANK key start stop"
+    },
+    {
+      "id": "intro-510",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYRANK",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-511",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYRANK",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZREMRANGEBYRANK myzset 0 1\n(integer) 2\nredis> ZRANGE myzset 0 -1 WITHSCORES\n1) \"three\"\n2) \"3\""
+    },
+    {
+      "id": "intro-512",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYRANK",
+      "kind": "text",
+      "body": "删除给定索引内排序集中的所有成员"
+    },
+    {
+      "id": "intro-513",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYSCORE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZREMRANGEBYSCORE key min max"
+    },
+    {
+      "id": "intro-514",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYSCORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-515",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYSCORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZREMRANGEBYSCORE myzset -inf (2\n(integer) 1\nredis> ZRANGE myzset 0 -1 WITHSCORES\n1) \"two\"\n2) \"2\"\n3) \"three\"\n4) \"3\""
+    },
+    {
+      "id": "intro-516",
+      "sectionId": "intro",
+      "title": "ZREMRANGEBYSCORE",
+      "kind": "text",
+      "body": "删除给定分数内排序集中的所有成员"
+    },
+    {
+      "id": "intro-517",
+      "sectionId": "intro",
+      "title": "ZREVRANGE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZREVRANGE key start stop [WITHSCORES]"
+    },
+    {
+      "id": "intro-518",
+      "sectionId": "intro",
+      "title": "ZREVRANGE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-519",
+      "sectionId": "intro",
+      "title": "ZREVRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZREVRANGE myzset 0 -1\n1) \"three\"\n2) \"two\"\n3) \"one\"\nredis> ZREVRANGE myzset 2 3\n1) \"one\"\nredis> ZREVRANGE myzset -2 -1\n1) \"two\"\n2) \"one\""
+    },
+    {
+      "id": "intro-520",
+      "sectionId": "intro",
+      "title": "ZREVRANGE",
+      "kind": "text",
+      "body": "按索引返回排序集中的一系列成员，分数从高到低排序"
+    },
+    {
+      "id": "intro-521",
+      "sectionId": "intro",
+      "title": "ZREVRANGEBYSCORE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZREVRANGEBYSCORE key max min [WITHSCORES] [LIMIT offset count]"
+    },
+    {
+      "id": "intro-522",
+      "sectionId": "intro",
+      "title": "ZREVRANGEBYSCORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-523",
+      "sectionId": "intro",
+      "title": "ZREVRANGEBYSCORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZREVRANGEBYSCORE myzset +inf -inf\n1) \"three\"\n2) \"two\"\n3) \"one\"\nredis> ZREVRANGEBYSCORE myzset 2 1\n1) \"two\"\n2) \"one\"\nredis> ZREVRANGEBYSCORE myzset 2 (1\n1) \"two\"\nredis> ZREVRANGEBYSCORE myzset (2 (1\n(empty list or set)"
+    },
+    {
+      "id": "intro-524",
+      "sectionId": "intro",
+      "title": "ZREVRANGEBYSCORE",
+      "kind": "text",
+      "body": "按分数返回排序集中的一系列成员，分数从高到低排序"
+    },
+    {
+      "id": "intro-525",
+      "sectionId": "intro",
+      "title": "ZREVRANK",
+      "kind": "code",
+      "lang": "",
+      "code": "ZREVRANK key member"
+    },
+    {
+      "id": "intro-526",
+      "sectionId": "intro",
+      "title": "ZREVRANK",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-527",
+      "sectionId": "intro",
+      "title": "ZREVRANK",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZADD myzset 3 \"three\"\n(integer) 1\nredis> ZREVRANK myzset \"one\"\n(integer) 2\nredis> ZREVRANK myzset \"four\"\n(nil)"
+    },
+    {
+      "id": "intro-528",
+      "sectionId": "intro",
+      "title": "ZREVRANK",
+      "kind": "text",
+      "body": "确定一个成员在有序集合中的索引，分数从高到低排序"
+    },
+    {
+      "id": "intro-529",
+      "sectionId": "intro",
+      "title": "ZUNION",
+      "kind": "code",
+      "lang": "",
+      "code": "ZUNION numkeys key [key ...] [WEIGHTS weight [weight ...]] \n[AGGREGATE SUM|MIN|MAX] [WITHSCORES]"
+    },
+    {
+      "id": "intro-530",
+      "sectionId": "intro",
+      "title": "ZUNION",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-531",
+      "sectionId": "intro",
+      "title": "ZUNION",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD zset1 1 \"one\"\n(integer) 1\nredis> ZADD zset1 2 \"two\"\n(integer) 1\nredis> ZADD zset2 1 \"one\"\n(integer) 1\nredis> ZADD zset2 2 \"two\"\n(integer) 1\nredis> ZADD zset2 3 \"three\"\n(integer) 1\nredis> ZUNION 2 zset1 zset2\n1) \"one\"\n2) \"three\"\n3) \"two\"\nredis> ZUNION 2 zset1 zset2 WITHSCORES\n1) \"one\"\n2) \"2\"\n3) \"three\"\n4) \"3\"\n5) \"two\"\n6) \"4\""
+    },
+    {
+      "id": "intro-532",
+      "sectionId": "intro",
+      "title": "ZUNION",
+      "kind": "text",
+      "body": "添加多个排序集"
+    },
+    {
+      "id": "intro-533",
+      "sectionId": "intro",
+      "title": "ZMSCORE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZMSCORE key member [member ...]"
+    },
+    {
+      "id": "intro-534",
+      "sectionId": "intro",
+      "title": "ZMSCORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-535",
+      "sectionId": "intro",
+      "title": "ZMSCORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD myzset 1 \"one\"\n(integer) 1\nredis> ZADD myzset 2 \"two\"\n(integer) 1\nredis> ZMSCORE myzset \"one\" \"two\" \"nofield\"\n1) \"1\"\n2) \"2\"\n3) (nil)"
+    },
+    {
+      "id": "intro-536",
+      "sectionId": "intro",
+      "title": "ZMSCORE",
+      "kind": "text",
+      "body": "获取与排序集中给定成员关联的分数"
+    },
+    {
+      "id": "intro-537",
+      "sectionId": "intro",
+      "title": "ZUNIONSTORE",
+      "kind": "code",
+      "lang": "",
+      "code": "ZUNIONSTORE destination numkeys key [key ...] [WEIGHTS weight \n[weight ...]] [AGGREGATE SUM|MIN|MAX]"
+    },
+    {
+      "id": "intro-538",
+      "sectionId": "intro",
+      "title": "ZUNIONSTORE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-539",
+      "sectionId": "intro",
+      "title": "ZUNIONSTORE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> ZADD zset1 1 \"one\"\n(integer) 1\nredis> ZADD zset1 2 \"two\"\n(integer) 1\nredis> ZADD zset2 1 \"one\"\n(integer) 1\nredis> ZADD zset2 2 \"two\"\n(integer) 1\nredis> ZADD zset2 3 \"three\"\n(integer) 1\nredis> ZUNIONSTORE out 2 zset1 zset2 WEIGHTS 2 3\n(integer) 3\nredis> ZRANGE out 0 -1 WITHSCORES\n1) \"one\"\n2) \"5\"\n3) \"three\"\n4) \"9\"\n5) \"two\"\n6) \"10\""
+    },
+    {
+      "id": "intro-540",
+      "sectionId": "intro",
+      "title": "ZUNIONSTORE",
+      "kind": "text",
+      "body": "添加多个排序集并将生成的排序集存储在新键中"
+    },
+    {
+      "id": "intro-541",
+      "sectionId": "intro",
+      "title": "ZUNIONSTORE",
+      "kind": "text",
+      "body": "Redis地图坐标集类型设置\n------------\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-542",
+      "sectionId": "intro",
+      "title": "GEOADD",
+      "kind": "code",
+      "lang": "",
+      "code": "GEOADD key longitude latitude member [longitude latitude member ...]"
+    },
+    {
+      "id": "intro-543",
+      "sectionId": "intro",
+      "title": "GEOADD",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-544",
+      "sectionId": "intro",
+      "title": "GEOADD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> GEOADD Sicily 13.361389 38.115556 \"Palermo\" 15.087269 37.502669 \"Catania\"\n(integer) 2\nredis> GEODIST Sicily Palermo Catania\n\"166274.1516\"\nredis> GEORADIUS Sicily 15 37 100 km\n1) \"Catania\"\nredis> GEORADIUS Sicily 15 37 200 km\n1) \"Palermo\"\n2) \"Catania\""
+    },
+    {
+      "id": "intro-545",
+      "sectionId": "intro",
+      "title": "GEOADD",
+      "kind": "text",
+      "body": "在使用排序集表示的地理空间索引中添加一个或多个地理空间项"
+    },
+    {
+      "id": "intro-546",
+      "sectionId": "intro",
+      "title": "GEOHASH",
+      "kind": "code",
+      "lang": "",
+      "code": "GEOHASH key member [member ...]"
+    },
+    {
+      "id": "intro-547",
+      "sectionId": "intro",
+      "title": "GEOHASH",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-548",
+      "sectionId": "intro",
+      "title": "GEOHASH",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> GEOADD Sicily 13.361389 38.115556 \"Palermo\" 15.087269 37.502669 \"Catania\"\n(integer) 2\nredis> GEOHASH Sicily Palermo Catania\n1) \"sqc8b49rny0\"\n2) \"sqdtr74hyu0\""
+    },
+    {
+      "id": "intro-549",
+      "sectionId": "intro",
+      "title": "GEOHASH",
+      "kind": "text",
+      "body": "将地理空间索引的成员作为标准 geohash 字符串返回"
+    },
+    {
+      "id": "intro-550",
+      "sectionId": "intro",
+      "title": "GEOPOS",
+      "kind": "code",
+      "lang": "",
+      "code": "GEOPOS key member [member ...]"
+    },
+    {
+      "id": "intro-551",
+      "sectionId": "intro",
+      "title": "GEOPOS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-552",
+      "sectionId": "intro",
+      "title": "GEOPOS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> GEOADD Sicily 13.361389 38.115556 \"Palermo\" 15.087269 37.502669 \"Catania\"\n(integer) 2\nredis> GEOPOS Sicily Palermo Catania NonExisting\n1) 1) \"13.36138933897018433\"\n   2) \"38.11555639549629859\"\n2) 1) \"15.08726745843887329\"\n   2) \"37.50266842333162032\"\n3) (nil)"
+    },
+    {
+      "id": "intro-553",
+      "sectionId": "intro",
+      "title": "GEOPOS",
+      "kind": "text",
+      "body": "返回地理空间索引成员的经度和纬度"
+    },
+    {
+      "id": "intro-554",
+      "sectionId": "intro",
+      "title": "GEODIST",
+      "kind": "code",
+      "lang": "",
+      "code": "GEODIST key member1 member2 [m|km|ft|mi]"
+    },
+    {
+      "id": "intro-555",
+      "sectionId": "intro",
+      "title": "GEODIST",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-556",
+      "sectionId": "intro",
+      "title": "GEODIST",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> GEOADD Sicily 13.361389 38.115556 \"Palermo\" 15.087269 37.502669 \"Catania\"\n(integer) 2\nredis> GEODIST Sicily Palermo Catania\n\"166274.1516\"\nredis> GEODIST Sicily Palermo Catania km\n\"166.2742\"\nredis> GEODIST Sicily Palermo Catania mi\n\"103.3182\"\nredis> GEODIST Sicily Foo Bar\n(nil)"
+    },
+    {
+      "id": "intro-557",
+      "sectionId": "intro",
+      "title": "GEODIST",
+      "kind": "text",
+      "body": "返回地理空间索引的两个成员之间的距离"
+    },
+    {
+      "id": "intro-558",
+      "sectionId": "intro",
+      "title": "GEORADIUS",
+      "kind": "code",
+      "lang": "",
+      "code": "GEORADIUS key longitude latitude radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [COUNT \ncount] [ASC|DESC] [STORE key] [STOREDIST key]"
+    },
+    {
+      "id": "intro-559",
+      "sectionId": "intro",
+      "title": "GEORADIUS",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-560",
+      "sectionId": "intro",
+      "title": "GEORADIUS",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> GEOADD Sicily 13.361389 38.115556 \"Palermo\" 15.087269 37.502669 \"Catania\"\n(integer) 2\nredis> GEORADIUS Sicily 15 37 200 km WITHDIST\n1) 1) \"Palermo\"\n   2) \"190.4424\"\n2) 1) \"Catania\"\n   2) \"56.4413\"\nredis> GEORADIUS Sicily 15 37 200 km WITHCOORD\n1) 1) \"Palermo\"\n   2) 1) \"13.36138933897018433\"\n      2) \"38.11555639549629859\"\n2) 1) \"Catania\"\n   2) 1) \"15.08726745843887329\"\n      2) \"37.50266842333162032\"\nredis> GEORADIUS Sicily 15 37 200 km WITHDIST WITHCOORD\n1) 1) \"Palermo\"\n   2) \"190.4424\"\n   3) 1) \"13.36138933897018433\"\n      2) \"38.11555639549629859\"\n2) 1) \"Catania\"\n   2) \"56.4413\"\n   3) 1) \"15.08726745843887329\"\n      2) \"37.50266842333162032\""
+    },
+    {
+      "id": "intro-561",
+      "sectionId": "intro",
+      "title": "GEORADIUS",
+      "kind": "text",
+      "body": "查询表示地理空间索引的排序集，以获取与某个点的给定最大距离匹配的成员"
+    },
+    {
+      "id": "intro-562",
+      "sectionId": "intro",
+      "title": "GEORADIUSBYMEMBER",
+      "kind": "code",
+      "lang": "",
+      "code": "GEORADIUSBYMEMBER key member radius m|km|ft|mi [WITHCOORD] [WITHDIST] [WITHHASH] [COUNT count] \n[ASC|DESC] [STORE key] [STOREDIST key]"
+    },
+    {
+      "id": "intro-563",
+      "sectionId": "intro",
+      "title": "GEORADIUSBYMEMBER",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-564",
+      "sectionId": "intro",
+      "title": "GEORADIUSBYMEMBER",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> GEOADD Sicily 13.583333 37.316667 \"Agrigento\"\n(integer) 1\nredis> GEOADD Sicily 13.361389 38.115556 \"Palermo\" 15.087269 37.502669 \"Catania\"\n(integer) 2\nredis> GEORADIUSBYMEMBER Sicily Agrigento 100 km\n1) \"Agrigento\"\n2) \"Palermo\""
+    },
+    {
+      "id": "intro-565",
+      "sectionId": "intro",
+      "title": "GEORADIUSBYMEMBER",
+      "kind": "text",
+      "body": "查询表示地理空间索引的排序集，以获取与成员的给定最大距离相匹配的成员"
+    },
+    {
+      "id": "intro-566",
+      "sectionId": "intro",
+      "title": "GEOSEARCH",
+      "kind": "code",
+      "lang": "",
+      "code": "GEOSEARCH key [FROMMEMBER member] [FROMLONLAT longitude latitude] [BYRADIUS radius m|km|ft|mi] \n[BYBOX width height m|km|ft|mi] [ASC|DESC] [COUNT count] [WITHCOORD] [WITHDIST] [WITHHASH]"
+    },
+    {
+      "id": "intro-567",
+      "sectionId": "intro",
+      "title": "GEOSEARCH",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-568",
+      "sectionId": "intro",
+      "title": "GEOSEARCH",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> GEOADD Sicily 13.361389 38.115556 \"Palermo\" 15.087269 37.502669 \"Catania\"\n(integer) 2\nredis> GEOADD Sicily 12.758489 38.788135 \"edge1\"   17.241510 38.788135 \"edge2\"\n(integer) 2\nredis> GEOSEARCH Sicily FROMLONLAT 15 37 BYRADIUS 200 km ASC\n1) \"Catania\"\n2) \"Palermo\"\nredis> GEOSEARCH Sicily FROMLONLAT 15 37 BYBOX 400 400 km ASC\n1) \"Catania\"\n2) \"Palermo\"\n3) \"edge2\"\n4) \"edge1\""
+    },
+    {
+      "id": "intro-569",
+      "sectionId": "intro",
+      "title": "GEOSEARCH",
+      "kind": "text",
+      "body": "查询表示地理空间索引的排序集，以获取框或圆区域内的成员。"
+    },
+    {
+      "id": "intro-570",
+      "sectionId": "intro",
+      "title": "一些引用(可能有帮助)",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[GEOSEARCHSTORE](https://redis.io/commands/geosearchstore) | 查询表示地理空间索引的排序集以获取框或圆区域内的成员，并将结果存储在另一个键中\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "intro-571",
+      "sectionId": "intro",
+      "title": "一些引用(可能有帮助)",
+      "kind": "text",
+      "body": "Redis超文本日志类型设置\n------------"
+    },
+    {
+      "id": "intro-572",
+      "sectionId": "intro",
+      "title": "PFADD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "PFADD key element [element ...]"
+    },
+    {
+      "id": "intro-573",
+      "sectionId": "intro",
+      "title": "PFADD",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-574",
+      "sectionId": "intro",
+      "title": "PFADD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> PFADD hll a b c d e f g\n(integer) 1\nredis> PFCOUNT hll\n(integer) 7"
+    },
+    {
+      "id": "intro-575",
+      "sectionId": "intro",
+      "title": "PFADD",
+      "kind": "text",
+      "body": "将指定的元素添加到指定的HyperLogLog。"
+    },
+    {
+      "id": "intro-576",
+      "sectionId": "intro",
+      "title": "PFCOUNT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "PFCOUNT key [key ...]"
+    },
+    {
+      "id": "intro-577",
+      "sectionId": "intro",
+      "title": "PFCOUNT",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-578",
+      "sectionId": "intro",
+      "title": "PFCOUNT",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> PFADD hll foo bar zap\n(integer) 1\nredis> PFADD hll zap zap zap\n(integer) 0\nredis> PFADD hll foo bar\n(integer) 0\nredis> PFCOUNT hll\n(integer) 3\nredis> PFADD some-other-hll 1 2 3\n(integer) 1\nredis> PFCOUNT hll some-other-hll\n(integer) 6"
+    },
+    {
+      "id": "intro-579",
+      "sectionId": "intro",
+      "title": "PFCOUNT",
+      "kind": "text",
+      "body": "返回HyperLogLog在键处观察到的集合的近似基数。"
+    },
+    {
+      "id": "intro-580",
+      "sectionId": "intro",
+      "title": "PFMERGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "PFMERGE destkey sourcekey [sourcekey ...]"
+    },
+    {
+      "id": "intro-581",
+      "sectionId": "intro",
+      "title": "PFMERGE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-582",
+      "sectionId": "intro",
+      "title": "PFMERGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> PFADD hll1 foo bar zap a\n(integer) 1\nredis> PFADD hll2 a b c foo\n(integer) 1\nredis> PFMERGE hll3 hll1 hll2\n\"OK\"\nredis> PFCOUNT hll3\n(integer) 6"
+    },
+    {
+      "id": "intro-583",
+      "sectionId": "intro",
+      "title": "PFMERGE",
+      "kind": "text",
+      "body": "将N个不同的HyperLogLogs合并成一个。"
+    },
+    {
+      "id": "intro-584",
+      "sectionId": "intro",
+      "title": "PFMERGE",
+      "kind": "text",
+      "body": "Redis流命令\n------------\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-585",
+      "sectionId": "intro",
+      "title": "一些引用(可能有帮助)",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[XINFO](https://redis.io/commands/xinfo)           | 获取有关流和消费者组的信息\n[XDEL](https://redis.io/commands/xdel)             | 从流中删除指定的条目。返回实际删除的项目数，如果某些 ID 不存在，则可能与传递的 ID 数不同\n[XREAD](https://redis.io/commands/xread)           | 返回多个流中从未见过的元素，其 ID 大于调用者为每个流报告的 ID\n[XGROUP](https://redis.io/commands/xgroup)         | 创建、销毁和管理消费者组\n[XREADGROUP](https://redis.io/commands/xreadgroup) | 使用消费者组从流中返回新条目，或访问给定消费者的待处理条目的历史记录\n[XCLAIM](https://redis.io/commands/xclaim)         | 更改(或获取)消费者组中消息的所有权，就好像消息已传递给指定的消费者一样\n[XPENDING](https://redis.io/commands/xpending)     | 从流消费者组待定条目列表中返回信息和条目，这些信息是已获取但从未确认的消息\n<!--rehype:className=style-list-->"
+    },
+    {
+      "id": "intro-586",
+      "sectionId": "intro",
+      "title": "XADD",
+      "kind": "code",
+      "lang": "",
+      "code": "XADD key [MAXLEN [=|~] length] [NOMKSTREAM] *|ID field value [field value ...]"
+    },
+    {
+      "id": "intro-587",
+      "sectionId": "intro",
+      "title": "XADD",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-588",
+      "sectionId": "intro",
+      "title": "XADD",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> XADD mystream * name Sara surname OConnor\n\"1609040574632-0\"\nredis> XADD mystream * field1 value1 field2 value2 field3 value3\n\"1609040574632-1\"\nredis> XLEN mystream\n(integer) 2\nredis> XRANGE mystream - +\n1) 1) \"1609040574632-0\"\n   2) 1) \"name\"\n      2) \"Sara\"\n      3) \"surname\"\n      4) \"OConnor\"\n2) 1) \"1609040574632-1\"\n   2) 1) \"field1\"\n      2) \"value1\"\n      3) \"field2\"\n      4) \"value2\"\n      5) \"field3\"\n      6) \"value3\""
+    },
+    {
+      "id": "intro-589",
+      "sectionId": "intro",
+      "title": "XADD",
+      "kind": "text",
+      "body": "将新条目附加到流"
+    },
+    {
+      "id": "intro-590",
+      "sectionId": "intro",
+      "title": "XTRIM",
+      "kind": "code",
+      "lang": "shell",
+      "code": "XTRIM key MAXLEN [=|~] length"
+    },
+    {
+      "id": "intro-591",
+      "sectionId": "intro",
+      "title": "XTRIM",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-592",
+      "sectionId": "intro",
+      "title": "XTRIM",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> XADD mystream * field1 A field2 B field3 C field4 D\n\"1609040575750-0\"\nredis> XTRIM mystream MAXLEN 2\n(integer) 0\nredis> XRANGE mystream - +\n1) 1) \"1609040575750-0\"\n   2) 1) \"field1\"\n      2) \"A\"\n      3) \"field2\"\n      4) \"B\"\n      5) \"field3\"\n      6) \"C\"\n      7) \"field4\"\n      8) \"D\""
+    },
+    {
+      "id": "intro-593",
+      "sectionId": "intro",
+      "title": "XTRIM",
+      "kind": "text",
+      "body": "将流修剪为(大约如果传递了“~”)特定大小"
+    },
+    {
+      "id": "intro-594",
+      "sectionId": "intro",
+      "title": "XRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "XRANGE key start end [COUNT count]"
+    },
+    {
+      "id": "intro-595",
+      "sectionId": "intro",
+      "title": "XRANGE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-596",
+      "sectionId": "intro",
+      "title": "XRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> XADD writers * name Virginia surname Woolf\n\"1609040578002-0\"\nredis> XADD writers * name Jane surname Austen\n\"1609040578002-1\"\nredis> XADD writers * name Toni surname Morrison\n\"1609040578003-0\"\nredis> XADD writers * name Agatha surname Christie\n\"1609040578003-1\"\nredis> XADD writers * name Ngozi surname Adichie\n\"1609040578003-2\"\nredis> XLEN writers\n(integer) 5\nredis> XRANGE writers - + COUNT 2\n1) 1) \"1609040578002-0\"\n   2) 1) \"name\"\n      2) \"Virginia\"\n      3) \"surname\"\n      4) \"Woolf\"\n2) 1) \"1609040578002-1\"\n   2) 1) \"name\"\n      2) \"Jane\"\n      3) \"surname\"\n      4) \"Austen\""
+    },
+    {
+      "id": "intro-597",
+      "sectionId": "intro",
+      "title": "XRANGE",
+      "kind": "text",
+      "body": "返回流中的一系列元素，其 ID 与指定的 ID 间隔相匹配"
+    },
+    {
+      "id": "intro-598",
+      "sectionId": "intro",
+      "title": "XREVRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "XREVRANGE key end start [COUNT count]"
+    },
+    {
+      "id": "intro-599",
+      "sectionId": "intro",
+      "title": "XREVRANGE",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-600",
+      "sectionId": "intro",
+      "title": "XREVRANGE",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> XADD writers * name Virginia surname Woolf\n\"1609040579130-0\"\nredis> XADD writers * name Jane surname Austen\n\"1609040579130-1\"\nredis> XADD writers * name Toni surname Morrison\n\"1609040579130-2\"\nredis> XADD writers * name Agatha surname Christie\n\"1609040579131-0\"\nredis> XADD writers * name Ngozi surname Adichie\n\"1609040579131-1\"\nredis> XLEN writers\n(integer) 5\nredis> XREVRANGE writers + - COUNT 1\n1) 1) \"1609040579131-1\"\n   2) 1) \"name\"\n      2) \"Ngozi\"\n      3) \"surname\"\n      4) \"Adichie\""
+    },
+    {
+      "id": "intro-601",
+      "sectionId": "intro",
+      "title": "XREVRANGE",
+      "kind": "text",
+      "body": "返回流中的一系列元素，ID 与指定的 ID 间隔相匹配，与 XRANGE 相比，顺序相反(从大到小的 ID)"
+    },
+    {
+      "id": "intro-602",
+      "sectionId": "intro",
+      "title": "XLEN",
+      "kind": "code",
+      "lang": "shell",
+      "code": "XLEN key"
+    },
+    {
+      "id": "intro-603",
+      "sectionId": "intro",
+      "title": "XLEN",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-604",
+      "sectionId": "intro",
+      "title": "XLEN",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> XADD mystream * item 1\n\"1609040580250-0\"\nredis> XADD mystream * item 2\n\"1609040580250-1\"\nredis> XADD mystream * item 3\n\"1609040580251-0\"\nredis> XLEN mystream\n(integer) 3"
+    },
+    {
+      "id": "intro-605",
+      "sectionId": "intro",
+      "title": "XLEN",
+      "kind": "text",
+      "body": "返回流中的条目数"
+    },
+    {
+      "id": "intro-606",
+      "sectionId": "intro",
+      "title": "XACK",
+      "kind": "code",
+      "lang": "shell",
+      "code": "XACK key group ID [ID ...]"
+    },
+    {
+      "id": "intro-607",
+      "sectionId": "intro",
+      "title": "XACK",
+      "kind": "text",
+      "body": "#### 例子"
+    },
+    {
+      "id": "intro-608",
+      "sectionId": "intro",
+      "title": "XACK",
+      "kind": "code",
+      "lang": "shell",
+      "code": "redis> XACK mystream mygroup 1526569495631-0\nERR Unknown or disabled command 'XACK'"
+    },
+    {
+      "id": "intro-609",
+      "sectionId": "intro",
+      "title": "XACK",
+      "kind": "text",
+      "body": "将待处理消息标记为已正确处理，有效地将其从消费者组的待处理条目列表中删除，该命令的返回值是成功确认的消息数，即我们实际能够在 `PEL` 中解析的 `ID`"
+    },
+    {
+      "id": "intro-610",
+      "sectionId": "intro",
+      "title": "XACK",
+      "kind": "text",
+      "body": "集群方面的东西\n------------\n<!--rehype:body-class=cols-2-->"
+    },
+    {
+      "id": "intro-611",
+      "sectionId": "intro",
+      "title": "节点、集群",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n| [CLUSTER ADDSLOTS](https://redis.io/commands/cluster-addslots)                           | 为接收节点分配新的哈希槽 |\n| [CLUSTER BUMPEPOCH](https://redis.io/commands/cluster-bumpepoch)                          | 提前集群配置纪元 |\n| [CLUSTER COUNT-FAILURE-REPORTS](https://redis.io/commands/cluster-count-failure-reports) | 返回给定节点的活动故障报告数 |\n| [CLUSTER COUNTKEYSINSLOT](https://redis.io/commands/cluster-countkeysinslot)             | 返回指定哈希槽中本地键的个数 |\n| [CLUSTER DELSLOTS](https://redis.io/commands/cluster-delslots)                           | 在接收节点中将哈希槽设置为未绑定 |\n| [CLUSTER FAILOVER](https://redis.io/commands/cluster-failover)                           | 强制副本对其主副本执行手动故障转移 |\n| [CLUSTER FLUSHSLOTS](https://redis.io/commands/cluster-flushslots)                        | 删除节点自身的slot信息 |\n| [CLUSTER FORGET](https://redis.io/commands/cluster-forget)                               | 从节点表中删除一个节点 |\n| [CLUSTER GETKEYSINSLOT](https://redis.io/commands/cluster-getkeysinslot)                 | 返回指定哈希槽中的本地键名 |\n| [CLUSTER INFO](https://redis.io/commands/cluster-info)                                    | 提供有关 Redis 集群节点状态的信息 |\n| [CLUSTER KEYSLOT](https://redis.io/commands/cluster-keyslot)                             | 返回指定键的哈希槽 |\n| [CLUSTER MEET](https://redis.io/commands/cluster-meet)                                   | 强制节点集群与另一个节点握手 |\n| [CLUSTER MYID](https://redis.io/commands/cluster-myid)                                    | 返回节点id |\n| [CLUSTER NODES](https://redis.io/commands/cluster-nodes)                                  | 获取节点的集群配置 |\n| [CLUSTER REPLICATE](https://redis.io/commands/cluster-replicate)                         | 将节点重新配置为指定主节点的副本 |\n| [CLUSTER RESET](https://redis.io/commands/cluster-reset)                                 | 重置 Redis 集群节点 |\n| [CLUSTER SAVECONFIG](https://redis.io/commands/cluster-saveconfig)                        | 强制节点将集群状态保存在磁盘上 |\n| [CLUSTER SET-CONFIG-EPOCH](https://redis.io/commands/cluster-set-config-epoch)           | 在新节点中设置配置纪元 |\n| [CLUSTER SETSLOT](https://redis.io/commands/cluster-setslot)                             | 将哈希槽绑定到特定节点 |\n| [CLUSTER SLAVES](https://redis.io/commands/cluster-slaves)                               | 列出指定主节点的副本节点 |\n| [CLUSTER REPLICAS](https://redis.io/commands/cluster-replicas)                           | 列出指定主节点的副本节点 |\n| [CLUSTER SLOTS](https://redis.io/commands/cluster-slots)                                  | 获取集群插槽数组到节点映射 |\n| [READONLY](https://redis.io/commands/readonly)                                            | 为到集群副本节点的连接启用读取查询 |\n| [READWRITE](https://redis.io/commands/readwrite)                                          | 禁用对集群副本节点连接的读取查询 |"
+    },
+    {
+      "id": "intro-612",
+      "sectionId": "intro",
+      "title": "交易",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[DISCARD](https://redis.io/commands/discard) | 丢弃 MULTI 之后发出的所有命令\n[EXEC](https://redis.io/commands/exec)       | 执行 MULTI 之后发出的所有命令\n[MULTI](https://redis.io/commands/multi)     | 标记事务块的开始\n[UNWATCH](https://redis.io/commands/unwatch) | 忘记所有监视的键\n[WATCH](https://redis.io/commands/watch)    | 观察给定的键以确定MULTI/EXEC块的执行"
+    },
+    {
+      "id": "intro-613",
+      "sectionId": "intro",
+      "title": "脚本",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[EVAL](https://redis.io/commands/eval)                   | 执行 Lua 脚本服务器端\n[EVALSHA](https://redis.io/commands/evalsha)             | 执行 Lua 脚本服务器端\n[SCRIPT DEBUG](https://redis.io/commands/script-debug)   | 为执行的脚本设置调试模式\n[SCRIPT EXISTS](https://redis.io/commands/script-exists) | 检查脚本缓存中是否存在脚本\n[SCRIPT FLUSH](https://redis.io/commands/script-flush)    | 从脚本缓存中删除所有脚本\n[SCRIPT KILL](https://redis.io/commands/script-kill)      | 终止当前正在执行的脚本\n[SCRIPT LOAD](https://redis.io/commands/script-load)     | 将指定的 Lua 脚本加载到脚本缓存中"
+    },
+    {
+      "id": "intro-614",
+      "sectionId": "intro",
+      "title": "发布操作",
+      "kind": "text",
+      "body": ":- | --\n:- | --\n[PSUBSCRIBE](https://redis.io/commands/psubscribe)     | 侦听发布到与给定模式匹配的频道的消息\n[PUBSUB](https://redis.io/commands/pubsub)             | 检查 Pub/Sub 子系统的状态\n[PUBLISH](https://redis.io/commands/publish)           | 向频道发布消息\n[PUNSUBSCRIBE](https://redis.io/commands/punsubscribe) | 停止监听发布到与给定模式匹配的频道的消息\n[SUBSCRIBE](https://redis.io/commands/subscribe)       | 收听发布到给定频道的消息\n[UNSUBSCRIBE](https://redis.io/commands/unsubscribe)   | 停止收听发布到给定频道的消息"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/redis.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/redis.md",
+    "generatedAt": "2025-12-16T07:36:11.404Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

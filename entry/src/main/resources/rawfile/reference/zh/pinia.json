@@ -1,0 +1,354 @@
+{
+  "id": "pinia",
+  "title": "pinia",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Pinia 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "这是一份 [`Pinia`](https://pinia.vuejs.org/) 状态管理库的备忘单，列出了 Pinia 的常用命令和操作。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n---"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "安装 Pinia",
+      "kind": "code",
+      "lang": "bash",
+      "code": "npm install pinia\n# or\nyarn add pinia\n# or\npnpm add pinia"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "定义 Store",
+      "kind": "text",
+      "body": "创建一个 store 文件（例如 `src/stores/counter.js`），并定义 `store`"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "定义 Store",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import { defineStore } from 'pinia'\n\nexport const useCounterStore = defineStore('counter', {\n  state: () => ({\n    count: 0\n  }),\n  actions: {\n    increment() {\n      this.count++\n    }\n  },\n  getters: {\n    doubleCount: (state) => state.count * 2\n  }\n})"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "创建 Pinia 实例",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import { createApp } from 'vue'\nimport { createPinia } from 'pinia'\nimport App from './App.vue'\n\nconst app = createApp(App)\nconst pinia = createPinia()\n\napp.use(pinia)\napp.mount('#app')"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "创建 Pinia 实例",
+      "kind": "text",
+      "body": "在你的 [Vue](./vue.md) 应用中创建一个 Pinia 实例并将其传递给 [Vue](./vue.md)"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "热重载 Store",
+      "kind": "text",
+      "body": "使用 Vite 时，你可以启用热重载功能："
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "热重载 Store",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "if (import.meta.hot) {\n  import.meta.hot.accept(acceptHMRUpdate(useCounterStore, import.meta.hot))\n}"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "使用 Store",
+      "kind": "text",
+      "body": "在组件中使用 `store`"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "使用 Store",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "<template>\n  <div>\n    <p>Count: {{ counterStore.count }}</p>\n    <p>Double Count: {{ counterStore.doubleCount }}</p>\n    <button @click=\"counterStore.increment\">Increment</button>\n  </div>\n</template>\n\n<script>\nimport { useCounterStore } from '@/stores/counter'\n\nexport default {\n  setup() {\n    const counterStore = useCounterStore()\n\n    return {\n      counterStore\n    }\n  }\n}\n</script>"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "Modules 模式",
+      "kind": "text",
+      "body": "Pinia 不使用传统的 Vuex 模块模式。相反，推荐使用独立的 store 文件："
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "Modules 模式",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "// src/stores/user.js\nimport { defineStore } from 'pinia'\n\nexport const useUserStore = defineStore('user', {\n  state: () => ({\n    name: 'Alice',\n    age: 25\n  }),\n  actions: {\n    setName(name) {\n      this.name = name\n    }\n  },\n  getters: {\n    isAdult: (state) => state.age >= 18\n  }\n})"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "使用 Options API",
+      "kind": "text",
+      "body": "如果你更喜欢 Options API，可以这样使用 Pinia："
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "使用 Options API",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "<script>\nimport { defineComponent } from 'vue'\nimport { useCounterStore } from '@/stores/counter'\n\nexport default defineComponent({\n  setup() {\n    const counterStore = useCounterStore()\n\n    return {\n      counterStore\n    }\n  }\n})\n</script>"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "使用 Options API",
+      "kind": "text",
+      "body": "高级用法\n---"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "使用组合函数",
+      "kind": "text",
+      "body": "你可以将 store 与组合函数一起使用："
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "使用组合函数",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "// src/composables/useCounter.js\nimport { useCounterStore } from '@/stores/counter'\n\nexport function useCounter() {\n  const counterStore = useCounterStore()\n\n  return {\n    count: counterStore.count,\n    doubleCount: counterStore.doubleCount,\n    increment: counterStore.increment\n  }\n}"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "插件",
+      "kind": "text",
+      "body": "Pinia 支持插件。你可以编写插件来扩展 Pinia 的功能："
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "插件",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "// src/plugins/piniaPlugin.js\nexport function piniaPlugin({ store }) {\n  store.$onAction(({ name, store, args, after, onError }) => {\n    console.log(`Action ${name} was called with args:`, args)\n  })\n}\n\n// main.js\nimport { createPinia } from 'pinia'\nimport { piniaPlugin } from './plugins/piniaPlugin'\n\nconst pinia = createPinia()\npinia.use(piniaPlugin)"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "text",
+      "body": "#### 1. 安装  `pinia-plugin-persist`\n<!--rehype:style=color:#228e6c;font-weight: bold;text-align: left;-->"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "code",
+      "lang": "bash",
+      "code": "npm  pinia-plugin-persist"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "text",
+      "body": "#### 2. 配置 Pinia 和 `pinia-plugin-persist`\n<!--rehype:style=color:#228e6c;font-weight: bold;text-align: left;-->"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "text",
+      "body": "在你的入口文件中配置 Pinia 和 `pinia-plugin-persist`。"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "text",
+      "body": "**⚠️ Vue 2 项目**"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import Vue from 'vue'\nimport vueCompositionApi from '@vue/composition-api'\nimport { createPinia, PiniaVuePlugin } from 'pinia'\nimport piniaPersist from 'pinia-plugin-persist'\nimport App from './App.vue'\n\nVue.use(vueCompositionApi)\nVue.use(PiniaVuePlugin)\n\nconst pinia = createPinia()\npinia.use(piniaPersist)\n\nnew Vue({\n  pinia,\n  render: h => h(App)\n}).$mount('#app')"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "text",
+      "body": "**Vue 3 项目：**"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import { createApp } from 'vue'\nimport { createPinia } from 'pinia'\nimport piniaPersist from 'pinia-plugin-persist'\nimport App from './App.vue'\n\nconst pinia = createPinia()\npinia.use(piniaPersist)\n\ncreateApp(App)\n  .use(pinia)\n  .mount('#app')"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "text",
+      "body": "#### 3. 创建 Store 并启用持久化\n<!--rehype:style=color:#228e6c;font-weight: bold;text-align: left;-->"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "text",
+      "body": "创建一个 Pinia store，并启用持久化存储。"
+    },
+    {
+      "id": "intro-31",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "// stores/userStore.js\nimport { defineStore } from 'pinia'\n\nexport const useUserStore = defineStore('userStore', {\n  state: () => ({\n    firstName: 'S',\n    lastName: 'L',\n    accessToken: 'xxxxxxxxxxxxx'\n  }),\n  actions: {\n    setToken(value) {\n      this.accessToken = value\n    }\n  },\n  persist: {\n    enabled: true,\n    strategies: [\n      {\n        storage: localStorage,\n        paths: ['accessToken']\n      }\n    ]\n  }\n})"
+    },
+    {
+      "id": "intro-32",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "text",
+      "body": "#### 4. 使用 Store\n<!--rehype:style=color:#228e6c;font-weight: bold;text-align: left;-->"
+    },
+    {
+      "id": "intro-33",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "text",
+      "body": "在组件中使用创建好的 store。"
+    },
+    {
+      "id": "intro-34",
+      "sectionId": "intro",
+      "title": "持久化状态",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "// src/components/SomeComponent.vue\n<template>\n  <div>\n    <p>{{ userStore.firstName }} {{ userStore.lastName }}</p>\n    <p>{{ userStore.accessToken }}</p>\n  </div>\n</template>\n\n<script>\nimport { useUserStore } from '@/stores/userStore'\n\nexport default {\n  setup() {\n    const userStore = useUserStore()\n    \n    return { userStore }\n  }\n}\n</script>"
+    },
+    {
+      "id": "intro-35",
+      "sectionId": "intro",
+      "title": "SSR 支持",
+      "kind": "text",
+      "body": "Pinia 支持服务端渲染 (SSR)。在你的 SSR 入口文件中创建 Pinia 实例："
+    },
+    {
+      "id": "intro-36",
+      "sectionId": "intro",
+      "title": "SSR 支持",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "import { createPinia } from 'pinia'\n\nexport function createApp() {\n  const app = createSSRApp(App)\n  const pinia = createPinia()\n\n  app.use(pinia)\n  return { app, pinia }\n}"
+    },
+    {
+      "id": "intro-37",
+      "sectionId": "intro",
+      "title": "SSR 支持",
+      "kind": "text",
+      "body": "明白了，让我们来结合 `pinia-plugin-persist` 插件完善 Pinia 备忘清单。"
+    },
+    {
+      "id": "intro-38",
+      "sectionId": "intro",
+      "title": "使用 Vue Devtools",
+      "kind": "text",
+      "body": "Pinia 可以与 Vue Devtools 一起使用。确保你安装了最新版本的 Vue Devtools，然后你可以在 Devtools 中查看和调试你的 Pinia store。"
+    },
+    {
+      "id": "intro-39",
+      "sectionId": "intro",
+      "title": "使用异步 Actions",
+      "kind": "text",
+      "body": "Pinia 支持在 actions 中使用异步代码："
+    },
+    {
+      "id": "intro-40",
+      "sectionId": "intro",
+      "title": "使用异步 Actions",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "// src/stores/todo.js\nimport { defineStore } from 'pinia'\nimport axios from 'axios'\n\nexport const useTodoStore = defineStore('todo', {\n  state: () => ({\n    todos: []\n  }),\n  actions: {\n    async fetchTodos() {\n      const response = await axios.get('/api/todos')\n      this.todos = response.data\n    }\n  }\n})"
+    },
+    {
+      "id": "intro-41",
+      "sectionId": "intro",
+      "title": "测试 Pinia Store",
+      "kind": "text",
+      "body": "你可以使用 Vue Test Utils 和 Jest 来测试你的 Pinia store："
+    },
+    {
+      "id": "intro-42",
+      "sectionId": "intro",
+      "title": "测试 Pinia Store",
+      "kind": "code",
+      "lang": "javascript",
+      "code": "// __tests__/counterStore.test.js\nimport { setActivePinia, createPinia } from 'pinia'\nimport { useCounterStore } from '@/stores/counter'\n\ndescribe('Counter Store', () => {\n  beforeEach(() => {\n    setActivePinia(createPinia())\n  })\n\n  it('increments the count', () => {\n    const counterStore = useCounterStore()\n    expect(counterStore.count).toBe(0)\n    counterStore.increment()\n    expect(counterStore.count).toBe(1)\n  })\n\n  it('returns double count', () => {\n    const counterStore = useCounterStore()\n    counterStore.count = 2\n    expect(counterStore.doubleCount).toBe(4)\n  })\n})"
+    },
+    {
+      "id": "intro-43",
+      "sectionId": "intro",
+      "title": "测试 Pinia Store",
+      "kind": "text",
+      "body": "另见\n---"
+    },
+    {
+      "id": "intro-44",
+      "sectionId": "intro",
+      "title": "测试 Pinia Store",
+      "kind": "text",
+      "body": "• [Pinia 官方文档](https://pinia.vuejs.org/)\n• [Pinia GitHub 仓库](https://github.com/vuejs/pinia)\n• [Pinia 快速上手](https://pinia.vuejs.org/getting-started.html)\n• [pinia-plugin-persist 官方文档](https://seb-l.github.io/pinia-plugin-persist/basic-usage.html)"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/pinia.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/pinia.md",
+    "generatedAt": "2025-12-16T07:36:11.367Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

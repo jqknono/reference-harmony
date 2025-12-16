@@ -1,0 +1,254 @@
+{
+  "id": "flask",
+  "title": "flask",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Flask 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "本清单对 Flask 的入门进行了简要的概述，以及其常用示例。需要有 `HTML` 和 `Python` 基础。"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n-----"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "相关链接",
+      "kind": "text",
+      "body": "• [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) _(developer.mozilla.org)_\n• [Python](https://www.python.org/) _(python.org)_\n• [Flask](https://flask.palletsprojects.com/) _(flask.palletsprojects.com)_\n• [Python 备忘清单](./python.md) _(jaywcjlove.github.io)_"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "Hello World",
+      "kind": "text",
+      "body": "#### hello.py"
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "Hello World",
+      "kind": "code",
+      "lang": "python",
+      "code": "# 导入 Flask 类\nfrom flask import Flask\n\n# 创建应用实例\napp = Flask(__name__) # 'Flask' 参数是 应用程序模块 或 包 的名称\n                      # __name__是适用于大多数情况的便捷快捷方式\n\n# 路由 (装饰器)\n@app.route('/')           # route()装饰器告诉 Flask 什么路径触发下面的功能\ndef hello():\n   # 该函数返回我们想要在浏览器中显示的消息内容\n   return 'Hello World!'\n   # 默认类型 HTML, 因此字符串中的 HTML 将被浏览器渲染\n# 启动服务\nif __name__ == '__main__':\n   app.run()"
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "运行 `hello.py` 程序",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ python hello.py\n * Serving Flask app 'hello'\n * Running on http://127.0.0.1:5000\n * Press CTRL+C to quit"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "运行 `hello.py` 程序",
+      "kind": "text",
+      "body": "#### 或"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "运行 `hello.py` 程序",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ flask --app hello run\n * Serving Flask app 'hello'\n * Running on http://127.0.0.1:5000\n * Press CTRL+C to quit\n$ flask run --host=0.0.0.0"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "运行 `hello.py` 程序",
+      "kind": "text",
+      "body": "启用调试模式，使用 `--debug` 选项"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "运行 `hello.py` 程序",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ flask --app hello --debug run"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "HTML 转义",
+      "kind": "code",
+      "lang": "py",
+      "code": "from markupsafe import escape\n\n@app.route(\"/<name>\")\ndef hello(name):\n    return f\"Hello, {escape(name)}!\""
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "路由",
+      "kind": "code",
+      "lang": "py",
+      "code": "@app.route('/')\ndef index():\n    return 'Index Page'\n\n@app.route('/hello')\ndef hello():\n    return 'Hello, World'"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "变量规则",
+      "kind": "code",
+      "lang": "py",
+      "code": "from markupsafe import escape\n\n@app.route('/user/<username>')\ndef show_user_profile(username):\n    # 显示该用户的用户个人资料\n    return f'User {escape(username)}'\n\n@app.route('/post/<int:post_id>')\ndef show_post(post_id):\n    # 显示给定id的帖子，id是一个整数\n    return f'Post {post_id}'\n\n@app.route('/path/<path:subpath>')\ndef show_subpath(subpath):\n    # 在 /path/ 之后显示子路径\n    return f'Subpath {escape(subpath)}'"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "变量规则",
+      "kind": "text",
+      "body": "转换器类型："
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "变量规则",
+      "kind": "text",
+      "body": ":-- | --\n:-- | --\n`string` | （默认）接受任何没有斜杠的文本\n`int` | 接受正整数\n`float` | 接受正浮点值\n`path` | 像字符串但也接受斜线\n`uuid` | 接受 UUID 字符串"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "唯一 URL / 重定向行为",
+      "kind": "code",
+      "lang": "py",
+      "code": "@app.route('/projects/')\ndef projects():\n    return 'The project page'\n\n@app.route('/about')\ndef about():\n    return 'The about page'"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "唯一 URL / 重定向行为",
+      "kind": "text",
+      "body": "项目端点的规范 `URL` 有一个尾部斜杠。它类似于文件系统中的文件夹。如果您访问没有尾部斜杠 (`/projects`) 的 `URL`，`Flask` 会将您重定向到带有尾部斜杠 (`/projects/`) 的规范 `URL`"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "URL 建设",
+      "kind": "code",
+      "lang": "py",
+      "code": "from flask import url_for\n\n@app.route('/')\ndef index():\n    return 'index'\n\n@app.route('/login')\ndef login():\n    return 'login'\n\n@app.route('/user/<username>')\ndef profile(username):\n    return f'{username}\\'s profile'\n\nwith app.test_request_context():\n    print(url_for('index'))\n    print(url_for('login'))\n    print(url_for('login', next='/'))\n    print(url_for('profile', username='John Doe'))"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "HTTP 方法",
+      "kind": "text",
+      "body": "默认路由仅响应 `GET` 请求。可以使用 `route()` 装饰器的方法参数来处理不同的 `HTTP` 方法"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "HTTP 方法",
+      "kind": "code",
+      "lang": "py",
+      "code": "from flask import request\n\n@app.route('/login',methods=['GET','POST'])\ndef login():\n    if request.method == 'POST':\n        return do_the_login()\n    else:\n        return show_the_login_form()"
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "HTTP 方法",
+      "kind": "text",
+      "body": "您还可以将不同方法的视图分成不同的函数。 `Flask` 为每个常见的 `HTTP` 方法提供了一种快捷方式，用于使用 `get()`、`post()` 等来装饰此类路由"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "HTTP 方法",
+      "kind": "code",
+      "lang": "py",
+      "code": "@app.get('/login')\ndef login_get():\n    return show_the_login_form()\n\n@app.post('/login')\ndef login_post():\n    return do_the_login()"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "Blueprint",
+      "kind": "text",
+      "body": "创建蓝图Bp1"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "Blueprint",
+      "kind": "code",
+      "lang": "py",
+      "code": "from flask import Blueprint, abort, jsonify\n\n# 定义Bp1，并定义url前缀为/img\nBp1 = Blueprint('imgBlue', __name__, template_folder='templates', url_prefix='/img')\n\n\n@Bp1.route('/getimg')\ndef getImg():\n    try:\n        return jsonify(name=\"img\", size=\"100KB\")\n    except Exception as e:\n        abort(e)"
+    },
+    {
+      "id": "intro-25",
+      "sectionId": "intro",
+      "title": "Blueprint",
+      "kind": "text",
+      "body": "创建蓝图Bp2"
+    },
+    {
+      "id": "intro-26",
+      "sectionId": "intro",
+      "title": "Blueprint",
+      "kind": "code",
+      "lang": "py",
+      "code": "from flask import Blueprint, abort, jsonify\n\n# 定义Bp2，并定义url前缀为/video\nBp2 = Blueprint('videoBlue', __name__, template_folder='templates', url_prefix='/video')\n\n\n@Bp2.route('/getvideo')\ndef getvideo():\n    try:\n        return jsonify(name=\"video\", size=\"100GB\")\n    except Exception as e:\n        abort(e)"
+    },
+    {
+      "id": "intro-27",
+      "sectionId": "intro",
+      "title": "Blueprint",
+      "kind": "text",
+      "body": "在flask app中引用蓝图Bp1和Bp2"
+    },
+    {
+      "id": "intro-28",
+      "sectionId": "intro",
+      "title": "Blueprint",
+      "kind": "code",
+      "lang": "py",
+      "code": "from flask import Flask, jsonify\nfrom lantu.img import Bp1\nfrom lantu.video import Bp2\n\napp = Flask(__name__)\n\n# 注册蓝图到app\napp.register_blueprint(Bp1)\napp.register_blueprint(Bp2)\n\n\n@app.route('/')\ndef index():\n    return jsonify(name='phyger')\n\n\nif __name__ == '__main__':\n    app.run(host=\"127.0.0.1\", debug=True)"
+    },
+    {
+      "id": "intro-29",
+      "sectionId": "intro",
+      "title": "Blueprint",
+      "kind": "text",
+      "body": "简单测试"
+    },
+    {
+      "id": "intro-30",
+      "sectionId": "intro",
+      "title": "Blueprint",
+      "kind": "code",
+      "lang": "bash",
+      "code": "curl http://127.0.0.1:5000/\n>> {\"name\":\"phyger\"}\n\ncurl http://127.0.0.1:5000/img/getimg\n>> {\"name\": \"img\", \"size\": \"100KB\"}\n\ncurl http://127.0.0.1:5000/video/getvideo\n>> {\"name\": \"video\", \"size\": \"100GB\"}"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/flask.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/flask.md",
+    "generatedAt": "2025-12-16T07:36:11.220Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

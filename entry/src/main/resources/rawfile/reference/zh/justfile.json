@@ -1,0 +1,216 @@
+{
+  "id": "justfile",
+  "title": "justfile",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "Justfile 备忘清单\n==="
+    },
+    {
+      "id": "intro-1",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "[![Repo Dependents](https://badgen.net/github/dependents-repo/casey/just)](https://github.com/casey/just/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/casey/just)"
+    },
+    {
+      "id": "intro-2",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "[`just`](https://github.com/casey/just) 为您提供一种保存和运行项目特有命令的便捷方式"
+    },
+    {
+      "id": "intro-3",
+      "sectionId": "intro",
+      "title": "简介",
+      "kind": "text",
+      "body": "入门\n----"
+    },
+    {
+      "id": "intro-4",
+      "sectionId": "intro",
+      "title": "简单的 justfile",
+      "kind": "code",
+      "lang": "bash",
+      "code": "#!/usr/bin/env just --justfile\n\n# hello 是配方(recipe)的名字\nhello:\n  echo \"Hello World!\""
+    },
+    {
+      "id": "intro-5",
+      "sectionId": "intro",
+      "title": "带参数的配方",
+      "kind": "code",
+      "lang": "bash",
+      "code": "filter PATTERN:\n   echo {{PATTERN}}\n\n# 带有默认值的 param\nemail address='master@example.com':\n   echo {{address}}\n\n# 带表达式的参数\ntest triple=(arch() + \"-unknown-unknown\"):\n  ./test {{triple}}\n\n# 变量参数：“+”接受一个或多个值\nbackup +FILES:\n  scp {{FILES}} me@example.com\n\n# 带*的可变参数：零个或多个值\ncommit MESSAGE *FLAGS:\n  git commit {{FLAGS}} -m \"{{MESSAGE}}\""
+    },
+    {
+      "id": "intro-6",
+      "sectionId": "intro",
+      "title": "变量和子变量",
+      "kind": "code",
+      "lang": "bash",
+      "code": "version := \"0.2.7\"\ntardir  := \"awesomesauce-\" + version\ntarball := tardir + \".tar.gz\"\n\ntest:\n   echo {{version}}\n\n# 仅从命令行设置/覆盖变量\n$ just --set version 1.1.0"
+    },
+    {
+      "id": "intro-7",
+      "sectionId": "intro",
+      "title": "默认配置",
+      "kind": "code",
+      "lang": "bash",
+      "code": "default: lint build test\n# 显示帮助信息的默认配方\ndefault:\n  @just --list\n# 如果没有默认配方，则默认第一个配方"
+    },
+    {
+      "id": "intro-8",
+      "sectionId": "intro",
+      "title": "命令的环境变量",
+      "kind": "code",
+      "lang": "bash",
+      "code": "export RUST_BACKTRACE := \"1\"\n\ntest:\n    # 如果堆栈崩溃，将打印堆栈跟踪\n    cargo test"
+    },
+    {
+      "id": "intro-9",
+      "sectionId": "intro",
+      "title": "backtick-从评估中捕获输出",
+      "kind": "code",
+      "lang": "bash",
+      "code": "JAVA_HOME := `jbang jdk home 11`\n# Backtick 代码块\nstuff := \\```\n   foo=\"hello\"\n   echo $foo \"world\"\n\\```\n\ndone BRANCH=`git rev-parse --abbrev-ref HEAD`:\n  git checkout master\n\nsloc:\n    @echo \"`wc -l *.c` lines of code\"\n\n# Backtick 在任何地方工作：字符串/变量/参数"
+    },
+    {
+      "id": "intro-10",
+      "sectionId": "intro",
+      "title": "backtick-从评估中捕获输出",
+      "kind": "text",
+      "body": "注意： 上面示例中 <code>\\\\`</code> 没有转义过来"
+    },
+    {
+      "id": "intro-11",
+      "sectionId": "intro",
+      "title": "别名",
+      "kind": "code",
+      "lang": "bash",
+      "code": "alias t := test\nalias c := check"
+    },
+    {
+      "id": "intro-12",
+      "sectionId": "intro",
+      "title": "带有命令 env 变量配置",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# recipe 参数作为$符号的Env变量\nhello $name:\n   echo $name"
+    },
+    {
+      "id": "intro-13",
+      "sectionId": "intro",
+      "title": "设置",
+      "kind": "code",
+      "lang": "bash",
+      "code": "set shell := [\"zsh\", \"-cu\"] \n\nset dotenv-load := true\nserv: \n   echo \"$DATABASE_ADDRESS from .env\"\n\nset positional-arguments := true\nfoo:\n  echo $0\n  echo $1"
+    },
+    {
+      "id": "intro-14",
+      "sectionId": "intro",
+      "title": "配置依赖性-之前、之后和周围",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 执行序列：A-> B-> C-> D\nb: a && c d\n# 执行配方(recipe)“A”\nb:\n  echo 'B start!'\n  just a\n  echo 'B end!'\n# 通过表达式依赖参数\ndefault: (build \"main\")\n\nbuild target:\n  @echo 'Building {{target}}...'"
+    },
+    {
+      "id": "intro-15",
+      "sectionId": "intro",
+      "title": "Just 函数",
+      "kind": "code",
+      "lang": "shell",
+      "code": "hello name:\n   echo {{os()}}\n   echo {{uppercase(name)}}\n\n# 函数类别\n* 系统信息\n* 系统信息\n* Justfile 和 Justfile目录\n* 字符串操纵\n* 路径操纵\n\n# String contact:  (key + \":\" + value)"
+    },
+    {
+      "id": "intro-16",
+      "sectionId": "intro",
+      "title": "字符串-用双引号转义",
+      "kind": "code",
+      "lang": "bash",
+      "code": "tring-with-tab := \"\\t\"\nstring-with-newline := \"\\n\"\nescapes := '\\t\\n\\r\\\"\\\\'\n\n# 该字符串将评估为`foo\\nbar\\n`\nx := '''\n  foo\n  bar\n'''"
+    },
+    {
+      "id": "intro-17",
+      "sectionId": "intro",
+      "title": "命令注释：quiet(@)、suppre­ss(-)、invert(!)",
+      "kind": "code",
+      "lang": "bash",
+      "code": "hello:\n  @ echo \"command will not be echoed\"\n  - echo \"ignore none-zero exit status and continue\"\n\n@hello2:\n  echo \"command will not be echoed\"\n\n# 反转命令退出状态！- shell 功能\nhello3:\n  # 如果命令成功（退出状态为0），请仅退出\n  ! git branch | grep '* master'"
+    },
+    {
+      "id": "intro-18",
+      "sectionId": "intro",
+      "title": "条件表达式：if、loop 和 while",
+      "kind": "code",
+      "lang": "shell",
+      "code": "# 正则表达匹配\nfo := if \"hi\" =~ 'h.+' { \"match\" } else { \"mismatch\" }\n\ntest:\n   if true; then echo 'True!'; fi\n   for file in `ls .`; do echo $file; done\n   while `server-is-dead`; do ping -c 1 server; done\n\nfoo bar:\n  echo {{ if bar == \"bar\" { \"hello\" } else { \"bye\" } }}"
+    },
+    {
+      "id": "intro-19",
+      "sectionId": "intro",
+      "title": "Just 命令行",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 运行配方(recipe)\n$ just hello param1\n\n# 按字母顺序列出配方(recipe)\n$ just --list\n$ just --summary\n\n# 显示有关配方(recipe)的完整信息\njust --show test\n\n# 选择以交互方式运行的配方(recipe)\n$ just --choose\n\n# shell 完成\njust --comp­letions zsh"
+    },
+    {
+      "id": "intro-20",
+      "sectionId": "intro",
+      "title": "其他语言的配置",
+      "kind": "code",
+      "lang": "bash",
+      "code": "bash-test:\n    #!/usr/bin/env bash\n    set -euxo pipefail\n    hello='Yo'\n    echo \"$hello from bash!\""
+    },
+    {
+      "id": "intro-21",
+      "sectionId": "intro",
+      "title": "私人配置 - 名称以开头 _",
+      "kind": "code",
+      "lang": "bash",
+      "code": "test: _test-helper\n  ./bin/test\n\n# ommited from 'just --list'\n_test-helper:\n  ./bin/super-secret-test-helper-stuff"
+    },
+    {
+      "id": "intro-22",
+      "sectionId": "intro",
+      "title": "注意",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 每个命令行都由一个新的 shell 执行\n# 如果一个命令行执行失败，just会退出\n# 后面的命令行不会执行\nchange-working-dir:\n   cd bar && pwd\n   # 多行构造 - 用斜线转义换行符\n   if true; then \\\n        echo 'True!'; \\\n   fi\n\n# justfile 不区分大小写：Justfile、JUSTFILE 等\n# justfile 可以被隐藏：'.justfile'\n# 从子目录调用配方：`~/app1/target>$ just build`"
+    },
+    {
+      "id": "intro-23",
+      "sectionId": "intro",
+      "title": "作为 shell 别名的配置",
+      "kind": "code",
+      "lang": "bash",
+      "code": "for recipe in `just -f ~/.justfile --summary`; do\n  alias $recipe=\"just -f ~/.justfile -d. $recipe\"\ndone"
+    },
+    {
+      "id": "intro-24",
+      "sectionId": "intro",
+      "title": "IDE 集成",
+      "kind": "text",
+      "body": "• VS Code: <https:­//m­ark­etp­lac­e.v­isu­als­tud­io.c­om­/it­ems­?it­emN­ame­=sk­ell­ock.just>\n• JetBrains: <https:­//p­lug­ins.je­tbr­ain­s.c­om/­plu­gin­/18­658­-just>"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/justfile.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/justfile.md",
+    "generatedAt": "2025-12-16T07:36:11.294Z",
+    "lang": "zh",
+    "mode": "local"
+  }
+}
