@@ -1,11 +1,33 @@
 {
   "id": "mitmproxy",
-  "title": "mitmproxy",
+  "name": "Mitmproxy 备忘清单",
+  "title": "[Mitmproxy](https://mitmproxy.org/) 是一个免费开源的交互式 HTTPS 代理。这是 mitmproxy 的快速参考备忘单。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/mitmproxy.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Mitmproxy 过滤器",
+      "startIndex": 84
+    },
+    {
+      "id": "s3",
+      "title": "Mitmproxy 脚本",
+      "startIndex": 131
+    },
+    {
+      "id": "s4",
+      "title": "另见",
+      "startIndex": 135
     }
   ],
   "cards": [
@@ -14,1097 +36,1062 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Mitmproxy 备忘清单\n===="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "[Mitmproxy](https://mitmproxy.org/) 是一个免费开源的交互式 HTTPS 代理。这是 mitmproxy 的快速参考备忘单。"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n-----"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "使用",
       "kind": "text",
       "body": "选项 | 范例 | 描述\n:--|--|--\n`-p`   | mitmproxy -p 8001                                  | 在端口 `8001` 上启动代理\n`-m`   | mitmproxy -p 8001 -m reverse:<http://127.0.0.1:4000> | `8001` 端口反向代理到4000端口\n`-w`   | mitmproxy -p 8001 -w traffic.mitm                  | 流到达时流向文件\n`-r`   | mitmproxy -r traffic.mitm                          | 从文件中读取流\n`-C`   | mitmproxy -C traffic.mitm                          | 从保存的文件重放客户端请求\n`-S`   | mitmproxy -S traffic.mitm                          | 从保存的文件重放服务器响应\n`-s`   | mitmproxy -s myScript.py                           | 执行脚本\n`-h`   | mitmproxy -h                                       | `mitmproxy` 快速帮助"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "移动",
       "kind": "code",
       "lang": "markdown",
       "code": "        k                 Ctrl b\n        ▲                   ▲▲\n        │                   ││\nh ◀ ─── + ─── ▶ l           ││ page\n        │                   ││\n        ▼                   ▼▼\n        j             Ctrl f / Space"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "移动",
       "kind": "text",
       "body": "---"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "移动",
       "kind": "qa",
       "front": "`h`, `j`, `k` ,`l`",
       "back": "左、下、上、右"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "移动",
       "kind": "qa",
       "front": "`Ctrl` `b`",
       "back": "向上翻页"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "移动",
       "kind": "qa",
       "front": "`Space` / `Ctrl` `f`",
       "back": "向下翻页"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "移动",
       "kind": "qa",
       "front": "`g` / `G`",
       "back": "转到开头/结尾"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "移动",
       "kind": "qa",
       "front": "`Arrows`",
       "back": "上下左右"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "text",
       "body": "• [mitmproxy 文档](https://docs.mitmproxy.org/stable/) _(mitmproxy.org)_\n• [mitmproxy 开源仓库](https://github.com/mitmproxy/mitmproxy) _(github.com)_"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "text",
       "body": "---"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "code",
       "lang": "bash",
       "code": "$ brew install mitmproxy # macOS"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "代理模式",
       "kind": "text",
       "body": "Argument | Effect\n:-- | --\n`-R REVERSE_PROXY`, `--reverse REVERSE_PROXY` | 将所有请求转发到上游 HTTP 服务器：`http[s]://host[:port]`。客户端始终可以通过 `HTTPS` 和 `HTTP` 进行连接，与服务器的连接由指定的方案决定\n`--socks` | 设置 `SOCKS5` 代理模式\n`-T`, `--transparent` | 设置透明代理模式\n`-U UPSTREAM_PROXY`, `--upstream UPSTREAM_PROXY` | 将所有请求转发到上游代理服务器：`http://host[:port]`\n<!--rehype:className=style-list-->"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "复制到剪贴板",
       "kind": "text",
       "body": "命令语法："
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "复制到剪贴板",
       "kind": "code",
       "lang": "",
       "code": ":export.clip format flow"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "复制到剪贴板",
       "kind": "text",
       "body": "例子："
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "复制到剪贴板",
       "kind": "qa",
       "front": "1. 复制为 curl 命令",
       "back": "`:export.clip curl @focus`"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "复制到剪贴板",
       "kind": "qa",
       "front": "2. 复制为 httpie",
       "back": "`:export.clip httpie @focus`"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "复制到剪贴板",
       "kind": "qa",
       "front": "3. 复制为原始文件",
       "back": "`:export.clip raw @focus`"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "复制到剪贴板",
       "kind": "qa",
       "front": "4. 复制为原始 HTTP 请求",
       "back": "`:export.clip raw_request @focus`"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "复制到剪贴板",
       "kind": "qa",
       "front": "5. 复制为原始 HTTP 响应",
       "back": "`:export.clip raw_response @focus`"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "复制到剪贴板",
       "kind": "text",
       "body": "将流程导出到系统剪贴板"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "保存到文件",
       "kind": "text",
       "body": "命令语法："
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s1-23",
+      "sectionId": "s1",
       "title": "保存到文件",
       "kind": "code",
       "lang": "",
       "code": ":export.file format flow path"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s1-24",
+      "sectionId": "s1",
       "title": "保存到文件",
       "kind": "text",
       "body": "例子："
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s1-25",
+      "sectionId": "s1",
       "title": "保存到文件",
       "kind": "qa",
       "front": "1. 导出到 `/tmp/a.curl`",
       "back": "`:export.file curl @focus /tmp/a.curl`"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s1-26",
+      "sectionId": "s1",
       "title": "保存到文件",
       "kind": "qa",
       "front": "2. 导出到 `/tmp/a.httpie`",
       "back": "`:export.file httpie @focus /tmp/a.httpie`"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s1-27",
+      "sectionId": "s1",
       "title": "保存到文件",
       "kind": "qa",
       "front": "3. 导出到 `/tmp/a.raw`",
       "back": "`:export.file raw @focus  /tmp/a.raw`"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s1-28",
+      "sectionId": "s1",
       "title": "保存到文件",
       "kind": "qa",
       "front": "4. 导出到 `/tmp/a.request`",
       "back": "`:export.file raw_request @focus /tmp/a.request`"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s1-29",
+      "sectionId": "s1",
       "title": "保存到文件",
       "kind": "qa",
       "front": "5. 导出到 `/tmp/a.response`",
       "back": "`:export.file raw_response @focus /tmp/a.response`"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s1-30",
+      "sectionId": "s1",
       "title": "保存到文件",
       "kind": "text",
       "body": "将流程导出到系统剪贴板"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s1-31",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`A`",
       "back": "恢复所有拦截的流"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s1-32",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`D`",
       "back": "重复流"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s1-33",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`F`",
       "back": "设置焦点跟随"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s1-34",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`L`",
       "back": "从文件加载流"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s1-35",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`M`",
       "back": "切换查看标记流"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s1-36",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`S`",
       "back": "开始服务器回放"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s1-37",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`U`",
       "back": "取消设置所有标记"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s1-38",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`V`",
       "back": "还原对此流的更改"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s1-39",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`X`",
       "back": "杀死这个流"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s1-40",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`Z`",
       "back": "清除所有未显示的流"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s1-41",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`a`",
       "back": "恢复此拦截流"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s1-42",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`b`",
       "back": "将响应主体保存到文件"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s1-43",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`d`",
       "back": "从视图中删除流"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s1-44",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`e`",
       "back": "将此流导出到文件"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s1-45",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`f`",
       "back": "设置视图过滤器"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s1-46",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`m`",
       "back": "在此流程上切换标记"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s1-47",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`n`",
       "back": "创建新流程"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s1-48",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`o`",
       "back": "设置流列表顺序"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s1-49",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`r`",
       "back": "重播此流程"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s1-50",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`v`",
       "back": "反向流列表顺序"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s1-51",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`w`",
       "back": "将列出的流程保存到文件"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s1-52",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`\\",
       "back": "` | 在此流上运行脚本"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s1-53",
+      "sectionId": "s1",
       "title": "流（视图）",
       "kind": "qa",
       "front": "`Ctrl` `l`",
       "back": "将剪辑发送到剪贴板"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s1-54",
+      "sectionId": "s1",
       "title": "常见的快捷键",
       "kind": "qa",
       "front": "`q`",
       "back": "返回/退出"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s1-55",
+      "sectionId": "s1",
       "title": "常见的快捷键",
       "kind": "qa",
       "front": "`z`",
       "back": "清除流列表"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s1-56",
+      "sectionId": "s1",
       "title": "常见的快捷键",
       "kind": "qa",
       "front": "`:`",
       "back": "命令提示符"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s1-57",
+      "sectionId": "s1",
       "title": "常见的快捷键",
       "kind": "qa",
       "front": "`E`",
       "back": "查看事件日志"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s1-58",
+      "sectionId": "s1",
       "title": "常见的快捷键",
       "kind": "qa",
       "front": "`O`",
       "back": "查看选项"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s1-59",
+      "sectionId": "s1",
       "title": "常见的快捷键",
       "kind": "qa",
       "front": "`r`",
       "back": "重播此流程"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s1-60",
+      "sectionId": "s1",
       "title": "常见的快捷键",
       "kind": "qa",
       "front": "`Tab`",
       "back": "下一个"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
+      "id": "s1-61",
+      "sectionId": "s1",
       "title": "常见的快捷键",
       "kind": "qa",
       "front": "`Enter`",
       "back": "选择"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s1-62",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`-`",
       "back": "循环到下一个布局"
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s1-63",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`?`",
       "back": "查看帮助"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s1-64",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`B`",
       "back": "启动附加的浏览器"
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s1-65",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`C`",
       "back": "查看命令"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
+      "id": "s1-66",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`I`",
       "back": "切换拦截"
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s1-67",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`K`",
       "back": "查看按键绑定"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
+      "id": "s1-68",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`P`",
       "back": "查看流程详细信息"
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s1-69",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`Q`",
       "back": "立即退出"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
+      "id": "s1-70",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`W`",
       "back": "流式传输到文件"
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s1-71",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`i`",
       "back": "设置拦截"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s1-72",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`Ctrl` `right`",
       "back": "聚焦下一个布局窗格"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s1-73",
+      "sectionId": "s1",
       "title": "全局键绑定",
       "kind": "qa",
       "front": "`Shift` `tab`",
       "back": "聚焦下一个布局窗格"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
+      "id": "s1-74",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`-b ADDR`, `--bind-address ADDR`",
       "back": "将代理绑定到的地址（默认为所有接口）"
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
+      "id": "s1-75",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`-I HOST`, `--ignore HOST`",
       "back": "忽略主机并转发所有流量而不对其进行处理。在透明模式下，建议使用 IP 地址（范围），而不是主机名。在常规模式下，仅忽略 SSL 流量并应使用主机名。提供的值被解释为正则表达式并匹配 ip 或主机名。可以多次通过"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
+      "id": "s1-76",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`--tcp HOST`",
       "back": "与模式匹配的所有主机的通用 TCP SSL 代理模式。类似于 `--ignore`，但 SSL 连接被拦截。通信内容以详细模式打印到日志中"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
+      "id": "s1-77",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`-n`, `--no-server`",
       "back": "不要启动代理服务器。用于离线分析以前捕获的流"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
+      "id": "s1-78",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`-p PORT`, `--port PORT`",
       "back": "代理服务端口。默认值：`8080`"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
+      "id": "s1-79",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`--http2`, `--no-http2`",
       "back": "显式启用/禁用 `HTTP/2` 支持。默认情况下禁用，直到主要网站正确实施规范。默认值将在未来版本中更改"
     },
     {
-      "id": "intro-82",
-      "sectionId": "intro",
+      "id": "s1-80",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`--no-websocket`, `--websocket`",
       "back": "显式启用/禁用 `WebSocket` 支持。默认启用"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
+      "id": "s1-81",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`--raw-tcp`, `--no-raw-tcp`",
       "back": "显式启用/禁用实验性原始 `TCP` 支持。默认情况下禁用。默认值将在未来版本中更改"
     },
     {
-      "id": "intro-84",
-      "sectionId": "intro",
+      "id": "s1-82",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`--spoof-source-address`",
       "back": "使用客户端的 IP 进行服务器端连接。与 `–upstream-bind-address` 结合使用以欺骗固定源地址"
     },
     {
-      "id": "intro-85",
-      "sectionId": "intro",
+      "id": "s1-83",
+      "sectionId": "s1",
       "title": "代理选项",
       "kind": "qa",
       "front": "`--upstream-bind-address UPSTREAM_BIND_ADDRESS`",
       "back": "将上游请求绑定到的地址（默认为无）"
     },
     {
-      "id": "intro-86",
-      "sectionId": "intro",
-      "title": "代理选项",
-      "kind": "text",
-      "body": "Mitmproxy 过滤器\n---------------"
-    },
-    {
-      "id": "intro-87",
-      "sectionId": "intro",
+      "id": "s2-84",
+      "sectionId": "s2",
       "title": "过滤器",
       "kind": "qa",
       "front": "`f`",
       "back": "设置视图过滤器 _(在流视图页面上)_"
     },
     {
-      "id": "intro-88",
-      "sectionId": "intro",
+      "id": "s2-85",
+      "sectionId": "s2",
       "title": "过滤器",
       "kind": "text",
       "body": "---"
     },
     {
-      "id": "intro-89",
-      "sectionId": "intro",
+      "id": "s2-86",
+      "sectionId": "s2",
       "title": "过滤器",
       "kind": "text",
       "body": "• [RegEX 备忘清单](./regex.md) _(jaywcjlove.github.io)_"
     },
     {
-      "id": "intro-90",
-      "sectionId": "intro",
+      "id": "s2-87",
+      "sectionId": "s2",
       "title": "过滤器",
       "kind": "text",
       "body": "正则表达式是 Python 风格的，可以指定为带引号的字符串"
     },
     {
-      "id": "intro-91",
-      "sectionId": "intro",
+      "id": "s2-88",
+      "sectionId": "s2",
       "title": "运算符",
       "kind": "qa",
       "front": "`!`",
       "back": "一元非"
     },
     {
-      "id": "intro-92",
-      "sectionId": "intro",
+      "id": "s2-89",
+      "sectionId": "s2",
       "title": "运算符",
       "kind": "qa",
       "front": "`&`",
       "back": "和"
     },
     {
-      "id": "intro-93",
-      "sectionId": "intro",
+      "id": "s2-90",
+      "sectionId": "s2",
       "title": "运算符",
       "kind": "qa",
       "front": "`\\",
       "back": "` | 或者"
     },
     {
-      "id": "intro-94",
-      "sectionId": "intro",
+      "id": "s2-91",
+      "sectionId": "s2",
       "title": "运算符",
       "kind": "qa",
       "front": "`(...)`",
       "back": "分组"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
+      "id": "s2-92",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~a`",
       "back": "响应匹配资源：CSS、Javascript、Flash、图像。"
     },
     {
-      "id": "intro-96",
-      "sectionId": "intro",
+      "id": "s2-93",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~b` `regex`",
       "back": "主体 Body"
     },
     {
-      "id": "intro-97",
-      "sectionId": "intro",
+      "id": "s2-94",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~bq` `regex`",
       "back": "请求正文"
     },
     {
-      "id": "intro-98",
-      "sectionId": "intro",
+      "id": "s2-95",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~bs` `regex`",
       "back": "响应体"
     },
     {
-      "id": "intro-99",
-      "sectionId": "intro",
+      "id": "s2-96",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~c` `int`",
       "back": "HTTP 响应代码"
     },
     {
-      "id": "intro-100",
-      "sectionId": "intro",
+      "id": "s2-97",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~d` `regex`",
       "back": "域"
     },
     {
-      "id": "intro-101",
-      "sectionId": "intro",
+      "id": "s2-98",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~dst` `regex`",
       "back": "匹配目标地址"
     },
     {
-      "id": "intro-102",
-      "sectionId": "intro",
+      "id": "s2-99",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~e`",
       "back": "匹配错误"
     },
     {
-      "id": "intro-103",
-      "sectionId": "intro",
+      "id": "s2-100",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~h` `regex`",
       "back": "标头"
     },
     {
-      "id": "intro-104",
-      "sectionId": "intro",
+      "id": "s2-101",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~hq` `regex`",
       "back": "请求头"
     },
     {
-      "id": "intro-105",
-      "sectionId": "intro",
+      "id": "s2-102",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~hs` `regex`",
       "back": "响应头"
     },
     {
-      "id": "intro-106",
-      "sectionId": "intro",
+      "id": "s2-103",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~http`",
       "back": "匹配 HTTP 流"
     },
     {
-      "id": "intro-107",
-      "sectionId": "intro",
+      "id": "s2-104",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~m` `regex`",
       "back": "方法"
     },
     {
-      "id": "intro-108",
-      "sectionId": "intro",
+      "id": "s2-105",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~marked`",
       "back": "匹配标记流"
     },
     {
-      "id": "intro-109",
-      "sectionId": "intro",
+      "id": "s2-106",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~q`",
       "back": "匹配请求无响应"
     },
     {
-      "id": "intro-110",
-      "sectionId": "intro",
+      "id": "s2-107",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~s`",
       "back": "匹配响应"
     },
     {
-      "id": "intro-111",
-      "sectionId": "intro",
+      "id": "s2-108",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~src` `regex`",
       "back": "匹配源地址"
     },
     {
-      "id": "intro-112",
-      "sectionId": "intro",
+      "id": "s2-109",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~t` `regex`",
       "back": "内容类型标头"
     },
     {
-      "id": "intro-113",
-      "sectionId": "intro",
+      "id": "s2-110",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~tcp`",
       "back": "匹配 TCP 流"
     },
     {
-      "id": "intro-114",
-      "sectionId": "intro",
+      "id": "s2-111",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~tq` `regex`",
       "back": "请求 Content-Type 标头"
     },
     {
-      "id": "intro-115",
-      "sectionId": "intro",
+      "id": "s2-112",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~ts` `regex`",
       "back": "响应内容类型标头"
     },
     {
-      "id": "intro-116",
-      "sectionId": "intro",
+      "id": "s2-113",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~u` `regex`",
       "back": "网址"
     },
     {
-      "id": "intro-117",
-      "sectionId": "intro",
+      "id": "s2-114",
+      "sectionId": "s2",
       "title": "表达式",
       "kind": "qa",
       "front": "`~websocket`",
       "back": "匹配 WebSocket 流（和 HTTP-WebSocket 握手流）"
     },
     {
-      "id": "intro-118",
-      "sectionId": "intro",
+      "id": "s2-115",
+      "sectionId": "s2",
       "title": "流选择器",
       "kind": "text",
       "body": "表达式"
     },
     {
-      "id": "intro-119",
-      "sectionId": "intro",
+      "id": "s2-116",
+      "sectionId": "s2",
       "title": "流选择器",
       "kind": "qa",
       "front": "`@all`",
       "back": "所有流程"
     },
     {
-      "id": "intro-120",
-      "sectionId": "intro",
+      "id": "s2-117",
+      "sectionId": "s2",
       "title": "流选择器",
       "kind": "qa",
       "front": "`@focus`",
       "back": "目前关注的流程"
     },
     {
-      "id": "intro-121",
-      "sectionId": "intro",
+      "id": "s2-118",
+      "sectionId": "s2",
       "title": "流选择器",
       "kind": "qa",
       "front": "`@shown`",
       "back": "当前显示的所有流程"
     },
     {
-      "id": "intro-122",
-      "sectionId": "intro",
+      "id": "s2-119",
+      "sectionId": "s2",
       "title": "流选择器",
       "kind": "qa",
       "front": "`@hidden`",
       "back": "当前隐藏的所有流程"
     },
     {
-      "id": "intro-123",
-      "sectionId": "intro",
+      "id": "s2-120",
+      "sectionId": "s2",
       "title": "流选择器",
       "kind": "qa",
       "front": "`@marked`",
       "back": "所有标记流"
     },
     {
-      "id": "intro-124",
-      "sectionId": "intro",
+      "id": "s2-121",
+      "sectionId": "s2",
       "title": "流选择器",
       "kind": "qa",
       "front": "`@unmarked`",
       "back": "所有未标记的流"
     },
     {
-      "id": "intro-125",
-      "sectionId": "intro",
+      "id": "s2-122",
+      "sectionId": "s2",
       "title": "流选择器",
       "kind": "text",
       "body": "mitmproxy 有一组方便的流选择器，可以在当前视图上操作"
     },
     {
-      "id": "intro-126",
-      "sectionId": "intro",
+      "id": "s2-123",
+      "sectionId": "s2",
       "title": "示例",
       "kind": "text",
       "body": "包含“google.com”的网址"
     },
     {
-      "id": "intro-127",
-      "sectionId": "intro",
+      "id": "s2-124",
+      "sectionId": "s2",
       "title": "示例",
       "kind": "code",
       "lang": "",
       "code": "google\\.com"
     },
     {
-      "id": "intro-128",
-      "sectionId": "intro",
+      "id": "s2-125",
+      "sectionId": "s2",
       "title": "示例",
       "kind": "text",
       "body": "正文中包含字符串“test”的请求"
     },
     {
-      "id": "intro-129",
-      "sectionId": "intro",
+      "id": "s2-126",
+      "sectionId": "s2",
       "title": "示例",
       "kind": "code",
       "lang": "",
       "code": "~q ~b test"
     },
     {
-      "id": "intro-130",
-      "sectionId": "intro",
+      "id": "s2-127",
+      "sectionId": "s2",
       "title": "示例",
       "kind": "text",
       "body": "除了带有 text/html 内容类型的请求之外的任何内容："
     },
     {
-      "id": "intro-131",
-      "sectionId": "intro",
+      "id": "s2-128",
+      "sectionId": "s2",
       "title": "示例",
       "kind": "code",
       "lang": "",
       "code": "!(~q & ~t \"text/html\")"
     },
     {
-      "id": "intro-132",
-      "sectionId": "intro",
+      "id": "s2-129",
+      "sectionId": "s2",
       "title": "示例",
       "kind": "text",
       "body": "替换请求中的整个 GET 字符串（需要引号才能使其工作）："
     },
     {
-      "id": "intro-133",
-      "sectionId": "intro",
+      "id": "s2-130",
+      "sectionId": "s2",
       "title": "示例",
       "kind": "code",
       "lang": "",
       "code": "\":~q ~m GET:.*:/replacement.html\""
     },
     {
-      "id": "intro-134",
-      "sectionId": "intro",
-      "title": "示例",
-      "kind": "text",
-      "body": "Mitmproxy 脚本\n-------\n<!--rehype:body-class=cols-2-->"
-    },
-    {
-      "id": "intro-135",
-      "sectionId": "intro",
+      "id": "s3-131",
+      "sectionId": "s3",
       "title": "Custom response",
       "kind": "code",
       "lang": "python",
       "code": "from mitmproxy import http\ndef request(flow: http.HTTPFlow) -> None:\n    if flow.request.pretty_url == \"http://example.com/path\":\n        flow.response = http.HTTPResponse.make(\n            200,  # (optional) status code\n            b\"Hello World\",  # (optional) content\n            {\"Content-Type\": \"text/html\"}  # (optional) headers\n        )"
     },
     {
-      "id": "intro-136",
-      "sectionId": "intro",
+      "id": "s3-132",
+      "sectionId": "s3",
       "title": "Custom response",
       "kind": "text",
       "body": "从代理发送回复而不向远程服务器发送任何数据"
     },
     {
-      "id": "intro-137",
-      "sectionId": "intro",
+      "id": "s3-133",
+      "sectionId": "s3",
       "title": "Add header",
       "kind": "code",
       "lang": "python",
       "code": "class AddHeader:\n    def __init__(self):\n        self.num = 0\n    def response(self, flow):\n        self.num = self.num + 1\n        flow.response.headers[\"count\"] = str(self.num)\naddons = [\n    AddHeader()\n]"
     },
     {
-      "id": "intro-138",
-      "sectionId": "intro",
+      "id": "s3-134",
+      "sectionId": "s3",
       "title": "Add header",
       "kind": "text",
       "body": "为每个响应添加一个 HTTP 标头"
     },
     {
-      "id": "intro-139",
-      "sectionId": "intro",
-      "title": "Add header",
-      "kind": "text",
-      "body": "另见\n-------"
-    },
-    {
-      "id": "intro-140",
-      "sectionId": "intro",
-      "title": "Add header",
+      "id": "s4-135",
+      "sectionId": "s4",
+      "title": "另见",
       "kind": "text",
       "body": "• [mitmproxy addons](https://github.com/mitmproxy/mitmproxy/tree/master/examples/addons) _(github.com)_\n• [mitmproxy 文档](https://docs.mitmproxy.org/stable/) _(mitmproxy.org)_\n• [mitmproxy 开源仓库](https://github.com/mitmproxy/mitmproxy) _(github.com)_\n• [mitmproxy 备忘清单](https://www.stut-it.net/blog/2017/mitmproxy-cheatsheet.html) _(stut-it.net)_"
     }
@@ -1114,7 +1101,6 @@
     "path": "docs/mitmproxy.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/mitmproxy.md",
-    "generatedAt": "2025-12-16T07:36:11.327Z",
     "lang": "zh",
     "mode": "local"
   }

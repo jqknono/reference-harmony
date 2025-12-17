@@ -1,6 +1,8 @@
 {
   "id": "rxjs",
-  "title": "rxjs",
+  "name": "RxJS 备忘清单",
+  "title": "[RxJS](https://rxjs.dev/)（Reactive Extensions for JavaScript）是一个强大的库，用于处理异步事件和数据流。以下是 RxJS 的一些关键概念、操作符和方法的总结。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/rxjs.svg",
   "sections": [
     {
       "id": "intro",
@@ -10,37 +12,42 @@
     {
       "id": "s1",
       "title": "入门",
-      "startIndex": 2
+      "startIndex": 1
     },
     {
       "id": "s2",
       "title": "创建 Observable",
-      "startIndex": 17
+      "startIndex": 16
     },
     {
       "id": "s3",
       "title": "操作符",
-      "startIndex": 25
+      "startIndex": 24
     },
     {
       "id": "s4",
       "title": "组合操作符",
-      "startIndex": 41
+      "startIndex": 40
     },
     {
       "id": "s5",
       "title": "错误处理",
-      "startIndex": 49
+      "startIndex": 48
     },
     {
       "id": "s6",
       "title": "实用操作符",
-      "startIndex": 51
+      "startIndex": 50
     },
     {
       "id": "s7",
+      "title": "调度器",
+      "startIndex": 60
+    },
+    {
+      "id": "s8",
       "title": "另见",
-      "startIndex": 65
+      "startIndex": 63
     }
   ],
   "cards": [
@@ -49,17 +56,10 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "RxJS 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "[RxJS](https://rxjs.dev/)（Reactive Extensions for JavaScript）是一个强大的库，用于处理异步事件和数据流。以下是 RxJS 的一些关键概念、操作符和方法的总结。"
     },
     {
-      "id": "s1-2",
+      "id": "s1-1",
       "sectionId": "s1",
       "title": "安装 RxJS",
       "kind": "code",
@@ -67,14 +67,14 @@
       "code": "npm install rxjs"
     },
     {
-      "id": "s1-3",
+      "id": "s1-2",
       "sectionId": "s1",
       "title": "清晰",
       "kind": "text",
       "body": "RxJS 的强大之处在于它使用纯函数生成值的能力。这意味着您的代码更不容易出错。通常情况下，您会创建一个不纯的函数，而代码的其他部分可能会弄乱您的状态。"
     },
     {
-      "id": "s1-4",
+      "id": "s1-3",
       "sectionId": "s1",
       "title": "清晰",
       "kind": "code",
@@ -82,14 +82,14 @@
       "code": "let count = 0;\ndocument.addEventListener('click', () => {\n  console.log(`Clicked ${++count} times`)\n});"
     },
     {
-      "id": "s1-5",
+      "id": "s1-4",
       "sectionId": "s1",
       "title": "清晰",
       "kind": "text",
       "body": "使用 `RxJS` 可以隔离状态。"
     },
     {
-      "id": "s1-6",
+      "id": "s1-5",
       "sectionId": "s1",
       "title": "清晰",
       "kind": "code",
@@ -97,21 +97,21 @@
       "code": "import { fromEvent, scan } from 'rxjs';\n\nfromEvent(document, 'click')\n  .pipe(scan((count) => count + 1, 0))\n  .subscribe((count) => {\n    console.log(`Clicked ${count} times`)\n  });"
     },
     {
-      "id": "s1-7",
+      "id": "s1-6",
       "sectionId": "s1",
       "title": "清晰",
       "kind": "text",
       "body": "扫描操作符的工作原理与数组的 `reduce` 类似。它接受一个暴露给回调函数的值。回调的返回值将成为下次回调运行时公开的下一个值。"
     },
     {
-      "id": "s1-8",
+      "id": "s1-7",
       "sectionId": "s1",
       "title": "流",
       "kind": "text",
       "body": "`RxJS` 拥有一整套运算符，可以帮助您控制事件如何流经您的可观察对象。这是使用纯 JavaScript 每秒最多允许一次点击的方式："
     },
     {
-      "id": "s1-9",
+      "id": "s1-8",
       "sectionId": "s1",
       "title": "流",
       "kind": "code",
@@ -119,14 +119,14 @@
       "code": "let count = 0;\nlet rate = 1000;\nlet lastClick = Date.now() - rate;\ndocument.addEventListener('click', () => {\n  if (Date.now() - lastClick >= rate) {\n    console.log(`Clicked ${++count}times`);\n    lastClick = Date.now();\n  }\n});"
     },
     {
-      "id": "s1-10",
+      "id": "s1-9",
       "sectionId": "s1",
       "title": "流",
       "kind": "text",
       "body": "使用 RxJS："
     },
     {
-      "id": "s1-11",
+      "id": "s1-10",
       "sectionId": "s1",
       "title": "流",
       "kind": "code",
@@ -134,14 +134,14 @@
       "code": "import { fromEvent, throttleTime, scan\n  } from 'rxjs';\n\nfromEvent(document, 'click')\n  .pipe(throttleTime(1000),\n      scan((count) => count + 1, 0)\n  )\n  .subscribe((count) => {\n    console.log(`Clicked ${count} times`)\n  });"
     },
     {
-      "id": "s1-12",
+      "id": "s1-11",
       "sectionId": "s1",
       "title": "第一个示例",
       "kind": "text",
       "body": "通常情况下，您需要注册事件监听器。"
     },
     {
-      "id": "s1-13",
+      "id": "s1-12",
       "sectionId": "s1",
       "title": "第一个示例",
       "kind": "code",
@@ -149,14 +149,14 @@
       "code": "document.addEventListener('click', () => {\n  console.log('Clicked!')\n});"
     },
     {
-      "id": "s1-14",
+      "id": "s1-13",
       "sectionId": "s1",
       "title": "第一个示例",
       "kind": "text",
       "body": "使用 [RxJS](https://rxjs.dev/)，您可以创建一个可观察对象。"
     },
     {
-      "id": "s1-15",
+      "id": "s1-14",
       "sectionId": "s1",
       "title": "第一个示例",
       "kind": "code",
@@ -164,7 +164,7 @@
       "code": "import { fromEvent } from 'rxjs';\n\nfromEvent(document, 'click')\n  .subscribe(() => {\n    console.log('Clicked!')\n  });"
     },
     {
-      "id": "s1-16",
+      "id": "s1-15",
       "sectionId": "s1",
       "title": "导入所需的 Observable 和操作符",
       "kind": "code",
@@ -172,7 +172,7 @@
       "code": "import { Observable, of, from, interval, fromEvent } from 'rxjs';\n\nimport { map, filter, switchMap, mergeMap, catchError, debounceTime, \n  distinctUntilChanged, take, tap, concatMap, delay, retryWhen, scan, \n  combineLatest, concat, merge, forkJoin, withLatestFrom, startWith, reduce\n} from 'rxjs/operators';"
     },
     {
-      "id": "s2-17",
+      "id": "s2-16",
       "sectionId": "s2",
       "title": "of",
       "kind": "code",
@@ -180,14 +180,14 @@
       "code": "const obs = of(1, 2, 3);\nobs.subscribe(console.log);\n// 输出: 1 2 3"
     },
     {
-      "id": "s2-18",
+      "id": "s2-17",
       "sectionId": "s2",
       "title": "of",
       "kind": "text",
       "body": "创建一个立即发送指定值并完成的 `Observable`"
     },
     {
-      "id": "s2-19",
+      "id": "s2-18",
       "sectionId": "s2",
       "title": "from",
       "kind": "code",
@@ -195,14 +195,14 @@
       "code": "const obs = from([1, 2, 3]);\nobs.subscribe(console.log);\n// 输出: 1 2 3"
     },
     {
-      "id": "s2-20",
+      "id": "s2-19",
       "sectionId": "s2",
       "title": "from",
       "kind": "text",
       "body": "从 Promise、数组、可迭代对象创建 `Observable`"
     },
     {
-      "id": "s2-21",
+      "id": "s2-20",
       "sectionId": "s2",
       "title": "interval",
       "kind": "code",
@@ -210,14 +210,14 @@
       "code": "const obs = interval(1000);\nobs.subscribe(console.log);\n// 每秒输出一次递增的数字"
     },
     {
-      "id": "s2-22",
+      "id": "s2-21",
       "sectionId": "s2",
       "title": "interval",
       "kind": "text",
       "body": "创建一个定时发送递增整数的 `Observable`"
     },
     {
-      "id": "s2-23",
+      "id": "s2-22",
       "sectionId": "s2",
       "title": "fromEvent",
       "kind": "code",
@@ -225,14 +225,14 @@
       "code": "const button = document.querySelector('button');\nconst obs = fromEvent(button, 'click');\nobs.subscribe(event => {\n  console.log('Button clicked!', event)\n});"
     },
     {
-      "id": "s2-24",
+      "id": "s2-23",
       "sectionId": "s2",
       "title": "fromEvent",
       "kind": "text",
       "body": "从 DOM 事件创建 `Observable`"
     },
     {
-      "id": "s3-25",
+      "id": "s3-24",
       "sectionId": "s3",
       "title": "map",
       "kind": "code",
@@ -240,14 +240,14 @@
       "code": "const obs = of(1, 2, 3).pipe(\n  map(x => x * 2)\n);\nobs.subscribe(console.log);\n// 输出: 2 4 6"
     },
     {
-      "id": "s3-26",
+      "id": "s3-25",
       "sectionId": "s3",
       "title": "map",
       "kind": "text",
       "body": "对 `Observable` 发出的每个值应用一个函数"
     },
     {
-      "id": "s3-27",
+      "id": "s3-26",
       "sectionId": "s3",
       "title": "filter",
       "kind": "code",
@@ -255,14 +255,14 @@
       "code": "const obs = of(1, 2, 3).pipe(\n  filter(x => x % 2 === 0)\n);\nobs.subscribe(console.log);\n// 输出: 2"
     },
     {
-      "id": "s3-28",
+      "id": "s3-27",
       "sectionId": "s3",
       "title": "filter",
       "kind": "text",
       "body": "过滤 `Observable` 发出的值"
     },
     {
-      "id": "s3-29",
+      "id": "s3-28",
       "sectionId": "s3",
       "title": "switchMap",
       "kind": "code",
@@ -270,14 +270,14 @@
       "code": "const obs = interval(1000).pipe(\n  switchMap(() => of('Hello'))\n);\n\nobs.subscribe(console.log);\n// 每秒输出一次 \"Hello\""
     },
     {
-      "id": "s3-30",
+      "id": "s3-29",
       "sectionId": "s3",
       "title": "switchMap",
       "kind": "text",
       "body": "将 `Observable` 每个值映射成 `Observable` 并订阅，前一个订阅将被取消"
     },
     {
-      "id": "s3-31",
+      "id": "s3-30",
       "sectionId": "s3",
       "title": "mergeMap",
       "kind": "code",
@@ -285,14 +285,14 @@
       "code": "const obs = interval(1000).pipe(\n  mergeMap(() => of('Hello'))\n);\n\nobs.subscribe(console.log);\n// 每秒输出一次 \"Hello\""
     },
     {
-      "id": "s3-32",
+      "id": "s3-31",
       "sectionId": "s3",
       "title": "mergeMap",
       "kind": "text",
       "body": "类似 `switchMap`，但允许多个内部 `Observable` 并发执行"
     },
     {
-      "id": "s3-33",
+      "id": "s3-32",
       "sectionId": "s3",
       "title": "catchError",
       "kind": "code",
@@ -300,14 +300,14 @@
       "code": "const obs = of(1, 2, 3).pipe(\n  map(x => {\n    if (x === 2) throw 'Error!';\n    return x;\n  }),\n  catchError(err => of('发现一个错误：'+err))\n);\nobs.subscribe(console.log);\n// 输出: 1 发现一个错误：Error!"
     },
     {
-      "id": "s3-34",
+      "id": "s3-33",
       "sectionId": "s3",
       "title": "catchError",
       "kind": "text",
       "body": "捕获 `Observable` 链中的错误"
     },
     {
-      "id": "s3-35",
+      "id": "s3-34",
       "sectionId": "s3",
       "title": "debounceTime",
       "kind": "code",
@@ -315,14 +315,14 @@
       "code": "const obs = fromEvent(document,'mousemove')\n    .pipe(debounceTime(300));\n\nobs.subscribe(event => {\n  console.log('Mouse moved!', event)\n});"
     },
     {
-      "id": "s3-36",
+      "id": "s3-35",
       "sectionId": "s3",
       "title": "debounceTime",
       "kind": "text",
       "body": "延迟处理，直到源 `Observable` 停止发出数据一定时间"
     },
     {
-      "id": "s3-37",
+      "id": "s3-36",
       "sectionId": "s3",
       "title": "distinctUntilChanged",
       "kind": "code",
@@ -330,14 +330,14 @@
       "code": "const obs = of(1, 1, 2, 2, 3, 3).pipe(\n  distinctUntilChanged()\n);\nobs.subscribe(console.log);\n// 输出: 1 2 3"
     },
     {
-      "id": "s3-38",
+      "id": "s3-37",
       "sectionId": "s3",
       "title": "distinctUntilChanged",
       "kind": "text",
       "body": "忽略连续重复的值"
     },
     {
-      "id": "s3-39",
+      "id": "s3-38",
       "sectionId": "s3",
       "title": "take",
       "kind": "code",
@@ -345,14 +345,14 @@
       "code": "const obs = interval(1000).pipe(\n  take(3)\n);\nobs.subscribe(console.log);\n// 输出: 0 1 2"
     },
     {
-      "id": "s3-40",
+      "id": "s3-39",
       "sectionId": "s3",
       "title": "take",
       "kind": "text",
       "body": "只发出前 n 个值"
     },
     {
-      "id": "s4-41",
+      "id": "s4-40",
       "sectionId": "s4",
       "title": "combineLatest",
       "kind": "code",
@@ -360,14 +360,14 @@
       "code": "const obs1 = interval(1000);\nconst obs2 = of('A', 'B', 'C');\nconst combined = combineLatest(\n  [obs1, obs2]\n);\n\ncombined.subscribe(console.log);\n// 每秒输出一次两个 observables 的最新值"
     },
     {
-      "id": "s4-42",
+      "id": "s4-41",
       "sectionId": "s4",
       "title": "combineLatest",
       "kind": "text",
       "body": "当两个 `Observable` 都发出新的值时，发出它们的组合"
     },
     {
-      "id": "s4-43",
+      "id": "s4-42",
       "sectionId": "s4",
       "title": "concat",
       "kind": "code",
@@ -375,14 +375,14 @@
       "code": "const obs1 = of(1, 2, 3);\nconst obs2 = of(4, 5, 6);\nconst combined = concat(obs1, obs2);\ncombined.subscribe(console.log);\n// 输出: 1 2 3 4 5 6"
     },
     {
-      "id": "s4-44",
+      "id": "s4-43",
       "sectionId": "s4",
       "title": "concat",
       "kind": "text",
       "body": "按顺序连接多个 `Observable`"
     },
     {
-      "id": "s4-45",
+      "id": "s4-44",
       "sectionId": "s4",
       "title": "merge",
       "kind": "code",
@@ -390,14 +390,14 @@
       "code": "const obs1 = interval(1000).pipe(\n    map(x => 'A' + x)\n);\nconst obs2 = interval(500).pipe(\n    map(x => 'B' + x)\n);\nconst combined = merge(obs1, obs2);\ncombined.subscribe(console.log);\n// 每秒输出 \"A\" 和 \"B\" 开头的递增数字"
     },
     {
-      "id": "s4-46",
+      "id": "s4-45",
       "sectionId": "s4",
       "title": "merge",
       "kind": "text",
       "body": "将多个 `Observable` 合并为一个"
     },
     {
-      "id": "s4-47",
+      "id": "s4-46",
       "sectionId": "s4",
       "title": "forkJoin",
       "kind": "code",
@@ -405,14 +405,14 @@
       "code": "const obs1 = of(1, 2, 3);\nconst obs2 = of('A', 'B', 'C');\nconst combined = forkJoin([obs1, obs2]);\ncombined.subscribe(console.log);\n// 输出: [3, 'C']"
     },
     {
-      "id": "s4-48",
+      "id": "s4-47",
       "sectionId": "s4",
       "title": "forkJoin",
       "kind": "text",
       "body": "等待所有 `Observable` 完成，然后发出它们的最后一个值的数组"
     },
     {
-      "id": "s5-49",
+      "id": "s5-48",
       "sectionId": "s5",
       "title": "retryWhen",
       "kind": "code",
@@ -420,14 +420,14 @@
       "code": "const obs = throwError('出了些问题！')\n  .pipe(\n      retryWhen(errors =>\n        errors.pipe(delayWhen(() => interval(1000)))\n      )\n  );\nobs.subscribe(console.log, console.error);\n// 输出: 出了些问题！ (每秒重试一次)"
     },
     {
-      "id": "s5-50",
+      "id": "s5-49",
       "sectionId": "s5",
       "title": "retryWhen",
       "kind": "text",
       "body": "在 `Observable` 发出错误时重试"
     },
     {
-      "id": "s6-51",
+      "id": "s6-50",
       "sectionId": "s6",
       "title": "tap",
       "kind": "code",
@@ -435,14 +435,14 @@
       "code": "const obs = of(1, 2, 3).pipe(\n  tap(x => console.log(`Before: ${x}`)),\n  map(x => x * 2),\n  tap(x => console.log(`After: ${x}`))\n);\nobs.subscribe();\n// 输出: Before: 1, After: 2, Before: 2, \n//      After: 4, Before: 3, After: 6"
     },
     {
-      "id": "s6-52",
+      "id": "s6-51",
       "sectionId": "s6",
       "title": "tap",
       "kind": "text",
       "body": "用于记录、测量或执行副作用操作"
     },
     {
-      "id": "s6-53",
+      "id": "s6-52",
       "sectionId": "s6",
       "title": "startWith",
       "kind": "code",
@@ -450,14 +450,14 @@
       "code": "const obs = of(1, 2, 3).pipe(\n  startWith(0)\n);\nobs.subscribe(console.log);\n// 输出: 0 1 2 3"
     },
     {
-      "id": "s6-54",
+      "id": "s6-53",
       "sectionId": "s6",
       "title": "startWith",
       "kind": "text",
       "body": "在 `Observable` 序列前添加值"
     },
     {
-      "id": "s6-55",
+      "id": "s6-54",
       "sectionId": "s6",
       "title": "scan",
       "kind": "code",
@@ -465,14 +465,14 @@
       "code": "const obs = of(1, 2, 3).pipe(\n  scan((acc, value) => acc + value, 0)\n);\nobs.subscribe(console.log);\n// 输出: 1 3 6"
     },
     {
-      "id": "s6-56",
+      "id": "s6-55",
       "sectionId": "s6",
       "title": "scan",
       "kind": "text",
       "body": "对 `Observable` 发出的每个值应用累加器函数"
     },
     {
-      "id": "s6-57",
+      "id": "s6-56",
       "sectionId": "s6",
       "title": "reduce",
       "kind": "code",
@@ -480,14 +480,14 @@
       "code": "const obs = of(1, 2, 3).pipe(reduce((acc, value) => acc + value, 0));\nobs.subscribe(console.log);\n// 输出: 6"
     },
     {
-      "id": "s6-58",
+      "id": "s6-57",
       "sectionId": "s6",
       "title": "reduce",
       "kind": "text",
       "body": "对 `Observable` 发出的值进行累加"
     },
     {
-      "id": "s6-59",
+      "id": "s6-58",
       "sectionId": "s6",
       "title": "delay",
       "kind": "code",
@@ -495,44 +495,37 @@
       "code": "const obs = of('Hello').pipe(delay(2000));\nobs.subscribe(console.log);\n// 输出: 'Hello' (延迟2秒)"
     },
     {
-      "id": "s6-60",
+      "id": "s6-59",
       "sectionId": "s6",
       "title": "delay",
       "kind": "text",
       "body": "延迟 `Observable` 发出数据的时间"
     },
     {
-      "id": "s6-61",
-      "sectionId": "s6",
-      "title": "delay",
-      "kind": "text",
-      "body": "调度器\n---"
-    },
-    {
-      "id": "s6-62",
-      "sectionId": "s6",
+      "id": "s7-60",
+      "sectionId": "s7",
       "title": "调度器说明",
       "kind": "text",
       "body": "调度器（Scheduler）控制着 RxJS 操作的执行时机。常见的调度器有："
     },
     {
-      "id": "s6-63",
-      "sectionId": "s6",
+      "id": "s7-61",
+      "sectionId": "s7",
       "title": "调度器说明",
       "kind": "text",
       "body": "• `asyncScheduler`：异步执行任务\n• `queueScheduler`：按队列顺序执行任务\n• `animationFrameScheduler`：在浏览器的下一次重绘前执行任务"
     },
     {
-      "id": "s6-64",
-      "sectionId": "s6",
+      "id": "s7-62",
+      "sectionId": "s7",
       "title": "示例",
       "kind": "code",
       "lang": "javascript",
       "code": "const obs = of(1, 2, 3).pipe(observeOn(asyncScheduler));\n\nconsole.log('Before subscribe');\nobs.subscribe(console.log);\nconsole.log('After subscribe');\n// 输出: Before subscribe, After subscribe, 1, 2, 3"
     },
     {
-      "id": "s7-65",
-      "sectionId": "s7",
+      "id": "s8-63",
+      "sectionId": "s8",
       "title": "另见",
       "kind": "text",
       "body": "• [RxJS 官方文档](https://rxjs.dev/)\n• [RxJS 学习资源](https://rxjs.dev/guide/overview)\n• [RxJS 操作符参考](https://rxjs.dev/guide/operators)"
@@ -543,7 +536,6 @@
     "path": "docs/rxjs.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/rxjs.md",
-    "generatedAt": "2025-12-16T07:36:11.419Z",
     "lang": "zh",
     "mode": "local"
   }

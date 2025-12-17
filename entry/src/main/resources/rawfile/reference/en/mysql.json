@@ -1,6 +1,8 @@
 {
   "id": "mysql",
-  "title": "MySQL",
+  "name": "MySQL",
+  "title": "The SQL cheat sheet provides you with the most commonly used SQL statements for your reference.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/mysql.svg",
   "sections": [
     {
       "id": "intro",
@@ -11,6 +13,21 @@
       "id": "s1",
       "title": "Getting Started",
       "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "MySQL Data Types",
+      "startIndex": 137
+    },
+    {
+      "id": "s3",
+      "title": "MySQL Functions & Operators",
+      "startIndex": 161
+    },
+    {
+      "id": "s4",
+      "title": "Also see",
+      "startIndex": 173
     }
   ],
   "cards": [
@@ -219,787 +236,1116 @@
       "title": "Backups",
       "kind": "code",
       "lang": "",
-      "code": "\n## MySQL Examples\n\n### Managing tables\n\nCreate a new table with three columns"
+      "code": "\n## MySQL Examples\n\n### Managing tables\n\nCreate a new table with three columns\n\n```sql\nCREATE TABLE t (\n     id    INT,\n     name  VARCHAR DEFAULT NOT NULL,\n     price INT DEFAULT 0\n     PRIMARY KEY(id)\n);"
     },
     {
       "id": "s1-27",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "text",
-      "body": "CREATE TABLE t (\nid    INT,\nname  VARCHAR DEFAULT NOT NULL,\nprice INT DEFAULT 0\nPRIMARY KEY(id)\n);"
+      "body": "Delete the table from the database"
     },
     {
       "id": "s1-28",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "code",
-      "lang": "",
-      "code": "\nDelete the table from the database"
+      "lang": "sql",
+      "code": "DROP TABLE t ;"
     },
     {
       "id": "s1-29",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "text",
-      "body": "DROP TABLE t ;"
+      "body": "Add a new column to the table"
     },
     {
       "id": "s1-30",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "code",
-      "lang": "",
-      "code": "\nAdd a new column to the table"
+      "lang": "sql",
+      "code": "ALTER TABLE t ADD column;"
     },
     {
       "id": "s1-31",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "text",
-      "body": "ALTER TABLE t ADD column;"
+      "body": "Drop column c from the table"
     },
     {
       "id": "s1-32",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "code",
-      "lang": "",
-      "code": "\nDrop column c from the table"
+      "lang": "sql",
+      "code": "ALTER TABLE t DROP COLUMN c ;"
     },
     {
       "id": "s1-33",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "text",
-      "body": "ALTER TABLE t DROP COLUMN c ;"
+      "body": "Add a constraint"
     },
     {
       "id": "s1-34",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "code",
-      "lang": "",
-      "code": "\nAdd a constraint"
+      "lang": "sql",
+      "code": "ALTER TABLE t ADD constraint;"
     },
     {
       "id": "s1-35",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "text",
-      "body": "ALTER TABLE t ADD constraint;"
+      "body": "Drop a constraint"
     },
     {
       "id": "s1-36",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "code",
-      "lang": "",
-      "code": "\nDrop a constraint"
+      "lang": "sql",
+      "code": "ALTER TABLE t DROP constraint;"
     },
     {
       "id": "s1-37",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "text",
-      "body": "ALTER TABLE t DROP constraint;"
+      "body": "Rename a table from t1 to t2"
     },
     {
       "id": "s1-38",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "code",
-      "lang": "",
-      "code": "\nRename a table from t1 to t2"
+      "lang": "sql",
+      "code": "ALTER TABLE t1 RENAME TO t2;"
     },
     {
       "id": "s1-39",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "text",
-      "body": "ALTER TABLE t1 RENAME TO t2;"
+      "body": "Rename column c1 to c2"
     },
     {
       "id": "s1-40",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "code",
-      "lang": "",
-      "code": "\nRename column c1 to c2"
+      "lang": "sql",
+      "code": "ALTER TABLE t1 RENAME c1 TO c2 ;"
     },
     {
       "id": "s1-41",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "text",
-      "body": "ALTER TABLE t1 RENAME c1 TO c2 ;"
+      "body": "Remove all data in a table"
     },
     {
       "id": "s1-42",
       "sectionId": "s1",
       "title": "Backups",
       "kind": "code",
-      "lang": "",
-      "code": "\nRemove all data in a table"
+      "lang": "sql",
+      "code": "TRUNCATE TABLE t;"
     },
     {
       "id": "s1-43",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "text",
-      "body": "TRUNCATE TABLE t;"
+      "body": "Query data in columns c1, c2 from a table"
     },
     {
       "id": "s1-44",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Querying data from a table\n\nQuery data in columns c1, c2 from a table"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t"
     },
     {
       "id": "s1-45",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t"
+      "body": "Query all rows and columns from a table"
     },
     {
       "id": "s1-46",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "code",
-      "lang": "",
-      "code": "\nQuery all rows and columns from a table"
+      "lang": "sql",
+      "code": "SELECT * FROM t"
     },
     {
       "id": "s1-47",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "text",
-      "body": "SELECT * FROM t"
+      "body": "Query data and filter rows with a condition"
     },
     {
       "id": "s1-48",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "code",
-      "lang": "",
-      "code": "\nQuery data and filter rows with a condition"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t\nWHERE condition"
     },
     {
       "id": "s1-49",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t\nWHERE condition"
+      "body": "Query distinct rows from a table"
     },
     {
       "id": "s1-50",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "code",
-      "lang": "",
-      "code": "\nQuery distinct rows from a table"
+      "lang": "sql",
+      "code": "SELECT DISTINCT c1 FROM t\nWHERE condition"
     },
     {
       "id": "s1-51",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "text",
-      "body": "SELECT DISTINCT c1 FROM t\nWHERE condition"
+      "body": "Sort the result set in ascending or descending order"
     },
     {
       "id": "s1-52",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "code",
-      "lang": "",
-      "code": "\nSort the result set in ascending or descending order"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t\nORDER BY c1 ASC [DESC]"
     },
     {
       "id": "s1-53",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t\nORDER BY c1 ASC [DESC]"
+      "body": "Skip offset of rows and return the next n rows"
     },
     {
       "id": "s1-54",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "code",
-      "lang": "",
-      "code": "\nSkip offset of rows and return the next n rows"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t\nORDER BY c1\nLIMIT n OFFSET offset"
     },
     {
       "id": "s1-55",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t\nORDER BY c1\nLIMIT n OFFSET offset"
+      "body": "Group rows using an aggregate function"
     },
     {
       "id": "s1-56",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "code",
-      "lang": "",
-      "code": "\nGroup rows using an aggregate function"
+      "lang": "sql",
+      "code": "SELECT c1, aggregate(c2)\nFROM t\nGROUP BY c1"
     },
     {
       "id": "s1-57",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "text",
-      "body": "SELECT c1, aggregate(c2)\nFROM t\nGROUP BY c1"
+      "body": "Filter groups using HAVING clause"
     },
     {
       "id": "s1-58",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying data from a table",
       "kind": "code",
-      "lang": "",
-      "code": "\nFilter groups using HAVING clause"
+      "lang": "sql",
+      "code": "SELECT c1, aggregate(c2)\nFROM t\nGROUP BY c1\nHAVING condition"
     },
     {
       "id": "s1-59",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, aggregate(c2)\nFROM t\nGROUP BY c1\nHAVING condition"
+      "body": "Inner join t1 and t2"
     },
     {
       "id": "s1-60",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Querying from multiple tables {.row-span-2}\n\nInner join t1 and t2"
+      "lang": "sql",
+      "code": "SELECT c1, c2\nFROM t1\nINNER JOIN t2 ON condition"
     },
     {
       "id": "s1-61",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2\nFROM t1\nINNER JOIN t2 ON condition"
+      "body": "Left join t1 and t1"
     },
     {
       "id": "s1-62",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nLeft join t1 and t1"
+      "lang": "sql",
+      "code": "SELECT c1, c2\nFROM t1\nLEFT JOIN t2 ON condition"
     },
     {
       "id": "s1-63",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2\nFROM t1\nLEFT JOIN t2 ON condition"
+      "body": "Right join t1 and t2"
     },
     {
       "id": "s1-64",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nRight join t1 and t2"
+      "lang": "sql",
+      "code": "SELECT c1, c2\nFROM t1\nRIGHT JOIN t2 ON condition"
     },
     {
       "id": "s1-65",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2\nFROM t1\nRIGHT JOIN t2 ON condition"
+      "body": "Perform full outer join"
     },
     {
       "id": "s1-66",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nPerform full outer join"
+      "lang": "sql",
+      "code": "SELECT c1, c2\nFROM t1\nFULL OUTER JOIN t2 ON condition"
     },
     {
       "id": "s1-67",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2\nFROM t1\nFULL OUTER JOIN t2 ON condition"
+      "body": "Produce a Cartesian product of rows in tables"
     },
     {
       "id": "s1-68",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nProduce a Cartesian product of rows in tables"
+      "lang": "sql",
+      "code": "SELECT c1, c2\nFROM t1\nCROSS JOIN t2"
     },
     {
       "id": "s1-69",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2\nFROM t1\nCROSS JOIN t2"
+      "body": "Another way to perform cross join"
     },
     {
       "id": "s1-70",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nAnother way to perform cross join"
+      "lang": "sql",
+      "code": "SELECT c1, c2\nFROM t1, t2"
     },
     {
       "id": "s1-71",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2\nFROM t1, t2"
+      "body": "Join t1 to itself using INNER JOIN clause"
     },
     {
       "id": "s1-72",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nJoin t1 to itself using INNER JOIN clause"
+      "lang": "sql",
+      "code": "SELECT c1, c2\nFROM t1 A\nINNER JOIN t1 B ON condition"
     },
     {
       "id": "s1-73",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2\nFROM t1 A\nINNER JOIN t1 B ON condition"
+      "body": "Using SQL Operators Combine rows from two queries"
     },
     {
       "id": "s1-74",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nUsing SQL Operators Combine rows from two queries"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t1\nUNION [ALL]\nSELECT c1, c2 FROM t2"
     },
     {
       "id": "s1-75",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t1\nUNION [ALL]\nSELECT c1, c2 FROM t2"
+      "body": "Return the intersection of two queries"
     },
     {
       "id": "s1-76",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nReturn the intersection of two queries"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t1\nINTERSECT\nSELECT c1, c2 FROM t2"
     },
     {
       "id": "s1-77",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t1\nINTERSECT\nSELECT c1, c2 FROM t2"
+      "body": "Subtract a result set from another result set"
     },
     {
       "id": "s1-78",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nSubtract a result set from another result set"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t1\nMINUS\nSELECT c1, c2 FROM t2"
     },
     {
       "id": "s1-79",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t1\nMINUS\nSELECT c1, c2 FROM t2"
+      "body": "Query rows using pattern matching %, \\_"
     },
     {
       "id": "s1-80",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nQuery rows using pattern matching %, \\_"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t1\nWHERE c1 [NOT] LIKE pattern"
     },
     {
       "id": "s1-81",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t1\nWHERE c1 [NOT] LIKE pattern"
+      "body": "Query rows in a list"
     },
     {
       "id": "s1-82",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nQuery rows in a list"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t\nWHERE c1 [NOT] IN value_list"
     },
     {
       "id": "s1-83",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t\nWHERE c1 [NOT] IN value_list"
+      "body": "Query rows between two values"
     },
     {
       "id": "s1-84",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nQuery rows between two values"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t\nWHERE  c1 BETWEEN low AND high"
     },
     {
       "id": "s1-85",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t\nWHERE  c1 BETWEEN low AND high"
+      "body": "Check if values in a table is NULL or not"
     },
     {
       "id": "s1-86",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Querying from multiple tables",
       "kind": "code",
-      "lang": "",
-      "code": "\nCheck if values in a table is NULL or not"
+      "lang": "sql",
+      "code": "SELECT c1, c2 FROM t\nWHERE  c1 IS [NOT] NULL"
     },
     {
       "id": "s1-87",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "text",
-      "body": "SELECT c1, c2 FROM t\nWHERE  c1 IS [NOT] NULL"
+      "body": "Set c1 and c2 as a primary key"
     },
     {
       "id": "s1-88",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Using SQL constraints\n\nSet c1 and c2 as a primary key"
+      "lang": "sql",
+      "code": "CREATE TABLE t(\n    c1 INT, c2 INT, c3 VARCHAR,\n    PRIMARY KEY (c1,c2)\n);"
     },
     {
       "id": "s1-89",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "text",
-      "body": "CREATE TABLE t(\nc1 INT, c2 INT, c3 VARCHAR,\nPRIMARY KEY (c1,c2)\n);"
+      "body": "Set c2 column as a foreign key"
     },
     {
       "id": "s1-90",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "code",
-      "lang": "",
-      "code": "\nSet c2 column as a foreign key"
+      "lang": "sql",
+      "code": "CREATE TABLE t1(\n    c1 INT PRIMARY KEY,\n    c2 INT,\n    FOREIGN KEY (c2) REFERENCES t2(c2)\n);"
     },
     {
       "id": "s1-91",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "text",
-      "body": "CREATE TABLE t1(\nc1 INT PRIMARY KEY,\nc2 INT,\nFOREIGN KEY (c2) REFERENCES t2(c2)\n);"
+      "body": "Make the values in c1 and c2 unique"
     },
     {
       "id": "s1-92",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "code",
-      "lang": "",
-      "code": "\nMake the values in c1 and c2 unique"
+      "lang": "sql",
+      "code": "CREATE TABLE t(\n    c1 INT, c1 INT,\n    UNIQUE(c2,c3)\n);"
     },
     {
       "id": "s1-93",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "text",
-      "body": "CREATE TABLE t(\nc1 INT, c1 INT,\nUNIQUE(c2,c3)\n);"
+      "body": "Ensure c1 > 0 and values in c1 >= c2"
     },
     {
       "id": "s1-94",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "code",
-      "lang": "",
-      "code": "\nEnsure c1 > 0 and values in c1 >= c2"
+      "lang": "sql",
+      "code": "CREATE TABLE t(\n  c1 INT, c2 INT,\n  CHECK(c1> 0 AND c1 >= c2)\n);"
     },
     {
       "id": "s1-95",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "text",
-      "body": "CREATE TABLE t(\nc1 INT, c2 INT,\nCHECK(c1> 0 AND c1 >= c2)\n);"
+      "body": "Set values in c2 column not NULL"
     },
     {
       "id": "s1-96",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Using SQL constraints",
       "kind": "code",
-      "lang": "",
-      "code": "\nSet values in c2 column not NULL"
+      "lang": "sql",
+      "code": "CREATE TABLE t(\n     c1 INT PRIMARY KEY,\n     c2 VARCHAR NOT NULL\n);"
     },
     {
       "id": "s1-97",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "text",
-      "body": "CREATE TABLE t(\nc1 INT PRIMARY KEY,\nc2 VARCHAR NOT NULL\n);"
+      "body": "Insert one row into a table"
     },
     {
       "id": "s1-98",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Modifying Data\n\nInsert one row into a table"
+      "lang": "sql",
+      "code": "INSERT INTO t(column_list)\nVALUES(value_list);"
     },
     {
       "id": "s1-99",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "text",
-      "body": "INSERT INTO t(column_list)\nVALUES(value_list);"
+      "body": "Insert multiple rows into a table"
     },
     {
       "id": "s1-100",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "code",
-      "lang": "",
-      "code": "\nInsert multiple rows into a table"
+      "lang": "sql",
+      "code": "INSERT INTO t(column_list)\nVALUES (value_list),\n       (value_list), …;"
     },
     {
       "id": "s1-101",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "text",
-      "body": "INSERT INTO t(column_list)\nVALUES (value_list),\n(value_list), …;"
+      "body": "Insert rows from t2 into t1"
     },
     {
       "id": "s1-102",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "code",
-      "lang": "",
-      "code": "\nInsert rows from t2 into t1"
+      "lang": "sql",
+      "code": "INSERT INTO t1(column_list)\nSELECT column_list\nFROM t2;"
     },
     {
       "id": "s1-103",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "text",
-      "body": "INSERT INTO t1(column_list)\nSELECT column_list\nFROM t2;"
+      "body": "Update new value in the column c1 for all rows"
     },
     {
       "id": "s1-104",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "code",
-      "lang": "",
-      "code": "\nUpdate new value in the column c1 for all rows"
+      "lang": "sql",
+      "code": "UPDATE t\nSET c1 = new_value;"
     },
     {
       "id": "s1-105",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "text",
-      "body": "UPDATE t\nSET c1 = new_value;"
+      "body": "Update values in the column c1, c2 that match the condition"
     },
     {
       "id": "s1-106",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "code",
-      "lang": "",
-      "code": "\nUpdate values in the column c1, c2 that match the condition"
+      "lang": "sql",
+      "code": "UPDATE t\nSET c1 = new_value,\n        c2 = new_value\nWHERE condition;"
     },
     {
       "id": "s1-107",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "text",
-      "body": "UPDATE t\nSET c1 = new_value,\nc2 = new_value\nWHERE condition;"
+      "body": "Delete all data in a table"
     },
     {
       "id": "s1-108",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "code",
-      "lang": "",
-      "code": "\nDelete all data in a table"
+      "lang": "sql",
+      "code": "DELETE FROM t;"
     },
     {
       "id": "s1-109",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "text",
-      "body": "DELETE FROM t;"
+      "body": "Delete subset of rows in a table"
     },
     {
       "id": "s1-110",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Modifying Data",
       "kind": "code",
-      "lang": "",
-      "code": "\nDelete subset of rows in a table"
+      "lang": "sql",
+      "code": "DELETE FROM t\nWHERE condition;"
     },
     {
       "id": "s1-111",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "text",
-      "body": "DELETE FROM t\nWHERE condition;"
+      "body": "Create a new view that consists of c1 and c2"
     },
     {
       "id": "s1-112",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Managing Views\n\nCreate a new view that consists of c1 and c2"
+      "lang": "sql",
+      "code": "CREATE VIEW v(c1,c2)\nAS\nSELECT c1, c2\nFROM t;"
     },
     {
       "id": "s1-113",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "text",
-      "body": "CREATE VIEW v(c1,c2)\nAS\nSELECT c1, c2\nFROM t;"
+      "body": "Create a new view with check option"
     },
     {
       "id": "s1-114",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "code",
-      "lang": "",
-      "code": "\nCreate a new view with check option"
+      "lang": "sql",
+      "code": "CREATE VIEW v(c1,c2)\nAS\nSELECT c1, c2\nFROM t;\nWITH [CASCADED | LOCAL] CHECK OPTION;"
     },
     {
       "id": "s1-115",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "text",
-      "body": "CREATE VIEW v(c1,c2)\nAS\nSELECT c1, c2\nFROM t;\nWITH [CASCADED | LOCAL] CHECK OPTION;"
+      "body": "Create a recursive view"
     },
     {
       "id": "s1-116",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "code",
-      "lang": "",
-      "code": "\nCreate a recursive view"
+      "lang": "sql",
+      "code": "CREATE RECURSIVE VIEW v\nAS\nselect-statement -- anchor part\nUNION [ALL]\nselect-statement; -- recursive part"
     },
     {
       "id": "s1-117",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "text",
-      "body": "CREATE RECURSIVE VIEW v\nAS\nselect-statement -- anchor part\nUNION [ALL]\nselect-statement; -- recursive part"
+      "body": "Create a temporary view"
     },
     {
       "id": "s1-118",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "code",
-      "lang": "",
-      "code": "\nCreate a temporary view"
+      "lang": "sql",
+      "code": "CREATE TEMPORARY VIEW v\nAS\nSELECT c1, c2\nFROM t;"
     },
     {
       "id": "s1-119",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "text",
-      "body": "CREATE TEMPORARY VIEW v\nAS\nSELECT c1, c2\nFROM t;"
+      "body": "Delete a view"
     },
     {
       "id": "s1-120",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing Views",
       "kind": "code",
-      "lang": "",
-      "code": "\nDelete a view"
+      "lang": "sql",
+      "code": "DROP VIEW view_name;"
     },
     {
       "id": "s1-121",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing triggers",
       "kind": "text",
-      "body": "DROP VIEW view_name;"
+      "body": "Create or modify a trigger"
     },
     {
       "id": "s1-122",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing triggers",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Managing triggers\n\nCreate or modify a trigger"
+      "lang": "sql",
+      "code": "CREATE OR MODIFY TRIGGER trigger_name\nWHEN EVENT\nON table_name TRIGGER_TYPE\nEXECUTE stored_procedure;"
     },
     {
       "id": "s1-123",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing triggers",
       "kind": "text",
-      "body": "CREATE OR MODIFY TRIGGER trigger_name\nWHEN EVENT\nON table_name TRIGGER_TYPE\nEXECUTE stored_procedure;"
+      "body": "#### WHEN"
     },
     {
       "id": "s1-124",
       "sectionId": "s1",
-      "title": "Backups",
-      "kind": "code",
-      "lang": "",
-      "code": "\n#### WHEN\n\n| -        | -                              |\n| -------- | ------------------------------ |\n| `BEFORE` | invoke before the event occurs |\n| `AFTER`  | invoke after the event occurs  |\n\n#### EVENT\n\n| -        | -                 |\n| -------- | ----------------- |\n| `INSERT` | invoke for INSERT |\n| `UPDATE` | invoke for UPDATE |\n| `DELETE` | invoke for DELETE |\n\n#### TRIGGER_TYPE\n\n| -                    | -   |\n| -------------------- | --- |\n| `FOR EACH ROW`       |     |\n| `FOR EACH STATEMENT` |     |\n\n### Managing indexes\n\nCreate an index on c1 and c2 of the t table"
+      "title": "Managing triggers",
+      "kind": "qa",
+      "front": "`BEFORE`",
+      "back": "invoke before the event occurs"
     },
     {
       "id": "s1-125",
       "sectionId": "s1",
-      "title": "Backups",
-      "kind": "text",
-      "body": "CREATE INDEX idx_name\nON t(c1,c2);"
+      "title": "Managing triggers",
+      "kind": "qa",
+      "front": "`AFTER`",
+      "back": "invoke after the event occurs"
     },
     {
       "id": "s1-126",
       "sectionId": "s1",
-      "title": "Backups",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCreate a unique index on c3, c4 of the t table"
+      "title": "Managing triggers",
+      "kind": "text",
+      "body": "#### EVENT"
     },
     {
       "id": "s1-127",
       "sectionId": "s1",
-      "title": "Backups",
-      "kind": "text",
-      "body": "CREATE UNIQUE INDEX idx_name\nON t(c3,c4)"
+      "title": "Managing triggers",
+      "kind": "qa",
+      "front": "`INSERT`",
+      "back": "invoke for INSERT"
     },
     {
       "id": "s1-128",
       "sectionId": "s1",
-      "title": "Backups",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDrop an index"
+      "title": "Managing triggers",
+      "kind": "qa",
+      "front": "`UPDATE`",
+      "back": "invoke for UPDATE"
     },
     {
       "id": "s1-129",
       "sectionId": "s1",
-      "title": "Backups",
-      "kind": "text",
-      "body": "DROP INDEX idx_name ON t;"
+      "title": "Managing triggers",
+      "kind": "qa",
+      "front": "`DELETE`",
+      "back": "invoke for DELETE"
     },
     {
       "id": "s1-130",
       "sectionId": "s1",
-      "title": "Backups",
+      "title": "Managing triggers",
+      "kind": "text",
+      "body": "#### TRIGGER_TYPE"
+    },
+    {
+      "id": "s1-131",
+      "sectionId": "s1",
+      "title": "Managing indexes",
+      "kind": "text",
+      "body": "Create an index on c1 and c2 of the t table"
+    },
+    {
+      "id": "s1-132",
+      "sectionId": "s1",
+      "title": "Managing indexes",
       "kind": "code",
-      "lang": "",
-      "code": "\n## MySQL Data Types\n\n### Strings\n\n| -            | -                           |\n| ------------ | --------------------------- |\n| `CHAR`       | String (0 - 255)            |\n| `VARCHAR`    | String (0 - 255)            |\n| `TINYTEXT`   | String (0 - 255)            |\n| `TEXT`       | String (0 - 65535)          |\n| `BLOB`       | String (0 - 65535)          |\n| `MEDIUMTEXT` | String (0 - 16777215)       |\n| `MEDIUMBLOB` | String (0 - 16777215)       |\n| `LONGTEXT`   | String (0 - 429496­7295)    |\n| `LONGBLOB`   | String (0 - 429496­7295)    |\n| `ENUM`       | One of preset options       |\n| `SET`        | Selection of preset options |\n\n### Date & time\n\n| Data Type   | Format              |\n| ----------- | ------------------- |\n| `DATE     ` | yyyy-MM-dd          |\n| `TIME     ` | hh:mm:ss            |\n| `DATETIME ` | yyyy-MM-dd hh:mm:ss |\n| `TIMESTAMP` | yyyy-MM-dd hh:mm:ss |\n| `YEAR     ` | yyyy                |\n\n### Numeric\n\n| -             | -                                                             |\n| ------------- | ------------------------------------------------------------- |\n| `TINYINT x`   | Integer (-128 to 127)                                         |\n| `SMALLINT x`  | Integer (-32768 to 32767)                                     |\n| `MEDIUMINT x` | Integer (-8388608 to 8388607)                                 |\n| `INT x`       | Integer (-2147­483648 to 214748­3647)                         |\n| `BIGINT x`    | Integer (-9223­372­036­854­775808 to 922337­203­685­477­5807) |\n| `FLOAT`       | Decimal (precise to 23 digits)                                |\n| `DOUBLE`      | Decimal (24 to 53 digits)                                     |\n| `DECIMAL`     | \"­DOU­BLE­\" stored as string                                  |\n\n## MySQL Functions & Operators\n\n### Strings {.row-span-2}\n\n<!-- prettier-ignore -->\n- [ASCII()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_ascii){data-tooltip=\"Return numeric value of left-most character\"}\n- [BIN()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_bin){data-tooltip=\"Return a string containing binary representation of a number\"}\n- [BIT_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_bit-length){data-tooltip=\"Return length of argument in bits\"}\n- [CHAR()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_char){data-tooltip=\"Return the character for each integer passed\"}\n- [CHARACTER_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_character-length){data-tooltip=\"Synonym for CHAR_LENGTH()\"}\n- [CHAR_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_char-length){data-tooltip=\"Return number of characters in argument\"}\n- [CONCAT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat){data-tooltip=\"Return concatenated string\"}\n- [CONCAT_WS()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat-ws){data-tooltip=\"Return concatenate with separator\"}\n- [ELT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_elt){data-tooltip=\"Return string at index number\"}\n- [EXPORT_SET()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_export-set){data-tooltip=\"Return a string such that for every bit set in the value bits, you get an on string and for every unset bit, you get an off string\"}\n- [FIELD()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_field){data-tooltip=\"Index (position) of first argument in subsequent arguments\"}\n- [FIND_IN_SET()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_find-in-set){data-tooltip=\"Index (position) of first argument within second argument\"}\n- [FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_format){data-tooltip=\"Return a number formatted to specified number of decimal places\"}\n- [FROM_BASE64()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_from-base64){data-tooltip=\"Decode base64 encoded string and return result\"}\n- [HEX()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_hex){data-tooltip=\"Hexadecimal representation of decimal or string value\"}\n- [INSERT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_insert){data-tooltip=\"Insert substring at specified position up to specified number of characters\"}\n- [INSTR()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_instr){data-tooltip=\"Return the index of the first occurrence of substring\"}\n- [LCASE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_lcase){data-tooltip=\"Synonym for LOWER()\"}\n- [LEFT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_left){data-tooltip=\"Return the leftmost number of characters as specified\"}\n- [LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_length){data-tooltip=\"Return the length of a string in bytes\"}\n- [LIKE](https://dev.mysql.com/doc/refman/8.0/en/string-comparison-functions.html#operator_like){data-tooltip=\"Simple pattern matching\"}\n- [LOAD_FILE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_load-file){data-tooltip=\"Load the named file\"}\n- [LOCATE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_locate){data-tooltip=\"Return the position of the first occurrence of substring\"}\n- [LOWER()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_lower){data-tooltip=\"Return the argument in lowercase\"}\n- [LPAD()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_lpad){data-tooltip=\"Return the string argument, left-padded with the specified string\"}\n- [LTRIM()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_ltrim){data-tooltip=\"Remove leading spaces\"}\n- [MAKE_SET()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_make-set){data-tooltip=\"Return a set of comma-separated strings that have the corresponding bit in bits set\"}\n- [MATCH](https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html#function_match){data-tooltip=\"Perform full-text search\"}\n- [MID()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_mid){data-tooltip=\"Return a substring starting from the specified position\"}\n- [NOT LIKE](https://dev.mysql.com/doc/refman/8.0/en/string-comparison-functions.html#operator_not-like){data-tooltip=\"Negation of simple pattern matching\"}\n- [NOT REGEXP](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#operator_not-regexp){data-tooltip=\"Negation of REGEXP\"}\n- [OCT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_oct){data-tooltip=\"Return a string containing octal representation of a number\"}\n- [OCTET_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_octet-length){data-tooltip=\"Synonym for LENGTH()\"}\n- [ORD()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_ord){data-tooltip=\"Return character code for leftmost character of the argument\"}\n- [POSITION()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_position){data-tooltip=\"Synonym for LOCATE()\"}\n- [QUOTE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_quote){data-tooltip=\"Escape the argument for use in an SQL statement\"}\n- [REGEXP](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#operator_regexp){data-tooltip=\"Whether string matches regular expression\"}\n- [REGEXP_INSTR()](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#function_regexp-instr){data-tooltip=\"Starting index of substring matching regular expression\"}\n- [REGEXP_LIKE()](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#function_regexp-like){data-tooltip=\"Whether string matches regular expression\"}\n- [REGEXP_REPLACE()](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#function_regexp-replace){data-tooltip=\"Replace substrings matching regular expression\"}\n- [REGEXP_SUBSTR()](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#function_regexp-substr){data-tooltip=\"Return substring matching regular expression\"}\n- [REPEAT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_repeat){data-tooltip=\"Repeat a string the specified number of times\"}\n- [REPLACE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_replace){data-tooltip=\"Replace occurrences of a specified string\"}\n- [REVERSE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_reverse){data-tooltip=\"Reverse the characters in a string\"}\n- [RIGHT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_right){data-tooltip=\"Return the specified rightmost number of characters\"}\n- [RLIKE](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#operator_regexp){data-tooltip=\"Whether string matches regular expression\"}\n- [RPAD()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_rpad){data-tooltip=\"Append string the specified number of times\"}\n- [RTRIM()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_rtrim){data-tooltip=\"Remove trailing spaces\"}\n- [SOUNDEX()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_soundex){data-tooltip=\"Return a soundex string\"}\n- [SOUNDS LIKE](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#operator_sounds-like){data-tooltip=\"Compare sounds\"}\n- [SPACE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_space){data-tooltip=\"Return a string of the specified number of spaces\"}\n- [STRCMP()](https://dev.mysql.com/doc/refman/8.0/en/string-comparison-functions.html#function_strcmp){data-tooltip=\"Compare two strings\"}\n- [SUBSTR()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_substr){data-tooltip=\"Return the substring as specified\"}\n- [SUBSTRING()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_substring){data-tooltip=\"Return the substring as specified\"}\n- [SUBSTRING_INDEX()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_substring-index){data-tooltip=\"Return a substring from a string before the specified number of occurrences of the delimiter\"}\n- [TO_BASE64()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_to-base64){data-tooltip=\"Return the argument converted to a base-64 string\"}\n- [TRIM()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_trim){data-tooltip=\"Remove leading and trailing spaces\"}\n- [UCASE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_ucase){data-tooltip=\"Synonym for UPPER()\"}\n- [UNHEX()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_unhex){data-tooltip=\"Return a string containing hex representation of a number\"}\n- [UPPER()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_upper){data-tooltip=\"Convert to uppercase\"}\n- [WEIGHT_STRING()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_weight-string){data-tooltip=\"Return the weight string for a string\"}\n\n{.cols-2 .marker-none}\n\n### Date and Time {.row-span-2}\n\n<!-- prettier-ignore -->\n- [ADDDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_adddate){data-tooltip=\"Add time values (intervals) to a date value\"}\n- [ADDTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_addtime){data-tooltip=\"Add time\"}\n- [CONVERT_TZ()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_convert-tz){data-tooltip=\"Convert from one time zone to another\"}\n- [CURDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_curdate){data-tooltip=\"Return the current date\"}\n- [CURRENT_DATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_current-date){data-tooltip=\"Synonyms for CURDATE()\"}\n- [CURRENT_TIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_current-time){data-tooltip=\"Synonyms for CURTIME()\"}\n- [CURRENT_TIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_current-timestamp){data-tooltip=\"Synonyms for NOW()\"}\n- [CURTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_curtime){data-tooltip=\"Return the current time\"}\n- [DATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date){data-tooltip=\"Extract the date part of a date or datetime expression\"}\n- [DATE_ADD()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-add){data-tooltip=\"Add time values (intervals) to a date value\"}\n- [DATE_FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-format){data-tooltip=\"Format date as specified\"}\n- [DATE_SUB()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-sub){data-tooltip=\"Subtract a time value (interval) from a date\"}\n- [DATEDIFF()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_datediff){data-tooltip=\"Subtract two dates\"}\n- [DAY()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_day){data-tooltip=\"Synonym for DAYOFMONTH()\"}\n- [DAYNAME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayname){data-tooltip=\"Return the name of the weekday\"}\n- [DAYOFMONTH()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayofmonth){data-tooltip=\"Return the day of the month (0-31)\"}\n- [DAYOFWEEK()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayofweek){data-tooltip=\"Return the weekday index of the argument\"}\n- [DAYOFYEAR()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayofyear){data-tooltip=\"Return the day of the year (1-366)\"}\n- [EXTRACT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_extract){data-tooltip=\"Extract part of a date\"}\n- [FROM_DAYS()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_from-days){data-tooltip=\"Convert a day number to a date\"}\n- [FROM_UNIXTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_from-unixtime){data-tooltip=\"Format Unix timestamp as a date\"}\n- [GET_FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_get-format){data-tooltip=\"Return a date format string\"}\n- [HOUR()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_hour){data-tooltip=\"Extract the hour\"}\n- [LAST_DAY](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_last-day){data-tooltip=\"Return the last day of the month for the argument\"}\n- [LOCALTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_localtime){data-tooltip=\"Synonym for NOW()\"}\n- [LOCALTIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_localtimestamp){data-tooltip=\"Synonym for NOW()\"}\n- [MAKEDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_makedate){data-tooltip=\"Create a date from the year and day of year\"}\n- [MAKETIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_maketime){data-tooltip=\"Create time from hour, minute, second\"}\n- [MICROSECOND()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_microsecond){data-tooltip=\"Return the microseconds from argument\"}\n- [MINUTE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_minute){data-tooltip=\"Return the minute from the argument\"}\n- [MONTH()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_month){data-tooltip=\"Return the month from the date passed\"}\n- [MONTHNAME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_monthname){data-tooltip=\"Return the name of the month\"}\n- [NOW()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_now){data-tooltip=\"Return the current date and time\"}\n- [PERIOD_ADD()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_period-add){data-tooltip=\"Add a period to a year-month\"}\n- [PERIOD_DIFF()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_period-diff){data-tooltip=\"Return the number of months between periods\"}\n- [QUARTER()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_quarter){data-tooltip=\"Return the quarter from a date argument\"}\n- [SEC_TO_TIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_sec-to-time){data-tooltip=\"Converts seconds to 'hh:mm:ss' format\"}\n- [SECOND()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_second){data-tooltip=\"Return the second (0-59)\"}\n- [STR_TO_DATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_str-to-date){data-tooltip=\"Convert a string to a date\"}\n- [SUBDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_subdate){data-tooltip=\"Synonym for DATE_SUB() when invoked with three arguments\"}\n- [SUBTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_subtime){data-tooltip=\"Subtract times\"}\n- [SYSDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_sysdate){data-tooltip=\"Return the time at which the function executes\"}\n- [TIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_time){data-tooltip=\"Extract the time portion of the expression passed\"}\n- [TIME_FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_time-format){data-tooltip=\"Format as time\"}\n- [TIME_TO_SEC()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_time-to-sec){data-tooltip=\"Return the argument converted to seconds\"}\n- [TIMEDIFF()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_timediff){data-tooltip=\"Subtract time\"}\n- [TIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_timestamp){data-tooltip=\"With a single argument, this function returns the date or datetime expression; with two arguments, the sum of the arguments\"}\n- [TIMESTAMPADD()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_timestampadd){data-tooltip=\"Add an interval to a datetime expression\"}\n- [TIMESTAMPDIFF()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_timestampdiff){data-tooltip=\"Subtract an interval from a datetime expression\"}\n- [TO_DAYS()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_to-days){data-tooltip=\"Return the date argument converted to days\"}\n- [TO_SECONDS()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_to-seconds){data-tooltip=\"Return the date or datetime argument converted to seconds since Year 0\"}\n- [UNIX_TIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_unix-timestamp){data-tooltip=\"Return a Unix timestamp\"}\n- [UTC_DATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_utc-date){data-tooltip=\"Return the current UTC date\"}\n- [UTC_TIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_utc-time){data-tooltip=\"Return the current UTC time\"}\n- [UTC_TIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_utc-timestamp){data-tooltip=\"Return the current UTC date and time\"}\n- [WEEK()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_week){data-tooltip=\"Return the week number\"}\n- [WEEKDAY()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_weekday){data-tooltip=\"Return the weekday index\"}\n- [WEEKOFYEAR()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_weekofyear){data-tooltip=\"Return the calendar week of the date (1-53)\"}\n- [YEAR()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_year){data-tooltip=\"Return the year\"}\n- [YEARWEEK()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_yearweek){data-tooltip=\"Return the year and week\"}\n- [GET_FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_get-format){data-tooltip=\"'%m.%d.%Y'\"}\n\n{.cols-2 .marker-none}\n\n### Numeric\n\n<!-- prettier-ignore -->\n- [%, MOD](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_mod){data-tooltip=\"Modulo operator\"}\n- [*](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_times){data-tooltip=\"Multiplication operator\"}\n- [+](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_plus){data-tooltip=\"Addition operator\"}\n- [-](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_minus){data-tooltip=\"Minus operator\"}\n- [-](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_unary-minus){data-tooltip=\"Change the sign of the argument\"}\n- [/](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_divide){data-tooltip=\"Division operator\"}\n- [ABS()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_abs){data-tooltip=\"Return the absolute value\"}\n- [ACOS()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_acos){data-tooltip=\"Return the arc cosine\"}\n- [ASIN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_asin){data-tooltip=\"Return the arc sine\"}\n- [ATAN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_atan){data-tooltip=\"Return the arc tangent\"}\n- [ATAN2(), ATAN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_atan2){data-tooltip=\"Return the arc tangent of the two arguments\"}\n- [CEIL()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_ceil){data-tooltip=\"Return the smallest integer value not less than the argument\"}\n- [CEILING()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_ceiling){data-tooltip=\"Return the smallest integer value not less than the argument\"}\n- [CONV()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_conv){data-tooltip=\"Convert numbers between different number bases\"}\n- [COS()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_cos){data-tooltip=\"Return the cosine\"}\n- [COT()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_cot){data-tooltip=\"Return the cotangent\"}\n- [CRC32()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_crc32){data-tooltip=\"Compute a cyclic redundancy check value\"}\n- [DEGREES()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_degrees){data-tooltip=\"Convert radians to degrees\"}\n- [DIV](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_div){data-tooltip=\"Integer division\"}\n- [EXP()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_exp){data-tooltip=\"Raise to the power of\"}\n- [FLOOR()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_floor){data-tooltip=\"Return the largest integer value not greater than the argument\"}\n- [LN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_ln){data-tooltip=\"Return the natural logarithm of the argument\"}\n- [LOG()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_log){data-tooltip=\"Return the natural logarithm of the first argument\"}\n- [LOG10()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_log10){data-tooltip=\"Return the base-10 logarithm of the argument\"}\n- [LOG2()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_log2){data-tooltip=\"Return the base-2 logarithm of the argument\"}\n- [MOD()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_mod){data-tooltip=\"Return the remainder\"}\n- [PI()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_pi){data-tooltip=\"Return the value of pi\"}\n- [POW()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_pow){data-tooltip=\"Return the argument raised to the specified power\"}\n- [POWER()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_power){data-tooltip=\"Return the argument raised to the specified power\"}\n- [RADIANS()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_radians){data-tooltip=\"Return argument converted to radians\"}\n- [RAND()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_rand){data-tooltip=\"Return a random floating-point value\"}\n- [ROUND()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_round){data-tooltip=\"Round the argument\"}\n- [SIGN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_sign){data-tooltip=\"Return the sign of the argument\"}\n- [SIN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_sin){data-tooltip=\"Return the sine of the argument\"}\n- [SQRT()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_sqrt){data-tooltip=\"Return the square root of the argument\"}\n- [TAN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_tan){data-tooltip=\"Return the tangent of the argument\"}\n- [TRUNCATE()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_truncate){data-tooltip=\"Truncate to specified number of decimal places\"}\n\n{.cols-2 .marker-none}\n\n### Aggregate\n\n<!-- prettier-ignore -->\n- [AVG()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_avg){data-tooltip=\"Return the average value of the argument\"}\n- [BIT_AND()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_bit-and){data-tooltip=\"Return bitwise AND\"}\n- [BIT_OR()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_bit-or){data-tooltip=\"Return bitwise OR\"}\n- [BIT_XOR()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_bit-xor){data-tooltip=\"Return bitwise XOR\"}\n- [COUNT()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_count){data-tooltip=\"Return a count of the number of rows returned\"}\n- [COUNT(DISTINCT)](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_count-distinct){data-tooltip=\"Return the count of a number of different values\"}\n- [GROUP_CONCAT()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_group-concat){data-tooltip=\"Return a concatenated string\"}\n- [JSON_ARRAYAGG()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_json-arrayagg){data-tooltip=\"Return result set as a single JSON array\"}\n- [JSON_OBJECTAGG()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_json-objectagg){data-tooltip=\"Return result set as a single JSON object\"}\n- [MAX()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_max){data-tooltip=\"Return the maximum value\"}\n- [MIN()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_min){data-tooltip=\"Return the minimum value\"}\n- [STD()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_std){data-tooltip=\"Return the population standard deviation\"}\n- [STDDEV()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_stddev){data-tooltip=\"Return the population standard deviation\"}\n- [STDDEV_POP()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_stddev-pop){data-tooltip=\"Return the population standard deviation\"}\n- [STDDEV_SAMP()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_stddev-samp){data-tooltip=\"Return the sample standard deviation\"}\n- [SUM()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_sum){data-tooltip=\"Return the sum\"}\n- [VAR_POP()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_var-pop){data-tooltip=\"Return the population standard variance\"}\n- [VAR_SAMP()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_var-samp){data-tooltip=\"Return the sample variance\"}\n- [VARIANCE()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_variance){data-tooltip=\"Return the population standard variance\"}\n\n{.cols-2 .marker-none}\n\n### JSON {.row-span-4}\n\n<!-- prettier-ignore -->\n- [->](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#operator_json-column-path){data-tooltip=\"Return value from JSON column after evaluating path; equivalent to JSON_EXTRACT().\"}\n- [->>](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#operator_json-inline-path){data-tooltip=\"Return value from JSON column after evaluating path and unquoting the result; equivalent to JSON_UNQUOTE(JSON_EXTRACT()).\"}\n- [JSON_ARRAY()](https://dev.mysql.com/doc/refman/8.0/en/json-creation-functions.html#function_json-array){data-tooltip=\"Create JSON array\"}\n- [JSON_ARRAY_APPEND()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-array-append){data-tooltip=\"Append data to JSON document\"}\n- [JSON_ARRAY_INSERT()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-array-insert){data-tooltip=\"Insert into JSON array\"}\n- [JSON_CONTAINS()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-contains){data-tooltip=\"Whether JSON document contains specific object at path\"}\n- [JSON_CONTAINS_PATH()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-contains-path){data-tooltip=\"Whether JSON document contains any data at path\"}\n- [JSON_DEPTH()](https://dev.mysql.com/doc/refman/8.0/en/json-attribute-functions.html#function_json-depth){data-tooltip=\"Maximum depth of JSON document\"}\n- [JSON_EXTRACT()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-extract){data-tooltip=\"Return data from JSON document\"}\n- [JSON_INSERT()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-insert){data-tooltip=\"Insert data into JSON document\"}\n- [JSON_KEYS()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-keys){data-tooltip=\"Array of keys from JSON document\"}\n- [JSON_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/json-attribute-functions.html#function_json-length){data-tooltip=\"Number of elements in JSON document\"}\n- [JSON_MERGE() (deprecated)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge){data-tooltip=\"Merge JSON documents, preserving duplicate keys. Deprecated synonym for JSON_MERGE_PRESERVE()\"}\n- [JSON_MERGE_PATCH()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch){data-tooltip=\"Merge JSON documents, replacing values of duplicate keys\"}\n- [JSON_MERGE_PRESERVE()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-preserve){data-tooltip=\"Merge JSON documents, preserving duplicate keys\"}\n- [JSON_OBJECT()](https://dev.mysql.com/doc/refman/8.0/en/json-creation-functions.html#function_json-object){data-tooltip=\"Create JSON object\"}\n- [JSON_OVERLAPS() (introduced 8.0.17)](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-overlaps){data-tooltip=\"Compares two JSON documents, returns TRUE (1) if these have any key-value pairs or array elements in common, otherwise FALSE (0)\"}\n- [JSON_PRETTY()](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty){data-tooltip=\"Print a JSON document in human-readable format\"}\n- [JSON_QUOTE()](https://dev.mysql.com/doc/refman/8.0/en/json-creation-functions.html#function_json-quote){data-tooltip=\"Quote JSON document\"}\n- [JSON_REMOVE()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-remove){data-tooltip=\"Remove data from JSON document\"}\n- [JSON_REPLACE()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-replace){data-tooltip=\"Replace values in JSON document\"}\n- [JSON_SCHEMA_VALID() (introduced 8.0.17)](https://dev.mysql.com/doc/refman/8.0/en/json-validation-functions.html#function_json-schema-valid){data-tooltip=\"Validate JSON document against JSON schema; returns TRUE/1 if document validates against schema, or FALSE/0 if it does not\"}\n- [JSON_SCHEMA_VALIDATION_REPORT() (introduced 8.0.17)](https://dev.mysql.com/doc/refman/8.0/en/json-validation-functions.html#function_json-schema-validation-report){data-tooltip=\"Validate JSON document against JSON schema; returns report in JSON format on outcome on validation including success or failure and reasons for failure\"}\n- [JSON_SEARCH()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-search){data-tooltip=\"Path to value within JSON document\"}\n- [JSON_SET()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-set){data-tooltip=\"Insert data into JSON document\"}\n- [JSON_STORAGE_FREE()](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free){data-tooltip=\"Freed space within binary representation of JSON column value following partial update\"}\n- [JSON_STORAGE_SIZE()](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-size){data-tooltip=\"Space used for storage of binary representation of a JSON document\"}\n- [JSON_TABLE()](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table){data-tooltip=\"Return data from a JSON expression as a relational table\"}\n- [JSON_TYPE()](https://dev.mysql.com/doc/refman/8.0/en/json-attribute-functions.html#function_json-type){data-tooltip=\"Type of JSON value\"}\n- [JSON_UNQUOTE()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-unquote){data-tooltip=\"Unquote JSON value\"}\n- [JSON_VALID()](https://dev.mysql.com/doc/refman/8.0/en/json-attribute-functions.html#function_json-valid){data-tooltip=\"Whether JSON value is valid\"}\n- [JSON_VALUE() (introduced 8.0.21)](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-value){data-tooltip=\"Extract value from JSON document at location pointed to by path provided; return this value as VARCHAR(512) or specified type\"}\n- [MEMBER OF() (introduced 8.0.17)](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#operator_member-of){data-tooltip=\"Returns true (1) if first operand matches any element of JSON array passed as second operand, otherwise returns false (0)\"}\n\n{.cols-1 .marker-none}\n\n### Cast\n\n<!-- prettier-ignore -->\n- [BINARY](https://dev.mysql.com/doc/refman/8.0/en/cast-functions.html#operator_binary){data-tooltip=\"Cast a string to a binary string\"}\n- [CAST()](https://dev.mysql.com/doc/refman/8.0/en/cast-functions.html#function_cast){data-tooltip=\"Cast a value as a certain type\"}\n- [CONVERT()](https://dev.mysql.com/doc/refman/8.0/en/cast-functions.html#function_convert){data-tooltip=\"Cast a value as a certain type\"}\n\n{.cols-2 .marker-none}\n\n### Flow Control\n\n<!-- prettier-ignore -->\n- [CASE](https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html#operator_case){data-tooltip=\"Case operator\"}\n- [IF()](https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html#function_if){data-tooltip=\"If/else construct\"}\n- [IFNULL()](https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html#function_ifnull){data-tooltip=\"Null if/else construct\"}\n- [NULLIF()](https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html#function_nullif){data-tooltip=\"Return NULL if expr1 = expr2\"}\n\n{.cols-2 .marker-none}\n\n### Information\n\n<!-- prettier-ignore -->\n- [BENCHMARK()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_benchmark){data-tooltip=\"Repeatedly execute an expression\"}\n- [CHARSET()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_charset){data-tooltip=\"Return the character set of the argument\"}\n- [COERCIBILITY()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_coercibility){data-tooltip=\"Return the collation coercibility value of the string argument\"}\n- [COLLATION()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_collation){data-tooltip=\"Return the collation of the string argument\"}\n- [CONNECTION_ID()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_connection-id){data-tooltip=\"Return the connection ID (thread ID) for the connection\"}\n- [CURRENT_ROLE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_current-role){data-tooltip=\"Return the current active roles\"}\n- [CURRENT_USER()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_current-user){data-tooltip=\"The authenticated user name and host name\"}\n- [DATABASE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_database){data-tooltip=\"Return the default (current) database name\"}\n- [FOUND_ROWS()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_found-rows){data-tooltip=\"For a SELECT with a LIMIT clause, the number of rows that would be returned were there no LIMIT clause\"}\n- [ICU_VERSION()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_icu-version){data-tooltip=\"ICU library version\"}\n- [LAST_INSERT_ID()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_last-insert-id){data-tooltip=\"Value of the AUTOINCREMENT column for the last INSERT\"}\n- [ROLES_GRAPHML()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_roles-graphml){data-tooltip=\"Return a GraphML document representing memory role subgraphs\"}\n- [ROW_COUNT()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_row-count){data-tooltip=\"The number of rows updated\"}\n- [SCHEMA()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_schema){data-tooltip=\"Synonym for DATABASE()\"}\n- [SESSION_USER()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_session-user){data-tooltip=\"Synonym for USER()\"}\n- [SYSTEM_USER()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_system-user){data-tooltip=\"Synonym for USER()\"}\n- [USER()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_user){data-tooltip=\"The user name and host name provided by the client\"}\n- [VERSION()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_version){data-tooltip=\"Return a string that indicates the MySQL server version\"}\n\n{.cols-2 .marker-none}\n\n### Encryption and Compression\n\n<!-- prettier-ignore -->\n- [AES_DECRYPT()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_aes-decrypt){data-tooltip=\"Decrypt using AES\"}\n- [AES_ENCRYPT()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_aes-encrypt){data-tooltip=\"Encrypt using AES\"}\n- [COMPRESS()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_compress){data-tooltip=\"Return result as a binary string\"}\n- [MD5()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_md5){data-tooltip=\"Calculate MD5 checksum\"}\n- [RANDOM_BYTES()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_random-bytes){data-tooltip=\"Return a random byte vector\"}\n- [SHA1(), SHA()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_sha1){data-tooltip=\"Calculate an SHA-1 160-bit checksum\"}\n- [SHA2()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_sha2){data-tooltip=\"Calculate an SHA-2 checksum\"}\n- [STATEMENT_DIGEST()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_statement-digest){data-tooltip=\"Compute statement digest hash value\"}\n- [STATEMENT_DIGEST_TEXT()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_statement-digest-text){data-tooltip=\"Compute normalized statement digest\"}\n- [UNCOMPRESS()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_uncompress){data-tooltip=\"Uncompress a string compressed\"}\n- [UNCOMPRESSED_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_uncompressed-length){data-tooltip=\"Return the length of a string before compression\"}\n- [VALIDATE_PASSWORD_STRENGTH()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_validate-password-strength){data-tooltip=\"Determine strength of password\"}\n\n{.cols-1 .marker-none}\n\n### Locking\n\n<!-- prettier-ignore -->\n- [GET_LOCK()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_get-lock){data-tooltip=\"Get a named lock\"}\n- [IS_FREE_LOCK()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_is-free-lock){data-tooltip=\"Whether the named lock is free\"}\n- [IS_USED_LOCK()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_is-used-lock){data-tooltip=\"Whether the named lock is in use; return connection identifier if true\"}\n- [RELEASE_ALL_LOCKS()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_release-all-locks){data-tooltip=\"Release all current named locks\"}\n- [RELEASE_LOCK()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_release-lock){data-tooltip=\"Release the named lock\"}\n\n{.cols-1 .marker-none}\n\n### Bit\n\n<!-- prettier-ignore -->\n- [&](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_bitwise-and){data-tooltip=\"Bitwise AND\"}\n- [>>](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_right-shift){data-tooltip=\"Right shift\"}\n- [<<](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_left-shift){data-tooltip=\"Left shift\"}\n- [^](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_bitwise-xor){data-tooltip=\"Bitwise XOR\"}\n- [BIT_COUNT()](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#function_bit-count){data-tooltip=\"Return the number of bits that are set\"}\n- [|](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_bitwise-or){data-tooltip=\"Bitwise OR\"}\n- [~](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_bitwise-invert){data-tooltip=\"Bitwise inversion\"}\n\n{.cols-2 .marker-none}\n\n### Miscellaneous\n\n<!-- prettier-ignore -->\n- [ANY_VALUE()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_any-value){data-tooltip=\"Suppress ONLY_FULL_GROUP_BY value rejection\"}\n- [BIN_TO_UUID()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_bin-to-uuid){data-tooltip=\"Convert binary UUID to string\"}\n- [DEFAULT()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_default){data-tooltip=\"Return the default value for a table column\"}\n- [GROUPING()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_grouping){data-tooltip=\"Distinguish super-aggregate ROLLUP rows from regular rows\"}\n- [INET_ATON()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_inet-aton){data-tooltip=\"Return the numeric value of an IP address\"}\n- [INET_NTOA()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_inet-ntoa){data-tooltip=\"Return the IP address from a numeric value\"}\n- [INET6_ATON()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_inet6-aton){data-tooltip=\"Return the numeric value of an IPv6 address\"}\n- [INET6_NTOA()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_inet6-ntoa){data-tooltip=\"Return the IPv6 address from a numeric value\"}\n- [IS_IPV4()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-ipv4){data-tooltip=\"Whether argument is an IPv4 address\"}\n- [IS_IPV4_COMPAT()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-ipv4-compat){data-tooltip=\"Whether argument is an IPv4-compatible address\"}\n- [IS_IPV4_MAPPED()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-ipv4-mapped){data-tooltip=\"Whether argument is an IPv4-mapped address\"}\n- [IS_IPV6()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-ipv6){data-tooltip=\"Whether argument is an IPv6 address\"}\n- [IS_UUID()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-uuid){data-tooltip=\"Whether argument is a valid UUID\"}\n- [MASTER_POS_WAIT()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_master-pos-wait){data-tooltip=\"Block until the replica has read and applied all updates up to the specified position\"}\n- [NAME_CONST()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_name-const){data-tooltip=\"Cause the column to have the given name\"}\n- [SLEEP()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_sleep){data-tooltip=\"Sleep for a number of seconds\"}\n- [UUID()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid){data-tooltip=\"Return a Universal Unique Identifier (UUID)\"}\n- [UUID_SHORT()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid-short){data-tooltip=\"Return an integer-valued universal identifier\"}\n- [UUID_TO_BIN()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid-to-bin){data-tooltip=\"Convert string UUID to binary\"}\n- [VALUES()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_values){data-tooltip=\"Define the values to be used during an INSERT\"}\n\n{.cols-2 .marker-none}\n\n## Also see {.cols-1}\n\n- [Regex in MySQL](/regex#regex-in-mysql) _(cheatsheets.zip)_"
+      "lang": "sql",
+      "code": "CREATE INDEX idx_name\nON t(c1,c2);"
+    },
+    {
+      "id": "s1-133",
+      "sectionId": "s1",
+      "title": "Managing indexes",
+      "kind": "text",
+      "body": "Create a unique index on c3, c4 of the t table"
+    },
+    {
+      "id": "s1-134",
+      "sectionId": "s1",
+      "title": "Managing indexes",
+      "kind": "code",
+      "lang": "sql",
+      "code": "CREATE UNIQUE INDEX idx_name\nON t(c3,c4)"
+    },
+    {
+      "id": "s1-135",
+      "sectionId": "s1",
+      "title": "Managing indexes",
+      "kind": "text",
+      "body": "Drop an index"
+    },
+    {
+      "id": "s1-136",
+      "sectionId": "s1",
+      "title": "Managing indexes",
+      "kind": "code",
+      "lang": "sql",
+      "code": "DROP INDEX idx_name ON t;"
+    },
+    {
+      "id": "s2-137",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`CHAR`",
+      "back": "String (0 - 255)"
+    },
+    {
+      "id": "s2-138",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`VARCHAR`",
+      "back": "String (0 - 255)"
+    },
+    {
+      "id": "s2-139",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`TINYTEXT`",
+      "back": "String (0 - 255)"
+    },
+    {
+      "id": "s2-140",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`TEXT`",
+      "back": "String (0 - 65535)"
+    },
+    {
+      "id": "s2-141",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`BLOB`",
+      "back": "String (0 - 65535)"
+    },
+    {
+      "id": "s2-142",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`MEDIUMTEXT`",
+      "back": "String (0 - 16777215)"
+    },
+    {
+      "id": "s2-143",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`MEDIUMBLOB`",
+      "back": "String (0 - 16777215)"
+    },
+    {
+      "id": "s2-144",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`LONGTEXT`",
+      "back": "String (0 - 429496­7295)"
+    },
+    {
+      "id": "s2-145",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`LONGBLOB`",
+      "back": "String (0 - 429496­7295)"
+    },
+    {
+      "id": "s2-146",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`ENUM`",
+      "back": "One of preset options"
+    },
+    {
+      "id": "s2-147",
+      "sectionId": "s2",
+      "title": "Strings",
+      "kind": "qa",
+      "front": "`SET`",
+      "back": "Selection of preset options"
+    },
+    {
+      "id": "s2-148",
+      "sectionId": "s2",
+      "title": "Date & time",
+      "kind": "qa",
+      "front": "`DATE     `",
+      "back": "yyyy-MM-dd"
+    },
+    {
+      "id": "s2-149",
+      "sectionId": "s2",
+      "title": "Date & time",
+      "kind": "qa",
+      "front": "`TIME     `",
+      "back": "hh:mm:ss"
+    },
+    {
+      "id": "s2-150",
+      "sectionId": "s2",
+      "title": "Date & time",
+      "kind": "qa",
+      "front": "`DATETIME `",
+      "back": "yyyy-MM-dd hh:mm:ss"
+    },
+    {
+      "id": "s2-151",
+      "sectionId": "s2",
+      "title": "Date & time",
+      "kind": "qa",
+      "front": "`TIMESTAMP`",
+      "back": "yyyy-MM-dd hh:mm:ss"
+    },
+    {
+      "id": "s2-152",
+      "sectionId": "s2",
+      "title": "Date & time",
+      "kind": "qa",
+      "front": "`YEAR     `",
+      "back": "yyyy"
+    },
+    {
+      "id": "s2-153",
+      "sectionId": "s2",
+      "title": "Numeric",
+      "kind": "qa",
+      "front": "`TINYINT x`",
+      "back": "Integer (-128 to 127)"
+    },
+    {
+      "id": "s2-154",
+      "sectionId": "s2",
+      "title": "Numeric",
+      "kind": "qa",
+      "front": "`SMALLINT x`",
+      "back": "Integer (-32768 to 32767)"
+    },
+    {
+      "id": "s2-155",
+      "sectionId": "s2",
+      "title": "Numeric",
+      "kind": "qa",
+      "front": "`MEDIUMINT x`",
+      "back": "Integer (-8388608 to 8388607)"
+    },
+    {
+      "id": "s2-156",
+      "sectionId": "s2",
+      "title": "Numeric",
+      "kind": "qa",
+      "front": "`INT x`",
+      "back": "Integer (-2147­483648 to 214748­3647)"
+    },
+    {
+      "id": "s2-157",
+      "sectionId": "s2",
+      "title": "Numeric",
+      "kind": "qa",
+      "front": "`BIGINT x`",
+      "back": "Integer (-9223­372­036­854­775808 to 922337­203­685­477­5807)"
+    },
+    {
+      "id": "s2-158",
+      "sectionId": "s2",
+      "title": "Numeric",
+      "kind": "qa",
+      "front": "`FLOAT`",
+      "back": "Decimal (precise to 23 digits)"
+    },
+    {
+      "id": "s2-159",
+      "sectionId": "s2",
+      "title": "Numeric",
+      "kind": "qa",
+      "front": "`DOUBLE`",
+      "back": "Decimal (24 to 53 digits)"
+    },
+    {
+      "id": "s2-160",
+      "sectionId": "s2",
+      "title": "Numeric",
+      "kind": "qa",
+      "front": "`DECIMAL`",
+      "back": "\"­DOU­BLE­\" stored as string"
+    },
+    {
+      "id": "s3-161",
+      "sectionId": "s3",
+      "title": "Strings",
+      "kind": "text",
+      "body": "• [ASCII()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_ascii){data-tooltip=\"Return numeric value of left-most character\"}\n• [BIN()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_bin){data-tooltip=\"Return a string containing binary representation of a number\"}\n• [BIT_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_bit-length){data-tooltip=\"Return length of argument in bits\"}\n• [CHAR()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_char){data-tooltip=\"Return the character for each integer passed\"}\n• [CHARACTER_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_character-length){data-tooltip=\"Synonym for CHAR_LENGTH()\"}\n• [CHAR_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_char-length){data-tooltip=\"Return number of characters in argument\"}\n• [CONCAT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat){data-tooltip=\"Return concatenated string\"}\n• [CONCAT_WS()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat-ws){data-tooltip=\"Return concatenate with separator\"}\n• [ELT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_elt){data-tooltip=\"Return string at index number\"}\n• [EXPORT_SET()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_export-set){data-tooltip=\"Return a string such that for every bit set in the value bits, you get an on string and for every unset bit, you get an off string\"}\n• [FIELD()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_field){data-tooltip=\"Index (position) of first argument in subsequent arguments\"}\n• [FIND_IN_SET()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_find-in-set){data-tooltip=\"Index (position) of first argument within second argument\"}\n• [FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_format){data-tooltip=\"Return a number formatted to specified number of decimal places\"}\n• [FROM_BASE64()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_from-base64){data-tooltip=\"Decode base64 encoded string and return result\"}\n• [HEX()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_hex){data-tooltip=\"Hexadecimal representation of decimal or string value\"}\n• [INSERT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_insert){data-tooltip=\"Insert substring at specified position up to specified number of characters\"}\n• [INSTR()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_instr){data-tooltip=\"Return the index of the first occurrence of substring\"}\n• [LCASE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_lcase){data-tooltip=\"Synonym for LOWER()\"}\n• [LEFT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_left){data-tooltip=\"Return the leftmost number of characters as specified\"}\n• [LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_length){data-tooltip=\"Return the length of a string in bytes\"}\n• [LIKE](https://dev.mysql.com/doc/refman/8.0/en/string-comparison-functions.html#operator_like){data-tooltip=\"Simple pattern matching\"}\n• [LOAD_FILE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_load-file){data-tooltip=\"Load the named file\"}\n• [LOCATE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_locate){data-tooltip=\"Return the position of the first occurrence of substring\"}\n• [LOWER()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_lower){data-tooltip=\"Return the argument in lowercase\"}\n• [LPAD()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_lpad){data-tooltip=\"Return the string argument, left-padded with the specified string\"}\n• [LTRIM()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_ltrim){data-tooltip=\"Remove leading spaces\"}\n• [MAKE_SET()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_make-set){data-tooltip=\"Return a set of comma-separated strings that have the corresponding bit in bits set\"}\n• [MATCH](https://dev.mysql.com/doc/refman/8.0/en/fulltext-search.html#function_match){data-tooltip=\"Perform full-text search\"}\n• [MID()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_mid){data-tooltip=\"Return a substring starting from the specified position\"}\n• [NOT LIKE](https://dev.mysql.com/doc/refman/8.0/en/string-comparison-functions.html#operator_not-like){data-tooltip=\"Negation of simple pattern matching\"}\n• [NOT REGEXP](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#operator_not-regexp){data-tooltip=\"Negation of REGEXP\"}\n• [OCT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_oct){data-tooltip=\"Return a string containing octal representation of a number\"}\n• [OCTET_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_octet-length){data-tooltip=\"Synonym for LENGTH()\"}\n• [ORD()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_ord){data-tooltip=\"Return character code for leftmost character of the argument\"}\n• [POSITION()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_position){data-tooltip=\"Synonym for LOCATE()\"}\n• [QUOTE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_quote){data-tooltip=\"Escape the argument for use in an SQL statement\"}\n• [REGEXP](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#operator_regexp){data-tooltip=\"Whether string matches regular expression\"}\n• [REGEXP_INSTR()](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#function_regexp-instr){data-tooltip=\"Starting index of substring matching regular expression\"}\n• [REGEXP_LIKE()](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#function_regexp-like){data-tooltip=\"Whether string matches regular expression\"}\n• [REGEXP_REPLACE()](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#function_regexp-replace){data-tooltip=\"Replace substrings matching regular expression\"}\n• [REGEXP_SUBSTR()](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#function_regexp-substr){data-tooltip=\"Return substring matching regular expression\"}\n• [REPEAT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_repeat){data-tooltip=\"Repeat a string the specified number of times\"}\n• [REPLACE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_replace){data-tooltip=\"Replace occurrences of a specified string\"}\n• [REVERSE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_reverse){data-tooltip=\"Reverse the characters in a string\"}\n• [RIGHT()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_right){data-tooltip=\"Return the specified rightmost number of characters\"}\n• [RLIKE](https://dev.mysql.com/doc/refman/8.0/en/regexp.html#operator_regexp){data-tooltip=\"Whether string matches regular expression\"}\n• [RPAD()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_rpad){data-tooltip=\"Append string the specified number of times\"}\n• [RTRIM()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_rtrim){data-tooltip=\"Remove trailing spaces\"}\n• [SOUNDEX()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_soundex){data-tooltip=\"Return a soundex string\"}\n• [SOUNDS LIKE](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#operator_sounds-like){data-tooltip=\"Compare sounds\"}\n• [SPACE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_space){data-tooltip=\"Return a string of the specified number of spaces\"}\n• [STRCMP()](https://dev.mysql.com/doc/refman/8.0/en/string-comparison-functions.html#function_strcmp){data-tooltip=\"Compare two strings\"}\n• [SUBSTR()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_substr){data-tooltip=\"Return the substring as specified\"}\n• [SUBSTRING()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_substring){data-tooltip=\"Return the substring as specified\"}\n• [SUBSTRING_INDEX()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_substring-index){data-tooltip=\"Return a substring from a string before the specified number of occurrences of the delimiter\"}\n• [TO_BASE64()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_to-base64){data-tooltip=\"Return the argument converted to a base-64 string\"}\n• [TRIM()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_trim){data-tooltip=\"Remove leading and trailing spaces\"}\n• [UCASE()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_ucase){data-tooltip=\"Synonym for UPPER()\"}\n• [UNHEX()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_unhex){data-tooltip=\"Return a string containing hex representation of a number\"}\n• [UPPER()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_upper){data-tooltip=\"Convert to uppercase\"}\n• [WEIGHT_STRING()](https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_weight-string){data-tooltip=\"Return the weight string for a string\"}"
+    },
+    {
+      "id": "s3-162",
+      "sectionId": "s3",
+      "title": "Date and Time",
+      "kind": "text",
+      "body": "• [ADDDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_adddate){data-tooltip=\"Add time values (intervals) to a date value\"}\n• [ADDTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_addtime){data-tooltip=\"Add time\"}\n• [CONVERT_TZ()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_convert-tz){data-tooltip=\"Convert from one time zone to another\"}\n• [CURDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_curdate){data-tooltip=\"Return the current date\"}\n• [CURRENT_DATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_current-date){data-tooltip=\"Synonyms for CURDATE()\"}\n• [CURRENT_TIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_current-time){data-tooltip=\"Synonyms for CURTIME()\"}\n• [CURRENT_TIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_current-timestamp){data-tooltip=\"Synonyms for NOW()\"}\n• [CURTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_curtime){data-tooltip=\"Return the current time\"}\n• [DATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date){data-tooltip=\"Extract the date part of a date or datetime expression\"}\n• [DATE_ADD()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-add){data-tooltip=\"Add time values (intervals) to a date value\"}\n• [DATE_FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-format){data-tooltip=\"Format date as specified\"}\n• [DATE_SUB()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_date-sub){data-tooltip=\"Subtract a time value (interval) from a date\"}\n• [DATEDIFF()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_datediff){data-tooltip=\"Subtract two dates\"}\n• [DAY()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_day){data-tooltip=\"Synonym for DAYOFMONTH()\"}\n• [DAYNAME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayname){data-tooltip=\"Return the name of the weekday\"}\n• [DAYOFMONTH()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayofmonth){data-tooltip=\"Return the day of the month (0-31)\"}\n• [DAYOFWEEK()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayofweek){data-tooltip=\"Return the weekday index of the argument\"}\n• [DAYOFYEAR()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_dayofyear){data-tooltip=\"Return the day of the year (1-366)\"}\n• [EXTRACT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_extract){data-tooltip=\"Extract part of a date\"}\n• [FROM_DAYS()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_from-days){data-tooltip=\"Convert a day number to a date\"}\n• [FROM_UNIXTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_from-unixtime){data-tooltip=\"Format Unix timestamp as a date\"}\n• [GET_FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_get-format){data-tooltip=\"Return a date format string\"}\n• [HOUR()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_hour){data-tooltip=\"Extract the hour\"}\n• [LAST_DAY](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_last-day){data-tooltip=\"Return the last day of the month for the argument\"}\n• [LOCALTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_localtime){data-tooltip=\"Synonym for NOW()\"}\n• [LOCALTIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_localtimestamp){data-tooltip=\"Synonym for NOW()\"}\n• [MAKEDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_makedate){data-tooltip=\"Create a date from the year and day of year\"}\n• [MAKETIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_maketime){data-tooltip=\"Create time from hour, minute, second\"}\n• [MICROSECOND()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_microsecond){data-tooltip=\"Return the microseconds from argument\"}\n• [MINUTE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_minute){data-tooltip=\"Return the minute from the argument\"}\n• [MONTH()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_month){data-tooltip=\"Return the month from the date passed\"}\n• [MONTHNAME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_monthname){data-tooltip=\"Return the name of the month\"}\n• [NOW()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_now){data-tooltip=\"Return the current date and time\"}\n• [PERIOD_ADD()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_period-add){data-tooltip=\"Add a period to a year-month\"}\n• [PERIOD_DIFF()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_period-diff){data-tooltip=\"Return the number of months between periods\"}\n• [QUARTER()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_quarter){data-tooltip=\"Return the quarter from a date argument\"}\n• [SEC_TO_TIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_sec-to-time){data-tooltip=\"Converts seconds to 'hh:mm:ss' format\"}\n• [SECOND()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_second){data-tooltip=\"Return the second (0-59)\"}\n• [STR_TO_DATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_str-to-date){data-tooltip=\"Convert a string to a date\"}\n• [SUBDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_subdate){data-tooltip=\"Synonym for DATE_SUB() when invoked with three arguments\"}\n• [SUBTIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_subtime){data-tooltip=\"Subtract times\"}\n• [SYSDATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_sysdate){data-tooltip=\"Return the time at which the function executes\"}\n• [TIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_time){data-tooltip=\"Extract the time portion of the expression passed\"}\n• [TIME_FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_time-format){data-tooltip=\"Format as time\"}\n• [TIME_TO_SEC()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_time-to-sec){data-tooltip=\"Return the argument converted to seconds\"}\n• [TIMEDIFF()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_timediff){data-tooltip=\"Subtract time\"}\n• [TIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_timestamp){data-tooltip=\"With a single argument, this function returns the date or datetime expression; with two arguments, the sum of the arguments\"}\n• [TIMESTAMPADD()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_timestampadd){data-tooltip=\"Add an interval to a datetime expression\"}\n• [TIMESTAMPDIFF()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_timestampdiff){data-tooltip=\"Subtract an interval from a datetime expression\"}\n• [TO_DAYS()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_to-days){data-tooltip=\"Return the date argument converted to days\"}\n• [TO_SECONDS()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_to-seconds){data-tooltip=\"Return the date or datetime argument converted to seconds since Year 0\"}\n• [UNIX_TIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_unix-timestamp){data-tooltip=\"Return a Unix timestamp\"}\n• [UTC_DATE()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_utc-date){data-tooltip=\"Return the current UTC date\"}\n• [UTC_TIME()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_utc-time){data-tooltip=\"Return the current UTC time\"}\n• [UTC_TIMESTAMP()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_utc-timestamp){data-tooltip=\"Return the current UTC date and time\"}\n• [WEEK()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_week){data-tooltip=\"Return the week number\"}\n• [WEEKDAY()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_weekday){data-tooltip=\"Return the weekday index\"}\n• [WEEKOFYEAR()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_weekofyear){data-tooltip=\"Return the calendar week of the date (1-53)\"}\n• [YEAR()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_year){data-tooltip=\"Return the year\"}\n• [YEARWEEK()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_yearweek){data-tooltip=\"Return the year and week\"}\n• [GET_FORMAT()](https://dev.mysql.com/doc/refman/8.0/en/date-and-time-functions.html#function_get-format){data-tooltip=\"'%m.%d.%Y'\"}"
+    },
+    {
+      "id": "s3-163",
+      "sectionId": "s3",
+      "title": "Numeric",
+      "kind": "text",
+      "body": "• [%, MOD](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_mod){data-tooltip=\"Modulo operator\"}\n• [*](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_times){data-tooltip=\"Multiplication operator\"}\n• [+](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_plus){data-tooltip=\"Addition operator\"}\n• [-](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_minus){data-tooltip=\"Minus operator\"}\n• [-](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_unary-minus){data-tooltip=\"Change the sign of the argument\"}\n• [/](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_divide){data-tooltip=\"Division operator\"}\n• [ABS()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_abs){data-tooltip=\"Return the absolute value\"}\n• [ACOS()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_acos){data-tooltip=\"Return the arc cosine\"}\n• [ASIN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_asin){data-tooltip=\"Return the arc sine\"}\n• [ATAN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_atan){data-tooltip=\"Return the arc tangent\"}\n• [ATAN2(), ATAN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_atan2){data-tooltip=\"Return the arc tangent of the two arguments\"}\n• [CEIL()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_ceil){data-tooltip=\"Return the smallest integer value not less than the argument\"}\n• [CEILING()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_ceiling){data-tooltip=\"Return the smallest integer value not less than the argument\"}\n• [CONV()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_conv){data-tooltip=\"Convert numbers between different number bases\"}\n• [COS()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_cos){data-tooltip=\"Return the cosine\"}\n• [COT()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_cot){data-tooltip=\"Return the cotangent\"}\n• [CRC32()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_crc32){data-tooltip=\"Compute a cyclic redundancy check value\"}\n• [DEGREES()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_degrees){data-tooltip=\"Convert radians to degrees\"}\n• [DIV](https://dev.mysql.com/doc/refman/8.0/en/arithmetic-functions.html#operator_div){data-tooltip=\"Integer division\"}\n• [EXP()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_exp){data-tooltip=\"Raise to the power of\"}\n• [FLOOR()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_floor){data-tooltip=\"Return the largest integer value not greater than the argument\"}\n• [LN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_ln){data-tooltip=\"Return the natural logarithm of the argument\"}\n• [LOG()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_log){data-tooltip=\"Return the natural logarithm of the first argument\"}\n• [LOG10()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_log10){data-tooltip=\"Return the base-10 logarithm of the argument\"}\n• [LOG2()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_log2){data-tooltip=\"Return the base-2 logarithm of the argument\"}\n• [MOD()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_mod){data-tooltip=\"Return the remainder\"}\n• [PI()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_pi){data-tooltip=\"Return the value of pi\"}\n• [POW()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_pow){data-tooltip=\"Return the argument raised to the specified power\"}\n• [POWER()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_power){data-tooltip=\"Return the argument raised to the specified power\"}\n• [RADIANS()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_radians){data-tooltip=\"Return argument converted to radians\"}\n• [RAND()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_rand){data-tooltip=\"Return a random floating-point value\"}\n• [ROUND()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_round){data-tooltip=\"Round the argument\"}\n• [SIGN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_sign){data-tooltip=\"Return the sign of the argument\"}\n• [SIN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_sin){data-tooltip=\"Return the sine of the argument\"}\n• [SQRT()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_sqrt){data-tooltip=\"Return the square root of the argument\"}\n• [TAN()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_tan){data-tooltip=\"Return the tangent of the argument\"}\n• [TRUNCATE()](https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_truncate){data-tooltip=\"Truncate to specified number of decimal places\"}"
+    },
+    {
+      "id": "s3-164",
+      "sectionId": "s3",
+      "title": "Aggregate",
+      "kind": "text",
+      "body": "• [AVG()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_avg){data-tooltip=\"Return the average value of the argument\"}\n• [BIT_AND()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_bit-and){data-tooltip=\"Return bitwise AND\"}\n• [BIT_OR()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_bit-or){data-tooltip=\"Return bitwise OR\"}\n• [BIT_XOR()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_bit-xor){data-tooltip=\"Return bitwise XOR\"}\n• [COUNT()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_count){data-tooltip=\"Return a count of the number of rows returned\"}\n• [COUNT(DISTINCT)](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_count-distinct){data-tooltip=\"Return the count of a number of different values\"}\n• [GROUP_CONCAT()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_group-concat){data-tooltip=\"Return a concatenated string\"}\n• [JSON_ARRAYAGG()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_json-arrayagg){data-tooltip=\"Return result set as a single JSON array\"}\n• [JSON_OBJECTAGG()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_json-objectagg){data-tooltip=\"Return result set as a single JSON object\"}\n• [MAX()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_max){data-tooltip=\"Return the maximum value\"}\n• [MIN()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_min){data-tooltip=\"Return the minimum value\"}\n• [STD()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_std){data-tooltip=\"Return the population standard deviation\"}\n• [STDDEV()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_stddev){data-tooltip=\"Return the population standard deviation\"}\n• [STDDEV_POP()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_stddev-pop){data-tooltip=\"Return the population standard deviation\"}\n• [STDDEV_SAMP()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_stddev-samp){data-tooltip=\"Return the sample standard deviation\"}\n• [SUM()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_sum){data-tooltip=\"Return the sum\"}\n• [VAR_POP()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_var-pop){data-tooltip=\"Return the population standard variance\"}\n• [VAR_SAMP()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_var-samp){data-tooltip=\"Return the sample variance\"}\n• [VARIANCE()](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html#function_variance){data-tooltip=\"Return the population standard variance\"}"
+    },
+    {
+      "id": "s3-165",
+      "sectionId": "s3",
+      "title": "JSON",
+      "kind": "text",
+      "body": "• [->](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#operator_json-column-path){data-tooltip=\"Return value from JSON column after evaluating path; equivalent to JSON_EXTRACT().\"}\n• [->>](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#operator_json-inline-path){data-tooltip=\"Return value from JSON column after evaluating path and unquoting the result; equivalent to JSON_UNQUOTE(JSON_EXTRACT()).\"}\n• [JSON_ARRAY()](https://dev.mysql.com/doc/refman/8.0/en/json-creation-functions.html#function_json-array){data-tooltip=\"Create JSON array\"}\n• [JSON_ARRAY_APPEND()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-array-append){data-tooltip=\"Append data to JSON document\"}\n• [JSON_ARRAY_INSERT()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-array-insert){data-tooltip=\"Insert into JSON array\"}\n• [JSON_CONTAINS()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-contains){data-tooltip=\"Whether JSON document contains specific object at path\"}\n• [JSON_CONTAINS_PATH()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-contains-path){data-tooltip=\"Whether JSON document contains any data at path\"}\n• [JSON_DEPTH()](https://dev.mysql.com/doc/refman/8.0/en/json-attribute-functions.html#function_json-depth){data-tooltip=\"Maximum depth of JSON document\"}\n• [JSON_EXTRACT()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-extract){data-tooltip=\"Return data from JSON document\"}\n• [JSON_INSERT()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-insert){data-tooltip=\"Insert data into JSON document\"}\n• [JSON_KEYS()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-keys){data-tooltip=\"Array of keys from JSON document\"}\n• [JSON_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/json-attribute-functions.html#function_json-length){data-tooltip=\"Number of elements in JSON document\"}\n• [JSON_MERGE() (deprecated)](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge){data-tooltip=\"Merge JSON documents, preserving duplicate keys. Deprecated synonym for JSON_MERGE_PRESERVE()\"}\n• [JSON_MERGE_PATCH()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-patch){data-tooltip=\"Merge JSON documents, replacing values of duplicate keys\"}\n• [JSON_MERGE_PRESERVE()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-merge-preserve){data-tooltip=\"Merge JSON documents, preserving duplicate keys\"}\n• [JSON_OBJECT()](https://dev.mysql.com/doc/refman/8.0/en/json-creation-functions.html#function_json-object){data-tooltip=\"Create JSON object\"}\n• [JSON_OVERLAPS() (introduced 8.0.17)](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-overlaps){data-tooltip=\"Compares two JSON documents, returns TRUE (1) if these have any key-value pairs or array elements in common, otherwise FALSE (0)\"}\n• [JSON_PRETTY()](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-pretty){data-tooltip=\"Print a JSON document in human-readable format\"}\n• [JSON_QUOTE()](https://dev.mysql.com/doc/refman/8.0/en/json-creation-functions.html#function_json-quote){data-tooltip=\"Quote JSON document\"}\n• [JSON_REMOVE()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-remove){data-tooltip=\"Remove data from JSON document\"}\n• [JSON_REPLACE()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-replace){data-tooltip=\"Replace values in JSON document\"}\n• [JSON_SCHEMA_VALID() (introduced 8.0.17)](https://dev.mysql.com/doc/refman/8.0/en/json-validation-functions.html#function_json-schema-valid){data-tooltip=\"Validate JSON document against JSON schema; returns TRUE/1 if document validates against schema, or FALSE/0 if it does not\"}\n• [JSON_SCHEMA_VALIDATION_REPORT() (introduced 8.0.17)](https://dev.mysql.com/doc/refman/8.0/en/json-validation-functions.html#function_json-schema-validation-report){data-tooltip=\"Validate JSON document against JSON schema; returns report in JSON format on outcome on validation including success or failure and reasons for failure\"}\n• [JSON_SEARCH()](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-search){data-tooltip=\"Path to value within JSON document\"}\n• [JSON_SET()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-set){data-tooltip=\"Insert data into JSON document\"}\n• [JSON_STORAGE_FREE()](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-free){data-tooltip=\"Freed space within binary representation of JSON column value following partial update\"}\n• [JSON_STORAGE_SIZE()](https://dev.mysql.com/doc/refman/8.0/en/json-utility-functions.html#function_json-storage-size){data-tooltip=\"Space used for storage of binary representation of a JSON document\"}\n• [JSON_TABLE()](https://dev.mysql.com/doc/refman/8.0/en/json-table-functions.html#function_json-table){data-tooltip=\"Return data from a JSON expression as a relational table\"}\n• [JSON_TYPE()](https://dev.mysql.com/doc/refman/8.0/en/json-attribute-functions.html#function_json-type){data-tooltip=\"Type of JSON value\"}\n• [JSON_UNQUOTE()](https://dev.mysql.com/doc/refman/8.0/en/json-modification-functions.html#function_json-unquote){data-tooltip=\"Unquote JSON value\"}\n• [JSON_VALID()](https://dev.mysql.com/doc/refman/8.0/en/json-attribute-functions.html#function_json-valid){data-tooltip=\"Whether JSON value is valid\"}\n• [JSON_VALUE() (introduced 8.0.21)](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#function_json-value){data-tooltip=\"Extract value from JSON document at location pointed to by path provided; return this value as VARCHAR(512) or specified type\"}\n• [MEMBER OF() (introduced 8.0.17)](https://dev.mysql.com/doc/refman/8.0/en/json-search-functions.html#operator_member-of){data-tooltip=\"Returns true (1) if first operand matches any element of JSON array passed as second operand, otherwise returns false (0)\"}"
+    },
+    {
+      "id": "s3-166",
+      "sectionId": "s3",
+      "title": "Cast",
+      "kind": "text",
+      "body": "• [BINARY](https://dev.mysql.com/doc/refman/8.0/en/cast-functions.html#operator_binary){data-tooltip=\"Cast a string to a binary string\"}\n• [CAST()](https://dev.mysql.com/doc/refman/8.0/en/cast-functions.html#function_cast){data-tooltip=\"Cast a value as a certain type\"}\n• [CONVERT()](https://dev.mysql.com/doc/refman/8.0/en/cast-functions.html#function_convert){data-tooltip=\"Cast a value as a certain type\"}"
+    },
+    {
+      "id": "s3-167",
+      "sectionId": "s3",
+      "title": "Flow Control",
+      "kind": "text",
+      "body": "• [CASE](https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html#operator_case){data-tooltip=\"Case operator\"}\n• [IF()](https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html#function_if){data-tooltip=\"If/else construct\"}\n• [IFNULL()](https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html#function_ifnull){data-tooltip=\"Null if/else construct\"}\n• [NULLIF()](https://dev.mysql.com/doc/refman/8.0/en/flow-control-functions.html#function_nullif){data-tooltip=\"Return NULL if expr1 = expr2\"}"
+    },
+    {
+      "id": "s3-168",
+      "sectionId": "s3",
+      "title": "Information",
+      "kind": "text",
+      "body": "• [BENCHMARK()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_benchmark){data-tooltip=\"Repeatedly execute an expression\"}\n• [CHARSET()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_charset){data-tooltip=\"Return the character set of the argument\"}\n• [COERCIBILITY()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_coercibility){data-tooltip=\"Return the collation coercibility value of the string argument\"}\n• [COLLATION()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_collation){data-tooltip=\"Return the collation of the string argument\"}\n• [CONNECTION_ID()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_connection-id){data-tooltip=\"Return the connection ID (thread ID) for the connection\"}\n• [CURRENT_ROLE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_current-role){data-tooltip=\"Return the current active roles\"}\n• [CURRENT_USER()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_current-user){data-tooltip=\"The authenticated user name and host name\"}\n• [DATABASE()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_database){data-tooltip=\"Return the default (current) database name\"}\n• [FOUND_ROWS()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_found-rows){data-tooltip=\"For a SELECT with a LIMIT clause, the number of rows that would be returned were there no LIMIT clause\"}\n• [ICU_VERSION()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_icu-version){data-tooltip=\"ICU library version\"}\n• [LAST_INSERT_ID()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_last-insert-id){data-tooltip=\"Value of the AUTOINCREMENT column for the last INSERT\"}\n• [ROLES_GRAPHML()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_roles-graphml){data-tooltip=\"Return a GraphML document representing memory role subgraphs\"}\n• [ROW_COUNT()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_row-count){data-tooltip=\"The number of rows updated\"}\n• [SCHEMA()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_schema){data-tooltip=\"Synonym for DATABASE()\"}\n• [SESSION_USER()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_session-user){data-tooltip=\"Synonym for USER()\"}\n• [SYSTEM_USER()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_system-user){data-tooltip=\"Synonym for USER()\"}\n• [USER()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_user){data-tooltip=\"The user name and host name provided by the client\"}\n• [VERSION()](https://dev.mysql.com/doc/refman/8.0/en/information-functions.html#function_version){data-tooltip=\"Return a string that indicates the MySQL server version\"}"
+    },
+    {
+      "id": "s3-169",
+      "sectionId": "s3",
+      "title": "Encryption and Compression",
+      "kind": "text",
+      "body": "• [AES_DECRYPT()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_aes-decrypt){data-tooltip=\"Decrypt using AES\"}\n• [AES_ENCRYPT()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_aes-encrypt){data-tooltip=\"Encrypt using AES\"}\n• [COMPRESS()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_compress){data-tooltip=\"Return result as a binary string\"}\n• [MD5()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_md5){data-tooltip=\"Calculate MD5 checksum\"}\n• [RANDOM_BYTES()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_random-bytes){data-tooltip=\"Return a random byte vector\"}\n• [SHA1(), SHA()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_sha1){data-tooltip=\"Calculate an SHA-1 160-bit checksum\"}\n• [SHA2()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_sha2){data-tooltip=\"Calculate an SHA-2 checksum\"}\n• [STATEMENT_DIGEST()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_statement-digest){data-tooltip=\"Compute statement digest hash value\"}\n• [STATEMENT_DIGEST_TEXT()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_statement-digest-text){data-tooltip=\"Compute normalized statement digest\"}\n• [UNCOMPRESS()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_uncompress){data-tooltip=\"Uncompress a string compressed\"}\n• [UNCOMPRESSED_LENGTH()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_uncompressed-length){data-tooltip=\"Return the length of a string before compression\"}\n• [VALIDATE_PASSWORD_STRENGTH()](https://dev.mysql.com/doc/refman/8.0/en/encryption-functions.html#function_validate-password-strength){data-tooltip=\"Determine strength of password\"}"
+    },
+    {
+      "id": "s3-170",
+      "sectionId": "s3",
+      "title": "Locking",
+      "kind": "text",
+      "body": "• [GET_LOCK()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_get-lock){data-tooltip=\"Get a named lock\"}\n• [IS_FREE_LOCK()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_is-free-lock){data-tooltip=\"Whether the named lock is free\"}\n• [IS_USED_LOCK()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_is-used-lock){data-tooltip=\"Whether the named lock is in use; return connection identifier if true\"}\n• [RELEASE_ALL_LOCKS()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_release-all-locks){data-tooltip=\"Release all current named locks\"}\n• [RELEASE_LOCK()](https://dev.mysql.com/doc/refman/8.0/en/locking-functions.html#function_release-lock){data-tooltip=\"Release the named lock\"}"
+    },
+    {
+      "id": "s3-171",
+      "sectionId": "s3",
+      "title": "Bit",
+      "kind": "text",
+      "body": "• [&](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_bitwise-and){data-tooltip=\"Bitwise AND\"}\n• [>>](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_right-shift){data-tooltip=\"Right shift\"}\n• [<<](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_left-shift){data-tooltip=\"Left shift\"}\n• [^](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_bitwise-xor){data-tooltip=\"Bitwise XOR\"}\n• [BIT_COUNT()](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#function_bit-count){data-tooltip=\"Return the number of bits that are set\"}\n• [|](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_bitwise-or){data-tooltip=\"Bitwise OR\"}\n• [~](https://dev.mysql.com/doc/refman/8.0/en/bit-functions.html#operator_bitwise-invert){data-tooltip=\"Bitwise inversion\"}"
+    },
+    {
+      "id": "s3-172",
+      "sectionId": "s3",
+      "title": "Miscellaneous",
+      "kind": "text",
+      "body": "• [ANY_VALUE()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_any-value){data-tooltip=\"Suppress ONLY_FULL_GROUP_BY value rejection\"}\n• [BIN_TO_UUID()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_bin-to-uuid){data-tooltip=\"Convert binary UUID to string\"}\n• [DEFAULT()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_default){data-tooltip=\"Return the default value for a table column\"}\n• [GROUPING()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_grouping){data-tooltip=\"Distinguish super-aggregate ROLLUP rows from regular rows\"}\n• [INET_ATON()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_inet-aton){data-tooltip=\"Return the numeric value of an IP address\"}\n• [INET_NTOA()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_inet-ntoa){data-tooltip=\"Return the IP address from a numeric value\"}\n• [INET6_ATON()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_inet6-aton){data-tooltip=\"Return the numeric value of an IPv6 address\"}\n• [INET6_NTOA()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_inet6-ntoa){data-tooltip=\"Return the IPv6 address from a numeric value\"}\n• [IS_IPV4()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-ipv4){data-tooltip=\"Whether argument is an IPv4 address\"}\n• [IS_IPV4_COMPAT()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-ipv4-compat){data-tooltip=\"Whether argument is an IPv4-compatible address\"}\n• [IS_IPV4_MAPPED()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-ipv4-mapped){data-tooltip=\"Whether argument is an IPv4-mapped address\"}\n• [IS_IPV6()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-ipv6){data-tooltip=\"Whether argument is an IPv6 address\"}\n• [IS_UUID()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_is-uuid){data-tooltip=\"Whether argument is a valid UUID\"}\n• [MASTER_POS_WAIT()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_master-pos-wait){data-tooltip=\"Block until the replica has read and applied all updates up to the specified position\"}\n• [NAME_CONST()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_name-const){data-tooltip=\"Cause the column to have the given name\"}\n• [SLEEP()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_sleep){data-tooltip=\"Sleep for a number of seconds\"}\n• [UUID()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid){data-tooltip=\"Return a Universal Unique Identifier (UUID)\"}\n• [UUID_SHORT()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid-short){data-tooltip=\"Return an integer-valued universal identifier\"}\n• [UUID_TO_BIN()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_uuid-to-bin){data-tooltip=\"Convert string UUID to binary\"}\n• [VALUES()](https://dev.mysql.com/doc/refman/8.0/en/miscellaneous-functions.html#function_values){data-tooltip=\"Define the values to be used during an INSERT\"}"
+    },
+    {
+      "id": "s4-173",
+      "sectionId": "s4",
+      "title": "Also see",
+      "kind": "text",
+      "body": "• [Regex in MySQL](/regex#regex-in-mysql) _(cheatsheets.zip)_"
     }
   ],
   "source": {
@@ -1007,7 +1353,6 @@
     "path": "source/_posts/mysql.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/mysql.md",
-    "generatedAt": "2025-12-16T07:36:11.736Z",
     "lang": "en",
     "mode": "local"
   }

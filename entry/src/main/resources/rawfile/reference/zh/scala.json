@@ -1,11 +1,33 @@
 {
   "id": "scala",
-  "title": "scala",
+  "name": "Scala",
+  "title": "[![Repo Dependents](https://badgen.net/github/dependents-repo/scala/scala)](https://github.com/scala/scala/network/dependents)",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/scala.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 2
+    },
+    {
+      "id": "s2",
+      "title": "控制结构",
+      "startIndex": 7
+    },
+    {
+      "id": "s3",
+      "title": "模式匹配",
+      "startIndex": 18
+    },
+    {
+      "id": "s4",
+      "title": "面向对象",
+      "startIndex": 25
     }
   ],
   "cards": [
@@ -14,374 +36,339 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Scala\n==="
+      "body": "[![Repo Dependents](https://badgen.net/github/dependents-repo/scala/scala)](https://github.com/scala/scala/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/scala/scala)"
     },
     {
       "id": "intro-1",
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "[![Repo Dependents](https://badgen.net/github/dependents-repo/scala/scala)](https://github.com/scala/scala/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/scala/scala)"
-    },
-    {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "本速查表可以用于快速地查找 [Scala](https://github.com/scala/scala) 语法结构\n<!--rehype:style=padding-top: 12px;-->"
     },
     {
-      "id": "intro-3",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n-----"
-    },
-    {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "介绍",
       "kind": "text",
       "body": "• [Scala](https://github.com/scala/scala) 官网  _(github.com)_"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "函数",
       "kind": "code",
       "lang": "scala",
       "code": "def f(x: Int) = { x*x }  // ✅ GOOD\ndef f(x: Int)   { x*x }   // ❌ BAD 定义函数,潜在风险: \n// 不加“=”号将会是一段返回Unit类型的过程，\n// 这将会导致意想不到的错误。\n\ndef f(x: Any) = println(x)  // ✅ GOOD\ndef f(x) = println(x)       // ❌ BAD 定义函数 语法错误: 每个参数都需要指定类型。\n\ntype R = Double    // 类型别名\ndef f(x: R) vs.\ndef f(x: => R)     // 传值调用 传名调用 （惰性参数）\n(x:R) => x*x       // 匿名函数\n(1 to 5).map(_*2) vs.     // 匿名函数: 下划线是参数的占位符\n(1 to 5).reduceLeft( _+_ )\n(1 to 5).map( x => x*x )  // 匿名函数: 必须命名以后才可以多次使用同一个参数\n\n(1 to 5).map(2*) // ✅ GOOD\n(1 to 5).map(*2) // ❌ BAD 匿名函数: 绑定中缀方法，明智的做法是2*_。\n\n\n(1 to 5).map { x => val y=x*2; println(y); y } // 匿名函数: 代码块风格，最后一个表达式作为返回值\n(1 to 5) filter {_%2 == 0} map {_*2}           // 匿名函数: 管道风格（或者用圆括号）\n\n// 匿名函数: 要传入多个代码块的话，需要使用花括号。\ndef compose(g:R=>R, h:R=>R) = (x:R) => g(h(x))\nval f = compose({_*2}, {_-1})\n\nval zscore = (mean:R, sd:R) => (x:R) => (x-mean)/sd // 柯里化, 显然的语法。\ndef zscore(mean:R, sd:R) = (x:R) => (x-mean)/sd // 柯里化, 显然的语法。\ndef zscore(mean:R, sd:R)(x:R) = (x-mean)/sd  // 柯里化，语法糖。然后:)\n\nval normer = zscore(7, 0.4) _  // 需要在尾部加下划线来变成偏函数（只对语法糖版本适用）\ndef mapmake[T](g:T=>T)(seq: List[T]) = seq.map(g) // 泛型\n\n5.+(3); 5 + 3\n(1 to 5) map (_*2) // 中缀语法糖\ndef sum(args: Int*) = args.reduceLeft(_+_) // 变长参数"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "变量",
       "kind": "code",
       "lang": "scala",
       "code": "var x = 5         // 可变变量      \nval x = 5         // ✅ GOOD\nx=6               // ❌ BAD 常量\nvar x: Double = 5 // 显式类型"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "包",
       "kind": "code",
       "lang": "scala",
       "code": "import scala.collection._ // 通配符导入\nimport scala.collection.Vector\n// 选择性导入\nimport scala.collection.{Vector, Sequence}\n// 重命名导入\nimport scala.collection.{Vector => Vec28}\n// 导入java.util包里除Date之外的一切\nimport java.util.{Date => _, _}\n// 文件开头的包名 pkg\npackage pkg { ... } // 声明这是一个包"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "数据结构",
       "kind": "code",
       "lang": "scala",
       "code": "(1,2,3) // 元组字面量 (Tuple3)\n// 解构绑定：通过模式匹配来解构元组。\nvar (x,y,z) = (1,2,3)\n// ❌ BAD 潜在风险：整个元组被赋值给了每一个变量\nvar x,y,z = (1,2,3)\n// 列表 (不可变)\nvar xs = List(1,2,3)\nxs(2) // 用括号索引 (slides)\n1 :: List(2,3) // Cons（构成）\n1 to 5 /* 等价于 => */ 1 until 6\n// Range类型（语法糖）\n1 to 10 by 2\n// Unit类型的唯一成员 (相当于 C/Java 里的void)\n() (空括号)"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
-      "title": "数据结构",
-      "kind": "text",
-      "body": "控制结构\n---"
-    },
-    {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s2-7",
+      "sectionId": "s2",
       "title": "条件",
       "kind": "code",
       "lang": "scala",
       "code": "if (check) happy else sad"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s2-8",
+      "sectionId": "s2",
       "title": "条件（语法糖）",
       "kind": "code",
       "lang": "scala",
       "code": "if (check) happy same as\nif (check) happy else ()"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s2-9",
+      "sectionId": "s2",
       "title": "while 循环",
       "kind": "code",
       "lang": "scala",
       "code": "while (x < 5) { println(x); x += 1}"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s2-10",
+      "sectionId": "s2",
       "title": "do while 循环",
       "kind": "code",
       "lang": "scala",
       "code": "do { println(x); x += 1} while (x < 5)"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s2-11",
+      "sectionId": "s2",
       "title": "break. (slides)",
       "kind": "code",
       "lang": "scala",
       "code": "import scala.util.control.Breaks._\nbreakable {\n  for (x <- xs) {\n    if (Math.random < 0.1) break\n  }\n}"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s2-12",
+      "sectionId": "s2",
       "title": "for 表达式: filter/map",
       "kind": "code",
       "lang": "scala",
       "code": "for (x <- xs if x%2 == 0) yield x*10\n// 等价于\nxs.filter(_%2 == 0).map(_*10)"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s2-13",
+      "sectionId": "s2",
       "title": "for 表达式: 解构绑定",
       "kind": "code",
       "lang": "scala",
       "code": "for ((x,y) <- xs zip ys) yield x*y\n// 等价于\n(xs zip ys) map { case (x,y) => x*y }"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s2-14",
+      "sectionId": "s2",
       "title": "for 表达式: 叉乘",
       "kind": "code",
       "lang": "scala",
       "code": "for (x <- xs; y <- ys) yield x*y\n// 等价于\nxs flatMap {x => ys map {y => x*y}}"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s2-15",
+      "sectionId": "s2",
       "title": "for 表达式: 不可避免的格式",
       "kind": "code",
       "lang": "scala",
       "code": "for (x <- xs; y <- ys) {\n   println(\"%d/%d = %.1f\".format(x, y, x/y.toFloat))\n}"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s2-16",
+      "sectionId": "s2",
       "title": "for 表达式: 包括上边界的遍历",
       "kind": "code",
       "lang": "scala",
       "code": "for (i <- 1 to 5) {\n  println(i)\n}"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s2-17",
+      "sectionId": "s2",
       "title": "for 表达式: 忽略上边界的遍历",
       "kind": "code",
       "lang": "scala",
       "code": "for (i <- 1 until 5) {\n  println(i)\n}"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
-      "title": "for 表达式: 忽略上边界的遍历",
-      "kind": "text",
-      "body": "模式匹配\n---"
-    },
-    {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s3-18",
+      "sectionId": "s3",
       "title": "在函数的参数中使用模式匹配",
       "kind": "code",
       "lang": "scala",
       "code": "// ✅ GOOD\n(xs zip ys) map { case (x,y) => x*y }\n// ❌ BAD\n(xs zip ys) map( (x,y) => x*y )"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s3-19",
+      "sectionId": "s3",
       "title": "可以匹配任何Int类型值的名称",
       "kind": "code",
       "lang": "scala",
       "code": "val v42 = 42\nSome(3) match {\n  case Some(v42) => println(\"42\")\n  case _ => println(\"Not 42\")\n}"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s3-20",
+      "sectionId": "s3",
       "title": "可以匹配任何Int类型值的名称",
       "kind": "text",
       "body": "❌ BAD: “v42” 被解释为可以匹配任何Int类型值的名称，打印输出”42”"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s3-21",
+      "sectionId": "s3",
       "title": "可以匹配任何Int类型值的名称",
       "kind": "code",
       "lang": "scala",
       "code": "val v42 = 42\nSome(3) match {\n  case Some(`v42`) => println(\"42\")\n  case _ => println(\"Not 42\")\n}"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s3-22",
+      "sectionId": "s3",
       "title": "可以匹配任何Int类型值的名称",
       "kind": "text",
       "body": "✅ GOOD: 有反引号的 “`v42`” 被解释为已经存在的 `val v42`，所以输出的是 “Not 42”."
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s3-23",
+      "sectionId": "s3",
       "title": "可以匹配任何Int类型值的名称",
       "kind": "code",
       "lang": "scala",
       "code": "val UppercaseVal = 42\nSome(3) match {\ncase Some(UppercaseVal) => println(\"42\")\n  case _ => println(\"Not 42\")\n}"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s3-24",
+      "sectionId": "s3",
       "title": "可以匹配任何Int类型值的名称",
       "kind": "text",
       "body": "✅ GOOD: UppercaseVal 被视作已经存在的 val，而不是一个新的模式变量，因为它是以大写字母开头的，所以 `UppercaseVal` 所包含的值（42）和检查的值（3）不匹配，输出”Not 42”"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
-      "title": "可以匹配任何Int类型值的名称",
-      "kind": "text",
-      "body": "面向对象\n----"
-    },
-    {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s4-25",
+      "sectionId": "s4",
       "title": "构造器参数 - 私有",
       "kind": "code",
       "lang": "scala",
       "code": "class C(x: R) same as\nclass C(private val x: R)\nvar c = new C(4)"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s4-26",
+      "sectionId": "s4",
       "title": "构造器参数 - 公有",
       "kind": "code",
       "lang": "scala",
       "code": "class C(val x: R)\nvar c = new C(4)\nc.x"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s4-27",
+      "sectionId": "s4",
       "title": "构造函数就是类的主体",
       "kind": "code",
       "lang": "scala",
       "code": "class C(var x: R) {\n  assert(x > 0, \"positive please\")\n  var y = x\n  val readonly = 5\n  private var secret = 1\n  def this = this(42)\n}"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s4-28",
+      "sectionId": "s4",
       "title": "匿名类",
       "kind": "code",
       "lang": "scala",
       "code": "new{ ... }"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s4-29",
+      "sectionId": "s4",
       "title": "定义一个抽象类",
       "kind": "code",
       "lang": "scala",
       "code": "abstract class D { ... } // 不可创建"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s4-30",
+      "sectionId": "s4",
       "title": "定义一个继承子类",
       "kind": "code",
       "lang": "scala",
       "code": "class C extends D { ... }"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s4-31",
+      "sectionId": "s4",
       "title": "继承与构造器参数",
       "kind": "code",
       "lang": "scala",
       "code": "class D(var x: R)\nclass C(x: R) extends D(x)"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s4-32",
+      "sectionId": "s4",
       "title": "继承与构造器参数",
       "kind": "text",
       "body": "愿望清单: 默认自动传参"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s4-33",
+      "sectionId": "s4",
       "title": "定义一个单例",
       "kind": "code",
       "lang": "scala",
       "code": "object O extends D { ... }"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s4-34",
+      "sectionId": "s4",
       "title": "定义一个单例",
       "kind": "text",
       "body": "和模块一样"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s4-35",
+      "sectionId": "s4",
       "title": "特质",
       "kind": "code",
       "lang": "scala",
       "code": "trait T { ... }\nclass C extends T { ... }\nclass C extends D with T { ... }"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s4-36",
+      "sectionId": "s4",
       "title": "特质",
       "kind": "text",
       "body": "带有实现的接口，没有构造参数"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s4-37",
+      "sectionId": "s4",
       "title": "多个特质",
       "kind": "code",
       "lang": "scala",
       "code": "trait T1; trait T2\nclass C extends T1 with T2\nclass C extends D with T1 with T2"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s4-38",
+      "sectionId": "s4",
       "title": "必须声明覆盖该方法",
       "kind": "code",
       "lang": "scala",
       "code": "class C extends D { override def f = ...}"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s4-39",
+      "sectionId": "s4",
       "title": "创建对象",
       "kind": "code",
       "lang": "scala",
       "code": "new java.io.File(\"f\")\nnew List[Int]  // ✅ GOOD\nList(1,2,3)    // ❌ BAD"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s4-40",
+      "sectionId": "s4",
       "title": "类字面量",
       "kind": "code",
       "lang": "scala",
       "code": "classOf[String]"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s4-41",
+      "sectionId": "s4",
       "title": "类型检查 (运行时)",
       "kind": "code",
       "lang": "scala",
       "code": "x.isInstanceOf[String]"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s4-42",
+      "sectionId": "s4",
       "title": "类型强制转换 (运行时)",
       "kind": "code",
       "lang": "scala",
       "code": "x.asInstanceOf[String]"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s4-43",
+      "sectionId": "s4",
       "title": "归属 (编译时)",
       "kind": "code",
       "lang": "scala",
@@ -393,7 +380,6 @@
     "path": "docs/scala.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/scala.md",
-    "generatedAt": "2025-12-16T07:36:11.423Z",
     "lang": "zh",
     "mode": "local"
   }

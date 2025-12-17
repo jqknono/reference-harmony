@@ -1,11 +1,53 @@
 {
   "id": "canvas",
-  "title": "canvas",
+  "name": "HTML Canvas 备忘清单",
+  "title": "这份 HTML Canvas 快速参考备忘单列出了常见的 HTML5 Canvas 设计标签，以易读的格式呈现。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/canvas.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "绘制形状",
+      "startIndex": 3
+    },
+    {
+      "id": "s3",
+      "title": "路径",
+      "startIndex": 4
+    },
+    {
+      "id": "s4",
+      "title": "贝塞尔曲线和二次曲线",
+      "startIndex": 7
+    },
+    {
+      "id": "s5",
+      "title": "变换",
+      "startIndex": 11
+    },
+    {
+      "id": "s6",
+      "title": "渐变",
+      "startIndex": 14
+    },
+    {
+      "id": "s7",
+      "title": "合成",
+      "startIndex": 18
+    },
+    {
+      "id": "s8",
+      "title": "参考阅读",
+      "startIndex": 21
     }
   ],
   "cards": [
@@ -14,235 +56,172 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "HTML Canvas 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "这份 HTML Canvas 快速参考备忘单列出了常见的 HTML5 Canvas 设计标签，以易读的格式呈现。"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n---\n<!--rehype:body-class=cols-4-->"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "基本设置",
       "kind": "code",
       "lang": "html",
       "code": "<!DOCTYPE html>\n<html>\n  <head>\n    <title>Canvas 示例</title>\n  </head>\n  <body>\n    <canvas id=\"myCanvas\" width=\"500\" height=\"400\"\n      style=\"border:1px solid #000000;\">\n    </canvas>\n    <script src=\"script.js\"></script>\n  </body>\n</html>"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "获取上下文",
       "kind": "code",
       "lang": "js",
       "code": "const canvas = document.getElementById(\"myCanvas\");\n\nconst ctx = canvas.getContext(\"2d\");"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
-      "title": "获取上下文",
-      "kind": "text",
-      "body": "绘制形状\n---"
-    },
-    {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s2-3",
+      "sectionId": "s2",
       "title": "矩形",
       "kind": "code",
       "lang": "js",
       "code": "ctx.fillStyle = \"red\";\nctx.fillRect(10, 10, 150, 100); // x, y, 宽度, 高度\n\nctx.strokeStyle = \"blue\";\nctx.lineWidth = 5;\nctx.strokeRect(200, 10, 150, 100); // x, y, 宽度, 高度\n\nctx.clearRect(15, 15, 30, 30); // x, y, 宽度, 高度"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
-      "title": "矩形",
-      "kind": "text",
-      "body": "路径\n---"
-    },
-    {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s3-4",
+      "sectionId": "s3",
       "title": "线条",
       "kind": "code",
       "lang": "js",
       "code": "ctx.beginPath();\nctx.moveTo(50, 50); // 起始点\nctx.lineTo(200, 50); // 结束点\nctx.lineTo(200, 200); // 下一个线条结束点\nctx.closePath(); // 将结束点连接到起始点\nctx.stroke();"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s3-5",
+      "sectionId": "s3",
       "title": "圆形",
       "kind": "code",
       "lang": "js",
       "code": "ctx.beginPath();\n// x, y, 半径, 起始角度, 结束角度\nctx.arc(150, 150, 75, 0, 2 * Math.PI);\nctx.fillStyle = \"green\";\nctx.fill();\nctx.stroke();"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s3-6",
+      "sectionId": "s3",
       "title": "弧",
       "kind": "code",
       "lang": "js",
       "code": "ctx.beginPath();\n// x, y, 半径, 起始角度, 结束角度\nctx.arc(150, 150, 75, 0, Math.PI);\nctx.stroke();"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
-      "title": "弧",
-      "kind": "text",
-      "body": "贝塞尔曲线和二次曲线\n---"
-    },
-    {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s4-7",
+      "sectionId": "s4",
       "title": "二次曲线",
       "kind": "code",
       "lang": "js",
       "code": "ctx.beginPath();\nctx.moveTo(50, 250);\n// cpX, cpY, 终点X, 终点Y\nctx.quadraticCurveTo(200, 100, 400, 250); \nctx.stroke();"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s4-8",
+      "sectionId": "s4",
       "title": "贝塞尔曲线",
       "kind": "code",
       "lang": "js",
       "code": "ctx.beginPath();\nctx.moveTo(50, 300);\n// cp1X, cp1Y, cp2X, cp2Y, 终点X, 终点Y\nctx.bezierCurveTo(150, 100, 350, 500, 450, 300); \nctx.stroke();"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s4-9",
+      "sectionId": "s4",
       "title": "文本",
       "kind": "code",
       "lang": "js",
       "code": "ctx.font = \"30px Arial\";\nctx.fillStyle = \"black\";\n// 文本, x, y\nctx.fillText(\"Hello Canvas\", 10, 50); \n// 文本, x, y\nctx.strokeText(\"Hello Canvas\", 10, 100);"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s4-10",
+      "sectionId": "s4",
       "title": "图像",
       "kind": "code",
       "lang": "js",
       "code": "const img = new Image();\nimg.src = \"path/to/image.jpg\";\nimg.onload = () => {\n  ctx.drawImage(img, 10, 10); // img, x, y\n  ctx.drawImage(img, 50, 50, 100, 100); // img, x, y, 宽度, 高度\n  ctx.drawImage(img, 100, 100, 100, 100, 150, 150, 200, 200); // img, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight\n};"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
-      "title": "图像",
-      "kind": "text",
-      "body": "变换\n---"
-    },
-    {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s5-11",
+      "sectionId": "s5",
       "title": "平移",
       "kind": "code",
       "lang": "js",
       "code": "ctx.translate(100, 100); // x, y\nctx.fillRect(0, 0, 50, 50);"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s5-12",
+      "sectionId": "s5",
       "title": "旋转",
       "kind": "code",
       "lang": "js",
       "code": "// 角度（以弧度为单位）\nctx.rotate((Math.PI / 180) * 45);\nctx.fillRect(100, 100, 50, 50);"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s5-13",
+      "sectionId": "s5",
       "title": "缩放",
       "kind": "code",
       "lang": "js",
       "code": "ctx.scale(2, 2); // x, y\nctx.fillRect(50, 50, 50, 50);"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
-      "title": "缩放",
-      "kind": "text",
-      "body": "渐变\n---"
-    },
-    {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s6-14",
+      "sectionId": "s6",
       "title": "线性渐变",
       "kind": "code",
       "lang": "js",
       "code": "const linearGradient = ctx.createLinearGradient(0, 0, 200, 0); // x0, y0, x1, y1\nlinearGradient.addColorStop(0, \"red\");\nlinearGradient.addColorStop(1, \"blue\");\nctx.fillStyle = linearGradient;\nctx.fillRect(10, 10, 200, 100);"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s6-15",
+      "sectionId": "s6",
       "title": "径向渐变",
       "kind": "code",
       "lang": "js",
       "code": "const radialGradient = ctx.createRadialGradient(75, 50, 5, 90, 60, 100); // x0, y0, r0, x1, y1, r1\nradialGradient.addColorStop(0, \"red\");\nradialGradient.addColorStop(1, \"blue\");\nctx.fillStyle = radialGradient;\nctx.fillRect(10, 10, 200, 100);"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s6-16",
+      "sectionId": "s6",
       "title": "图案",
       "kind": "code",
       "lang": "js",
       "code": "const img = new Image();\nimg.src = \"path/to/image.jpg\";\nimg.onload = () => {\n  // 'repeat', 'repeat-x', 'repeat-y', 'no-repeat'\n  const pattern = ctx.createPattern(img, \"repeat\");\n  ctx.fillStyle = pattern;\n  ctx.fillRect(0, 0, 300, 300);\n};"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s6-17",
+      "sectionId": "s6",
       "title": "阴影",
       "kind": "code",
       "lang": "js",
       "code": "ctx.shadowColor = \"rgba(0, 0, 0, 0.5)\";\nctx.shadowBlur = 10;\nctx.shadowOffsetX = 5;\nctx.shadowOffsetY = 5;\n\nctx.fillStyle = \"red\";\nctx.fillRect(100, 100, 100, 100);"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
-      "title": "阴影",
-      "kind": "text",
-      "body": "合成\n---"
-    },
-    {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s7-18",
+      "sectionId": "s7",
       "title": "全局透明度",
       "kind": "code",
       "lang": "js",
       "code": "ctx.globalAlpha = 0.5;\nctx.fillStyle = \"red\";\nctx.fillRect(100, 100, 100, 100);\n\nctx.fillStyle = \"blue\";\nctx.fillRect(150, 150, 100, 100);"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s7-19",
+      "sectionId": "s7",
       "title": "全局合成操作",
       "kind": "code",
       "lang": "js",
       "code": "ctx.globalCompositeOperation = \"source-over\"; // 默认\nctx.fillStyle = \"red\";\nctx.fillRect(100, 100, 100, 100);\n\nctx.globalCompositeOperation = \"destination-over\";\nctx.fillStyle = \"blue\";\nctx.fillRect(150, 150, 100, 100);"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s7-20",
+      "sectionId": "s7",
       "title": "动画",
       "kind": "code",
       "lang": "js",
       "code": "let x = 0;\nfunction draw() {\n  ctx.clearRect(0, 0, canvas.width, canvas.height);\n  ctx.fillStyle = \"blue\";\n  ctx.fillRect(x, 100, 50, 50);\n  x += 2;\n  requestAnimationFrame(draw);\n}\ndraw();"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
-      "title": "动画",
-      "kind": "text",
-      "body": "参考阅读\n---"
-    },
-    {
-      "id": "intro-30",
-      "sectionId": "intro",
-      "title": "动画",
+      "id": "s8-21",
+      "sectionId": "s8",
+      "title": "参考阅读",
       "kind": "text",
       "body": "• [MDN 文档](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)"
     }
@@ -252,7 +231,6 @@
     "path": "docs/canvas.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/canvas.md",
-    "generatedAt": "2025-12-16T07:36:11.132Z",
     "lang": "zh",
     "mode": "local"
   }

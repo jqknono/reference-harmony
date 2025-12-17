@@ -1,11 +1,48 @@
 {
   "id": "elixir",
-  "title": "elixir",
+  "name": "Elixir 备忘清单",
+  "title": "提供基本语法和方法的 Elixir 快速参考备忘单。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/elixir.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "集合",
+      "startIndex": 43
+    },
+    {
+      "id": "s3",
+      "title": "模式匹配",
+      "startIndex": 60
+    },
+    {
+      "id": "s4",
+      "title": "控制语句",
+      "startIndex": 67
+    },
+    {
+      "id": "s5",
+      "title": "函数",
+      "startIndex": 84
+    },
+    {
+      "id": "s6",
+      "title": "Enumerables 与 Streams",
+      "startIndex": 118
+    },
+    {
+      "id": "s7",
+      "title": "另见",
+      "startIndex": 125
     }
   ],
   "cards": [
@@ -14,994 +51,952 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Elixir 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "提供基本语法和方法的 Elixir 快速参考备忘单。"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n------"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "安装 Elixir",
       "kind": "text",
       "body": "Elixir 自带了 `iex` 这样一个交互 shell，可以随时计算 Elixir 表达式的值，运行`iex`命令，继续输入几个简单的表达式试试："
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "安装 Elixir",
       "kind": "code",
       "lang": "shell",
       "code": "iex 2+3\n5\niex 2+3 == 5\ntrue\niex String.length(\"快速的狐狸跳过了懒惰的狗\")\n43"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "安装 Elixir",
       "kind": "text",
       "body": "每个操作系统的文档可以在[官网](https://elixir-lang.org)网站上 [Installing Elixir](http://elixir-lang.org/install.html) 部分找到"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "hello.exs",
       "kind": "code",
       "lang": "elixir",
       "code": "IO.puts(\"Hello world from Elixir\")"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "hello.exs",
       "kind": "text",
       "body": "Elixir 运行命令"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "hello.exs",
       "kind": "code",
       "lang": "shell",
       "code": "$ elixir hello.exs"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "基本类型",
       "kind": "text",
       "body": "Elixir 支持多种基本类型：整数、浮点、布尔值、原子和字符串。其他数据类型，如列表和元组"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "基本类型",
       "kind": "code",
       "lang": "elixir",
       "code": "# integer 整数\niex> 1          \n# integer（支持2进制、8进制和16进制的整数）\niex> 0x1F       \n# float\niex> 1.0        \n# boolean\niex> true       \n# atom / symbol\niex> :atom      \n# string\niex> \"elixir\"   \n# list\niex> [1, 2, 3]  \n# tuple\niex> {1, 2, 3}"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "注释",
       "kind": "code",
       "lang": "elixir",
       "code": "# 这是一个单行注释"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "字符串插值与拼接",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> name = \"Sean\"\niex> \"Hello #{name}\"\n\"Hello Sean\"\n\niex> \"Hello \" <> \"world!\"\n\"Hello world!\""
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "变量和模式匹配",
       "kind": "code",
       "lang": "elixir",
       "code": "x = 1\n# => x 现在等于 1\n\n{a, b} = {1, 2}\n# => a 等于 1，b 等于 2"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "变量和模式匹配",
       "kind": "text",
       "body": "在 Elixir 中，使用 `=` 来进行赋值操作，但实际上是模式匹配。左边是模式，右边是值"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "原子（Atoms）",
       "kind": "code",
       "lang": "elixir",
       "code": ":ok"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "原子（Atoms）",
       "kind": "text",
       "body": "原子是常量，它们的名称就是它们的值"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "列表（Lists）",
       "kind": "code",
       "lang": "elixir",
       "code": "list = [1, 2, 3]"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "元组（Tuples）",
       "kind": "code",
       "lang": "elixir",
       "code": "tuple = {:ok, \"value\"}"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "函数定义",
       "kind": "code",
       "lang": "elixir",
       "code": "defmodule MyModule do\n  def my_function(parameter) do\n    # 函数体\n  end\nend"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "匿名函数",
       "kind": "code",
       "lang": "elixir",
       "code": "add = fn a, b -> a + b end"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "控制结构",
       "kind": "text",
       "body": "`if/else`"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "控制结构",
       "kind": "code",
       "lang": "elixir",
       "code": "if x > 0 do\n  \"Positive\"\nelse\n  \"Non-positive\"\nend"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "控制结构",
       "kind": "text",
       "body": "`case`"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "控制结构",
       "kind": "code",
       "lang": "elixir",
       "code": "case {1, 2} do\n  {1, x} -> \"Matched #{x}\"\n  _ -> \"Not matched\"\nend"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s1-23",
+      "sectionId": "s1",
       "title": "控制结构",
       "kind": "text",
       "body": "`cond`"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s1-24",
+      "sectionId": "s1",
       "title": "控制结构",
       "kind": "code",
       "lang": "elixir",
       "code": "cond do\n  x > 2 -> \"Greater than 2\"\n  x == 2 -> \"Equal to 2\"\n  true -> \"Less than 2\"\nend"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s1-25",
+      "sectionId": "s1",
       "title": "基本算术",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> 1 + 2\n3\niex> 5 * 5\n25\niex> 10 / 2\n5.0"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s1-26",
+      "sectionId": "s1",
       "title": "基本算术",
       "kind": "text",
       "body": "运算符`/`总是返回一个 float。如果你想做整数除法或得到除法余数，你可以调用 div 和 rem 函数:"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s1-27",
+      "sectionId": "s1",
       "title": "基本算术",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> div(10, 2)\n5"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s1-28",
+      "sectionId": "s1",
       "title": "基本算术",
       "kind": "text",
       "body": "允许在调用需要一个或多个参数的函数时删除括号"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s1-29",
+      "sectionId": "s1",
       "title": "基本算术",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> div 10, 2 \n5\niex> rem 10, 3\n1"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s1-30",
+      "sectionId": "s1",
       "title": "基本算术",
       "kind": "text",
       "body": "可以调用 round 函数来获取与给定浮点数最接近的整数，或者调用 trunc 函数来获取浮点数的整数部分"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s1-31",
+      "sectionId": "s1",
       "title": "基本算术",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> round(3.58)\n4\niex> trunc(3.58)\n3"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s1-32",
+      "sectionId": "s1",
       "title": "基本算术",
       "kind": "text",
       "body": "可以使用 is_integer、is_float 或 is_number 分别检查参数是否为 integer、float 或 number 类型"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s1-33",
+      "sectionId": "s1",
       "title": "基本算术",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> is_integer(1)\ntrue\niex> is_float(2.0)\ntrue\niex> is_number(2.0)\nfalse"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s1-34",
+      "sectionId": "s1",
       "title": "布尔算术",
       "kind": "text",
       "body": "Elixir 提供了 `||`、`&&` 和 `!` 布尔操作符，它们支持任何类型的操作："
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s1-35",
+      "sectionId": "s1",
       "title": "布尔算术",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> -20 || true\n-20\niex> false || 42\n42\n\niex> 42 && true\ntrue\niex> 42 && nil\nnil\n\niex> !42\nfalse\niex> !false\ntrue"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s1-36",
+      "sectionId": "s1",
       "title": "布尔算术",
       "kind": "text",
       "body": "还有三个操作符（and、or、not），它们的第一个参数**必须是布尔类型**（true 和 false）:"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s1-37",
+      "sectionId": "s1",
       "title": "布尔算术",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> true and 42\n42\niex> false or true\ntrue\niex> not false\ntrue\niex> 42 and true\n** (ArgumentError) argument error: 42\niex> not 42\n** (ArgumentError) argument error"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s1-38",
+      "sectionId": "s1",
       "title": "模块和函数导入",
       "kind": "code",
       "lang": "elixir",
       "code": "import List, only: [duplicate: 2]"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s1-39",
+      "sectionId": "s1",
       "title": "管道操作符",
       "kind": "code",
       "lang": "elixir",
       "code": "result = data\n         |> process1()\n         |> process2()"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s1-40",
+      "sectionId": "s1",
       "title": "管道操作符",
       "kind": "text",
       "body": "`|>` 用于链式调用函数，将前一个函数的结果作为下一个函数的第一个参数"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s1-41",
+      "sectionId": "s1",
       "title": "比较运算符",
       "kind": "text",
       "body": "比较运算符 ：`==`, `!=`, `===`, `!==`, `<=`, `>=`, `<` 和 `>`"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s1-42",
+      "sectionId": "s1",
       "title": "比较运算符",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> 1 > 2\nfalse\niex> 1 != 2\ntrue\niex> 2 == 2\ntrue\niex> 2 <= 3\ntrue"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
-      "title": "比较运算符",
+      "id": "s2-43",
+      "sectionId": "s2",
+      "title": "集合",
       "kind": "text",
-      "body": "集合\n------\n>\n> 列表（list）、元组（tuple）、关键字列表（keyword list）、映射（map）。\n>"
+      "body": ">\n> 列表（list）、元组（tuple）、关键字列表（keyword list）、映射（map）。\n>"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s2-44",
+      "sectionId": "s2",
       "title": "列表（List）",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> [3.14, :pie, \"Apple\"]\n[3.14, :pie, \"Apple\"]\n\niex> list = [3.14, :pie, \"Apple\"]\niex> [3.14, :pie, \"Apple\"]"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s2-45",
+      "sectionId": "s2",
       "title": "列表（List）",
       "kind": "text",
       "body": "列表的开头添加元素"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s2-46",
+      "sectionId": "s2",
       "title": "列表（List）",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> [\"π\" | list]\n[\"π\", 3.14, :pie, \"Apple\"]"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s2-47",
+      "sectionId": "s2",
       "title": "列表（List）",
       "kind": "text",
       "body": "列表的尾部添加元素/列表拼接"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s2-48",
+      "sectionId": "s2",
       "title": "列表（List）",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> list ++ [\"Cherry\"]\n[3.14, :pie, \"Apple\", \"Cherry\"]"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s2-49",
+      "sectionId": "s2",
       "title": "列表（List）",
       "kind": "text",
       "body": "获取列表的头部元素"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s2-50",
+      "sectionId": "s2",
       "title": "列表（List）",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> hd [3.14, :pie, \"Apple\"]\n3.14"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s2-51",
+      "sectionId": "s2",
       "title": "列表（List）",
       "kind": "text",
       "body": "获取列表的尾部元素"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s2-52",
+      "sectionId": "s2",
       "title": "列表（List）",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> tl [3.14, :pie, \"Apple\"]\n[:pie, \"Apple\"]"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s2-53",
+      "sectionId": "s2",
       "title": "元组（Tuple）",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> {3.14, :pie, \"Apple\"}\n{3.14, :pie, \"Apple\"}"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s2-54",
+      "sectionId": "s2",
       "title": "关键字列表（Keyword List）",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> [foo: \"bar\", hello: \"world\"]\n[foo: \"bar\", hello: \"world\"]\niex> [{:foo, \"bar\"}, {:hello, \"world\"}]\n[foo: \"bar\", hello: \"world\"]"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s2-55",
+      "sectionId": "s2",
       "title": "关键字列表（Keyword List）",
       "kind": "text",
       "body": "关键字列表非常重要，它有以下的特性："
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s2-56",
+      "sectionId": "s2",
       "title": "关键字列表（Keyword List）",
       "kind": "text",
       "body": "• 键（key）都是原子（atom）\n• 键（key）是有序的（定义后，顺序不会改变）\n• 键（key）不必是唯一的"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s2-57",
+      "sectionId": "s2",
       "title": "关键字列表（Keyword List）",
       "kind": "text",
       "body": "因为这些原因，常见的用法是作为参数传递给函数"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s2-58",
+      "sectionId": "s2",
       "title": "映射（Map）",
       "kind": "text",
       "body": "Elixir 的映射（maps）是键值对结构的第一选择，和关键字列表（keywords）不同，映射允许任意类型的数据作为键，而且数据并不严格排序。 你可以使用 %{} 来定义映射："
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s2-59",
+      "sectionId": "s2",
       "title": "映射（Map）",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> map = %{:foo => \"bar\", \"hello\" => :world}\n%{:foo => \"bar\", \"hello\" => :world}\niex> map[:foo]\n\"bar\"\niex> map[\"hello\"]\n:world"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
-      "title": "映射（Map）",
-      "kind": "text",
-      "body": "模式匹配\n------"
-    },
-    {
-      "id": "intro-63",
-      "sectionId": "intro",
-      "title": "映射（Map）",
+      "id": "s3-60",
+      "sectionId": "s3",
+      "title": "模式匹配",
       "kind": "text",
       "body": ">\n> 模式匹配是 Elixir 很强大的特性，它允许我们匹配简单值、数据结构、甚至函数。\n>"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s3-61",
+      "sectionId": "s3",
       "title": "匹配元组",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> {a, b, c} = {:hello, \"world\", 42}\n{:hello, \"world\", 42}\niex> a\n:hello\niex> b\n\"world\""
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s3-62",
+      "sectionId": "s3",
       "title": "匹配列表",
       "kind": "code",
       "lang": "",
       "code": "iex> [a, b, c] = [1, 2, 3]\n[1, 2, 3]\niex> a\n1"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s3-63",
+      "sectionId": "s3",
       "title": "匹配列表的头部元素",
       "kind": "code",
       "lang": "",
       "code": "iex> [head | tail] = [1, 2, 3]\n[1, 2, 3]\niex> head\n1\niex> tail\n[2, 3]"
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s3-64",
+      "sectionId": "s3",
       "title": "Pin 操作符",
       "kind": "text",
       "body": "pin 操作符，就是用已经绑定的值去匹配，而不是重新绑定一个新值。"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
+      "id": "s3-65",
+      "sectionId": "s3",
       "title": "Pin 操作符",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> {x, ^x} = {2, 1}\n{2, 1}\niex> x\n2"
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s3-66",
+      "sectionId": "s3",
       "title": "使用下划线 `_` 忽略匹配的值",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> [head | _] = [1, 2, 3]\n[1, 2, 3]\niex> head\n1"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
-      "title": "使用下划线 `_` 忽略匹配的值",
-      "kind": "text",
-      "body": "控制语句\n------"
-    },
-    {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s4-67",
+      "sectionId": "s4",
       "title": "if/else/end",
       "kind": "code",
       "lang": "elixir",
       "code": "if condition do\n  # 条件成立时执行的代码\nelse\n  # 条件不成立时执行的代码\nend"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
+      "id": "s4-68",
+      "sectionId": "s4",
       "title": "case/end",
       "kind": "code",
       "lang": "elixir",
       "code": "case expression do\n  pattern1 -> # 匹配 pattern1 时执行的代码\n  pattern2 -> # 匹配 pattern2 时执行的代码\n  _ -> # 其他情况执行的代码\nend"
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s4-69",
+      "sectionId": "s4",
       "title": "cond/end",
       "kind": "code",
       "lang": "elixir",
       "code": "cond do\n  condition1 -> # 条件1成立时执行的代码\n  condition2 -> # 条件2成立时执行的代码\n  true -> # 如果没有任何条件成立，执行这里的代码\nend"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s4-70",
+      "sectionId": "s4",
       "title": "unless/do/end",
       "kind": "code",
       "lang": "elixir",
       "code": "unless condition do\n  # 条件为假时执行的代码\nend"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s4-71",
+      "sectionId": "s4",
       "title": "try/rescue/end",
       "kind": "code",
       "lang": "elixir",
       "code": "try do\n  # 可能会引发异常的代码\nrescue\n  pattern1 -> # 匹配 pattern1 的异常处理代码\n  pattern2 -> # 匹配 pattern2 的异常处理代码\n  _ -> # 其他异常处理代码\nend"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
+      "id": "s4-72",
+      "sectionId": "s4",
       "title": "case",
       "kind": "text",
       "body": "允许将一个值与许多模式进行比较，直到找到匹配的模式："
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
+      "id": "s4-73",
+      "sectionId": "s4",
       "title": "case",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> case {1, 2, 3} do\n  {4, 5, 6} ->\n    \"This clause won't match\"\n  {1, x, 3} ->\n    \"该子句将匹配并绑定 x 到该子句中的 2\"\n  _ ->\n    \"This clause would match any value\"\nend\n\"该子句将匹配并绑定 x 到该子句中的 2\""
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
+      "id": "s4-74",
+      "sectionId": "s4",
       "title": "case",
       "kind": "text",
       "body": "还可以使用when指定额外的条件"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
+      "id": "s4-75",
+      "sectionId": "s4",
       "title": "case",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> case {1, 2, 3} do\n  {1, x, 3} when x > 0 ->\n    \"Will match\"\n  _ ->\n    \"如果不满足保护条件，将匹配\"\nend\n\"Will match\""
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
+      "id": "s4-76",
+      "sectionId": "s4",
       "title": "cond",
       "kind": "text",
       "body": "当我们需要根据条件进行匹配而不是值时，类似于其他语言的 `else if` 或 `elsif`，可以使用 `cond` 控制结构。"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
+      "id": "s4-77",
+      "sectionId": "s4",
       "title": "cond",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> cond do\n  2 + 2 == 5 ->\n    \"This will not be true\"\n  2 * 2 == 3 ->\n    \"Nor this\"\n  1 + 1 == 2 ->\n    \"But this will\"\nend\n\"But this will\""
     },
     {
-      "id": "intro-82",
-      "sectionId": "intro",
+      "id": "s4-78",
+      "sectionId": "s4",
       "title": "cond",
       "kind": "text",
       "body": "如果所有的条件都返回 `nil` 或 `false`，则会引发一个错误（CondClauseError）。因此，需要添加一个 `final` 条件，等于 `true`，它将始终匹配："
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
+      "id": "s4-79",
+      "sectionId": "s4",
       "title": "cond",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> cond do\n  2 + 2 == 5 ->\n    \"This is never true\"\n  2 * 2 == 3 ->\n    \"Nor this\"\n  true ->\n    \"这始终为真（等同于 else）\"\nend\n\"这始终为真（等同于 else）\""
     },
     {
-      "id": "intro-84",
-      "sectionId": "intro",
+      "id": "s4-80",
+      "sectionId": "s4",
       "title": "变量的作用域",
       "kind": "text",
       "body": "如果在if、case和类似的构造中声明或更改了任何变量，则声明和更改将只在构造中可见。"
     },
     {
-      "id": "intro-85",
-      "sectionId": "intro",
+      "id": "s4-81",
+      "sectionId": "s4",
       "title": "变量的作用域",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> x = 1\n1\nif true do\n  x = x + 1\nend\n2\niex> x\n1"
     },
     {
-      "id": "intro-86",
-      "sectionId": "intro",
+      "id": "s4-82",
+      "sectionId": "s4",
       "title": "变量的作用域",
       "kind": "text",
       "body": "如果要更改值，则必须从if返回值："
     },
     {
-      "id": "intro-87",
-      "sectionId": "intro",
+      "id": "s4-83",
+      "sectionId": "s4",
       "title": "变量的作用域",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> x = 1\n1\niex> x = if true do\n  x + 1\nelse\n  x\nend\n2"
     },
     {
-      "id": "intro-88",
-      "sectionId": "intro",
-      "title": "变量的作用域",
-      "kind": "text",
-      "body": "函数\n------"
-    },
-    {
-      "id": "intro-89",
-      "sectionId": "intro",
+      "id": "s5-84",
+      "sectionId": "s5",
       "title": "函数定义",
       "kind": "code",
       "lang": "elixir",
       "code": "def function_name(param1, param2) do\n  # 函数体\nend"
     },
     {
-      "id": "intro-90",
-      "sectionId": "intro",
+      "id": "s5-85",
+      "sectionId": "s5",
       "title": "函数定义",
       "kind": "text",
       "body": "示例："
     },
     {
-      "id": "intro-91",
-      "sectionId": "intro",
+      "id": "s5-86",
+      "sectionId": "s5",
       "title": "函数定义",
       "kind": "code",
       "lang": "elixir",
       "code": "def sum(a, b) do\n  a + b\nend"
     },
     {
-      "id": "intro-92",
-      "sectionId": "intro",
+      "id": "s5-87",
+      "sectionId": "s5",
       "title": "模式匹配的多个函数定义",
       "kind": "code",
       "lang": "elixir",
       "code": "def fun_name(:atom) do\n  # 对于 :atom 的处理\nend\n\ndef fun_name(\"string\") do\n  # 对于 \"string\" 的处理\nend\n\ndef fun_name(number) when is_integer(number) do\n  # 对于整数的处理\nend"
     },
     {
-      "id": "intro-93",
-      "sectionId": "intro",
+      "id": "s5-88",
+      "sectionId": "s5",
       "title": "模式匹配的多个函数定义",
       "kind": "text",
       "body": "示例："
     },
     {
-      "id": "intro-94",
-      "sectionId": "intro",
+      "id": "s5-89",
+      "sectionId": "s5",
       "title": "模式匹配的多个函数定义",
       "kind": "code",
       "lang": "elixir",
       "code": "def is_positive(number) when number > 0 do\n  true\nend\n\ndef is_positive(_), do: false"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
+      "id": "s5-90",
+      "sectionId": "s5",
       "title": "函数调用",
       "kind": "code",
       "lang": "elixir",
       "code": "module_name.function_name(arg1, arg2)"
     },
     {
-      "id": "intro-96",
-      "sectionId": "intro",
+      "id": "s5-91",
+      "sectionId": "s5",
       "title": "函数调用",
       "kind": "text",
       "body": "示例："
     },
     {
-      "id": "intro-97",
-      "sectionId": "intro",
+      "id": "s5-92",
+      "sectionId": "s5",
       "title": "函数调用",
       "kind": "code",
       "lang": "elixir",
       "code": "Enum.map([1, 2, 3], &(&1 * 2))"
     },
     {
-      "id": "intro-98",
-      "sectionId": "intro",
+      "id": "s5-93",
+      "sectionId": "s5",
       "title": "函数参数默认值",
       "kind": "code",
       "lang": "elixir",
       "code": "def function_name(parameter \\\\ 默认值) do\n  # 函数体\nend"
     },
     {
-      "id": "intro-99",
-      "sectionId": "intro",
+      "id": "s5-94",
+      "sectionId": "s5",
       "title": "函数参数默认值",
       "kind": "text",
       "body": "示例："
     },
     {
-      "id": "intro-100",
-      "sectionId": "intro",
+      "id": "s5-95",
+      "sectionId": "s5",
       "title": "函数参数默认值",
       "kind": "code",
       "lang": "elixir",
       "code": "def greet(name \\\\ \"World\") do\n  \"Hello, #{name}!\"\nend"
     },
     {
-      "id": "intro-101",
-      "sectionId": "intro",
+      "id": "s5-96",
+      "sectionId": "s5",
       "title": "可变参数数量",
       "kind": "code",
       "lang": "elixir",
       "code": "def function_name(param1, param2 \\\\ []) do\n  # 函数体\nend"
     },
     {
-      "id": "intro-102",
-      "sectionId": "intro",
+      "id": "s5-97",
+      "sectionId": "s5",
       "title": "可变参数数量",
       "kind": "text",
       "body": "示例："
     },
     {
-      "id": "intro-103",
-      "sectionId": "intro",
+      "id": "s5-98",
+      "sectionId": "s5",
       "title": "可变参数数量",
       "kind": "code",
       "lang": "elixir",
       "code": "def sum(numbers) do\n  Enum.sum(numbers)\nend"
     },
     {
-      "id": "intro-104",
-      "sectionId": "intro",
+      "id": "s5-99",
+      "sectionId": "s5",
       "title": "函数文档注释",
       "kind": "code",
       "lang": "elixir",
       "code": "@doc \"\"\"\n这是函数的文档。\n\"\"\""
     },
     {
-      "id": "intro-105",
-      "sectionId": "intro",
+      "id": "s5-100",
+      "sectionId": "s5",
       "title": "函数文档注释",
       "kind": "text",
       "body": "示例："
     },
     {
-      "id": "intro-106",
-      "sectionId": "intro",
+      "id": "s5-101",
+      "sectionId": "s5",
       "title": "函数文档注释",
       "kind": "code",
       "lang": "elixir",
       "code": "@doc \"\"\"\nAdds two numbers together.\n\n## 示例\n\n    iex> MyModule.add(1, 2)\n    3\n\"\"\"\ndef add(a, b) do\n  a + b\nend"
     },
     {
-      "id": "intro-107",
-      "sectionId": "intro",
+      "id": "s5-102",
+      "sectionId": "s5",
       "title": "函数文档注释",
       "kind": "text",
       "body": "这些是 Elixir 函数语法的基本要点，可以帮助你开始编写函数。"
     },
     {
-      "id": "intro-108",
-      "sectionId": "intro",
+      "id": "s5-103",
+      "sectionId": "s5",
       "title": "匿名函数",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> sum = fn (a, b) -> a + b end\niex> sum.(2, 3)\n5"
     },
     {
-      "id": "intro-109",
-      "sectionId": "intro",
+      "id": "s5-104",
+      "sectionId": "s5",
       "title": "匿名函数",
       "kind": "text",
       "body": "可以使用 & 语法来简化匿名函数的定义："
     },
     {
-      "id": "intro-110",
-      "sectionId": "intro",
+      "id": "s5-105",
+      "sectionId": "s5",
       "title": "匿名函数",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> sum = &(&1 + &2)\niex> sum.(2, 3)\n5"
     },
     {
-      "id": "intro-111",
-      "sectionId": "intro",
+      "id": "s5-106",
+      "sectionId": "s5",
       "title": "闭包",
       "kind": "text",
       "body": "匿名函数去引用外部的变量，这通常被称为闭包。"
     },
     {
-      "id": "intro-112",
-      "sectionId": "intro",
+      "id": "s5-107",
+      "sectionId": "s5",
       "title": "闭包",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> double = fn a -> add.(a, a) end\n#Function<6.71889879/1 in :erl_eval.expr/5>\ndouble.(2)\n4"
     },
     {
-      "id": "intro-113",
-      "sectionId": "intro",
+      "id": "s5-108",
+      "sectionId": "s5",
       "title": "闭包",
       "kind": "text",
       "body": "闭包与守卫"
     },
     {
-      "id": "intro-114",
-      "sectionId": "intro",
+      "id": "s5-109",
+      "sectionId": "s5",
       "title": "闭包",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> f = fn\n  x, y when x > 0 -> x + y\n  x, y -> x * y\nend\n\niex> f.(1, 3)\n4\niex> f.(-1, 3)\n-3"
     },
     {
-      "id": "intro-115",
-      "sectionId": "intro",
+      "id": "s5-110",
+      "sectionId": "s5",
       "title": "命名函数",
       "kind": "text",
       "body": "命名函数是通过 def 关键字定义在某个模块中"
     },
     {
-      "id": "intro-116",
-      "sectionId": "intro",
+      "id": "s5-111",
+      "sectionId": "s5",
       "title": "命名函数",
       "kind": "code",
       "lang": "elixir",
       "code": "defmodule Greeter do\n  def hello(name) do\n    \"Hello, \" <> name\n  end\nend\n\niex> Greeter.hello(\"Sean\")\n\"Hello, Sean\""
     },
     {
-      "id": "intro-117",
-      "sectionId": "intro",
+      "id": "s5-112",
+      "sectionId": "s5",
       "title": "命名函数",
       "kind": "text",
       "body": "简写为一行："
     },
     {
-      "id": "intro-118",
-      "sectionId": "intro",
+      "id": "s5-113",
+      "sectionId": "s5",
       "title": "命名函数",
       "kind": "code",
       "lang": "elixir",
       "code": "defmodule Greeter do\n  def hello(name), do: \"Hello, \" <> name\nend"
     },
     {
-      "id": "intro-119",
-      "sectionId": "intro",
+      "id": "s5-114",
+      "sectionId": "s5",
       "title": "命名函数",
       "kind": "text",
       "body": "私有函数"
     },
     {
-      "id": "intro-120",
-      "sectionId": "intro",
+      "id": "s5-115",
+      "sectionId": "s5",
       "title": "命名函数",
       "kind": "code",
       "lang": "elixir",
       "code": "defmodule Greeter do\n  def hello(name), do: phrase <> name\n  # 使用defp来定义私有函数\n  defp phrase, do: \"Hello, \" \nend"
     },
     {
-      "id": "intro-121",
-      "sectionId": "intro",
+      "id": "s5-116",
+      "sectionId": "s5",
       "title": "命名函数",
       "kind": "text",
       "body": "函数的默认参数：使用 `\\\\` 来定义默认参数"
     },
     {
-      "id": "intro-122",
-      "sectionId": "intro",
+      "id": "s5-117",
+      "sectionId": "s5",
       "title": "命名函数",
       "kind": "code",
       "lang": "elixir",
       "code": "defmodule Greeter do\n  def hello(name, language_code \\\\ \"en\") do\n    phrase(language_code) <> name\n  end\n\n  defp phrase(\"en\"), do: \"Hello, \"\n  defp phrase(\"es\"), do: \"Hola, \"\nend"
     },
     {
-      "id": "intro-123",
-      "sectionId": "intro",
-      "title": "命名函数",
+      "id": "s6-118",
+      "sectionId": "s6",
+      "title": "Enumerables 与 Streams",
       "kind": "text",
-      "body": "Enumerables 与 Streams\n------\n>\n> Elixir 提供了 Enum 和 Stream 两个模块，用于处理集合。\n>"
+      "body": ">\n> Elixir 提供了 Enum 和 Stream 两个模块，用于处理集合。\n>"
     },
     {
-      "id": "intro-124",
-      "sectionId": "intro",
+      "id": "s6-119",
+      "sectionId": "s6",
       "title": "Enum",
       "kind": "text",
       "body": ">\n> Enum 模块提供了对集合的常用操作，如 map、filter、reduce、sort、chunk、join、into 等。"
     },
     {
-      "id": "intro-125",
-      "sectionId": "intro",
+      "id": "s6-120",
+      "sectionId": "s6",
       "title": "Enum",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> Enum.map([1, 2, 3], fn x -> x * 2 end)\n[2, 4, 6]\niex> Enum.map(%{1 => 2, 3 => 4}, fn {k, v} -> k * v end)\n[2, 12]"
     },
     {
-      "id": "intro-126",
-      "sectionId": "intro",
+      "id": "s6-121",
+      "sectionId": "s6",
       "title": "Stream",
       "kind": "text",
       "body": ">\n> 作为Enum的替代品，Elixir提供了支持懒惰操作的Stream模块"
     },
     {
-      "id": "intro-127",
-      "sectionId": "intro",
+      "id": "s6-122",
+      "sectionId": "s6",
       "title": "Stream",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> 1..100_000 |> Stream.map(&(&1 * 3)) |> Stream.filter(odd?) |> Enum.sum()\n7500000000"
     },
     {
-      "id": "intro-128",
-      "sectionId": "intro",
+      "id": "s6-123",
+      "sectionId": "s6",
       "title": "Stream",
       "kind": "text",
       "body": "> 流文件操作"
     },
     {
-      "id": "intro-129",
-      "sectionId": "intro",
+      "id": "s6-124",
+      "sectionId": "s6",
       "title": "Stream",
       "kind": "code",
       "lang": "elixir",
       "code": "iex> stream = File.stream!(\"path/to/file\")\n%File.Stream{\n  line_or_bytes: :line,\n  modes: [:raw, :read_ahead, :binary],\n  path: \"path/to/file\",\n  raw: true\n}\nEnum.take(stream, 10)\n\n# 上面的例子将提取所选文件的前10行。这意味着流对于处理大型文件甚至是网络资源等慢速资源非常有用。"
     },
     {
-      "id": "intro-130",
-      "sectionId": "intro",
-      "title": "Stream",
-      "kind": "text",
-      "body": "另见\n----"
-    },
-    {
-      "id": "intro-131",
-      "sectionId": "intro",
-      "title": "Stream",
+      "id": "s7-125",
+      "sectionId": "s7",
+      "title": "另见",
       "kind": "text",
       "body": "• [Elixir 官方](https://elixir-lang.org/) _(elixir-lang.org)_\n• [Elixir School](https://elixirschool.com/) _(elixirschool.com)_"
     }
@@ -1011,7 +1006,6 @@
     "path": "docs/elixir.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/elixir.md",
-    "generatedAt": "2025-12-16T07:36:11.190Z",
     "lang": "zh",
     "mode": "local"
   }

@@ -1,6 +1,8 @@
 {
   "id": "springboot",
-  "title": "springboot",
+  "name": "Spring Boot 备忘清单",
+  "title": "此快速参考备忘单提供了使用 Spring Boot 的用法",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/springboot.svg",
   "sections": [
     {
       "id": "intro",
@@ -9,8 +11,43 @@
     },
     {
       "id": "s1",
+      "title": "入门",
+      "startIndex": 2
+    },
+    {
+      "id": "s2",
+      "title": "配置",
+      "startIndex": 4
+    },
+    {
+      "id": "s3",
+      "title": "依赖管理",
+      "startIndex": 31
+    },
+    {
+      "id": "s4",
+      "title": "Spring Boot 核心功能",
+      "startIndex": 46
+    },
+    {
+      "id": "s5",
+      "title": "Web 开发",
+      "startIndex": 65
+    },
+    {
+      "id": "s6",
       "title": "**数据访问**",
-      "startIndex": 84
+      "startIndex": 78
+    },
+    {
+      "id": "s7",
+      "title": "测试",
+      "startIndex": 99
+    },
+    {
+      "id": "s8",
+      "title": "部署与扩展",
+      "startIndex": 106
     }
   ],
   "cards": [
@@ -19,916 +56,860 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Spring Boot 备忘清单\n==="
+      "body": "此快速参考备忘单提供了使用 Spring Boot 的用法"
     },
     {
       "id": "intro-1",
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "此快速参考备忘单提供了使用 Spring Boot 的用法"
-    },
-    {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "注：开发 springboot 需要要基本的 java 基础和 maven 基础。"
     },
     {
-      "id": "intro-3",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n---"
-    },
-    {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "介绍",
       "kind": "text",
       "body": "Spring Boot 是一个用于简化 Spring 应用程序开发的框架。它提供了一种简单的方式来创建、运行和部署 Spring 应用程序，并简化了配置和依赖管理。"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "项目创建与配置",
       "kind": "text",
       "body": "• 使用 [`Spring Initializr`](https://start.spring.io) 创建项目\n• 国内可以使用阿里云的 [`Spring Initializr`](https://start.aliyun.com/) 创建项目，选择依赖项（如Web、JPA、Security）和 Spring Boot 版本\n• 添加所需的依赖项到 `pom.xml`(Maven) 或 `build.gradle`(Gradle) 文件中\n• 在 `src/main/resources` 目录下创建 `application.properties`或`application.yml` 文件，配置应用程序属性，例如数据库连接信息、端口号等"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
-      "title": "项目创建与配置",
-      "kind": "text",
-      "body": "配置\n---"
-    },
-    {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s2-4",
+      "sectionId": "s2",
       "title": "配置文件说明",
       "kind": "text",
       "body": "在Spring Boot应用程序中，通常使用YAML格式（`.yml`文件）来配置应用程序的属性和设置。相比于传统的`.properties`文件，YAML格式更加清晰易读，并且支持层级结构和列表等复杂数据类型。以下是一些常用的Spring Boot YAML配置字段及其说明："
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s2-5",
+      "sectionId": "s2",
       "title": "配置文件说明",
       "kind": "text",
       "body": "• `server.port`: 配置应用程序的端口号。\n• `spring.application.name`: 配置应用程序的名称。\n• `spring.datasource.url`: 配置数据库连接的URL。\n• `spring.datasource.username`: 配置数据库连接的用户名。\n• `spring.datasource.password`: 配置数据库连接的密码。\n• `logging.level`: 配置日志记录的级别，如`DEBUG`、`INFO`、`WARN`、`ERROR`等。\n• `management.endpoints.web.exposure.include`: 配置哪些管理端点（如`health`、`info`）可以通过Web访问。\n• `spring.jpa.hibernate.ddl-auto`: 配置Hibernate的DDL模式，如`update`、`create`、`create-drop`等。"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s2-6",
+      "sectionId": "s2",
       "title": "1. 应用程序配置",
       "kind": "code",
       "lang": "yaml",
       "code": "spring:\n  application:\n    name: my-application"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s2-7",
+      "sectionId": "s2",
       "title": "1. 应用程序配置",
       "kind": "text",
       "body": "`spring.application.name`: 应用程序的名称。在集成服务发现和配置管理时特别有用，也会影响Actuator端点的路径。"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s2-8",
+      "sectionId": "s2",
       "title": "2. 服务器端口配置",
       "kind": "code",
       "lang": "yaml",
       "code": "server:\n  port: 8080"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s2-9",
+      "sectionId": "s2",
       "title": "2. 服务器端口配置",
       "kind": "text",
       "body": "`server.port`: 应用程序监听的HTTP端口号。默认为8080，可以根据需要进行配置。"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s2-10",
+      "sectionId": "s2",
       "title": "3. 数据源配置",
       "kind": "code",
       "lang": "yaml",
       "code": "spring:\n  datasource:\n    url: jdbc:mysql://localhost:3306/mydatabase\n    username: root\n    password: password\n    driver-class-name: com.mysql.cj.jdbc.Driver # 这里是 MySQL8.0 版本配置，5.0 则是 com.mysql.jdbc.Driver"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s2-11",
+      "sectionId": "s2",
       "title": "3. 数据源配置",
       "kind": "text",
       "body": "#### 说明"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s2-12",
+      "sectionId": "s2",
       "title": "3. 数据源配置",
       "kind": "text",
       "body": "• `spring.datasource.url`: 数据库连接URL。\n• `spring.datasource.username` 和 `spring.datasource.password`: 数据库的用户名和密码。\n• `spring.datasource.driver-class-name`: 数据库驱动类名。"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s2-13",
+      "sectionId": "s2",
       "title": "4. **JPA 配置**",
       "kind": "code",
       "lang": "yaml",
       "code": "spring:\n  jpa:\n    show-sql: true\n    hibernate:\n      ddl-auto: update"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s2-14",
+      "sectionId": "s2",
       "title": "4. **JPA 配置**",
       "kind": "text",
       "body": "#### 说明"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s2-15",
+      "sectionId": "s2",
       "title": "4. **JPA 配置**",
       "kind": "text",
       "body": "• `spring.jpa.show-sql`: 是否在控制台显示SQL语句。\n• `spring.jpa.hibernate.ddl-auto`: Hibernate自动建表策略，如`update`、`create`、`validate`等。"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s2-16",
+      "sectionId": "s2",
       "title": "5. 日志配置",
       "kind": "code",
       "lang": "yaml",
       "code": "logging:\n  level:\n    org.springframework: INFO\n    com.example: DEBUG"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s2-17",
+      "sectionId": "s2",
       "title": "5. 日志配置",
       "kind": "text",
       "body": "#### 说明"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s2-18",
+      "sectionId": "s2",
       "title": "5. 日志配置",
       "kind": "text",
       "body": "• `logging.level`: 日志级别配置，可以针对不同的包或类设置不同的日志级别。"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s2-19",
+      "sectionId": "s2",
       "title": "6. Spring Security 配置",
       "kind": "code",
       "lang": "yaml",
       "code": "spring:\n  security:\n    user:\n      name: user\n      password: password\n    basic:\n      enabled: true"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s2-20",
+      "sectionId": "s2",
       "title": "6. Spring Security 配置",
       "kind": "text",
       "body": "#### 说明"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s2-21",
+      "sectionId": "s2",
       "title": "6. Spring Security 配置",
       "kind": "text",
       "body": "• `spring.security.user.name` 和 `spring.security.user.password`: 基本认证的用户名和密码。\n• `spring.security.basic.enabled`: 是否启用基本认证。"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s2-22",
+      "sectionId": "s2",
       "title": "7. Actuator 配置",
       "kind": "code",
       "lang": "yaml",
       "code": "management:\n  endpoints:\n    web:\n      exposure:\n        include: health, info"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s2-23",
+      "sectionId": "s2",
       "title": "7. Actuator 配置",
       "kind": "text",
       "body": "#### 说明"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s2-24",
+      "sectionId": "s2",
       "title": "7. Actuator 配置",
       "kind": "text",
       "body": "• `management.endpoints.web.exposure.include`: 暴露给外部的Actuator端点，可以设置为`*`来暴露所有端点。"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s2-25",
+      "sectionId": "s2",
       "title": "8. 多环境配置",
       "kind": "code",
       "lang": "yaml",
       "code": "spring:\n  profiles:\n    active: dev"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s2-26",
+      "sectionId": "s2",
       "title": "8. 多环境配置",
       "kind": "text",
       "body": "#### 说明"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s2-27",
+      "sectionId": "s2",
       "title": "8. 多环境配置",
       "kind": "text",
       "body": "• `spring.profiles.active`: 指定当前激活的环境配置文件，可以根据需要选择`dev`、`prod`等不同的配置文件。"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s2-28",
+      "sectionId": "s2",
       "title": "9. **自定义属性配置**",
       "kind": "code",
       "lang": "yaml",
       "code": "myapp:\n  custom:\n    property: value"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s2-29",
+      "sectionId": "s2",
       "title": "9. **自定义属性配置**",
       "kind": "text",
       "body": "#### 说明"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s2-30",
+      "sectionId": "s2",
       "title": "9. **自定义属性配置**",
       "kind": "text",
       "body": "• 自定义应用程序属性，可以在应用程序中通过`@Value`注解或`Environment`对象访问。"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
-      "title": "9. **自定义属性配置**",
-      "kind": "text",
-      "body": "依赖管理\n---"
-    },
-    {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s3-31",
+      "sectionId": "s3",
       "title": "依赖管理介绍",
       "kind": "text",
       "body": "• 在 Spring Boot 中，依赖管理是非常重要的一部分。\n• 它通过简化依赖项的引入和版本管理，大大简化了项目的构建和维护过程。\n• Spring Boot采用了 Starter 依赖项的概念，通过提供预配置的依赖项集合来简化项目的初始化和配置。"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s3-32",
+      "sectionId": "s3",
       "title": "Starter 依赖项",
       "kind": "text",
       "body": "Spring Boot 的 Starter 依赖项是预先配置的一组依赖项集合，它们以 `spring-boot-starter-*` 的命名格式提供。这些 Starter 依赖项可以按照功能领域进行分类，例如："
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s3-33",
+      "sectionId": "s3",
       "title": "Starter 依赖项",
       "kind": "text",
       "body": "• `spring-boot-starter-web`: 支持构建Web应用程序，包括Spring MVC和内嵌的Servlet容器（如Tomcat）。\n• `spring-boot-starter-data-jpa`: 支持使用Spring Data JPA访问数据库，包括Hibernate和JPA实现。\n• `spring-boot-starter-security`: 支持Spring Security，用于身份验证和授权。\n• `spring-boot-starter-test`: 支持单元测试和集成测试，包括JUnit、Mockito等。\n• `spring-boot-starter-actuator`: 支持集成Actuator，用于监控和管理应用程序。"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s3-34",
+      "sectionId": "s3",
       "title": "Starter 依赖项",
       "kind": "text",
       "body": "引入Starter依赖项可以快速添加特定功能，Spring Boot会自动配置所需的组件和设置，减少手动配置工作量。"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s3-35",
+      "sectionId": "s3",
       "title": "自动依赖解析和版本管理",
       "kind": "text",
       "body": "Spring Boot的BOM（Bill of Materials）集中管理各个 Starter 依赖项的版本，通过在`pom.xml`（Maven）或 `build.gradle`（Gradle）中引入 BOM，可以简化依赖项版本管理。例如，在 Maven 项目中："
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s3-36",
+      "sectionId": "s3",
       "title": "自动依赖解析和版本管理",
       "kind": "code",
       "lang": "xml",
       "code": "<dependencyManagement>\n  <dependencies>\n    <dependency>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-dependencies</artifactId>\n      <version>2.6.0</version>\n      <type>pom</type>\n      <scope>import</scope>\n    </dependency>\n  </dependencies>\n</dependencyManagement>"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s3-37",
+      "sectionId": "s3",
       "title": "自动依赖解析和版本管理",
       "kind": "text",
       "body": "这样一来，当你在项目中引入 Spring Boot 的 Starter 依赖项时，不需要显式声明版本号，Maven 会自动使用 BOM 中指定的版本。"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s3-38",
+      "sectionId": "s3",
       "title": "自定义依赖管理",
       "kind": "text",
       "body": "尽管Spring Boot提供了丰富的Starter依赖项和依赖管理功能，但有时你可能需要自定义特定的依赖项或版本。在这种情况下，你可以在`pom.xml`或`build.gradle`中显式声明所需的依赖项，而不使用Starter依赖项。"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s3-39",
+      "sectionId": "s3",
       "title": "自定义依赖管理",
       "kind": "text",
       "body": "例如，在Maven项目中，你可以这样声明一个依赖项："
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s3-40",
+      "sectionId": "s3",
       "title": "自定义依赖管理",
       "kind": "code",
       "lang": "xml",
       "code": "<dependency>\n  <groupId>org.springframework.boot</groupId>\n  <artifactId>spring-boot-starter-web</artifactId>\n  <version>2.6.0</version>\n</dependency>"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s3-41",
+      "sectionId": "s3",
       "title": "自定义依赖管理",
       "kind": "text",
       "body": "这样做可以覆盖Spring Boot BOM中指定的版本，允许你使用特定版本的依赖项。"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s3-42",
+      "sectionId": "s3",
       "title": "排除和冲突解决",
       "kind": "text",
       "body": "在实际项目中，可能会遇到依赖项之间的冲突或不兼容性问题。Spring Boot允许你通过`<exclusions>`标签来排除Starter依赖项中的某些传递性依赖，以解决冲突问题。"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s3-43",
+      "sectionId": "s3",
       "title": "排除和冲突解决",
       "kind": "text",
       "body": "例如，在Maven项目中排除传递性依赖："
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s3-44",
+      "sectionId": "s3",
       "title": "排除和冲突解决",
       "kind": "code",
       "lang": "xml",
       "code": "<dependency>\n  <groupId>org.springframework.boot</groupId>\n  <artifactId>spring-boot-starter-web</artifactId>\n  <exclusions>\n    <exclusion>\n      <groupId>org.springframework.boot</groupId>\n      <artifactId>spring-boot-starter-tomcat</artifactId>\n    </exclusion>\n  </exclusions>\n</dependency>"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s3-45",
+      "sectionId": "s3",
       "title": "排除和冲突解决",
       "kind": "text",
       "body": "这种排除机制使得你可以更精确地控制项目中依赖项的版本和组合，以避免不必要的冲突。"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
-      "title": "排除和冲突解决",
-      "kind": "text",
-      "body": "Spring Boot 核心功能\n---\n<!--rehype:body-class=cols-2-->"
-    },
-    {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s4-46",
+      "sectionId": "s4",
       "title": "依赖注入（Dependency Injection）",
       "kind": "text",
       "body": "依赖注入是Spring框架的核心概念之一，它通过控制反转（IoC，Inversion of Control）的方式管理对象之间的依赖关系，从而实现松耦合、可测试和可维护的代码结构。Spring Boot通过自动配置的方式支持依赖注入，以下是一些关键点："
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s4-47",
+      "sectionId": "s4",
       "title": "依赖注入（Dependency Injection）",
       "kind": "text",
       "body": "#### 自动装配（Auto-configuration）"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s4-48",
+      "sectionId": "s4",
       "title": "依赖注入（Dependency Injection）",
       "kind": "text",
       "body": "Spring Boot根据类路径中的依赖项自动配置应用程序上下文。这包括自动扫描和注册带有特定注解（如`@Component`、`@Service`、`@Repository`等）的Bean，以及自动解析和注入这些Bean之间的依赖关系。"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s4-49",
+      "sectionId": "s4",
       "title": "依赖注入（Dependency Injection）",
       "kind": "text",
       "body": "#### Bean的声明和管理"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s4-50",
+      "sectionId": "s4",
       "title": "依赖注入（Dependency Injection）",
       "kind": "text",
       "body": "开发者可以使用`@Autowired`注解在需要依赖注入的地方注入其他Bean，Spring Boot会自动解析和注入所需的依赖。例如："
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s4-51",
+      "sectionId": "s4",
       "title": "依赖注入（Dependency Injection）",
       "kind": "code",
       "lang": "java",
       "code": "@RestController\npublic class MyContr {\n  private final MyService myService;\n  \n  @Autowired\n  public MyContr(MyService myService) {\n      this.myService = myService;\n  }\n  \n  // Controller methods\n}"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s4-52",
+      "sectionId": "s4",
       "title": "依赖注入（Dependency Injection）",
       "kind": "text",
       "body": "在上面的例子中，`MyController`中的`MyService`依赖通过构造函数注入。"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s4-53",
+      "sectionId": "s4",
       "title": "依赖注入（Dependency Injection）",
       "kind": "text",
       "body": "#### 条件化注入"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s4-54",
+      "sectionId": "s4",
       "title": "依赖注入（Dependency Injection）",
       "kind": "text",
       "body": "Spring Boot支持根据条件选择性地注入Bean。例如，可以使用 `@Conditional` 注解或 `@ConditionalOnProperty` 注解根据特定的条件决定是否创建和注入Bean。"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s4-55",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "text",
       "body": "面向切面编程是一种软件开发方法，用于分离横切关注点（cross-cutting concerns），例如日志、事务管理、安全性等，以便更好地模块化和管理应用程序。Spring Boot通过整合Spring AOP框架支持面向切面编程，以下是相关的说明："
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s4-56",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "text",
       "body": "#### 切面（Aspect）"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s4-57",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "text",
       "body": "切面是一个模块化的类，它包含了横切关注点的逻辑。在Spring Boot中，可以使用`@Aspect`注解标记一个类作为切面，并通过`@Before`、`@After`、`@Around`等注解定义切面的具体行为。"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
+      "id": "s4-58",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "text",
       "body": "#### 切点（Pointcut）"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s4-59",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "text",
       "body": "切点定义了在应用程序中哪些位置应用切面逻辑。切点表达式使用`execution`关键字指定要拦截的方法调用。例如："
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s4-60",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "code",
       "lang": "java",
       "code": "@Aspect\n@Component\npublic class LoggingAspect {\n    \n    @Before(\"execution(* com.example.service.*.*(..))\")\n    public void beforeServiceMethods(JoinPoint joinPoint) {\n        // Advice logic before service method execution\n    }\n    \n    // Other advices (e.g., @After, @Around) can be defined similarly\n}"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s4-61",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "text",
       "body": "#### 通知（Advice）"
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s4-62",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "text",
       "body": "通知是在切点处执行的具体逻辑，包括`@Before`、`@AfterReturning`、`@AfterThrowing`、`@Around`等。例如，在上面的例子中，`beforeServiceMethods`方法就是一个`@Before`通知，它在目标方法执行之前执行。"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
+      "id": "s4-63",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "text",
       "body": "#### 配置和启用"
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s4-64",
+      "sectionId": "s4",
       "title": "面向切面编程（Aspect-Oriented Programming）",
       "kind": "text",
       "body": "Spring Boot通过自动配置和注解扫描使得使用AOP变得非常简单。通常情况下，只需在切面类上加上`@Aspect`注解，并确保它被Spring Boot的组件扫描机制扫描到即可。"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
-      "title": "面向切面编程（Aspect-Oriented Programming）",
-      "kind": "text",
-      "body": "Web 开发\n---"
-    },
-    {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s5-65",
+      "sectionId": "s5",
       "title": "1. 创建一个新的 Spring Boot 项目",
       "kind": "text",
       "body": "你可以使用 Spring Initializr 创建一个新的 Spring Boot 项目。访问 [start.spring.io](https://start.spring.io/) 并按照以下配置创建项目："
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
+      "id": "s5-66",
+      "sectionId": "s5",
       "title": "1. 创建一个新的 Spring Boot 项目",
       "kind": "text",
       "body": "• **Project**: Maven 或 Gradle（选择你的构建工具）\n• **Language**: Java\n• **Spring Boot**: 选择最新的稳定版本\n• **Project Metadata**:\n• **Group**: com.example（或者你喜欢的 Group ID）\n• **Artifact**: helloworld（或者你喜欢的 Artifact ID）\n• **Dependencies**: 选择 \"Spring Web\""
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s5-67",
+      "sectionId": "s5",
       "title": "1. 创建一个新的 Spring Boot 项目",
       "kind": "text",
       "body": "点击 \"Generate\" 下载项目的 zip 文件。"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s5-68",
+      "sectionId": "s5",
       "title": "2. 将项目导入到你的 IDE 中",
       "kind": "text",
       "body": "解压下载的文件并导入到你喜欢的 IDE 中（如 IntelliJ IDEA、Eclipse 等）。"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s5-69",
+      "sectionId": "s5",
       "title": "3. 实现 Hello World Controller",
       "kind": "text",
       "body": "在 IDE 中打开你的项目，导航到 `src/main/java/com/example/helloworld`。你会看到一个名为 `HelloworldApplication.java` 的类文件，这是 Spring Boot 应用程序的入口类。"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
+      "id": "s5-70",
+      "sectionId": "s5",
       "title": "3. 实现 Hello World Controller",
       "kind": "text",
       "body": "在这个类的同级目录下创建一个新的 Java 类文件，例如 `HelloController.java`，并添加以下内容："
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
+      "id": "s5-71",
+      "sectionId": "s5",
       "title": "3. 实现 Hello World Controller",
       "kind": "code",
       "lang": "java",
       "code": "package com.example.helloworld;\n\nimport org.springframework.web.bind.annotation.GetMapping;\nimport org.springframework.web.bind.annotation.RestController;\n\n@RestController\npublic class HelloController {\n\n    @GetMapping(\"/\")\n    public String hello() {\n        return \"Hello, World!\";\n    }\n}"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
+      "id": "s5-72",
+      "sectionId": "s5",
       "title": "4. 运行应用程序",
       "kind": "text",
       "body": "使用 Maven 或 Gradle 构建项目并启动应用程序。可以通过 IDE 的运行功能或者命令行执行以下命令："
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
+      "id": "s5-73",
+      "sectionId": "s5",
       "title": "4. 运行应用程序",
       "kind": "code",
       "lang": "bash",
       "code": "mvn spring-boot:run"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
+      "id": "s5-74",
+      "sectionId": "s5",
       "title": "4. 运行应用程序",
       "kind": "text",
       "body": "或者"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
+      "id": "s5-75",
+      "sectionId": "s5",
       "title": "4. 运行应用程序",
       "kind": "code",
       "lang": "bash",
       "code": "./gradlew bootRun"
     },
     {
-      "id": "intro-82",
-      "sectionId": "intro",
+      "id": "s5-76",
+      "sectionId": "s5",
       "title": "5. 访问 Hello World 页面",
       "kind": "text",
       "body": "在浏览器中访问 `http://localhost:8080/`，你应该能够看到显示 \"Hello, World!\" 的页面。"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
+      "id": "s5-77",
+      "sectionId": "s5",
       "title": "5. 访问 Hello World 页面",
       "kind": "text",
       "body": "这样，你就成功创建了一个简单的 Spring Boot Web 应用程序，并实现了一个基本的 \"Hello, World!\" 示例。"
     },
     {
-      "id": "s1-84",
-      "sectionId": "s1",
+      "id": "s6-78",
+      "sectionId": "s6",
       "title": "1.创建过程和 web 项目示例一样",
       "kind": "text",
       "body": "注意：需要选择 jpa 和对应数据库的驱动"
     },
     {
-      "id": "s1-85",
-      "sectionId": "s1",
+      "id": "s6-79",
+      "sectionId": "s6",
       "title": "2. 配置数据库连接",
       "kind": "text",
       "body": "默认情况下，Spring Boot 使用 H2 Database 作为内嵌数据库。如果你想使用其他数据库，可以在 `application.properties`（或 `application.yml`）文件中配置数据库连接信息。"
     },
     {
-      "id": "s1-86",
-      "sectionId": "s1",
+      "id": "s6-80",
+      "sectionId": "s6",
       "title": "2. 配置数据库连接",
       "kind": "text",
       "body": "例如，使用 H2 Database 的默认配置："
     },
     {
-      "id": "s1-87",
-      "sectionId": "s1",
+      "id": "s6-81",
+      "sectionId": "s6",
       "title": "2. 配置数据库连接",
       "kind": "code",
       "lang": "properties",
       "code": "# application.properties\n\nspring.datasource.url=jdbc:h2:mem:testdb\nspring.datasource.driverClassName=org.h2.Driver\nspring.datasource.username=username\nspring.datasource.password=password\nspring.jpa.database-platform=org.hibernate.dialect.H2Dialect\n\n# Hibernate ddl auto (create, create-drop, validate, update)\nspring.jpa.hibernate.ddl-auto=update"
     },
     {
-      "id": "s1-88",
-      "sectionId": "s1",
+      "id": "s6-82",
+      "sectionId": "s6",
       "title": "5. 创建一个简单的控制器来测试",
       "kind": "text",
       "body": "创建一个简单的控制器 `UserController`，用来处理 HTTP 请求，并操作 `UserRepository` 来访问数据库。"
     },
     {
-      "id": "s1-89",
-      "sectionId": "s1",
+      "id": "s6-83",
+      "sectionId": "s6",
       "title": "5. 创建一个简单的控制器来测试",
       "kind": "code",
       "lang": "java",
       "code": "package com.example.userdemo;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.web.bind.annotation.*;\n\nimport java.util.List;\n\n@RestController\n@RequestMapping(\"/users\")\npublic class UserController {\n\n    @Autowired\n    private UserRepository userRepository;\n\n    //  获取所有用户\n    @GetMapping(\"/\")\n    public List<User> getAllUsers() {\n        return userRepository.findAll();\n    }\n\n    // 通过 id 获取用户\n    @GetMapping(\"/{id}\")\n    public User getUserById(@PathVariable(\"id\") Long id) {\n        return userRepository.findById(id).orElse(null);\n    }\n\n    // POST 创建新用户\n    @PostMapping(\"/\")\n    public User addUser(@RequestBody User user) {\n        return userRepository.save(user);\n    }\n\n    // PUT 更新用户\n    @PutMapping(\"/{id}\")\n    public User updateUser(@PathVariable(\"id\") Long id, @RequestBody User userDetails) {\n        User user = userRepository.findById(id).orElse(null);\n        if (user != null) {\n            user.setUsername(userDetails.getUsername());\n            user.setAge(userDetails.getAge());\n            user.setSex(userDetails.getSex());\n            return userRepository.save(user);\n        }\n        return null;\n    }\n\n    // DELETE 删除用户 \n    @DeleteMapping(\"/{id}\")\n    public void deleteUser(@PathVariable(\"id\") Long id) {\n        userRepository.deleteById(id);\n    }\n}"
     },
     {
-      "id": "s1-90",
-      "sectionId": "s1",
+      "id": "s6-84",
+      "sectionId": "s6",
       "title": "4. 创建 UserRepository 接口",
       "kind": "text",
       "body": "在同样的目录下创建一个接口 `UserRepository`，继承自 `JpaRepository<User, Long>`，这样 Spring Data JPA 将会自动实现一些基本的数据库操作方法。"
     },
     {
-      "id": "s1-91",
-      "sectionId": "s1",
+      "id": "s6-85",
+      "sectionId": "s6",
       "title": "4. 创建 UserRepository 接口",
       "kind": "code",
       "lang": "java",
       "code": "package com.example.userdemo;\nimport org.springframework.data.jpa.repository.JpaRepository;\npublic interface UserRepository extends JpaRepository<User, Long> {\n}"
     },
     {
-      "id": "s1-92",
-      "sectionId": "s1",
+      "id": "s6-86",
+      "sectionId": "s6",
       "title": "3.  创建实体类 `User`",
       "kind": "text",
       "body": "在 `src/main/java/com/example/userdemo` 目录下创建一个名为 `User` 的实体类："
     },
     {
-      "id": "s1-93",
-      "sectionId": "s1",
+      "id": "s6-87",
+      "sectionId": "s6",
       "title": "3.  创建实体类 `User`",
       "kind": "code",
       "lang": "java",
       "code": "package com.example.userdemo;\n\nimport javax.persistence.Entity;\nimport javax.persistence.GeneratedValue;\nimport javax.persistence.GenerationType;\nimport javax.persistence.Id;\n\n@Entity\npublic class User {\n\n    @Id\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\n    private Long userId;\n    private String username;\n    private Integer age;\n    private String sex;\n    // Constructors, getters, and setters 省略\n}"
     },
     {
-      "id": "s1-94",
-      "sectionId": "s1",
+      "id": "s6-88",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "使用 Maven 或 Gradle 构建并运行你的应用程序。然后，可以使用 Postman 或浏览器访问以下 API 来测试你的应用程序："
     },
     {
-      "id": "s1-95",
-      "sectionId": "s1",
+      "id": "s6-89",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "• **GET** `http://localhost:8080/users/`"
     },
     {
-      "id": "s1-96",
-      "sectionId": "s1",
+      "id": "s6-90",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "获取所有用户"
     },
     {
-      "id": "s1-97",
-      "sectionId": "s1",
+      "id": "s6-91",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "• **GET** `http://localhost:8080/users/{id}`"
     },
     {
-      "id": "s1-98",
-      "sectionId": "s1",
+      "id": "s6-92",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "根据用户ID获取用户信息"
     },
     {
-      "id": "s1-99",
-      "sectionId": "s1",
+      "id": "s6-93",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "• **POST** `http://localhost:8080/users/`"
     },
     {
-      "id": "s1-100",
-      "sectionId": "s1",
+      "id": "s6-94",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "添加新用户（Body 中包含 JSON 数据）"
     },
     {
-      "id": "s1-101",
-      "sectionId": "s1",
+      "id": "s6-95",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "• **PUT** `http://localhost:8080/users/{id}`"
     },
     {
-      "id": "s1-102",
-      "sectionId": "s1",
+      "id": "s6-96",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "更新用户信息（Body 中包含 JSON 数据）"
     },
     {
-      "id": "s1-103",
-      "sectionId": "s1",
+      "id": "s6-97",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "• **DELETE** `http://localhost:8080/users/{id}`"
     },
     {
-      "id": "s1-104",
-      "sectionId": "s1",
+      "id": "s6-98",
+      "sectionId": "s6",
       "title": "6. 运行应用程序并测试",
       "kind": "text",
       "body": "删除用户"
     },
     {
-      "id": "s1-105",
-      "sectionId": "s1",
-      "title": "6. 运行应用程序并测试",
-      "kind": "text",
-      "body": "测试\n---"
-    },
-    {
-      "id": "s1-106",
-      "sectionId": "s1",
+      "id": "s7-99",
+      "sectionId": "s7",
       "title": "1. 创建一个简单的项目",
       "kind": "text",
       "body": "在 `src/main/java/com/example/demo` 目录下创建一个名为 `HelloController.java` 的类："
     },
     {
-      "id": "s1-107",
-      "sectionId": "s1",
+      "id": "s7-100",
+      "sectionId": "s7",
       "title": "1. 创建一个简单的项目",
       "kind": "code",
       "lang": "java",
       "code": "package com.example.demo;\n\nimport org.springframework.web.bind.annotation.GetMapping;\nimport org.springframework.web.bind.annotation.RestController;\n\n@RestController\npublic class HelloController {\n  @GetMapping(\"/hello\")\n  public String hello() {\n      return \"Hello, World!\";\n  }\n}"
     },
     {
-      "id": "s1-108",
-      "sectionId": "s1",
+      "id": "s7-101",
+      "sectionId": "s7",
       "title": "1. 创建一个简单的项目",
       "kind": "text",
       "body": "创建过程同 web 项目创建"
     },
     {
-      "id": "s1-109",
-      "sectionId": "s1",
+      "id": "s7-102",
+      "sectionId": "s7",
       "title": "2. 编写测试类",
       "kind": "text",
       "body": "在 `src/test/java/com/example/demo` 目录下创建一个名为 `HelloControllerTest.java` 的测试类："
     },
     {
-      "id": "s1-110",
-      "sectionId": "s1",
+      "id": "s7-103",
+      "sectionId": "s7",
       "title": "2. 编写测试类",
       "kind": "code",
       "lang": "java",
       "code": "package com.example.demo;\n\nimport org.junit.jupiter.api.Test;\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;\nimport org.springframework.test.web.servlet.MockMvc;\nimport org.springframework.test.web.servlet.request.MockMvcRequestBuilders;\nimport org.springframework.test.web.servlet.result.MockMvcResultMatchers;\n\nimport static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;\n\n@SpringBootTest\n@AutoConfigureMockMvc\npublic class HelloControllerTest {\n\n    @Autowired\n    private MockMvc mockMvc;\n\n    @Test\n    public void helloTest() throws Exception {\n        mockMvc.perform(MockMvcRequestBuilders.get(\"/hello\"))\n                .andExpect(MockMvcResultMatchers.status().isOk())\n                .andExpect(MockMvcResultMatchers.content().string(\"Hello, World!\"))\n                .andDo(print());\n    }\n}"
     },
     {
-      "id": "s1-111",
-      "sectionId": "s1",
+      "id": "s7-104",
+      "sectionId": "s7",
       "title": "3. 解释测试类的关键点",
       "kind": "text",
       "body": "• `@SpringBootTest`: 这个注解告诉 Spring Boot 在测试时启动整个 Spring 应用程序上下文。\n• `@AutoConfigureMockMvc`: 这个注解确保在测试中自动配置 MockMvc 实例，用于模拟 HTTP 请求。\n• `@Autowired private MockMvc mockMvc`: 注入 MockMvc 实例，用于执行 HTTP 请求并验证响应。\n• `@Test public void helloTest()`: 这是一个 JUnit 测试方法，用来测试 `HelloController` 中的 `hello()` 方法。\n• `mockMvc.perform(...)`: 执行一个 GET 请求到 `/hello` 接口。\n• `andExpect(MockMvcResultMatchers.status().isOk())`: 预期响应的状态码是 200 OK。\n• `andExpect(MockMvcResultMatchers.content().string(\"Hello, World!\"))`: 预期响应的内容是 \"Hello, World!\"。\n• `andDo(print())`: 打印请求和响应的详细信息，方便调试。"
     },
     {
-      "id": "s1-112",
-      "sectionId": "s1",
+      "id": "s7-105",
+      "sectionId": "s7",
       "title": "4. 运行测试",
       "kind": "text",
       "body": "运行测试，确保程序正确."
     },
     {
-      "id": "s1-113",
-      "sectionId": "s1",
-      "title": "4. 运行测试",
-      "kind": "text",
-      "body": "部署与扩展\n---"
-    },
-    {
-      "id": "s1-114",
-      "sectionId": "s1",
+      "id": "s8-106",
+      "sectionId": "s8",
       "title": "1. 打包方式",
       "kind": "text",
       "body": "Spring Boot 应用程序可以打包为以下几种方式之一："
     },
     {
-      "id": "s1-115",
-      "sectionId": "s1",
+      "id": "s8-107",
+      "sectionId": "s8",
       "title": "1. 打包方式",
       "kind": "text",
       "body": "#### 可执行 JAR 文件"
     },
     {
-      "id": "s1-116",
-      "sectionId": "s1",
+      "id": "s8-108",
+      "sectionId": "s8",
       "title": "1. 打包方式",
       "kind": "text",
       "body": "• 最常见的方式是将 Spring Boot 应用程序打包成一个可执行的 JAR 文件（Java Archive）。\n• JAR 文件中包含了所有的依赖项，可以通过 `java -jar` 命令来运行。"
     },
     {
-      "id": "s1-117",
-      "sectionId": "s1",
+      "id": "s8-109",
+      "sectionId": "s8",
       "title": "1. 打包方式",
       "kind": "text",
       "body": "#### WAR 文件"
     },
     {
-      "id": "s1-118",
-      "sectionId": "s1",
+      "id": "s8-110",
+      "sectionId": "s8",
       "title": "1. 打包方式",
       "kind": "text",
       "body": "• 如果你需要将 Spring Boot 应用程序部署到外部的 Servlet 容器（如 Tomcat、Jetty 等），你可以将应用程序打包成一个 WAR 文件（Web Application Archive）。\n• WAR 文件适合传统的 Java Web 应用程序部署方式。"
     },
     {
-      "id": "s1-119",
-      "sectionId": "s1",
+      "id": "s8-111",
+      "sectionId": "s8",
       "title": "3. 打包过程概述",
       "kind": "text",
       "body": "当你运行 Maven 的构建命令时，它们会执行以下几个主要步骤来打包你的应用程序："
     },
     {
-      "id": "s1-120",
-      "sectionId": "s1",
+      "id": "s8-112",
+      "sectionId": "s8",
       "title": "3. 打包过程概述",
       "kind": "text",
       "body": "• `依赖项解析和下载`：构建工具会检查你项目中的依赖项，下载缺失的依赖并构建整个依赖树。\n• `编译代码`：构建工具会编译你的 Java 代码、资源文件等。\n• `运行测试`：通常会执行单元测试和集成测试，确保代码质量和功能正确性。\n• `打包应用程序`：\n• 对于可执行 JAR 文件：构建工具会将编译后的类文件、资源文件和依赖项打包到一个 JAR 文件中。同时，它会生成一个 MANIFEST.MF 文件，指定应用程序的入口点（main class）。\n• 对于 WAR 文件：构建工具会将编译后的类文件、资源文件和依赖项打包成一个 WAR 文件，包括 WEB-INF 目录和其他必要的内容。\n• `输出结果`：构建工具会在指定的目录下生成打包好的 JAR 或 WAR 文件，通常位于 `target` 目录下（Maven）。"
     },
     {
-      "id": "s1-121",
-      "sectionId": "s1",
+      "id": "s8-113",
+      "sectionId": "s8",
       "title": "3. 打包过程概述",
       "kind": "text",
       "body": "在你的 Spring Boot 项目中，通常有一个入口类（如 `Application.java` 或者根据你的项目命名）。这个类使用 `@SpringBootApplication` 注解标记，它包含了 `main` 方法用来启动应用程序。"
     },
     {
-      "id": "s1-122",
-      "sectionId": "s1",
+      "id": "s8-114",
+      "sectionId": "s8",
       "title": "2. 打包工具",
       "kind": "text",
       "body": "通常使用以下两种构建工具来打包 Spring Boot 应用程序："
     },
     {
-      "id": "s1-123",
-      "sectionId": "s1",
+      "id": "s8-115",
+      "sectionId": "s8",
       "title": "2. 打包工具",
       "kind": "text",
       "body": "#### **Maven**"
     },
     {
-      "id": "s1-124",
-      "sectionId": "s1",
+      "id": "s8-116",
+      "sectionId": "s8",
       "title": "2. 打包工具",
       "kind": "text",
       "body": "• 使用 Maven 的 `mvn package` 命令可以将应用程序打包为 JAR 或 WAR 文件。\n• 在 `pom.xml` 文件中，Spring Boot 应用程序通常会依赖于 `spring-boot-starter-parent` 父项目，这简化了 Maven 配置和依赖管理。"
     },
     {
-      "id": "s1-125",
-      "sectionId": "s1",
+      "id": "s8-117",
+      "sectionId": "s8",
       "title": "4. 示例",
       "kind": "text",
       "body": "假设你有一个简单的 Spring Boot 应用程序，并且已经配置好了 Maven 或 Gradle。运行以下命令即可进行打包："
     },
     {
-      "id": "s1-126",
-      "sectionId": "s1",
+      "id": "s8-118",
+      "sectionId": "s8",
       "title": "4. 示例",
       "kind": "text",
       "body": "• **Maven**：`mvn clean package`"
     },
     {
-      "id": "s1-127",
-      "sectionId": "s1",
+      "id": "s8-119",
+      "sectionId": "s8",
       "title": "4. 示例",
       "kind": "text",
       "body": "构建工具会执行以上步骤，生成可执行的 JAR 文件或 WAR 文件，你可以根据需要进行部署和运行。"
@@ -939,7 +920,6 @@
     "path": "docs/springboot.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/springboot.md",
-    "generatedAt": "2025-12-16T07:36:11.433Z",
     "lang": "zh",
     "mode": "local"
   }

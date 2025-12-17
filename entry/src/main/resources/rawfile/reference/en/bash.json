@@ -1,6 +1,8 @@
 {
   "id": "bash",
-  "title": "('lib/**/*.rb' => 'lib/a/b/c.rb')",
+  "name": "Bash",
+  "title": "This is a quick reference cheat sheet to getting started with linux bash shell scripting.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/bash.svg",
   "sections": [
     {
       "id": "intro",
@@ -11,6 +13,56 @@
       "id": "s1",
       "title": "Getting Started",
       "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Bash Parameter expansions",
+      "startIndex": 31
+    },
+    {
+      "id": "s3",
+      "title": "Bash Arrays",
+      "startIndex": 56
+    },
+    {
+      "id": "s4",
+      "title": "Bash Dictionaries",
+      "startIndex": 71
+    },
+    {
+      "id": "s5",
+      "title": "Bash Conditionals",
+      "startIndex": 77
+    },
+    {
+      "id": "s6",
+      "title": "Bash Loops",
+      "startIndex": 123
+    },
+    {
+      "id": "s7",
+      "title": "Bash Functions",
+      "startIndex": 138
+    },
+    {
+      "id": "s8",
+      "title": "Bash Options",
+      "startIndex": 145
+    },
+    {
+      "id": "s9",
+      "title": "Bash History",
+      "startIndex": 147
+    },
+    {
+      "id": "s10",
+      "title": "Miscellaneous",
+      "startIndex": 167
+    },
+    {
+      "id": "s11",
+      "title": "Also see",
+      "startIndex": 199
     }
   ],
   "cards": [
@@ -49,1218 +101,1536 @@
       "title": "hello.sh",
       "kind": "code",
       "lang": "",
-      "code": "\n### Variables"
+      "code": "\n### Variables\n\n```bash\nNAME=\"John\"\n\necho ${NAME}    # => John (Variables)\necho $NAME      # => John (Variables)\necho \"$NAME\"    # => John (Variables)\necho '$NAME'    # => $NAME (Exact string)\necho \"${NAME}!\" # => John! (Variables)\n\nNAME = \"John\"   # => Error (about space)"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "hello.sh",
-      "kind": "text",
-      "body": "NAME=\"John\""
+      "title": "Comments",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# This is an inline Bash comment."
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "hello.sh",
-      "kind": "text",
-      "body": "echo ${NAME}    # => John (Variables)\necho $NAME      # => John (Variables)\necho \"$NAME\"    # => John (Variables)\necho '$NAME'    # => $NAME (Exact string)\necho \"${NAME}!\" # => John! (Variables)"
+      "title": "Comments",
+      "kind": "code",
+      "lang": "bash",
+      "code": ": '\nThis is a\nvery neat comment\nin bash\n'"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
-      "title": "hello.sh",
+      "title": "Comments",
       "kind": "text",
-      "body": "NAME = \"John\"   # => Error (about space)"
+      "body": "Multi-line comments use `:'` to open and `'` to close"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "hello.sh",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Comments"
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`$1` … `$9`",
+      "back": "Parameter 1 ... 9"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": ": '\nThis is a\nvery neat comment\nin bash\n'"
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`$0`",
+      "back": "Name of the script itself"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\nMulti-line comments use `:'` to open and `'` to close\n\n### Arguments {.row-span-2}\n\n| Expression  | Description                           |\n| ----------- | ------------------------------------- |\n| `$1` … `$9` | Parameter 1 ... 9                     |\n| `$0`        | Name of the script itself             |\n| `$1`        | First argument                        |\n| `${10}`     | Positional parameter 10               |\n| `$#`        | Number of arguments                   |\n| `$$`        | Process id of the shell               |\n| `$*`        | All arguments                         |\n| `$@`        | All arguments, starting from first    |\n| `$-`        | Current options                       |\n| `$_`        | Last argument of the previous command |\n\nSee: [Special parameters](http://wiki.bash-hackers.org/syntax/shellvars#special_parameters_and_shell_variables)\n\n### Functions"
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`$1`",
+      "back": "First argument"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "get_name() {\necho \"John\"\n}"
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`${10}`",
+      "back": "Positional parameter 10"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "echo \"You are $(get_name)\""
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`$#`",
+      "back": "Number of arguments"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSee: [Functions](#bash-functions)\n\n### Conditionals {#conditionals-example}"
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`$$`",
+      "back": "Process id of the shell"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if [[ -z \"$string\" ]]; then\necho \"String is empty\"\nelif [[ -n \"$string\" ]]; then\necho \"String is not empty\"\nfi"
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`$*`",
+      "back": "All arguments"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSee: [Conditionals](#bash-conditionals)\n\n### Brace expansion"
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`$@`",
+      "back": "All arguments, starting from first"
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "echo {A,B}.js"
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`$-`",
+      "back": "Current options"
     },
     {
       "id": "s1-17",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n---\n\n| Expression | Description         |\n| ---------- | ------------------- |\n| `{A,B}`    | Same as `A B`       |\n| `{A,B}.js` | Same as `A.js B.js` |\n| `{1..5}`   | Same as `1 2 3 4 5` |\n\nSee: [Brace expansion](http://wiki.bash-hackers.org/syntax/expansion/brace)\n\n### Shell execution"
+      "title": "Arguments",
+      "kind": "qa",
+      "front": "`$_`",
+      "back": "Last argument of the previous command"
     },
     {
       "id": "s1-18",
       "sectionId": "s1",
-      "title": "Getting Started",
+      "title": "Arguments",
       "kind": "text",
-      "body": "echo \"I'm in $(PWD)\""
+      "body": "See: [Special parameters](http://wiki.bash-hackers.org/syntax/shellvars#special_parameters_and_shell_variables)"
     },
     {
       "id": "s1-19",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "echo \"I'm in `pwd`\""
+      "title": "Functions",
+      "kind": "code",
+      "lang": "bash",
+      "code": "get_name() {\n    echo \"John\"\n}\n\necho \"You are $(get_name)\""
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSee: [Command substitution](http://wiki.bash-hackers.org/syntax/expansion/cmdsubst)\n\n## Bash Parameter expansions\n\n### Syntax {.row-span-2}\n\n| Code              | Description         |\n| ----------------- | ------------------- |\n| `${FOO%suffix}`   | Remove suffix       |\n| `${FOO#prefix}`   | Remove prefix       |\n| `${FOO%%suffix}`  | Remove long suffix  |\n| `${FOO##prefix}`  | Remove long prefix  |\n| `${FOO/from/to}`  | Replace first match |\n| `${FOO//from/to}` | Replace all         |\n| `${FOO/%from/to}` | Replace suffix      |\n| `${FOO/#from/to}` | Replace prefix      |\n\n#### Substrings\n\n| Expression      | Description                    |\n| --------------- | ------------------------------ |\n| `${FOO:0:3}`    | Substring _(position, length)_ |\n| `${FOO:(-3):3}` | Substring from the right       |\n\n#### Length\n\n| Expression | Description      |\n| ---------- | ---------------- |\n| `${#FOO}`  | Length of `$FOO` |\n\n#### Default values\n\n| Expression        | Description                              |\n| ----------------- | ---------------------------------------- |\n| `${FOO:-val}`     | `$FOO`, or `val` if unset                |\n| `${FOO:=val}`     | Set `$FOO` to `val` if unset             |\n| `${FOO:+val}`     | `val` if `$FOO` is set                   |\n| `${FOO:?message}` | Show message and exit if `$FOO` is unset |\n\n### Substitution"
+      "title": "Functions",
+      "kind": "text",
+      "body": "See: [Functions](#bash-functions)"
     },
     {
       "id": "s1-21",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "echo ${food:-Cake}  #=> $food or \"Cake\""
+      "title": "Conditionals",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if [[ -z \"$string\" ]]; then\n    echo \"String is empty\"\nelif [[ -n \"$string\" ]]; then\n    echo \"String is not empty\"\nfi"
     },
     {
       "id": "s1-22",
       "sectionId": "s1",
-      "title": "Getting Started",
+      "title": "Conditionals",
       "kind": "text",
-      "body": "STR=\"/path/to/foo.cpp\"\necho ${STR%.cpp}    # /path/to/foo\necho ${STR%.cpp}.o  # /path/to/foo.o\necho ${STR%/*}      # /path/to"
+      "body": "See: [Conditionals](#bash-conditionals)"
     },
     {
       "id": "s1-23",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "echo ${STR##*.}     # cpp (extension)\necho ${STR##*/}     # foo.cpp (basepath)"
+      "title": "Brace expansion",
+      "kind": "code",
+      "lang": "bash",
+      "code": "echo {A,B}.js"
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
-      "title": "Getting Started",
+      "title": "Brace expansion",
       "kind": "text",
-      "body": "echo ${STR#*/}      # path/to/foo.cpp\necho ${STR##*/}     # foo.cpp"
+      "body": "---"
     },
     {
       "id": "s1-25",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "echo ${STR/foo/bar} # /path/to/bar.cpp"
+      "title": "Brace expansion",
+      "kind": "qa",
+      "front": "`{A,B}`",
+      "back": "Same as `A B`"
     },
     {
       "id": "s1-26",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Slicing"
+      "title": "Brace expansion",
+      "kind": "qa",
+      "front": "`{A,B}.js`",
+      "back": "Same as `A.js B.js`"
     },
     {
       "id": "s1-27",
       "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "name=\"John\"\necho ${name}           # => John\necho ${name:0:2}       # => Jo\necho ${name::2}        # => Jo\necho ${name::-1}       # => Joh\necho ${name:(-1)}      # => n\necho ${name:(-2)}      # => hn\necho ${name:(-2):2}    # => hn"
+      "title": "Brace expansion",
+      "kind": "qa",
+      "front": "`{1..5}`",
+      "back": "Same as `1 2 3 4 5`"
     },
     {
       "id": "s1-28",
       "sectionId": "s1",
-      "title": "Getting Started",
+      "title": "Brace expansion",
       "kind": "text",
-      "body": "length=2\necho ${name:0:length}  # => Jo"
+      "body": "See: [Brace expansion](http://wiki.bash-hackers.org/syntax/expansion/brace)"
     },
     {
       "id": "s1-29",
       "sectionId": "s1",
-      "title": "Getting Started",
+      "title": "Shell execution",
       "kind": "code",
-      "lang": "",
-      "code": "\nSee: [Parameter expansion](http://wiki.bash-hackers.org/syntax/pe)\n\n### basepath & dirpath"
+      "lang": "bash",
+      "code": "# => I'm in /path/of/current\necho \"I'm in $(PWD)\"\n\n# Same as:\necho \"I'm in `pwd`\""
     },
     {
       "id": "s1-30",
       "sectionId": "s1",
-      "title": "Getting Started",
+      "title": "Shell execution",
       "kind": "text",
-      "body": "SRC=\"/path/to/foo.cpp\""
+      "body": "See: [Command substitution](http://wiki.bash-hackers.org/syntax/expansion/cmdsubst)"
     },
     {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "BASEPATH=${SRC##*/}\necho $BASEPATH  # => \"foo.cpp\""
+      "id": "s2-31",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO%suffix}`",
+      "back": "Remove suffix"
     },
     {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "DIRPATH=${SRC%$BASEPATH}\necho $DIRPATH   # => \"/path/to/\""
+      "id": "s2-32",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO#prefix}`",
+      "back": "Remove prefix"
     },
     {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s2-33",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO%%suffix}`",
+      "back": "Remove long suffix"
+    },
+    {
+      "id": "s2-34",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO##prefix}`",
+      "back": "Remove long prefix"
+    },
+    {
+      "id": "s2-35",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO/from/to}`",
+      "back": "Replace first match"
+    },
+    {
+      "id": "s2-36",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO//from/to}`",
+      "back": "Replace all"
+    },
+    {
+      "id": "s2-37",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO/%from/to}`",
+      "back": "Replace suffix"
+    },
+    {
+      "id": "s2-38",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO/#from/to}`",
+      "back": "Replace prefix"
+    },
+    {
+      "id": "s2-39",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "#### Substrings"
+    },
+    {
+      "id": "s2-40",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO:0:3}`",
+      "back": "Substring _(position, length)_"
+    },
+    {
+      "id": "s2-41",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO:(-3):3}`",
+      "back": "Substring from the right"
+    },
+    {
+      "id": "s2-42",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "#### Length"
+    },
+    {
+      "id": "s2-43",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${#FOO}`",
+      "back": "Length of `$FOO`"
+    },
+    {
+      "id": "s2-44",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "text",
+      "body": "#### Default values"
+    },
+    {
+      "id": "s2-45",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO:-val}`",
+      "back": "`$FOO`, or `val` if unset"
+    },
+    {
+      "id": "s2-46",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO:=val}`",
+      "back": "Set `$FOO` to `val` if unset"
+    },
+    {
+      "id": "s2-47",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO:+val}`",
+      "back": "`val` if `$FOO` is set"
+    },
+    {
+      "id": "s2-48",
+      "sectionId": "s2",
+      "title": "Syntax",
+      "kind": "qa",
+      "front": "`${FOO:?message}`",
+      "back": "Show message and exit if `$FOO` is unset"
+    },
+    {
+      "id": "s2-49",
+      "sectionId": "s2",
+      "title": "Substitution",
+      "kind": "code",
+      "lang": "bash",
+      "code": "echo ${food:-Cake}  #=> $food or \"Cake\""
+    },
+    {
+      "id": "s2-50",
+      "sectionId": "s2",
+      "title": "Substitution",
+      "kind": "code",
+      "lang": "bash",
+      "code": "STR=\"/path/to/foo.cpp\"\necho ${STR%.cpp}    # /path/to/foo\necho ${STR%.cpp}.o  # /path/to/foo.o\necho ${STR%/*}      # /path/to\n\necho ${STR##*.}     # cpp (extension)\necho ${STR##*/}     # foo.cpp (basepath)\n\necho ${STR#*/}      # path/to/foo.cpp\necho ${STR##*/}     # foo.cpp\n\necho ${STR/foo/bar} # /path/to/bar.cpp"
+    },
+    {
+      "id": "s2-51",
+      "sectionId": "s2",
+      "title": "Slicing",
+      "kind": "code",
+      "lang": "bash",
+      "code": "name=\"John\"\necho ${name}           # => John\necho ${name:0:2}       # => Jo\necho ${name::2}        # => Jo\necho ${name::-1}       # => Joh\necho ${name:(-1)}      # => n\necho ${name:(-2)}      # => hn\necho ${name:(-2):2}    # => hn\n\nlength=2\necho ${name:0:length}  # => Jo"
+    },
+    {
+      "id": "s2-52",
+      "sectionId": "s2",
+      "title": "Slicing",
+      "kind": "text",
+      "body": "See: [Parameter expansion](http://wiki.bash-hackers.org/syntax/pe)"
+    },
+    {
+      "id": "s2-53",
+      "sectionId": "s2",
+      "title": "basepath & dirpath",
+      "kind": "code",
+      "lang": "bash",
+      "code": "SRC=\"/path/to/foo.cpp\""
+    },
+    {
+      "id": "s2-54",
+      "sectionId": "s2",
+      "title": "basepath & dirpath",
+      "kind": "code",
+      "lang": "bash",
+      "code": "BASEPATH=${SRC##*/}\necho $BASEPATH  # => \"foo.cpp\"\n\n\nDIRPATH=${SRC%$BASEPATH}\necho $DIRPATH   # => \"/path/to/\""
+    },
+    {
+      "id": "s2-55",
+      "sectionId": "s2",
+      "title": "Transform",
+      "kind": "code",
+      "lang": "bash",
+      "code": "STR=\"HELLO WORLD!\"\necho ${STR,}   # => hELLO WORLD!\necho ${STR,,}  # => hello world!\n\nSTR=\"hello world!\"\necho ${STR^}   # => Hello world!\necho ${STR^^}  # => HELLO WORLD!\n\nARR=(hello World)\necho \"${ARR[@],}\" # => hello world\necho \"${ARR[@]^}\" # => Hello World"
+    },
+    {
+      "id": "s3-56",
+      "sectionId": "s3",
+      "title": "Defining arrays",
+      "kind": "code",
+      "lang": "bash",
+      "code": "Fruits=('Apple' 'Banana' 'Orange')\n\nFruits[0]=\"Apple\"\nFruits[1]=\"Banana\"\nFruits[2]=\"Orange\"\n\nARRAY1=(foo{1..2}) # => foo1 foo2\nARRAY2=({A..D})    # => A B C D\n\n# Merge => foo1 foo2 A B C D\nARRAY3=(${ARRAY1[@]} ${ARRAY2[@]})\n\n# declare construct\ndeclare -a Numbers=(1 2 3)\nNumbers+=(4 5) # Append => 1 2 3 4 5"
+    },
+    {
+      "id": "s3-57",
+      "sectionId": "s3",
+      "title": "Indexing",
+      "kind": "qa",
+      "front": "`${Fruits[0]}`",
+      "back": "First element"
+    },
+    {
+      "id": "s3-58",
+      "sectionId": "s3",
+      "title": "Indexing",
+      "kind": "qa",
+      "front": "`${Fruits[-1]}`",
+      "back": "Last element"
+    },
+    {
+      "id": "s3-59",
+      "sectionId": "s3",
+      "title": "Indexing",
+      "kind": "qa",
+      "front": "`${Fruits[*]}`",
+      "back": "All elements"
+    },
+    {
+      "id": "s3-60",
+      "sectionId": "s3",
+      "title": "Indexing",
+      "kind": "qa",
+      "front": "`${Fruits[@]}`",
+      "back": "All elements"
+    },
+    {
+      "id": "s3-61",
+      "sectionId": "s3",
+      "title": "Indexing",
+      "kind": "qa",
+      "front": "`${#Fruits[@]}`",
+      "back": "Number of all"
+    },
+    {
+      "id": "s3-62",
+      "sectionId": "s3",
+      "title": "Indexing",
+      "kind": "qa",
+      "front": "`${#Fruits}`",
+      "back": "Length of 1st"
+    },
+    {
+      "id": "s3-63",
+      "sectionId": "s3",
+      "title": "Indexing",
+      "kind": "qa",
+      "front": "`${#Fruits[3]}`",
+      "back": "Length of nth"
+    },
+    {
+      "id": "s3-64",
+      "sectionId": "s3",
+      "title": "Indexing",
+      "kind": "qa",
+      "front": "`${Fruits[@]:3:2}`",
+      "back": "Range"
+    },
+    {
+      "id": "s3-65",
+      "sectionId": "s3",
+      "title": "Indexing",
+      "kind": "qa",
+      "front": "`${!Fruits[@]}`",
+      "back": "Keys of all"
+    },
+    {
+      "id": "s3-66",
+      "sectionId": "s3",
+      "title": "Iteration",
+      "kind": "code",
+      "lang": "bash",
+      "code": "Fruits=('Apple' 'Banana' 'Orange')\n\nfor e in \"${Fruits[@]}\"; do\n    echo $e\ndone"
+    },
+    {
+      "id": "s3-67",
+      "sectionId": "s3",
+      "title": "Iteration",
+      "kind": "text",
+      "body": "#### With index"
+    },
+    {
+      "id": "s3-68",
+      "sectionId": "s3",
+      "title": "Iteration",
+      "kind": "code",
+      "lang": "bash",
+      "code": "for i in \"${!Fruits[@]}\"; do\n  printf \"%s\\t%s\\n\" \"$i\" \"${Fruits[$i]}\"\ndone"
+    },
+    {
+      "id": "s3-69",
+      "sectionId": "s3",
+      "title": "Operations",
+      "kind": "code",
+      "lang": "bash",
+      "code": "Fruits=(\"${Fruits[@]}\" \"Watermelon\")     # Push\nFruits+=('Watermelon')                   # Also Push\nFruits=( ${Fruits[@]/Ap*/} )             # Remove by regex match\nunset Fruits[2]                          # Remove one item\nFruits=(\"${Fruits[@]}\")                  # Duplicate\nFruits=(\"${Fruits[@]}\" \"${Veggies[@]}\")  # Concatenate\nlines=(`cat \"logfile\"`)                  # Read from file"
+    },
+    {
+      "id": "s3-70",
+      "sectionId": "s3",
+      "title": "Arrays as arguments",
+      "kind": "code",
+      "lang": "bash",
+      "code": "function extract()\n{\n    local -n myarray=$1\n    local idx=$2\n    echo \"${myarray[$idx]}\"\n}\nFruits=('Apple' 'Banana' 'Orange')\nextract Fruits 2     # => Orangle"
+    },
+    {
+      "id": "s4-71",
+      "sectionId": "s4",
+      "title": "Defining",
+      "kind": "code",
+      "lang": "bash",
+      "code": "declare -A sounds"
+    },
+    {
+      "id": "s4-72",
+      "sectionId": "s4",
+      "title": "Defining",
+      "kind": "code",
+      "lang": "bash",
+      "code": "sounds[dog]=\"bark\"\nsounds[cow]=\"moo\"\nsounds[bird]=\"tweet\"\nsounds[wolf]=\"howl\""
+    },
+    {
+      "id": "s4-73",
+      "sectionId": "s4",
+      "title": "Working with dictionaries",
+      "kind": "code",
+      "lang": "bash",
+      "code": "echo ${sounds[dog]} # Dog's sound\necho ${sounds[@]}   # All values\necho ${!sounds[@]}  # All keys\necho ${#sounds[@]}  # Number of elements\nunset sounds[dog]   # Delete dog"
+    },
+    {
+      "id": "s4-74",
+      "sectionId": "s4",
+      "title": "Iteration",
+      "kind": "code",
+      "lang": "bash",
+      "code": "for val in \"${sounds[@]}\"; do\n    echo $val\ndone"
+    },
+    {
+      "id": "s4-75",
+      "sectionId": "s4",
+      "title": "Iteration",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s4-76",
+      "sectionId": "s4",
+      "title": "Iteration",
+      "kind": "code",
+      "lang": "bash",
+      "code": "for key in \"${!sounds[@]}\"; do\n    echo $key\ndone"
+    },
+    {
+      "id": "s5-77",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`[[ NUM -eq NUM ]]`",
+      "back": "<yel>Eq</yel>ual"
+    },
+    {
+      "id": "s5-78",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`[[ NUM -ne NUM ]]`",
+      "back": "<yel>N</yel>ot <yel>e</yel>qual"
+    },
+    {
+      "id": "s5-79",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`[[ NUM -lt NUM ]]`",
+      "back": "<yel>L</yel>ess <yel>t</yel>han"
+    },
+    {
+      "id": "s5-80",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`[[ NUM -le NUM ]]`",
+      "back": "<yel>L</yel>ess than or <yel>e</yel>qual"
+    },
+    {
+      "id": "s5-81",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`[[ NUM -gt NUM ]]`",
+      "back": "<yel>G</yel>reater <yel>t</yel>han"
+    },
+    {
+      "id": "s5-82",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`[[ NUM -ge NUM ]]`",
+      "back": "<yel>G</yel>reater than or <yel>e</yel>qual"
+    },
+    {
+      "id": "s5-83",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`(( NUM < NUM ))`",
+      "back": "Less than"
+    },
+    {
+      "id": "s5-84",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`(( NUM <= NUM ))`",
+      "back": "Less than or equal"
+    },
+    {
+      "id": "s5-85",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`(( NUM > NUM ))`",
+      "back": "Greater than"
+    },
+    {
+      "id": "s5-86",
+      "sectionId": "s5",
+      "title": "Integer conditions",
+      "kind": "qa",
+      "front": "`(( NUM >= NUM ))`",
+      "back": "Greater than or equal"
+    },
+    {
+      "id": "s5-87",
+      "sectionId": "s5",
+      "title": "String conditions",
+      "kind": "qa",
+      "front": "`[[ -z STR ]]`",
+      "back": "Empty string"
+    },
+    {
+      "id": "s5-88",
+      "sectionId": "s5",
+      "title": "String conditions",
+      "kind": "qa",
+      "front": "`[[ -n STR ]]`",
+      "back": "<yel>N</yel>ot empty string"
+    },
+    {
+      "id": "s5-89",
+      "sectionId": "s5",
+      "title": "String conditions",
+      "kind": "qa",
+      "front": "`[[ STR == STR ]]`",
+      "back": "Equal"
+    },
+    {
+      "id": "s5-90",
+      "sectionId": "s5",
+      "title": "String conditions",
+      "kind": "qa",
+      "front": "`[[ STR = STR ]]`",
+      "back": "Equal (Same above)"
+    },
+    {
+      "id": "s5-91",
+      "sectionId": "s5",
+      "title": "String conditions",
+      "kind": "qa",
+      "front": "`[[ STR < STR ]]`",
+      "back": "Less than _(ASCII)_"
+    },
+    {
+      "id": "s5-92",
+      "sectionId": "s5",
+      "title": "String conditions",
+      "kind": "qa",
+      "front": "`[[ STR > STR ]]`",
+      "back": "Greater than _(ASCII)_"
+    },
+    {
+      "id": "s5-93",
+      "sectionId": "s5",
+      "title": "String conditions",
+      "kind": "qa",
+      "front": "`[[ STR != STR ]]`",
+      "back": "Not Equal"
+    },
+    {
+      "id": "s5-94",
+      "sectionId": "s5",
+      "title": "String conditions",
+      "kind": "qa",
+      "front": "`[[ STR =~ STR ]]`",
+      "back": "Regexp"
+    },
+    {
+      "id": "s5-95",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "text",
+      "body": "#### String"
+    },
+    {
+      "id": "s5-96",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if [[ -z \"$string\" ]]; then\n    echo \"String is empty\"\nelif [[ -n \"$string\" ]]; then\n    echo \"String is not empty\"\nelse\n    echo \"This never happens\"\nfi"
+    },
+    {
+      "id": "s5-97",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "text",
+      "body": "#### Combinations"
+    },
+    {
+      "id": "s5-98",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if [[ X && Y ]]; then\n    ...\nfi"
+    },
+    {
+      "id": "s5-99",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "text",
+      "body": "#### Equal"
+    },
+    {
+      "id": "s5-100",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if [[ \"$A\" == \"$B\" ]]; then\n    ...\nfi"
+    },
+    {
+      "id": "s5-101",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "text",
+      "body": "#### Regex"
+    },
+    {
+      "id": "s5-102",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if [[ '1. abc' =~ ([a-z]+) ]]; then\n    echo ${BASH_REMATCH[1]}\nfi"
+    },
+    {
+      "id": "s5-103",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "text",
+      "body": "#### Smaller"
+    },
+    {
+      "id": "s5-104",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if (( $a < $b )); then\n   echo \"$a is smaller than $b\"\nfi"
+    },
+    {
+      "id": "s5-105",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "text",
+      "body": "#### Exists"
+    },
+    {
+      "id": "s5-106",
+      "sectionId": "s5",
+      "title": "Example",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if [[ -e \"file.txt\" ]]; then\n    echo \"file exists\"\nfi"
+    },
+    {
+      "id": "s5-107",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ -e FILE ]]`",
+      "back": "<yel>E</yel>xists"
+    },
+    {
+      "id": "s5-108",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ -d FILE ]]`",
+      "back": "<yel>D</yel>irectory"
+    },
+    {
+      "id": "s5-109",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ -f FILE ]]`",
+      "back": "<yel>F</yel>ile"
+    },
+    {
+      "id": "s5-110",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ -h FILE ]]`",
+      "back": "Symlink"
+    },
+    {
+      "id": "s5-111",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ -s FILE ]]`",
+      "back": "Size is > 0 bytes"
+    },
+    {
+      "id": "s5-112",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ -r FILE ]]`",
+      "back": "<yel>R</yel>eadable"
+    },
+    {
+      "id": "s5-113",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ -w FILE ]]`",
+      "back": "<yel>W</yel>ritable"
+    },
+    {
+      "id": "s5-114",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ -x FILE ]]`",
+      "back": "Executable"
+    },
+    {
+      "id": "s5-115",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ f1 -nt f2 ]]`",
+      "back": "f1 <yel>n</yel>ewer <yel>t</yel>han f2"
+    },
+    {
+      "id": "s5-116",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ f1 -ot f2 ]]`",
+      "back": "f2 <yel>o</yel>lder <yel>t</yel>han f1"
+    },
+    {
+      "id": "s5-117",
+      "sectionId": "s5",
+      "title": "File conditions",
+      "kind": "qa",
+      "front": "`[[ f1 -ef f2 ]]`",
+      "back": "Same files"
+    },
+    {
+      "id": "s5-118",
+      "sectionId": "s5",
+      "title": "More conditions",
+      "kind": "qa",
+      "front": "`[[ -o noclobber ]]`",
+      "back": "If OPTION is enabled"
+    },
+    {
+      "id": "s5-119",
+      "sectionId": "s5",
+      "title": "More conditions",
+      "kind": "qa",
+      "front": "`[[ ! EXPR ]]`",
+      "back": "Not"
+    },
+    {
+      "id": "s5-120",
+      "sectionId": "s5",
+      "title": "More conditions",
+      "kind": "qa",
+      "front": "`[[ X && Y ]]`",
+      "back": "And"
+    },
+    {
+      "id": "s5-121",
+      "sectionId": "s5",
+      "title": "More conditions",
+      "kind": "qa",
+      "front": "`[[ X",
+      "back": "| Y ]]` | Or"
+    },
+    {
+      "id": "s5-122",
+      "sectionId": "s5",
+      "title": "logical and, or",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if [ \"$1\" = 'y' -a $2 -gt 0 ]; then\n    echo \"yes\"\nfi\n\nif [ \"$1\" = 'n' -o $2 -lt 0 ]; then\n    echo \"no\"\nfi"
+    },
+    {
+      "id": "s6-123",
+      "sectionId": "s6",
+      "title": "Basic for loop",
+      "kind": "code",
+      "lang": "bash",
+      "code": "for i in /etc/rc.*; do\n    echo $i\ndone"
+    },
+    {
+      "id": "s6-124",
+      "sectionId": "s6",
+      "title": "C-like for loop",
+      "kind": "code",
+      "lang": "bash",
+      "code": "for ((i = 0 ; i < 100 ; i++)); do\n    echo $i\ndone"
+    },
+    {
+      "id": "s6-125",
+      "sectionId": "s6",
+      "title": "Ranges",
+      "kind": "code",
+      "lang": "bash",
+      "code": "for i in {1..5}; do\n    echo \"Welcome $i\"\ndone"
+    },
+    {
+      "id": "s6-126",
+      "sectionId": "s6",
+      "title": "Ranges",
+      "kind": "text",
+      "body": "#### With step size"
+    },
+    {
+      "id": "s6-127",
+      "sectionId": "s6",
+      "title": "Ranges",
+      "kind": "code",
+      "lang": "bash",
+      "code": "for i in {5..50..5}; do\n    echo \"Welcome $i\"\ndone"
+    },
+    {
+      "id": "s6-128",
+      "sectionId": "s6",
+      "title": "Continue",
+      "kind": "text",
+      "body": "```bash {data=3,5}\nfor number in $(seq 1 3); do\nif [[ $number == 2 ]]; then\ncontinue;\nfi\necho \"$number\"\ndone"
+    },
+    {
+      "id": "s6-129",
+      "sectionId": "s6",
+      "title": "Continue",
       "kind": "code",
       "lang": "",
-      "code": "\n### Transform"
+      "code": "\n### Break\n\n```bash\nfor number in $(seq 1 3); do\n    if [[ $number == 2 ]]; then\n        # Skip entire rest of loop.\n        break;\n    fi\n    # This will only print 1\n    echo \"$number\"\ndone"
     },
     {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "STR=\"HELLO WORLD!\"\necho ${STR,}   # => hELLO WORLD!\necho ${STR,,}  # => hello world!"
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "STR=\"hello world!\"\necho ${STR^}   # => Hello world!\necho ${STR^^}  # => HELLO WORLD!"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "ARR=(hello World)\necho \"${ARR[@],}\" # => hello world\necho \"${ARR[@]^}\" # => Hello World"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s6-130",
+      "sectionId": "s6",
+      "title": "Until",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Bash Arrays\n\n### Defining arrays"
+      "lang": "bash",
+      "code": "count=0\nuntil [ $count -gt 10 ]; do\n    echo \"$count\"\n    ((count++))\ndone"
     },
     {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "Fruits=('Apple' 'Banana' 'Orange')"
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "Fruits[0]=\"Apple\"\nFruits[1]=\"Banana\"\nFruits[2]=\"Orange\""
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "ARRAY1=(foo{1..2}) # => foo1 foo2\nARRAY2=({A..D})    # => A B C D"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "ARRAY3=(${ARRAY1[@]} ${ARRAY2[@]})"
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "declare -a Numbers=(1 2 3)\nNumbers+=(4 5) # Append => 1 2 3 4 5"
-    },
-    {
-      "id": "s1-43",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s6-131",
+      "sectionId": "s6",
+      "title": "While with increment",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Indexing\n\n| -                  | -             |\n| ------------------ | ------------- |\n| `${Fruits[0]}`     | First element |\n| `${Fruits[-1]}`    | Last element  |\n| `${Fruits[*]}`     | All elements  |\n| `${Fruits[@]}`     | All elements  |\n| `${#Fruits[@]}`    | Number of all |\n| `${#Fruits}`       | Length of 1st |\n| `${#Fruits[3]}`    | Length of nth |\n| `${Fruits[@]:3:2}` | Range         |\n| `${!Fruits[@]}`    | Keys of all   |\n\n### Iteration"
+      "lang": "bash",
+      "code": "i=1\nwhile [[ $i -lt 4 ]]; do\n    echo \"Number: $i\"\n    ((i++))\ndone"
     },
     {
-      "id": "s1-44",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "Fruits=('Apple' 'Banana' 'Orange')"
-    },
-    {
-      "id": "s1-45",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "for e in \"${Fruits[@]}\"; do\necho $e\ndone"
-    },
-    {
-      "id": "s1-46",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s6-132",
+      "sectionId": "s6",
+      "title": "While with decrement",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### With index"
+      "lang": "bash",
+      "code": "i=3\nwhile [[ $i -gt 0 ]]; do\n    echo \"Number: $i\"\n    ((i--))\ndone"
     },
     {
-      "id": "s1-47",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s6-133",
+      "sectionId": "s6",
+      "title": "While with decrement",
       "kind": "text",
-      "body": "for i in \"${!Fruits[@]}\"; do\nprintf \"%s\\t%s\\n\" \"$i\" \"${Fruits[$i]}\"\ndone"
+      "body": "#### Combined with test"
     },
     {
-      "id": "s1-48",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s6-134",
+      "sectionId": "s6",
+      "title": "While with decrement",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Operations {.col-span-2}"
+      "lang": "bash",
+      "code": "i=3\nwhile ((i--)); do\n    echo \"Number: $i\"\ndone"
     },
     {
-      "id": "s1-49",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "Fruits=(\"${Fruits[@]}\" \"Watermelon\")     # Push\nFruits+=('Watermelon')                   # Also Push\nFruits=( ${Fruits[@]/Ap*/} )             # Remove by regex match\nunset Fruits[2]                          # Remove one item\nFruits=(\"${Fruits[@]}\")                  # Duplicate\nFruits=(\"${Fruits[@]}\" \"${Veggies[@]}\")  # Concatenate\nlines=(`cat \"logfile\"`)                  # Read from file"
-    },
-    {
-      "id": "s1-50",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s6-135",
+      "sectionId": "s6",
+      "title": "Forever",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Arrays as arguments"
+      "lang": "bash",
+      "code": "while true; do\n    # here is some code.\ndone"
     },
     {
-      "id": "s1-51",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "function extract()\n{\nlocal -n myarray=$1\nlocal idx=$2\necho \"${myarray[$idx]}\"\n}\nFruits=('Apple' 'Banana' 'Orange')\nextract Fruits 2     # => Orangle"
-    },
-    {
-      "id": "s1-52",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s6-136",
+      "sectionId": "s6",
+      "title": "Forever (shorthand)",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Bash Dictionaries\n\n### Defining"
+      "lang": "bash",
+      "code": "while :; do\n    # here is some code.\ndone"
     },
     {
-      "id": "s1-53",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "declare -A sounds"
-    },
-    {
-      "id": "s1-54",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "sounds[dog]=\"bark\"\nsounds[cow]=\"moo\"\nsounds[bird]=\"tweet\"\nsounds[wolf]=\"howl\""
-    },
-    {
-      "id": "s1-55",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s6-137",
+      "sectionId": "s6",
+      "title": "Reading lines",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Working with dictionaries"
+      "lang": "bash",
+      "code": "while read line; do\n    echo $line\ndone < file.txt"
     },
     {
-      "id": "s1-56",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "echo ${sounds[dog]} # Dog's sound\necho ${sounds[@]}   # All values\necho ${!sounds[@]}  # All keys\necho ${#sounds[@]}  # Number of elements\nunset sounds[dog]   # Delete dog"
-    },
-    {
-      "id": "s1-57",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s7-138",
+      "sectionId": "s7",
+      "title": "Defining functions",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Iteration"
+      "lang": "bash",
+      "code": "myfunc() {\n    echo \"hello $1\"\n}"
     },
     {
-      "id": "s1-58",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "for val in \"${sounds[@]}\"; do\necho $val\ndone"
-    },
-    {
-      "id": "s1-59",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s7-139",
+      "sectionId": "s7",
+      "title": "Defining functions",
       "kind": "code",
-      "lang": "",
-      "code": "\n---"
+      "lang": "bash",
+      "code": "# Same as above (alternate syntax)\nfunction myfunc() {\n    echo \"hello $1\"\n}"
     },
     {
-      "id": "s1-60",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "for key in \"${!sounds[@]}\"; do\necho $key\ndone"
-    },
-    {
-      "id": "s1-61",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s7-140",
+      "sectionId": "s7",
+      "title": "Defining functions",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Bash Conditionals\n\n### Integer conditions\n\n| Condition           | Description                                 |\n| ------------------- | ------------------------------------------- |\n| `[[ NUM -eq NUM ]]` | <yel>Eq</yel>ual                            |\n| `[[ NUM -ne NUM ]]` | <yel>N</yel>ot <yel>e</yel>qual             |\n| `[[ NUM -lt NUM ]]` | <yel>L</yel>ess <yel>t</yel>han             |\n| `[[ NUM -le NUM ]]` | <yel>L</yel>ess than or <yel>e</yel>qual    |\n| `[[ NUM -gt NUM ]]` | <yel>G</yel>reater <yel>t</yel>han          |\n| `[[ NUM -ge NUM ]]` | <yel>G</yel>reater than or <yel>e</yel>qual |\n| `(( NUM < NUM ))`   | Less than                                   |\n| `(( NUM <= NUM ))`  | Less than or equal                          |\n| `(( NUM > NUM ))`   | Greater than                                |\n| `(( NUM >= NUM ))`  | Greater than or equal                       |\n\n### String conditions\n\n| Condition          | Description                 |\n| ------------------ | --------------------------- |\n| `[[ -z STR ]]`     | Empty string                |\n| `[[ -n STR ]]`     | <yel>N</yel>ot empty string |\n| `[[ STR == STR ]]` | Equal                       |\n| `[[ STR = STR ]]`  | Equal (Same above)          |\n| `[[ STR < STR ]]`  | Less than _(ASCII)_         |\n| `[[ STR > STR ]]`  | Greater than _(ASCII)_      |\n| `[[ STR != STR ]]` | Not Equal                   |\n| `[[ STR =~ STR ]]` | Regexp                      |\n\n### Example {.row-span-3}\n\n#### String"
+      "lang": "bash",
+      "code": "myfunc \"John\""
     },
     {
-      "id": "s1-62",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if [[ -z \"$string\" ]]; then\necho \"String is empty\"\nelif [[ -n \"$string\" ]]; then\necho \"String is not empty\"\nelse\necho \"This never happens\"\nfi"
-    },
-    {
-      "id": "s1-63",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s7-141",
+      "sectionId": "s7",
+      "title": "Returning values",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### Combinations"
+      "lang": "bash",
+      "code": "myfunc() {\n    local myresult='some value'\n    echo $myresult\n}"
     },
     {
-      "id": "s1-64",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if [[ X && Y ]]; then\n...\nfi"
-    },
-    {
-      "id": "s1-65",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s7-142",
+      "sectionId": "s7",
+      "title": "Returning values",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### Equal"
+      "lang": "bash",
+      "code": "result=\"$(myfunc)\""
     },
     {
-      "id": "s1-66",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if [[ \"$A\" == \"$B\" ]]; then\n...\nfi"
-    },
-    {
-      "id": "s1-67",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s7-143",
+      "sectionId": "s7",
+      "title": "Raising errors",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### Regex"
+      "lang": "bash",
+      "code": "myfunc() {\n    return 1\n}"
     },
     {
-      "id": "s1-68",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if [[ '1. abc' =~ ([a-z]+) ]]; then\necho ${BASH_REMATCH[1]}\nfi"
-    },
-    {
-      "id": "s1-69",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s7-144",
+      "sectionId": "s7",
+      "title": "Raising errors",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### Smaller"
+      "lang": "bash",
+      "code": "if myfunc; then\n    echo \"success\"\nelse\n    echo \"failure\"\nfi"
     },
     {
-      "id": "s1-70",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if (( $a < $b )); then\necho \"$a is smaller than $b\"\nfi"
-    },
-    {
-      "id": "s1-71",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s8-145",
+      "sectionId": "s8",
+      "title": "Options",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### Exists"
+      "lang": "bash",
+      "code": "# Avoid overlay files\n# (echo \"hi\" > foo)\nset -o noclobber\n\n# Used to exit upon error\n# avoiding cascading errors\nset -o errexit\n\n# Unveils hidden failures\nset -o pipefail\n\n# Exposes unset variables\nset -o nounset"
     },
     {
-      "id": "s1-72",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if [[ -e \"file.txt\" ]]; then\necho \"file exists\"\nfi"
-    },
-    {
-      "id": "s1-73",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s8-146",
+      "sectionId": "s8",
+      "title": "Glob options",
       "kind": "code",
-      "lang": "",
-      "code": "\n### File conditions {.row-span-2}\n\n| Condition         | Description                            |\n| ----------------- | -------------------------------------- |\n| `[[ -e FILE ]]`   | <yel>E</yel>xists                      |\n| `[[ -d FILE ]]`   | <yel>D</yel>irectory                   |\n| `[[ -f FILE ]]`   | <yel>F</yel>ile                        |\n| `[[ -h FILE ]]`   | Symlink                                |\n| `[[ -s FILE ]]`   | Size is > 0 bytes                      |\n| `[[ -r FILE ]]`   | <yel>R</yel>eadable                    |\n| `[[ -w FILE ]]`   | <yel>W</yel>ritable                    |\n| `[[ -x FILE ]]`   | Executable                             |\n| `[[ f1 -nt f2 ]]` | f1 <yel>n</yel>ewer <yel>t</yel>han f2 |\n| `[[ f1 -ot f2 ]]` | f2 <yel>o</yel>lder <yel>t</yel>han f1 |\n| `[[ f1 -ef f2 ]]` | Same files                             |\n\n### More conditions\n\n| Condition            | Description          |\n| -------------------- | -------------------- | ----- | --- |\n| `[[ -o noclobber ]]` | If OPTION is enabled |\n| `[[ ! EXPR ]]`       | Not                  |\n| `[[ X && Y ]]`       | And                  |\n| `[[ X                |                      | Y ]]` | Or  |\n\n### logical and, or"
+      "lang": "bash",
+      "code": "# Non-matching globs are removed\n# ('*.foo' => '')\nshopt -s nullglob\n\n# Non-matching globs throw errors\nshopt -s failglob\n\n# Case insensitive globs\nshopt -s nocaseglob\n\n# Wildcards match dotfiles\n# (\"*.sh\" => \".foo.sh\")\nshopt -s dotglob\n\n# Allow ** for recursive matches\n# ('lib/**/*.rb' => 'lib/a/b/c.rb')\nshopt -s globstar"
     },
     {
-      "id": "s1-74",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s9-147",
+      "sectionId": "s9",
+      "title": "Commands",
+      "kind": "qa",
+      "front": "`history`",
+      "back": "Show history"
+    },
+    {
+      "id": "s9-148",
+      "sectionId": "s9",
+      "title": "Commands",
+      "kind": "qa",
+      "front": "`sudo !!`",
+      "back": "Run the previous command with sudo"
+    },
+    {
+      "id": "s9-149",
+      "sectionId": "s9",
+      "title": "Commands",
+      "kind": "qa",
+      "front": "`shopt -s histverify`",
+      "back": "Don't execute expanded result immediately"
+    },
+    {
+      "id": "s9-150",
+      "sectionId": "s9",
+      "title": "Expansions",
+      "kind": "qa",
+      "front": "`!$`",
+      "back": "Expand last parameter of most recent command"
+    },
+    {
+      "id": "s9-151",
+      "sectionId": "s9",
+      "title": "Expansions",
+      "kind": "qa",
+      "front": "`!*`",
+      "back": "Expand all parameters of most recent command"
+    },
+    {
+      "id": "s9-152",
+      "sectionId": "s9",
+      "title": "Expansions",
+      "kind": "qa",
+      "front": "`!-n`",
+      "back": "Expand `n`th most recent command"
+    },
+    {
+      "id": "s9-153",
+      "sectionId": "s9",
+      "title": "Expansions",
+      "kind": "qa",
+      "front": "`!n`",
+      "back": "Expand `n`th command in history"
+    },
+    {
+      "id": "s9-154",
+      "sectionId": "s9",
+      "title": "Expansions",
+      "kind": "qa",
+      "front": "`!<command>`",
+      "back": "Expand most recent invocation of command `<command>`"
+    },
+    {
+      "id": "s9-155",
+      "sectionId": "s9",
+      "title": "Operations",
+      "kind": "qa",
+      "front": "`!!`",
+      "back": "Execute last command again"
+    },
+    {
+      "id": "s9-156",
+      "sectionId": "s9",
+      "title": "Operations",
+      "kind": "qa",
+      "front": "`!!:s/<FROM>/<TO>/`",
+      "back": "Replace first occurrence of `<FROM>` to `<TO>` in most recent command"
+    },
+    {
+      "id": "s9-157",
+      "sectionId": "s9",
+      "title": "Operations",
+      "kind": "qa",
+      "front": "`!!:gs/<FROM>/<TO>/`",
+      "back": "Replace all occurrences of `<FROM>` to `<TO>` in most recent command"
+    },
+    {
+      "id": "s9-158",
+      "sectionId": "s9",
+      "title": "Operations",
+      "kind": "qa",
+      "front": "`!$:t`",
+      "back": "Expand only basename from last parameter of most recent command"
+    },
+    {
+      "id": "s9-159",
+      "sectionId": "s9",
+      "title": "Operations",
+      "kind": "qa",
+      "front": "`!$:h`",
+      "back": "Expand only directory from last parameter of most recent command"
+    },
+    {
+      "id": "s9-160",
+      "sectionId": "s9",
+      "title": "Operations",
       "kind": "text",
-      "body": "if [ \"$1\" = 'y' -a $2 -gt 0 ]; then\necho \"yes\"\nfi"
+      "body": "`!!` and `!$` can be replaced with any valid expansion."
     },
     {
-      "id": "s1-75",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s9-161",
+      "sectionId": "s9",
+      "title": "Slices",
+      "kind": "qa",
+      "front": "`!!:n`",
+      "back": "Expand only `n`th token from most recent command (command is `0`; first argument is `1`)"
+    },
+    {
+      "id": "s9-162",
+      "sectionId": "s9",
+      "title": "Slices",
+      "kind": "qa",
+      "front": "`!^`",
+      "back": "Expand first argument from most recent command"
+    },
+    {
+      "id": "s9-163",
+      "sectionId": "s9",
+      "title": "Slices",
+      "kind": "qa",
+      "front": "`!$`",
+      "back": "Expand last token from most recent command"
+    },
+    {
+      "id": "s9-164",
+      "sectionId": "s9",
+      "title": "Slices",
+      "kind": "qa",
+      "front": "`!!:n-m`",
+      "back": "Expand range of tokens from most recent command"
+    },
+    {
+      "id": "s9-165",
+      "sectionId": "s9",
+      "title": "Slices",
+      "kind": "qa",
+      "front": "`!!:n-$`",
+      "back": "Expand `n`th token to last from most recent command"
+    },
+    {
+      "id": "s9-166",
+      "sectionId": "s9",
+      "title": "Slices",
       "kind": "text",
-      "body": "if [ \"$1\" = 'n' -o $2 -lt 0 ]; then\necho \"no\"\nfi"
+      "body": "`!!` can be replaced with any valid expansion i.e. `!cat`, `!-2`, `!42`, etc."
     },
     {
-      "id": "s1-76",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-167",
+      "sectionId": "s10",
+      "title": "Numeric calculations",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Bash Loops\n\n### Basic for loop"
+      "lang": "bash",
+      "code": "$((a + 200))      # Add 200 to $a"
     },
     {
-      "id": "s1-77",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "for i in /etc/rc.*; do\necho $i\ndone"
-    },
-    {
-      "id": "s1-78",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-168",
+      "sectionId": "s10",
+      "title": "Numeric calculations",
       "kind": "code",
-      "lang": "",
-      "code": "\n### C-like for loop"
+      "lang": "bash",
+      "code": "$(($RANDOM%200))  # Random number 0..199"
     },
     {
-      "id": "s1-79",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "for ((i = 0 ; i < 100 ; i++)); do\necho $i\ndone"
-    },
-    {
-      "id": "s1-80",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-169",
+      "sectionId": "s10",
+      "title": "Subshells",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Ranges {.row-span-2}"
+      "lang": "bash",
+      "code": "(cd somedir; echo \"I'm now in $PWD\")\npwd # still in first directory"
     },
     {
-      "id": "s1-81",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "for i in {1..5}; do\necho \"Welcome $i\"\ndone"
-    },
-    {
-      "id": "s1-82",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-170",
+      "sectionId": "s10",
+      "title": "Inspecting commands",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### With step size"
+      "lang": "bash",
+      "code": "command -V cd\n#=> \"cd is a function/alias/whatever\""
     },
     {
-      "id": "s1-83",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "for i in {5..50..5}; do\necho \"Welcome $i\"\ndone"
-    },
-    {
-      "id": "s1-84",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-171",
+      "sectionId": "s10",
+      "title": "Redirection",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Continue"
+      "lang": "bash",
+      "code": "python hello.py > output.txt   # stdout to (file)\npython hello.py >> output.txt  # stdout to (file), append\npython hello.py 2> error.log   # stderr to (file)\npython hello.py 2>&1           # stderr to stdout\npython hello.py 2>/dev/null    # stderr to (null)\npython hello.py &>/dev/null    # stdout and stderr to (null)"
     },
     {
-      "id": "s1-85",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "for number in $(seq 1 3); do\nif [[ $number == 2 ]]; then\ncontinue;\nfi\necho \"$number\"\ndone"
-    },
-    {
-      "id": "s1-86",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-172",
+      "sectionId": "s10",
+      "title": "Redirection",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Break"
+      "lang": "bash",
+      "code": "python hello.py < foo.txt      # feed foo.txt to stdin for python"
     },
     {
-      "id": "s1-87",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "for number in $(seq 1 3); do\nif [[ $number == 2 ]]; then\n# Skip entire rest of loop.\nbreak;\nfi\n# This will only print 1\necho \"$number\"\ndone"
-    },
-    {
-      "id": "s1-88",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-173",
+      "sectionId": "s10",
+      "title": "Source relative",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Until"
+      "lang": "bash",
+      "code": "source \"${0%/*}/../share/foo.sh\""
     },
     {
-      "id": "s1-89",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "count=0\nuntil [ $count -gt 10 ]; do\necho \"$count\"\n((count++))\ndone"
-    },
-    {
-      "id": "s1-90",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-174",
+      "sectionId": "s10",
+      "title": "Directory of script",
       "kind": "code",
-      "lang": "",
-      "code": "\n### While with increment"
+      "lang": "bash",
+      "code": "DIR=\"${0%/*}\""
     },
     {
-      "id": "s1-91",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "i=1\nwhile [[ $i -lt 4 ]]; do\necho \"Number: $i\"\n((i++))\ndone"
-    },
-    {
-      "id": "s1-92",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-175",
+      "sectionId": "s10",
+      "title": "Case/switch",
       "kind": "code",
-      "lang": "",
-      "code": "\n### While with decrement"
+      "lang": "bash",
+      "code": "case \"$1\" in\n    start | up)\n    vagrant up\n    ;;\n\n    *)\n    echo \"Usage: $0 {start|stop|ssh}\"\n    ;;\nesac"
     },
     {
-      "id": "s1-93",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "i=3\nwhile [[ $i -gt 0 ]]; do\necho \"Number: $i\"\n((i--))\ndone"
-    },
-    {
-      "id": "s1-94",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-176",
+      "sectionId": "s10",
+      "title": "Trap errors",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### Combined with test"
+      "lang": "bash",
+      "code": "trap 'echo Error at about $LINENO' ERR"
     },
     {
-      "id": "s1-95",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-177",
+      "sectionId": "s10",
+      "title": "Trap errors",
       "kind": "text",
-      "body": "i=3\nwhile ((i--)); do\necho \"Number: $i\"\ndone"
+      "body": "or"
     },
     {
-      "id": "s1-96",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-178",
+      "sectionId": "s10",
+      "title": "Trap errors",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Forever"
+      "lang": "bash",
+      "code": "traperr() {\n    echo \"ERROR: ${BASH_SOURCE[1]} at about ${BASH_LINENO[0]}\"\n}\n\nset -o errtrace\ntrap traperr ERR"
     },
     {
-      "id": "s1-97",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "while true; do\n# here is some code.\ndone"
-    },
-    {
-      "id": "s1-98",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-179",
+      "sectionId": "s10",
+      "title": "printf",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Forever (shorthand)"
+      "lang": "bash",
+      "code": "printf \"Hello %s, I'm %s\" Sven Olga\n#=> \"Hello Sven, I'm Olga\n\nprintf \"1 + 1 = %d\" 2\n#=> \"1 + 1 = 2\"\n\nprintf \"Print a float: %f\" 2\n#=> \"Print a float: 2.000000\""
     },
     {
-      "id": "s1-99",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "while :; do\n# here is some code.\ndone"
-    },
-    {
-      "id": "s1-100",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-180",
+      "sectionId": "s10",
+      "title": "Getting options",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Reading lines"
+      "lang": "bash",
+      "code": "while [[ \"$1\" =~ ^- && ! \"$1\" == \"--\" ]]; do case $1 in\n    -V | --version )\n    echo $version\n    exit\n    ;;\n    -s | --string )\n    shift; string=$1\n    ;;\n    -f | --flag )\n    flag=1\n    ;;\nesac; shift; done\nif [[ \"$1\" == '--' ]]; then shift; fi"
     },
     {
-      "id": "s1-101",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "while read line; do\necho $line\ndone < file.txt"
-    },
-    {
-      "id": "s1-102",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-181",
+      "sectionId": "s10",
+      "title": "Check for command's result",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Bash Functions\n\n### Defining functions"
+      "lang": "bash",
+      "code": "if ping -c 1 google.com; then\n    echo \"It appears you have a working internet connection\"\nfi"
     },
     {
-      "id": "s1-103",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-182",
+      "sectionId": "s10",
+      "title": "Special variables",
+      "kind": "qa",
+      "front": "`$?`",
+      "back": "Exit status of last task"
+    },
+    {
+      "id": "s10-183",
+      "sectionId": "s10",
+      "title": "Special variables",
+      "kind": "qa",
+      "front": "`$!`",
+      "back": "PID of last background task"
+    },
+    {
+      "id": "s10-184",
+      "sectionId": "s10",
+      "title": "Special variables",
+      "kind": "qa",
+      "front": "`$$`",
+      "back": "PID of shell"
+    },
+    {
+      "id": "s10-185",
+      "sectionId": "s10",
+      "title": "Special variables",
+      "kind": "qa",
+      "front": "`$0`",
+      "back": "Filename of the shell script"
+    },
+    {
+      "id": "s10-186",
+      "sectionId": "s10",
+      "title": "Special variables",
       "kind": "text",
-      "body": "myfunc() {\necho \"hello $1\"\n}"
+      "body": "See [Special parameters](http://wiki.bash-hackers.org/syntax/shellvars#special_parameters_and_shell_variables)."
     },
     {
-      "id": "s1-104",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "function myfunc() {\necho \"hello $1\"\n}"
-    },
-    {
-      "id": "s1-105",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "myfunc \"John\""
-    },
-    {
-      "id": "s1-106",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-187",
+      "sectionId": "s10",
+      "title": "Grep check",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Returning values"
+      "lang": "bash",
+      "code": "if grep -q 'foo' ~/.bash_history; then\n    echo \"You appear to have typed 'foo' in the past\"\nfi"
     },
     {
-      "id": "s1-107",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-188",
+      "sectionId": "s10",
+      "title": "Backslash escapes",
       "kind": "text",
-      "body": "myfunc() {\nlocal myresult='some value'\necho $myresult\n}"
+      "body": "• &nbsp;\n• \\!\n• \\\"\n• \\#\n• \\&\n• \\'\n• \\(\n• \\)\n• \\,\n• \\;\n• \\<\n• \\>\n• \\[\n• \\|\n• \\\\\n• \\]\n• \\^\n• \\{\n• \\}\n• \\`\n• \\$\n• \\*\n• \\?"
     },
     {
-      "id": "s1-108",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-189",
+      "sectionId": "s10",
+      "title": "Backslash escapes",
       "kind": "text",
-      "body": "result=\"$(myfunc)\""
+      "body": "Escape these special characters with `\\`"
     },
     {
-      "id": "s1-109",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-190",
+      "sectionId": "s10",
+      "title": "Heredoc",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Raising errors"
+      "lang": "sh",
+      "code": "cat <<END\nhello world\nEND"
     },
     {
-      "id": "s1-110",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "myfunc() {\nreturn 1\n}"
-    },
-    {
-      "id": "s1-111",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if myfunc; then\necho \"success\"\nelse\necho \"failure\"\nfi"
-    },
-    {
-      "id": "s1-112",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-191",
+      "sectionId": "s10",
+      "title": "Go to previous directory",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Bash Options {.cols-2}\n\n### Options"
+      "lang": "bash",
+      "code": "pwd # /home/user/foo\ncd bar/\npwd # /home/user/foo/bar\ncd -\npwd # /home/user/foo"
     },
     {
-      "id": "s1-113",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "set -o noclobber"
-    },
-    {
-      "id": "s1-114",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "set -o errexit"
-    },
-    {
-      "id": "s1-115",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "set -o pipefail"
-    },
-    {
-      "id": "s1-116",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "set -o nounset"
-    },
-    {
-      "id": "s1-117",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-192",
+      "sectionId": "s10",
+      "title": "Reading input",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Glob options"
+      "lang": "bash",
+      "code": "echo -n \"Proceed? [y/n]: \"\nread ans\necho $ans"
     },
     {
-      "id": "s1-118",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "shopt -s nullglob"
-    },
-    {
-      "id": "s1-119",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "shopt -s failglob"
-    },
-    {
-      "id": "s1-120",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "shopt -s nocaseglob"
-    },
-    {
-      "id": "s1-121",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "shopt -s dotglob"
-    },
-    {
-      "id": "s1-122",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "shopt -s globstar"
-    },
-    {
-      "id": "s1-123",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-193",
+      "sectionId": "s10",
+      "title": "Reading input",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Bash History {.cols-2}\n\n### Commands\n\n| Command               | Description                               |\n| --------------------- | ----------------------------------------- |\n| `history`             | Show history                              |\n| `sudo !!`             | Run the previous command with sudo        |\n| `shopt -s histverify` | Don't execute expanded result immediately |\n\n### Expansions\n\n| Expression   | Description                                          |\n| ------------ | ---------------------------------------------------- |\n| `!$`         | Expand last parameter of most recent command         |\n| `!*`         | Expand all parameters of most recent command         |\n| `!-n`        | Expand `n`th most recent command                     |\n| `!n`         | Expand `n`th command in history                      |\n| `!<command>` | Expand most recent invocation of command `<command>` |\n\n### Operations\n\n| Code                 | Description                                                           |\n| -------------------- | --------------------------------------------------------------------- |\n| `!!`                 | Execute last command again                                            |\n| `!!:s/<FROM>/<TO>/`  | Replace first occurrence of `<FROM>` to `<TO>` in most recent command |\n| `!!:gs/<FROM>/<TO>/` | Replace all occurrences of `<FROM>` to `<TO>` in most recent command  |\n| `!$:t`               | Expand only basename from last parameter of most recent command       |\n| `!$:h`               | Expand only directory from last parameter of most recent command      |\n\n`!!` and `!$` can be replaced with any valid expansion.\n\n### Slices\n\n| Code     | Description                                                                              |\n| -------- | ---------------------------------------------------------------------------------------- |\n| `!!:n`   | Expand only `n`th token from most recent command (command is `0`; first argument is `1`) |\n| `!^`     | Expand first argument from most recent command                                           |\n| `!$`     | Expand last token from most recent command                                               |\n| `!!:n-m` | Expand range of tokens from most recent command                                          |\n| `!!:n-$` | Expand `n`th token to last from most recent command                                      |\n\n`!!` can be replaced with any valid expansion i.e. `!cat`, `!-2`, `!42`, etc.\n\n## Miscellaneous\n\n### Numeric calculations"
+      "lang": "bash",
+      "code": "read -n 1 ans    # Just one character"
     },
     {
-      "id": "s1-124",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "$((a + 200))      # Add 200 to $a"
-    },
-    {
-      "id": "s1-125",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "$(($RANDOM%200))  # Random number 0..199"
-    },
-    {
-      "id": "s1-126",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-194",
+      "sectionId": "s10",
+      "title": "Conditional execution",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Subshells"
+      "lang": "bash",
+      "code": "git commit && git push\ngit commit || echo \"Commit failed\""
     },
     {
-      "id": "s1-127",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "(cd somedir; echo \"I'm now in $PWD\")\npwd # still in first directory"
-    },
-    {
-      "id": "s1-128",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-195",
+      "sectionId": "s10",
+      "title": "Strict mode",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Inspecting commands"
+      "lang": "bash",
+      "code": "set -euo pipefail\nIFS=$'\\n\\t'"
     },
     {
-      "id": "s1-129",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-196",
+      "sectionId": "s10",
+      "title": "Strict mode",
       "kind": "text",
-      "body": "command -V cd\n#=> \"cd is a function/alias/whatever\""
+      "body": "See: [Unofficial bash strict mode](http://redsymbol.net/articles/unofficial-bash-strict-mode/)"
     },
     {
-      "id": "s1-130",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-197",
+      "sectionId": "s10",
+      "title": "Optional arguments",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Redirection {.row-span-2 .col-span-2}"
+      "lang": "bash",
+      "code": "args=(\"$@\")\nargs+=(foo)\nargs+=(bar)\necho \"${args[@]}\""
     },
     {
-      "id": "s1-131",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s10-198",
+      "sectionId": "s10",
+      "title": "Optional arguments",
       "kind": "text",
-      "body": "python hello.py > output.txt   # stdout to (file)\npython hello.py >> output.txt  # stdout to (file), append\npython hello.py 2> error.log   # stderr to (file)\npython hello.py 2>&1           # stderr to stdout\npython hello.py 2>/dev/null    # stderr to (null)\npython hello.py &>/dev/null    # stdout and stderr to (null)"
+      "body": "Put the arguments into an array and then append"
     },
     {
-      "id": "s1-132",
-      "sectionId": "s1",
-      "title": "Getting Started",
+      "id": "s11-199",
+      "sectionId": "s11",
+      "title": "Also see",
       "kind": "text",
-      "body": "python hello.py < foo.txt      # feed foo.txt to stdin for python"
-    },
-    {
-      "id": "s1-133",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Source relative"
-    },
-    {
-      "id": "s1-134",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "source \"${0%/*}/../share/foo.sh\""
-    },
-    {
-      "id": "s1-135",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Directory of script"
-    },
-    {
-      "id": "s1-136",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "DIR=\"${0%/*}\""
-    },
-    {
-      "id": "s1-137",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Case/switch"
-    },
-    {
-      "id": "s1-138",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "case \"$1\" in\nstart | up)\nvagrant up\n;;"
-    },
-    {
-      "id": "s1-139",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "*)\necho \"Usage: $0 {start|stop|ssh}\"\n;;\nesac"
-    },
-    {
-      "id": "s1-140",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Trap errors {.col-span-2}"
-    },
-    {
-      "id": "s1-141",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "trap 'echo Error at about $LINENO' ERR"
-    },
-    {
-      "id": "s1-142",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\nor"
-    },
-    {
-      "id": "s1-143",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "traperr() {\necho \"ERROR: ${BASH_SOURCE[1]} at about ${BASH_LINENO[0]}\"\n}"
-    },
-    {
-      "id": "s1-144",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "set -o errtrace\ntrap traperr ERR"
-    },
-    {
-      "id": "s1-145",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### printf"
-    },
-    {
-      "id": "s1-146",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "printf \"Hello %s, I'm %s\" Sven Olga\n#=> \"Hello Sven, I'm Olga"
-    },
-    {
-      "id": "s1-147",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "printf \"1 + 1 = %d\" 2\n#=> \"1 + 1 = 2\""
-    },
-    {
-      "id": "s1-148",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "printf \"Print a float: %f\" 2\n#=> \"Print a float: 2.000000\""
-    },
-    {
-      "id": "s1-149",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Getting options {.col-span-2}"
-    },
-    {
-      "id": "s1-150",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "while [[ \"$1\" =~ ^- && ! \"$1\" == \"--\" ]]; do case $1 in\n-V | --version )\necho $version\nexit\n;;\n-s | --string )\nshift; string=$1\n;;\n-f | --flag )\nflag=1\n;;\nesac; shift; done\nif [[ \"$1\" == '--' ]]; then shift; fi"
-    },
-    {
-      "id": "s1-151",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Check for command's result {.col-span-2}"
-    },
-    {
-      "id": "s1-152",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if ping -c 1 google.com; then\necho \"It appears you have a working internet connection\"\nfi"
-    },
-    {
-      "id": "s1-153",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Special variables {.row-span-2}\n\n| Expression | Description                  |\n| ---------- | ---------------------------- |\n| `$?`       | Exit status of last task     |\n| `$!`       | PID of last background task  |\n| `$$`       | PID of shell                 |\n| `$0`       | Filename of the shell script |\n\nSee [Special parameters](http://wiki.bash-hackers.org/syntax/shellvars#special_parameters_and_shell_variables).\n\n### Grep check {.col-span-2}"
-    },
-    {
-      "id": "s1-154",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "if grep -q 'foo' ~/.bash_history; then\necho \"You appear to have typed 'foo' in the past\"\nfi"
-    },
-    {
-      "id": "s1-155",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Backslash escapes {.row-span-2}\n\n- &nbsp;\n- \\!\n- \\\"\n- \\#\n- \\&\n- \\'\n- \\(\n- \\)\n- \\,\n- \\;\n- \\<\n- \\>\n- \\[\n- \\|\n- \\\\\n- \\]\n- \\^\n- \\{\n- \\}\n- \\`\n- \\$\n- \\*\n- \\?\n\n{.cols-4 .marker-none}\n\nEscape these special characters with `\\`\n\n### Heredoc"
-    },
-    {
-      "id": "s1-156",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "cat <<END\nhello world\nEND"
-    },
-    {
-      "id": "s1-157",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Go to previous directory"
-    },
-    {
-      "id": "s1-158",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "pwd # /home/user/foo\ncd bar/\npwd # /home/user/foo/bar\ncd -\npwd # /home/user/foo"
-    },
-    {
-      "id": "s1-159",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Reading input"
-    },
-    {
-      "id": "s1-160",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "echo -n \"Proceed? [y/n]: \"\nread ans\necho $ans"
-    },
-    {
-      "id": "s1-161",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "read -n 1 ans    # Just one character"
-    },
-    {
-      "id": "s1-162",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Conditional execution"
-    },
-    {
-      "id": "s1-163",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "git commit && git push\ngit commit || echo \"Commit failed\""
-    },
-    {
-      "id": "s1-164",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Strict mode"
-    },
-    {
-      "id": "s1-165",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "set -euo pipefail\nIFS=$'\\n\\t'"
-    },
-    {
-      "id": "s1-166",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSee: [Unofficial bash strict mode](http://redsymbol.net/articles/unofficial-bash-strict-mode/)\n\n### Optional arguments"
-    },
-    {
-      "id": "s1-167",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "text",
-      "body": "args=(\"$@\")\nargs+=(foo)\nargs+=(bar)\necho \"${args[@]}\""
-    },
-    {
-      "id": "s1-168",
-      "sectionId": "s1",
-      "title": "Getting Started",
-      "kind": "code",
-      "lang": "",
-      "code": "\nPut the arguments into an array and then append\n\n## Also see {.cols-1}\n\n- [Devhints](https://devhints.io/bash) _(devhints.io)_\n- [Bash-hackers wiki](http://wiki.bash-hackers.org/) _(bash-hackers.org)_\n- [Shell vars](http://wiki.bash-hackers.org/syntax/shellvars) _(bash-hackers.org)_\n- [Learn bash in y minutes](https://learnxinyminutes.com/docs/bash/) _(learnxinyminutes.com)_\n- [Bash Guide](http://mywiki.wooledge.org/BashGuide) _(mywiki.wooledge.org)_\n- [ShellCheck](https://www.shellcheck.net/) _(shellcheck.net)_\n- [shell - Standard Shell](https://devmanual.gentoo.org/tools-reference/bash/index.html) _(devmanual.gentoo.org)_"
+      "body": "• [Devhints](https://devhints.io/bash) _(devhints.io)_\n• [Bash-hackers wiki](http://wiki.bash-hackers.org/) _(bash-hackers.org)_\n• [Shell vars](http://wiki.bash-hackers.org/syntax/shellvars) _(bash-hackers.org)_\n• [Learn bash in y minutes](https://learnxinyminutes.com/docs/bash/) _(learnxinyminutes.com)_\n• [Bash Guide](http://mywiki.wooledge.org/BashGuide) _(mywiki.wooledge.org)_\n• [ShellCheck](https://www.shellcheck.net/) _(shellcheck.net)_\n• [shell - Standard Shell](https://devmanual.gentoo.org/tools-reference/bash/index.html) _(devmanual.gentoo.org)_"
     }
   ],
   "source": {
@@ -1268,7 +1638,6 @@
     "path": "source/_posts/bash.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/bash.md",
-    "generatedAt": "2025-12-16T07:36:11.566Z",
     "lang": "en",
     "mode": "local"
   }

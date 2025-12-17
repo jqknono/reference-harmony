@@ -1,11 +1,43 @@
 {
   "id": "mongodb",
-  "title": "mongodb",
+  "name": "MongoDB 备忘清单",
+  "title": "[MongoDB](https://www.mongodb.com/developer/products/mongodb/cheat-sheet/#connect-mongodb-shell) 此备忘单包含一些方便的提示、命令和快速参考，可让您立即连接并进行 CRUD",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/mongodb.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "CRUD",
+      "startIndex": 6
+    },
+    {
+      "id": "s3",
+      "title": "数据库和集合",
+      "startIndex": 12
+    },
+    {
+      "id": "s4",
+      "title": "索引",
+      "startIndex": 15
+    },
+    {
+      "id": "s5",
+      "title": "方便的命令",
+      "startIndex": 19
+    },
+    {
+      "id": "s6",
+      "title": "各种各样的",
+      "startIndex": 21
     }
   ],
   "cards": [
@@ -14,233 +46,184 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "MongoDB 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "[MongoDB](https://www.mongodb.com/developer/products/mongodb/cheat-sheet/#connect-mongodb-shell) 此备忘单包含一些方便的提示、命令和快速参考，可让您立即连接并进行 CRUD"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n---"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "连接 MongoDB Shell",
       "kind": "code",
       "lang": "bash",
       "code": "mongo # 默认连接到 mongodb://127.0.0.1:27017\nmongo --host <host> --port <port> -u <user> -p <pwd> # 如果需要提示，请省略密码\nmongo \"mongodb://192.168.1.1:27017\"\n# MongoDB 地图集\nmongo \"mongodb+srv://cluster-name.abcde.mongodb.net/<dbname>\" --username <username>"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "显示数据库",
       "kind": "code",
       "lang": "mongodb",
       "code": "show dbs\ndb // 打印当前数据库"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "切换数据库",
       "kind": "code",
       "lang": "mongodb",
       "code": "use <database_name>"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "显示集合",
       "kind": "code",
       "lang": "mongodb",
       "code": "show collections"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "运行 JavaScript 文件",
       "kind": "code",
       "lang": "mongodb",
       "code": "load(\"myScript.js\")"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
-      "title": "运行 JavaScript 文件",
-      "kind": "text",
-      "body": "CRUD\n---"
-    },
-    {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s2-6",
+      "sectionId": "s2",
       "title": "创建",
       "kind": "code",
       "lang": "mongodb",
       "code": "db.coll.insertOne({ name: \"Max\" })\ndb.coll.insert([{ name: \"Max\"}, {name:\"Alex\"}]) // 批量插入\ndb.coll.insert([{ name: \"Max\"}, {name:\"Alex\"}], {ordered: false}) // 无序批量插入\ndb.coll.insert({ date: ISODate()})\ndb.coll.insert({ name: \"Max\"}, {\"writeConcern\": {\"w\": \"majority\", \"wtimeout\": 5000}})"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s2-7",
+      "sectionId": "s2",
       "title": "寻找文件",
       "kind": "text",
       "body": "Commands | Description\n:-- | ---\n`db.docx.findOne()` | 查找一个随机文档\n`db.docx.find().prettyPrint()` | 查找所有文档\n`db.docx.find({}, {name:true, _id:false})` | 仅显示文档 Docx 的名称\n`db.docx.find({}, {name:true, _id:false})` | 可以在多个文件中按属性查找一个文件"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s2-8",
+      "sectionId": "s2",
       "title": "使用运算符查找文档",
       "kind": "text",
       "body": "Operator | Description | Commands\n:-- | --- | ---\n`$gt`  | 大于 | `db.docx.find({class:{$gt:'T'}`\n`$gte`  | 大于等于 | `db.docx.find({class:{$gt:'T'}`\n`$lt`  | 小于 | `db.docx.find({class:{$lt:'T'}`\n`$lte` | 小于等于 | `db.docx.find({class:{$lte:'T'}`\n`$exists` | 属性是否存在 | `db.docx.find({class:{$gt:'T'}`\n`$regex` | 正则表达式匹配 | `db.docx.find({name:{$regex:'^USS\\\\sE'}})`\n`$type`  | 按元素类型搜索 | `db.docx.find({name : {$type:4}})`"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s2-9",
+      "sectionId": "s2",
       "title": "读取",
       "kind": "code",
       "lang": "mongodb",
       "code": "db.coll.findOne() // 返回单个文档\ndb.coll.find()    // 返回一个游标 - 显示 20 个结果 - \"it\" 显示更多\ndb.coll.find().pretty()\ndb.coll.find({name: \"Max\", age: 32}) // 隐式逻辑“与”。\ndb.coll.find({date: ISODate(\"2020-09-25T13:57:17.180Z\")})\n\n// 或“queryPlanner”或“allPlansExecution”\ndb.coll.find({name: \"Max\", age: 32}).explain(\"executionStats\") \ndb.coll.distinct(\"name\")\n\n// 数数\ndb.coll.count({age: 32})          // 基于馆藏元数据的估计\ndb.coll.estimatedDocumentCount()  // 基于馆藏元数据的估计\ndb.coll.countDocuments({age: 32}) // 聚合管道的别名 - 准确计数\n\n// Comparison 比较\ndb.coll.find({\"year\": {$gt: 1970}})\ndb.coll.find({\"year\": {$gte: 1970}})\ndb.coll.find({\"year\": {$lt: 1970}})\ndb.coll.find({\"year\": {$lte: 1970}})\ndb.coll.find({\"year\": {$ne: 1970}})\ndb.coll.find({\"year\": {$in: [1958, 1959]}})\ndb.coll.find({\"year\": {$nin: [1958, 1959]}})\n\n\n// Logical 逻辑\ndb.coll.find({name:{$not: {$eq: \"Max\"}}})\ndb.coll.find({$or: [{\"year\" : 1958}, {\"year\" : 1959}]})\ndb.coll.find({$nor: [{price: 1.99}, {sale: true}]})\ndb.coll.find({\n  $and: [\n    {$or: [{qty: {$lt :10}}, {qty :{$gt: 50}}]},\n    {$or: [{sale: true}, {price: {$lt: 5 }}]}\n  ]\n})\n\n// Element 元素\ndb.coll.find({name: {$exists: true}})\ndb.coll.find({\"zipCode\": {$type: 2 }})\ndb.coll.find({\"zipCode\": {$type: \"string\"}})\n\n// Aggregation Pipeline 聚合管道\ndb.coll.aggregate([\n  {$match: {status: \"A\"}},\n  {$group: {_id: \"$cust_id\", total: {$sum: \"$amount\"}}},\n  {$sort: {total: -1}}\n])\n\n// 使用“文本”索引进行文本搜索\ndb.coll.find({$text: {$search: \"cake\"}}, {score: {$meta: \"textScore\"}})\n        .sort({score: {$meta: \"textScore\"}})\n\n// Regex 正则表达式\ndb.coll.find({name: /^Max/})   // 正则表达式：以字母“M”开头\ndb.coll.find({name: /^Max$/i}) // 正则表达式不区分大小写\n\n// Array\ndb.coll.find({tags: {$all: [\"Realm\", \"Charts\"]}})\ndb.coll.find({field: {$size: 2}}) // 无法索引 - 更喜欢存储数组的大小并更新它\ndb.coll.find({results: {$elemMatch: {product: \"xyz\", score: {$gte: 8}}}})\n\n// Projections 预测\ndb.coll.find({\"x\": 1}, {\"actors\": 1})               // actors + _id\ndb.coll.find({\"x\": 1}, {\"actors\": 1, \"_id\": 0})     // actors\ndb.coll.find({\"x\": 1}, {\"actors\": 0, \"summary\": 0}) // 除了“actors”和“summary”之外的所有内容\n\n// Sort 排序, skip 跳过, limit 限制\ndb.coll.find({}).sort({\"year\": 1, \"rating\": -1}).skip(10).limit(3)\n\n// Read Concern 阅读关注\ndb.coll.find().readConcern(\"majority\")"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s2-10",
+      "sectionId": "s2",
       "title": "更新",
       "kind": "code",
       "lang": "mongodb",
       "code": "db.coll.update({\"_id\": 1}, {\"year\": 2016}) // 警告！ 替换整个文档\ndb.coll.update({\"_id\": 1}, {$set: {\"year\": 2016, name: \"Max\"}})\ndb.coll.update({\"_id\": 1}, {$unset: {\"year\": 1}})\ndb.coll.update({\"_id\": 1}, {$rename: {\"year\": \"date\"} })\ndb.coll.update({\"_id\": 1}, {$inc: {\"year\": 5}})\ndb.coll.update({\"_id\": 1}, {$mul: {price: NumberDecimal(\"1.25\"), qty: 2}})\ndb.coll.update({\"_id\": 1}, {$min: {\"imdb\": 5}})\ndb.coll.update({\"_id\": 1}, {$max: {\"imdb\": 8}})\ndb.coll.update({\"_id\": 1}, {$currentDate: {\"lastModified\": true}})\ndb.coll.update({\"_id\": 1}, {$currentDate: {\"lastModified\": {$type: \"timestamp\"}}})\n\n// Array\ndb.coll.update({\"_id\": 1}, {$push :{\"array\": 1}})\ndb.coll.update({\"_id\": 1}, {$pull :{\"array\": 1}})\ndb.coll.update({\"_id\": 1}, {$addToSet :{\"array\": 2}})\ndb.coll.update({\"_id\": 1}, {$pop: {\"array\": 1}})  // 最后一个元素\ndb.coll.update({\"_id\": 1}, {$pop: {\"array\": -1}}) // 第一个元素\ndb.coll.update({\"_id\": 1}, {$pullAll: {\"array\" :[3, 4, 5]}})\ndb.coll.update({\"_id\": 1}, {$push: {scores: {$each: [90, 92, 85]}}})\ndb.coll.updateOne({\"_id\": 1, \"grades\": 80}, {$set: {\"grades.$\": 82}})\ndb.coll.updateMany({}, {$inc: {\"grades.$[]\": 10}})\ndb.coll.update({}, {$set: {\"grades.$[element]\": 100}}, {multi: true, arrayFilters: [{\"element\": {$gte: 100}}]})\n\n// 更新很多\ndb.coll.update({\"year\": 1999}, {$set: {\"decade\": \"90's\"}}, {\"multi\":true})\ndb.coll.updateMany({\"year\": 1999}, {$set: {\"decade\": \"90's\"}})\n\n// FindOneAndUpdate 查找并更新\ndb.coll.findOneAndUpdate({\"name\": \"Max\"}, {$inc: {\"points\": 5}}, {returnNewDocument: true})\n\n// Upsert 更新插入\ndb.coll.update({\"_id\": 1}, {$set: {item: \"apple\"}, $setOnInsert: {defaultQty: 100}}, {upsert: true})\n\n// Replace 代替\ndb.coll.replaceOne({\"name\": \"Max\"}, {\"firstname\": \"Maxime\", \"surname\": \"Beugnet\"})\n\n// Save 保存\ndb.coll.save({\"item\": \"book\", \"qty\": 40})\n\n// Write concern 写关注\ndb.coll.update({}, {$set: {\"x\": 1}}, {\"writeConcern\": {\"w\": \"majority\", \"wtimeout\": 5000}})"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s2-11",
+      "sectionId": "s2",
       "title": "删除",
       "kind": "code",
       "lang": "mongodb",
       "code": "db.coll.remove({name: \"Max\"})\ndb.coll.remove({name: \"Max\"}, {justOne: true})\ndb.coll.remove({}) // 警告！删除所有文档但不删除集合本身及其索引定义\ndb.coll.remove({name: \"Max\"}, {\"writeConcern\": {\"w\": \"majority\", \"wtimeout\": 5000}})\ndb.coll.findOneAndDelete({\"name\": \"Max\"})"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
-      "title": "删除",
-      "kind": "text",
-      "body": "数据库和集合\n---"
-    },
-    {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s3-12",
+      "sectionId": "s3",
       "title": "Drop",
       "kind": "code",
       "lang": "mongodb",
       "code": "// 删除集合及其索引定义\ndb.coll.drop()    \n// 仔细检查你*不*在 PROD 集群上......:-)\ndb.dropDatabase()"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s3-13",
+      "sectionId": "s3",
       "title": "创建集合",
       "kind": "code",
       "lang": "mongodb",
       "code": "// 使用 $jsonschema 创建集合\ndb.createCollection(\"contacts\", {\n   validator: {$jsonSchema: {\n      bsonType: \"object\",\n      required: [\"phone\"],\n      properties: {\n         phone: {\n            bsonType: \"string\",\n            description: \"必须是一个字符串并且是必需的\"\n         },\n         email: {\n            bsonType: \"string\",\n            pattern: \"@mongodb\\.com$\",\n            description: \"必须是字符串并匹配正则表达式模式\"\n         },\n         status: {\n            enum: [ \"Unknown\", \"Incomplete\" ],\n            description: \"只能是枚举值之一\"\n         }\n      }\n   }}\n})"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s3-14",
+      "sectionId": "s3",
       "title": "其他采集功能",
       "kind": "code",
       "lang": "mongodb",
       "code": "db.coll.stats()\ndb.coll.storageSize()\ndb.coll.totalIndexSize()\ndb.coll.totalSize()\ndb.coll.validate({full: true})\n// 第二个参数用于删除目标集合（如果存在）\ndb.coll.renameCollection(\"new_coll\", true)"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
-      "title": "其他采集功能",
-      "kind": "text",
-      "body": "索引\n---"
-    },
-    {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s4-15",
+      "sectionId": "s4",
       "title": "列表索引",
       "kind": "code",
       "lang": "mongodb",
       "code": "db.coll.getIndexes()\ndb.coll.getIndexKeys()"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s4-16",
+      "sectionId": "s4",
       "title": "创建索引",
       "kind": "code",
       "lang": "mongodb",
       "code": "// 索引类型\ndb.coll.createIndex({\"name\": 1})                // 单字段索引\ndb.coll.createIndex({\"name\": 1, \"date\": 1})     // 复合索引\ndb.coll.createIndex({foo: \"text\", bar: \"text\"}) // 文本索引\ndb.coll.createIndex({\"$**\": \"text\"})            // 通配符文本索引\ndb.coll.createIndex({\"userMetadata.$**\": 1})    // 通配符索引\ndb.coll.createIndex({\"loc\": \"2d\"})              // 二维索引\ndb.coll.createIndex({\"loc\": \"2dsphere\"})        // 2dsphere 索引\ndb.coll.createIndex({\"_id\": \"hashed\"})          // 哈希索引\n\n// Index Options\ndb.coll.createIndex({\"lastModifiedDate\": 1}, {expireAfterSeconds: 3600})      // TTL指数\ndb.coll.createIndex({\"name\": 1}, {unique: true})\ndb.coll.createIndex({\"name\": 1}, {partialFilterExpression: {age: {$gt: 18}}}) // 部分索引\n// 强度为 1 或 2 的不区分大小写的索引\ndb.coll.createIndex({\"name\": 1}, {collation: {locale: 'en', strength: 1}})\ndb.coll.createIndex({\"name\": 1 }, {sparse: true})"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s4-17",
+      "sectionId": "s4",
       "title": "删除索引",
       "kind": "code",
       "lang": "mongodb",
       "code": "db.coll.dropIndex(\"name_1\")"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s4-18",
+      "sectionId": "s4",
       "title": "隐藏/取消隐藏索引",
       "kind": "code",
       "lang": "mongodb",
       "code": "db.coll.hideIndex(\"name_1\")\ndb.coll.unhideIndex(\"name_1\")"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
-      "title": "隐藏/取消隐藏索引",
-      "kind": "text",
-      "body": "方便的命令\n---"
-    },
-    {
-      "id": "intro-25",
-      "sectionId": "intro",
-      "title": "隐藏/取消隐藏索引",
+      "id": "s5-19",
+      "sectionId": "s5",
+      "title": "方便的命令",
       "kind": "text",
       "body": "###\n<!--rehype:wrap-class=col-span-3&style=display:none;&wrap-style=padding-top: 0;-->"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
-      "title": "隐藏/取消隐藏索引",
+      "id": "s5-20",
+      "sectionId": "s5",
+      "title": "方便的命令",
       "kind": "code",
       "lang": "mongodb",
       "code": "use admin\ndb.createUser({\"user\": \"root\", \"pwd\": passwordPrompt(), \"roles\": [\"root\"]})\ndb.dropUser(\"root\")\ndb.auth( \"user\", passwordPrompt() )\n\nuse test\ndb.getSiblingDB(\"dbname\")\ndb.currentOp()\ndb.killOp(123) // opid\n\ndb.fsyncLock()\ndb.fsyncUnlock()\n\ndb.getCollectionNames()\ndb.getCollectionInfos()\ndb.printCollectionStats()\ndb.stats()\n\ndb.getReplicationInfo()\ndb.printReplicationInfo()\ndb.isMaster()\ndb.hostInfo()\ndb.printShardingStatus()\ndb.shutdownServer()\ndb.serverStatus()\n\ndb.setSlaveOk()\ndb.getSlaveOk()\n\ndb.getProfilingLevel()\ndb.getProfilingStatus()\ndb.setProfilingLevel(1, 200) // 0 == OFF, 1 == ON with slowms, 2 == ON\n\ndb.enableFreeMonitoring()\ndb.disableFreeMonitoring()\ndb.getFreeMonitoringStatus()\n\ndb.createView(\"viewName\", \"sourceColl\", [{$project:{department: 1}}])"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
-      "title": "隐藏/取消隐藏索引",
-      "kind": "text",
-      "body": "各种各样的\n---"
-    },
-    {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s6-21",
+      "sectionId": "s6",
       "title": "改变流",
       "kind": "code",
       "lang": "mongodb",
       "code": "watchCursor = db.coll.watch([\n   {\n      $match : {\"operationType\": \"insert\" }\n   }\n])\n\nwhile (!watchCursor.isExhausted()){\n   if (watchCursor.hasNext()){\n      print(tojson(watchCursor.next()));\n   }\n}"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s6-22",
+      "sectionId": "s6",
       "title": "分片集群",
       "kind": "code",
       "lang": "mongodb",
       "code": "sh.status()\nsh.addShard(\"rs1/mongodbd1.example.net:27017\")\nsh.shardCollection(\"mydb.coll\", {zipcode: 1})\n\nsh.moveChunk(\"mydb.coll\", { zipcode: \"53187\" }, \"shard0019\")\nsh.splitAt(\"mydb.coll\", {x: 70})\nsh.splitFind(\"mydb.coll\", {x: 70})\nsh.disableAutoSplit()\nsh.enableAutoSplit()\n\nsh.startBalancer()\nsh.stopBalancer()\nsh.disableBalancing(\"mydb.coll\")\nsh.enableBalancing(\"mydb.coll\")\nsh.getBalancerState()\nsh.setBalancerState(true/false)\nsh.isBalancerRunning()\n\nsh.addTagRange(\"mydb.coll\", {state: \"NY\",zip: MinKey}, {state: \"NY\",zip: MaxKey}, \"NY\")\nsh.removeTagRange(\"mydb.coll\", {state: \"NY\",zip: MinKey}, {state: \"NY\",zip: MaxKey}, \"NY\")\nsh.addShardTag(\"shard0000\", \"NYC\")\nsh.removeShardTag(\"shard0000\", \"NYC\")\n\nsh.addShardToZone(\"shard0000\", \"JFK\")\nsh.removeShardFromZone(\"shard0000\", \"NYC\")\nsh.removeRangeFromZone(\"mydb.coll\", {a: 1, b: 1}, {a: 10, b: 10})"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s6-23",
+      "sectionId": "s6",
       "title": "副本集",
       "kind": "code",
       "lang": "mongodb",
@@ -252,7 +235,6 @@
     "path": "docs/mongodb.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/mongodb.md",
-    "generatedAt": "2025-12-16T07:36:11.329Z",
     "lang": "zh",
     "mode": "local"
   }

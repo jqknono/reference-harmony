@@ -1,6 +1,8 @@
 {
   "id": "find",
-  "title": "Find",
+  "name": "Find",
+  "title": "This is a quick reference list of cheatsheet for linux find command, contains common options and examples.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/find.svg",
   "sections": [
     {
       "id": "intro",
@@ -11,6 +13,16 @@
       "id": "s1",
       "title": "Getting Started",
       "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Find Date and Time",
+      "startIndex": 63
+    },
+    {
+      "id": "s3",
+      "title": "Find and",
+      "startIndex": 88
     }
   ],
   "cards": [
@@ -34,734 +46,859 @@
       "title": "Usage",
       "kind": "code",
       "lang": "",
-      "code": "\nWildcard"
+      "code": "\nWildcard\n\n```shell script\n$ find . -name \"*.txt\"\n$ find . -name \"2020*.csv\"\n$ find . -name \"json_*\""
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "Usage",
       "kind": "text",
-      "body": "$ find . -name \"*.txt\"\n$ find . -name \"2020*.csv\"\n$ find . -name \"json_*\""
+      "body": "---"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\n---\n\n- [Regex reference](/regex) _(cheatsheets.zip)_\n- [Find cheatsheet](https://gist.github.com/gr1ev0us/3a9b9d9dbdd38f6379288eb2686fc538) _(gist.github.com)_\n\n### Option Examples {.col-span-2}\n\n| Option      | Example                                    | Description                                 |\n| ----------- | ------------------------------------------ | ------------------------------------------- |\n| `-type`     | find . -type d                             | Find only directories                       |\n| `-name`     | find . -type f -name \"\\*.txt\"              | Find file by name                           |\n| `-iname`    | find . -type f -iname \"hello\"              | Find file by name (case-insensitive)        |\n| `-size`     | find . -size +1G                           | Find files larger than 1G                   |\n| `-user`     | find . -type d -user jack                  | Find jack's file                            |\n| `-regex`    | find /var -regex '.\\*/tmp/.\\*[0-9]\\*.file' | Using Regex with find. See [regex](/regex)  |\n| `-maxdepth` | find . -maxdepth 1 -name \"a.txt\"           | In the current directory and subdirectories |\n| `-mindepth` | find / -mindepth 3 -maxdepth 5 -name pass  | Between sub-directory level 2 and 4         |\n\n{.show-header}\n\n### Type\n\n|           |                      |\n| --------- | -------------------- |\n| `-type d` | Directory            |\n| `-type f` | File                 |\n| `-type l` | Symbolic link        |\n| `-type b` | Buffered block       |\n| `-type c` | Unbuffered character |\n| `-type p` | Named pipe           |\n| `-type s` | Socket               |\n\n### Size\n\n|           |                           |\n| --------- | ------------------------- |\n| `-size b` | 512-byte blocks (default) |\n| `-size c` | Bytes                     |\n| `-size k` | Kilobytes                 |\n| `-size M` | Megabytes                 |\n| `-size G` | Gigabytes                 |\n| `-size T` | Terabytes _(only BSD)_    |\n| `-size P` | Petabytes _(only BSD)_    |\n\n### Size +/-\n\nFind all bigger than 10MB files"
+      "kind": "text",
+      "body": "• [Regex reference](/regex) _(cheatsheets.zip)_\n• [Find cheatsheet](https://gist.github.com/gr1ev0us/3a9b9d9dbdd38f6379288eb2686fc538) _(gist.github.com)_"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -size +10M"
+      "title": "Option Examples",
+      "kind": "qa",
+      "front": "`-type`",
+      "back": "find . -type d | Find only directories"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind all smaller than 10MB files"
+      "title": "Option Examples",
+      "kind": "qa",
+      "front": "`-name`",
+      "back": "find . -type f -name \"\\*.txt\" | Find file by name"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -size -10M"
+      "title": "Option Examples",
+      "kind": "qa",
+      "front": "`-iname`",
+      "back": "find . -type f -iname \"hello\" | Find file by name (case-insensitive)"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind all files that are exactly 10M"
+      "title": "Option Examples",
+      "kind": "qa",
+      "front": "`-size`",
+      "back": "find . -size +1G | Find files larger than 1G"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -size 10M"
+      "title": "Option Examples",
+      "kind": "qa",
+      "front": "`-user`",
+      "back": "find . -type d -user jack | Find jack's file"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind Size between 100MB and 1GB"
+      "title": "Option Examples",
+      "kind": "qa",
+      "front": "`-regex`",
+      "back": "find /var -regex '.\\*/tmp/.\\*[0-9]\\*.file' | Using Regex with find. See [regex](/regex)"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -size +100M -size -1G"
+      "title": "Option Examples",
+      "kind": "qa",
+      "front": "`-maxdepth`",
+      "back": "find . -maxdepth 1 -name \"a.txt\" | In the current directory and subdirectories"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nThe `+` and `-` prefixes signify greater than and less than, as usual.\n\n### Names\n\nFind files using name in current directory"
+      "title": "Option Examples",
+      "kind": "qa",
+      "front": "`-mindepth`",
+      "back": "find / -mindepth 3 -maxdepth 5 -name pass | Between sub-directory level 2 and 4"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -name tecmint.txt"
+      "title": "Type",
+      "kind": "qa",
+      "front": "`-type d`",
+      "back": "Directory"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind files under home directory"
+      "title": "Type",
+      "kind": "qa",
+      "front": "`-type f`",
+      "back": "File"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find /home -name tecmint.txt"
+      "title": "Type",
+      "kind": "qa",
+      "front": "`-type l`",
+      "back": "Symbolic link"
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind files using name and ignoring case"
+      "title": "Type",
+      "kind": "qa",
+      "front": "`-type b`",
+      "back": "Buffered block"
     },
     {
       "id": "s1-17",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find /home -iname tecmint.txt"
+      "title": "Type",
+      "kind": "qa",
+      "front": "`-type c`",
+      "back": "Unbuffered character"
     },
     {
       "id": "s1-18",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind directories using name"
+      "title": "Type",
+      "kind": "qa",
+      "front": "`-type p`",
+      "back": "Named pipe"
     },
     {
       "id": "s1-19",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -type d -name tecmint"
+      "title": "Type",
+      "kind": "qa",
+      "front": "`-type s`",
+      "back": "Socket"
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind php files using name"
+      "title": "Size",
+      "kind": "qa",
+      "front": "`-size b`",
+      "back": "512-byte blocks (default)"
     },
     {
       "id": "s1-21",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -type f -name tecmint.php"
+      "title": "Size",
+      "kind": "qa",
+      "front": "`-size c`",
+      "back": "Bytes"
     },
     {
       "id": "s1-22",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind all php files in directory"
+      "title": "Size",
+      "kind": "qa",
+      "front": "`-size k`",
+      "back": "Kilobytes"
     },
     {
       "id": "s1-23",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -type f -name \"*.php\""
+      "title": "Size",
+      "kind": "qa",
+      "front": "`-size M`",
+      "back": "Megabytes"
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Permissions\n\nFind the files whose permissions are 777."
+      "title": "Size",
+      "kind": "qa",
+      "front": "`-size G`",
+      "back": "Gigabytes"
     },
     {
       "id": "s1-25",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -type f -perm 0777 -print"
+      "title": "Size",
+      "kind": "qa",
+      "front": "`-size T`",
+      "back": "Terabytes _(only BSD)_"
     },
     {
       "id": "s1-26",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind the files without permission 777."
+      "title": "Size",
+      "kind": "qa",
+      "front": "`-size P`",
+      "back": "Petabytes _(only BSD)_"
     },
     {
       "id": "s1-27",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Size +/-",
       "kind": "text",
-      "body": "$ find / -type f ! -perm 777"
+      "body": "Find all bigger than 10MB files"
     },
     {
       "id": "s1-28",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind SUID set files."
+      "title": "Size +/-",
+      "kind": "text",
+      "body": "```shell script\n$ find / -size +10M"
     },
     {
       "id": "s1-29",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -perm /u=s"
+      "title": "Size +/-",
+      "kind": "code",
+      "lang": "",
+      "code": "\nFind all smaller than 10MB files\n\n```shell script\n$ find / -size -10M"
     },
     {
       "id": "s1-30",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind SGID set files."
+      "title": "Size +/-",
+      "kind": "text",
+      "body": "Find all files that are exactly 10M"
     },
     {
       "id": "s1-31",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Size +/-",
       "kind": "text",
-      "body": "$ find / -perm /g=s"
+      "body": "```shell script\n$ find / -size 10M"
     },
     {
       "id": "s1-32",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Size +/-",
       "kind": "code",
       "lang": "",
-      "code": "\nFind Read Only files."
+      "code": "\nFind Size between 100MB and 1GB\n\n```shell script\n$ find / -size +100M -size -1G"
     },
     {
       "id": "s1-33",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Size +/-",
       "kind": "text",
-      "body": "$ find / -perm /u=r"
+      "body": "The `+` and `-` prefixes signify greater than and less than, as usual."
     },
     {
       "id": "s1-34",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind Executable files."
+      "title": "Names",
+      "kind": "text",
+      "body": "Find files using name in current directory"
     },
     {
       "id": "s1-35",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Names",
       "kind": "text",
-      "body": "$ find / -perm /a=x"
+      "body": "```shell script\n$ find . -name tecmint.txt"
     },
     {
       "id": "s1-36",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Names",
       "kind": "code",
       "lang": "",
-      "code": "\n### Owners and Groups\n\nFind single file based on user"
+      "code": "\nFind files under home directory\n\n```shell script\n$ find /home -name tecmint.txt"
     },
     {
       "id": "s1-37",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Names",
       "kind": "text",
-      "body": "$ find / -user root -name tecmint.txt"
+      "body": "Find files using name and ignoring case"
     },
     {
       "id": "s1-38",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind all files based on user"
+      "title": "Names",
+      "kind": "text",
+      "body": "```shell script\n$ find /home -iname tecmint.txt"
     },
     {
       "id": "s1-39",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find /home -user tecmint"
+      "title": "Names",
+      "kind": "code",
+      "lang": "",
+      "code": "\nFind directories using name\n\n```shell script\n$ find / -type d -name tecmint"
     },
     {
       "id": "s1-40",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind all files based on group"
+      "title": "Names",
+      "kind": "text",
+      "body": "Find php files using name"
     },
     {
       "id": "s1-41",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Names",
       "kind": "text",
-      "body": "$ find /home -group developer"
+      "body": "```shell script\n$ find . -type f -name tecmint.php"
     },
     {
       "id": "s1-42",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Names",
       "kind": "code",
       "lang": "",
-      "code": "\nFind particular files of user"
+      "code": "\nFind all php files in directory\n\n```shell script\n$ find . -type f -name \"*.php\""
     },
     {
       "id": "s1-43",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Permissions",
       "kind": "text",
-      "body": "$ find /home -user tecmint -iname \"*.txt\""
+      "body": "Find the files whose permissions are 777."
     },
     {
       "id": "s1-44",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Multiple filenames"
+      "title": "Permissions",
+      "kind": "text",
+      "body": "```shell script\n$ find . -type f -perm 0777 -print"
     },
     {
       "id": "s1-45",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -type f \\( -name \"*.sh\" -o -name \"*.txt\" \\)"
+      "title": "Permissions",
+      "kind": "code",
+      "lang": "",
+      "code": "\nFind the files without permission 777.\n\n```shell script\n$ find / -type f ! -perm 777"
     },
     {
       "id": "s1-46",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind files with `.sh` and `.txt` extensions\n\n### Multiple dirs"
+      "title": "Permissions",
+      "kind": "text",
+      "body": "Find SUID set files."
     },
     {
       "id": "s1-47",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Permissions",
       "kind": "text",
-      "body": "$ find /opt /usr /var -name foo.scala -type f"
+      "body": "```shell script\n$ find / -perm /u=s"
     },
     {
       "id": "s1-48",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Permissions",
       "kind": "code",
       "lang": "",
-      "code": "\nFind files with multiple dirs\n\n### Empty"
+      "code": "\nFind SGID set files.\n\n```shell script\n$ find / -perm /g=s"
     },
     {
       "id": "s1-49",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Permissions",
       "kind": "text",
-      "body": "$ find . -type d -empty"
+      "body": "Find Read Only files."
     },
     {
       "id": "s1-50",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDelete all empty files in a directory"
+      "title": "Permissions",
+      "kind": "text",
+      "body": "```shell script\n$ find / -perm /u=r"
     },
     {
       "id": "s1-51",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -type f -empty -delete"
+      "title": "Permissions",
+      "kind": "code",
+      "lang": "",
+      "code": "\nFind Executable files.\n\n```shell script\n$ find / -perm /a=x"
     },
     {
       "id": "s1-52",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\n## Find Date and Time\n\n### Means {.col-span-2}\n\n| Option  | Description                                                     |\n| ------- | --------------------------------------------------------------- |\n| `atime` | access time (last time file <yel>opened</yel>)                  |\n| `mtime` | modified time (last time file <yel>contents was modified</yel>) |\n| `ctime` | changed time (last time file <yel>inode was changed</yel>)      |\n\n#### Example\n\n| Option          | Description                                                |\n| --------------- | ---------------------------------------------------------- |\n| `-mtime +0`     | Modified greater than 24 hours ago                         |\n| `-mtime 0`      | Modified between now and 1 day ago                         |\n| `-mtime -1`     | Modified less than 1 day ago (same as `-mtime 0`)          |\n| `-mtime 1`      | Modified between 24 and 48 hours ago                       |\n| `-mtime +1`     | Modified more than 48 hours ago                            |\n| `-mtime +1w`    | Last modified more than 1 week ago                         |\n| `-atime 0`      | Last accessed between now and 24 hours ago                 |\n| `-atime +0`     | Accessed more than 24 hours ago                            |\n| `-atime 1`      | Accessed between 24 and 48 hours ago                       |\n| `-atime +1`     | Accessed more than 48 hours ago                            |\n| `-atime -1`     | Accessed less than 24 hours ago (same as `-atime 0`)       |\n| `-ctime -6h30m` | File status changed within the last 6 hours and 30 minutes |\n\n### Examples\n\nFind last 50 days modified files"
+      "title": "Owners and Groups",
+      "kind": "text",
+      "body": "Find single file based on user"
     },
     {
       "id": "s1-53",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Owners and Groups",
       "kind": "text",
-      "body": "$ find / -mtime 50"
+      "body": "```shell script\n$ find / -user root -name tecmint.txt"
     },
     {
       "id": "s1-54",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Owners and Groups",
       "kind": "code",
       "lang": "",
-      "code": "\nfind last 50 days accessed files"
+      "code": "\nFind all files based on user\n\n```shell script\n$ find /home -user tecmint"
     },
     {
       "id": "s1-55",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Owners and Groups",
       "kind": "text",
-      "body": "$ find / -atime 50"
+      "body": "Find all files based on group"
     },
     {
       "id": "s1-56",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nfind last 50-100 days modified files"
+      "title": "Owners and Groups",
+      "kind": "text",
+      "body": "```shell script\n$ find /home -group developer"
     },
     {
       "id": "s1-57",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -mtime +50 –mtime -100"
+      "title": "Owners and Groups",
+      "kind": "code",
+      "lang": "",
+      "code": "\nFind particular files of user\n\n```shell script\n$ find /home -user tecmint -iname \"*.txt\""
     },
     {
       "id": "s1-58",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nfind changed files in last 1 hour"
+      "title": "Multiple filenames",
+      "kind": "text",
+      "body": "```shell script {.wrap}\n$ find . -type f \\( -name \"*.sh\" -o -name \"*.txt\" \\)"
     },
     {
       "id": "s1-59",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -cmin -60"
+      "title": "Multiple filenames",
+      "kind": "code",
+      "lang": "",
+      "code": "\nFind files with `.sh` and `.txt` extensions\n\n### Multiple dirs\n\n```shell script {.wrap}\n$ find /opt /usr /var -name foo.scala -type f"
     },
     {
       "id": "s1-60",
       "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nfind modified files in last 1 hour"
+      "title": "Multiple filenames",
+      "kind": "text",
+      "body": "Find files with multiple dirs"
     },
     {
       "id": "s1-61",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Empty",
       "kind": "text",
-      "body": "$ find / -mmin -60"
+      "body": "```shell script\n$ find . -type d -empty"
     },
     {
       "id": "s1-62",
       "sectionId": "s1",
-      "title": "Usage",
+      "title": "Empty",
       "kind": "code",
       "lang": "",
-      "code": "\nfind accessed files in last 1 hour"
+      "code": "\nDelete all empty files in a directory\n\n```shell script\n$ find . -type f -empty -delete"
     },
     {
-      "id": "s1-63",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s2-63",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`atime`",
+      "back": "access time (last time file <yel>opened</yel>)"
+    },
+    {
+      "id": "s2-64",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`mtime`",
+      "back": "modified time (last time file <yel>contents was modified</yel>)"
+    },
+    {
+      "id": "s2-65",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`ctime`",
+      "back": "changed time (last time file <yel>inode was changed</yel>)"
+    },
+    {
+      "id": "s2-66",
+      "sectionId": "s2",
+      "title": "Means",
       "kind": "text",
-      "body": "$ find / -amin -60"
+      "body": "#### Example"
     },
     {
-      "id": "s1-64",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s2-67",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-mtime +0`",
+      "back": "Modified greater than 24 hours ago"
+    },
+    {
+      "id": "s2-68",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-mtime 0`",
+      "back": "Modified between now and 1 day ago"
+    },
+    {
+      "id": "s2-69",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-mtime -1`",
+      "back": "Modified less than 1 day ago (same as `-mtime 0`)"
+    },
+    {
+      "id": "s2-70",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-mtime 1`",
+      "back": "Modified between 24 and 48 hours ago"
+    },
+    {
+      "id": "s2-71",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-mtime +1`",
+      "back": "Modified more than 48 hours ago"
+    },
+    {
+      "id": "s2-72",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-mtime +1w`",
+      "back": "Last modified more than 1 week ago"
+    },
+    {
+      "id": "s2-73",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-atime 0`",
+      "back": "Last accessed between now and 24 hours ago"
+    },
+    {
+      "id": "s2-74",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-atime +0`",
+      "back": "Accessed more than 24 hours ago"
+    },
+    {
+      "id": "s2-75",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-atime 1`",
+      "back": "Accessed between 24 and 48 hours ago"
+    },
+    {
+      "id": "s2-76",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-atime +1`",
+      "back": "Accessed more than 48 hours ago"
+    },
+    {
+      "id": "s2-77",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-atime -1`",
+      "back": "Accessed less than 24 hours ago (same as `-atime 0`)"
+    },
+    {
+      "id": "s2-78",
+      "sectionId": "s2",
+      "title": "Means",
+      "kind": "qa",
+      "front": "`-ctime -6h30m`",
+      "back": "File status changed within the last 6 hours and 30 minutes"
+    },
+    {
+      "id": "s2-79",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "text",
+      "body": "Find last 50 days modified files"
+    },
+    {
+      "id": "s2-80",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "text",
+      "body": "```shell script\n$ find / -mtime 50"
+    },
+    {
+      "id": "s2-81",
+      "sectionId": "s2",
+      "title": "Examples",
       "kind": "code",
       "lang": "",
-      "code": "\n## Find and {.cols-2}\n\n### Find and delete {.row-span-2}\n\nFind and remove multiple files"
+      "code": "\nfind last 50 days accessed files\n\n```shell script\n$ find / -atime 50"
     },
     {
-      "id": "s1-65",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s2-82",
+      "sectionId": "s2",
+      "title": "Examples",
       "kind": "text",
-      "body": "$ find . -type f -name \"*.mp3\" -exec rm -f {} \\;"
+      "body": "find last 50-100 days modified files"
     },
     {
-      "id": "s1-66",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s2-83",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "text",
+      "body": "```shell script\n$ find / -mtime +50 –mtime -100"
+    },
+    {
+      "id": "s2-84",
+      "sectionId": "s2",
+      "title": "Examples",
       "kind": "code",
       "lang": "",
-      "code": "\nFind and remove single file"
+      "code": "\nfind changed files in last 1 hour\n\n```shell script\n$ find / -cmin -60"
     },
     {
-      "id": "s1-67",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s2-85",
+      "sectionId": "s2",
+      "title": "Examples",
       "kind": "text",
-      "body": "$ find . -type f -name \"tecmint.txt\" -exec rm -f {} \\;"
+      "body": "find modified files in last 1 hour"
     },
     {
-      "id": "s1-68",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s2-86",
+      "sectionId": "s2",
+      "title": "Examples",
+      "kind": "text",
+      "body": "```shell script\n$ find / -mmin -60"
+    },
+    {
+      "id": "s2-87",
+      "sectionId": "s2",
+      "title": "Examples",
       "kind": "code",
       "lang": "",
-      "code": "\nFind and delete 100mb files"
+      "code": "\nfind accessed files in last 1 hour\n\n```shell script\n$ find / -amin -60"
     },
     {
-      "id": "s1-69",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-88",
+      "sectionId": "s3",
+      "title": "Find and delete",
       "kind": "text",
-      "body": "$ find / -type f -size +100m -exec rm -f {} \\;"
+      "body": "Find and remove multiple files"
     },
     {
-      "id": "s1-70",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-89",
+      "sectionId": "s3",
+      "title": "Find and delete",
+      "kind": "text",
+      "body": "```shell script\n$ find . -type f -name \"*.mp3\" -exec rm -f {} \\;"
+    },
+    {
+      "id": "s3-90",
+      "sectionId": "s3",
+      "title": "Find and delete",
       "kind": "code",
       "lang": "",
-      "code": "\nFind specific files and delete"
+      "code": "\nFind and remove single file\n\n```shell script\n$ find . -type f -name \"tecmint.txt\" -exec rm -f {} \\;"
     },
     {
-      "id": "s1-71",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-91",
+      "sectionId": "s3",
+      "title": "Find and delete",
       "kind": "text",
-      "body": "$ find / -type f -name *.mp3 -size +10m -exec rm {} \\;"
+      "body": "Find and delete 100mb files"
     },
     {
-      "id": "s1-72",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-92",
+      "sectionId": "s3",
+      "title": "Find and delete",
+      "kind": "text",
+      "body": "```shell script\n$ find / -type f -size +100m -exec rm -f {} \\;"
+    },
+    {
+      "id": "s3-93",
+      "sectionId": "s3",
+      "title": "Find and delete",
       "kind": "code",
       "lang": "",
-      "code": "\n### Find and replace\n\nFind all files and modify the content `const` to `let`"
+      "code": "\nFind specific files and delete\n\n```shell script\n$ find / -type f -name *.mp3 -size +10m -exec rm {} \\;"
     },
     {
-      "id": "s1-73",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-94",
+      "sectionId": "s3",
+      "title": "Find and replace",
       "kind": "text",
-      "body": "$ find ./ -type f -exec sed -i 's/const/let/g' {} \\;"
+      "body": "Find all files and modify the content `const` to `let`"
     },
     {
-      "id": "s1-74",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-95",
+      "sectionId": "s3",
+      "title": "Find and replace",
+      "kind": "text",
+      "body": "```shell script {.wrap}\n$ find ./ -type f -exec sed -i 's/const/let/g' {} \\;"
+    },
+    {
+      "id": "s3-96",
+      "sectionId": "s3",
+      "title": "Find and replace",
       "kind": "code",
       "lang": "",
-      "code": "\nFind readable and writable files and modify the content `old` to `new`"
+      "code": "\nFind readable and writable files and modify the content `old` to `new`\n\n```shell script {.wrap}\n$ find ./ -type f -readable -writable -exec sed -i \"s/old/new/g\" {} \\;"
     },
     {
-      "id": "s1-75",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-97",
+      "sectionId": "s3",
+      "title": "Find and replace",
       "kind": "text",
-      "body": "$ find ./ -type f -readable -writable -exec sed -i \"s/old/new/g\" {} \\;"
+      "body": "See also: [sed cheatsheet](/sed)"
     },
     {
-      "id": "s1-76",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-98",
+      "sectionId": "s3",
+      "title": "Find and rename",
+      "kind": "text",
+      "body": "Find and suffix (added `.bak`)"
+    },
+    {
+      "id": "s3-99",
+      "sectionId": "s3",
+      "title": "Find and rename",
+      "kind": "text",
+      "body": "```shell script {.wrap}\n$ find . -type f -name 'file*' -exec mv {} {}.bak\\;"
+    },
+    {
+      "id": "s3-100",
+      "sectionId": "s3",
+      "title": "Find and rename",
       "kind": "code",
       "lang": "",
-      "code": "\nSee also: [sed cheatsheet](/sed)\n\n### Find and rename\n\nFind and suffix (added `.bak`)"
+      "code": "\nFind and rename extension (`.html` => `.gohtml`)\n\n```shell script {.wrap}\n$ find ./ -depth -name \"*.html\" -exec sh -c 'mv \"$1\" \"${1%.html}.gohtml\"' _ {} \\;"
     },
     {
-      "id": "s1-77",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-101",
+      "sectionId": "s3",
+      "title": "Find and move",
       "kind": "text",
-      "body": "$ find . -type f -name 'file*' -exec mv {} {}.bak\\;"
+      "body": "```shell script\n$ find . -name '*.mp3' -exec mv {} /tmp/music \\;"
     },
     {
-      "id": "s1-78",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-102",
+      "sectionId": "s3",
+      "title": "Find and move",
       "kind": "code",
       "lang": "",
-      "code": "\nFind and rename extension (`.html` => `.gohtml`)"
+      "code": "\nFind and move it to a specific directory (`/tmp/music`)\n\n### Find and copy\n\n```shell script\n$ find . -name '*2020*.xml' -exec cp -r \"{}\" /tmp/backup \\;"
     },
     {
-      "id": "s1-79",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-103",
+      "sectionId": "s3",
+      "title": "Find and move",
       "kind": "text",
-      "body": "$ find ./ -depth -name \"*.html\" -exec sh -c 'mv \"$1\" \"${1%.html}.gohtml\"' _ {} \\;"
+      "body": "Find matching files and copy to a specific directory (`/tmp/backup`)"
     },
     {
-      "id": "s1-80",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-104",
+      "sectionId": "s3",
+      "title": "Find and concatenate",
+      "kind": "text",
+      "body": "Merge all csv files in the download directory into `merged.csv`"
+    },
+    {
+      "id": "s3-105",
+      "sectionId": "s3",
+      "title": "Find and concatenate",
+      "kind": "text",
+      "body": "```shell script\n$ find download -type f -iname '*.csv' | xargs cat > merged.csv"
+    },
+    {
+      "id": "s3-106",
+      "sectionId": "s3",
+      "title": "Find and concatenate",
       "kind": "code",
       "lang": "",
-      "code": "\n### Find and move"
+      "code": "\nMerge all sorted csv files in the download directory into `merged.csv`\n\n```shell script {.wrap}\n$ find download -type f -iname '*.csv' | sort | xargs cat > merged.csv"
     },
     {
-      "id": "s1-81",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-107",
+      "sectionId": "s3",
+      "title": "Find and sort",
       "kind": "text",
-      "body": "$ find . -name '*.mp3' -exec mv {} /tmp/music \\;"
+      "body": "Find and sort in ascending"
     },
     {
-      "id": "s1-82",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-108",
+      "sectionId": "s3",
+      "title": "Find and sort",
+      "kind": "text",
+      "body": "```shell script\n$ find . -type f | sort"
+    },
+    {
+      "id": "s3-109",
+      "sectionId": "s3",
+      "title": "Find and sort",
       "kind": "code",
       "lang": "",
-      "code": "\nFind and move it to a specific directory (`/tmp/music`)\n\n### Find and copy"
+      "code": "\nfind and sort descending\n\n```shell script\n$ find . -type f | sort -r"
     },
     {
-      "id": "s1-83",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-110",
+      "sectionId": "s3",
+      "title": "Find and chmod",
       "kind": "text",
-      "body": "$ find . -name '*2020*.xml' -exec cp -r \"{}\" /tmp/backup \\;"
+      "body": "Find files and set permissions to 644."
     },
     {
-      "id": "s1-84",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-111",
+      "sectionId": "s3",
+      "title": "Find and chmod",
+      "kind": "text",
+      "body": "```shell script\n$ find / -type f -perm 0777 -print -exec chmod 644 {} \\;"
+    },
+    {
+      "id": "s3-112",
+      "sectionId": "s3",
+      "title": "Find and chmod",
       "kind": "code",
       "lang": "",
-      "code": "\nFind matching files and copy to a specific directory (`/tmp/backup`)\n\n### Find and concatenate\n\nMerge all csv files in the download directory into `merged.csv`"
+      "code": "\nFind directories and set permissions to 755.\n\n```shell script\n$ find / -type d -perm 777 -print -exec chmod 755 {} \\;"
     },
     {
-      "id": "s1-85",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-113",
+      "sectionId": "s3",
+      "title": "Find and compress",
       "kind": "text",
-      "body": "$ find download -type f -iname '*.csv' | xargs cat > merged.csv"
+      "body": "Find all `.java` files and compress it into `java.tar`"
     },
     {
-      "id": "s1-86",
-      "sectionId": "s1",
-      "title": "Usage",
+      "id": "s3-114",
+      "sectionId": "s3",
+      "title": "Find and compress",
+      "kind": "text",
+      "body": "```shell script\n$ find . -type f -name \"*.java\" | xargs tar cvf java.tar"
+    },
+    {
+      "id": "s3-115",
+      "sectionId": "s3",
+      "title": "Find and compress",
       "kind": "code",
       "lang": "",
-      "code": "\nMerge all sorted csv files in the download directory into `merged.csv`"
-    },
-    {
-      "id": "s1-87",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find download -type f -iname '*.csv' | sort | xargs cat > merged.csv"
-    },
-    {
-      "id": "s1-88",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Find and sort\n\nFind and sort in ascending"
-    },
-    {
-      "id": "s1-89",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -type f | sort"
-    },
-    {
-      "id": "s1-90",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nfind and sort descending"
-    },
-    {
-      "id": "s1-91",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -type f | sort -r"
-    },
-    {
-      "id": "s1-92",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Find and chmod {.row-span-1}\n\nFind files and set permissions to 644."
-    },
-    {
-      "id": "s1-93",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -type f -perm 0777 -print -exec chmod 644 {} \\;"
-    },
-    {
-      "id": "s1-94",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind directories and set permissions to 755."
-    },
-    {
-      "id": "s1-95",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find / -type d -perm 777 -print -exec chmod 755 {} \\;"
-    },
-    {
-      "id": "s1-96",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Find and compress\n\nFind all `.java` files and compress it into `java.tar`"
-    },
-    {
-      "id": "s1-97",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -type f -name \"*.java\" | xargs tar cvf java.tar"
-    },
-    {
-      "id": "s1-98",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "\nFind all `.csv` files and compress it into `cheatsheets.zip`"
-    },
-    {
-      "id": "s1-99",
-      "sectionId": "s1",
-      "title": "Usage",
-      "kind": "text",
-      "body": "$ find . -type f -name \"*.csv\" | xargs zip cheatsheets.zip"
+      "code": "\nFind all `.csv` files and compress it into `cheatsheets.zip`\n\n```shell script\n$ find . -type f -name \"*.csv\" | xargs zip cheatsheets.zip"
     }
   ],
   "source": {
@@ -769,7 +906,6 @@
     "path": "source/_posts/find.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/find.md",
-    "generatedAt": "2025-12-16T07:36:11.632Z",
     "lang": "en",
     "mode": "local"
   }

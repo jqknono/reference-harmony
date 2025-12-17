@@ -1,11 +1,23 @@
 {
   "id": "minio",
-  "title": "minio",
+  "name": "MinIO 备忘清单",
+  "title": "这是 MinIO 语法的快速参考备忘单",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/minio.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "MinIO 快速参考",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "另见",
+      "startIndex": 66
     }
   ],
   "cards": [
@@ -14,516 +26,496 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "MinIO 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "这是 MinIO 语法的快速参考备忘单"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "MinIO 快速参考\n----"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "基本概念",
       "kind": "text",
       "body": "• **对象存储**：存储非结构化数据，如图片、视频等。\n• **桶（Bucket）**：MinIO中存储对象的容器，类似于文件夹。\n• **对象（Object）**：桶中存储的具体数据。"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "安装MinIO",
       "kind": "text",
       "body": "• 从[MinIO官网](https://min.io/download)下载对应平台的MinIO服务器。\n• 根据操作系统的指南进行安装。"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "启动MinIO服务",
       "kind": "text",
       "body": "• 运行MinIO服务器，通常使用以下命令："
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "启动MinIO服务",
-      "kind": "text",
-      "body": "```shell\nminio server /export/data1 /export/data2 /export/data3 /export/data4\n```"
+      "kind": "code",
+      "lang": "shell",
+      "code": "  minio server /export/data1 /export/data2 /export/data3 /export/data4"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "启动MinIO服务",
       "kind": "text",
       "body": "• 其中`/export/data1`等是存储数据的路径。"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "访问MinIO",
       "kind": "text",
       "body": "• 使用Web界面访问MinIO，通常是`http://127.0.0.1:9000`。\n• 使用客户端工具，如`mc`命令行工具。"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "minio client 安装",
       "kind": "text",
       "body": "#### windows"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "minio client 安装",
       "kind": "text",
       "body": "下载"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "minio client 安装",
       "kind": "code",
       "lang": "bash",
       "code": "https://dl.min.io/client/mc/release/windows-amd64/mc.exe\n\\path\\to\\mc.exe --help"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "minio client 安装",
       "kind": "text",
       "body": "#### mac"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "minio client 安装",
       "kind": "text",
       "body": "安装"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "minio client 安装",
       "kind": "code",
       "lang": "bash",
       "code": "brew install minio/stable/mc\nmc --help"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "minio client 安装",
       "kind": "text",
       "body": "#### linux"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "minio client 安装",
       "kind": "code",
       "lang": "sh",
       "code": "curl https://dl.min.io/client/mc/release/linux-amd64/mc \\\n--create-dirs \\\n-o $HOME/minio-binaries/mc\n\nchmod +x $HOME/minio-binaries/mc\nexport PATH=$PATH:$HOME/minio-binaries/"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "minio client 安装",
       "kind": "text",
       "body": "版本比较多,请去官网查找安装步骤"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "mc 连接服务操作",
       "kind": "text",
       "body": "列出所有别名"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "mc 连接服务操作",
       "kind": "code",
       "lang": "bash",
       "code": "mc alias list"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "mc 连接服务操作",
       "kind": "text",
       "body": "添加服务别名"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "mc 连接服务操作",
       "kind": "code",
       "lang": "bash",
       "code": "mc alias set myminio https://myminio.example.net minioadminuser minioadminpassword"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "mc 连接服务操作",
       "kind": "text",
       "body": "删除服务别名"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "mc 连接服务操作",
       "kind": "code",
       "lang": "bash",
       "code": "mc alias rm myminio"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "mc 桶操作",
       "kind": "text",
       "body": "创建桶"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s1-23",
+      "sectionId": "s1",
       "title": "mc 桶操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc mb myminio/mybucket"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s1-24",
+      "sectionId": "s1",
       "title": "mc 桶操作",
       "kind": "text",
       "body": "删除桶"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s1-25",
+      "sectionId": "s1",
       "title": "mc 桶操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc rb myminio/mybucket"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s1-26",
+      "sectionId": "s1",
       "title": "mc 桶操作",
       "kind": "text",
       "body": "设置桶策略"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s1-27",
+      "sectionId": "s1",
       "title": "mc 桶操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc policy set download myminio/mybucket"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s1-28",
+      "sectionId": "s1",
       "title": "mc 桶操作",
       "kind": "text",
       "body": "设置桶生命周期"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s1-29",
+      "sectionId": "s1",
       "title": "mc 桶操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc ilm import myminio/mybucket"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s1-30",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "text",
       "body": "列出文件"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s1-31",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc ls myminio/mybucket"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s1-32",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "text",
       "body": "上传文件"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s1-33",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc cp /path/to/file myminio/mybucket/file"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s1-34",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "text",
       "body": "下载文件"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s1-35",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc cp myminio/mybucket/file /path/to/destination"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s1-36",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "text",
       "body": "删除文件"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s1-37",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc rm myminio/mybucket/file"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s1-38",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "text",
       "body": "移动文件"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s1-39",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc mv myminio/mybucket/file myminio/mybucket/newfile"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s1-40",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "text",
       "body": "拷贝文件"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s1-41",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc cp myminio/mybucket/file myminio/mybucket/newfile"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s1-42",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "text",
       "body": "查找文件"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s1-43",
+      "sectionId": "s1",
       "title": "mc 文件操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc find myminio/mydata --name \"*.jpg\""
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s1-44",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "text",
       "body": "列出文件夹"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s1-45",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc ls myminio/mybucket/folder"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s1-46",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "text",
       "body": "创建文件夹"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s1-47",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc mb myminio/mybucket/folder"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s1-48",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "text",
       "body": "删除文件夹"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s1-49",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc rb myminio/mybucket/folder"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s1-50",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "text",
       "body": "移动文件夹"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s1-51",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc mv myminio/mybucket/folder myminio/mybucket/newfolder"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s1-52",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "text",
       "body": "拷贝文件夹"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s1-53",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc cp myminio/mybucket/folder myminio/mybucket/newfolder"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s1-54",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "text",
       "body": "删除文件夹中的所有文件"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s1-55",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc rm --recursive myminio/mybucket/folder"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s1-56",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "text",
       "body": "列出文件夹中的所有文件"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s1-57",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc ls --recursive myminio/mybucket/folder"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s1-58",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "text",
       "body": "列出文件夹中的所有文件，包括子文件夹"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s1-59",
+      "sectionId": "s1",
       "title": "mc 文件夹操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc ls --recursive --include-folders myminio/mybucket/folder"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s1-60",
+      "sectionId": "s1",
       "title": "mc 其他操作",
       "kind": "text",
       "body": "列出所有桶"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
+      "id": "s1-61",
+      "sectionId": "s1",
       "title": "mc 其他操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc ls myminio"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s1-62",
+      "sectionId": "s1",
       "title": "mc 其他操作",
       "kind": "text",
       "body": "显示帮助信息"
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s1-63",
+      "sectionId": "s1",
       "title": "mc 其他操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc  help"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s1-64",
+      "sectionId": "s1",
       "title": "mc 其他操作",
       "kind": "text",
       "body": "版本信息"
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s1-65",
+      "sectionId": "s1",
       "title": "mc 其他操作",
       "kind": "code",
       "lang": "sh",
       "code": "mc version"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
-      "title": "mc 其他操作",
-      "kind": "text",
-      "body": "另见\n---"
-    },
-    {
-      "id": "intro-69",
-      "sectionId": "intro",
-      "title": "mc 其他操作",
+      "id": "s2-66",
+      "sectionId": "s2",
+      "title": "另见",
       "kind": "text",
       "body": "• [MinIO官方文档](https://min.io/docs/minio/kubernetes/upstream/) _(min.io)_\n• [MinIO github 源码](https://github.com/minio/minio) _(github.com)_"
     }
@@ -533,7 +525,6 @@
     "path": "docs/minio.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/minio.md",
-    "generatedAt": "2025-12-16T07:36:11.325Z",
     "lang": "zh",
     "mode": "local"
   }

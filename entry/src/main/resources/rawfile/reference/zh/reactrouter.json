@@ -1,11 +1,28 @@
 {
   "id": "reactrouter",
-  "title": "reactrouter",
+  "name": "React Router 备忘清单",
+  "title": "[![NPM version](https://img.shields.io/npm/v/react-router-dom.svg?style=flat)](https://npmjs.org/package/react-router-dom)",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/reactrouter.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 2
+    },
+    {
+      "id": "s2",
+      "title": "Routers",
+      "startIndex": 59
+    },
+    {
+      "id": "s3",
+      "title": "另见",
+      "startIndex": 95
     }
   ],
   "cards": [
@@ -14,1139 +31,701 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "React Router 备忘清单\n==="
+      "body": "[![NPM version](https://img.shields.io/npm/v/react-router-dom.svg?style=flat)](https://npmjs.org/package/react-router-dom)\n[![Downloads](https://img.shields.io/npm/dm/react-router-dom.svg?style=flat)](https://www.npmjs.com/package/react-router-dom)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/remix-run/react-router)](https://github.com/remix-run/react-router/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/remix-run/react-router)"
     },
     {
       "id": "intro-1",
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "[![NPM version](https://img.shields.io/npm/v/react-router-dom.svg?style=flat)](https://npmjs.org/package/react-router-dom)\n[![Downloads](https://img.shields.io/npm/dm/react-router-dom.svg?style=flat)](https://www.npmjs.com/package/react-router-dom)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/remix-run/react-router)](https://github.com/remix-run/react-router/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/remix-run/react-router)"
-    },
-    {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "适合初学者的综合 [React Router 6.x](https://reactrouter.com/en/main/start/overview) 备忘清单\n<!--rehype:style=padding-top: 12px;-->"
     },
     {
-      "id": "intro-3",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n----"
-    },
-    {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "安装使用",
       "kind": "code",
       "lang": "bash",
       "code": "$ npm create vite@latest myApp --\\\n     --template react\n# 按照提示操作\n$ cd <myApp>\n$ npm install react-router-dom \\\n    localforage \\\n    match-sorter \\\n    sort-by\n$ npm run dev"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "添加路由器",
       "kind": "text",
       "body": "```jsx {3-6,8-13,19}\nimport React from \"react\";\nimport ReactDOM from \"react-dom/client\";\nimport {\ncreateBrowserRouter,\nRouterProvider,\n} from \"react-router-dom\";"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "添加路由器",
       "kind": "text",
       "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <div>Hello world!</div>,\n},\n]);"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "添加路由器",
       "kind": "text",
       "body": "const root=document.getElementById('root');"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "添加路由器",
       "kind": "text",
       "body": "ReactDOM.createRoot(root).render(\n<React.StrictMode>\n<RouterProvider router={router} />\n</React.StrictMode>\n);"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "添加路由器",
       "kind": "code",
       "lang": "",
-      "code": "\n### 根路由"
+      "code": "\n### 根路由\n\n```jsx {1,6}\nimport Root from \"./routes/root\";\n\nconst router = createBrowserRouter([\n  {\n    path: \"/\",\n    element: <Root />,\n  },\n]);"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "处理未找到错误",
       "kind": "text",
-      "body": "import Root from \"./routes/root\";"
+      "body": "```jsx {1,7}\nimport ErrorPage from \"./error-page\";"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\n},\n]);"
-    },
-    {
-      "id": "intro-12",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 处理未找到错误"
-    },
-    {
-      "id": "intro-13",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import ErrorPage from \"./error-page\";"
-    },
-    {
-      "id": "intro-14",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "处理未找到错误",
       "kind": "text",
       "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nerrorElement: <ErrorPage />,\n},\n]);"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "处理未找到错误",
       "kind": "code",
       "lang": "",
-      "code": "\n### `contacts` 用户界面"
+      "code": "\n### `contacts` 用户界面\n\n```jsx {1,9-12}\nimport Contact from \"./routes/contact\";\n\nconst router = createBrowserRouter([\n  {\n    path: \"/\",\n    element: <Root />,\n    errorElement: <ErrorPage />,\n  },\n  {\n    path: \"contacts/:contactId\",\n    element: <Contact />,\n  },\n]);"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "嵌套路由",
       "kind": "text",
-      "body": "import Contact from \"./routes/contact\";"
+      "body": "`src/main.jsx`"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "嵌套路由",
       "kind": "text",
-      "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nerrorElement: <ErrorPage />,\n},\n{\npath: \"contacts/:contactId\",\nelement: <Contact />,\n},\n]);"
+      "body": "```jsx {6-11}\nconst router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nerrorElement: <ErrorPage />,\nchildren: [\n{\npath: \"contacts/:contactId\",\nelement: <Contact />,\n},\n],\n},\n]);"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "嵌套路由",
       "kind": "code",
       "lang": "",
-      "code": "\n### 嵌套路由\n\n`src/main.jsx`"
+      "code": "\n`src/routes/root.jsx`\n\n```jsx {1,8}\nimport { Outlet } from \"react-router-dom\";\n\nexport default function Root() {\n  return (\n    <>\n      {/* 所有其他元素 */}\n      <div id=\"detail\">\n        <Outlet />\n      </div>\n    </>\n  );\n}"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "text",
-      "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nerrorElement: <ErrorPage />,\nchildren: [\n{\npath: \"contacts/:contactId\",\nelement: <Contact />,\n},\n],\n},\n]);"
+      "body": "```jsx {2,9,14}\nimport {\nOutlet, Link\n} from \"react-router-dom\";"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`src/routes/root.jsx`"
-    },
-    {
-      "id": "intro-21",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import { Outlet } from \"react-router-dom\";"
-    },
-    {
-      "id": "intro-22",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "export default function Root() {\nreturn (\n<>\n{/* 所有其他元素 */}\n<div id=\"detail\">\n<Outlet />\n</div>\n</>\n);\n}"
-    },
-    {
-      "id": "intro-23",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 客户端路由"
-    },
-    {
-      "id": "intro-24",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import {\nOutlet, Link\n} from \"react-router-dom\";"
-    },
-    {
-      "id": "intro-25",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "text",
       "body": "export default function Root() {\nreturn (\n<ul>\n<li>\n<Link to={`contacts/1`}>\nYour Name\n</Link>\n</li>\n<li>\n<Link to={`contacts/2`}>\nYour Friend\n</Link>\n</li>\n</ul>\n);\n}"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "code",
       "lang": "",
-      "code": "\n### 创建联系人\n<!--rehype:wrap-class=row-span-2-->\n\n创建动作并将 `<form>` 更改为 `<Form>`"
+      "code": "\n### 创建联系人\n<!--rehype:wrap-class=row-span-2-->\n\n创建动作并将 `<form>` 更改为 `<Form>`\n\n```jsx {5,8,11-14,20-22}\nimport {\n  Outlet,\n  Link,\n  useLoaderData,\n  Form,\n} from \"react-router-dom\";\nimport {\n  getContacts, createContact\n} from \"../contacts\";\n\nexport async function action() {\n  const contact = await createContact();\n  return { contact };\n}\nexport default function Root() {\n  const { contacts } = useLoaderData();\n  return (\n    <div id=\"sidebar\">\n      <h1>React Router Contacts</h1>\n      <Form method=\"post\">\n        <button type=\"submit\">New</button>\n      </Form>\n    </div>\n  );\n}"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "text",
-      "body": "import {\nOutlet,\nLink,\nuseLoaderData,\nForm,\n} from \"react-router-dom\";\nimport {\ngetContacts, createContact\n} from \"../contacts\";"
+      "body": "导入并设置路由上的 `action`"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "text",
-      "body": "export async function action() {\nconst contact = await createContact();\nreturn { contact };\n}\nexport default function Root() {\nconst { contacts } = useLoaderData();\nreturn (\n<div id=\"sidebar\">\n<h1>React Router Contacts</h1>\n<Form method=\"post\">\n<button type=\"submit\">New</button>\n</Form>\n</div>\n);\n}"
+      "body": "```jsx {3,12}\nimport Root, {\nloader as rootLoader,\naction as rootAction,\n} from \"./routes/root\";"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n导入并设置路由上的 `action`"
-    },
-    {
-      "id": "intro-30",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import Root, {\nloader as rootLoader,\naction as rootAction,\n} from \"./routes/root\";"
-    },
-    {
-      "id": "intro-31",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "text",
       "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nerrorElement: <ErrorPage />,\nloader: rootLoader,\naction: rootAction,\nchildren: [\n{\npath: \"contacts/:contactId\",\nelement: <Contact />,\n},\n],\n},\n]);"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "code",
       "lang": "",
-      "code": "\n### 加载程序中的 URL 参数\n<!--rehype:wrap-class=row-span-3-->"
+      "code": "\n### 加载程序中的 URL 参数\n<!--rehype:wrap-class=row-span-3-->\n\n```jsx {3}\n[\n  {\n    path: \"contacts/:contactId\",\n    element: <Contact />,\n  },\n];"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "text",
-      "body": "[\n{\npath: \"contacts/:contactId\",\nelement: <Contact />,\n},\n];"
+      "body": "`:contactId` URL 段。 冒号（<pur>:</pur>）具有特殊含义，将其变成“`动态段`”"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`:contactId` URL 段。 冒号（<pur>:</pur>）具有特殊含义，将其变成“`动态段`”"
-    },
-    {
-      "id": "intro-35",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "text",
-      "body": "import {\nuseLoaderData\n} from \"react-router-dom\";\nimport { getContact } from \"../contacts\";"
+      "body": "```jsx {1-4,6-8,11}\nimport {\nuseLoaderData\n} from \"react-router-dom\";\nimport { getContact } from \"../contacts\";"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "text",
       "body": "export async function loader({ params }) {\nreturn getContact(params.contactId);\n}"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "text",
       "body": "export default function Contact() {\nconst contact = useLoaderData();\n// existing code\n}"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "客户端路由",
       "kind": "code",
       "lang": "",
-      "code": "\n在路由上配置 `loader`"
+      "code": "\n在路由上配置 `loader`\n\n```jsx {2,16}\nimport Contact, {\n  loader as contactLoader,\n} from \"./routes/contact\";\n\nconst router = createBrowserRouter([\n  {\n    path: \"/\",\n    element: <Root />,\n    errorElement: <ErrorPage />,\n    loader: rootLoader,\n    action: rootAction,\n    children: [\n      {\n        path: \"contacts/:contactId\",\n        element: <Contact />,\n        loader: contactLoader,\n      },\n    ],\n  },\n]);"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import Contact, {\nloader as contactLoader,\n} from \"./routes/contact\";"
-    },
-    {
-      "id": "intro-40",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nerrorElement: <ErrorPage />,\nloader: rootLoader,\naction: rootAction,\nchildren: [\n{\npath: \"contacts/:contactId\",\nelement: <Contact />,\nloader: contactLoader,\n},\n],\n},\n]);"
-    },
-    {
-      "id": "intro-41",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "更新数据",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 更新数据\n<!--rehype:wrap-class=row-span-3-->"
+      "lang": "jsx",
+      "code": "import {\n  Form, useLoaderData\n} from \"react-router-dom\";\n\nexport default function EditContact() {\n  const contact = useLoaderData();\n\n  return (\n    <Form method=\"post\" id=\"contact-form\">\n      <label>\n        <span>Twitter</span>\n        <input\n          type=\"text\"\n          name=\"twitter\"\n          placeholder=\"@jack\"\n          defaultValue={contact.twitter}\n        />\n      </label>\n      <label>\n        <span>Notes</span>\n        <textarea\n          name=\"notes\"\n          defaultValue={contact.notes}\n          rows={6}\n        />\n      </label>\n      <p>\n        <button type=\"submit\">保存</button>\n        <button type=\"button\">取消</button>\n      </p>\n    </Form>\n  );\n}"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "更新数据",
       "kind": "text",
-      "body": "import {\nForm, useLoaderData\n} from \"react-router-dom\";"
+      "body": "添加新的编辑路由"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "更新数据",
       "kind": "text",
-      "body": "export default function EditContact() {\nconst contact = useLoaderData();"
+      "body": "```jsx {1,16-20}\nimport EditContact from \"./routes/edit\";"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "return (\n<Form method=\"post\" id=\"contact-form\">\n<label>\n<span>Twitter</span>\n<input\ntype=\"text\"\nname=\"twitter\"\nplaceholder=\"@jack\"\ndefaultValue={contact.twitter}\n/>\n</label>\n<label>\n<span>Notes</span>\n<textarea\nname=\"notes\"\ndefaultValue={contact.notes}\nrows={6}\n/>\n</label>\n<p>\n<button type=\"submit\">保存</button>\n<button type=\"button\">取消</button>\n</p>\n</Form>\n);\n}"
-    },
-    {
-      "id": "intro-45",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n添加新的编辑路由"
-    },
-    {
-      "id": "intro-46",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import EditContact from \"./routes/edit\";"
-    },
-    {
-      "id": "intro-47",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "更新数据",
       "kind": "text",
       "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nerrorElement: <ErrorPage />,\nloader: rootLoader,\naction: rootAction,\nchildren: [\n{\npath: \"contacts/:contactId\",\nelement: <Contact />,\nloader: contactLoader,\n},\n{\npath: \"contacts/:contactId/edit\",\nelement: <EditContact />,\nloader: contactLoader,\n},\n],\n},\n]);"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "更新数据",
       "kind": "code",
       "lang": "",
-      "code": "\n### 活动链接样式"
+      "code": "\n### 活动链接样式\n\n```jsx {2,7-8}\nimport {\n  NavLink,\n} from \"react-router-dom\";\n\n<NavLink\n  to={`contacts/${contact.id}`}\n  className={({ isActive, isPending }) =>\n    isActive\n      ? \"active\"\n      : isPending\n      ? \"pending\"\n      : \"\"\n  }\n>\n  {/* other code */}\n</NavLink>"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
-      "body": "import {\nNavLink,\n} from \"react-router-dom\";"
+      "body": "```jsx {7,13-14}\nimport {\nuseNavigation,\n} from \"react-router-dom\";"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "<NavLink\nto={`contacts/${contact.id}`}\nclassName={({ isActive, isPending }) =>\nisActive\n? \"active\"\n: isPending\n? \"pending\"\n: \"\"\n}\n>\n{/* other code */}\n</NavLink>"
-    },
-    {
-      "id": "intro-51",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 全局待定用户界面"
-    },
-    {
-      "id": "intro-52",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import {\nuseNavigation,\n} from \"react-router-dom\";"
-    },
-    {
-      "id": "intro-53",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
       "body": "export default function Root() {\nconst { contacts } = useLoaderData();\nconst navigation = useNavigation();"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
       "body": "return (\n<div\nid=\"detail\"\nclassName={\nnavigation.state === 'loading'\n? 'loading' : ''\n}\n>\n<Outlet />\n</div>\n);\n}"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-34",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "code",
       "lang": "",
-      "code": "\n### 使用 FormData 更新联系人\n<!--rehype:wrap-class=col-span-2-->\n\n向编辑模块添加一个动作"
+      "code": "\n### 使用 FormData 更新联系人\n<!--rehype:wrap-class=col-span-2-->\n\n向编辑模块添加一个动作\n\n```jsx {4,6,8-13}\nimport {\n  Form,\n  useLoaderData,\n  redirect,\n} from \"react-router-dom\";\nimport { updateContact } from \"../contacts\";\n\nexport async function action({ request, params }) {\n  const formData = await request.formData();\n  const updates = Object.fromEntries(formData);\n  await updateContact(params.contactId, updates);\n  return redirect(`/contacts/${params.contactId}`);\n}"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-35",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
-      "body": "import {\nForm,\nuseLoaderData,\nredirect,\n} from \"react-router-dom\";\nimport { updateContact } from \"../contacts\";"
+      "body": "将动作连接到路由"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-36",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
-      "body": "export async function action({ request, params }) {\nconst formData = await request.formData();\nconst updates = Object.fromEntries(formData);\nawait updateContact(params.contactId, updates);\nreturn redirect(`/contacts/${params.contactId}`);\n}"
+      "body": "```jsx {2,22}\nimport EditContact, {\naction as editAction,\n} from \"./routes/edit\";"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n将动作连接到路由"
-    },
-    {
-      "id": "intro-59",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import EditContact, {\naction as editAction,\n} from \"./routes/edit\";"
-    },
-    {
-      "id": "intro-60",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-37",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
       "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nerrorElement: <ErrorPage />,\nloader: rootLoader,\naction: rootAction,\nchildren: [\n{\npath: \"contacts/:contactId\",\nelement: <Contact />,\nloader: contactLoader,\n},\n{\npath: \"contacts/:contactId/edit\",\nelement: <EditContact />,\nloader: contactLoader,\naction: editAction,\n},\n],\n},\n]);"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-38",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "code",
       "lang": "",
-      "code": "\n### 删除记录"
+      "code": "\n### 删除记录\n\n```jsx {3}\n<Form\n  method=\"post\"\n  action=\"destroy\"\n  onSubmit={(event) => {\n    if (!confirm(\"请确认您要删除此记录\")) {\n      event.preventDefault();\n    }\n  }}\n>\n  <button type=\"submit\">删除</button>\n</Form>"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-39",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
-      "body": "<Form\nmethod=\"post\"\naction=\"destroy\"\nonSubmit={(event) => {\nif (!confirm(\"请确认您要删除此记录\")) {\nevent.preventDefault();\n}\n}}\n>\n<button type=\"submit\">删除</button>\n</Form>"
+      "body": "添加销毁动作"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-40",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "code",
-      "lang": "",
-      "code": "\n添加销毁动作"
+      "lang": "jsx",
+      "code": "import {redirect} from \"react-router-dom\";\nimport {deleteContact} from \"../contacts\";\n\nexport async function action({ params }) {\n  await deleteContact(params.contactId);\n  return redirect(\"/\");\n}"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
-      "body": "import {redirect} from \"react-router-dom\";\nimport {deleteContact} from \"../contacts\";"
+      "body": "将 `destroy` 路由添加到路由配置中"
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-42",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
-      "body": "export async function action({ params }) {\nawait deleteContact(params.contactId);\nreturn redirect(\"/\");\n}"
+      "body": "```jsx {2,9-12}\nimport {\naction as destroyAction\n} from \"./routes/destroy\";"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n将 `destroy` 路由添加到路由配置中"
-    },
-    {
-      "id": "intro-67",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import {\naction as destroyAction\n} from \"./routes/destroy\";"
-    },
-    {
-      "id": "intro-68",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-43",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
       "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nchildren: [\n{\npath: \"contacts/:contactId/destroy\",\naction: destroyAction,\n},\n],\n},\n]);"
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-44",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "code",
       "lang": "",
-      "code": "\n### 上下文错误"
+      "code": "\n### 上下文错误\n\n```jsx {2}\nexport async function action({ params }) {\n  throw new Error(\"oh dang!\");\n  await deleteContact(params.contactId);\n  return redirect(\"/\");\n}"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-45",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "text",
-      "body": "export async function action({ params }) {\nthrow new Error(\"oh dang!\");\nawait deleteContact(params.contactId);\nreturn redirect(\"/\");\n}"
+      "body": "让我们为 `destroy` 路由创建上下文错误消息："
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-46",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
+      "kind": "text",
+      "body": "```jsx {5}\n[\n{\npath: \"contacts/:contactId/destroy\",\naction: destroyAction,\nerrorElement: <div>哎呀！有一个错误</div>,\n},\n];"
+    },
+    {
+      "id": "s1-47",
+      "sectionId": "s1",
+      "title": "全局待定用户界面",
       "kind": "code",
       "lang": "",
-      "code": "\n让我们为 `destroy` 路由创建上下文错误消息："
+      "code": "\n### 首页路由\n\n```jsx {1,11}\nimport Index from \"./routes/index\";\n\nconst router = createBrowserRouter([\n  {\n    path: \"/\",\n    element: <Root />,\n    errorElement: <ErrorPage />,\n    loader: rootLoader,\n    action: rootAction,\n    children: [\n      { index: true, element: <Index /> },\n    ],\n  },\n]);"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-48",
+      "sectionId": "s1",
+      "title": "取消按钮",
       "kind": "text",
-      "body": "[\n{\npath: \"contacts/:contactId/destroy\",\naction: destroyAction,\nerrorElement: <div>哎呀！有一个错误</div>,\n},\n];"
+      "body": "```jsx {5,10,18-20}\nimport {\nForm,\nuseLoaderData,\nredirect,\nuseNavigate,\n} from \"react-router-dom\";"
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 首页路由"
-    },
-    {
-      "id": "intro-74",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import Index from \"./routes/index\";"
-    },
-    {
-      "id": "intro-75",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nerrorElement: <ErrorPage />,\nloader: rootLoader,\naction: rootAction,\nchildren: [\n{ index: true, element: <Index /> },\n],\n},\n]);"
-    },
-    {
-      "id": "intro-76",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 取消按钮"
-    },
-    {
-      "id": "intro-77",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import {\nForm,\nuseLoaderData,\nredirect,\nuseNavigate,\n} from \"react-router-dom\";"
-    },
-    {
-      "id": "intro-78",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-49",
+      "sectionId": "s1",
+      "title": "取消按钮",
       "kind": "text",
       "body": "export default function Edit() {\nconst contact = useLoaderData();\nconst navigate = useNavigate();"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-50",
+      "sectionId": "s1",
+      "title": "取消按钮",
       "kind": "text",
       "body": "return (\n<Form method=\"post\" id=\"contact-form\">\n<div>\n<button type=\"submit\">保存</button>\n<button\ntype=\"button\"\nonClick={() => {\nnavigate(-1);\n}}\n>\n取消\n</button>\n</div>\n</Form>\n);\n}"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-51",
+      "sectionId": "s1",
+      "title": "取消按钮",
       "kind": "code",
       "lang": "",
-      "code": "\n### 使用客户端路由获取提交\n<!--rehype:wrap-class=row-span-2-->\n\n将 `<form>` 更改为 `<Form>`"
+      "code": "\n### 使用客户端路由获取提交\n<!--rehype:wrap-class=row-span-2-->\n\n将 `<form>` 更改为 `<Form>`\n\n```jsx {1,9}\n<Form id=\"search-form\" role=\"search\">\n  <input\n    id=\"q\"\n    aria-label=\"Search contacts\"\n    placeholder=\"Search\"\n    type=\"search\"\n    name=\"q\"\n  />\n</Form>"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-52",
+      "sectionId": "s1",
+      "title": "取消按钮",
       "kind": "text",
-      "body": "<Form id=\"search-form\" role=\"search\">\n<input\nid=\"q\"\naria-label=\"Search contacts\"\nplaceholder=\"Search\"\ntype=\"search\"\nname=\"q\"\n/>\n</Form>"
+      "body": "如果有 `URLSearchParams` 过滤列表"
     },
     {
-      "id": "intro-82",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-53",
+      "sectionId": "s1",
+      "title": "取消按钮",
+      "kind": "text",
+      "body": "```jsx {1,4}\nexport async function loader({ request }) {\nconst url = new URL(request.url);\nconst q = url.searchParams.get(\"q\");\nconst contacts = await getContacts(q);\nreturn { contacts };\n}"
+    },
+    {
+      "id": "s1-54",
+      "sectionId": "s1",
+      "title": "取消按钮",
       "kind": "code",
       "lang": "",
-      "code": "\n如果有 `URLSearchParams` 过滤列表"
+      "code": "\n### 将 URL 同步到表单状态\n<!--rehype:wrap-class=row-span-2-->\n\n```jsx {5,9,20}\nexport async function loader({ request }) {\n  const url = new URL(request.url);\n  const q = url.searchParams.get(\"q\");\n  const contacts = await getContacts(q);\n  return { contacts, q };\n}\n\nexport default function Root() {\n  const { contacts, q } = useLoaderData();\n  const navigation = useNavigation();\n\n  return (\n    <Form id=\"search-form\" role=\"search\">\n      <input\n        id=\"q\"\n        aria-label=\"Search contacts\"\n        placeholder=\"Search\"\n        type=\"search\"\n        name=\"q\"\n        defaultValue={q}\n      />\n      {/* existing code */}\n    </Form>\n  );\n}"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-55",
+      "sectionId": "s1",
+      "title": "将输入值与 URL 搜索参数同步",
       "kind": "text",
-      "body": "export async function loader({ request }) {\nconst url = new URL(request.url);\nconst q = url.searchParams.get(\"q\");\nconst contacts = await getContacts(q);\nreturn { contacts };\n}"
+      "body": "```jsx {1,7-9}\nimport { useEffect } from \"react\";"
     },
     {
-      "id": "intro-84",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 将 URL 同步到表单状态\n<!--rehype:wrap-class=row-span-2-->"
-    },
-    {
-      "id": "intro-85",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "export async function loader({ request }) {\nconst url = new URL(request.url);\nconst q = url.searchParams.get(\"q\");\nconst contacts = await getContacts(q);\nreturn { contacts, q };\n}"
-    },
-    {
-      "id": "intro-86",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-56",
+      "sectionId": "s1",
+      "title": "将输入值与 URL 搜索参数同步",
       "kind": "text",
       "body": "export default function Root() {\nconst { contacts, q } = useLoaderData();\nconst navigation = useNavigation();"
     },
     {
-      "id": "intro-87",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "return (\n<Form id=\"search-form\" role=\"search\">\n<input\nid=\"q\"\naria-label=\"Search contacts\"\nplaceholder=\"Search\"\ntype=\"search\"\nname=\"q\"\ndefaultValue={q}\n/>\n{/* existing code */}\n</Form>\n);\n}"
-    },
-    {
-      "id": "intro-88",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 将输入值与 URL 搜索参数同步"
-    },
-    {
-      "id": "intro-89",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import { useEffect } from \"react\";"
-    },
-    {
-      "id": "intro-90",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "export default function Root() {\nconst { contacts, q } = useLoaderData();\nconst navigation = useNavigation();"
-    },
-    {
-      "id": "intro-91",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-57",
+      "sectionId": "s1",
+      "title": "将输入值与 URL 搜索参数同步",
       "kind": "text",
       "body": "useEffect(() => {\ndocument.getElementById(\"q\").value = q;\n}, [q]);\n}"
     },
     {
-      "id": "intro-92",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s1-58",
+      "sectionId": "s1",
+      "title": "将输入值与 URL 搜索参数同步",
       "kind": "code",
       "lang": "",
-      "code": "\n### 提交变更 Forms"
+      "code": "\n### 提交变更 Forms\n\n```jsx {2,8,19-21}\nimport {\n  useSubmit,\n} from \"react-router-dom\";\n\nexport default function Root() {\n  const { contacts, q } = useLoaderData();\n  const navigation = useNavigation();\n  const submit = useSubmit();\n\n  return (\n    <Form id=\"search-form\" role=\"search\">\n      <input\n        id=\"q\"\n        aria-label=\"Search contacts\"\n        placeholder=\"Search\"\n        type=\"search\"\n        name=\"q\"\n        defaultValue={q}\n        onChange={(event) => {\n          submit(event.currentTarget.form);\n        }}\n      />\n      {/* existing code */}\n    </Form>\n  );\n}"
     },
     {
-      "id": "intro-93",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-59",
+      "sectionId": "s2",
+      "title": "挑选路由器",
       "kind": "text",
-      "body": "import {\nuseSubmit,\n} from \"react-router-dom\";"
+      "body": "在 v6.4 中，引入了支持新数据 API 的新路由器："
     },
     {
-      "id": "intro-94",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-60",
+      "sectionId": "s2",
+      "title": "挑选路由器",
       "kind": "text",
-      "body": "export default function Root() {\nconst { contacts, q } = useLoaderData();\nconst navigation = useNavigation();\nconst submit = useSubmit();"
+      "body": ":-- | --\n:-- | --\n`createBrowserRouter` | [#](https://reactrouter.com/en/main/routers/create-browser-router)\n`createMemoryRouter` | [#](https://reactrouter.com/en/main/routers/create-memory-router)\n`createHashRouter` | [#](https://reactrouter.com/en/main/routers/create-hash-router)"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-61",
+      "sectionId": "s2",
+      "title": "挑选路由器",
       "kind": "text",
-      "body": "return (\n<Form id=\"search-form\" role=\"search\">\n<input\nid=\"q\"\naria-label=\"Search contacts\"\nplaceholder=\"Search\"\ntype=\"search\"\nname=\"q\"\ndefaultValue={q}\nonChange={(event) => {\nsubmit(event.currentTarget.form);\n}}\n/>\n{/* existing code */}\n</Form>\n);\n}"
+      "body": "以下路由器不支持数据 `data` API："
     },
     {
-      "id": "intro-96",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-62",
+      "sectionId": "s2",
+      "title": "挑选路由器",
+      "kind": "text",
+      "body": ":-- | --\n:-- | --\n`<BrowserRouter>` | [#](https://reactrouter.com/en/main/router-components/browser-router)\n`<MemoryRouter>` | [#](https://reactrouter.com/en/main/router-components/memory-router)\n`<HashRouter>` | [#](https://reactrouter.com/en/main/router-components/hash-router)\n`<NativeRouter>` | [#](https://reactrouter.com/en/main/router-components/native-router)\n`<StaticRouter>` | [#](https://reactrouter.com/en/main/router-components/static-router)"
+    },
+    {
+      "id": "s2-63",
+      "sectionId": "s2",
+      "title": "路由示例",
+      "kind": "text",
+      "body": "快速更新到 v6.4 的最简单方法是从 createRoutesFromElements 获得帮助，因此您无需将 `<Route>` 元素转换为路由对象"
+    },
+    {
+      "id": "s2-64",
+      "sectionId": "s2",
+      "title": "路由示例",
       "kind": "code",
-      "lang": "",
-      "code": "\nRouters\n---\n\n### 挑选路由器\n\n在 v6.4 中，引入了支持新数据 API 的新路由器：\n\n:-- | --\n:-- | --\n`createBrowserRouter` | [#](https://reactrouter.com/en/main/routers/create-browser-router)\n`createMemoryRouter` | [#](https://reactrouter.com/en/main/routers/create-memory-router)\n`createHashRouter` | [#](https://reactrouter.com/en/main/routers/create-hash-router)\n\n以下路由器不支持数据 `data` API：\n\n:-- | --\n:-- | --\n`<BrowserRouter>` | [#](https://reactrouter.com/en/main/router-components/browser-router)\n`<MemoryRouter>` | [#](https://reactrouter.com/en/main/router-components/memory-router)\n`<HashRouter>` | [#](https://reactrouter.com/en/main/router-components/hash-router)\n`<NativeRouter>` | [#](https://reactrouter.com/en/main/router-components/native-router)\n`<StaticRouter>` | [#](https://reactrouter.com/en/main/router-components/static-router)\n\n### 路由示例\n<!--rehype:wrap-class=col-span-2-->\n\n快速更新到 v6.4 的最简单方法是从 createRoutesFromElements 获得帮助，因此您无需将 `<Route>` 元素转换为路由对象"
+      "lang": "jsx",
+      "code": "import {\n  createBrowserRouter,\n  createRoutesFromElements,\n  Route,\n  RouterProvider,\n} from \"react-router-dom\";\n\nconst router = createBrowserRouter(\n  createRoutesFromElements(\n    <Route path=\"/\" element={<Root />}>\n      <Route path=\"dashboard\" element={<Dashboard />} />\n      {/* ... etc. */}\n    </Route>\n  )\n);\n\nReactDOM.createRoot(document.getElementById(\"root\")).render(\n  <React.StrictMode>\n    <RouterProvider router={router} />\n  </React.StrictMode>\n);"
     },
     {
-      "id": "intro-97",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import {\ncreateBrowserRouter,\ncreateRoutesFromElements,\nRoute,\nRouterProvider,\n} from \"react-router-dom\";"
-    },
-    {
-      "id": "intro-98",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "const router = createBrowserRouter(\ncreateRoutesFromElements(\n<Route path=\"/\" element={<Root />}>\n<Route path=\"dashboard\" element={<Dashboard />} />\n{/* ... etc. */}\n</Route>\n)\n);"
-    },
-    {
-      "id": "intro-99",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "ReactDOM.createRoot(document.getElementById(\"root\")).render(\n<React.StrictMode>\n<RouterProvider router={router} />\n</React.StrictMode>\n);"
-    },
-    {
-      "id": "intro-100",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-65",
+      "sectionId": "s2",
+      "title": "createBrowserRouter",
       "kind": "code",
-      "lang": "",
-      "code": "\n### createBrowserRouter\n<!--rehype:wrap-class=row-span-2-->"
+      "lang": "jsx",
+      "code": "import * as React from \"react\";\nimport * as ReactDOM from \"react-dom\";\nimport {\n  createBrowserRouter,\n  RouterProvider,\n} from \"react-router-dom\";\n\nimport Root, {rootLoader} from \"./root\";\nimport Team, {teamLoader} from \"./team\";\n\nconst router = createBrowserRouter([\n  {\n    path: \"/\",\n    element: <Root />,\n    loader: rootLoader,\n    children: [\n      {\n        path: \"team\",\n        element: <Team />,\n        loader: teamLoader,\n      },\n    ],\n  },\n]);\n\nconst root=document.getElementById('root');\n\nReactDOM.createRoot(root).render(\n  <RouterProvider router={router} />\n);"
     },
     {
-      "id": "intro-101",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-66",
+      "sectionId": "s2",
+      "title": "createBrowserRouter",
       "kind": "text",
-      "body": "import * as React from \"react\";\nimport * as ReactDOM from \"react-dom\";\nimport {\ncreateBrowserRouter,\nRouterProvider,\n} from \"react-router-dom\";"
+      "body": "Type Declaration"
     },
     {
-      "id": "intro-102",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import Root, {rootLoader} from \"./root\";\nimport Team, {teamLoader} from \"./team\";"
-    },
-    {
-      "id": "intro-103",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nloader: rootLoader,\nchildren: [\n{\npath: \"team\",\nelement: <Team />,\nloader: teamLoader,\n},\n],\n},\n]);"
-    },
-    {
-      "id": "intro-104",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "const root=document.getElementById('root');"
-    },
-    {
-      "id": "intro-105",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "ReactDOM.createRoot(root).render(\n<RouterProvider router={router} />\n);"
-    },
-    {
-      "id": "intro-106",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-67",
+      "sectionId": "s2",
+      "title": "createBrowserRouter",
       "kind": "code",
-      "lang": "",
-      "code": "\nType Declaration"
+      "lang": "jsx",
+      "code": "function createBrowserRouter(\n  routes: RouteObject[],\n  opts?: {\n    basename?: string;\n    window?: Window;\n  }\n): RemixRouter;"
     },
     {
-      "id": "intro-107",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-68",
+      "sectionId": "s2",
+      "title": "createBrowserRouter",
       "kind": "text",
-      "body": "function createBrowserRouter(\nroutes: RouteObject[],\nopts?: {\nbasename?: string;\nwindow?: Window;\n}\n): RemixRouter;"
+      "body": "routes"
     },
     {
-      "id": "intro-108",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-69",
+      "sectionId": "s2",
+      "title": "createBrowserRouter",
       "kind": "code",
-      "lang": "",
-      "code": "\nroutes"
+      "lang": "jsx",
+      "code": "createBrowserRouter([\n  {\n    path: \"/\",\n    element: <Root />,\n    loader: rootLoader,\n    children: [\n      {\n        path: \"events/:id\",\n        element: <Event />,\n        loader: eventLoader,\n      },\n    ],\n  },\n]);"
     },
     {
-      "id": "intro-109",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-70",
+      "sectionId": "s2",
+      "title": "createBrowserRouter",
       "kind": "text",
-      "body": "createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nloader: rootLoader,\nchildren: [\n{\npath: \"events/:id\",\nelement: <Event />,\nloader: eventLoader,\n},\n],\n},\n]);"
+      "body": "`basename` 用于您无法部署到域的根目录，而是部署到子目录的情况"
     },
     {
-      "id": "intro-110",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-71",
+      "sectionId": "s2",
+      "title": "createBrowserRouter",
       "kind": "code",
-      "lang": "",
-      "code": "\n`basename` 用于您无法部署到域的根目录，而是部署到子目录的情况"
+      "lang": "jsx",
+      "code": "createBrowserRouter(routes, {\n  basename: \"/app\",\n});\n\ncreateBrowserRouter(routes, {\n  basename: \"/app\",\n});\n<Link to=\"/\" />;\n// results in <a href=\"/app\" />\n\ncreateBrowserRouter(routes, {\n  basename: \"/app/\",\n});\n<Link to=\"/\" />;\n// results in <a href=\"/app/\" />"
     },
     {
-      "id": "intro-111",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-72",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
-      "body": "createBrowserRouter(routes, {\nbasename: \"/app\",\n});"
+      "body": "```jsx {4,11}\nimport * as React from \"react\";\nimport * as ReactDOM from \"react-dom\";\nimport {\ncreateHashRouter,\nRouterProvider,\n} from \"react-router-dom\";"
     },
     {
-      "id": "intro-112",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "createBrowserRouter(routes, {\nbasename: \"/app\",\n});\n<Link to=\"/\" />;\n// results in <a href=\"/app\" />"
-    },
-    {
-      "id": "intro-113",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "createBrowserRouter(routes, {\nbasename: \"/app/\",\n});\n<Link to=\"/\" />;\n// results in <a href=\"/app/\" />"
-    },
-    {
-      "id": "intro-114",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### createHashRouter"
-    },
-    {
-      "id": "intro-115",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import * as React from \"react\";\nimport * as ReactDOM from \"react-dom\";\nimport {\ncreateHashRouter,\nRouterProvider,\n} from \"react-router-dom\";"
-    },
-    {
-      "id": "intro-116",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-73",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
       "body": "import Root, { rootLoader } from \"./root\";\nimport Team, { teamLoader } from \"./team\";"
     },
     {
-      "id": "intro-117",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-74",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
       "body": "const router = createHashRouter([\n{\npath: \"/\",\nelement: <Root />,\nloader: rootLoader,\nchildren: [\n{\npath: \"team\",\nelement: <Team />,\nloader: teamLoader,\n},\n],\n},\n]);"
     },
     {
-      "id": "intro-118",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-75",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
       "body": "const root=document.getElementById('root');"
     },
     {
-      "id": "intro-119",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-76",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
       "body": "ReactDOM.createRoot(root).render(\n<RouterProvider router={router} />\n);"
     },
     {
-      "id": "intro-120",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-77",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "code",
       "lang": "",
-      "code": "\n### createMemoryRouter\n<!--rehype:wrap-class=row-span-2-->"
+      "code": "\n### createMemoryRouter\n<!--rehype:wrap-class=row-span-2-->\n\n```jsx {2-3,24-27}\nimport {\n  RouterProvider,\n  createMemoryRouter,\n} from \"react-router-dom\";\nimport * as React from \"react\";\nimport {\n  render,\n  waitFor,\n  screen,\n} from \"@testing-library/react\";\nimport \"@testing-library/jest-dom\";\nimport CalendarEvent from \"./event\";\n\ntest(\"event route\", async () => {\n  const FAKE_EVENT = { name: \"测试事件\" };\n  const routes = [\n    {\n      path: \"/events/:id\",\n      element: <CalendarEvent />,\n      loader: () => FAKE_EVENT,\n    },\n  ];\n\n  const router=createMemoryRouter(routes,{\n    initialEntries: [\"/\", \"/events/123\"],\n    initialIndex: 1,\n  });\n\n  render(\n    <RouterProvider router={router} />\n  );\n\n  await waitFor(\n    () => screen.getByRole(\"heading\")\n  );\n  expect(screen.getByRole(\"heading\"))\n    .toHaveTextContent(\n    FAKE_EVENT.name\n  );\n});"
     },
     {
-      "id": "intro-121",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-78",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
-      "body": "import {\nRouterProvider,\ncreateMemoryRouter,\n} from \"react-router-dom\";\nimport * as React from \"react\";\nimport {\nrender,\nwaitFor,\nscreen,\n} from \"@testing-library/react\";\nimport \"@testing-library/jest-dom\";\nimport CalendarEvent from \"./event\";"
+      "body": "initialEntries"
     },
     {
-      "id": "intro-122",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-79",
+      "sectionId": "s2",
+      "title": "createHashRouter",
+      "kind": "code",
+      "lang": "jsx",
+      "code": "createMemoryRouter(routes, {\n  initialEntries: [\"/\", \"/events/123\"],\n});"
+    },
+    {
+      "id": "s2-80",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
-      "body": "test(\"event route\", async () => {\nconst FAKE_EVENT = { name: \"测试事件\" };\nconst routes = [\n{\npath: \"/events/:id\",\nelement: <CalendarEvent />,\nloader: () => FAKE_EVENT,\n},\n];"
+      "body": "initialIndex"
     },
     {
-      "id": "intro-123",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-81",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
-      "body": "const router=createMemoryRouter(routes,{\ninitialEntries: [\"/\", \"/events/123\"],\ninitialIndex: 1,\n});"
+      "body": "```jsx {3}\ncreateMemoryRouter(routes, {\ninitialEntries: [\"/\", \"/events/123\"],\ninitialIndex: 1,\n// start at \"/events/123\"\n});"
     },
     {
-      "id": "intro-124",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "render(\n<RouterProvider router={router} />\n);"
-    },
-    {
-      "id": "intro-125",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "await waitFor(\n() => screen.getByRole(\"heading\")\n);\nexpect(screen.getByRole(\"heading\"))\n.toHaveTextContent(\nFAKE_EVENT.name\n);\n});"
-    },
-    {
-      "id": "intro-126",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-82",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "code",
       "lang": "",
-      "code": "\ninitialEntries"
+      "code": "\n### \\<RouterProvider>\n\n```jsx {26}\nimport {\n  createBrowserRouter,\n  RouterProvider,\n} from \"react-router-dom\";\n\nconst router = createBrowserRouter([\n  {\n    path: \"/\",\n    element: <Root />,\n    children: [\n      {\n        path: \"dashboard\",\n        element: <Dashboard />,\n      },\n      {\n        path: \"about\",\n        element: <About />,\n      },\n    ],\n  },\n]);\n\nconst root=document.getElementById('root');\n\nReactDOM.createRoot(root).render(\n  <RouterProvider\n    router={router}\n    fallbackElement={<BigSpinner />}\n  />\n);"
     },
     {
-      "id": "intro-127",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-83",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
-      "body": "createMemoryRouter(routes, {\ninitialEntries: [\"/\", \"/events/123\"],\n});"
+      "body": "`fallbackElement` 如果您不是服务器渲染您的应用程序，DataBrowserRouter 将在安装时启动所有匹配的路由加载器。 在此期间，您可以提供一个 fallbackElement 来向用户表明该应用程序正在运行"
     },
     {
-      "id": "intro-128",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-84",
+      "sectionId": "s2",
+      "title": "createHashRouter",
+      "kind": "text",
+      "body": "```jsx {3}\n<RouterProvider\nrouter={router}\nfallbackElement={<SpinnerOfDoom />}\n/>"
+    },
+    {
+      "id": "s2-85",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "code",
       "lang": "",
-      "code": "\ninitialIndex"
+      "code": "\nRouter Components\n---\n\n### \\<BrowserRouter>\n\n```jsx {4}\nimport * as React from \"react\";\nimport * as ReactDOM from \"react-dom\";\nimport {\n  BrowserRouter\n} from \"react-router-dom\";\n\nconst root=document.getElementById('root');\nReactDOM.createRoot(root).render(\n  <HashRouter>\n    {/* 你的应用程序的其余部分在这里 */}\n  </HashRouter>,\n);"
     },
     {
-      "id": "intro-129",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-86",
+      "sectionId": "s2",
+      "title": "createHashRouter",
       "kind": "text",
-      "body": "createMemoryRouter(routes, {\ninitialEntries: [\"/\", \"/events/123\"],\ninitialIndex: 1,\n// start at \"/events/123\"\n});"
+      "body": "`<BrowserRouter>` 使用干净的 `URL` 将当前位置存储在浏览器的地址栏中，并使用浏览器的内置历史堆栈进行导航"
     },
     {
-      "id": "intro-130",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### \\<RouterProvider>"
-    },
-    {
-      "id": "intro-131",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-87",
+      "sectionId": "s2",
+      "title": "\\<HashRouter>",
       "kind": "text",
-      "body": "import {\ncreateBrowserRouter,\nRouterProvider,\n} from \"react-router-dom\";"
+      "body": "```jsx {4}\nimport * as React from \"react\";\nimport * as ReactDOM from \"react-dom\";\nimport {\nHashRouter\n} from \"react-router-dom\";"
     },
     {
-      "id": "intro-132",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "const router = createBrowserRouter([\n{\npath: \"/\",\nelement: <Root />,\nchildren: [\n{\npath: \"dashboard\",\nelement: <Dashboard />,\n},\n{\npath: \"about\",\nelement: <About />,\n},\n],\n},\n]);"
-    },
-    {
-      "id": "intro-133",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "const root=document.getElementById('root');"
-    },
-    {
-      "id": "intro-134",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "ReactDOM.createRoot(root).render(\n<RouterProvider\nrouter={router}\nfallbackElement={<BigSpinner />}\n/>\n);"
-    },
-    {
-      "id": "intro-135",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`fallbackElement` 如果您不是服务器渲染您的应用程序，DataBrowserRouter 将在安装时启动所有匹配的路由加载器。 在此期间，您可以提供一个 fallbackElement 来向用户表明该应用程序正在运行"
-    },
-    {
-      "id": "intro-136",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "<RouterProvider\nrouter={router}\nfallbackElement={<SpinnerOfDoom />}\n/>"
-    },
-    {
-      "id": "intro-137",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\nRouter Components\n---\n\n### \\<BrowserRouter>"
-    },
-    {
-      "id": "intro-138",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import * as React from \"react\";\nimport * as ReactDOM from \"react-dom\";\nimport {\nBrowserRouter\n} from \"react-router-dom\";"
-    },
-    {
-      "id": "intro-139",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-88",
+      "sectionId": "s2",
+      "title": "\\<HashRouter>",
       "kind": "text",
       "body": "const root=document.getElementById('root');\nReactDOM.createRoot(root).render(\n<HashRouter>\n{/* 你的应用程序的其余部分在这里 */}\n</HashRouter>,\n);"
     },
     {
-      "id": "intro-140",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-89",
+      "sectionId": "s2",
+      "title": "\\<HashRouter>",
       "kind": "code",
       "lang": "",
-      "code": "\n`<BrowserRouter>` 使用干净的 `URL` 将当前位置存储在浏览器的地址栏中，并使用浏览器的内置历史堆栈进行导航\n\n### \\<HashRouter>"
+      "code": "\n`<HashRouter>` 用于 Web 浏览器，因为某些原因不应（或不能）将 URL 发送到服务器\n\n### \\<NativeRouter>\n\n```jsx {3}\nimport * as React from \"react\";\nimport {\n  NativeRouter\n} from \"react-router-native\";\n\nfunction App() {\n  return (\n    <NativeRouter>\n      {/* 你的应用程序的其余部分在这里 */}\n    </NativeRouter>\n  );\n}"
     },
     {
-      "id": "intro-141",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-90",
+      "sectionId": "s2",
+      "title": "\\<HashRouter>",
       "kind": "text",
-      "body": "import * as React from \"react\";\nimport * as ReactDOM from \"react-dom\";\nimport {\nHashRouter\n} from \"react-router-dom\";"
+      "body": "`<NativeRouter>` 是在 React Native 应用程序中运行 React Router 的推荐接口"
     },
     {
-      "id": "intro-142",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "const root=document.getElementById('root');\nReactDOM.createRoot(root).render(\n<HashRouter>\n{/* 你的应用程序的其余部分在这里 */}\n</HashRouter>,\n);"
-    },
-    {
-      "id": "intro-143",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-91",
+      "sectionId": "s2",
+      "title": "\\<MemoryRouter>",
       "kind": "code",
-      "lang": "",
-      "code": "\n`<HashRouter>` 用于 Web 浏览器，因为某些原因不应（或不能）将 URL 发送到服务器\n\n### \\<NativeRouter>"
+      "lang": "jsx",
+      "code": "import * as React from \"react\";\nimport { create } from \"react-test-renderer\";\nimport {\n  MemoryRouter,\n  Routes,\n  Route,\n} from \"react-router-dom\";\n\ndescribe(\"My app\", () => {\n  it(\"renders correctly\", () => {\n    let renderer = create(\n      <MemoryRouter initialEntries={[\"/users/mjackson\"]}>\n        <Routes>\n          <Route path=\"users\" element={<Users />}>\n            <Route path=\":id\" element={<UserProfile />} />\n          </Route>\n        </Routes>\n      </MemoryRouter>\n    );\n\n    expect(renderer.toJSON()).toMatchSnapshot();\n  });\n});"
     },
     {
-      "id": "intro-144",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-92",
+      "sectionId": "s2",
+      "title": "\\<MemoryRouter>",
       "kind": "text",
-      "body": "import * as React from \"react\";\nimport {\nNativeRouter\n} from \"react-router-native\";"
+      "body": "`<MemoryRouter>` 在内部将其位置存储在一个数组中。 与 `<BrowserHistory>` 和 `<HashHistory>` 不同，它不依赖于外部源，例如浏览器中的历史堆栈。 这使得它非常适合需要完全控制历史堆栈的场景，例如测试"
     },
     {
-      "id": "intro-145",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-93",
+      "sectionId": "s2",
+      "title": "\\<Router>",
       "kind": "text",
-      "body": "function App() {\nreturn (\n<NativeRouter>\n{/* 你的应用程序的其余部分在这里 */}\n</NativeRouter>\n);\n}"
+      "body": "`<Router>` 是所有路由器组件（如 `<BrowserRouter>` 和 `<StaticRouter>`）共享的低级接口。 就 React 而言，`<Router>` 是一个上下文提供者，它向应用程序的其余部分提供路由信息"
     },
     {
-      "id": "intro-146",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s2-94",
+      "sectionId": "s2",
+      "title": "\\<StaticRouter>",
       "kind": "code",
-      "lang": "",
-      "code": "\n`<NativeRouter>` 是在 React Native 应用程序中运行 React Router 的推荐接口\n\n### \\<MemoryRouter>\n<!--rehype:wrap-class=col-span-2 row-span-2-->"
+      "lang": "jsx",
+      "code": "import * as React from \"react\";\nimport * as ReactDOMServer from \"react-dom/server\";\nimport { StaticRouter } from \"react-router-dom/server\";\nimport http from \"http\";\n\nfunction requestHandler(req, res) {\n  let html = ReactDOMServer.renderToString(\n    <StaticRouter location={req.url}>\n      {/* 你的应用程序的其余部分在这里 */}\n    </StaticRouter>\n  );\n\n  res.write(html);\n  res.end();\n}\n\nhttp.createServer(requestHandler)\n    .listen(3000);"
     },
     {
-      "id": "intro-147",
-      "sectionId": "intro",
-      "title": "添加路由器",
+      "id": "s3-95",
+      "sectionId": "s3",
+      "title": "另见",
       "kind": "text",
-      "body": "import * as React from \"react\";\nimport { create } from \"react-test-renderer\";\nimport {\nMemoryRouter,\nRoutes,\nRoute,\n} from \"react-router-dom\";"
-    },
-    {
-      "id": "intro-148",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "describe(\"My app\", () => {\nit(\"renders correctly\", () => {\nlet renderer = create(\n<MemoryRouter initialEntries={[\"/users/mjackson\"]}>\n<Routes>\n<Route path=\"users\" element={<Users />}>\n<Route path=\":id\" element={<UserProfile />} />\n</Route>\n</Routes>\n</MemoryRouter>\n);"
-    },
-    {
-      "id": "intro-149",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "expect(renderer.toJSON()).toMatchSnapshot();\n});\n});"
-    },
-    {
-      "id": "intro-150",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`<MemoryRouter>` 在内部将其位置存储在一个数组中。 与 `<BrowserHistory>` 和 `<HashHistory>` 不同，它不依赖于外部源，例如浏览器中的历史堆栈。 这使得它非常适合需要完全控制历史堆栈的场景，例如测试\n\n### \\<Router>\n\n`<Router>` 是所有路由器组件（如 `<BrowserRouter>` 和 `<StaticRouter>`）共享的低级接口。 就 React 而言，`<Router>` 是一个上下文提供者，它向应用程序的其余部分提供路由信息\n\n### \\<StaticRouter>"
-    },
-    {
-      "id": "intro-151",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "import * as React from \"react\";\nimport * as ReactDOMServer from \"react-dom/server\";\nimport { StaticRouter } from \"react-router-dom/server\";\nimport http from \"http\";"
-    },
-    {
-      "id": "intro-152",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "function requestHandler(req, res) {\nlet html = ReactDOMServer.renderToString(\n<StaticRouter location={req.url}>\n{/* 你的应用程序的其余部分在这里 */}\n</StaticRouter>\n);"
-    },
-    {
-      "id": "intro-153",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "res.write(html);\nres.end();\n}"
-    },
-    {
-      "id": "intro-154",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "text",
-      "body": "http.createServer(requestHandler)\n.listen(3000);"
-    },
-    {
-      "id": "intro-155",
-      "sectionId": "intro",
-      "title": "添加路由器",
-      "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n另见\n---\n\n- [React Router 官网](https://reactrouter.com/)"
+      "body": "• [React Router 官网](https://reactrouter.com/)"
     }
   ],
   "source": {
@@ -1154,7 +733,6 @@
     "path": "docs/reactrouter.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/reactrouter.md",
-    "generatedAt": "2025-12-16T07:36:11.401Z",
     "lang": "zh",
     "mode": "local"
   }

@@ -1,11 +1,58 @@
 {
   "id": "jest",
-  "title": "jest",
+  "name": "Jest 备忘清单",
+  "title": "[![NPM version](https://img.shields.io/npm/v/jest.svg?style=flat)](https://www.npmjs.com/package/jest)",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/jest.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 2
+    },
+    {
+      "id": "s2",
+      "title": "匹配器",
+      "startIndex": 34
+    },
+    {
+      "id": "s3",
+      "title": "异步测试",
+      "startIndex": 53
+    },
+    {
+      "id": "s4",
+      "title": "模拟",
+      "startIndex": 63
+    },
+    {
+      "id": "s5",
+      "title": "数据驱动测试（Jest 23+）",
+      "startIndex": 99
+    },
+    {
+      "id": "s6",
+      "title": "跳过测试",
+      "startIndex": 103
+    },
+    {
+      "id": "s7",
+      "title": "测试有副作用的模块",
+      "startIndex": 105
+    },
+    {
+      "id": "s8",
+      "title": "命令参数参考",
+      "startIndex": 107
+    },
+    {
+      "id": "s9",
+      "title": "另见",
+      "startIndex": 108
     }
   ],
   "cards": [
@@ -14,1146 +61,828 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Jest 备忘清单\n==="
+      "body": "[![NPM version](https://img.shields.io/npm/v/jest.svg?style=flat)](https://www.npmjs.com/package/jest)\n[![Downloads](https://img.shields.io/npm/dm/jest.svg?style=flat)](https://www.npmjs.com/package/jest)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/facebook/jest)](https://github.com/facebook/jest/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/facebook/jest)"
     },
     {
       "id": "intro-1",
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "[![NPM version](https://img.shields.io/npm/v/jest.svg?style=flat)](https://www.npmjs.com/package/jest)\n[![Downloads](https://img.shields.io/npm/dm/jest.svg?style=flat)](https://www.npmjs.com/package/jest)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/facebook/jest)](https://github.com/facebook/jest/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/facebook/jest)"
-    },
-    {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "Jest 是一款优雅、简洁的 JavaScript 测试框架，这里介绍了它的入门和 一些 API 的索引\n<!--rehype:style=padding-top: 12px;-->"
     },
     {
-      "id": "intro-3",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n----\n<!--rehype:body-class=cols-6-->"
-    },
-    {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "介绍",
       "kind": "text",
       "body": "[Jest v29](https://jestjs.io/) 是一款优雅、简洁的 JavaScript 测试框架。"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "介绍",
       "kind": "text",
       "body": "• `无需配置` 大多数 JS 项目中即装即用，无需配置\n• `优秀接口` 从 `it` 到 `expect` - Jest 将工具包整合在一处。文档齐全、不断维护，非常不错。\n• `隔离的` 并行进行测试，发挥每一丝算力。\n• `快照` 轻松编写持续追踪大型对象的测试，并在测试旁或代码内显示实时快照。\n• `代码覆盖` 无需其他操作，您仅需添加 `--coverage` 参数来生成代码覆盖率报告。"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "code",
       "lang": "bash",
       "code": "npm install --save-dev jest"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "text",
       "body": "Add to `package.json`"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "code",
       "lang": "js",
       "code": "\"scripts\": {\n  \"test\": \"jest\"\n}"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "text",
       "body": "运行你的测试"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "code",
       "lang": "bash",
       "code": "npm test -- --watch"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "text",
       "body": "查看: [Getting started](https://jestjs.io/docs/getting-started)"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "code",
       "lang": "bash",
       "code": "# 指定测试文件的名称\n$ jest my-test\n# 指定测试文件的路径\n$ jest path/to/my-test.js\n# 仅运行在 hg/git 上有改动但尚未提交的文件\n$ jest -o\n# 仅运行与 fileA.js 和 fileB.js相关的测试\n$ jest --findRelatedTests fileA.js fileB.js\n# 仅运行匹配特定名称的测试用例\n$ jest -t name-of-spec\n# 运行监视模式默认执行 jest -o 监视有改动的测试\n$ jest --watch \n$ jest --watchAll # 监视所有测试"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "支持驼峰和串式命名的参数",
       "kind": "code",
       "lang": "bash",
       "code": "# 下面给出的命令执行的结果是一样的：\n$ jest --collect-coverage\n$ jest --collectCoverage\n# 不同命名形式的参数还可以混用，如：\n$ jest --update-snapshot \\\n       --detectOpenHandles"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "编写测试",
       "kind": "code",
       "lang": "js",
       "code": "describe('My work', () => {\n  test('works', () => {\n    expect(2).toEqual(2)\n  })\n})"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "BDD 语法",
       "kind": "text",
       "body": "```js {2}\ndescribe('My work', () => {\nit('works', () => { // `it`是`test`的别名\n···\n})\n})"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "BDD 语法",
       "kind": "code",
       "lang": "",
-      "code": "\n### 测试结构\n<!--rehype:wrap-class=col-span-3 row-span-2-->"
+      "code": "\n### 测试结构\n<!--rehype:wrap-class=col-span-3 row-span-2-->\n\n```js\ndescribe('makePoniesPink', () => {\n  beforeAll(() => {\n    /* 在所有测试之前运行 */\n  })\n  afterAll(() => {\n    /* 在所有测试后运行 */\n  })\n  beforeEach(() => {\n    /* 在每次测试之前运行 */\n  })\n  afterEach(() => {\n    /* 每次测试后运行 */\n  })\n  test('make each pony pink', () => {\n    const actual = fn(['Alice', 'Bob', 'Eve'])\n    expect(actual).toEqual(['Pink Alice', 'Pink Bob', 'Pink Eve'])\n  })\n})"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "describe('makePoniesPink', () => {\nbeforeAll(() => {\n/* 在所有测试之前运行 */\n})\nafterAll(() => {\n/* 在所有测试后运行 */\n})\nbeforeEach(() => {\n/* 在每次测试之前运行 */\n})\nafterEach(() => {\n/* 每次测试后运行 */\n})\ntest('make each pony pink', () => {\nconst actual = fn(['Alice', 'Bob', 'Eve'])\nexpect(actual).toEqual(['Pink Alice', 'Pink Bob', 'Pink Eve'])\n})\n})"
-    },
-    {
-      "id": "intro-18",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "聚焦测试",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 聚焦测试"
+      "lang": "js",
+      "code": "describe.only(···)\n\nit.only(···)\n// 别名: fit()"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "聚焦测试",
       "kind": "text",
-      "body": "describe.only(···)"
+      "body": "查看: [test.only](https://jestjs.io/docs/api#testonlyname-fn-timeout)"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "可选参数",
+      "kind": "qa",
+      "front": "`--coverage`",
+      "back": "查看测试覆盖率摘要"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "可选参数",
+      "kind": "qa",
+      "front": "`--detectOpenHandles`",
+      "back": "查看未关闭端口的摘要"
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "可选参数",
+      "kind": "qa",
+      "front": "`--runInBand`",
+      "back": "一个接一个地运行所有测试"
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "可选参数",
+      "kind": "qa",
+      "front": "`--bail,-b`",
+      "back": "失败跳出测试"
+    },
+    {
+      "id": "s1-21",
+      "sectionId": "s1",
+      "title": "可选参数",
       "kind": "text",
-      "body": "it.only(···)\n// 别名: fit()"
+      "body": "更多参数查看 [Jest CLI Options](https://jestjs.io/docs/next/cli#--bailn)"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-22",
+      "sectionId": "s1",
+      "title": "跳过测试",
       "kind": "code",
-      "lang": "",
-      "code": "\n查看: [test.only](https://jestjs.io/docs/api#testonlyname-fn-timeout)\n\n### 可选参数\n<!--rehype:wrap-class=col-span-2-->\n\n| Flag                  | Description                              |\n| --------------------- | ---------------------------------------- |\n| `--coverage`          | 查看测试覆盖率摘要 |\n| `--detectOpenHandles` | 查看未关闭端口的摘要 |\n| `--runInBand`         | 一个接一个地运行所有测试 |\n| `--bail,-b`         | 失败跳出测试 |\n\n更多参数查看 [Jest CLI Options](https://jestjs.io/docs/next/cli#--bailn)\n\n### 跳过测试"
+      "lang": "js",
+      "code": "describe.skip(···)\n\nit.skip(···)\n// 别名: xit()"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-23",
+      "sectionId": "s1",
+      "title": "跳过测试",
       "kind": "text",
-      "body": "describe.skip(···)"
+      "body": "查看: [test.skip](https://jestjs.io/docs/next/api#testskipname-fn)"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "it.skip(···)\n// 别名: xit()"
-    },
-    {
-      "id": "intro-24",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-24",
+      "sectionId": "s1",
+      "title": "基本测试用例",
       "kind": "code",
-      "lang": "",
-      "code": "\n查看: [test.skip](https://jestjs.io/docs/next/api#testskipname-fn)\n\n### 基本测试用例\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "expect(value).not.toBe(value)\n  .toEqual(value)\n  .toBeTruthy()\n// Errors 测试\nexpect(value).toThrow(error)\n  .toThrowErrorMatchingSnapshot()"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(value).not.toBe(value)\n.toEqual(value)\n.toBeTruthy()\n// Errors 测试\nexpect(value).toThrow(error)\n.toThrowErrorMatchingSnapshot()"
-    },
-    {
-      "id": "intro-26",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-25",
+      "sectionId": "s1",
+      "title": "快照",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 快照\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "expect(value)\n  .toMatchSnapshot()\n  .toMatchInlineSnapshot()"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(value)\n.toMatchSnapshot()\n.toMatchInlineSnapshot()"
-    },
-    {
-      "id": "intro-28",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Errors",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Errors\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "expect(value)\n  .toThrow(error)\n  .toThrowErrorMatchingSnapshot()"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(value)\n.toThrow(error)\n.toThrowErrorMatchingSnapshot()"
-    },
-    {
-      "id": "intro-30",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Objects",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Objects\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "expect(value)\n  .toBeInstanceOf(Class)\n  .toMatchObject(object)\n  .toHaveProperty(keyPath, value)"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(value)\n.toBeInstanceOf(Class)\n.toMatchObject(object)\n.toHaveProperty(keyPath, value)"
-    },
-    {
-      "id": "intro-32",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Objects",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Objects\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "expect(value)\n  .toContain(item)\n  .toContainEqual(item)\n  .toHaveLength(number)"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(value)\n.toContain(item)\n.toContainEqual(item)\n.toHaveLength(number)"
-    },
-    {
-      "id": "intro-34",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Numbers",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Numbers\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "expect(value)\n  .toBeCloseTo(number, numDigits)\n  .toBeGreaterThan(number)\n  .toBeGreaterThanOrEqual(number)\n  .toBeLessThan(number)\n  .toBeLessThanOrEqual(number)"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(value)\n.toBeCloseTo(number, numDigits)\n.toBeGreaterThan(number)\n.toBeGreaterThanOrEqual(number)\n.toBeLessThan(number)\n.toBeLessThanOrEqual(number)"
-    },
-    {
-      "id": "intro-36",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "Booleans",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Booleans\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "expect(value)\n  .toBeFalsy()\n  .toBeNull()\n  .toBeTruthy()\n  .toBeUndefined()\n  .toBeDefined()"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(value)\n.toBeFalsy()\n.toBeNull()\n.toBeTruthy()\n.toBeUndefined()\n.toBeDefined()"
-    },
-    {
-      "id": "intro-38",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "Strings",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Strings\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "expect(value)\n  .toMatch(regexpOrString)"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(value)\n.toMatch(regexpOrString)"
-    },
-    {
-      "id": "intro-40",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "NaN",
       "kind": "code",
-      "lang": "",
-      "code": "\n### NaN\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "test('当值为 NaN 时通过', () => {\n  expect(NaN).toBeNaN();\n  expect(1).not.toBeNaN();\n});"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "test('当值为 NaN 时通过', () => {\nexpect(NaN).toBeNaN();\nexpect(1).not.toBeNaN();\n});"
-    },
-    {
-      "id": "intro-42",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "Others",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Others\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "js",
+      "code": "expect.extend(matchers)\nexpect.any(constructor)\nexpect.addSnapshotSerializer(serializer)\n\nexpect.assertions(1)"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect.extend(matchers)\nexpect.any(constructor)\nexpect.addSnapshotSerializer(serializer)"
-    },
-    {
-      "id": "intro-44",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect.assertions(1)"
-    },
-    {
-      "id": "intro-45",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-34",
+      "sectionId": "s2",
+      "title": "基本匹配器",
       "kind": "code",
-      "lang": "",
-      "code": "\n匹配器\n----\n\n### 基本匹配器"
+      "lang": "js",
+      "code": "expect(42).toBe(42)    // 严格相等 (===)\nexpect(42).not.toBe(3) // 严格相等 (!==)\nexpect([1, 2]).toEqual([1, 2]) // 深度相等\n\n// 深度相等\nexpect({ a: undefined, b: 2 })\n  .toEqual({ b: 2 })\n\n// 严格相等 (Jest 23+)\nexpect({ a: undefined, b: 2 })\n  .not.toStrictEqual({ b: 2 })"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-35",
+      "sectionId": "s2",
+      "title": "基本匹配器",
       "kind": "text",
-      "body": "expect(42).toBe(42)    // 严格相等 (===)\nexpect(42).not.toBe(3) // 严格相等 (!==)\nexpect([1, 2]).toEqual([1, 2]) // 深度相等"
+      "body": "[Using matchers](http://jestjs.io/docs/en/using-matchers), [matchers docs](https://jestjs.io/docs/en/expect)"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 深度相等\nexpect({ a: undefined, b: 2 })\n.toEqual({ b: 2 })"
-    },
-    {
-      "id": "intro-48",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 严格相等 (Jest 23+)\nexpect({ a: undefined, b: 2 })\n.not.toStrictEqual({ b: 2 })"
-    },
-    {
-      "id": "intro-49",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-36",
+      "sectionId": "s2",
+      "title": "真实性",
       "kind": "code",
-      "lang": "",
-      "code": "\n[Using matchers](http://jestjs.io/docs/en/using-matchers), [matchers docs](https://jestjs.io/docs/en/expect)\n\n### 真实性"
+      "lang": "js",
+      "code": "// 匹配 if 语句视为 true 的任何内容\n// （not false、0、''、null、undefined、NaN）\nexpect('foo').toBeTruthy()\n// 匹配 if 语句视为 false 的任何内容\n// （false、0、''、null、undefined、NaN）\nexpect('').toBeFalsy()\n// 仅匹配 null\nexpect(null).toBeNull()\n// 仅匹配未定义\nexpect(undefined).toBeUndefined()\n// toBeUndefined 的反义词\nexpect(7).toBeDefined()\n// 匹配真假\nexpect(true).toEqual(expect.any(Boolean))"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 匹配 if 语句视为 true 的任何内容\n// （not false、0、''、null、undefined、NaN）\nexpect('foo').toBeTruthy()\n// 匹配 if 语句视为 false 的任何内容\n// （false、0、''、null、undefined、NaN）\nexpect('').toBeFalsy()\n// 仅匹配 null\nexpect(null).toBeNull()\n// 仅匹配未定义\nexpect(undefined).toBeUndefined()\n// toBeUndefined 的反义词\nexpect(7).toBeDefined()\n// 匹配真假\nexpect(true).toEqual(expect.any(Boolean))"
-    },
-    {
-      "id": "intro-51",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-37",
+      "sectionId": "s2",
+      "title": "数字",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 数字"
+      "lang": "js",
+      "code": "// 大于\nexpect(2).toBeGreaterThan(1)\n// 大于或等于\nexpect(1).toBeGreaterThanOrEqual(1)\n// 小于\nexpect(1).toBeLessThan(2)\n// 小于或等于\nexpect(1).toBeLessThanOrEqual(1)\n// 接近于\nexpect(0.2 + 0.1).toBeCloseTo(0.3, 5)\n// 原始值的传递类型\nexpect(NaN).toEqual(expect.any(Number))"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 大于\nexpect(2).toBeGreaterThan(1)\n// 大于或等于\nexpect(1).toBeGreaterThanOrEqual(1)\n// 小于\nexpect(1).toBeLessThan(2)\n// 小于或等于\nexpect(1).toBeLessThanOrEqual(1)\n// 接近于\nexpect(0.2 + 0.1).toBeCloseTo(0.3, 5)\n// 原始值的传递类型\nexpect(NaN).toEqual(expect.any(Number))"
-    },
-    {
-      "id": "intro-53",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-38",
+      "sectionId": "s2",
+      "title": "字符串",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 字符串"
+      "lang": "js",
+      "code": "// 检查字符串是否与正则表达式匹配。\nexpect('long string').toMatch('str')\nexpect('string').toEqual(expect.any(String))\nexpect('coffee').toMatch(/ff/)\nexpect('pizza').not.toMatch('coffee')\nexpect(['pizza', 'coffee']).toEqual(\n  [\n    expect.stringContaining('zz'), \n    expect.stringMatching(/ff/)\n  ]\n)"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 检查字符串是否与正则表达式匹配。\nexpect('long string').toMatch('str')\nexpect('string').toEqual(expect.any(String))\nexpect('coffee').toMatch(/ff/)\nexpect('pizza').not.toMatch('coffee')\nexpect(['pizza', 'coffee']).toEqual(\n[\nexpect.stringContaining('zz'),\nexpect.stringMatching(/ff/)\n]\n)"
-    },
-    {
-      "id": "intro-55",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-39",
+      "sectionId": "s2",
+      "title": "数组",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 数组"
+      "lang": "js",
+      "code": "expect([]).toEqual(expect.any(Array))\nconst exampleArray = [\n  'Alice', 'Bob', 'Eve'\n]\nexpect(exampleArray).toHaveLength(3)\nexpect(exampleArray).toContain('Alice')\nexpect(exampleArray).toEqual(\n  expect.arrayContaining(['Alice', 'Bob'])\n)\nexpect([{ a: 1 }, { a: 2 }])\n    .toContainEqual({ a: 1 }) // 包含相等"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect([]).toEqual(expect.any(Array))\nconst exampleArray = [\n'Alice', 'Bob', 'Eve'\n]\nexpect(exampleArray).toHaveLength(3)\nexpect(exampleArray).toContain('Alice')\nexpect(exampleArray).toEqual(\nexpect.arrayContaining(['Alice', 'Bob'])\n)\nexpect([{ a: 1 }, { a: 2 }])\n.toContainEqual({ a: 1 }) // 包含相等"
-    },
-    {
-      "id": "intro-57",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-40",
+      "sectionId": "s2",
+      "title": "对象",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 对象"
+      "lang": "js",
+      "code": "expect({ a:1 }).toHaveProperty('a')\nexpect({ a:1 }).toHaveProperty('a', 1)\nexpect({ a: {b:1} }).toHaveProperty('a.b')\nexpect({ a:1, b:2 }).toMatchObject({a:1})\nexpect({ a:1, b:2 }).toMatchObject({\n  a: expect.any(Number),\n  b: expect.any(Number),\n})\nexpect([{ a: 1 }, { b: 2 }]).toEqual([\n  expect.objectContaining(\n    { a: expect.any(Number) }\n  ),\n  expect.anything(),\n])"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect({ a:1 }).toHaveProperty('a')\nexpect({ a:1 }).toHaveProperty('a', 1)\nexpect({ a: {b:1} }).toHaveProperty('a.b')\nexpect({ a:1, b:2 }).toMatchObject({a:1})\nexpect({ a:1, b:2 }).toMatchObject({\na: expect.any(Number),\nb: expect.any(Number),\n})\nexpect([{ a: 1 }, { b: 2 }]).toEqual([\nexpect.objectContaining(\n{ a: expect.any(Number) }\n),\nexpect.anything(),\n])"
-    },
-    {
-      "id": "intro-59",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-41",
+      "sectionId": "s2",
+      "title": "模拟函数",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 模拟函数\n<!--rehype:wrap-class=row-span-2-->"
+      "lang": "js",
+      "code": "// const fn = jest.fn()\n// const fn = jest.fn().mockName('Unicorn') -- 命名为 mock, Jest 22+\n// 函数被调用\nexpect(fn).toBeCalled()\n// 函数*未*调用\nexpect(fn).not.toBeCalled()\n// 函数只被调用一次\nexpect(fn).toHaveBeenCalledTimes(1)\n// 任何执行都带有这些参数\nexpect(fn).toBeCalledWith(arg1, arg2)\n// 最后一个执行是用这些参数\nexpect(fn).toHaveBeenLastCalledWith(arg1, arg2)\n// 第 N 个执行带有这些参数（Jest 23+）\nexpect(fn).toHaveBeenNthCalledWith(callNumber, args)\n// 函数返回没有抛出错误（Jest 23+）\nexpect(fn).toHaveReturnedTimes(2)\n// 函数返回一个值（Jest 23+）\nexpect(fn).toHaveReturnedWith(value)\n// 最后一个函数调用返回一个值（Jest 23+）\nexpect(fn).toHaveLastReturnedWith(value)\n// 第 N 个函数调用返回一个值（Jest 23+）\nexpect(fn).toHaveNthReturnedWith(value)\nexpect(fn.mock.calls).toEqual([\n  ['first', 'call', 'args'],\n  ['second', 'call', 'args'],\n]) // 多次调用\n// fn.mock.calls[0][0] — 第一次调用的第一个参数\nexpect(fn.mock.calls[0][0]).toBe(2)"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-42",
+      "sectionId": "s2",
+      "title": "模拟函数",
       "kind": "text",
-      "body": "// const fn = jest.fn()\n// const fn = jest.fn().mockName('Unicorn') -- 命名为 mock, Jest 22+\n// 函数被调用\nexpect(fn).toBeCalled()\n// 函数*未*调用\nexpect(fn).not.toBeCalled()\n// 函数只被调用一次\nexpect(fn).toHaveBeenCalledTimes(1)\n// 任何执行都带有这些参数\nexpect(fn).toBeCalledWith(arg1, arg2)\n// 最后一个执行是用这些参数\nexpect(fn).toHaveBeenLastCalledWith(arg1, arg2)\n// 第 N 个执行带有这些参数（Jest 23+）\nexpect(fn).toHaveBeenNthCalledWith(callNumber, args)\n// 函数返回没有抛出错误（Jest 23+）\nexpect(fn).toHaveReturnedTimes(2)\n// 函数返回一个值（Jest 23+）\nexpect(fn).toHaveReturnedWith(value)\n// 最后一个函数调用返回一个值（Jest 23+）\nexpect(fn).toHaveLastReturnedWith(value)\n// 第 N 个函数调用返回一个值（Jest 23+）\nexpect(fn).toHaveNthReturnedWith(value)\nexpect(fn.mock.calls).toEqual([\n['first', 'call', 'args'],\n['second', 'call', 'args'],\n]) // 多次调用\n// fn.mock.calls[0][0] — 第一次调用的第一个参数\nexpect(fn.mock.calls[0][0]).toBe(2)"
+      "body": "#### 别名"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-43",
+      "sectionId": "s2",
+      "title": "模拟函数",
+      "kind": "text",
+      "body": "• `toBeCalled` → `toHaveBeenCalled`\n• `toBeCalledWith` → `toHaveBeenCalledWith`\n• `lastCalledWith` → `toHaveBeenLastCalledWith`\n• `nthCalledWith` → `toHaveBeenNthCalledWith`\n• `toReturnTimes` → `toHaveReturnedTimes`\n• `toReturnWith` → `toHaveReturnedWith`\n• `lastReturnedWith` → `toHaveLastReturnedWith`\n• `nthReturnedWith` → `toHaveNthReturnedWith`"
+    },
+    {
+      "id": "s2-44",
+      "sectionId": "s2",
+      "title": "杂项",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### 别名\n\n- `toBeCalled` → `toHaveBeenCalled`\n- `toBeCalledWith` → `toHaveBeenCalledWith`\n- `lastCalledWith` → `toHaveBeenLastCalledWith`\n- `nthCalledWith` → `toHaveBeenNthCalledWith`\n- `toReturnTimes` → `toHaveReturnedTimes`\n- `toReturnWith` → `toHaveReturnedWith`\n- `lastReturnedWith` → `toHaveLastReturnedWith`\n- `nthReturnedWith` → `toHaveNthReturnedWith`\n\n### 杂项"
+      "lang": "js",
+      "code": "// 检查对象是否是类的实例。\nexpect(new A()).toBeInstanceOf(A)\n\n// 检查对象是否是函数的实例。\nexpect(() => {}).toEqual(\n  expect.any(Function)\n)\n\n// 匹配除 null 或 undefined 之外的任何内容\nexpect('pizza').toEqual(expect.anything())"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 检查对象是否是类的实例。\nexpect(new A()).toBeInstanceOf(A)"
-    },
-    {
-      "id": "intro-63",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 检查对象是否是函数的实例。\nexpect(() => {}).toEqual(\nexpect.any(Function)\n)"
-    },
-    {
-      "id": "intro-64",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 匹配除 null 或 undefined 之外的任何内容\nexpect('pizza').toEqual(expect.anything())"
-    },
-    {
-      "id": "intro-65",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-45",
+      "sectionId": "s2",
+      "title": "快照",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 快照"
+      "lang": "js",
+      "code": "// 这可确保某个值与最近的快照匹配。\nexpect(node).toMatchSnapshot()\n\n// Jest 23+\nexpect(user).toMatchSnapshot({\n  date: expect.any(Date),\n})\n\n// 确保值与最近的快照匹配。\nexpect(user).toMatchInlineSnapshot()"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 这可确保某个值与最近的快照匹配。\nexpect(node).toMatchSnapshot()"
-    },
-    {
-      "id": "intro-67",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// Jest 23+\nexpect(user).toMatchSnapshot({\ndate: expect.any(Date),\n})"
-    },
-    {
-      "id": "intro-68",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 确保值与最近的快照匹配。\nexpect(user).toMatchInlineSnapshot()"
-    },
-    {
-      "id": "intro-69",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-46",
+      "sectionId": "s2",
+      "title": "Promise 匹配器（Jest 20+）",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Promise 匹配器（Jest 20+）"
+      "lang": "js",
+      "code": "test('resolve to lemon', () => {\n  // 验证在测试期间是否调用了一定数量的断言。\n  expect.assertions(1)\n  // 确保添加return语句\n  return expect(Promise.resolve('lemon'))\n            .resolves.toBe('lemon')\n\n  return expect(Promise.reject('octopus'))\n            .rejects.toBeDefined()\n\n  return expect(Promise.reject(\n    Error('pizza')\n  )).rejects.toThrow()\n})"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-47",
+      "sectionId": "s2",
+      "title": "Promise 匹配器（Jest 20+）",
       "kind": "text",
-      "body": "test('resolve to lemon', () => {\n// 验证在测试期间是否调用了一定数量的断言。\nexpect.assertions(1)\n// 确保添加return语句\nreturn expect(Promise.resolve('lemon'))\n.resolves.toBe('lemon')"
+      "body": "或者使用 async/await:"
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "return expect(Promise.reject('octopus'))\n.rejects.toBeDefined()"
-    },
-    {
-      "id": "intro-72",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "return expect(Promise.reject(\nError('pizza')\n)).rejects.toThrow()\n})"
-    },
-    {
-      "id": "intro-73",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-48",
+      "sectionId": "s2",
+      "title": "Promise 匹配器（Jest 20+）",
       "kind": "code",
-      "lang": "",
-      "code": "\n或者使用 async/await:"
+      "lang": "js",
+      "code": "test('resolve to lemon', async () => {\n  expect.assertions(2)\n  await expect(Promise.resolve('lemon'))\n          .resolves.toBe('lemon')\n\n  await expect(Promise.resolve('lemon'))\n          .resolves.not.toBe('octopus')\n})"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-49",
+      "sectionId": "s2",
+      "title": "Promise 匹配器（Jest 20+）",
       "kind": "text",
-      "body": "test('resolve to lemon', async () => {\nexpect.assertions(2)\nawait expect(Promise.resolve('lemon'))\n.resolves.toBe('lemon')"
+      "body": "[resolves 文档](https://jestjs.io/docs/en/expect#resolves)"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "await expect(Promise.resolve('lemon'))\n.resolves.not.toBe('octopus')\n})"
-    },
-    {
-      "id": "intro-76",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-50",
+      "sectionId": "s2",
+      "title": "例外",
       "kind": "code",
-      "lang": "",
-      "code": "\n[resolves 文档](https://jestjs.io/docs/en/expect#resolves)\n\n### 例外"
+      "lang": "js",
+      "code": "// const fn = () => {\n//    throw new Error('Out of cheese!')\n// }\n\nexpect(fn).toThrow()\nexpect(fn).toThrow('Out of cheese')\n\n// 测试错误消息在某处说“cheese”：这些是等价的\nexpect(fn).toThrowError(/cheese/);\nexpect(fn).toThrowError('cheese');\n\n// 测试准确的错误信息\nexpect(fn).toThrowError(\n  /^Out of cheese!$/\n);\nexpect(fn).toThrowError(\n  new Error('Out of cheese!')\n);\n\n// 测试函数在调用时是否抛出与最新快照匹配的错误。\nexpect(fn).toThrowErrorMatchingSnapshot()"
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-51",
+      "sectionId": "s2",
+      "title": "例外",
       "kind": "text",
-      "body": "// const fn = () => {\n//    throw new Error('Out of cheese!')\n// }"
+      "body": "#### 别名"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s2-52",
+      "sectionId": "s2",
+      "title": "例外",
       "kind": "text",
-      "body": "expect(fn).toThrow()\nexpect(fn).toThrow('Out of cheese')"
+      "body": "• `toThrowError` → `toThrow`"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-53",
+      "sectionId": "s3",
+      "title": "实例",
       "kind": "text",
-      "body": "// 测试错误消息在某处说“cheese”：这些是等价的\nexpect(fn).toThrowError(/cheese/);\nexpect(fn).toThrowError('cheese');"
+      "body": "在异步测试中指定一些预期的断言是一个很好的做法，所以如果你的断言根本没有被调用，测试将会失败。"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 测试准确的错误信息\nexpect(fn).toThrowError(\n/^Out of cheese!$/\n);\nexpect(fn).toThrowError(\nnew Error('Out of cheese!')\n);"
-    },
-    {
-      "id": "intro-81",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 测试函数在调用时是否抛出与最新快照匹配的错误。\nexpect(fn).toThrowErrorMatchingSnapshot()"
-    },
-    {
-      "id": "intro-82",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-54",
+      "sectionId": "s3",
+      "title": "实例",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### 别名\n\n- `toThrowError` → `toThrow`\n\n异步测试\n----\n\n### 实例\n<!--rehype:wrap-class=row-span-2-->\n\n在异步测试中指定一些预期的断言是一个很好的做法，所以如果你的断言根本没有被调用，测试将会失败。"
+      "lang": "js",
+      "code": "test('async test', () => {\n  // 在测试期间恰好调用了三个断言\n  expect.assertions(3) \n  // 或者 - 在测试期间至少调用一个断言\n  expect.hasAssertions()\n  // 你的异步测试\n})"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-55",
+      "sectionId": "s3",
+      "title": "实例",
       "kind": "text",
-      "body": "test('async test', () => {\n// 在测试期间恰好调用了三个断言\nexpect.assertions(3)\n// 或者 - 在测试期间至少调用一个断言\nexpect.hasAssertions()\n// 你的异步测试\n})"
+      "body": "请注意，您也可以在任何 `describe` 和 `test` 之外对每个文件执行此操作："
     },
     {
-      "id": "intro-84",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-56",
+      "sectionId": "s3",
+      "title": "实例",
       "kind": "code",
-      "lang": "",
-      "code": "\n请注意，您也可以在任何 `describe` 和 `test` 之外对每个文件执行此操作："
+      "lang": "js",
+      "code": "beforeEach(expect.hasAssertions)"
     },
     {
-      "id": "intro-85",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-57",
+      "sectionId": "s3",
+      "title": "实例",
       "kind": "text",
-      "body": "beforeEach(expect.hasAssertions)"
+      "body": "这将验证每个测试用例至少存在一个断言。 它还可以与更具体的 `expect.assertions(3)` 声明配合使用。\n请参阅 Jest 文档中的 [更多示例](https://jestjs.io/docs/en/tutorial-async)"
     },
     {
-      "id": "intro-86",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-58",
+      "sectionId": "s3",
+      "title": "async/await",
       "kind": "code",
-      "lang": "",
-      "code": "\n这将验证每个测试用例至少存在一个断言。 它还可以与更具体的 `expect.assertions(3)` 声明配合使用。\n请参阅 Jest 文档中的 [更多示例](https://jestjs.io/docs/en/tutorial-async)\n\n### async/await"
+      "lang": "js",
+      "code": "test('async test', async () => {\n  expect.assertions(1)\n\n  const result = await runAsyncOperation()\n  expect(result).toBe(true)\n})"
     },
     {
-      "id": "intro-87",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "test('async test', async () => {\nexpect.assertions(1)"
-    },
-    {
-      "id": "intro-88",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "const result = await runAsyncOperation()\nexpect(result).toBe(true)\n})"
-    },
-    {
-      "id": "intro-89",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-59",
+      "sectionId": "s3",
+      "title": "done() 回调",
       "kind": "code",
-      "lang": "",
-      "code": "\n### done() 回调\n<!--rehype:wrap-class=row-span-2-->"
+      "lang": "js",
+      "code": "test('async test', (done) => {\n  expect.assertions(1)\n\n  runAsyncOperation()\n  \n  setTimeout(() => {\n    try {\n      const res = getAsyncOperatResult()\n      expect(res).toBe(true)\n      done()\n    } catch (err) {\n      done.fail(err)\n    }\n  })\n})"
     },
     {
-      "id": "intro-90",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-60",
+      "sectionId": "s3",
+      "title": "done() 回调",
       "kind": "text",
-      "body": "test('async test', (done) => {\nexpect.assertions(1)"
+      "body": "将断言包装在 `try/catch` 块中，否则 `Jest` 将忽略失败"
     },
     {
-      "id": "intro-91",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "runAsyncOperation()"
-    },
-    {
-      "id": "intro-92",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "setTimeout(() => {\ntry {\nconst res = getAsyncOperatResult()\nexpect(res).toBe(true)\ndone()\n} catch (err) {\ndone.fail(err)\n}\n})\n})"
-    },
-    {
-      "id": "intro-93",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-61",
+      "sectionId": "s3",
+      "title": "Promises",
       "kind": "code",
-      "lang": "",
-      "code": "\n将断言包装在 `try/catch` 块中，否则 `Jest` 将忽略失败\n\n### Promises"
+      "lang": "js",
+      "code": "test('async test', () => {\n  expect.assertions(1)\n\n  return runAsyncOperation().then((result) => {\n    expect(result).toBe(true)\n  })\n})"
     },
     {
-      "id": "intro-94",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s3-62",
+      "sectionId": "s3",
+      "title": "Promises",
       "kind": "text",
-      "body": "test('async test', () => {\nexpect.assertions(1)"
+      "body": "从你的测试中 _返回_ 一个 `Promise`"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "return runAsyncOperation().then((result) => {\nexpect(result).toBe(true)\n})\n})"
-    },
-    {
-      "id": "intro-96",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-63",
+      "sectionId": "s4",
+      "title": "模拟函数",
       "kind": "code",
-      "lang": "",
-      "code": "\n从你的测试中 _返回_ 一个 `Promise`\n\n## 模拟\n\n### 模拟函数\n<!--rehype:wrap-class=row-span-2-->"
+      "lang": "js",
+      "code": "test('call the callback', () => {\n  const callback = jest.fn()\n  fn(callback)\n  expect(callback).toBeCalled()\n  expect(callback.mock.calls[0][1].baz)\n    .toBe('pizza') // 第一次调用的第二个参数\n  \n  // 匹配第一个和最后一个参数，但忽略第二个参数\n  expect(callback)\n    .toHaveBeenLastCalledWith(\n      'meal',\n      expect.anything(),\n      'margarita'\n    )\n})"
     },
     {
-      "id": "intro-97",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-64",
+      "sectionId": "s4",
+      "title": "模拟函数",
       "kind": "text",
-      "body": "test('call the callback', () => {\nconst callback = jest.fn()\nfn(callback)\nexpect(callback).toBeCalled()\nexpect(callback.mock.calls[0][1].baz)\n.toBe('pizza') // 第一次调用的第二个参数"
+      "body": "您还可以使用快照："
     },
     {
-      "id": "intro-98",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 匹配第一个和最后一个参数，但忽略第二个参数\nexpect(callback)\n.toHaveBeenLastCalledWith(\n'meal',\nexpect.anything(),\n'margarita'\n)\n})"
-    },
-    {
-      "id": "intro-99",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-65",
+      "sectionId": "s4",
+      "title": "模拟函数",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text -->\n\n您还可以使用快照："
+      "lang": "js",
+      "code": "test('call the callback', () => {\n  // mockName 在 Jest 22+ 中可用\n  const callback = jest.fn()\n    .mockName('Unicorn')\n\n  fn(callback)\n  expect(callback).toMatchSnapshot()\n  // ->\n  // [MockFunction Unicorn] {\n  //   \"calls\": Array [\n  // ...\n})"
     },
     {
-      "id": "intro-100",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-66",
+      "sectionId": "s4",
+      "title": "模拟函数",
       "kind": "text",
-      "body": "test('call the callback', () => {\n// mockName 在 Jest 22+ 中可用\nconst callback = jest.fn()\n.mockName('Unicorn')"
+      "body": "并将实现传递给 `jest.fn` 函数："
     },
     {
-      "id": "intro-101",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "fn(callback)\nexpect(callback).toMatchSnapshot()\n// ->\n// [MockFunction Unicorn] {\n//   \"calls\": Array [\n// ...\n})"
-    },
-    {
-      "id": "intro-102",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-67",
+      "sectionId": "s4",
+      "title": "模拟函数",
       "kind": "code",
-      "lang": "",
-      "code": "\n并将实现传递给 `jest.fn` 函数："
+      "lang": "js",
+      "code": "const callback = jest.fn(() => true)"
     },
     {
-      "id": "intro-103",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-68",
+      "sectionId": "s4",
+      "title": "模拟函数",
       "kind": "text",
-      "body": "const callback = jest.fn(() => true)"
+      "body": "[模拟函数文档](https://jestjs.io/docs/en/mock-function-api)"
     },
     {
-      "id": "intro-104",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-69",
+      "sectionId": "s4",
+      "title": "返回、解析和拒绝值",
+      "kind": "text",
+      "body": "您的模拟可以返回值："
+    },
+    {
+      "id": "s4-70",
+      "sectionId": "s4",
+      "title": "返回、解析和拒绝值",
       "kind": "code",
-      "lang": "",
-      "code": "\n[模拟函数文档](https://jestjs.io/docs/en/mock-function-api)\n\n### 返回、解析和拒绝值\n<!--rehype:wrap-class=row-span-2-->\n\n您的模拟可以返回值："
+      "lang": "js",
+      "code": "const callback\n    = jest.fn().mockReturnValue(true)\n\nconst callbackOnce\n    = jest.fn().mockReturnValueOnce(true)"
     },
     {
-      "id": "intro-105",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-71",
+      "sectionId": "s4",
+      "title": "返回、解析和拒绝值",
       "kind": "text",
-      "body": "const callback\n= jest.fn().mockReturnValue(true)"
+      "body": "或解析值："
     },
     {
-      "id": "intro-106",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "const callbackOnce\n= jest.fn().mockReturnValueOnce(true)"
-    },
-    {
-      "id": "intro-107",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-72",
+      "sectionId": "s4",
+      "title": "返回、解析和拒绝值",
       "kind": "code",
-      "lang": "",
-      "code": "\n或解析值："
+      "lang": "js",
+      "code": "const promise\n    = jest.fn().mockResolvedValue(true)\n\nconst promiseOnce\n    = jest.fn().mockResolvedValueOnce(true)"
     },
     {
-      "id": "intro-108",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-73",
+      "sectionId": "s4",
+      "title": "返回、解析和拒绝值",
       "kind": "text",
-      "body": "const promise\n= jest.fn().mockResolvedValue(true)"
+      "body": "他们甚至可以拒绝值："
     },
     {
-      "id": "intro-109",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "const promiseOnce\n= jest.fn().mockResolvedValueOnce(true)"
-    },
-    {
-      "id": "intro-110",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-74",
+      "sectionId": "s4",
+      "title": "返回、解析和拒绝值",
       "kind": "code",
-      "lang": "",
-      "code": "\n他们甚至可以拒绝值："
+      "lang": "js",
+      "code": "const failedPromise =\n  jest.fn().mockRejectedValue('Error')\n\nconst failedPromiseOnce =\n  jest.fn().mockRejectedValueOnce('Error')"
     },
     {
-      "id": "intro-111",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-75",
+      "sectionId": "s4",
+      "title": "返回、解析和拒绝值",
       "kind": "text",
-      "body": "const failedPromise =\njest.fn().mockRejectedValue('Error')"
+      "body": "你甚至可以结合这些："
     },
     {
-      "id": "intro-112",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "const failedPromiseOnce =\njest.fn().mockRejectedValueOnce('Error')"
-    },
-    {
-      "id": "intro-113",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-76",
+      "sectionId": "s4",
+      "title": "返回、解析和拒绝值",
       "kind": "code",
-      "lang": "",
-      "code": "\n你甚至可以结合这些："
+      "lang": "js",
+      "code": "const callback = jest.fn()\n        .mockReturnValueOnce(false)\n        .mockReturnValue(true)\n// ->\n//  call 1: false\n//  call 2+: true"
     },
     {
-      "id": "intro-114",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "const callback = jest.fn()\n.mockReturnValueOnce(false)\n.mockReturnValue(true)\n// ->\n//  call 1: false\n//  call 2+: true"
-    },
-    {
-      "id": "intro-115",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-77",
+      "sectionId": "s4",
+      "title": "使用 `jest.mock` 方法模拟模块",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 使用 `jest.mock` 方法模拟模块"
+      "lang": "js",
+      "code": "// 原来的 lodash/memoize 应该存在\njest.mock(\n  'lodash/memoize',\n  () => (a) => a\n)\n// 不需要原始的 lodash/memoize\njest.mock(\n  'lodash/memoize',\n  () => (a) => a,\n  { virtual: true }\n)"
     },
     {
-      "id": "intro-116",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-78",
+      "sectionId": "s4",
+      "title": "使用 `jest.mock` 方法模拟模块",
       "kind": "text",
-      "body": "// 原来的 lodash/memoize 应该存在\njest.mock(\n'lodash/memoize',\n() => (a) => a\n)\n// 不需要原始的 lodash/memoize\njest.mock(\n'lodash/memoize',\n() => (a) => a,\n{ virtual: true }\n)"
+      "body": "注意：当使用 `babel-jest` 时，对 [`jest.mock`](https://jestjs.io/docs/en/jest-object#jestmockmodulename-factory-options) 的调用将自动提升到代码块的顶部。 如果您想明确避免这种行为，请使用 `jest.doMock`。"
     },
     {
-      "id": "intro-117",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-79",
+      "sectionId": "s4",
+      "title": "使用模拟文件模拟模块",
+      "kind": "text",
+      "body": "创建一个类似 `__mocks__/lodash/memoize.js` 的文件："
+    },
+    {
+      "id": "s4-80",
+      "sectionId": "s4",
+      "title": "使用模拟文件模拟模块",
       "kind": "code",
-      "lang": "",
-      "code": "\n注意：当使用 `babel-jest` 时，对 [`jest.mock`](https://jestjs.io/docs/en/jest-object#jestmockmodulename-factory-options) 的调用将自动提升到代码块的顶部。 如果您想明确避免这种行为，请使用 `jest.doMock`。\n\n### 使用模拟文件模拟模块\n\n创建一个类似 `__mocks__/lodash/memoize.js` 的文件："
+      "lang": "js",
+      "code": "module.exports = (a) => a"
     },
     {
-      "id": "intro-118",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-81",
+      "sectionId": "s4",
+      "title": "使用模拟文件模拟模块",
       "kind": "text",
-      "body": "module.exports = (a) => a"
+      "body": "添加到您的测试中："
     },
     {
-      "id": "intro-119",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-82",
+      "sectionId": "s4",
+      "title": "使用模拟文件模拟模块",
       "kind": "code",
-      "lang": "",
-      "code": "\n添加到您的测试中："
+      "lang": "js",
+      "code": "jest.mock('lodash/memoize')"
     },
     {
-      "id": "intro-120",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-83",
+      "sectionId": "s4",
+      "title": "使用模拟文件模拟模块",
       "kind": "text",
-      "body": "jest.mock('lodash/memoize')"
+      "body": "注意：当使用 `babel-jest` 时，对 `jest.mock` 的调用将自动提升到代码块的顶部。 如果您想明确避免这种行为，请使用 `jest.doMock`。[手动模拟文档](https://jestjs.io/docs/en/manual-mocks)"
     },
     {
-      "id": "intro-121",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-84",
+      "sectionId": "s4",
+      "title": "模拟 getters 和 setters",
       "kind": "code",
-      "lang": "",
-      "code": "\n注意：当使用 `babel-jest` 时，对 `jest.mock` 的调用将自动提升到代码块的顶部。 如果您想明确避免这种行为，请使用 `jest.doMock`。[手动模拟文档](https://jestjs.io/docs/en/manual-mocks)\n\n### 模拟 getters 和 setters"
+      "lang": "js",
+      "code": "const getTitle = jest.fn(() => 'pizza')\nconst setTitle = jest.fn()\nconst location = {}\nObject.defineProperty(location, 'title', {\n  get: getTitle,\n  set: setTitle,\n})"
     },
     {
-      "id": "intro-122",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "const getTitle = jest.fn(() => 'pizza')\nconst setTitle = jest.fn()\nconst location = {}\nObject.defineProperty(location, 'title', {\nget: getTitle,\nset: setTitle,\n})"
-    },
-    {
-      "id": "intro-123",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-85",
+      "sectionId": "s4",
+      "title": "模拟 getter 和 setter (Jest 22.1.0+)",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 模拟 getter 和 setter (Jest 22.1.0+)"
+      "lang": "js",
+      "code": "const location = {}\nconst getTitle = jest\n    .spyOn(location, 'title', 'get')\n    .mockImplementation(() => 'pizza')\nconst setTitle = jest\n    .spyOn(location, 'title', 'set')\n    .mockImplementation(() => {})"
     },
     {
-      "id": "intro-124",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-86",
+      "sectionId": "s4",
+      "title": "定时器模拟",
       "kind": "text",
-      "body": "const location = {}\nconst getTitle = jest\n.spyOn(location, 'title', 'get')\n.mockImplementation(() => 'pizza')\nconst setTitle = jest\n.spyOn(location, 'title', 'set')\n.mockImplementation(() => {})"
+      "body": "为使用本机计时器函数（`setTimeout`、`setInterval`、`clearTimeout`、`clearInterval`）的代码编写同步测试。"
     },
     {
-      "id": "intro-125",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-87",
+      "sectionId": "s4",
+      "title": "定时器模拟",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 定时器模拟\n<!--rehype:wrap-class=row-span-3-->\n\n为使用本机计时器函数（`setTimeout`、`setInterval`、`clearTimeout`、`clearInterval`）的代码编写同步测试。"
+      "lang": "js",
+      "code": "// 启用假计时器\njest.useFakeTimers()\ntest('kill the time', () => {\n  const callback = jest.fn()\n  // 运行使用 setTimeout或setInterval 的代码\n  const actual \n    = someFunctionThatUseTimers(callback)\n  // 快进直到所有定时器都执行完毕\n  jest.runAllTimers()\n  // 同步检查结果\n  expect(callback).toHaveBeenCalledTimes(1)\n})"
     },
     {
-      "id": "intro-126",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-88",
+      "sectionId": "s4",
+      "title": "定时器模拟",
       "kind": "text",
-      "body": "// 启用假计时器\njest.useFakeTimers()\ntest('kill the time', () => {\nconst callback = jest.fn()\n// 运行使用 setTimeout或setInterval 的代码\nconst actual\n= someFunctionThatUseTimers(callback)\n// 快进直到所有定时器都执行完毕\njest.runAllTimers()\n// 同步检查结果\nexpect(callback).toHaveBeenCalledTimes(1)\n})"
+      "body": "或者使用 [advanceTimersByTime()](https://jestjs.io/docs/en/timer-mocks#advance-timers-by-time) 按时间调整计时器："
     },
     {
-      "id": "intro-127",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-89",
+      "sectionId": "s4",
+      "title": "定时器模拟",
       "kind": "code",
-      "lang": "",
-      "code": "\n或者使用 [advanceTimersByTime()](https://jestjs.io/docs/en/timer-mocks#advance-timers-by-time) 按时间调整计时器："
+      "lang": "js",
+      "code": "// 启用假计时器\njest.useFakeTimers()\ntest('kill the time', () => {\n  const callback = jest.fn()\n  // 运行使用 setTimeout或setInterval 的代码\n  const actual \n    = someFunctionThatUseTimers(callback)\n  // 快进 250 毫秒\n  jest.advanceTimersByTime(250)\n  // 同步检查结果\n  expect(callback).toHaveBeenCalledTimes(1)\n})"
     },
     {
-      "id": "intro-128",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-90",
+      "sectionId": "s4",
+      "title": "定时器模拟",
       "kind": "text",
-      "body": "// 启用假计时器\njest.useFakeTimers()\ntest('kill the time', () => {\nconst callback = jest.fn()\n// 运行使用 setTimeout或setInterval 的代码\nconst actual\n= someFunctionThatUseTimers(callback)\n// 快进 250 毫秒\njest.advanceTimersByTime(250)\n// 同步检查结果\nexpect(callback).toHaveBeenCalledTimes(1)\n})"
+      "body": "> 对于特殊情况，请使用 [jest.runOnlyPendingTimers()](https://jestjs.io/docs/en/timer-mocks#run-pending-timers)。"
     },
     {
-      "id": "intro-129",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-91",
+      "sectionId": "s4",
+      "title": "定时器模拟",
+      "kind": "text",
+      "body": "**注意：** 您应该在测试用例中调用 `jest.useFakeTimers()` 以使用其他假计时器方法。"
+    },
+    {
+      "id": "s4-92",
+      "sectionId": "s4",
+      "title": "模拟对象方法",
       "kind": "code",
-      "lang": "",
-      "code": "\n> 对于特殊情况，请使用 [jest.runOnlyPendingTimers()](https://jestjs.io/docs/en/timer-mocks#run-pending-timers)。\n\n**注意：** 您应该在测试用例中调用 `jest.useFakeTimers()` 以使用其他假计时器方法。\n\n### 模拟对象方法"
+      "lang": "js",
+      "code": "const spy = jest.spyOn(console, 'log')\n  .mockImplementation(() => {})\n\nexpect(console.log.mock.calls)\n  .toEqual([['dope'], ['nope']])\nspy.mockRestore()"
     },
     {
-      "id": "intro-130",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "const spy = jest.spyOn(console, 'log')\n.mockImplementation(() => {})"
-    },
-    {
-      "id": "intro-131",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(console.log.mock.calls)\n.toEqual([['dope'], ['nope']])\nspy.mockRestore()"
-    },
-    {
-      "id": "intro-132",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "const spy = jest.spyOn(ajax, 'request')\n.mockImplementation(\n() => Promise.resolve({success: true})\n)"
-    },
-    {
-      "id": "intro-133",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "expect(spy).toHaveBeenCalled()\nspy.mockRestore()"
-    },
-    {
-      "id": "intro-134",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-93",
+      "sectionId": "s4",
+      "title": "模拟对象方法",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 清除和恢复模拟\n<!--rehype:wrap-class=row-span-2-->\n\n对于一个模拟"
+      "lang": "js",
+      "code": "const spy = jest.spyOn(ajax, 'request')\n  .mockImplementation(\n    () => Promise.resolve({success: true})\n  )\n\nexpect(spy).toHaveBeenCalled()\nspy.mockRestore()"
     },
     {
-      "id": "intro-135",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-94",
+      "sectionId": "s4",
+      "title": "清除和恢复模拟",
       "kind": "text",
-      "body": "// 清除模拟使用日期\n// （fn.mock.calls、fn.mock.instances）\nfn.mockClear()"
+      "body": "对于一个模拟"
     },
     {
-      "id": "intro-136",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 清除并删除任何模拟的返回值或实现\nfn.mockReset()"
-    },
-    {
-      "id": "intro-137",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "// 重置并恢复初始实现\nfn.mockRestore()"
-    },
-    {
-      "id": "intro-138",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-95",
+      "sectionId": "s4",
+      "title": "清除和恢复模拟",
       "kind": "code",
-      "lang": "",
-      "code": "\n> 注意：`mockRestore` 仅适用于由`jest.spyOn` 创建的模拟。对于所有模拟："
+      "lang": "js",
+      "code": "// 清除模拟使用日期\n// （fn.mock.calls、fn.mock.instances）\nfn.mockClear()\n\n// 清除并删除任何模拟的返回值或实现\nfn.mockReset()\n\n// 重置并恢复初始实现\nfn.mockRestore()"
     },
     {
-      "id": "intro-139",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-96",
+      "sectionId": "s4",
+      "title": "清除和恢复模拟",
       "kind": "text",
-      "body": "// 清除所有 mock 的\n// mock.calls、mock.instances、\n// mock.contexts 和 mock.results 属性。\njest.clearAllMocks()\n// 重置所有模拟的状态。\njest.resetAllMocks()\n// 将所有模拟恢复到其原始值。\njest.restoreAllMocks()"
+      "body": "> 注意：`mockRestore` 仅适用于由`jest.spyOn` 创建的模拟。对于所有模拟："
     },
     {
-      "id": "intro-140",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-97",
+      "sectionId": "s4",
+      "title": "清除和恢复模拟",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 使用模拟时访问原始模块"
+      "lang": "js",
+      "code": "// 清除所有 mock 的 \n// mock.calls、mock.instances、\n// mock.contexts 和 mock.results 属性。\njest.clearAllMocks()\n// 重置所有模拟的状态。\njest.resetAllMocks()\n// 将所有模拟恢复到其原始值。\njest.restoreAllMocks()"
     },
     {
-      "id": "intro-141",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s4-98",
+      "sectionId": "s4",
+      "title": "使用模拟时访问原始模块",
+      "kind": "code",
+      "lang": "js",
+      "code": "jest.mock('fs')\n// 模拟模块\nconst fs = require('fs')\n// 原始模块\nconst fs = require.requireActual('fs')"
+    },
+    {
+      "id": "s5-99",
+      "sectionId": "s5",
+      "title": "使用不同的数据运行相同的测试",
+      "kind": "code",
+      "lang": "js",
+      "code": "test.each([\n  [1, 1, 2],\n  [1, 2, 3],\n  [2, 1, 3],\n])('.add(%s, %s)', (a, b, expected) => {\n  expect(a + b).toBe(expected)\n})"
+    },
+    {
+      "id": "s5-100",
+      "sectionId": "s5",
+      "title": "使用模板文字相同",
+      "kind": "code",
+      "lang": "js",
+      "code": "test.each`\n  a    | b    | expected\n  ${1} | ${1} | ${2}\n  ${1} | ${2} | ${3}\n  ${2} | ${1} | ${3}\n`('returns $expected when $a is added $b', ({ a, b, expected }) => {\n  expect(a + b).toBe(expected)\n})"
+    },
+    {
+      "id": "s5-101",
+      "sectionId": "s5",
+      "title": "或在“describe”级别",
+      "kind": "code",
+      "lang": "js",
+      "code": "describe.each([\n  ['mobile'], ['tablet'], ['desktop']\n])('checkout flow on %s', (viewport) => {\n  test('displays success page', () => {\n    //\n  })\n})"
+    },
+    {
+      "id": "s5-102",
+      "sectionId": "s5",
+      "title": "或在“describe”级别",
       "kind": "text",
-      "body": "jest.mock('fs')\n// 模拟模块\nconst fs = require('fs')\n// 原始模块\nconst fs = require.requireActual('fs')"
+      "body": "[describe.each()](https://jestjs.io/docs/en/api#describeeachtablename-fn-timeout) 文档、[test.each()](https://jestjs.io/docs/en/api#testeachtablename-fn-timeout) 文档"
     },
     {
-      "id": "intro-142",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s6-103",
+      "sectionId": "s6",
+      "title": "不要运行这些测试",
       "kind": "code",
-      "lang": "",
-      "code": "\n数据驱动测试（Jest 23+）\n----\n\n### 使用不同的数据运行相同的测试"
+      "lang": "js",
+      "code": "describe.skip('makePoniesPink'...\ntests.skip('make each pony pink'..."
     },
     {
-      "id": "intro-143",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s6-104",
+      "sectionId": "s6",
+      "title": "仅运行以下测试",
+      "kind": "code",
+      "lang": "js",
+      "code": "describe.only('makePoniesPink'...\ntests.only('make each pony pink'..."
+    },
+    {
+      "id": "s7-105",
+      "sectionId": "s7",
+      "title": "实例",
+      "kind": "code",
+      "lang": "js",
+      "code": "const modulePath = '../module-to-test'\nafterEach(() => {\n  jest.resetModules()\n})\ntest('第一次测试', () => {\n  // 准备第一次测试的条件\n  const result = require(modulePath)\n  expect(result).toMatchSnapshot()\n})\ntest('第二个文本', () => {\n  // 准备第二次测试的条件\n  const fn = () => require(modulePath)\n  expect(fn).toThrow()\n})"
+    },
+    {
+      "id": "s7-106",
+      "sectionId": "s7",
+      "title": "实例",
       "kind": "text",
-      "body": "test.each([\n[1, 1, 2],\n[1, 2, 3],\n[2, 1, 3],\n])('.add(%s, %s)', (a, b, expected) => {\nexpect(a + b).toBe(expected)\n})"
+      "body": "`Node.js` 和 `Jest` 会缓存你需要的模块。 要测试具有副作用的模块，您需要在测试之间重置模块注册表"
     },
     {
-      "id": "intro-144",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 使用模板文字相同"
-    },
-    {
-      "id": "intro-145",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s8-107",
+      "sectionId": "s8",
+      "title": "命令参数",
       "kind": "text",
-      "body": "test.each`\na    | b    | expected\n${1} | ${1} | ${2}\n${1} | ${2} | ${3}\n${2} | ${1} | ${3}\n`('returns $expected when $a is added $b', ({ a, b, expected }) => {\nexpect(a + b).toBe(expected)\n})"
+      "body": ":-- | --\n:-- | --\n`--bail[=<n>]`, `-b` | 在 `n` 个测试套件失败后立即退出测试套件\n`--cache` | 是否使用缓存\n`--changedFilesWithAncestor` | 运行与当前更改和上次提交中所做更改相关的测试\n`--changedSince` | 运行与自提供的分支或提交哈希以来的更改相关的测试\n`--ci` | 指定该参数时，`Jest` 会认为正在 `CI` 环境上运行\n`--clearCache` | 删除 `Jest` 的缓存目录, 然后不运行测试直接退出\n`--clearMocks` | 在每次测试前自动清除模拟的上下文\n`--collectCoverageFrom=<glob>` | 相对于 `rootDir` 的 `glob` 模式匹配需要从中收集覆盖信息的文件\n`--colors` | 即便 `stdout` 不是 `TTY` 模式，也要强制高亮显示测试结果\n`--config=<path>` | 指定配置文件的路径\n`--coverage[=<boolean>]`, `--collectCoverage` | 将测试覆盖率信息输出为报告\n`--coverageProvider=<provider>` | 指示应该使用哪个提供程序来检测代码的覆盖率\n`--debug` | 打印关于 `Jest` 配置的调试信息\n`--detectOpenHandles` | 尝试收集并打印打开的句柄以防止 `Jest` 干净地退出\n`--env=<environment>` | 所有测试都使用该测试环境设定\n`--errorOnDeprecated` | 使调用已弃用的 `API` 抛出有用的错误消息\n`--expand`, `-e` | 使用该参数来对比完整的差异和错误，而非修复\n`--filter=<file>` | 导出过滤功能的模块的路径\n`--findRelatedTests <spaceSeparatedListOfSourceFiles>` | 查找并运行涵盖作为参数传入的以空格分隔的源文件列表的测试\n`--forceExit` | 强制 `Jest` 在所有测试运行完后退出\n`--help` | 显示帮助信息，类似于本页文档\n`--ignoreProjects <project1> ... <projectN>` | 忽略特定的测试项目\n`--init` | 生成一个基础配置文件\n`--injectGlobals` | 将全局变量（`expect`,`test`,`describe`,`beforeEach`等）插入到全局环境中\n`--json` | 以 `JSON` 模式显示测试结果\n`--lastCommit` | 运行受上次提交中的文件更改影响的所有测试\n`--listTests` | 以 `JSON` 数组的形式列出所有将要运行的测试并退出\n`--logHeapUsage` | 记录每个测试后的记录堆使用情况\n`--maxConcurrency=<num>` | 防止 `Jest` 同时执行超过指定数量的测试\n`--maxWorkers=<num>\\|<string>` | 设定运行测试的最大工作池数目\n`--noStackTrace` | 禁止栈跟踪信息在测试结果输出中\n`--notify` | 激活测试结果通知\n`--onlyChanged` `-o` | 尝试确定根据当前存储库中哪些已经更改的文件来运行的测试\n`--outputFile=<filename>` | 通过 `——json` 参数可以将测试结果写入到指定文件\n`--passWithNoTests` | 允许在没有找到文件的情况下通过测试\n`--projects <path1> ... <pathN>` | 从指定路径中找到的一个或多个项目运行测试；也采用路径 `globs`\n`--reporters` | 使用指定的记者进行测试\n`--resetMocks` | 每次测试前自动重置模拟状态\n`--restoreMocks` | 在每次测试前自动恢复模拟状态和实现\n`--roots` | `Jest` 应该用来搜索文件的目录路径列表\n`--runInBand`, `-i` | 仅在当前的进程中连续运行所有测试，而非通过创建的子进程的工作池来运行测试\n`--runTestsByPath` | 仅运行使用其确切路径指定的测试\n`--selectProjects <project1> ... <projectN>` | 运行指定的测试项目\n`--setupFilesAfterEnv <path1> ... <pathN>` | 运行某些代码以在每次测试之前配置或设置测试框架的模块的路径列表\n`--shard` | 测试套件分片以 `(?<shardIndex>\\d+)/(?<shardCount>\\d+)` 的格式执行\n`--showConfig` | 输出 `Jest` 配置，然后退出\n`--silent` | 阻止所有测试通过控制台输出信息\n`--testEnvironmentOptions=<json string>` | 带有将传递给 `testEnvironment` 的选项的 `JSON` 字符串\n`--testLocationInResults` | 向测试结果添加 `location` 字段\n`--testMatch glob1 ... globN` | `Jest` 用于检测测试文件的 `glob` 模式\n`--testNamePattern=<regex>`, `-t` | 仅运行名称与正则表达式匹配的测试\n`--testPathIgnorePatterns=<regex>\\|[array]` | 在执行测试之前针对所有测试路径进行测试的单个或一组正则表达式模式字符串\n`--testPathPattern=<regex>` | 在运行测试前，匹配的 `regexp` 模式字符串的测试文件路径\n`--testRunner=<path>` | 允许你指定自定义测试运行程序\n`--testSequencer=<path>` | 允许您指定自定义测试定序器\n`--testTimeout=<number>` | 测试的默认超时时间(以毫秒为单位)。默认值：`5000`\n`--updateSnapshot`, `-u` | 在运行测试中使用这个参数来重新录制每个失败测试的快照\n`--useStderr` | 转移所有输出到 `stderr` (标准错误输出)\n`--verbose` | 层次显示测试套件中每个测试的结果\n`--version`, `-v` | 打印版本并退出\n`--watch` | 监视文件更改，并重新运行与已更改的文件相关的测试\n`--watchAll` | 监视文件的更改并在任何更改时重新运行所有测试\n`--watchman` | 是否使用 `watchman` 进行文件爬取。 默认为 `true`\n<!--rehype:className=left-align-->"
     },
     {
-      "id": "intro-146",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 或在“describe”级别"
-    },
-    {
-      "id": "intro-147",
-      "sectionId": "intro",
-      "title": "BDD 语法",
+      "id": "s9-108",
+      "sectionId": "s9",
+      "title": "另见",
       "kind": "text",
-      "body": "describe.each([\n['mobile'], ['tablet'], ['desktop']\n])('checkout flow on %s', (viewport) => {\ntest('displays success page', () => {\n//\n})\n})"
-    },
-    {
-      "id": "intro-148",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "code",
-      "lang": "",
-      "code": "\n[describe.each()](https://jestjs.io/docs/en/api#describeeachtablename-fn-timeout) 文档、[test.each()](https://jestjs.io/docs/en/api#testeachtablename-fn-timeout) 文档\n\n跳过测试\n----\n<!--rehype:body-class=cols-2-->\n\n### 不要运行这些测试"
-    },
-    {
-      "id": "intro-149",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "describe.skip('makePoniesPink'...\ntests.skip('make each pony pink'..."
-    },
-    {
-      "id": "intro-150",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 仅运行以下测试"
-    },
-    {
-      "id": "intro-151",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "describe.only('makePoniesPink'...\ntests.only('make each pony pink'..."
-    },
-    {
-      "id": "intro-152",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "code",
-      "lang": "",
-      "code": "\n测试有副作用的模块\n----\n<!--rehype:body-class=cols-1-->\n\n### 实例"
-    },
-    {
-      "id": "intro-153",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "text",
-      "body": "const modulePath = '../module-to-test'\nafterEach(() => {\njest.resetModules()\n})\ntest('第一次测试', () => {\n// 准备第一次测试的条件\nconst result = require(modulePath)\nexpect(result).toMatchSnapshot()\n})\ntest('第二个文本', () => {\n// 准备第二次测试的条件\nconst fn = () => require(modulePath)\nexpect(fn).toThrow()\n})"
-    },
-    {
-      "id": "intro-154",
-      "sectionId": "intro",
-      "title": "BDD 语法",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`Node.js` 和 `Jest` 会缓存你需要的模块。 要测试具有副作用的模块，您需要在测试之间重置模块注册表\n\n命令参数参考\n---\n<!--rehype:body-class=cols-1-->\n\n### 命令参数\n\n:-- | --\n:-- | --\n`--bail[=<n>]`, `-b` | 在 `n` 个测试套件失败后立即退出测试套件\n`--cache` | 是否使用缓存\n`--changedFilesWithAncestor` | 运行与当前更改和上次提交中所做更改相关的测试\n`--changedSince` | 运行与自提供的分支或提交哈希以来的更改相关的测试\n`--ci` | 指定该参数时，`Jest` 会认为正在 `CI` 环境上运行\n`--clearCache` | 删除 `Jest` 的缓存目录, 然后不运行测试直接退出\n`--clearMocks` | 在每次测试前自动清除模拟的上下文\n`--collectCoverageFrom=<glob>` | 相对于 `rootDir` 的 `glob` 模式匹配需要从中收集覆盖信息的文件\n`--colors` | 即便 `stdout` 不是 `TTY` 模式，也要强制高亮显示测试结果\n`--config=<path>` | 指定配置文件的路径\n`--coverage[=<boolean>]`, `--collectCoverage` | 将测试覆盖率信息输出为报告\n`--coverageProvider=<provider>` | 指示应该使用哪个提供程序来检测代码的覆盖率\n`--debug` | 打印关于 `Jest` 配置的调试信息\n`--detectOpenHandles` | 尝试收集并打印打开的句柄以防止 `Jest` 干净地退出\n`--env=<environment>` | 所有测试都使用该测试环境设定\n`--errorOnDeprecated` | 使调用已弃用的 `API` 抛出有用的错误消息\n`--expand`, `-e` | 使用该参数来对比完整的差异和错误，而非修复\n`--filter=<file>` | 导出过滤功能的模块的路径\n`--findRelatedTests <spaceSeparatedListOfSourceFiles>` | 查找并运行涵盖作为参数传入的以空格分隔的源文件列表的测试\n`--forceExit` | 强制 `Jest` 在所有测试运行完后退出\n`--help` | 显示帮助信息，类似于本页文档\n`--ignoreProjects <project1> ... <projectN>` | 忽略特定的测试项目\n`--init` | 生成一个基础配置文件\n`--injectGlobals` | 将全局变量（`expect`,`test`,`describe`,`beforeEach`等）插入到全局环境中\n`--json` | 以 `JSON` 模式显示测试结果\n`--lastCommit` | 运行受上次提交中的文件更改影响的所有测试\n`--listTests` | 以 `JSON` 数组的形式列出所有将要运行的测试并退出\n`--logHeapUsage` | 记录每个测试后的记录堆使用情况\n`--maxConcurrency=<num>` | 防止 `Jest` 同时执行超过指定数量的测试\n`--maxWorkers=<num>\\|<string>` | 设定运行测试的最大工作池数目\n`--noStackTrace` | 禁止栈跟踪信息在测试结果输出中\n`--notify` | 激活测试结果通知\n`--onlyChanged` `-o` | 尝试确定根据当前存储库中哪些已经更改的文件来运行的测试\n`--outputFile=<filename>` | 通过 `——json` 参数可以将测试结果写入到指定文件\n`--passWithNoTests` | 允许在没有找到文件的情况下通过测试\n`--projects <path1> ... <pathN>` | 从指定路径中找到的一个或多个项目运行测试；也采用路径 `globs`\n`--reporters` | 使用指定的记者进行测试\n`--resetMocks` | 每次测试前自动重置模拟状态\n`--restoreMocks` | 在每次测试前自动恢复模拟状态和实现\n`--roots` | `Jest` 应该用来搜索文件的目录路径列表\n`--runInBand`, `-i` | 仅在当前的进程中连续运行所有测试，而非通过创建的子进程的工作池来运行测试\n`--runTestsByPath` | 仅运行使用其确切路径指定的测试\n`--selectProjects <project1> ... <projectN>` | 运行指定的测试项目\n`--setupFilesAfterEnv <path1> ... <pathN>` | 运行某些代码以在每次测试之前配置或设置测试框架的模块的路径列表\n`--shard` | 测试套件分片以 `(?<shardIndex>\\d+)/(?<shardCount>\\d+)` 的格式执行\n`--showConfig` | 输出 `Jest` 配置，然后退出\n`--silent` | 阻止所有测试通过控制台输出信息\n`--testEnvironmentOptions=<json string>` | 带有将传递给 `testEnvironment` 的选项的 `JSON` 字符串\n`--testLocationInResults` | 向测试结果添加 `location` 字段\n`--testMatch glob1 ... globN` | `Jest` 用于检测测试文件的 `glob` 模式\n`--testNamePattern=<regex>`, `-t` | 仅运行名称与正则表达式匹配的测试\n`--testPathIgnorePatterns=<regex>\\|[array]` | 在执行测试之前针对所有测试路径进行测试的单个或一组正则表达式模式字符串\n`--testPathPattern=<regex>` | 在运行测试前，匹配的 `regexp` 模式字符串的测试文件路径\n`--testRunner=<path>` | 允许你指定自定义测试运行程序\n`--testSequencer=<path>` | 允许您指定自定义测试定序器\n`--testTimeout=<number>` | 测试的默认超时时间(以毫秒为单位)。默认值：`5000`\n`--updateSnapshot`, `-u` | 在运行测试中使用这个参数来重新录制每个失败测试的快照\n`--useStderr` | 转移所有输出到 `stderr` (标准错误输出)\n`--verbose` | 层次显示测试套件中每个测试的结果\n`--version`, `-v` | 打印版本并退出\n`--watch` | 监视文件更改，并重新运行与已更改的文件相关的测试\n`--watchAll` | 监视文件的更改并在任何更改时重新运行所有测试\n`--watchman` | 是否使用 `watchman` 进行文件爬取。 默认为 `true`\n<!--rehype:className=left-align-->\n\n另见\n----\n\n- [Jest cheat sheet](https://github.com/sapegin/jest-cheat-sheet) _(github.com)_"
+      "body": "• [Jest cheat sheet](https://github.com/sapegin/jest-cheat-sheet) _(github.com)_"
     }
   ],
   "source": {
@@ -1161,7 +890,6 @@
     "path": "docs/jest.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/jest.md",
-    "generatedAt": "2025-12-16T07:36:11.284Z",
     "lang": "zh",
     "mode": "local"
   }

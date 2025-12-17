@@ -1,11 +1,23 @@
 {
   "id": "ftp",
-  "title": "ftp",
+  "name": "ftp 备忘清单",
+  "title": "此 ftp 备忘清单包含命令和使用 ftp 脚本实现自动化的技巧示例。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/ftp.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "脚本",
+      "startIndex": 33
     }
   ],
   "cards": [
@@ -14,299 +26,278 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "ftp 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "此 ftp 备忘清单包含命令和使用 ftp 脚本实现自动化的技巧示例。"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n----"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "介绍",
       "kind": "text",
       "body": "• FTP 命令允许用户通过FTP（File Transfer Protocol）协议在本地计算机和远程服务器之间传输文件。\n• FTP 是一种在网络上交换文件的标准协议，是 ARPANet 的标准文件传输协议，ARPANet 网络就是现今 Internet 的前身。\n• 使用 FTP 协议时，一方充当客户端，另一方充当服务器，客户端可以上传、下载、删除、重命名文件和目录，以及执行其他文件传输相关的操作。"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "code",
       "lang": "bash",
       "code": "ftp -v ftp.example.com"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "text",
       "body": "`-v`：启用或禁用详细模式。在详细模式下，`ftp`命令会显示所有来自服务器的响应消息。默认情况下，该选项为开启状态。"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "code",
       "lang": "bash",
       "code": "ftp -d ftp.example.com"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "text",
       "body": "`-d`：启用调试模式。该选项会显示所有FTP传输过程中发送和接收到的命令，有助于调试连接问题。"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "code",
       "lang": "bash",
       "code": "ftp -n ftp.example.com"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "text",
       "body": "`-n`：禁止自动登录。默认情况下，`ftp`命令会在连接到远程服务器后尝试自动登录。使用该选项可以禁止该行为，通常与`.netrc`文件联合使用。"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "code",
       "lang": "bash",
       "code": "ftp -g ftp.example.com"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "text",
       "body": "禁用文件名通配符扩展。`ftp`命令默认会展开文件名中的通配符。使用该选项可以关闭这一行为。"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "code",
       "lang": "bash",
       "code": "ftp -p ftp.example.com"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "text",
       "body": "`-p`：使用被动模式（PASV）进行数据连接。被动模式在客户端位于防火墙或NAT后面时非常有用。"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "code",
       "lang": "bash",
       "code": "ftp -s:script.txt ftp.example.com # Windows\nftp -n ftp.example.com < script # Linux"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "选项",
       "kind": "text",
       "body": ":warning: Windows 上使用`-s`选项指定`script.txt`脚本执行 ftp 命令。Linux 上可以使用重定向实现。"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "目录操作",
       "kind": "qa",
       "front": "`cd`",
       "back": "更改当前工作目录到指定目录"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "目录操作",
       "kind": "qa",
       "front": "`ls`或`dir`",
       "back": "列出当前目录下的内容"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "目录操作",
       "kind": "qa",
       "front": "`pwd`",
       "back": "显示当前目录的绝对路径"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "目录操作",
       "kind": "qa",
       "front": "`mkdir`",
       "back": "创建目录"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "目录操作",
       "kind": "qa",
       "front": "`rmdir`",
       "back": "删除一个目录"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "目录操作",
       "kind": "qa",
       "front": "`rename <old> <new>`",
       "back": "重命名一个目录"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "text",
       "body": "使用匿名模式访问远程 FTP 服务器"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "code",
       "lang": "bash",
       "code": "ftp ftp.example.com"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "text",
       "body": "ftp 会启动交互式命令行"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s1-23",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "code",
       "lang": "bash",
       "code": "Connected to <host> (<ip address>).\n220 (vsFTPd 3.*)\n# 需要手动输入 anonymous \nName (192.168.10.10:root): anonymous\n331 Please specify the password.\nPassword: # 匿名模式下直接回车\n230 Login successful.\nRemote system type is UNIX.\nUsing binary mode to transfer files."
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s1-24",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "text",
       "body": "连接成功后进入交互式会话."
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s1-25",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "text",
       "body": "查看所有命令，使用 `helm` 或 `?`"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s1-26",
+      "sectionId": "s1",
       "title": "快速开始",
       "kind": "code",
       "lang": "bash",
       "code": "ftp> help\n# 或者\nftp> ?"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s1-27",
+      "sectionId": "s1",
       "title": "文件操作",
       "kind": "qa",
       "front": "`get <remote> <local>`",
       "back": "下载一个文件到本地"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s1-28",
+      "sectionId": "s1",
       "title": "文件操作",
       "kind": "qa",
       "front": "`mget`",
       "back": "下载多个文件到本地"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s1-29",
+      "sectionId": "s1",
       "title": "文件操作",
       "kind": "qa",
       "front": "`put <local> <remote>`",
       "back": "上传一个文件到服务器"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s1-30",
+      "sectionId": "s1",
       "title": "文件操作",
       "kind": "qa",
       "front": "`mput`",
       "back": "上传多个文件到服务器"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s1-31",
+      "sectionId": "s1",
       "title": "文件操作",
       "kind": "qa",
       "front": "`delete <remote>`",
       "back": "删除一个文件"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s1-32",
+      "sectionId": "s1",
       "title": "文件操作",
       "kind": "qa",
       "front": "`rename <old> <new>`",
       "back": "重命名一个文件"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
-      "title": "文件操作",
-      "kind": "text",
-      "body": "脚本\n----"
-    },
-    {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s2-33",
+      "sectionId": "s2",
       "title": "样例",
       "kind": "text",
       "body": "以匿名登录为例，将下列脚本代码放入文件 `script` 中："
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s2-34",
+      "sectionId": "s2",
       "title": "样例",
       "kind": "code",
       "lang": "bash",
       "code": "user anonymous \"\\n\"                 # 匿名用户\nbinary                              # 将文件传输模式设置为二进制模式，这对于非文本文件（如图片、压缩文件等）来说是必要的，以确保文件在传输过程中不会被更改。\nls <dir>                            # 进入某个目录\npwd                                 # 输出当前路径\nquit                                # 退出 ftp 连接"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s2-35",
+      "sectionId": "s2",
       "title": "样例",
       "kind": "text",
       "body": "使用 `ftp` 命令执行脚本文件："
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s2-36",
+      "sectionId": "s2",
       "title": "样例",
       "kind": "code",
       "lang": "bash",
@@ -318,7 +309,6 @@
     "path": "docs/ftp.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/ftp.md",
-    "generatedAt": "2025-12-16T07:36:11.224Z",
     "lang": "zh",
     "mode": "local"
   }

@@ -1,6 +1,8 @@
 {
   "id": "regex",
-  "title": "RegEX",
+  "name": "RegEX",
+  "title": "A quick reference for regular expressions (regex), including symbols, ranges, grouping, assertions and some sample patterns to get you started.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/regex.svg",
   "sections": [
     {
       "id": "intro",
@@ -26,6 +28,21 @@
       "id": "s4",
       "title": "Regex in JavaScript",
       "startIndex": 276
+    },
+    {
+      "id": "s5",
+      "title": "Regex in PHP",
+      "startIndex": 285
+    },
+    {
+      "id": "s6",
+      "title": "Regex in Java",
+      "startIndex": 297
+    },
+    {
+      "id": "s7",
+      "title": "Regex in MySQL",
+      "startIndex": 321
     }
   ],
   "cards": [
@@ -2283,412 +2300,404 @@
       "title": "replace()",
       "kind": "code",
       "lang": "",
-      "code": "\n### replaceAll()"
+      "code": "\n### replaceAll()\n\n```javascript\nlet regex = /apples/gi;\nlet text = 'Here are apples and apPleS';\n\n// Output: Here are mangoes and mangoes\nlet result = text.replaceAll(regex, 'mangoes');\nconsole.log(result);"
     },
     {
-      "id": "s4-285",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s5-285",
+      "sectionId": "s5",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`preg_match()`",
+      "back": "Performs a regex match"
+    },
+    {
+      "id": "s5-286",
+      "sectionId": "s5",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`preg_match_all()`",
+      "back": "Perform a global regular expression match"
+    },
+    {
+      "id": "s5-287",
+      "sectionId": "s5",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`preg_replace_callback()`",
+      "back": "Perform a regular expression search and replace using a callback"
+    },
+    {
+      "id": "s5-288",
+      "sectionId": "s5",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`preg_replace()`",
+      "back": "Perform a regular expression search and replace"
+    },
+    {
+      "id": "s5-289",
+      "sectionId": "s5",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`preg_split()`",
+      "back": "Splits a string by regex pattern"
+    },
+    {
+      "id": "s5-290",
+      "sectionId": "s5",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`preg_grep()`",
+      "back": "Returns array entries that match a pattern"
+    },
+    {
+      "id": "s5-291",
+      "sectionId": "s5",
+      "title": "preg_replace",
       "kind": "text",
-      "body": "let regex = /apples/gi;\nlet text = 'Here are apples and apPleS';"
+      "body": "```php {.wrap}\n$str = \"Visit Microsoft!\";\n$regex = \"/microsoft/i\";"
     },
     {
-      "id": "s4-286",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "// Output: Here are mangoes and mangoes\nlet result = text.replaceAll(regex, 'mangoes');\nconsole.log(result);"
-    },
-    {
-      "id": "s4-287",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n## Regex in PHP\n\n### Functions {.col-span-2}\n\n| -                         | -                                                                |\n| ------------------------- | :--------------------------------------------------------------- |\n| `preg_match()`            | Performs a regex match                                           |\n| `preg_match_all()`        | Perform a global regular expression match                        |\n| `preg_replace_callback()` | Perform a regular expression search and replace using a callback |\n| `preg_replace()`          | Perform a regular expression search and replace                  |\n| `preg_split()`            | Splits a string by regex pattern                                 |\n| `preg_grep()`             | Returns array entries that match a pattern                       |\n\n### preg_replace"
-    },
-    {
-      "id": "s4-288",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "$str = \"Visit Microsoft!\";\n$regex = \"/microsoft/i\";"
-    },
-    {
-      "id": "s4-289",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s5-292",
+      "sectionId": "s5",
+      "title": "preg_replace",
       "kind": "text",
       "body": "// Output: Visit CheatSheets!\necho preg_replace($regex, \"CheatSheets\", $str);"
     },
     {
-      "id": "s4-290",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s5-293",
+      "sectionId": "s5",
+      "title": "preg_replace",
       "kind": "code",
       "lang": "",
-      "code": "\n### preg_match"
+      "code": "\n### preg_match\n\n```php\n$str = \"Visit CheatSheets\";\n$regex = \"#cheatsheets#i\";\n\n// Output: 1\necho preg_match($regex, $str);"
     },
     {
-      "id": "s4-291",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s5-294",
+      "sectionId": "s5",
+      "title": "preg_matchall",
+      "kind": "code",
+      "lang": "php",
+      "code": "$regex = \"/[a-zA-Z]+ (\\d+)/\";\n$input_str = \"June 24, August 13, and December 30\";\nif (preg_match_all($regex, $input_str, $matches_out)) {\n\n    // Output: 2\n    echo count($matches_out);\n\n    // Output: 3\n    echo count($matches_out[0]);\n\n    // Output: Array(\"June 24\", \"August 13\", \"December 30\")\n    print_r($matches_out[0]);\n\n    // Output: Array(\"24\", \"13\", \"30\")\n    print_r($matches_out[1]);\n}"
+    },
+    {
+      "id": "s5-295",
+      "sectionId": "s5",
+      "title": "preg_grep",
+      "kind": "code",
+      "lang": "php",
+      "code": "$arr = [\"Jane\", \"jane\", \"Joan\", \"JANE\"];\n$regex = \"/Jane/\";\n\n// Output: Jane\necho preg_grep($regex, $arr);"
+    },
+    {
+      "id": "s5-296",
+      "sectionId": "s5",
+      "title": "preg_split",
+      "kind": "code",
+      "lang": "php",
+      "code": "$str = \"Jane\\tKate\\nLucy Marion\";\n$regex = \"@\\s@\";\n\n// Output: Array(\"Jane\", \"Kate\", \"Lucy\", \"Marion\")\nprint_r(preg_split($regex, $str));"
+    },
+    {
+      "id": "s6-297",
+      "sectionId": "s6",
+      "title": "Styles",
       "kind": "text",
-      "body": "$str = \"Visit CheatSheets\";\n$regex = \"#cheatsheets#i\";"
+      "body": "#### First way"
     },
     {
-      "id": "s4-292",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s6-298",
+      "sectionId": "s6",
+      "title": "Styles",
+      "kind": "code",
+      "lang": "java",
+      "code": "Pattern p = Pattern.compile(\".s\", Pattern.CASE_INSENSITIVE);\nMatcher m = p.matcher(\"aS\");\nboolean s1 = m.matches();\nSystem.out.println(s1);   // Outputs: true"
+    },
+    {
+      "id": "s6-299",
+      "sectionId": "s6",
+      "title": "Styles",
       "kind": "text",
-      "body": "// Output: 1\necho preg_match($regex, $str);"
+      "body": "#### Second way"
     },
     {
-      "id": "s4-293",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s6-300",
+      "sectionId": "s6",
+      "title": "Styles",
+      "kind": "code",
+      "lang": "java",
+      "code": "boolean s2 = Pattern.compile(\"[0-9]+\").matcher(\"123\").matches();\nSystem.out.println(s2);   // Outputs: true"
+    },
+    {
+      "id": "s6-301",
+      "sectionId": "s6",
+      "title": "Styles",
+      "kind": "text",
+      "body": "#### Third way"
+    },
+    {
+      "id": "s6-302",
+      "sectionId": "s6",
+      "title": "Styles",
+      "kind": "code",
+      "lang": "java",
+      "code": "boolean s3 = Pattern.matches(\".s\", \"XXXX\");\nSystem.out.println(s3);   // Outputs: false"
+    },
+    {
+      "id": "s6-303",
+      "sectionId": "s6",
+      "title": "Pattern Fields",
+      "kind": "qa",
+      "front": "`CANON_EQ`",
+      "back": "Canonical equivalence"
+    },
+    {
+      "id": "s6-304",
+      "sectionId": "s6",
+      "title": "Pattern Fields",
+      "kind": "qa",
+      "front": "`CASE_INSENSITIVE`",
+      "back": "Case-insensitive matching"
+    },
+    {
+      "id": "s6-305",
+      "sectionId": "s6",
+      "title": "Pattern Fields",
+      "kind": "qa",
+      "front": "`COMMENTS`",
+      "back": "Permits whitespace and comments"
+    },
+    {
+      "id": "s6-306",
+      "sectionId": "s6",
+      "title": "Pattern Fields",
+      "kind": "qa",
+      "front": "`DOTALL`",
+      "back": "Dotall mode"
+    },
+    {
+      "id": "s6-307",
+      "sectionId": "s6",
+      "title": "Pattern Fields",
+      "kind": "qa",
+      "front": "`MULTILINE`",
+      "back": "Multiline mode"
+    },
+    {
+      "id": "s6-308",
+      "sectionId": "s6",
+      "title": "Pattern Fields",
+      "kind": "qa",
+      "front": "`UNICODE_CASE`",
+      "back": "Unicode-aware case folding"
+    },
+    {
+      "id": "s6-309",
+      "sectionId": "s6",
+      "title": "Pattern Fields",
+      "kind": "qa",
+      "front": "`UNIX_LINES`",
+      "back": "Unix lines mode"
+    },
+    {
+      "id": "s6-310",
+      "sectionId": "s6",
+      "title": "Methods",
+      "kind": "text",
+      "body": "#### Pattern"
+    },
+    {
+      "id": "s6-311",
+      "sectionId": "s6",
+      "title": "Methods",
+      "kind": "text",
+      "body": "• Pattern compile(String regex [, int flags])\n• boolean matches([String regex, ] CharSequence input)\n• String[] split(String regex [, int limit])\n• String quote(String s)"
+    },
+    {
+      "id": "s6-312",
+      "sectionId": "s6",
+      "title": "Methods",
+      "kind": "text",
+      "body": "#### Matcher"
+    },
+    {
+      "id": "s6-313",
+      "sectionId": "s6",
+      "title": "Methods",
+      "kind": "text",
+      "body": "• int start([int group | String name])\n• int end([int group | String name])\n• boolean find([int start])\n• String group([int group | String name])\n• Matcher reset()"
+    },
+    {
+      "id": "s6-314",
+      "sectionId": "s6",
+      "title": "Methods",
+      "kind": "text",
+      "body": "#### String"
+    },
+    {
+      "id": "s6-315",
+      "sectionId": "s6",
+      "title": "Methods",
+      "kind": "text",
+      "body": "• boolean matches(String regex)\n• String replaceAll(String regex, String replacement)\n• String[] split(String regex[, int limit])"
+    },
+    {
+      "id": "s6-316",
+      "sectionId": "s6",
+      "title": "Methods",
+      "kind": "text",
+      "body": "There are more methods ..."
+    },
+    {
+      "id": "s6-317",
+      "sectionId": "s6",
+      "title": "Examples",
+      "kind": "text",
+      "body": "Replace sentence:"
+    },
+    {
+      "id": "s6-318",
+      "sectionId": "s6",
+      "title": "Examples",
+      "kind": "code",
+      "lang": "java",
+      "code": "String regex = \"[A-Z\\n]{5}$\";\nString str = \"I like APP\\nLE\";\n\nPattern p = Pattern.compile(regex, Pattern.MULTILINE);\nMatcher m = p.matcher(str);\n\n// Outputs: I like Apple!\nSystem.out.println(m.replaceAll(\"pple!\"));"
+    },
+    {
+      "id": "s6-319",
+      "sectionId": "s6",
+      "title": "Examples",
+      "kind": "text",
+      "body": "Array of all matches:"
+    },
+    {
+      "id": "s6-320",
+      "sectionId": "s6",
+      "title": "Examples",
+      "kind": "code",
+      "lang": "java",
+      "code": "String str = \"She sells seashells by the Seashore\";\nString regex = \"\\\\w*se\\\\w*\";\n\nPattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);\nMatcher m = p.matcher(str);\n\nList<String> matches = new ArrayList<>();\nwhile (m.find()) {\n    matches.add(m.group());\n}\n\n// Outputs: [sells, seashells, Seashore]\nSystem.out.println(matches);"
+    },
+    {
+      "id": "s7-321",
+      "sectionId": "s7",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`REGEXP          `",
+      "back": "Whether string matches regex"
+    },
+    {
+      "id": "s7-322",
+      "sectionId": "s7",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`REGEXP_INSTR()  `",
+      "back": "Starting index of substring matching regex <br>_(NOTE: Only MySQL 8.0+)_"
+    },
+    {
+      "id": "s7-323",
+      "sectionId": "s7",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`REGEXP_LIKE()   `",
+      "back": "Whether string matches regex <br>_(NOTE: Only MySQL 8.0+)_"
+    },
+    {
+      "id": "s7-324",
+      "sectionId": "s7",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`REGEXP_REPLACE()`",
+      "back": "Replace substrings matching regex <br>_(NOTE: Only MySQL 8.0+)_"
+    },
+    {
+      "id": "s7-325",
+      "sectionId": "s7",
+      "title": "Functions",
+      "kind": "qa",
+      "front": "`REGEXP_SUBSTR() `",
+      "back": "Return substring matching regex <br>_(NOTE: Only MySQL 8.0+)_"
+    },
+    {
+      "id": "s7-326",
+      "sectionId": "s7",
+      "title": "REGEXP",
+      "kind": "text",
+      "body": "```sql {.wrap}\nexpr REGEXP pat"
+    },
+    {
+      "id": "s7-327",
+      "sectionId": "s7",
+      "title": "REGEXP",
       "kind": "code",
       "lang": "",
-      "code": "\n### preg_matchall {.col-span-2 .row-span-2}"
+      "code": "\n#### Examples\n\n```sql\nmysql> SELECT 'abc' REGEXP '^[a-d]';\n1\nmysql> SELECT name FROM cities WHERE name REGEXP '^A';\nmysql> SELECT name FROM cities WHERE name NOT REGEXP '^A';\nmysql> SELECT name FROM cities WHERE name REGEXP 'A|B|R';\nmysql> SELECT 'a' REGEXP 'A', 'a' REGEXP BINARY 'A';\n1   0"
     },
     {
-      "id": "s4-294",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s7-328",
+      "sectionId": "s7",
+      "title": "REGEXP_REPLACE",
       "kind": "text",
-      "body": "$regex = \"/[a-zA-Z]+ (\\d+)/\";\n$input_str = \"June 24, August 13, and December 30\";\nif (preg_match_all($regex, $input_str, $matches_out)) {"
+      "body": "```{.wrap}\nREGEXP_REPLACE(expr, pat, repl[, pos[, occurrence[, match_type]]])"
     },
     {
-      "id": "s4-295",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "// Output: 2\necho count($matches_out);"
-    },
-    {
-      "id": "s4-296",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "// Output: 3\necho count($matches_out[0]);"
-    },
-    {
-      "id": "s4-297",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "// Output: Array(\"June 24\", \"August 13\", \"December 30\")\nprint_r($matches_out[0]);"
-    },
-    {
-      "id": "s4-298",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "// Output: Array(\"24\", \"13\", \"30\")\nprint_r($matches_out[1]);\n}"
-    },
-    {
-      "id": "s4-299",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s7-329",
+      "sectionId": "s7",
+      "title": "REGEXP_REPLACE",
       "kind": "code",
       "lang": "",
-      "code": "\n### preg_grep"
+      "code": "\n#### Examples\n\n```sql\nmysql> SELECT REGEXP_REPLACE('a b c', 'b', 'X');\na X c\nmysql> SELECT REGEXP_REPLACE('abc ghi', '[a-z]+', 'X', 1, 2);\nabc X"
     },
     {
-      "id": "s4-300",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s7-330",
+      "sectionId": "s7",
+      "title": "REGEXP_SUBSTR",
       "kind": "text",
-      "body": "$arr = [\"Jane\", \"jane\", \"Joan\", \"JANE\"];\n$regex = \"/Jane/\";"
+      "body": "```{.wrap}\nREGEXP_SUBSTR(expr, pat[, pos[, occurrence[, match_type]]])"
     },
     {
-      "id": "s4-301",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "// Output: Jane\necho preg_grep($regex, $arr);"
-    },
-    {
-      "id": "s4-302",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s7-331",
+      "sectionId": "s7",
+      "title": "REGEXP_SUBSTR",
       "kind": "code",
       "lang": "",
-      "code": "\n### preg_split {.col-span-2}"
+      "code": "\n#### Examples\n\n```sql\nmysql> SELECT REGEXP_SUBSTR('abc def ghi', '[a-z]+');\nabc\nmysql> SELECT REGEXP_SUBSTR('abc def ghi', '[a-z]+', 1, 3);\nghi"
     },
     {
-      "id": "s4-303",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "$str = \"Jane\\tKate\\nLucy Marion\";\n$regex = \"@\\s@\";"
-    },
-    {
-      "id": "s4-304",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "// Output: Array(\"Jane\", \"Kate\", \"Lucy\", \"Marion\")\nprint_r(preg_split($regex, $str));"
-    },
-    {
-      "id": "s4-305",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s7-332",
+      "sectionId": "s7",
+      "title": "REGEXP_LIKE",
       "kind": "code",
       "lang": "",
-      "code": "\n## Regex in Java\n\n### Styles {.col-span-2}\n\n#### First way"
+      "code": "REGEXP_LIKE(expr, pat[, match_type])"
     },
     {
-      "id": "s4-306",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s7-333",
+      "sectionId": "s7",
+      "title": "REGEXP_LIKE",
       "kind": "text",
-      "body": "Pattern p = Pattern.compile(\".s\", Pattern.CASE_INSENSITIVE);\nMatcher m = p.matcher(\"aS\");\nboolean s1 = m.matches();\nSystem.out.println(s1);   // Outputs: true"
+      "body": "#### Examples"
     },
     {
-      "id": "s4-307",
-      "sectionId": "s4",
-      "title": "replace()",
+      "id": "s7-334",
+      "sectionId": "s7",
+      "title": "REGEXP_LIKE",
+      "kind": "code",
+      "lang": "sql",
+      "code": "mysql> SELECT regexp_like('aba', 'b+')\n1\nmysql> SELECT regexp_like('aba', 'b{2}')\n0\nmysql> # i: case-insensitive\nmysql> SELECT regexp_like('Abba', 'ABBA', 'i');\n1\nmysql> # m: multi-line\nmysql> SELECT regexp_like('a\\nb\\nc', '^b$', 'm');\n1"
+    },
+    {
+      "id": "s7-335",
+      "sectionId": "s7",
+      "title": "REGEXP_INSTR",
+      "kind": "text",
+      "body": "```{.wrap}\nREGEXP_INSTR(expr, pat[, pos[, occurrence[, return_option[, match_type]]]])"
+    },
+    {
+      "id": "s7-336",
+      "sectionId": "s7",
+      "title": "REGEXP_INSTR",
       "kind": "code",
       "lang": "",
-      "code": "\n#### Second way"
-    },
-    {
-      "id": "s4-308",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "boolean s2 = Pattern.compile(\"[0-9]+\").matcher(\"123\").matches();\nSystem.out.println(s2);   // Outputs: true"
-    },
-    {
-      "id": "s4-309",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n#### Third way"
-    },
-    {
-      "id": "s4-310",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "boolean s3 = Pattern.matches(\".s\", \"XXXX\");\nSystem.out.println(s3);   // Outputs: false"
-    },
-    {
-      "id": "s4-311",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Pattern Fields\n\n| -                  | -                               |\n| ------------------ | :------------------------------ |\n| `CANON_EQ`         | Canonical equivalence           |\n| `CASE_INSENSITIVE` | Case-insensitive matching       |\n| `COMMENTS`         | Permits whitespace and comments |\n| `DOTALL`           | Dotall mode                     |\n| `MULTILINE`        | Multiline mode                  |\n| `UNICODE_CASE`     | Unicode-aware case folding      |\n| `UNIX_LINES`       | Unix lines mode                 |\n\n### Methods\n\n#### Pattern\n\n- Pattern compile(String regex [, int flags])\n- boolean matches([String regex, ] CharSequence input)\n- String[] split(String regex [, int limit])\n- String quote(String s)\n\n#### Matcher\n\n- int start([int group | String name])\n- int end([int group | String name])\n- boolean find([int start])\n- String group([int group | String name])\n- Matcher reset()\n\n#### String\n\n- boolean matches(String regex)\n- String replaceAll(String regex, String replacement)\n- String[] split(String regex[, int limit])\n\nThere are more methods ...\n\n### Examples {.col-span-2}\n\nReplace sentence:"
-    },
-    {
-      "id": "s4-312",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "String regex = \"[A-Z\\n]{5}$\";\nString str = \"I like APP\\nLE\";"
-    },
-    {
-      "id": "s4-313",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "Pattern p = Pattern.compile(regex, Pattern.MULTILINE);\nMatcher m = p.matcher(str);"
-    },
-    {
-      "id": "s4-314",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "// Outputs: I like Apple!\nSystem.out.println(m.replaceAll(\"pple!\"));"
-    },
-    {
-      "id": "s4-315",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\nArray of all matches:"
-    },
-    {
-      "id": "s4-316",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "String str = \"She sells seashells by the Seashore\";\nString regex = \"\\\\w*se\\\\w*\";"
-    },
-    {
-      "id": "s4-317",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "Pattern p = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);\nMatcher m = p.matcher(str);"
-    },
-    {
-      "id": "s4-318",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "List<String> matches = new ArrayList<>();\nwhile (m.find()) {\nmatches.add(m.group());\n}"
-    },
-    {
-      "id": "s4-319",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "// Outputs: [sells, seashells, Seashore]\nSystem.out.println(matches);"
-    },
-    {
-      "id": "s4-320",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n## Regex in MySQL {.cols-2}\n\n### Functions\n\n| Name               | Description                                                              |\n| ------------------ | :----------------------------------------------------------------------- |\n| `REGEXP          ` | Whether string matches regex                                             |\n| `REGEXP_INSTR()  ` | Starting index of substring matching regex <br>_(NOTE: Only MySQL 8.0+)_ |\n| `REGEXP_LIKE()   ` | Whether string matches regex <br>_(NOTE: Only MySQL 8.0+)_               |\n| `REGEXP_REPLACE()` | Replace substrings matching regex <br>_(NOTE: Only MySQL 8.0+)_          |\n| `REGEXP_SUBSTR() ` | Return substring matching regex <br>_(NOTE: Only MySQL 8.0+)_            |\n\n### REGEXP"
-    },
-    {
-      "id": "s4-321",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "expr REGEXP pat"
-    },
-    {
-      "id": "s4-322",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n#### Examples"
-    },
-    {
-      "id": "s4-323",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "mysql> SELECT 'abc' REGEXP '^[a-d]';\n1\nmysql> SELECT name FROM cities WHERE name REGEXP '^A';\nmysql> SELECT name FROM cities WHERE name NOT REGEXP '^A';\nmysql> SELECT name FROM cities WHERE name REGEXP 'A|B|R';\nmysql> SELECT 'a' REGEXP 'A', 'a' REGEXP BINARY 'A';\n1   0"
-    },
-    {
-      "id": "s4-324",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### REGEXP_REPLACE"
-    },
-    {
-      "id": "s4-325",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "REGEXP_REPLACE(expr, pat, repl[, pos[, occurrence[, match_type]]])"
-    },
-    {
-      "id": "s4-326",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n#### Examples"
-    },
-    {
-      "id": "s4-327",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "mysql> SELECT REGEXP_REPLACE('a b c', 'b', 'X');\na X c\nmysql> SELECT REGEXP_REPLACE('abc ghi', '[a-z]+', 'X', 1, 2);\nabc X"
-    },
-    {
-      "id": "s4-328",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### REGEXP_SUBSTR"
-    },
-    {
-      "id": "s4-329",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "REGEXP_SUBSTR(expr, pat[, pos[, occurrence[, match_type]]])"
-    },
-    {
-      "id": "s4-330",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n#### Examples"
-    },
-    {
-      "id": "s4-331",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "mysql> SELECT REGEXP_SUBSTR('abc def ghi', '[a-z]+');\nabc\nmysql> SELECT REGEXP_SUBSTR('abc def ghi', '[a-z]+', 1, 3);\nghi"
-    },
-    {
-      "id": "s4-332",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### REGEXP_LIKE"
-    },
-    {
-      "id": "s4-333",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "REGEXP_LIKE(expr, pat[, match_type])"
-    },
-    {
-      "id": "s4-334",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n#### Examples"
-    },
-    {
-      "id": "s4-335",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "mysql> SELECT regexp_like('aba', 'b+')\n1\nmysql> SELECT regexp_like('aba', 'b{2}')\n0\nmysql> # i: case-insensitive\nmysql> SELECT regexp_like('Abba', 'ABBA', 'i');\n1\nmysql> # m: multi-line\nmysql> SELECT regexp_like('a\\nb\\nc', '^b$', 'm');\n1"
-    },
-    {
-      "id": "s4-336",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### REGEXP_INSTR"
-    },
-    {
-      "id": "s4-337",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "REGEXP_INSTR(expr, pat[, pos[, occurrence[, return_option[, match_type]]]])"
-    },
-    {
-      "id": "s4-338",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "code",
-      "lang": "",
-      "code": "\n#### Examples"
-    },
-    {
-      "id": "s4-339",
-      "sectionId": "s4",
-      "title": "replace()",
-      "kind": "text",
-      "body": "mysql> SELECT regexp_instr('aa aaa aaaa', 'a{3}');\n2\nmysql> SELECT regexp_instr('abba', 'b{2}', 2);\n2\nmysql> SELECT regexp_instr('abbabba', 'b{2}', 1, 2);\n5\nmysql> SELECT regexp_instr('abbabba', 'b{2}', 1, 3, 1);\n7"
+      "code": "\n#### Examples\n\n```sql\nmysql> SELECT regexp_instr('aa aaa aaaa', 'a{3}');\n2\nmysql> SELECT regexp_instr('abba', 'b{2}', 2);\n2\nmysql> SELECT regexp_instr('abbabba', 'b{2}', 1, 2);\n5\nmysql> SELECT regexp_instr('abbabba', 'b{2}', 1, 3, 1);\n7"
     }
   ],
   "source": {
@@ -2696,7 +2705,6 @@
     "path": "source/_posts/regex.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/regex.md",
-    "generatedAt": "2025-12-16T07:50:03.260Z",
     "lang": "en",
     "mode": "local"
   }

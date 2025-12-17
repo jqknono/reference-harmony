@@ -1,6 +1,8 @@
 {
   "id": "toml",
-  "title": "TOML",
+  "name": "TOML",
+  "title": "This is a quick reference cheat sheet to the TOML format configuration file syntax.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/toml.svg",
   "sections": [
     {
       "id": "intro",
@@ -16,6 +18,11 @@
       "id": "s2",
       "title": "TOML Strings",
       "startIndex": 15
+    },
+    {
+      "id": "s3",
+      "title": "TOML Tables",
+      "startIndex": 18
     }
   ],
   "cards": [
@@ -155,178 +162,115 @@
       "title": "Literal String",
       "kind": "code",
       "lang": "",
-      "code": "\nSurrounded by single quotes. Escaping are not allowed.\n\n### MultiLine Literal String"
+      "code": "\nSurrounded by single quotes. Escaping are not allowed.\n\n### MultiLine Literal String\n\n```toml\nre = '''\\d{2} apps is t[wo]o many'''\nlines = '''\nThe first newline is\ntrimmed in raw strings.\nAll other whitespace\nis preserved.\n'''"
     },
     {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "Literal String",
-      "kind": "text",
-      "body": "re = '''\\d{2} apps is t[wo]o many'''\nlines = '''\nThe first newline is\ntrimmed in raw strings.\nAll other whitespace\nis preserved.\n'''"
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-18",
+      "sectionId": "s3",
+      "title": "Basic",
       "kind": "code",
-      "lang": "",
-      "code": "\n## TOML Tables\n\n### Basic"
+      "lang": "toml",
+      "code": "[name]\nfoo = 1\nbar = 2"
     },
     {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-19",
+      "sectionId": "s3",
+      "title": "Basic",
       "kind": "text",
-      "body": "[name]\nfoo = 1\nbar = 2"
+      "body": "`foo` and `bar` are keys in the table called `name`"
     },
     {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-20",
+      "sectionId": "s3",
+      "title": "Nested",
       "kind": "code",
-      "lang": "",
-      "code": "\n`foo` and `bar` are keys in the table called `name`\n\n### Nested"
+      "lang": "toml",
+      "code": "[table1]\n\tfoo = \"bar\"\n\n[table1.nested_table]\n\tbaz = \"bat\""
     },
     {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "Literal String",
-      "kind": "text",
-      "body": "[table1]\nfoo = \"bar\""
-    },
-    {
-      "id": "s2-23",
-      "sectionId": "s2",
-      "title": "Literal String",
-      "kind": "text",
-      "body": "[table1.nested_table]\nbaz = \"bat\""
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-21",
+      "sectionId": "s3",
+      "title": "Array-like",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Array-like {.row-span-2}"
+      "lang": "toml",
+      "code": "[[comments]]\nauthor = \"Nate\"\ntext = \"Great Article!\"\n\n[[comments]]\nauthor = \"Anonymous\"\ntext = \"Love it!\""
     },
     {
-      "id": "s2-25",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-22",
+      "sectionId": "s3",
+      "title": "Array-like",
       "kind": "text",
-      "body": "[[comments]]\nauthor = \"Nate\"\ntext = \"Great Article!\""
+      "body": "#### ↓ Equivalent JSON"
     },
     {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "Literal String",
-      "kind": "text",
-      "body": "[[comments]]\nauthor = \"Anonymous\"\ntext = \"Love it!\""
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-23",
+      "sectionId": "s3",
+      "title": "Array-like",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### ↓ Equivalent JSON"
+      "lang": "json",
+      "code": "{\n  \"comments\": [\n    {\n      \"author\": \"Nate\",\n      \"text\": \"Great Article!\"\n    },\n    {\n      \"author\": \"Anonymous\",\n      \"text\": \"Love It!\"\n    }\n  ]\n}"
     },
     {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "Literal String",
-      "kind": "text",
-      "body": "{\n\"comments\": [\n{\n\"author\": \"Nate\",\n\"text\": \"Great Article!\"\n},\n{\n\"author\": \"Anonymous\",\n\"text\": \"Love It!\"\n}\n]\n}"
-    },
-    {
-      "id": "s2-29",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-24",
+      "sectionId": "s3",
+      "title": "Dot separated",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Dot separated"
+      "lang": "toml",
+      "code": "[dog.\"tater.man\"]\ntype = \"pug\""
     },
     {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-25",
+      "sectionId": "s3",
+      "title": "Dot separated",
       "kind": "text",
-      "body": "[dog.\"tater.man\"]\ntype = \"pug\""
+      "body": "#### ↓ Equivalent JSON"
     },
     {
-      "id": "s2-31",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-26",
+      "sectionId": "s3",
+      "title": "Dot separated",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### ↓ Equivalent JSON"
+      "lang": "json",
+      "code": "{\n  \"dog\": {\n    \"tater.man\": {\n      \"type\": \"pug\"\n    }\n  }\n}"
     },
     {
-      "id": "s2-32",
-      "sectionId": "s2",
-      "title": "Literal String",
-      "kind": "text",
-      "body": "{\n\"dog\": {\n\"tater.man\": {\n\"type\": \"pug\"\n}\n}\n}"
-    },
-    {
-      "id": "s2-33",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-27",
+      "sectionId": "s3",
+      "title": "Multi-nested",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Multi-nested"
+      "lang": "toml",
+      "code": "[foo.bar.baz]\nbat = \"hi\""
     },
     {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-28",
+      "sectionId": "s3",
+      "title": "Multi-nested",
       "kind": "text",
-      "body": "[foo.bar.baz]\nbat = \"hi\""
+      "body": "#### ↓ Equivalent JSON"
     },
     {
-      "id": "s2-35",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-29",
+      "sectionId": "s3",
+      "title": "Multi-nested",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### ↓ Equivalent JSON"
+      "lang": "json",
+      "code": "{\n  \"foo\": {\n    \"bar\": {\n      \"baz\": {\n        \"bat\": \"hi\"\n      }\n    }\n  }\n}"
     },
     {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "Literal String",
-      "kind": "text",
-      "body": "{\n\"foo\": {\n\"bar\": {\n\"baz\": {\n\"bat\": \"hi\"\n}\n}\n}\n}"
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-30",
+      "sectionId": "s3",
+      "title": "Ignore whitespace",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Ignore whitespace"
+      "lang": "toml",
+      "code": "[a.b.c]          # this is best practice\n[ d.e.f ]        # same as [d.e.f]\n[ g .  h  .i ]   # same as [g.h.i]\n[ j . \"ʞ\" .'l' ] # same as [j.\"ʞ\".'l']"
     },
     {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "Literal String",
-      "kind": "text",
-      "body": "[a.b.c]          # this is best practice\n[ d.e.f ]        # same as [d.e.f]\n[ g .  h  .i ]   # same as [g.h.i]\n[ j . \"ʞ\" .'l' ] # same as [j.\"ʞ\".'l']"
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "Literal String",
+      "id": "s3-31",
+      "sectionId": "s3",
+      "title": "Inline Table",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Inline Table {.col-span-2}"
-    },
-    {
-      "id": "s2-40",
-      "sectionId": "s2",
-      "title": "Literal String",
-      "kind": "text",
-      "body": "name = { first = \"Tom\", last = \"Preston-Werner\" }\npoint = { x = 1, y = 2 }\nanimal = { type.name = \"pug\" }"
+      "lang": "toml",
+      "code": "name = { first = \"Tom\", last = \"Preston-Werner\" }\npoint = { x = 1, y = 2 }\nanimal = { type.name = \"pug\" }"
     }
   ],
   "source": {
@@ -334,7 +278,6 @@
     "path": "source/_posts/toml.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/toml.md",
-    "generatedAt": "2025-12-16T07:50:03.320Z",
     "lang": "en",
     "mode": "local"
   }

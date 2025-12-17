@@ -1,6 +1,8 @@
 {
   "id": "cpp",
-  "title": "cpp",
+  "name": "C++ 备忘清单",
+  "title": "提供基本语法和方法的 [C++](https://zh.cppreference.com/) 快速参考备忘单",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/cpp.svg",
   "sections": [
     {
       "id": "intro",
@@ -9,13 +11,53 @@
     },
     {
       "id": "s1",
-      "title": "C++智能指针",
-      "startIndex": 100
+      "title": "入门",
+      "startIndex": 1
     },
     {
       "id": "s2",
+      "title": "C++ 数组",
+      "startIndex": 23
+    },
+    {
+      "id": "s3",
+      "title": "C++ 条件",
+      "startIndex": 31
+    },
+    {
+      "id": "s4",
+      "title": "C++ 循环",
+      "startIndex": 56
+    },
+    {
+      "id": "s5",
+      "title": "C++ 函数",
+      "startIndex": 71
+    },
+    {
+      "id": "s6",
+      "title": "C++智能指针",
+      "startIndex": 92
+    },
+    {
+      "id": "s7",
       "title": "C++多线程",
-      "startIndex": 105
+      "startIndex": 97
+    },
+    {
+      "id": "s8",
+      "title": "C++ 预处理器",
+      "startIndex": 178
+    },
+    {
+      "id": "s9",
+      "title": "各种各样的",
+      "startIndex": 187
+    },
+    {
+      "id": "s10",
+      "title": "另见",
+      "startIndex": 190
     }
   ],
   "cards": [
@@ -24,1507 +66,1435 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "C++ 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "提供基本语法和方法的 [C++](https://zh.cppreference.com/) 快速参考备忘单"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n--------"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "hello.cpp",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <iostream>\nint main() {\n    std::cout << \"Hello Quick Reference\\n\";\n    return 0;\n}"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "hello.cpp",
       "kind": "text",
       "body": "编译运行"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "hello.cpp",
       "kind": "code",
       "lang": "shell",
       "code": "$ g++ hello.cpp -o hello\n$ ./hello\nHello Quick Reference"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "变量",
       "kind": "code",
       "lang": "cpp",
       "code": "int number = 5;       // 整数\nfloat f = 0.95;       // 浮点数\ndouble PI = 3.14159;  // 浮点数\nchar yes = 'Y';       // 字符\nstd::string s = \"ME\"; // 字符串（文本）\nbool isRight = true;  // 布尔值\n// 常量\nconst float RATE = 0.8;"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "变量",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "变量",
       "kind": "code",
       "lang": "cpp",
       "code": "int age {25};      // 自 C++11\nstd::cout << age;  // 打印 25"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "原始数据类型",
       "kind": "text",
       "body": "数据类型 | 大小 | 范围\n:- | -- | --\n`int`     | 4 bytes        | -2<sup>31</sup> 到 2<sup>31</sup>-1\n`float`   | 4 bytes        | _N/A_\n`double`  | 8 bytes        | _N/A_\n`char`    | 1 byte         | -128 到 127\n`bool`    | 1 byte         | `true` / `false`\n`void`    | _N/A_          | _N/A_\n`wchar_t` | 2 到 4 bytes   | 1 个宽字符\n<!--rehype:className=show-header-->"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "用户输入",
       "kind": "code",
       "lang": "cpp",
       "code": "int num;\nstd::cout << \"Type a number: \";\nstd::cin >> num;\nstd::cout << \"You entered \" << num;"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "交换",
       "kind": "code",
       "lang": "cpp",
       "code": "int a = 5, b = 10;\nstd::swap(a, b);\n// 输出: a=10, b=5\nstd::cout << \"a=\" << a << \", b=\" << b;\n\n// 整数交换的奇技淫巧\n(x ^= y), (y ^= x), (x ^= y);\n// 注意！ 以下操作会造成  undefined behavior\nx ^= y ^= x ^= y;"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "注释",
       "kind": "code",
       "lang": "cpp",
       "code": "// C++中的单行注释\n/* 这是一个多行注释\n    在 C++ 中 */"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "If 语句",
       "kind": "code",
       "lang": "cpp",
       "code": "if (a == 10) {\n    // do something\n}"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "If 语句",
       "kind": "text",
       "body": "查看: [条件](#c-条件)"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "循环",
       "kind": "code",
       "lang": "cpp",
       "code": "for (int i = 0; i < 10; i++) {\n    std::cout << i << \"\\n\";\n}"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "循环",
       "kind": "text",
       "body": "查看: [循环 Loops](#c-循环)"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "函数",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <iostream>\n\nvoid hello();   // 声明\n\nint main() {    // 主函数\n    hello();    // 执行函数\n}\n\nvoid hello() { // 定义\n  std::cout << \"Hello Quick Reference!\\n\";\n}"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "函数",
       "kind": "text",
       "body": "查看: [函数 Functions](#c-函数)"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "引用",
       "kind": "code",
       "lang": "cpp",
       "code": "int i = 1;\nint& ri = i; // ri 是对 i 的引用\nri = 2; // i 现在改为 2\nstd::cout << \"i=\" << i;\ni = 3;   // i 现在改为 3\nstd::cout << \"ri=\" << ri;"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "引用",
       "kind": "text",
       "body": "`ri` 和 `i` 指的是相同的内存位置"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "命名空间",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <iostream>\nnamespace ns1 {int val(){return 5;}}\nint main()\n{\n    std::cout << ns1::val();\n}"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "命名空间",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "命名空间",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <iostream>\nnamespace ns1 {int val(){return 5;}}\nusing namespace ns1;\nusing namespace std;\nint main()\n{\n    cout << val();\n}"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "命名空间",
       "kind": "text",
       "body": "名称空间允许名称下的全局标识符"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
-      "title": "命名空间",
-      "kind": "text",
-      "body": "C++ 数组\n------"
-    },
-    {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s2-23",
+      "sectionId": "s2",
       "title": "定义",
       "kind": "code",
       "lang": "cpp",
       "code": "std::array<int, 3> marks; // 定义\nmarks[0] = 92;\nmarks[1] = 97;\nmarks[2] = 98;\n// 定义和初始化\nstd::array<int, 3> marks = {92, 97, 98};\n// 有空成员\nstd::array<int, 3> marks = {92, 97};\nstd::cout << marks[2]; // 输出: 0"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s2-24",
+      "sectionId": "s2",
       "title": "操控",
       "kind": "code",
       "lang": "cpp",
       "code": "┌─────┬─────┬─────┬─────┬─────┬─────┐\n| 92  | 97  | 98  | 99  | 98  | 94  |\n└─────┴─────┴─────┴─────┴─────┴─────┘\n   0     1     2     3     4     5"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s2-25",
+      "sectionId": "s2",
       "title": "操控",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s2-26",
+      "sectionId": "s2",
       "title": "操控",
       "kind": "code",
       "lang": "cpp",
       "code": "std::array<int, 6> marks = {\n  92, 97, 98, 99, 98, 94\n};\n// 打印第一个元素\nstd::cout << marks[0];\n// 将第 2 个元素更改为 99\nmarks[1] = 99;\n// 从用户那里获取输入\nstd::cin >> marks[2];"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s2-27",
+      "sectionId": "s2",
       "title": "展示",
       "kind": "code",
       "lang": "cpp",
       "code": "char ref[5] = {'R', 'e', 'f'};\n// 基于范围的for循环\nfor (const int &n : ref) {\n    std::cout << std::string(1, n);\n}\n// 传统的for循环\nfor (int i = 0; i < sizeof(ref); ++i) {\n    std::cout << ref[i];\n}"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s2-28",
+      "sectionId": "s2",
       "title": "多维",
       "kind": "code",
       "lang": "cpp",
       "code": "     j0   j1   j2   j3   j4   j5\n   ┌────┬────┬────┬────┬────┬────┐\ni0 | 1  | 2  | 3  | 4  | 5  | 6  |\n   ├────┼────┼────┼────┼────┼────┤\ni1 | 6  | 5  | 4  | 3  | 2  | 1  |\n   └────┴────┴────┴────┴────┴────┘"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s2-29",
+      "sectionId": "s2",
       "title": "多维",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s2-30",
+      "sectionId": "s2",
       "title": "多维",
       "kind": "code",
       "lang": "cpp",
       "code": "int x[2][6] = {\n    {1,2,3,4,5,6}, {6,5,4,3,2,1}\n};\nfor (int i = 0; i < 2; ++i) {\n    for (int j = 0; j < 6; ++j) {\n        std::cout << x[i][j] << \" \";\n    }\n}\n// 输出: 1 2 3 4 5 6 6 5 4 3 2 1"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
-      "title": "多维",
-      "kind": "text",
-      "body": "C++ 条件\n------------"
-    },
-    {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s3-31",
+      "sectionId": "s3",
       "title": "If Clause",
       "kind": "code",
       "lang": "cpp",
       "code": "if (a == 10) {\n    // do something\n}"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s3-32",
+      "sectionId": "s3",
       "title": "If Clause",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s3-33",
+      "sectionId": "s3",
       "title": "If Clause",
       "kind": "code",
       "lang": "cpp",
       "code": "int number = 16;\nif (number % 2 == 0)\n{\n    std::cout << \"even\";\n}\nelse\n{\n    std::cout << \"odd\";\n}\n// 输出: even"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s3-34",
+      "sectionId": "s3",
       "title": "Else if 语句",
       "kind": "code",
       "lang": "cpp",
       "code": "int score = 99;\nif (score == 100) {\n    std::cout << \"Superb\";\n}\nelse if (score >= 90) {\n    std::cout << \"Excellent\";\n}\nelse if (score >= 80) {\n    std::cout << \"Very Good\";\n}\nelse if (score >= 70) {\n    std::cout << \"Good\";\n}\nelse if (score >= 60)\n    std::cout << \"OK\";\nelse\n    std::cout << \"What?\";"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s3-35",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "text",
       "body": "#### 关系运算符"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s3-36",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "text",
       "body": ":--|--\n:--|--\n`a == b` | a 等于 b\n`a != b` | a 不等于 b\n`a < b`  | a 小于 b\n`a > b`  | a 大于 b\n`a <= b` | a 小于或等于 b\n`a >= b` | a 大于或等于 b"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s3-37",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "text",
       "body": "#### 赋值运算符"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s3-38",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "text",
       "body": "范例 | 相当于\n:--|--\n`a += b` | _Aka_ `a = a + b`\n`a -= b` | _Aka_ `a = a - b`\n`a *= b` | _Aka_ `a = a * b`\n`a /= b` | _Aka_ `a = a / b`\n`a %= b` | _Aka_ `a = a % b`"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s3-39",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "text",
       "body": "#### 逻辑运算符"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s3-40",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "qa",
       "front": "`exp1 && exp2`",
       "back": "Both are true _(AND)_"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s3-41",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "qa",
       "front": "<code>exp1 &#124;&#124; exp2</code>",
       "back": "Either is true _(OR)_"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s3-42",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "qa",
       "front": "`!exp`",
       "back": "`exp` is false _(NOT)_"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s3-43",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "text",
       "body": "#### 位运算符"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s3-44",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "qa",
       "front": "`a & b`",
       "back": "按位与"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s3-45",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "qa",
       "front": "<code>a &#124; b</code>",
       "back": "按位或"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s3-46",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "qa",
       "front": "`a ^ b`",
       "back": "按位异或"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s3-47",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "qa",
       "front": "`~a`",
       "back": "按位取反"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s3-48",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "qa",
       "front": "`a << b`",
       "back": "左移"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s3-49",
+      "sectionId": "s3",
       "title": "运算符",
       "kind": "qa",
       "front": "`a >> b`",
       "back": "右移"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s3-50",
+      "sectionId": "s3",
       "title": "三元运算符",
       "kind": "code",
       "lang": "",
       "code": "           ┌── True ──┐\nResult = Condition ? Exp1 : Exp2;\n           └───── False ─────┘"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s3-51",
+      "sectionId": "s3",
       "title": "三元运算符",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s3-52",
+      "sectionId": "s3",
       "title": "三元运算符",
       "kind": "code",
       "lang": "cpp",
       "code": "int x = 3, y = 5, max;\nmax = (x > y) ? x : y;\n// 输出: 5\nstd::cout << max << std::endl;"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s3-53",
+      "sectionId": "s3",
       "title": "三元运算符",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s3-54",
+      "sectionId": "s3",
       "title": "三元运算符",
       "kind": "code",
       "lang": "cpp",
       "code": "int x = 3, y = 5, max;\nif (x > y) {\n    max = x;\n} else {\n    max = y;\n}\n// 输出: 5\nstd::cout << max << std::endl;"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s3-55",
+      "sectionId": "s3",
       "title": "switch 语句",
       "kind": "code",
       "lang": "cpp",
       "code": "int num = 2;\nswitch (num) {\n    case 0:\n        std::cout << \"Zero\";\n        break;\n    case 1:\n        std::cout << \"One\";\n        break;\n    case 2:\n        std::cout << \"Two\";\n        break;\n    case 3:\n        std::cout << \"Three\";\n        break;\n    default:\n        std::cout << \"What?\";\n        break;\n}"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
-      "title": "switch 语句",
-      "kind": "text",
-      "body": "C++ 循环\n------------"
-    },
-    {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s4-56",
+      "sectionId": "s4",
       "title": "While",
       "kind": "code",
       "lang": "cpp",
       "code": "int i = 0;\nwhile (i < 6) {\n    std::cout << i++;\n}\n// 输出: 012345"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s4-57",
+      "sectionId": "s4",
       "title": "Do-while",
       "kind": "code",
       "lang": "cpp",
       "code": "int i = 1;\ndo {\n    std::cout << i++;\n} while (i <= 5);\n// 输出: 12345"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
+      "id": "s4-58",
+      "sectionId": "s4",
       "title": "Continue 语句",
       "kind": "code",
       "lang": "cpp",
       "code": "for (int i = 0; i < 10; i++) {\n    if (i % 2 == 0) {\n        continue;\n    }\n    std::cout << i;\n} // 输出: 13579"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s4-59",
+      "sectionId": "s4",
       "title": "无限循环",
       "kind": "code",
       "lang": "cpp",
       "code": "while (true) { // true or 1\n    std::cout << \"无限循环\";\n}"
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s4-60",
+      "sectionId": "s4",
       "title": "无限循环",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s4-61",
+      "sectionId": "s4",
       "title": "无限循环",
       "kind": "code",
       "lang": "cpp",
       "code": "for (;;) {\n    std::cout << \"无限循环\";\n}"
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s4-62",
+      "sectionId": "s4",
       "title": "无限循环",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
+      "id": "s4-63",
+      "sectionId": "s4",
       "title": "无限循环",
       "kind": "code",
       "lang": "cpp",
       "code": "for(int i = 1; i > 0; i++) {\n    std::cout << \"infinite loop\";\n}"
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s4-64",
+      "sectionId": "s4",
       "title": "for_each (C++11 起)",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <iostream>\nint main()\n{\n    auto print = [](int num) {\n      std::cout << num << std::endl;\n    };\n    std::array<int, 4> arr = {1, 2, 3, 4};\n    std::for_each(arr.begin(), arr.end(), print);\n    return 0;\n}"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
+      "id": "s4-65",
+      "sectionId": "s4",
       "title": "基于范围 (C++11 起)",
       "kind": "code",
       "lang": "cpp",
       "code": "for (int n : {1, 2, 3, 4, 5}) {\n    std::cout << n << \" \";\n}\n// 输出: 1 2 3 4 5"
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s4-66",
+      "sectionId": "s4",
       "title": "基于范围 (C++11 起)",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
+      "id": "s4-67",
+      "sectionId": "s4",
       "title": "基于范围 (C++11 起)",
       "kind": "code",
       "lang": "cpp",
       "code": "std::string hello = \"Quick Reference.ME\";\nfor (char c: hello)\n{\n    std::cout << c << \" \";\n}\n// 输出: Q u i c k R e f . M E"
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s4-68",
+      "sectionId": "s4",
       "title": "中断语句",
       "kind": "code",
       "lang": "cpp",
       "code": "int password, times = 0;\nwhile (password != 1234) {\n    if (times++ >= 3) {\n        std::cout << \"Locked!\\n\";\n        break;\n    }\n    std::cout << \"Password: \";\n    std::cin >> password; // input\n}"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s4-69",
+      "sectionId": "s4",
       "title": "Several variations",
       "kind": "code",
       "lang": "cpp",
       "code": "for (int i = 0, j = 2; i < 3; i++, j--){\n    std::cout << \"i=\" << i << \",\";\n    std::cout << \"j=\" << j << \";\";\n}\n// 输出: i=0,j=2;i=1,j=1;i=2,j=0;"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s4-70",
+      "sectionId": "s4",
       "title": "auto",
       "kind": "code",
       "lang": "cpp",
       "code": "std:: string s = \"hello world\";\nfor(auto c: s){\n    std:: cout << c << \" \";\n}\n// 输出: h e l l o   w o r l d"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
-      "title": "auto",
-      "kind": "text",
-      "body": "C++ 函数\n------------"
-    },
-    {
-      "id": "intro-77",
-      "sectionId": "intro",
+      "id": "s5-71",
+      "sectionId": "s5",
       "title": "参数和返回",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <iostream>\nint add(int a, int b) {\n    return a + b;\n}\nint main() {\n    std::cout << add(10, 20);\n}"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
+      "id": "s5-72",
+      "sectionId": "s5",
       "title": "参数和返回",
       "kind": "text",
       "body": "`add` 是一个接受 2 个整数并返回整数的函数"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
+      "id": "s5-73",
+      "sectionId": "s5",
       "title": "重载",
       "kind": "code",
       "lang": "cpp",
       "code": "void fun(string a, string b) {\n    std::cout << a + \" \" + b;\n}\nvoid fun(string a) {\n    std::cout << a;\n}\nvoid fun(int a) {\n    std::cout << a;\n}"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
+      "id": "s5-74",
+      "sectionId": "s5",
       "title": "内置函数",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <iostream>\n#include <cmath> // 导入库\n\nint main() {\n    // sqrt() 来自 cmath\n    std::cout << sqrt(9);\n}"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
+      "id": "s5-75",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "Lambda 表达式可以在函数内定义，可以理解为在函数内定义的临时函数。格式："
     },
     {
-      "id": "intro-82",
-      "sectionId": "intro",
+      "id": "s5-76",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "code",
       "lang": "cpp",
       "code": "auto func = []() -> return_type { };"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
+      "id": "s5-77",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "• `[]`为捕获列表，能够捕获其所在函数的局部变量\n• 一个空的捕获列表代表Lambda表达式不捕获任何的变量\n• 对于值捕获，直接在中括号中填写要捕获的变量即可："
     },
     {
-      "id": "intro-84",
-      "sectionId": "intro",
+      "id": "s5-78",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
-      "kind": "text",
-      "body": "```cpp\nint val = 5;\nauto func = [val]() -> return_type { };\n```"
+      "kind": "code",
+      "lang": "cpp",
+      "code": "      int val = 5;\n      auto func = [val]() -> return_type { };"
     },
     {
-      "id": "intro-85",
-      "sectionId": "intro",
+      "id": "s5-79",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "• 对于引用捕获，需要在捕获的变量前添加`&`："
     },
     {
-      "id": "intro-86",
-      "sectionId": "intro",
+      "id": "s5-80",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
-      "kind": "text",
-      "body": "```cpp\nstring str(\"hello world!\");\nauto func = [&str]() -> return_type { };\n```"
+      "kind": "code",
+      "lang": "cpp",
+      "code": "  string str(\"hello world!\");\n  auto func = [&str]() -> return_type { };"
     },
     {
-      "id": "intro-87",
-      "sectionId": "intro",
+      "id": "s5-81",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "• 如果变量太多，需要编译器根据我们编写的代码自动捕获，可以采用隐式捕获的方式。"
     },
     {
-      "id": "intro-88",
-      "sectionId": "intro",
+      "id": "s5-82",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "• 全部值捕获："
     },
     {
-      "id": "intro-89",
-      "sectionId": "intro",
+      "id": "s5-83",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
-      "kind": "text",
-      "body": "```cpp\nint val1, val2;\nauto func = [=]() -> int\n{\nreturn val1 + val2;\n};\n```"
+      "kind": "code",
+      "lang": "cpp",
+      "code": "      int val1, val2;\n      auto func = [=]() -> int\n          {\n              return val1 + val2;\n          };"
     },
     {
-      "id": "intro-90",
-      "sectionId": "intro",
+      "id": "s5-84",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "• 全部引用捕获："
     },
     {
-      "id": "intro-91",
-      "sectionId": "intro",
+      "id": "s5-85",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
-      "kind": "text",
-      "body": "```cpp\nstring str1(\"hello\"), str2(\"word!\");\nauto func = [&]() -> string\n{\nreturn str1 + str2;\n};\n```"
+      "kind": "code",
+      "lang": "cpp",
+      "code": "      string str1(\"hello\"), str2(\"word!\");\n      auto func = [&]() -> string\n          {\n              return str1 + str2;\n          };"
     },
     {
-      "id": "intro-92",
-      "sectionId": "intro",
+      "id": "s5-86",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "• 混合隐式捕获："
     },
     {
-      "id": "intro-93",
-      "sectionId": "intro",
+      "id": "s5-87",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "如果希望对一部分变量采用值捕获，对其他变量采用引用捕获，可以混合使用："
     },
     {
-      "id": "intro-94",
-      "sectionId": "intro",
+      "id": "s5-88",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
-      "kind": "text",
-      "body": "```cpp\nint val1 = 123, val2 = 456;\nstring str1(\"123\"), str2(456);"
+      "kind": "code",
+      "lang": "cpp",
+      "code": "      int val1 = 123, val2 = 456;\n      string str1(\"123\"), str2(456);\n    \n      auto func1 = [=, &str1]() -> int\n          {\n              return   val1 == std::stoi(str1)\n                    ? val1 : val2;\n          };\n    \n      auto func2 = [&, val1]() -> string\n          {\n              return   str1 == std::to_string(val1)\n                    ? str1 : str2;\n          };"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
-      "title": "Lambda 表达式",
-      "kind": "text",
-      "body": "auto func1 = [=, &str1]() -> int\n{\nreturn   val1 == std::stoi(str1)\n? val1 : val2;\n};"
-    },
-    {
-      "id": "intro-96",
-      "sectionId": "intro",
-      "title": "Lambda 表达式",
-      "kind": "text",
-      "body": "auto func2 = [&, val1]() -> string\n{\nreturn   str1 == std::to_string(val1)\n? str1 : str2;\n};\n```"
-    },
-    {
-      "id": "intro-97",
-      "sectionId": "intro",
+      "id": "s5-89",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "• `()` 是参数列表，我们只需要按照普通函数的使用方法来使用即可\n• `return_type` 是函数的返回类型，`-> return_type` 可以不写，编译器会自动推导\n• `{}` 中的内容就是函数体，依照普通函数的使用方法使用即可"
     },
     {
-      "id": "intro-98",
-      "sectionId": "intro",
+      "id": "s5-90",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "text",
       "body": "此处给出一个 Lambda 表达式的实际使用例子(当然可以使用 `str::copy`):"
     },
     {
-      "id": "intro-99",
-      "sectionId": "intro",
+      "id": "s5-91",
+      "sectionId": "s5",
       "title": "Lambda 表达式",
       "kind": "code",
       "lang": "cpp",
       "code": "// vec中包含1, 2, 3, 4, 5\nstd::vector<int> vec({1, 2, 3, 4, 5});\nstd::for_each(vec.begin(), vec.end(),\n              [](int& ele) -> void\n          {\n              std::cout << ele\n                          << \" \";\n          });"
     },
     {
-      "id": "s1-100",
-      "sectionId": "s1",
+      "id": "s6-92",
+      "sectionId": "s6",
       "title": "智能指针基础",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <memory>\n\n// 创建独占所有权的指针\nstd::unique_ptr<int> p1 = std::make_unique<int>(42);\n// 不能复制，只能移动\nstd::unique_ptr<int> p2 = std::move(p1);\n// p1 现在为 nullptr\n\n// 创建共享所有权的指针\nstd::shared_ptr<int> sp1 = std::make_shared<int>(42);\n// 可以复制，引用计数增加\nstd::shared_ptr<int> sp2 = sp1;\n// 获取引用计数\nstd::cout << sp1.use_count(); // 输出: 2\n\n// 创建弱引用，不增加引用计数\nstd::weak_ptr<int> wp = sp1;"
     },
     {
-      "id": "s1-101",
-      "sectionId": "s1",
+      "id": "s6-93",
+      "sectionId": "s6",
       "title": "unique_ptr",
       "kind": "code",
       "lang": "cpp",
       "code": "// 创建方式1：使用 make_unique (C++14)\nauto p1 = std::make_unique<int>(42);\n\n// 创建方式2：直接构造\nstd::unique_ptr<int> p2(new int(42));\n\n// 访问资源\nstd::cout << *p1 << std::endl;\n*p1 = 100;\n\n// 获取原始指针（不转移所有权）\nint* raw = p1.get();\n\n// 释放所有权并返回原始指针\nint* released = p1.release();\n// p1 现在为 nullptr\n\n// 替换管理的对象\np1.reset(new int(50));"
     },
     {
-      "id": "s1-102",
-      "sectionId": "s1",
+      "id": "s6-94",
+      "sectionId": "s6",
       "title": "shared_ptr",
       "kind": "code",
       "lang": "cpp",
       "code": "// 创建方式1：使用 make_shared\nauto sp1 = std::make_shared<int>(42);\n\n// 创建方式2：直接构造\nstd::shared_ptr<int> sp2(new int(42));\n\n// 复制和共享所有权\nstd::shared_ptr<int> sp3 = sp1;\nstd::cout << sp1.use_count(); // 输出: 2\n\n// 访问资源\nstd::cout << *sp1 << std::endl;\n*sp1 = 100; // 所有指向该资源的shared_ptr都会看到这个修改\n\n// 重置指针\nsp1.reset(); // sp1变为nullptr，引用计数减1"
     },
     {
-      "id": "s1-103",
-      "sectionId": "s1",
+      "id": "s6-95",
+      "sectionId": "s6",
       "title": "weak_ptr",
       "kind": "code",
       "lang": "cpp",
       "code": "std::shared_ptr<int> sp = std::make_shared<int>(42);\nstd::weak_ptr<int> wp = sp;\n\n// 检查引用对象是否存在\nif (auto locked = wp.lock()) {\n    std::cout << *locked << std::endl; // 输出: 42\n} else {\n    std::cout << \"对象已被销毁\" << std::endl;\n}\n\n// 检查是否过期\nbool is_expired = wp.expired(); // false\n\n// 获取引用计数\nstd::cout << wp.use_count(); // 输出: 1\n\n// 当所有shared_ptr都被销毁时\nsp.reset();\nif (wp.expired()) {\n    std::cout << \"对象已被销毁\" << std::endl;\n}"
     },
     {
-      "id": "s1-104",
-      "sectionId": "s1",
+      "id": "s6-96",
+      "sectionId": "s6",
       "title": "循环引用问题",
       "kind": "code",
       "lang": "cpp",
       "code": "struct Node {\n    std::string name;\n    std::shared_ptr<Node> next;\n    // 使用weak_ptr避免循环引用\n    std::weak_ptr<Node> parent;\n    \n    Node(const std::string& n) : name(n) {}\n    ~Node() { std::cout << \"销毁: \" << name << std::endl; }\n};\n\n// 创建循环引用\nvoid createCycle() {\n    auto node1 = std::make_shared<Node>(\"Node1\");\n    auto node2 = std::make_shared<Node>(\"Node2\");\n    \n    node1->next = node2;\n    node2->parent = node1; // 使用weak_ptr避免循环引用\n    \n    // 函数结束时，node1和node2会被正确销毁\n    // 如果parent也是shared_ptr，则会造成内存泄漏\n}"
     },
     {
-      "id": "s2-105",
-      "sectionId": "s2",
+      "id": "s7-97",
+      "sectionId": "s7",
       "title": "多线程介绍",
       "kind": "text",
       "body": "g++编译选项：`-std=c++11`。包含头文件："
     },
     {
-      "id": "s2-106",
-      "sectionId": "s2",
+      "id": "s7-98",
+      "sectionId": "s7",
       "title": "多线程介绍",
       "kind": "text",
       "body": "• `#include <thread>`：C++多线程库\n• `#include <mutex>`：C++互斥量库\n• `#include <future>`：C++异步库"
     },
     {
-      "id": "s2-107",
-      "sectionId": "s2",
+      "id": "s7-99",
+      "sectionId": "s7",
       "title": "线程的创建",
       "kind": "text",
       "body": "以普通函数作为线程入口函数："
     },
     {
-      "id": "s2-108",
-      "sectionId": "s2",
+      "id": "s7-100",
+      "sectionId": "s7",
       "title": "线程的创建",
       "kind": "code",
       "lang": "cpp",
       "code": "void entry_1() { }\nvoid entry_2(int val) { }\n\nstd::thread my_thread_1(entry_1);\nstd::thread my_thread_2(entry_2, 5);"
     },
     {
-      "id": "s2-109",
-      "sectionId": "s2",
+      "id": "s7-101",
+      "sectionId": "s7",
       "title": "线程的创建",
       "kind": "text",
       "body": "以类对象作为线程入口函数："
     },
     {
-      "id": "s2-110",
-      "sectionId": "s2",
+      "id": "s7-102",
+      "sectionId": "s7",
       "title": "线程的创建",
       "kind": "code",
       "lang": "cpp",
       "code": "class Entry\n{\n    void operator()() { }\n    void entry_function() { }\n};\n\nEntry entry;\n// 调用operator()()\nstd::thread my_thread_1(entry);\n// 调用Entry::entry_function\nstd::thread my_thread_2(&Entry::entry_function, &entry);"
     },
     {
-      "id": "s2-111",
-      "sectionId": "s2",
+      "id": "s7-103",
+      "sectionId": "s7",
       "title": "线程的创建",
       "kind": "text",
       "body": "以lambda表达式作为线程入口函数："
     },
     {
-      "id": "s2-112",
-      "sectionId": "s2",
+      "id": "s7-104",
+      "sectionId": "s7",
       "title": "线程的创建",
       "kind": "code",
       "lang": "cpp",
       "code": "std::thread my_thread([]() -> void\n      {\n         // ...\n      });"
     },
     {
-      "id": "s2-113",
-      "sectionId": "s2",
+      "id": "s7-105",
+      "sectionId": "s7",
       "title": "线程的销毁",
       "kind": "code",
       "lang": "cpp",
       "code": "thread my_thread;\n// 阻塞\nmy_thread.join();\n// 非阻塞\nmy_thread.detach();"
     },
     {
-      "id": "s2-114",
-      "sectionId": "s2",
+      "id": "s7-106",
+      "sectionId": "s7",
       "title": "`this_thread`",
       "kind": "code",
       "lang": "cpp",
       "code": "// 获取当前线程ID\nstd::this_thread::get_id();\n// 使当前线程休眠一段指定时间\nstd::this_thread::sleep_for();\n// 使当前线程休眠到指定时间\nstd::this_thread::sleep_until();\n// 暂停当前线程的执行，让别的线程执行\nstd::this_thread::yield();"
     },
     {
-      "id": "s2-115",
-      "sectionId": "s2",
+      "id": "s7-107",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "> `#include <mutex>`"
     },
     {
-      "id": "s2-116",
-      "sectionId": "s2",
+      "id": "s7-108",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "#### 锁的基本操作"
     },
     {
-      "id": "s2-117",
-      "sectionId": "s2",
+      "id": "s7-109",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "创建锁"
     },
     {
-      "id": "s2-118",
-      "sectionId": "s2",
+      "id": "s7-110",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "std::mutex m;"
     },
     {
-      "id": "s2-119",
-      "sectionId": "s2",
+      "id": "s7-111",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "上锁"
     },
     {
-      "id": "s2-120",
-      "sectionId": "s2",
+      "id": "s7-112",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "m.lock();"
     },
     {
-      "id": "s2-121",
-      "sectionId": "s2",
+      "id": "s7-113",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "解锁"
     },
     {
-      "id": "s2-122",
-      "sectionId": "s2",
+      "id": "s7-114",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "m.unlock();"
     },
     {
-      "id": "s2-123",
-      "sectionId": "s2",
+      "id": "s7-115",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "尝试上锁：成功返回`true`，失败返回`false`"
     },
     {
-      "id": "s2-124",
-      "sectionId": "s2",
+      "id": "s7-116",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "m.try_lock();"
     },
     {
-      "id": "s2-125",
-      "sectionId": "s2",
+      "id": "s7-117",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "解锁"
     },
     {
-      "id": "s2-126",
-      "sectionId": "s2",
+      "id": "s7-118",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "m.unlock();"
     },
     {
-      "id": "s2-127",
-      "sectionId": "s2",
+      "id": "s7-119",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "#### 更简单的锁 —— `std::lock_guard<Mutex>`"
     },
     {
-      "id": "s2-128",
-      "sectionId": "s2",
+      "id": "s7-120",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "构造时上锁，析构时解锁"
     },
     {
-      "id": "s2-129",
-      "sectionId": "s2",
+      "id": "s7-121",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "std::mutex m;\nstd::lock_guard<std::mutex> lock(m);"
     },
     {
-      "id": "s2-130",
-      "sectionId": "s2",
+      "id": "s7-122",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "额外参数：`std::adopt_lock`：只需解锁，无需上锁"
     },
     {
-      "id": "s2-131",
-      "sectionId": "s2",
+      "id": "s7-123",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "// 手动上锁\nm.lock();\nstd::lock_guard<mutex> lock(m,\n    std::adopt_lock);"
     },
     {
-      "id": "s2-132",
-      "sectionId": "s2",
+      "id": "s7-124",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "#### `unique_lock<Mutex>`"
     },
     {
-      "id": "s2-133",
-      "sectionId": "s2",
+      "id": "s7-125",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "构造上锁，析构解锁"
     },
     {
-      "id": "s2-134",
-      "sectionId": "s2",
+      "id": "s7-126",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "std::mutex m;\nstd::unique_lock<mutex> lock(m);"
     },
     {
-      "id": "s2-135",
-      "sectionId": "s2",
+      "id": "s7-127",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "##### `std::adopt_lock`"
     },
     {
-      "id": "s2-136",
-      "sectionId": "s2",
+      "id": "s7-128",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "只需解锁，无需上锁"
     },
     {
-      "id": "s2-137",
-      "sectionId": "s2",
+      "id": "s7-129",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "// 手动上锁\nm.lock();\nstd::unique_lock<mutex> lock(m,\n    std::adopt_lock);"
     },
     {
-      "id": "s2-138",
-      "sectionId": "s2",
+      "id": "s7-130",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "##### `std::try_to_lock`"
     },
     {
-      "id": "s2-139",
-      "sectionId": "s2",
+      "id": "s7-131",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "尝试上锁，可以通过`std::unique_lock<Mutex>::owns_lock()`查看状态"
     },
     {
-      "id": "s2-140",
-      "sectionId": "s2",
+      "id": "s7-132",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "std::unique_lock<mutex> lock(m,\n    std::try_to_lock);\nif (lock.owns_lock())\n{\n    // 拿到了锁\n}\nelse\n{\n    // 没有\n}"
     },
     {
-      "id": "s2-141",
-      "sectionId": "s2",
+      "id": "s7-133",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "##### `std::defer_lock`"
     },
     {
-      "id": "s2-142",
-      "sectionId": "s2",
+      "id": "s7-134",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "绑定锁，但不上锁"
     },
     {
-      "id": "s2-143",
-      "sectionId": "s2",
+      "id": "s7-135",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "std::unique_lock<mutex> lock(m,\n    std::defer_lock);\nlock.lock();\nlock.unlock();"
     },
     {
-      "id": "s2-144",
-      "sectionId": "s2",
+      "id": "s7-136",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "##### `std::unique_lock<Mutex>::release`"
     },
     {
-      "id": "s2-145",
-      "sectionId": "s2",
+      "id": "s7-137",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "返回所管理的`mutex`对象指针，**释放所有权。**一旦释放了所有权，那么如果原来互斥量处于互斥状态，程序员有责任手动解锁。"
     },
     {
-      "id": "s2-146",
-      "sectionId": "s2",
+      "id": "s7-138",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "#### `std::call_once`"
     },
     {
-      "id": "s2-147",
-      "sectionId": "s2",
+      "id": "s7-139",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "text",
       "body": "当多个线程通过这个函数调用一个可调用对象时，只会有一个线程成功调用。"
     },
     {
-      "id": "s2-148",
-      "sectionId": "s2",
+      "id": "s7-140",
+      "sectionId": "s7",
       "title": "锁",
       "kind": "code",
       "lang": "cpp",
       "code": "std::once_flag flag;\n\nvoid foo() { }\n\nstd::call_once(flag, foo);"
     },
     {
-      "id": "s2-149",
-      "sectionId": "s2",
+      "id": "s7-141",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "text",
       "body": "#### 创建条件变量"
     },
     {
-      "id": "s2-150",
-      "sectionId": "s2",
+      "id": "s7-142",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "code",
       "lang": "cpp",
       "code": "std::condition_variable cond;"
     },
     {
-      "id": "s2-151",
-      "sectionId": "s2",
+      "id": "s7-143",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "text",
       "body": "#### 等待条件变量被通知"
     },
     {
-      "id": "s2-152",
-      "sectionId": "s2",
+      "id": "s7-144",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "code",
       "lang": "cpp",
       "code": "std::unique_lock<std::mutex>\n    lock;\nextern bool predicate();\n\n// 调用方式 1\ncond.wait(lock);\n// 调用方式 2\ncond.wait(lock, predicate);"
     },
     {
-      "id": "s2-153",
-      "sectionId": "s2",
+      "id": "s7-145",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "s2-154",
-      "sectionId": "s2",
+      "id": "s7-146",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "text",
       "body": "• `wait`不断地尝试重新获取并加锁该互斥量，如果获取不到，它就卡在这里并反复尝试重新获取，如果获取到了，执行流程就继续往下走\n• `wait`在获取到互斥量并加锁了互斥量之后：\n• 如果`wait`被提供了可调用对象，那么就执行这个可调用对象：\n• 如果返回值为`false`，那么`wait`继续加锁，直到再次被 notified\n• 如果返回值为`true`，那么`wait`返回，继续执行流程\n• 如果`wait`没有第二个参数，那么直接返回，继续执行"
     },
     {
-      "id": "s2-155",
-      "sectionId": "s2",
+      "id": "s7-147",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "text",
       "body": "#### `std::condition_variable::notify_one`"
     },
     {
-      "id": "s2-156",
-      "sectionId": "s2",
+      "id": "s7-148",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "text",
       "body": "`notify_one` 唤醒一个调用 `wait` 的线程。注意在唤醒之前要解锁，否则调用 `wait` 的线程也会因为无法加锁而阻塞。"
     },
     {
-      "id": "s2-157",
-      "sectionId": "s2",
+      "id": "s7-149",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "text",
       "body": "#### `std::condition_variable::notify_all`"
     },
     {
-      "id": "s2-158",
-      "sectionId": "s2",
+      "id": "s7-150",
+      "sectionId": "s7",
       "title": "`std::condition_variable`",
       "kind": "text",
       "body": "唤醒所有调用 `wait` 的线程。"
     },
     {
-      "id": "s2-159",
-      "sectionId": "s2",
+      "id": "s7-151",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "> `#include <future>`"
     },
     {
-      "id": "s2-160",
-      "sectionId": "s2",
+      "id": "s7-152",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "#### 创建异步任务"
     },
     {
-      "id": "s2-161",
-      "sectionId": "s2",
+      "id": "s7-153",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "code",
       "lang": "cpp",
       "code": "double func(int val);\n\n// 使用std::async创建异步任务\n// 使用std::future获取结果\n// future模板中存放返回值类型\nstd::future<double> result =\n    std::async(func, 5);"
     },
     {
-      "id": "s2-162",
-      "sectionId": "s2",
+      "id": "s7-154",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "#### 获取异步任务的返回值"
     },
     {
-      "id": "s2-163",
-      "sectionId": "s2",
+      "id": "s7-155",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "等待异步任务结束，但是不获取返回值："
     },
     {
-      "id": "s2-164",
-      "sectionId": "s2",
+      "id": "s7-156",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "code",
       "lang": "cpp",
       "code": "result.wait();"
     },
     {
-      "id": "s2-165",
-      "sectionId": "s2",
+      "id": "s7-157",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "获取异步任务的返回值："
     },
     {
-      "id": "s2-166",
-      "sectionId": "s2",
+      "id": "s7-158",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "code",
       "lang": "cpp",
       "code": "int val = result.get();"
     },
     {
-      "id": "s2-167",
-      "sectionId": "s2",
+      "id": "s7-159",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "注："
     },
     {
-      "id": "s2-168",
-      "sectionId": "s2",
+      "id": "s7-160",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "• `get()`返回右值，因此只可调用一次\n• 只要调用上述任意函数，线程就会一直阻塞到返回值可用（入口函数运行结束）"
     },
     {
-      "id": "s2-169",
-      "sectionId": "s2",
+      "id": "s7-161",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "#### `std::async` 的额外参数"
     },
     {
-      "id": "s2-170",
-      "sectionId": "s2",
+      "id": "s7-162",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "额外参数可以被放在 `std::async` 的第一个参数位置，用于设定 `std::async` 的行为："
     },
     {
-      "id": "s2-171",
-      "sectionId": "s2",
+      "id": "s7-163",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "• `std::launch::deferred`：入口函数的运行会被推迟到`std::future<T>::get()`或者`std::future<T>::wait()`被调用时。此时调用线程会直接运行线程入口函数，换言之，**不会创建子线程**\n• `std::launch::async`：立即创建子线程，并运行线程入口函数\n• `std::launch::deferred | std::launch::async`：默认值，由系统自行决定"
     },
     {
-      "id": "s2-172",
-      "sectionId": "s2",
+      "id": "s7-164",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "#### 返回值的状态"
     },
     {
-      "id": "s2-173",
-      "sectionId": "s2",
+      "id": "s7-165",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "让当前线程等待一段时间（等待到指定时间点），以期待返回值准备好："
     },
     {
-      "id": "s2-174",
-      "sectionId": "s2",
+      "id": "s7-166",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "code",
       "lang": "cpp",
       "code": "extern double foo(int val) {}\n\nstd::future<double> result =\n    std::async(foo, 5);\n\n//返回值类型\nstd::future_status status;\n// 等待一段时间\nstatus = result.wait_for(\n  std::chrono::seconds(1)\n  );\n// 等待到某一时间点\nstatus = result.wait_until(\n  std::chrono::now() +\n    std::chrono::seconds(1)\n  );"
     },
     {
-      "id": "s2-175",
-      "sectionId": "s2",
+      "id": "s7-167",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "在指定的时间过去后，可以获取等待的结果："
     },
     {
-      "id": "s2-176",
-      "sectionId": "s2",
+      "id": "s7-168",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "code",
       "lang": "cpp",
       "code": "// 返回值已经准备好\nif (status ==\n     std::future_status::ready)\n{\n\n}\n// 超时：尚未准备好\nelse if (status ==\n    std::future_status::timeout)\n{ }\n// 尚未启动: std::launch::deferred\nelse if (status ==\n    std::future_status::deferred)\n{ }"
     },
     {
-      "id": "s2-177",
-      "sectionId": "s2",
+      "id": "s7-169",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "#### 多个返回值"
     },
     {
-      "id": "s2-178",
-      "sectionId": "s2",
+      "id": "s7-170",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "如果要多次获取结果，可以使用`std::shared_future`，其会返回结果的一个**拷贝**。"
     },
     {
-      "id": "s2-179",
-      "sectionId": "s2",
+      "id": "s7-171",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "code",
       "lang": "cpp",
       "code": "std::shared_future<T> result;"
     },
     {
-      "id": "s2-180",
-      "sectionId": "s2",
+      "id": "s7-172",
+      "sectionId": "s7",
       "title": "获取线程的运行结果",
       "kind": "text",
       "body": "对于不可拷贝对象，可以在`std::shared_future`中存储对象的指针，而非指针本身。"
     },
     {
-      "id": "s2-181",
-      "sectionId": "s2",
+      "id": "s7-173",
+      "sectionId": "s7",
       "title": "创建线程",
       "kind": "code",
       "lang": "cpp",
       "code": "void threadFunction() {\n  // 线程函数体\n  std::cout << \"From thread\" << std::endl;\n}\n\nint main() {\n  // 创建线程并开始执行线程函数\n  std::thread t(threadFunction);\n  \n  // 等待线程执行完毕\n  t.join();\n  \n  return 0;\n}"
     },
     {
-      "id": "s2-182",
-      "sectionId": "s2",
+      "id": "s7-174",
+      "sectionId": "s7",
       "title": "传递参数给线程函数",
       "kind": "code",
       "lang": "cpp",
       "code": "void threadFunction(int value) {\n  // 线程函数体\n  std::cout << \"Received value: \" << value << std::endl;\n}\n\nint main() {\n  int data = 42;\n  std::thread t(threadFunction, data);\n  t.join();\n  return 0;\n}"
     },
     {
-      "id": "s2-183",
-      "sectionId": "s2",
+      "id": "s7-175",
+      "sectionId": "s7",
       "title": "使用Lambda表达式创建线程",
       "kind": "code",
       "lang": "cpp",
       "code": "int main() {\n  int data = 42;\n  std::thread t([data]() {\n      // Lambda 表达式作为线程函数\n      std::cout << \"Received value: \" << data << std::endl;\n  });\n  t.join();\n  return 0;\n}"
     },
     {
-      "id": "s2-184",
-      "sectionId": "s2",
+      "id": "s7-176",
+      "sectionId": "s7",
       "title": "**处理线程间的同步：**",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <mutex>\n\nstd::mutex mtx;\n\nvoid threadFunction() {\n  std::lock_guard<std::mutex> lock(mtx);\n  std::cout << \"Thread safe output.\" << std::endl;\n}\n\nint main() {\n  std::thread t1(threadFunction);\n  std::thread t2(threadFunction);\n  t1.join();\n  t2.join();\n  return 0;\n}"
     },
     {
-      "id": "s2-185",
-      "sectionId": "s2",
+      "id": "s7-177",
+      "sectionId": "s7",
       "title": "**使用`std::async`启动异步任务：**",
       "kind": "code",
       "lang": "cpp",
       "code": "#include <future>\n\nint taskFunction() {\n  // 异步任务\n  return 42;\n}\n\nint main() {\n  // 启动异步任务\n  std::future<int> fut = std::async(std::launch::async, taskFunction);\n  \n  // 获取异步任务的结果\n  int result = fut.get();\n  \n  std::cout << \"Result: \" << result << std::endl;\n  return 0;\n}"
     },
     {
-      "id": "s2-186",
-      "sectionId": "s2",
-      "title": "**使用`std::async`启动异步任务：**",
-      "kind": "text",
-      "body": "C++ 预处理器\n------------"
-    },
-    {
-      "id": "s2-187",
-      "sectionId": "s2",
+      "id": "s8-178",
+      "sectionId": "s8",
       "title": "预处理器",
       "kind": "text",
       "body": "• [if](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [elif](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [else](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [endif](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [ifdef](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [ifndef](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [define](https://zh.cppreference.com/w/cpp/preprocessor/replace)\n• [undef](https://zh.cppreference.com/w/cpp/preprocessor/replace)\n• [include](https://zh.cppreference.com/w/cpp/preprocessor/include)\n• [line](https://zh.cppreference.com/w/cpp/preprocessor/line)\n• [error](https://zh.cppreference.com/w/cpp/preprocessor/error)\n• [pragma](https://zh.cppreference.com/w/cpp/preprocessor/impl)\n• [defined](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [__has_include](https://zh.cppreference.com/w/cpp/feature_test)\n• [__has_cpp_attribute](https://zh.cppreference.com/w/cpp/feature_test)\n• [export](https://zh.cppreference.com/w/cpp/keyword/export)\n• [import](https://zh.cppreference.com/mwiki/index.php?title=cpp/keyword/import&amp;action=edit&amp;redlink=1)\n• [module](https://zh.cppreference.com/mwiki/index.php?title=cpp/keyword/module&amp;action=edit&amp;redlink=1)"
     },
     {
-      "id": "s2-188",
-      "sectionId": "s2",
+      "id": "s8-179",
+      "sectionId": "s8",
       "title": "Includes",
       "kind": "code",
       "lang": "cpp",
       "code": "#include \"iostream\"\n#include <iostream>"
     },
     {
-      "id": "s2-189",
-      "sectionId": "s2",
+      "id": "s8-180",
+      "sectionId": "s8",
       "title": "Defines",
       "kind": "code",
       "lang": "cpp",
       "code": "#define FOO\n#define FOO \"hello\"\n#undef FOO"
     },
     {
-      "id": "s2-190",
-      "sectionId": "s2",
+      "id": "s8-181",
+      "sectionId": "s8",
       "title": "If",
       "kind": "code",
       "lang": "cpp",
       "code": "#ifdef DEBUG\n  std::cout << \"hi\" << std::endl;\n#elif defined VERBOSE\n  ...\n#else\n  ...\n#endif"
     },
     {
-      "id": "s2-191",
-      "sectionId": "s2",
+      "id": "s8-182",
+      "sectionId": "s8",
       "title": "Error",
       "kind": "code",
       "lang": "cpp",
       "code": "#if VERSION == 2.0\n  #error Unsupported\n  #warning Not really supported\n#endif"
     },
     {
-      "id": "s2-192",
-      "sectionId": "s2",
+      "id": "s8-183",
+      "sectionId": "s8",
       "title": "宏",
       "kind": "code",
       "lang": "cpp",
       "code": "#define DEG(x) ((x) * 57.29)"
     },
     {
-      "id": "s2-193",
-      "sectionId": "s2",
+      "id": "s8-184",
+      "sectionId": "s8",
       "title": "令牌连接",
       "kind": "code",
       "lang": "cpp",
       "code": "#define DST(name) name##_s name##_t\nDST(object);   #=> object_s object_t;"
     },
     {
-      "id": "s2-194",
-      "sectionId": "s2",
+      "id": "s8-185",
+      "sectionId": "s8",
       "title": "字符串化",
       "kind": "code",
       "lang": "cpp",
       "code": "#define STR(name) #name\nchar * a = STR(object);   #=> char * a = \"object\";"
     },
     {
-      "id": "s2-195",
-      "sectionId": "s2",
+      "id": "s8-186",
+      "sectionId": "s8",
       "title": "文件和行",
       "kind": "code",
       "lang": "cpp",
       "code": "#define LOG(msg) console.log(__FILE__, __LINE__, msg)\n#=> console.log(\"file.txt\", 3, \"hey\")"
     },
     {
-      "id": "s2-196",
-      "sectionId": "s2",
-      "title": "文件和行",
-      "kind": "text",
-      "body": "各种各样的\n-------------"
-    },
-    {
-      "id": "s2-197",
-      "sectionId": "s2",
+      "id": "s9-187",
+      "sectionId": "s9",
       "title": "转义序列",
       "kind": "text",
       "body": "转义序列 | 说明\n:--|--\n`\\b`             | 退格键\n`\\f`             | 换页\n`\\n`             | 换行\n`\\r`             | 返回\n`\\t`             | 水平制表符\n`\\v`             | 垂直制表符\n`\\\\`             | 反斜杠\n`\\'`             | 单引号\n`\\\"`             | 双引号\n`\\?`             | 问号\n`\\0`             | 空字符"
     },
     {
-      "id": "s2-198",
-      "sectionId": "s2",
+      "id": "s9-188",
+      "sectionId": "s9",
       "title": "关键字",
       "kind": "text",
       "body": "• [alignas](https://zh.cppreference.com/w/cpp/keyword/alignas)\n• [alignof](https://zh.cppreference.com/w/cpp/keyword/alignof)\n• [and](https://zh.cppreference.com/w/cpp/keyword/and)\n• [and_eq](https://zh.cppreference.com/w/cpp/keyword/and_eq)\n• [asm](https://zh.cppreference.com/w/cpp/keyword/asm)\n• [atomic_cancel](https://zh.cppreference.com/w/cpp/keyword/atomic_cancel)\n• [atomic_commit](https://zh.cppreference.com/w/cpp/keyword/atomic_commit)\n• [atomic_noexcept](https://zh.cppreference.com/w/cpp/keyword/atomic_noexcept)\n• [auto](https://zh.cppreference.com/w/cpp/keyword/auto)\n• [bitand](https://zh.cppreference.com/w/cpp/keyword/bitand)\n• [bitor](https://zh.cppreference.com/w/cpp/keyword/bitor)\n• [bool](https://zh.cppreference.com/w/cpp/keyword/bool)\n• [break](https://zh.cppreference.com/w/cpp/keyword/break)\n• [case](https://zh.cppreference.com/w/cpp/keyword/case)\n• [catch](https://zh.cppreference.com/w/cpp/keyword/catch)\n• [char](https://zh.cppreference.com/w/cpp/keyword/char)\n• [char8_t](https://zh.cppreference.com/w/cpp/keyword/char8_t)\n• [char16_t](https://zh.cppreference.com/w/cpp/keyword/char16_t)\n• [char32_t](https://zh.cppreference.com/w/cpp/keyword/char32_t)\n• [class](https://zh.cppreference.com/w/cpp/keyword/class)\n• [compl](https://zh.cppreference.com/w/cpp/keyword/compl)\n• [concept](https://zh.cppreference.com/w/cpp/keyword/concept)\n• [const](https://zh.cppreference.com/w/cpp/keyword/const)\n• [consteval](https://zh.cppreference.com/w/cpp/keyword/consteval)\n• [constexpr](https://zh.cppreference.com/w/cpp/keyword/constexpr)\n• [constinit](https://zh.cppreference.com/w/cpp/keyword/constinit)\n• [const_cast](https://zh.cppreference.com/w/cpp/keyword/const_cast)\n• [continue](https://zh.cppreference.com/w/cpp/keyword/continue)\n• [co_await](https://zh.cppreference.com/w/cpp/keyword/co_await)\n• [co_return](https://zh.cppreference.com/w/cpp/keyword/co_return)\n• [co_yield](https://zh.cppreference.com/w/cpp/keyword/co_yield)\n• [decltype](https://zh.cppreference.com/w/cpp/keyword/decltype)\n• [default](https://zh.cppreference.com/w/cpp/keyword/default)\n• [delete](https://zh.cppreference.com/w/cpp/keyword/delete)\n• [do](https://zh.cppreference.com/w/cpp/keyword/do)\n• [double](https://zh.cppreference.com/w/cpp/keyword/double)\n• [dynamic_cast](https://zh.cppreference.com/w/cpp/keyword/dynamic_cast)\n• [else](https://zh.cppreference.com/w/cpp/keyword/else)\n• [enum](https://zh.cppreference.com/w/cpp/keyword/enum)\n• [explicit](https://zh.cppreference.com/w/cpp/keyword/explicit)\n• [export](https://zh.cppreference.com/w/cpp/keyword/export)\n• [extern](https://zh.cppreference.com/w/cpp/keyword/extern)\n• [false](https://zh.cppreference.com/w/cpp/keyword/false)\n• [float](https://zh.cppreference.com/w/cpp/keyword/float)\n• [for](https://zh.cppreference.com/w/cpp/keyword/for)\n• [friend](https://zh.cppreference.com/w/cpp/keyword/friend)\n• [goto](https://zh.cppreference.com/w/cpp/keyword/goto)\n• [if](https://zh.cppreference.com/w/cpp/keyword/if)\n• [inline](https://zh.cppreference.com/w/cpp/keyword/inline)\n• [int](https://zh.cppreference.com/w/cpp/keyword/int)\n• [long](https://zh.cppreference.com/w/cpp/keyword/long)\n• [mutable](https://zh.cppreference.com/w/cpp/keyword/mutable)\n• [namespace](https://zh.cppreference.com/w/cpp/keyword/namespace)\n• [new](https://zh.cppreference.com/w/cpp/keyword/new)\n• [noexcept](https://zh.cppreference.com/w/cpp/keyword/noexcept)\n• [not](https://zh.cppreference.com/w/cpp/keyword/not)\n• [not_eq](https://zh.cppreference.com/w/cpp/keyword/not_eq)\n• [nullptr](https://zh.cppreference.com/w/cpp/keyword/nullptr)\n• [operator](https://zh.cppreference.com/w/cpp/keyword/operator)\n• [or](https://zh.cppreference.com/w/cpp/keyword/or)\n• [or_eq](https://zh.cppreference.com/w/cpp/keyword/or_eq)\n• [private](https://zh.cppreference.com/w/cpp/keyword/private)\n• [protected](https://zh.cppreference.com/w/cpp/keyword/protected)\n• [public](https://zh.cppreference.com/w/cpp/keyword/public)\n• [reflexpr](https://zh.cppreference.com/w/cpp/keyword/reflexpr)\n• [register](https://zh.cppreference.com/w/cpp/keyword/register)\n• [reinterpret_cast](https://zh.cppreference.com/w/cpp/keyword/reinterpret_cast)\n• [requires](https://zh.cppreference.com/w/cpp/keyword/requires)\n• [return](https://zh.cppreference.com/w/cpp/language/return)\n• [short](https://zh.cppreference.com/w/cpp/keyword/short)\n• [signed](https://zh.cppreference.com/w/cpp/keyword/signed)\n• [sizeof](https://zh.cppreference.com/w/cpp/keyword/sizeof)\n• [static](https://zh.cppreference.com/w/cpp/keyword/static)\n• [static_assert](https://zh.cppreference.com/w/cpp/keyword/static_assert)\n• [static_cast](https://zh.cppreference.com/w/cpp/keyword/static_cast)\n• [struct](https://zh.cppreference.com/w/cpp/keyword/struct)\n• [switch](https://zh.cppreference.com/w/cpp/keyword/switch)\n• [synchronized](https://zh.cppreference.com/w/cpp/keyword/synchronized)\n• [template](https://zh.cppreference.com/w/cpp/keyword/template)\n• [this](https://zh.cppreference.com/w/cpp/keyword/this)\n• [thread_local](https://zh.cppreference.com/w/cpp/keyword/thread_local)\n• [throw](https://zh.cppreference.com/w/cpp/keyword/throw)\n• [true](https://zh.cppreference.com/w/cpp/keyword/true)\n• [try](https://zh.cppreference.com/w/cpp/keyword/try)\n• [typedef](https://zh.cppreference.com/w/cpp/keyword/typedef)\n• [typeid](https://zh.cppreference.com/w/cpp/keyword/typeid)\n• [typename](https://zh.cppreference.com/w/cpp/keyword/typename)\n• [union](https://zh.cppreference.com/w/cpp/keyword/union)\n• [unsigned](https://zh.cppreference.com/w/cpp/keyword/unsigned)\n• [using](https://zh.cppreference.com/w/cpp/keyword/using)\n• [virtual](https://zh.cppreference.com/w/cpp/keyword/virtual)\n• [void](https://zh.cppreference.com/w/cpp/keyword/void)\n• [volatile](https://zh.cppreference.com/w/cpp/keyword/volatile)\n• [wchar_t](https://zh.cppreference.com/w/cpp/keyword/wchar_t)\n• [while](https://zh.cppreference.com/w/cpp/keyword/while)\n• [xor](https://zh.cppreference.com/w/cpp/keyword/xor)\n• [xor_eq](https://zh.cppreference.com/w/cpp/keyword/xor_eq)\n• [final](https://zh.cppreference.com/w/cpp/language/final)\n• [override](https://zh.cppreference.com/w/cpp/language/override)\n• [transaction_safe](https://zh.cppreference.com/w/cpp/language/transactional_memory)\n• [transaction_safe_dynamic](https://zh.cppreference.com/w/cpp/language/transactional_memory)"
     },
     {
-      "id": "s2-199",
-      "sectionId": "s2",
+      "id": "s9-189",
+      "sectionId": "s9",
       "title": "预处理器",
       "kind": "text",
       "body": "• [if](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [elif](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [else](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [endif](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [ifdef](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [ifndef](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [define](https://zh.cppreference.com/w/cpp/preprocessor/replace)\n• [undef](https://zh.cppreference.com/w/cpp/preprocessor/replace)\n• [include](https://zh.cppreference.com/w/cpp/preprocessor/include)\n• [line](https://zh.cppreference.com/w/cpp/preprocessor/line)\n• [error](https://zh.cppreference.com/w/cpp/preprocessor/error)\n• [pragma](https://zh.cppreference.com/w/cpp/preprocessor/impl)\n• [defined](https://zh.cppreference.com/w/cpp/preprocessor/conditional)\n• [__has_include](https://zh.cppreference.com/w/cpp/feature_test)\n• [__has_cpp_attribute](https://zh.cppreference.com/w/cpp/feature_test)\n• [export](https://zh.cppreference.com/w/cpp/keyword/export)\n• [import](https://zh.cppreference.com/mwiki/index.php?title=cpp/keyword/import&amp;action=edit&amp;redlink=1)\n• [module](https://zh.cppreference.com/mwiki/index.php?title=cpp/keyword/module&amp;action=edit&amp;redlink=1)"
     },
     {
-      "id": "s2-200",
-      "sectionId": "s2",
-      "title": "预处理器",
-      "kind": "text",
-      "body": "另见\n----"
-    },
-    {
-      "id": "s2-201",
-      "sectionId": "s2",
-      "title": "预处理器",
+      "id": "s10-190",
+      "sectionId": "s10",
+      "title": "另见",
       "kind": "text",
       "body": "• [C++ Infographics & Cheat Sheets](https://hackingcpp.com/cpp/cheat_sheets.html) _(hackingcpp.com)_\n• [C++ reference](https://zh.cppreference.com/w/) _(cppreference.com)_\n• [C++ Language Tutorials](http://www.cplusplus.com/doc/tutorial/) _(cplusplus.com)_"
     }
@@ -1534,7 +1504,6 @@
     "path": "docs/cpp.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/cpp.md",
-    "generatedAt": "2025-12-16T07:36:11.156Z",
     "lang": "zh",
     "mode": "local"
   }

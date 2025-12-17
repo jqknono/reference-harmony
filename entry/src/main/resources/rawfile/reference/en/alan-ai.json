@@ -1,6 +1,8 @@
 {
   "id": "alan-ai",
+  "name": "Alan AI",
   "title": "Alan AI",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/alan-ai.svg",
   "sections": [
     {
       "id": "intro",
@@ -11,6 +13,11 @@
       "id": "s1",
       "title": "Dialog script",
       "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Client SDK",
+      "startIndex": 86
     }
   ],
   "cards": [
@@ -41,1031 +48,780 @@
       "title": "Intents & patterns",
       "kind": "code",
       "lang": "",
-      "code": "\nDefine a voice/text command to play a response or perform an action"
+      "code": "\nDefine a voice/text command to play a response or perform an action\n\n```{.wrap}\nintent('pattern'[, 'patternN'], p => { action })"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "Intents & patterns",
       "kind": "text",
-      "body": "intent('pattern'[, 'patternN'], p => { action })"
+      "body": "Define alternatives"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDefine alternatives"
+      "kind": "text",
+      "body": "```{.wrap}\nintent('phrase1|phrase2')"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "Intents & patterns",
-      "kind": "text",
-      "body": "intent('phrase1|phrase2')"
+      "kind": "code",
+      "lang": "",
+      "code": "\nDefine optional words and phrases\n\n```{.wrap}\nintent('pattern (optional phrase|)')"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDefine optional words and phrases"
+      "title": "Response functions",
+      "kind": "text",
+      "body": "Play a response (in case of multiple patterns, a response is picked at random)"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Response functions",
       "kind": "text",
-      "body": "intent('pattern (optional phrase|)')"
+      "body": "```{.wrap}\nreply('pattern'[, 'patternN'])"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Response functions",
       "kind": "code",
       "lang": "",
-      "code": "\n### Response functions\n\nPlay a response (in case of multiple patterns, a response is picked at random)"
+      "code": "\nPlay a response\n\n```{.wrap}\np.play('pattern')"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Response functions",
       "kind": "text",
-      "body": "reply('pattern'[, 'patternN'])"
+      "body": "Define voice settings for the assistant reply: `accent (en, fr, de, it, ru, es)`, `gender (male/female)`, `voice type`,\n`speaking pitch`, `speaking rate`"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nPlay a response"
+      "title": "Response functions",
+      "kind": "text",
+      "body": "```{.wrap}\np.play([voice(code, gender, type, pitch, rate), ]'pattern')"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "p.play('pattern')"
+      "title": "Response functions",
+      "kind": "code",
+      "lang": "",
+      "code": "\nDefine play options: `force:true` (execute if the button is inactive), `activate:true` (activate the button before),\n`deactivate:true` (deactivate the button after)\n\n```{.wrap}\np.play('pattern'[, opts(options)])"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDefine voice settings for the assistant reply: `accent (en, fr, de, it, ru, es)`, `gender (male/female)`, `voice type`,\n`speaking pitch`, `speaking rate`"
+      "title": "Response functions",
+      "kind": "text",
+      "body": "Send a command to the app"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Response functions",
       "kind": "text",
-      "body": "p.play([voice(code, gender, type, pitch, rate), ]'pattern')"
+      "body": "```{.wrap}\np.play({command:data})"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Response functions",
       "kind": "code",
       "lang": "",
-      "code": "\nDefine play options: `force:true` (execute if the button is inactive), `activate:true` (activate the button before),\n`deactivate:true` (deactivate the button after)"
+      "code": "\n### User-defined slots\n\nDefine a static list of values expected in the input\n\n```{.wrap}\n$(SLOTNAME value1|value2) => p.SLOTNAME.value"
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Response functions",
       "kind": "text",
-      "body": "p.play('pattern'[, opts(options)])"
+      "body": "Provide labels to classify or identify the slot values"
     },
     {
       "id": "s1-17",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSend a command to the app"
+      "title": "Response functions",
+      "kind": "text",
+      "body": "```{.wrap}\n$(SLOTNAME value1~label1|value2~label2) => p.SLOTNAME.label"
     },
     {
       "id": "s1-18",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "p.play({command:data})"
+      "title": "Response functions",
+      "kind": "code",
+      "lang": "",
+      "code": "\nEnable fuzzy matching to capture similar variants\n\n```{.wrap}\n$(SLOTNAME~ value1|value2) => p.SLOTNAME.value"
     },
     {
       "id": "s1-19",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### User-defined slots\n\nDefine a static list of values expected in the input"
+      "title": "Response functions",
+      "kind": "text",
+      "body": "Make a slot optional"
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Response functions",
       "kind": "text",
-      "body": "$(SLOTNAME value1|value2) => p.SLOTNAME.value"
+      "body": "```{.wrap}\n$(SLOTNAME value1|value2|)"
     },
     {
       "id": "s1-21",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Response functions",
       "kind": "code",
       "lang": "",
-      "code": "\nProvide labels to classify or identify the slot values"
+      "code": "\nCapture several slot values\n\n```{.wrap}\nintent('$(SLOTNAME value1|value2) and $(SLOTNAME value1|value2 )') => p.SLOTNAME_ (array), p.SLOTNAME_[0].value, p.SLOTNAME_[1].value"
     },
     {
       "id": "s1-22",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined slots",
       "kind": "text",
-      "body": "$(SLOTNAME value1~label1|value2~label2) => p.SLOTNAME.label"
+      "body": "Capture date values"
     },
     {
       "id": "s1-23",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nEnable fuzzy matching to capture similar variants"
+      "title": "Predefined slots",
+      "kind": "text",
+      "body": "```{.wrap}\n$(DATE) => p.DATE.value, p.DATE.moment, p.DATE.luxon"
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "$(SLOTNAME~ value1|value2) => p.SLOTNAME.value"
+      "title": "Predefined slots",
+      "kind": "code",
+      "lang": "",
+      "code": "\nCapture time values\n\n```{.wrap}\n$(TIME) => p.TIME.value, p.TIME.moment"
     },
     {
       "id": "s1-25",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nMake a slot optional"
+      "title": "Predefined slots",
+      "kind": "text",
+      "body": "Capture cardinal numbers"
     },
     {
       "id": "s1-26",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined slots",
       "kind": "text",
-      "body": "$(SLOTNAME value1|value2|)"
+      "body": "```{.wrap}\n$(NUMBER) => p.NUMBER.value, p.NUMBER.number"
     },
     {
       "id": "s1-27",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined slots",
       "kind": "code",
       "lang": "",
-      "code": "\nCapture several slot values"
+      "code": "\nCapture ordinal numbers\n\n```{.wrap}\n$(ORDINAL) => p.ORDINAL.value, p.ORDINAL.number"
     },
     {
       "id": "s1-28",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined slots",
       "kind": "text",
-      "body": "intent('$(SLOTNAME value1|value2) and $(SLOTNAME value1|value2 )') => p.SLOTNAME_ (array), p.SLOTNAME_[0].value, p.SLOTNAME_[1].value"
+      "body": "Capture locations"
     },
     {
       "id": "s1-29",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Predefined slots\n\nCapture date values"
+      "title": "Predefined slots",
+      "kind": "text",
+      "body": "```{.wrap}\n$(LOC) => p.LOC.value"
     },
     {
       "id": "s1-30",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "$(DATE) => p.DATE.value, p.DATE.moment, p.DATE.luxon"
+      "title": "Predefined slots",
+      "kind": "code",
+      "lang": "",
+      "code": "\nCapture names\n\n```{.wrap}\n$(NAME) => p.NAME.value"
     },
     {
       "id": "s1-31",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCapture time values"
+      "title": "Dynamic slots",
+      "kind": "text",
+      "body": "Define a dynamic slot at the project level"
     },
     {
       "id": "s1-32",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Dynamic slots",
       "kind": "text",
-      "body": "$(TIME) => p.TIME.value, p.TIME.moment"
+      "body": "```{.wrap}\nproject.name = {en: \"value1|value2|value3\"}\n$(SLOTNAME p:name) => p.SLOTNAME.value"
     },
     {
       "id": "s1-33",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Dynamic slots",
       "kind": "code",
       "lang": "",
-      "code": "\nCapture cardinal numbers"
+      "code": "\nDefine a dynamic slot at the dialog session level\n\n```{.wrap}\np.userData.name = {en: \"value1|value2|value3\"}\n$(SLOTNAME u:name) => p.SLOTNAME.value"
     },
     {
       "id": "s1-34",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Dynamic slots",
       "kind": "text",
-      "body": "$(NUMBER) => p.NUMBER.value, p.NUMBER.number"
+      "body": "Get data for a dynamic slot with the visual state"
     },
     {
       "id": "s1-35",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCapture ordinal numbers"
+      "title": "Dynamic slots",
+      "kind": "text",
+      "body": "```{.wrap}\nlet name = [\"value1|value2|value3\"]\np.visual.data = {en: name};\n$(SLOTNAME v:name) => p.SLOTNAME.value"
     },
     {
       "id": "s1-36",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "$(ORDINAL) => p.ORDINAL.value, p.ORDINAL.number"
+      "title": "Dynamic slots",
+      "kind": "code",
+      "lang": "",
+      "code": "\nDefine a dynamic slot in a short form\n\n```{.wrap}\nproject.name = {en: \"value1|value2|value3\"}\n$(p:name) => p.SLOTNAME.value"
     },
     {
       "id": "s1-37",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCapture locations"
+      "title": "Dynamic slots",
+      "kind": "text",
+      "body": "Define labels for dynamic slots: see [User-defined slots](#user-defined-slots)."
     },
     {
       "id": "s1-38",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Dynamic slots",
       "kind": "text",
-      "body": "$(LOC) => p.LOC.value"
+      "body": "Enable fuzzy matching for dynamic slots: see [User-defined slots](#user-defined-slots)."
     },
     {
       "id": "s1-39",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCapture names"
+      "title": "Dynamic slots",
+      "kind": "text",
+      "body": "Make a dynamic slot optional: see [User-defined slots](#user-defined-slots)."
     },
     {
       "id": "s1-40",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Dynamic slots",
       "kind": "text",
-      "body": "$(NAME) => p.NAME.value"
+      "body": "Capture several slot values: see [User-defined slots](#user-defined-slots)."
     },
     {
       "id": "s1-41",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Dynamic slots\n\nDefine a dynamic slot at the project level"
+      "title": "RegEx slots",
+      "kind": "text",
+      "body": "Capture digit and/or letter combination"
     },
     {
       "id": "s1-42",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "RegEx slots",
       "kind": "text",
-      "body": "project.name = {en: \"value1|value2|value3\"}\n$(SLOTNAME p:name) => p.SLOTNAME.value"
+      "body": "```{.wrap}\nconst reg = \"([A-Za-z]{1}\\\\s?){6}\"\n$(SLOTNAME* ${reg}) => p.SLOTNAME.value"
     },
     {
       "id": "s1-43",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "RegEx slots",
       "kind": "code",
       "lang": "",
-      "code": "\nDefine a dynamic slot at the dialog session level"
+      "code": "\nCapture any user’s input\n\n```{.wrap}\n$(SLOTNAME* .+) => p.SLOTNAME.value"
     },
     {
       "id": "s1-44",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Contexts",
       "kind": "text",
-      "body": "p.userData.name = {en: \"value1|value2|value3\"}\n$(SLOTNAME u:name) => p.SLOTNAME.value"
+      "body": "Define a context"
     },
     {
       "id": "s1-45",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nGet data for a dynamic slot with the visual state"
+      "title": "Contexts",
+      "kind": "text",
+      "body": "```{.wrap}\nlet contextName = context(() => { action })"
     },
     {
       "id": "s1-46",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "let name = [\"value1|value2|value3\"]\np.visual.data = {en: name};\n$(SLOTNAME v:name) => p.SLOTNAME.value"
+      "title": "Contexts",
+      "kind": "code",
+      "lang": "",
+      "code": "\nActivate a context\n\n```{.wrap}\nintent('pattern', p => {..., p.then(contextName)}"
     },
     {
       "id": "s1-47",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDefine a dynamic slot in a short form"
+      "title": "Contexts",
+      "kind": "text",
+      "body": "Pass data to the context"
     },
     {
       "id": "s1-48",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Contexts",
       "kind": "text",
-      "body": "project.name = {en: \"value1|value2|value3\"}\n$(p:name) => p.SLOTNAME.value"
+      "body": "```{.wrap}\np.then(contextName, state: {data:yourData}) => p.state.data"
     },
     {
       "id": "s1-49",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Contexts",
       "kind": "code",
       "lang": "",
-      "code": "\nDefine labels for dynamic slots: see [User-defined slots](#user-defined-slots).\n\nEnable fuzzy matching for dynamic slots: see [User-defined slots](#user-defined-slots).\n\nMake a dynamic slot optional: see [User-defined slots](#user-defined-slots).\n\nCapture several slot values: see [User-defined slots](#user-defined-slots).\n\n### RegEx slots\n\nCapture digit and/or letter combination"
+      "code": "\nResolve a context\n\n```{.wrap}\np.resolve([data:yourData])"
     },
     {
       "id": "s1-50",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Contexts",
       "kind": "text",
-      "body": "const reg = \"([A-Za-z]{1}\\\\s?){6}\"\n$(SLOTNAME* ${reg}) => p.SLOTNAME.value"
+      "body": "Reset a context"
     },
     {
       "id": "s1-51",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCapture any user’s input"
+      "title": "Contexts",
+      "kind": "text",
+      "body": "```{.wrap}\np.resetContext()"
     },
     {
       "id": "s1-52",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "$(SLOTNAME* .+) => p.SLOTNAME.value"
+      "title": "Contexts",
+      "kind": "code",
+      "lang": "",
+      "code": "\nDefine intents to be matched at any time without switching the current context\n\n```{.wrap}\nintent(noctx, 'pattern', ...) or noContext(() => {intent(...)})"
     },
     {
       "id": "s1-53",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Contexts\n\nDefine a context"
+      "title": "Contexts",
+      "kind": "text",
+      "body": "Play a prompt for an expected input"
     },
     {
       "id": "s1-54",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Contexts",
       "kind": "text",
-      "body": "let contextName = context(() => { action })"
+      "body": "```{.wrap}\nfallback('pattern1'[, 'patternN'])"
     },
     {
       "id": "s1-55",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Contexts",
       "kind": "code",
       "lang": "",
-      "code": "\nActivate a context"
+      "code": "\nTitle a context\n\n```{.wrap}\ntitle('contextName')"
     },
     {
       "id": "s1-56",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined objects",
       "kind": "text",
-      "body": "intent('pattern', p => {..., p.then(contextName)}"
+      "body": "Store static device- and user-specific data passed from the client app"
     },
     {
       "id": "s1-57",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nPass data to the context"
+      "title": "Predefined objects",
+      "kind": "text",
+      "body": "```{.wrap}\nauthData.data => p.authData.data"
     },
     {
       "id": "s1-58",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "p.then(contextName, state: {data:yourData}) => p.state.data"
+      "title": "Predefined objects",
+      "kind": "code",
+      "lang": "",
+      "code": "\nStore state data to be available globally at the project scope\n\n```{.wrap}\nproject.info = {data:yourData} => project.info.data"
     },
     {
       "id": "s1-59",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nResolve a context"
+      "title": "Predefined objects",
+      "kind": "text",
+      "body": "Store the intent match score"
     },
     {
       "id": "s1-60",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined objects",
       "kind": "text",
-      "body": "p.resolve([data:yourData])"
+      "body": "```{.wrap}\np.score"
     },
     {
       "id": "s1-61",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined objects",
       "kind": "code",
       "lang": "",
-      "code": "\nReset a context"
+      "code": "\nStore data to be passed between contexts\n\n```{.wrap}\np.state.data"
     },
     {
       "id": "s1-62",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined objects",
       "kind": "text",
-      "body": "p.resetContext()"
+      "body": "Store visual context data to be passed from the client app with `setVisualState()`"
     },
     {
       "id": "s1-63",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDefine intents to be matched at any time without switching the current context"
+      "title": "Predefined objects",
+      "kind": "text",
+      "body": "```{.wrap}\np.visual.data"
     },
     {
       "id": "s1-64",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "intent(noctx, 'pattern', ...) or noContext(() => {intent(...)})"
+      "title": "Predefined objects",
+      "kind": "code",
+      "lang": "",
+      "code": "\nStore user-specific state data to be accessible during the dialog session\n\n```{.wrap}\np.userData.data"
     },
     {
       "id": "s1-65",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nPlay a prompt for an expected input"
+      "title": "Predefined callbacks",
+      "kind": "text",
+      "body": "Define actions to be performed when the script is saved and dialog model is built"
     },
     {
       "id": "s1-66",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined callbacks",
       "kind": "text",
-      "body": "fallback('pattern1'[, 'patternN'])"
+      "body": "```{.wrap}\nonCreateProject(() => { action })"
     },
     {
       "id": "s1-67",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined callbacks",
       "kind": "code",
       "lang": "",
-      "code": "\nTitle a context"
+      "code": "\nDefine actions to be performed when the dialog session starts\n\n```{.wrap}\nonCreateUser((p) => { action })"
     },
     {
       "id": "s1-68",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined callbacks",
       "kind": "text",
-      "body": "title('contextName')"
+      "body": "Define actions to be performed when the dialog session ends"
     },
     {
       "id": "s1-69",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Predefined objects\n\nStore static device- and user-specific data passed from the client app"
+      "title": "Predefined callbacks",
+      "kind": "text",
+      "body": "```{.wrap}\nonCleanupUser((p) => { action })"
     },
     {
       "id": "s1-70",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "authData.data => p.authData.data"
+      "title": "Predefined callbacks",
+      "kind": "code",
+      "lang": "",
+      "code": "\nDefine actions to be performed when the visual state is set\n\n```{.wrap}\nonVisualState((p, s) => { action })"
     },
     {
       "id": "s1-71",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nStore state data to be available globally at the project scope"
+      "title": "Predefined callbacks",
+      "kind": "text",
+      "body": "Define actions to be performed when a user event is triggered in the client app: `buttonReady`, `buttonClicked`,\n`micPermissionPrompt`, `micAllowed`, `firstActivate`, `showPopup`, `popupCloseClicked`, `recognized`"
     },
     {
       "id": "s1-72",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined callbacks",
       "kind": "text",
-      "body": "project.info = {data:yourData} => project.info.data"
+      "body": "```{.wrap}\nonUserEvent((p, e) => { action })"
     },
     {
       "id": "s1-73",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Predefined callbacks",
       "kind": "code",
       "lang": "",
-      "code": "\nStore the intent match score"
+      "code": "\nDefine actions to be performed when a context is activated\n\n```{.wrap}\nonEnter((p) => { action })"
     },
     {
       "id": "s1-74",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Q&A service",
       "kind": "text",
-      "body": "p.score"
+      "body": "Define a URL of a resource to be indexed"
     },
     {
       "id": "s1-75",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nStore data to be passed between contexts"
+      "title": "Q&A service",
+      "kind": "text",
+      "body": "```{.wrap}\ncorpus({url: url, depth: depthLevel})"
     },
     {
       "id": "s1-76",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "p.state.data"
+      "title": "Q&A service",
+      "kind": "code",
+      "lang": "",
+      "code": "\nDefine text corpus to be used by the assistant in the dialog\n\n```{.wrap}\ncorpus('text')"
     },
     {
       "id": "s1-77",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nStore visual context data to be passed from the client app with `setVisualState()`"
+      "title": "Built-in JS libraries",
+      "kind": "text",
+      "body": "Make API calls"
     },
     {
       "id": "s1-78",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Built-in JS libraries",
       "kind": "text",
-      "body": "p.visual.data"
+      "body": "```{.wrap}\naxios, request"
     },
     {
       "id": "s1-79",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Built-in JS libraries",
       "kind": "code",
       "lang": "",
-      "code": "\nStore user-specific state data to be accessible during the dialog session"
+      "code": "\nWork with time\n\n```{.wrap}\nmoment-timezone, luxon"
     },
     {
       "id": "s1-80",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Built-in JS libraries",
       "kind": "text",
-      "body": "p.userData.data"
+      "body": "Work with arrays, numbers, objects, strings and so on"
     },
     {
       "id": "s1-81",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Predefined callbacks\n\nDefine actions to be performed when the script is saved and dialog model is built"
+      "title": "Built-in JS libraries",
+      "kind": "text",
+      "body": "```{.wrap}\nlodash"
     },
     {
       "id": "s1-82",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "onCreateProject(() => { action })"
+      "title": "Built-in JS libraries",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Other\n\nProvide a list of hints to help recognize specific terms\n\n```{.wrap}\nrecognitionHints('hint'[, 'hintN'])"
     },
     {
       "id": "s1-83",
       "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDefine actions to be performed when the dialog session starts"
+      "title": "Built-in JS libraries",
+      "kind": "text",
+      "body": "Write info messages to Alan Studio logs"
     },
     {
       "id": "s1-84",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Built-in JS libraries",
       "kind": "text",
-      "body": "onCreateUser((p) => { action })"
+      "body": "```{.wrap}\nconsole.log(data)"
     },
     {
       "id": "s1-85",
       "sectionId": "s1",
-      "title": "Intents & patterns",
+      "title": "Built-in JS libraries",
       "kind": "code",
       "lang": "",
-      "code": "\nDefine actions to be performed when the dialog session ends"
+      "code": "\nWrite error messages to Alan Studio logs\n\n```{.wrap}\nconsole.error(data)"
     },
     {
-      "id": "s1-86",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-86",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "text",
-      "body": "onCleanupUser((p) => { action })"
+      "body": "Send information about the visual state from the client app to the dialog script"
     },
     {
-      "id": "s1-87",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-87",
+      "sectionId": "s2",
+      "title": "Client API methods",
+      "kind": "text",
+      "body": "```{.wrap}\nsetVisualState(visualStateData:object)"
+    },
+    {
+      "id": "s2-88",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "code",
       "lang": "",
-      "code": "\nDefine actions to be performed when the visual state is set"
+      "code": "\nSend data or perform actions without a voice/text command\n\n```{.wrap}\nprojectAPI.method = function(p, param, callback) {\n  p.userData.data = param.data;\n  callback();\n};\n\ncallProjectApi(method:string, data:object, callback:function)"
     },
     {
-      "id": "s1-88",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-89",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "text",
-      "body": "onVisualState((p, s) => { action })"
+      "body": "Play a text message in the client app"
     },
     {
-      "id": "s1-89",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-90",
+      "sectionId": "s2",
+      "title": "Client API methods",
+      "kind": "text",
+      "body": "```{.wrap}\nplayText(text:string)"
+    },
+    {
+      "id": "s2-91",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "code",
       "lang": "",
-      "code": "\nDefine actions to be performed when a user event is triggered in the client app: `buttonReady`, `buttonClicked`,\n`micPermissionPrompt`, `micAllowed`, `firstActivate`, `showPopup`, `popupCloseClicked`, `recognized`"
+      "code": "\nSend a text message to Alan as the user’s input\n\n```{.wrap}\nsendText(text:string)"
     },
     {
-      "id": "s1-90",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-92",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "text",
-      "body": "onUserEvent((p, e) => { action })"
+      "body": "Execute a command in the client app"
     },
     {
-      "id": "s1-91",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-93",
+      "sectionId": "s2",
+      "title": "Client API methods",
+      "kind": "text",
+      "body": "```{.wrap}\nplayCommand(command:object)"
+    },
+    {
+      "id": "s2-94",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "code",
       "lang": "",
-      "code": "\nDefine actions to be performed when a context is activated"
+      "code": "\n### Client API methods (continued)\n\nActivate the Alan button programmatically\n\n```{.wrap}\nactivate()"
     },
     {
-      "id": "s1-92",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-95",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "text",
-      "body": "onEnter((p) => { action })"
+      "body": "Deactivate the Alan button programmatically"
     },
     {
-      "id": "s1-93",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-96",
+      "sectionId": "s2",
+      "title": "Client API methods",
+      "kind": "text",
+      "body": "```{.wrap}\ndeactivate()"
+    },
+    {
+      "id": "s2-97",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "code",
       "lang": "",
-      "code": "\n### Q&A service\n\nDefine a URL of a resource to be indexed"
+      "code": "\nCheck the Alan button state\n\n```{.wrap}\nisActive()"
     },
     {
-      "id": "s1-94",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-98",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "text",
-      "body": "corpus({url: url, depth: depthLevel})"
+      "body": "Remove the Alan button from the parent element, page (supported on Web, Ionic)"
     },
     {
-      "id": "s1-95",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-99",
+      "sectionId": "s2",
+      "title": "Client API methods",
+      "kind": "text",
+      "body": "```{.wrap}\nremove()"
+    },
+    {
+      "id": "s2-100",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "code",
       "lang": "",
-      "code": "\nDefine text corpus to be used by the assistant in the dialog"
+      "code": "\nCheck the state of the wake word (supported on iOS, Android)\n\n```{.wrap}\ngetWakewordEnabled()"
     },
     {
-      "id": "s1-96",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-101",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "text",
-      "body": "corpus('text')"
+      "body": "Set the state of the wake word (supported on iOS, Android)"
     },
     {
-      "id": "s1-97",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-102",
+      "sectionId": "s2",
+      "title": "Client API methods",
+      "kind": "text",
+      "body": "```{.wrap}\nsetWakewordEnabled(enabled:boolean)"
+    },
+    {
+      "id": "s2-103",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "code",
       "lang": "",
-      "code": "\n### Built-in JS libraries\n\nMake API calls"
+      "code": "\n### Handlers\n\n// Examples are provided for the Web platform\n\nHandle commands sent from the dialog script to the client app\n\n```{.wrap}\nonCommand: function (commandData) { action }"
     },
     {
-      "id": "s1-98",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-104",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "text",
-      "body": "axios, request"
+      "body": "Handle Alan button state changes"
     },
     {
-      "id": "s1-99",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-105",
+      "sectionId": "s2",
+      "title": "Client API methods",
+      "kind": "text",
+      "body": "```{.wrap}\nonButtonState: function (e) { action }"
+    },
+    {
+      "id": "s2-106",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "code",
       "lang": "",
-      "code": "\nWork with time"
+      "code": "\nHandle connection status to the virtual assistant project in the Alan Cloud\n\n```{.wrap}\nonConnectionStatus: function (e) { action }"
     },
     {
-      "id": "s1-100",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-107",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "text",
-      "body": "moment-timezone, luxon"
+      "body": "Handle events received from Alan"
     },
     {
-      "id": "s1-101",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nWork with arrays, numbers, objects, strings and so on"
-    },
-    {
-      "id": "s1-102",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-108",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "text",
-      "body": "lodash"
+      "body": "```{.wrap}\nonEvent: function (e) { action }"
     },
     {
-      "id": "s1-103",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Other\n\nProvide a list of hints to help recognize specific terms"
-    },
-    {
-      "id": "s1-104",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "recognitionHints('hint'[, 'hintN'])"
-    },
-    {
-      "id": "s1-105",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nWrite info messages to Alan Studio logs"
-    },
-    {
-      "id": "s1-106",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "console.log(data)"
-    },
-    {
-      "id": "s1-107",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nWrite error messages to Alan Studio logs"
-    },
-    {
-      "id": "s1-108",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "console.error(data)"
-    },
-    {
-      "id": "s1-109",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n## Client SDK\n\n### Client API methods\n\nSend information about the visual state from the client app to the dialog script"
-    },
-    {
-      "id": "s1-110",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "setVisualState(visualStateData:object)"
-    },
-    {
-      "id": "s1-111",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSend data or perform actions without a voice/text command"
-    },
-    {
-      "id": "s1-112",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "projectAPI.method = function(p, param, callback) {\np.userData.data = param.data;\ncallback();\n};"
-    },
-    {
-      "id": "s1-113",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "callProjectApi(method:string, data:object, callback:function)"
-    },
-    {
-      "id": "s1-114",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nPlay a text message in the client app"
-    },
-    {
-      "id": "s1-115",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "playText(text:string)"
-    },
-    {
-      "id": "s1-116",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSend a text message to Alan as the user’s input"
-    },
-    {
-      "id": "s1-117",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "sendText(text:string)"
-    },
-    {
-      "id": "s1-118",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nExecute a command in the client app"
-    },
-    {
-      "id": "s1-119",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "playCommand(command:object)"
-    },
-    {
-      "id": "s1-120",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Client API methods (continued)\n\nActivate the Alan button programmatically"
-    },
-    {
-      "id": "s1-121",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "activate()"
-    },
-    {
-      "id": "s1-122",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDeactivate the Alan button programmatically"
-    },
-    {
-      "id": "s1-123",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "deactivate()"
-    },
-    {
-      "id": "s1-124",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCheck the Alan button state"
-    },
-    {
-      "id": "s1-125",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "isActive()"
-    },
-    {
-      "id": "s1-126",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nRemove the Alan button from the parent element, page (supported on Web, Ionic)"
-    },
-    {
-      "id": "s1-127",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "remove()"
-    },
-    {
-      "id": "s1-128",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCheck the state of the wake word (supported on iOS, Android)"
-    },
-    {
-      "id": "s1-129",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "getWakewordEnabled()"
-    },
-    {
-      "id": "s1-130",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSet the state of the wake word (supported on iOS, Android)"
-    },
-    {
-      "id": "s1-131",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "setWakewordEnabled(enabled:boolean)"
-    },
-    {
-      "id": "s1-132",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Handlers\n\n// Examples are provided for the Web platform\n\nHandle commands sent from the dialog script to the client app"
-    },
-    {
-      "id": "s1-133",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "onCommand: function (commandData) { action }"
-    },
-    {
-      "id": "s1-134",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nHandle Alan button state changes"
-    },
-    {
-      "id": "s1-135",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "onButtonState: function (e) { action }"
-    },
-    {
-      "id": "s1-136",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nHandle connection status to the virtual assistant project in the Alan Cloud"
-    },
-    {
-      "id": "s1-137",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "onConnectionStatus: function (e) { action }"
-    },
-    {
-      "id": "s1-138",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "code",
-      "lang": "",
-      "code": "\nHandle events received from Alan"
-    },
-    {
-      "id": "s1-139",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
-      "kind": "text",
-      "body": "onEvent: function (e) { action }"
-    },
-    {
-      "id": "s1-140",
-      "sectionId": "s1",
-      "title": "Intents & patterns",
+      "id": "s2-109",
+      "sectionId": "s2",
+      "title": "Client API methods",
       "kind": "code",
       "lang": "",
       "code": "\n## Also see\n\n- [Alan AI website](https://alan.app)\n- [About the Alan Platform](https://alan.app/platform)\n- [Alan AI documentation](https://alan.app/docs)"
@@ -1076,7 +832,6 @@
     "path": "source/_posts/alan-ai.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/alan-ai.md",
-    "generatedAt": "2025-12-16T07:36:11.542Z",
     "lang": "en",
     "mode": "local"
   }

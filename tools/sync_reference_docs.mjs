@@ -25,8 +25,8 @@ const SOURCES = {
 };
 
 function parseArgs(argv) {
-  /** @type {{ zhRef: string; enRef: string; langs: string[]; mode: 'auto'|'local'|'github'; limit?: number }} */
-  const out = { zhRef: 'main', enRef: 'main', langs: ['zh', 'en'], mode: 'auto', limit: undefined };
+  /** @type {{ zhRef: string; enRef: string; langs: string[]; mode: 'auto'|'local'|'github'; limit?: number; concurrency?: number; filter?: string }} */
+  const out = { zhRef: 'main', enRef: 'main', langs: ['zh', 'en'], mode: 'auto', limit: undefined, concurrency: 8, filter: undefined };
   for (const arg of argv) {
     if (arg.startsWith('--ref=')) out.zhRef = arg.slice('--ref='.length); // backwards-compatible
     if (arg.startsWith('--zh-ref=')) out.zhRef = arg.slice('--zh-ref='.length);
@@ -34,6 +34,8 @@ function parseArgs(argv) {
     if (arg.startsWith('--langs=')) out.langs = arg.slice('--langs='.length).split(',').map((s) => s.trim()).filter(Boolean);
     if (arg.startsWith('--mode=')) out.mode = /** @type {any} */ (arg.slice('--mode='.length));
     if (arg.startsWith('--limit=')) out.limit = Number(arg.slice('--limit='.length));
+    if (arg.startsWith('--concurrency=')) out.concurrency = Number(arg.slice('--concurrency='.length));
+    if (arg.startsWith('--filter=')) out.filter = arg.slice('--filter='.length).trim();
   }
   return out;
 }
@@ -47,7 +49,17 @@ function isTableSeparatorLine(line) {
   // | --- | :---: | ---: |
   const trimmed = line.trim();
   if (!trimmed.includes('|')) return false;
-  return /^(\|?\s*:?-{3,}:?\s*)+\|?$/.test(trimmed.replace(/\s+/g, ''));
+
+  // Fast-path reject: real separator rows contain only pipes, colons, dashes and whitespace.
+  if (/[^|\s:-]/.test(trimmed)) return false;
+
+  const cells = splitTableRow(trimmed);
+  if (cells.length === 0) return false;
+  for (const cell of cells) {
+    const c = cell.replace(/\s+/g, '');
+    if (!/^:?-{3,}:?$/.test(c)) return false;
+  }
+  return true;
 }
 
 function splitTableRow(line) {
@@ -65,6 +77,38 @@ function stripListMarker(line) {
   return line.replace(/^\s*([-*+]|(\d+\.))\s+/, '').trim();
 }
 
+function escapeRegExp(s) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function parseFenceOpen(line) {
+  // Support ```lang, ~~~lang, and indented fences.
+  const m = /^\s*(`{3,}|~{3,})([A-Za-z0-9_+.-]+)?\s*$/.exec(line);
+  if (!m) return undefined;
+  return { marker: m[1], lang: (m[2] ?? '').trim() };
+}
+
+function isFenceClose(line, marker) {
+  return line.trim() === marker;
+}
+
+function isSetextUnderline(line, ch) {
+  const t = line.trim();
+  if (!t) return false;
+  if (ch) return new RegExp(`^${escapeRegExp(ch)}{3,}$`).test(t);
+  return /^={3,}$/.test(t) || /^-{3,}$/.test(t);
+}
+
+function getSetextHeading(lines, i) {
+  if (i + 1 >= lines.length) return undefined;
+  const text = (lines[i] ?? '').trim();
+  if (!text) return undefined;
+  const underline = (lines[i + 1] ?? '').trim();
+  if (isSetextUnderline(underline, '=')) return { level: 1, text };
+  if (isSetextUnderline(underline, '-')) return { level: 2, text };
+  return undefined;
+}
+
 function extractFrontmatter(markdown) {
   const normalized = markdown.replace(/\r\n/g, '\n');
   if (!normalized.startsWith('---\n')) return { frontmatter: {}, body: normalized };
@@ -73,7 +117,7 @@ function extractFrontmatter(markdown) {
   const block = normalized.slice(4, end);
   const body = normalized.slice(end + '\n---\n'.length);
 
-  /** @type {{ title?: string; intro?: string }} */
+  /** @type {{ title?: string; intro?: string; icon?: string; background?: string }} */
   const frontmatter = {};
   const lines = block.split('\n');
   for (let i = 0; i < lines.length; i++) {
@@ -104,6 +148,14 @@ function extractFrontmatter(markdown) {
         frontmatter.intro = rawValue.replace(/^['"]|['"]$/g, '').trim();
       }
     }
+
+    if (key === 'icon') {
+      frontmatter.icon = rawValue.replace(/^['"]|['"]$/g, '').trim();
+    }
+
+    if (key === 'background') {
+      frontmatter.background = rawValue.replace(/^['"]|['"]$/g, '').trim();
+    }
   }
 
   return { frontmatter, body };
@@ -115,11 +167,94 @@ function safeIdFromPath(relativePath) {
   return normalized.replace(/_+/g, '_').replace(/^_+|_+$/g, '') || 'doc';
 }
 
-function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, ref }) {
+function extractDocNameAndTitle(frontmatter, body, { id, lang }) {
+  const lines = body.replace(/\r\n/g, '\n').split('\n');
+
+  const frontName = (frontmatter.title ?? '').trim();
+  const frontIntro = (frontmatter.intro ?? '').trim();
+  if (frontName) {
+    return { name: frontName, title: frontIntro || frontName };
+  }
+
+  let name = id;
+  let title = '';
+  let h1Index = -1;
+  let h1IsSetext = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line) continue;
+    if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
+    if (/^\s*<!--/.test(line)) continue;
+    const fence = parseFenceOpen(line);
+    if (fence) {
+      i++;
+      while (i < lines.length && !isFenceClose(lines[i], fence.marker)) i++;
+      continue;
+    }
+
+    const setext = getSetextHeading(lines, i);
+    if (setext?.level === 1) {
+      name = cleanHeadingText(setext.text);
+      h1Index = i;
+      h1IsSetext = true;
+      break;
+    }
+
+    const atx1 = /^#\s+(.+)$/.exec(line);
+    if (atx1) {
+      name = cleanHeadingText(atx1[1].trim());
+      h1Index = i;
+      break;
+    }
+  }
+
+  const start = h1Index === -1 ? 0 : (h1IsSetext ? h1Index + 2 : h1Index + 1);
+  for (let i = start; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line) continue;
+    if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
+    if (/^\s*<!--/.test(line)) continue;
+
+    const fence = parseFenceOpen(line);
+    if (fence) {
+      i++;
+      while (i < lines.length && !isFenceClose(lines[i], fence.marker)) i++;
+      continue;
+    }
+
+    const setext = getSetextHeading(lines, i);
+    if (setext?.level === 2) break;
+    if (/^##\s+/.test(line)) break;
+
+    if (/^#{1,6}\s+/.test(line)) continue;
+    if (isSetextUnderline(line)) continue;
+    const t = line.trim();
+    if (t) {
+      title = t;
+      break;
+    }
+  }
+
+  return { name, title: title || name };
+}
+
+function resolveIconUrl({ lang, id, ref }) {
+  if (!id) return undefined;
+  if (lang === 'zh') {
+    return `https://raw.githubusercontent.com/${SOURCES.zh.repo}/${ref}/assets/${id}.svg`;
+  }
+  return `https://raw.githubusercontent.com/${SOURCES.en.repo}/${ref}/source/assets/icon/${id}.svg`;
+}
+
+function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, ref, debug }) {
   const { frontmatter, body } = extractFrontmatter(markdown);
   const lines = body.replace(/\r\n/g, '\n').split('\n');
 
-  let title = frontmatter.title?.trim() || id;
+  const meta = extractDocNameAndTitle(frontmatter, body, { id, lang });
+  const icon = resolveIconUrl({ lang, id, ref });
+  const title = meta.title;
+  const name = meta.name;
   const introTitle = lang === 'en' ? 'Intro' : '简介';
 
   /** @type {{ id: string; title: string; startIndex: number }[]} */
@@ -130,6 +265,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
   let currentSectionId = 'intro';
   let currentSectionTitle = introTitle;
   let lastH3 = '';
+  let consumedDocHeading = false;
 
   const pushCard = (card) => {
     cards.push(card);
@@ -146,14 +282,47 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     });
   }
 
+  const maxIterations = lines.length * 50 + 1000;
+  let iter = 0;
+  if (debug) console.log(`parse: ${lang}/${id} lines=${lines.length}`);
+
   for (let i = 0; i < lines.length; i++) {
+    iter++;
+    if (iter > maxIterations) {
+      throw new Error(`解析超时：${lang}/${id} (iter=${iter} lines=${lines.length})`);
+    }
     const line = lines[i];
+    if (debug && i % 20 === 0) console.log(`... at ${lang}/${id} i=${i} ${line.trim().slice(0, 60)}`);
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue; // e.g. "{.shortcuts}"
     if (/^\s*<!--/.test(line)) continue;
 
+    const setext = getSetextHeading(lines, i);
+    if (setext) {
+      if (setext.level === 1) {
+        consumedDocHeading = true;
+        lastH3 = '';
+      } else {
+        currentSectionTitle = cleanHeadingText(setext.text);
+        currentSectionId = `s${sections.length}`;
+        sections.push({ id: currentSectionId, title: currentSectionTitle, startIndex: cards.length });
+        lastH3 = '';
+      }
+      i++; // skip underline
+      continue;
+    }
+
     const h1 = /^#\s+(.+)$/.exec(line);
     if (h1) {
-      title = cleanHeadingText(h1[1].trim());
+      const hText = cleanHeadingText(h1[1].trim());
+      if (!consumedDocHeading) {
+        consumedDocHeading = true;
+        lastH3 = '';
+        continue;
+      }
+      // Some docs contain extra "# ..." headings for in-page anchors; treat them as section titles.
+      currentSectionTitle = hText;
+      currentSectionId = `s${sections.length}`;
+      sections.push({ id: currentSectionId, title: currentSectionTitle, startIndex: cards.length });
       lastH3 = '';
       continue;
     }
@@ -173,14 +342,17 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       continue;
     }
 
-    const fence = /^```(\w+)?\s*$/.exec(line);
+    const fence = parseFenceOpen(line);
     if (fence) {
-      const codeLang = (fence[1] ?? '').trim();
+      const codeLang = fence.lang;
       const buf = [];
       i++;
-      while (i < lines.length && !/^```/.test(lines[i])) {
+      let fenceLines = 0;
+      while (i < lines.length && !isFenceClose(lines[i], fence.marker)) {
         buf.push(lines[i]);
         i++;
+        fenceLines++;
+        if (debug && fenceLines % 5000 === 0) console.log(`... fence ${lang}/${id} lines=${fenceLines}`);
       }
       const code = buf.join('\n').trimEnd();
       if (code) {
@@ -199,6 +371,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     // table
     if (line.includes('|') && i + 1 < lines.length && isTableSeparatorLine(lines[i + 1])) {
       i += 2;
+      let rows = 0;
       while (i < lines.length && lines[i].trim() && lines[i].includes('|')) {
         const cols = splitTableRow(lines[i]);
         if (cols.length >= 2) {
@@ -216,7 +389,10 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
           }
         }
         i++;
+        rows++;
+        if (debug && rows % 5000 === 0) console.log(`... table ${lang}/${id} rows=${rows}`);
       }
+      if (debug) console.log(`table: ${lang}/${id} rows=${rows}`);
       i--;
       continue;
     }
@@ -224,9 +400,12 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     // list
     if (isListItem(line)) {
       const items = [];
+      let listItems = 0;
       while (i < lines.length && isListItem(lines[i])) {
         items.push(`• ${stripListMarker(lines[i])}`);
         i++;
+        listItems++;
+        if (debug && listItems % 5000 === 0) console.log(`... list ${lang}/${id} items=${listItems}`);
       }
       i--;
       const text = items.join('\n').trim();
@@ -246,9 +425,16 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     if (line.trim()) {
       const buf = [line.trim()];
       i++;
-      while (i < lines.length && lines[i].trim() && !/^#{1,6}\s+/.test(lines[i]) && !isListItem(lines[i]) && !/^```/.test(lines[i])) {
+      let paraLines = 1;
+      while (i < lines.length && lines[i].trim()) {
+        if (getSetextHeading(lines, i)) break;
+        if (/^#{1,6}\s+/.test(lines[i])) break;
+        if (isListItem(lines[i])) break;
+        if (parseFenceOpen(lines[i])) break;
         if (!/^\s*\{[.#][^}]+\}\s*$/.test(lines[i])) buf.push(lines[i].trim());
         i++;
+        paraLines++;
+        if (debug && paraLines % 5000 === 0) console.log(`... paragraph ${lang}/${id} lines=${paraLines}`);
       }
       i--;
       const text = buf.join('\n').trim();
@@ -266,7 +452,9 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
 
   return {
     id,
+    name,
     title,
+    icon,
     sections,
     cards,
     source: {
@@ -274,7 +462,6 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       path: sourcePath,
       ref,
       url: `https://github.com/${source.repo}/tree/${ref}/${sourcePath}`,
-      generatedAt: new Date().toISOString(),
       lang,
       mode,
     },
@@ -289,7 +476,10 @@ async function githubJson(url) {
     },
   });
   if (!res.ok) {
-    const text = await res.text().catch(() => '');
+    const text = await res.text().then(
+      (t) => t,
+      () => '',
+    );
     throw new Error(`GitHub API 失败:${res.status} ${res.statusText} ${text}`);
   }
   return res.json();
@@ -304,12 +494,10 @@ async function githubText(url) {
 }
 
 async function pathExists(p) {
-  try {
-    await fs.access(p);
-    return true;
-  } catch (_) {
-    return false;
-  }
+  return fs.access(p).then(
+    () => true,
+    () => false,
+  );
 }
 
 async function listLocalMarkdownFiles(absDocsDir) {
@@ -357,8 +545,30 @@ async function listMarkdownFiles({ repo, docsDir, ref }) {
   return out;
 }
 
+async function mapWithConcurrency(items, concurrency, fn) {
+  const limit = Number.isFinite(concurrency) && concurrency > 0 ? Math.floor(concurrency) : 8;
+  const workers = Math.max(1, Math.min(limit, items.length));
+  const results = new Array(items.length);
+  let nextIndex = 0;
+
+  await Promise.all(
+    new Array(workers).fill(0).map(() =>
+      Promise.resolve().then(async () => {
+        while (true) {
+          const idx = nextIndex;
+          nextIndex++;
+          if (idx >= items.length) return;
+          results[idx] = await fn(items[idx], idx);
+        }
+      }),
+    ),
+  );
+
+  return results;
+}
+
 async function main() {
-  const { zhRef, enRef, langs, mode, limit } = parseArgs(process.argv.slice(2));
+  const { zhRef, enRef, langs, mode, limit, concurrency, filter } = parseArgs(process.argv.slice(2));
   const outDir = path.join(process.cwd(), 'entry', 'src', 'main', 'resources', 'rawfile', 'reference');
   await fs.mkdir(outDir, { recursive: true });
 
@@ -369,10 +579,11 @@ async function main() {
     if (lang !== 'zh' && lang !== 'en') continue;
     const source = SOURCES[lang];
     const ref = lang === 'en' ? enRef : zhRef;
+    console.log(`Syncing: ${lang} (ref=${ref} mode=${mode} concurrency=${concurrency ?? 8})`);
     const langOutDir = path.join(outDir, lang);
     await fs.mkdir(langOutDir, { recursive: true });
 
-    /** @type {{ id: string; title: string; file: string; sectionCount: number; cardCount: number }[]} */
+    /** @type {{ id: string; name: string; title: string; icon?: string; file: string; sectionCount: number; cardCount: number }[]} */
     const manifestDocs = [];
 
     const docsDirPrefix = `${source.docsDir.replace(/\\/g, '/')}/`;
@@ -385,52 +596,71 @@ async function main() {
 
     if (modeUsed === 'local') {
       const docs = await listLocalMarkdownFiles(absLocalDocsDir);
-      const selected = typeof limit === 'number' ? docs.slice(0, limit) : docs;
-      for (const doc of selected) {
+      const filtered = filter ? docs.filter((d) => d.relPath.replace(/\\/g, '/').includes(filter)) : docs;
+      const selected = typeof limit === 'number' ? filtered.slice(0, limit) : filtered;
+      let done = 0;
+      const summaries = await mapWithConcurrency(selected, concurrency ?? 8, async (doc) => {
         const rel = doc.relPath.replace(/\\/g, '/');
         const id = safeIdFromPath(rel);
+        if (filter) console.log(`Processing: ${lang} ${id} (${rel})`);
         const md = await fs.readFile(doc.absPath, 'utf8');
         const sourcePath = `${source.docsDir.replace(/\\/g, '/')}/${rel}`;
-        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath, ref });
+        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath, ref, debug: Boolean(filter) });
+        if (filter) console.log(`Parsed: ${lang} ${id} sections=${parsed.sections.length} cards=${parsed.cards.length}`);
         const file = `reference/${lang}/${id}.json`;
 
         await fs.writeFile(path.join(langOutDir, `${id}.json`), JSON.stringify(parsed, null, 2), 'utf8');
-        manifestDocs.push({
+        if (filter) console.log(`Wrote: ${lang} ${id}`);
+        done++;
+        if (done % 50 === 0) console.log(`... ${lang} ${done}/${selected.length}`);
+        return {
           id,
+          name: parsed.name ?? parsed.title ?? id,
           title: parsed.title,
+          icon: parsed.icon,
           file,
           sectionCount: parsed.sections.length,
           cardCount: parsed.cards.length,
-        });
-      }
+        };
+      });
+      manifestDocs.push(...summaries.filter(Boolean));
     } else {
       const docs = await listMarkdownFiles({ repo: source.repo, docsDir: source.docsDir, ref });
-      const selected = typeof limit === 'number' ? docs.slice(0, limit) : docs;
-      for (const doc of selected) {
+      const filtered = filter ? docs.filter((d) => String(d.path ?? '').includes(filter)) : docs;
+      const selected = typeof limit === 'number' ? filtered.slice(0, limit) : filtered;
+      let done = 0;
+      const summaries = await mapWithConcurrency(selected, Math.min(concurrency ?? 8, 4), async (doc) => {
         const rel = doc.path.replace(/\\/g, '/').startsWith(docsDirPrefix) ? doc.path.replace(/\\/g, '/').slice(docsDirPrefix.length) : doc.path;
         const id = safeIdFromPath(rel);
+        if (filter) console.log(`Processing: ${lang} ${id} (${doc.path})`);
         const md = await githubText(doc.download_url);
-        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath: doc.path, ref });
+        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath: doc.path, ref, debug: Boolean(filter) });
+        if (filter) console.log(`Parsed: ${lang} ${id} sections=${parsed.sections.length} cards=${parsed.cards.length}`);
         const file = `reference/${lang}/${id}.json`;
 
         await fs.writeFile(path.join(langOutDir, `${id}.json`), JSON.stringify(parsed, null, 2), 'utf8');
-        manifestDocs.push({
+        if (filter) console.log(`Wrote: ${lang} ${id}`);
+        done++;
+        if (done % 50 === 0) console.log(`... ${lang} ${done}/${selected.length}`);
+        return {
           id,
+          name: parsed.name ?? parsed.title ?? id,
           title: parsed.title,
+          icon: parsed.icon,
           file,
           sectionCount: parsed.sections.length,
           cardCount: parsed.cards.length,
-        });
-      }
+        };
+      });
+      manifestDocs.push(...summaries.filter(Boolean));
     }
 
-    manifestDocs.sort((a, b) => a.title.localeCompare(b.title));
+    manifestDocs.sort((a, b) => a.name.localeCompare(b.name));
     const manifest = {
       source: {
         repo: `https://github.com/${source.repo}`,
         docsPath: source.docsDir,
         ref,
-        generatedAt: new Date().toISOString(),
         lang,
         mode: modeUsed,
       },
@@ -442,15 +672,18 @@ async function main() {
     console.log(`OK: ${lang} ${manifestDocs.length} docs -> ${langOutDir}`);
   }
 
-  // backward-compat: legacy single-language manifest location
-  const legacyManifest = manifestsByLang.get('zh') ?? manifestsByLang.get('en');
-  if (legacyManifest) {
-    await fs.writeFile(path.join(outDir, 'manifest.json'), JSON.stringify(legacyManifest, null, 2), 'utf8');
-    console.log(`OK: legacy manifest -> ${path.join(outDir, 'manifest.json')}`);
-  }
+  const manifestBundle = {
+    zh: manifestsByLang.get('zh') ?? null,
+    en: manifestsByLang.get('en') ?? null,
+  };
+  await fs.writeFile(path.join(outDir, 'manifest.json'), JSON.stringify(manifestBundle, null, 2), 'utf8');
+  console.log(`OK: manifest bundle -> ${path.join(outDir, 'manifest.json')}`);
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exitCode = 1;
-});
+main().then(
+  () => process.exit(0),
+  (err) => {
+    console.error(err);
+    process.exit(1);
+  },
+);

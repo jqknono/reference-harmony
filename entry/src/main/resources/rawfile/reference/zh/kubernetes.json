@@ -1,461 +1,446 @@
 {
   "id": "kubernetes",
-  "title": "kubernetes",
+  "name": "Kubernetes 备忘清单",
+  "title": "Kubernetes 备忘清单",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/kubernetes.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "查看资源信息",
+      "startIndex": 0
+    },
+    {
+      "id": "s2",
+      "title": "变更资源属性",
+      "startIndex": 34
+    },
+    {
+      "id": "s3",
+      "title": "添加资源",
+      "startIndex": 44
+    },
+    {
+      "id": "s4",
+      "title": "请求",
+      "startIndex": 50
+    },
+    {
+      "id": "s5",
+      "title": "另见",
+      "startIndex": 52
     }
   ],
   "cards": [
     {
-      "id": "intro-0",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "Kubernetes 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "查看资源信息\n---"
-    },
-    {
-      "id": "intro-2",
-      "sectionId": "intro",
+      "id": "s1-0",
+      "sectionId": "s1",
       "title": "节点",
       "kind": "text",
       "body": "资源名称: nodes, 缩写: no"
     },
     {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "节点",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get no          # 显示所有节点信息\n# 显示所有节点的更多信息\n$ kubectl get no -o wide  \n$ kubectl describe no     # 显示节点详情\n# 以yaml格式，显示节点详情\n$ kubectl get no -o yaml  \n# 筛选指定标签的节点\n$ kubectl get node --selector=[label_name] \n# 输出 jsonpath 表达式定义的字段信息\n$ kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type==\"ExternalIP\")].address}'\n# 显示节点(CPU/内存/存储)使用情况\n$ kubectl top node [node_name]"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "容器组",
       "kind": "text",
       "body": "资源名称: pods, 缩写: po"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "容器组",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get po              # 显示所有容器组信息\n$ kubectl get po -o wide\n$ kubectl describe po\n$ kubectl get po --show-labels # 查看容器组的labels\n$ kubectl get po -l app=nginx\n$ kubectl get po -o yaml\n$ kubectl get pod [pod_name] -o yaml --export\n$ kubectl get pod [pod_name] -o yaml --export > nameoffile.yaml \n# 以yaml格式导出容器组信息到yaml文件\n$ kubectl get pods --field-selector status.phase=Running     \n# 使用字段选择器筛选出容器组信息"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "命名空间",
       "kind": "text",
       "body": "资源名称: `namespaces`, 缩写: `ns`"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "命名空间",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get ns\n$ kubectl get ns -o yaml\n$ kubectl describe ns"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "无状态",
       "kind": "text",
       "body": "资源名称: `deployments`, 缩写: `deploy`"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "无状态",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get deploy\n$ kubectl describe deploy\n$ kubectl get deploy -o wide \n$ kubectl get deploy -o yaml"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "服务",
       "kind": "text",
       "body": "资源名称: `services`, 缩写: `svc`"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "服务",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get svc\n$ kubectl describe svc\n$ kubectl get svc -o wide \n$ kubectl get svc -o yaml\n$ kubectl get svc --show-labels"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "守护进程集",
       "kind": "text",
       "body": "资源名称: `daemonsets`, 缩写: `ds`"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "守护进程集",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get ds\n$ kubectl describe ds --all-namespaces\n$ kubectl describe ds [daemonset_name] -n [namespace_name]\n$ kubectl get ds [ds_name] -n [ns_name] -o yaml"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "事件",
       "kind": "text",
       "body": "资源名称: `events`, 缩写: `ev`"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "事件",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get events \n$ kubectl get events -n kube-system\n$ kubectl get events -w"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "服务帐户",
       "kind": "text",
       "body": "资源名称: `serviceaccounts`, 缩写: `sa`"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "服务帐户",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get sa\n$ kubectl get sa -o yaml\n$ kubectl get serviceaccounts default -o yaml >./sa.yaml\n$ kubectl replace serviceaccount default -f ./sa.yaml"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "日志",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl logs [pod_name]\n$ kubectl logs --since=1h [pod_name]\n$ kubectl logs --tail=20 [pod_name]\n$ kubectl logs \\\n      -f -c [container_name] [pod_name]\n$ kubectl logs [pod_name] > pod.log"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "副本集",
       "kind": "text",
       "body": "资源名称: replicasets, 缩写: rs"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "副本集",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get rs\n$ kubectl describe rs\n$ kubectl get rs -o wide \n$ kubectl get rs -o yaml"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "角色",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get roles --all-namespaces"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "角色",
       "kind": "text",
       "body": "---"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "角色",
       "kind": "code",
       "lang": "",
       "code": "$ kubectl get roles \\\n      --all-namespaces -o yaml"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "保密字典",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get secrets\n$ kubectl get secrets --all-namespaces \n$ kubectl get secrets -o yaml"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s1-23",
+      "sectionId": "s1",
       "title": "配置项",
       "kind": "text",
       "body": "资源名称: configmaps, 缩写: cm"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s1-24",
+      "sectionId": "s1",
       "title": "配置项",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get cm\n$ kubectl get cm --all-namespaces\n$ kubectl get cm --all-namespaces -o yaml"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s1-25",
+      "sectionId": "s1",
       "title": "路由",
       "kind": "text",
       "body": "资源名称: ingresses, 缩写: ing"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s1-26",
+      "sectionId": "s1",
       "title": "路由",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get ing\n$ kubectl get ing --all-namespaces"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s1-27",
+      "sectionId": "s1",
       "title": "持久卷",
       "kind": "text",
       "body": "资源名称: persistentvolumes, 缩写: pv"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s1-28",
+      "sectionId": "s1",
       "title": "持久卷",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get pv \n$ kubectl describe pv"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s1-29",
+      "sectionId": "s1",
       "title": "持久卷声明",
       "kind": "text",
       "body": "资源名称: persistentvolumeclaims, 缩写: pvc"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s1-30",
+      "sectionId": "s1",
       "title": "持久卷声明",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get pvc\n$ kubectl describe pvc"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s1-31",
+      "sectionId": "s1",
       "title": "存储类",
       "kind": "text",
       "body": "资源名称: storageclasses, 缩写: sc"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s1-32",
+      "sectionId": "s1",
       "title": "存储类",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get sc\n$ kubectl get sc -o yaml"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s1-33",
+      "sectionId": "s1",
       "title": "多个资源",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get svc, po\n$ kubectl get deploy, no\n$ kubectl get all\n$ kubectl get all --all-namespaces"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
-      "title": "多个资源",
-      "kind": "text",
-      "body": "变更资源属性\n---"
-    },
-    {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s2-34",
+      "sectionId": "s2",
       "title": "污点",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl taint [node_name] [taint_name]"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s2-35",
+      "sectionId": "s2",
       "title": "标签",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl label nodes <node-name> <label-key>=<label-value>  #增加\n$ kubectl label nodes <node-name> <label-key>- #删除\n$ kubectl label nodes <node-name> <label-key>=<label-value> --overwrite #修改"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s2-36",
+      "sectionId": "s2",
       "title": "维护/可调度",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl cordon [node_name]   # 节点维护\n$ kubectl uncordon [node_name] # 节点可调度"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s2-37",
+      "sectionId": "s2",
       "title": "清空节点",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl drain [node_name]    # 清空节点"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s2-38",
+      "sectionId": "s2",
       "title": "节点/容器组",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl delete node [node_name] \n$ kubectl delete pod [pod_name]\n$ kubectl edit node [node_name]\n$ kubectl edit pod [pod_name]"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s2-39",
+      "sectionId": "s2",
       "title": "无状态/命名空间",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl edit deploy [deploy_name]\n$ kubectl delete deploy [deploy_name]\n$ kubectl expose deploy [deploy_name] --port=80 --type=NodePort\n$ kubectl scale deploy [deploy_name] --replicas=5\n$ kubectl delete ns\n$ kubectl edit ns [ns_name]"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s2-40",
+      "sectionId": "s2",
       "title": "服务",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl edit svc [svc_name]\n$ kubectl delete svc [svc_name]"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s2-41",
+      "sectionId": "s2",
       "title": "守护进程集",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl edit ds [ds_name] -n kube-system \n$ kubectl delete ds [ds_name]"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s2-42",
+      "sectionId": "s2",
       "title": "服务账号",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl edit sa [sa_name]\n$ kubectl delete sa [sa_name]"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s2-43",
+      "sectionId": "s2",
       "title": "注释",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl annotatepo [pod_name] [annotation]\n$ kubectl annotateno [node_name]"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
-      "title": "注释",
-      "kind": "text",
-      "body": "添加资源\n---"
-    },
-    {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s3-44",
+      "sectionId": "s3",
       "title": "创建容器组",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl create -f [name_of_file] \n$ kubectl apply -f [name_of_file]\n$ kubectl run [pod_name] --image=nginx --restart=Never\n$ kubectl run [pod_name] --generator=run-pod/v1 --image=nginx\n$ kubectl run [pod_name] --image=nginx --restart=Never"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s3-45",
+      "sectionId": "s3",
       "title": "创建服务",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl create svc nodeport [svc_name] \\\n      --tcp=8080:80"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s3-46",
+      "sectionId": "s3",
       "title": "创建无状态应用",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl create -f [name_of_file] \n$ kubectl apply -f [name_of_file]\n$ kubectl create deploy [deploy_name] \\\n      --image=nginx"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s3-47",
+      "sectionId": "s3",
       "title": "输出YAML文件",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl create deploy [deploy_name] --image=nginx --dry-run -o yaml > deploy.yaml\n$ kubectl get po [pod_name] -o yaml --export > pod.yaml\n$ kubectl run nginx --image=nginx:alpine --dry-run -o -yaml > deploy.yaml"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s3-48",
+      "sectionId": "s3",
       "title": "容器交互",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl run [pod_name] \\\n        --image=busybox --rm -it \\\n        --restart=Never -- sh"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s3-49",
+      "sectionId": "s3",
       "title": "获取帮助",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl -h\n$ kubectl create -h\n$ kubectl run -h\n$ kubectl explain deploy.spec"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
-      "title": "获取帮助",
-      "kind": "text",
-      "body": "请求\n---"
-    },
-    {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s4-50",
+      "sectionId": "s4",
       "title": "API调用",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl get --raw /apis/metrics.k8s.io/"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s4-51",
+      "sectionId": "s4",
       "title": "集群信息",
       "kind": "code",
       "lang": "bash",
       "code": "$ kubectl config\n$ kubectl cluster-info\n$ kubectl get componentstatus"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
-      "title": "集群信息",
-      "kind": "text",
-      "body": "另见\n---"
-    },
-    {
-      "id": "intro-58",
-      "sectionId": "intro",
-      "title": "集群信息",
+      "id": "s5-52",
+      "sectionId": "s5",
+      "title": "另见",
       "kind": "text",
       "body": "• [Kubernetes 官方文档 命令行工具 (kubectl)](https://kubernetes.io/zh-cn/docs/reference/kubectl/) _(kubernetes.io)_"
     }
@@ -465,7 +450,6 @@
     "path": "docs/kubernetes.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/kubernetes.md",
-    "generatedAt": "2025-12-16T07:36:11.299Z",
     "lang": "zh",
     "mode": "local"
   }

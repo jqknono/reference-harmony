@@ -1,11 +1,23 @@
 {
   "id": "docker-compose",
-  "title": "docker-compose",
+  "name": "Docker Compose 备忘清单",
+  "title": "这是 [docker-compose](https://docs.docker.com/compose/) 的快速参考备忘单。你可以在这里找到最常见的 Docker Compose 使用方式。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/docker-compose.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Docker Compose 配置",
+      "startIndex": 49
     }
   ],
   "cards": [
@@ -14,989 +26,968 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Docker Compose 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "这是 [docker-compose](https://docs.docker.com/compose/) 的快速参考备忘单。你可以在这里找到最常见的 Docker Compose 使用方式。"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n---"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "Docker Compose 是什么？",
       "kind": "text",
       "body": "• **Docker Compose** 是由 [Docker](./docker.md) 社区维护的开源工具，用于定义和运行多容器应用。\n• 通过单个 [YAML](./yaml.md) 文件配置服务，可用一条命令启动、停止或重启整个应用。\n• [Docker Compose 开源地址](https://github.com/docker/compose)\n• [Docker Compose 发行地址](https://github.com/docker/compose/releases) _github.com_"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "基本概念",
       "kind": "text",
       "body": "• **服务 (services):** 一个服务指的是一个容器，即一个应用程序的一个实例。\n• **容器 (container):** [Docker](./docker.md) 容器，其中运行着应用程序的一个实例。\n• **镜像 (image):** [Docker](./docker.md) 镜像，用于创建容器的模板。\n• **Docker-Compose 文件：** 一个 [YAML](./yaml.md) 文件，描述了应用程序的各个服务以及它们之间的关系、配置等信息。"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "Docker-Compose 文件结构",
       "kind": "text",
       "body": "• `version`: _Docker-Compose_ 文件的版本。\n• `services`: 定义了各个服务，每个服务都有自己的配置项，如镜像、端口映射、依赖等。\n• `networks`: 定义了应用程序使用的网络，可以自定义网络以控制服务之间的通信。\n• `volumes`: 定义了应用程序使用的卷，用于持久化数据或与主机共享文件。"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "text",
       "body": "Docker 20.10 起，CLI 支持插件机制，官方已将 Compose 迁移为 CLI 插件。推荐使用 `docker compose`（空格，无横线），旧项目如需兼容 `docker-compose` 可安装 `docker-compose-plugin` 或使用软链接。"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "code",
       "lang": "bash",
       "code": "sudo ln -s /usr/lib/docker/cli-plugins/docker-compose /usr/local/bin/docker-compose"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "text",
       "body": "对于 Ubuntu 和 Debian，运行："
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "code",
       "lang": "bash",
       "code": "sudo apt-get update\nsudo apt-get install docker-compose-plugin"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "text",
       "body": "对于基于 RPM 的发行版，运行："
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "code",
       "lang": "bash",
       "code": "sudo yum update\nsudo yum install docker-compose-plugin"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "text",
       "body": "通过检查版本来验证 Docker Compose 是否正确安装"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "安装",
       "kind": "code",
       "lang": "sh",
       "code": "docker compose version\n# Docker Compose version v2.17.3\n\ndocker --version\n# Docker version 23.0.5, build bc4487a\n\ndocker version\n# Client: Docker Engine - Community\n# Cloud integration: v1.0.31\n# Version:           23.0.5\n# API version:       1.42\n# <...>"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "独立安装 Compose",
       "kind": "code",
       "lang": "sh",
       "code": "curl -SL https://github.com/docker/compose/releases/download/v2.27.0/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "独立安装 Compose",
       "kind": "text",
       "body": "如果命令 `docker-compose` 安装失败，请检查你的路径。你也可以创建一个符号链接，指向 `/usr/bin` 或路径中的任何其他目录。例如"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "独立安装 Compose",
       "kind": "code",
       "lang": "sh",
       "code": "$ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "更新 Compose",
       "kind": "text",
       "body": "对于 Ubuntu 和 Debian，运行："
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "更新 Compose",
       "kind": "code",
       "lang": "sh",
       "code": "sudo apt-get update\nsudo apt-get install docker-compose-plugin"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "更新 Compose",
       "kind": "text",
       "body": "对于基于 RPM 的发行版，运行："
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "更新 Compose",
       "kind": "code",
       "lang": "sh",
       "code": "sudo yum update\nsudo yum install docker-compose-plugin"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "卸载 Docker Compose",
       "kind": "text",
       "body": "Ubuntu, Debian:"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "卸载 Docker Compose",
       "kind": "code",
       "lang": "sh",
       "code": "sudo apt-get remove docker-compose-plugin"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "卸载 Docker Compose",
       "kind": "text",
       "body": "基于 RPM 的发行版"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "卸载 Docker Compose",
       "kind": "code",
       "lang": "sh",
       "code": "sudo yum remove docker-compose-plugin"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s1-23",
+      "sectionId": "s1",
       "title": "卸载 Docker Compose",
       "kind": "text",
       "body": "如果您使用curl安装Compose CLI插件，要卸载它，请运行："
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s1-24",
+      "sectionId": "s1",
       "title": "卸载 Docker Compose",
       "kind": "code",
       "lang": "sh",
       "code": "rm $DOCKER_CONFIG/cli-plugins/docker-compose"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s1-25",
+      "sectionId": "s1",
       "title": "卸载 Docker Compose",
       "kind": "text",
       "body": "为所有用户删除，或者，如果您已为所有用户安装 Compose，请运行："
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s1-26",
+      "sectionId": "s1",
       "title": "卸载 Docker Compose",
       "kind": "code",
       "lang": "sh",
       "code": "rm /usr/local/lib/docker/cli-plugins/docker-compose"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s1-27",
+      "sectionId": "s1",
       "title": "检查 Compose 的安装位置",
       "kind": "code",
       "lang": "sh",
       "code": "docker info --format '{{range .ClientInfo.Plugins}}{{if eq .Name \"compose\"}}{{.Path}}{{end}}{{end}}'"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s1-28",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose up`",
       "back": "启动容器 | `-d` 后台运行容器"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s1-29",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose down`",
       "back": "停止容器 | `-v` 删除容器和卷"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s1-30",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose logs`",
       "back": "查看容器日志 | `-f` 跟随日志输出"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s1-31",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose exec`",
       "back": "进入容器 | `-it` 启动交互式终端"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s1-32",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose pull`",
       "back": "拉取镜像 |"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s1-33",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose build`",
       "back": "构建镜像 |"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s1-34",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose images`",
       "back": "列出镜像 |"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s1-35",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose push`",
       "back": "推送镜像 |"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s1-36",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose config`",
       "back": "显示配置信息 |"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s1-37",
+      "sectionId": "s1",
       "title": "常用命令",
       "kind": "qa",
       "front": "`docker compose version`",
       "back": "查看版本信息 |"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s1-38",
+      "sectionId": "s1",
       "title": "常用运维命令",
       "kind": "qa",
       "front": "`docker compose stop`",
       "back": "停止容器"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s1-39",
+      "sectionId": "s1",
       "title": "常用运维命令",
       "kind": "qa",
       "front": "`docker compose start`",
       "back": "启动容器"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s1-40",
+      "sectionId": "s1",
       "title": "常用运维命令",
       "kind": "qa",
       "front": "`docker compose rm`",
       "back": "删除容器"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s1-41",
+      "sectionId": "s1",
       "title": "常用运维命令",
       "kind": "qa",
       "front": "`docker compose restart`",
       "back": "重启容器"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s1-42",
+      "sectionId": "s1",
       "title": "常用运维命令",
       "kind": "qa",
       "front": "`docker compose run`",
       "back": "运行一个临时容器"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s1-43",
+      "sectionId": "s1",
       "title": "常用运维命令",
       "kind": "qa",
       "front": "`docker compose ps`",
       "back": "查看容器状态"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s1-44",
+      "sectionId": "s1",
       "title": "其他命令",
       "kind": "code",
       "lang": "bash",
       "code": "docker compose up -d --remove-orphans --pull always --force-recreate"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s1-45",
+      "sectionId": "s1",
       "title": "其他命令",
       "kind": "qa",
       "front": "`-d / --detach`",
       "back": "后台运行容器。"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s1-46",
+      "sectionId": "s1",
       "title": "其他命令",
       "kind": "qa",
       "front": "`--remove-orphans`",
       "back": "删除孤儿容器和网络配置。"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s1-47",
+      "sectionId": "s1",
       "title": "其他命令",
       "kind": "qa",
       "front": "`--pull always`",
       "back": "每次启动前都从远程仓库拉取最新镜像，确保使用最新镜像，而不是本地缓存。还可以用--pull missing（只拉不存在的镜像）或 --pull never（不拉取）。"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s1-48",
+      "sectionId": "s1",
       "title": "其他命令",
       "kind": "qa",
       "front": "`--force-recreate`",
       "back": "强制重新创建容器，即使配置或镜像没有变化。"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
-      "title": "其他命令",
-      "kind": "text",
-      "body": "Docker Compose 配置\n---"
-    },
-    {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s2-49",
+      "sectionId": "s2",
       "title": "示例配置文件",
       "kind": "text",
       "body": "`docker-compose` 使用 [YAML](./yaml.md) 文件定义和运行多容器应用，通常命名为 `docker-compose.yml`（新版本建议用 `compose.yaml`）。\n该文件集中描述多个容器的服务、依赖关系等。下面是一个包含常用配置项和说明的模板："
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s2-50",
+      "sectionId": "s2",
       "title": "示例配置文件",
       "kind": "code",
       "lang": "yml",
       "code": "name: myapp\nversion: '3' # 已过时\n\nservices:  # 定义一个或多个服务\n  service1:  # 服务名称\n    image: nginx:latest  # 使用的 Docker 镜像，这里是 Nginx 的最新版本\n    # 或者使用构建指令来从 Dockerfile 构建镜像\n    build:\n      context: ./path/to/Dockerfile  # Dockerfile 所在的目录\n      dockerfile: Dockerfile-alternative  # 可选的 Dockerfile 名称，默认是 Dockerfile\n    # 容器启动时执行的命令，覆盖默认的命令\n    command: \n      - \"nginx\"\n      - \"-g\"\n      - \"daemon off;\"  # 以数组形式指定，防止 shell 解析\n    ports:       # 容器端口与主机端口映射\n      - \"80:80\"  # 主机 80 端口映射到容器的 80 端口\n\n    volumes:  # 数据卷挂载\n      - ./nginx.conf:/etc/nginx/nginx.conf:ro  # 将主机上的 nginx.conf \n                                              # 挂载到容器的 /etc/nginx/nginx.conf，只读\n      - ./logs:/var/log/nginx  # 将 logs 目录挂载到容器的 /var/log/nginx\n    environment:  # 设置环境变量\n      - MYSQL_HOST=database  # 可以引用其他服务，这里假设有一个名为 database 的服务\n      - MYSQL_PORT=3306\n    depends_on:  # 服务启动顺序，这里表明 service1 依赖于 database 服务\n      - database\n    networks:  # 定义网络\n      - my_network  # 参与名为 my_network 的网络\n\n  service2:  # 另一个服务示例\n    # ... 类似地定义其他服务\n\nnetworks:       # 定义网络\n  my_network:  # 网络名称\n    driver: bridge  # 网络驱动，通常是 bridge 模式\n\nvolumes:  # 定义数据卷\n  nginx_logs:  # 卷名称"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s2-51",
+      "sectionId": "s2",
       "title": "示例配置文件",
       "kind": "text",
       "body": "备忘录事项"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s2-52",
+      "sectionId": "s2",
       "title": "示例配置文件",
       "kind": "text",
       "body": "• 使用 Docker-Compose 可以简化多容器应用程序的部署和管理，但需要注意容器之间的依赖关系和通信。\n• 配置文件中的缩进必须使用空格，不能使用制表符。\n• 可以使用环境变量来动态设置配置项，如数据库密码。\n• 当你修改了 `docker-compose.yml` 文件后，需要重新运行 `docker compose up` 来使改动生效。\n• 使用 `docker compose build` 仅重建镜像，而不启动容器。\n• 使用 `docker compose restart` 重启容器。\n• 记得清理不再需要的容器和镜像，以避免磁盘空间不足。"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s2-53",
+      "sectionId": "s2",
       "title": "使用环境变量",
       "kind": "text",
       "body": "与 `docker run -e VARIABLE=VALUE ...` 相同"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s2-54",
+      "sectionId": "s2",
       "title": "使用环境变量",
       "kind": "code",
       "lang": "yml",
       "code": "web:\n  environment:\n    - DEBUG=1"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s2-55",
+      "sectionId": "s2",
       "title": "使用环境变量",
       "kind": "text",
       "body": "您可以选择不设置值并将环境变量从 shell 直接传递到容器。它的工作方式与 `docker run -e VARIABLE ...` 相同："
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s2-56",
+      "sectionId": "s2",
       "title": "使用环境变量",
       "kind": "code",
       "lang": "yml",
       "code": "web:\n  environment:\n    - DEBUG\nweb:\n  environment:\n    - DEBUG=${DEBUG}"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s2-57",
+      "sectionId": "s2",
       "title": "使用环境变量",
       "kind": "text",
       "body": "`env_file` 属性允许您在 Compose 应用程序中使用多个 `.env` 文件。\n它的工作方式与 `docker run --env-file=FILE ...` 相同。"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s2-58",
+      "sectionId": "s2",
       "title": "使用环境变量",
       "kind": "code",
       "lang": "yml",
       "code": "web:\n  env_file:\n    - web-variables.env"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s2-59",
+      "sectionId": "s2",
       "title": "使用环境变量",
       "kind": "text",
       "body": "#### 额外的信息"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
+      "id": "s2-60",
+      "sectionId": "s2",
       "title": "使用环境变量",
       "kind": "code",
       "lang": "yml",
       "code": "env_file:\n  - path: ./default.env\n    required: true # default\n  - path: ./override.env\n    required: false"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s2-61",
+      "sectionId": "s2",
       "title": "使用环境变量",
       "kind": "text",
       "body": "• 如果指定了多个文件，则它们将按顺序进行评估，可以覆盖先前文件中设置的值。\n• 在 `.env` 文件中声明的环境变量不能在 Compose 文件中单独再次引用。\n• 如果同时使用 `env_file` 和 `environment` 属性，则由 `environment` 设置的环境变量优先级更高。\n• 在 `env_file` 属性中指定的 `.env` 文件的路径是相对于 compose.yml 文件的位置的。\n• `.env` 文件中的值可以通过使用 `docker compose run -e` 命令行来从命令行覆盖。\n• 如果使用 `--env-file` 替换了另一个 `.env`，则您的 `.env` 文件可以被另一个 `.env` 文件覆盖。\n• 从 Docker Compose 版本 2.24.0 开始，您可以通过使用 `required` 字段将 `.env` 文件设置为可选项。当 `required` 设置为 `false` 且 `.env` 文件丢失时，Compose 将静默忽略该条目"
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s2-62",
+      "sectionId": "s2",
       "title": "image",
       "kind": "code",
       "lang": "yml",
       "code": "image: redis\nimage: redis:5\nimage: redis@sha256:0ed5d5928d473745...\nimage: library/redis\nimage: docker.io/library/redis\nimage: my_private.registry:5000/redis"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s2-63",
+      "sectionId": "s2",
       "title": "ports 端口",
       "kind": "code",
       "lang": "yml",
       "code": "ports:\n  # 将容器的端口 3000 映射到主机的随机端口\n  - \"3000\"\n  # 将容器的端口范围从 3000 到 3005 映射到主机的相同端口范围\n  - \"3000-3005\"\n  # 将容器的端口 8000 映射到主机的端口 8000\n  - \"8000:8000\"\n  # 将容器的端口范围从 8080 到 8081 映射到主机的端口范围从 9090 到 9091\n  - \"9090-9091:8080-8081\"\n  # 将容器的端口 22（SSH端口）映射到主机的端口 49100\n  - \"49100:22\"\n  # 将容器的端口范围从 8000 到 9000 映射到主机的端口 80\n  - \"8000-9000:80\"\n  # 将容器的端口 8001 映射到主机的 127.0.0.1 地址的端口 8001\n  - \"127.0.0.1:8001:8001\"\n  # 将容器的端口范围从 5000 到 5010 映射到主机的 127.0.0.1 地址的相同端口范围\n  - \"127.0.0.1:5000-5010:5000-5010\"\n  # 将容器的 UDP 端口 6060 映射到主机的端口 6060\n  - \"6060:6060/udp\""
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s2-64",
+      "sectionId": "s2",
       "title": "ports 端口",
       "kind": "text",
       "body": "暴露容器端口"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
+      "id": "s2-65",
+      "sectionId": "s2",
       "title": "platform 平台",
       "kind": "code",
       "lang": "yml",
       "code": "platform: darwin\nplatform: windows/amd64\nplatform: linux/arm64/v8"
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s2-66",
+      "sectionId": "s2",
       "title": "platform 平台",
       "kind": "text",
       "body": "定义了服务容器运行的目标平台。值必须符合 [OCI Image Spec](https://github.com/opencontainers/image-spec/blob/v1.0.2/image-index.md) 使用的约定"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
+      "id": "s2-67",
+      "sectionId": "s2",
       "title": "command",
       "kind": "text",
       "body": "会覆盖容器镜像声明的默认命令，例如 Dockerfile 的 CMD。"
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s2-68",
+      "sectionId": "s2",
       "title": "command",
       "kind": "code",
       "lang": "yml",
       "code": "command: bundle exec thin -p 3000"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
+      "id": "s2-69",
+      "sectionId": "s2",
       "title": "command",
       "kind": "text",
       "body": "该值也可以是一个列表，其方式类似于 Dockerfile："
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s2-70",
+      "sectionId": "s2",
       "title": "command",
       "kind": "code",
       "lang": "yml",
       "code": "command: [ \"bundle\", \"exec\", \"thin\", \"-p\", \"3000\" ]"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s2-71",
+      "sectionId": "s2",
       "title": "command",
       "kind": "text",
       "body": "如果该值为 null，则使用映像中的默认命令。如果值为 []（空列表）或 ''（空字符串），则忽略图像声明的默认命令，即覆盖为空。"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s2-72",
+      "sectionId": "s2",
       "title": "depends_on",
       "kind": "code",
       "lang": "yml",
       "code": "services:\n  web:\n    build: .\n    depends_on:\n      - db\n      - redis\n  redis:\n    image: redis\n  db:\n    image: postgres"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
+      "id": "s2-73",
+      "sectionId": "s2",
       "title": "depends_on",
       "kind": "text",
       "body": "服务之间的启动和关闭依赖关系。"
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
+      "id": "s2-74",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "下面的示例显示了双服务设置，其中数据库的数据目录作为名为 db-data 的卷与另一个服务共享，以便定期备份。"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
+      "id": "s2-75",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "code",
       "lang": "yml",
       "code": "services:\n  backend:\n    image: example/database\n    volumes:\n      - db-data:/etc/data\n\n  backup:\n    image: backup-service\n    volumes:\n      - db-data:/var/lib/backup/data\n\nvolumes:\n  db-data:"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
+      "id": "s2-76",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "db-data 卷安装在 `/var/lib/backup/data` 和 `/etc/data` 容器路径中，分别用于备份和后端。如果卷尚不存在，则运行 `docker compose up` 会创建该卷。否则，如果在 Compose 外部手动删除现有卷，则会使用并重新创建现有卷。"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
+      "id": "s2-77",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "#### driver"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
+      "id": "s2-78",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "指定应使用哪个卷驱动程序。如果驱动程序不可用，Compose 将返回错误并且不会部署应用程序。"
     },
     {
-      "id": "intro-82",
-      "sectionId": "intro",
+      "id": "s2-79",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "code",
       "lang": "yml",
       "code": "volumes:\n  db-data:\n    driver: foobar"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
+      "id": "s2-80",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "#### driver_opts"
     },
     {
-      "id": "intro-84",
-      "sectionId": "intro",
+      "id": "s2-81",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "指定一个选项列表，作为键值对传递给此卷的驱动程序。这些选项取决于驾驶员。"
     },
     {
-      "id": "intro-85",
-      "sectionId": "intro",
+      "id": "s2-82",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "code",
       "lang": "yml",
       "code": "volumes:\n  example:\n    driver_opts:\n      type: \"nfs\"\n      o: \"addr=10.40.0.199,nolock,soft,rw\"\n      device: \":/docker/example\""
     },
     {
-      "id": "intro-86",
-      "sectionId": "intro",
+      "id": "s2-83",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "#### external"
     },
     {
-      "id": "intro-87",
-      "sectionId": "intro",
+      "id": "s2-84",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "code",
       "lang": "yml",
       "code": "services:\n  backend:\n    image: example/database\n    volumes:\n      - db-data:/etc/data\n\nvolumes:\n  db-data:\n    external: true"
     },
     {
-      "id": "intro-88",
-      "sectionId": "intro",
+      "id": "s2-85",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "在示例中，Compose 不会尝试创建名为 `{project_name}_db-data` 的卷，而是查找名为 `db-data` 的现有卷，并将其挂载到后端服务的容器中。"
     },
     {
-      "id": "intro-89",
-      "sectionId": "intro",
+      "id": "s2-86",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "#### labels"
     },
     {
-      "id": "intro-90",
-      "sectionId": "intro",
+      "id": "s2-87",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "标签用于将元数据添加到卷中。您可以使用数组或字典。"
     },
     {
-      "id": "intro-91",
-      "sectionId": "intro",
+      "id": "s2-88",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "code",
       "lang": "yml",
       "code": "volumes:\n  db-data:\n    labels:\n      com.example.description: \"Database volume\"\n      com.example.department: \"IT/Ops\"\n      com.example.label-with-empty-value: \"\""
     },
     {
-      "id": "intro-92",
-      "sectionId": "intro",
+      "id": "s2-89",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "code",
       "lang": "yml",
       "code": "volumes:\n  db-data:\n    labels:\n      - \"com.demo.description=Database volume\"\n      - \"com.demo.department=IT/Ops\"\n      - \"com.demo.label-with-empty-value\""
     },
     {
-      "id": "intro-93",
-      "sectionId": "intro",
+      "id": "s2-90",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "#### name"
     },
     {
-      "id": "intro-94",
-      "sectionId": "intro",
+      "id": "s2-91",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "设置卷的自定义名称。名称字段可用于引用包含特殊字符的卷。该名称按原样使用，并且不受堆栈名称的限制。"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
+      "id": "s2-92",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "code",
       "lang": "yml",
       "code": "volumes:\n  db-data:\n    name: \"my-app-data\""
     },
     {
-      "id": "intro-96",
-      "sectionId": "intro",
+      "id": "s2-93",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "这使得可以将此查找名称作为 Compose 文件的参数，以便卷的模型 ID 被硬编码，但平台上的实际卷 ID 是在部署期间在运行时设置的。例如，如果 `.env` 文件中的 `DATABASE_VOLUME=my_volume_001`："
     },
     {
-      "id": "intro-97",
-      "sectionId": "intro",
+      "id": "s2-94",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "code",
       "lang": "yml",
       "code": "volumes:\n  db-data:\n    name: ${DATABASE_VOLUME}"
     },
     {
-      "id": "intro-98",
-      "sectionId": "intro",
+      "id": "s2-95",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "text",
       "body": "它还可以与外部属性结合使用。这意味着用于在平台上查找实际卷的卷名称与用于在 Compose 文件中引用它的名称分开设置："
     },
     {
-      "id": "intro-99",
-      "sectionId": "intro",
+      "id": "s2-96",
+      "sectionId": "s2",
       "title": "volumes",
       "kind": "code",
       "lang": "yml",
       "code": "volumes:\n  db-data:\n    external:\n      name: actual-name-of-volume"
     },
     {
-      "id": "intro-100",
-      "sectionId": "intro",
+      "id": "s2-97",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "code",
       "lang": "yml",
       "code": "services:\n  some-service:\n    networks:\n      - some-network\n      - other-network"
     },
     {
-      "id": "intro-101",
-      "sectionId": "intro",
+      "id": "s2-98",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "#### aliases"
     },
     {
-      "id": "intro-102",
-      "sectionId": "intro",
+      "id": "s2-99",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "声明网络上服务的替代主机名。同一网络上的其他容器可以使用服务名称或别名来连接到服务的容器之一"
     },
     {
-      "id": "intro-103",
-      "sectionId": "intro",
+      "id": "s2-100",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "code",
       "lang": "yml",
       "code": "services:\n  some-service:\n    networks:\n      some-network:\n        aliases:\n          - alias1\n          - alias3\n      other-network:\n        aliases:\n          - alias2"
     },
     {
-      "id": "intro-104",
-      "sectionId": "intro",
+      "id": "s2-101",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "在以下示例中，服务前端能够通过主机名 `backend` 或者 `back-tier` 网络上的数据库来访问 `backend` 服务。服务 `monitoring` 能够在 admin 网络上通过主机名 `backend` 或者 `mysql` 来访问相同的 `backend` 服务。"
     },
     {
-      "id": "intro-105",
-      "sectionId": "intro",
+      "id": "s2-102",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "code",
       "lang": "yml",
       "code": "services:\n  frontend:\n    image: example/webapp\n    networks:\n      - front-tier\n      - back-tier\n\n  monitoring:\n    image: example/monitoring\n    networks:\n      - admin\n\n  backend:\n    image: example/backend\n    networks:\n      back-tier:\n        aliases:\n          - database\n      admin:\n        aliases:\n          - mysql\n\nnetworks:\n  front-tier:\n  back-tier:\n  admin:"
     },
     {
-      "id": "intro-106",
-      "sectionId": "intro",
+      "id": "s2-103",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "#### ipv4_address, ipv6_address"
     },
     {
-      "id": "intro-107",
-      "sectionId": "intro",
+      "id": "s2-104",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "加入网络时，为服务容器指定静态IP地址。"
     },
     {
-      "id": "intro-108",
-      "sectionId": "intro",
+      "id": "s2-105",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "code",
       "lang": "yml",
       "code": "services:\n  frontend:\n    image: example/webapp\n    networks:\n      front-tier:\n        ipv4_address: 172.16.238.10\n        ipv6_address: 2001:3984:3989::10\n\nnetworks:\n  front-tier:\n    ipam:\n      driver: default\n      config:\n        - subnet: \"172.16.238.0/24\"\n        - subnet: \"2001:3984:3989::/64\""
     },
     {
-      "id": "intro-109",
-      "sectionId": "intro",
+      "id": "s2-106",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "#### link_local_ips"
     },
     {
-      "id": "intro-110",
-      "sectionId": "intro",
+      "id": "s2-107",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "指定了链接本地IP的列表。链路本地IP是属于知名子网的特殊IP，纯粹由运营商管理，通常取决于部署它们的架构。"
     },
     {
-      "id": "intro-111",
-      "sectionId": "intro",
+      "id": "s2-108",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "code",
       "lang": "yml",
       "code": "services:\n  app:\n    image: busybox\n    command: top\n    networks:\n      app_net:\n        link_local_ips:\n          - 57.123.22.11\n          - 57.123.22.13\nnetworks:\n  app_net:\n    driver: bridge"
     },
     {
-      "id": "intro-112",
-      "sectionId": "intro",
+      "id": "s2-109",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "#### mac_address"
     },
     {
-      "id": "intro-113",
-      "sectionId": "intro",
+      "id": "s2-110",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "设置服务容器连接特定网络时使用的 MAC 地址。"
     },
     {
-      "id": "intro-114",
-      "sectionId": "intro",
+      "id": "s2-111",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "#### priority 优先级"
     },
     {
-      "id": "intro-115",
-      "sectionId": "intro",
+      "id": "s2-112",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "text",
       "body": "将服务的容器连接到其网络的顺序。如果未指定，默认值为 0。在以下示例中，应用服务首先连接到 `app_net_1`，因为它具有最高优先级。然后它连接到 `app_net_3`，然后是 `app_net_2`，后者使用默认优先级值 0。"
     },
     {
-      "id": "intro-116",
-      "sectionId": "intro",
+      "id": "s2-113",
+      "sectionId": "s2",
       "title": "networks",
       "kind": "code",
       "lang": "yml",
       "code": "services:\n  app:\n    image: busybox\n    command: top\n    networks:\n      app_net_1:\n        priority: 1000\n      app_net_2:\n\n      app_net_3:\n        priority: 100\nnetworks:\n  app_net_1:\n  app_net_2:\n  app_net_3:"
     },
     {
-      "id": "intro-117",
-      "sectionId": "intro",
+      "id": "s2-114",
+      "sectionId": "s2",
       "title": "expose",
       "kind": "code",
       "lang": "yml",
       "code": "expose:\n  - \"3000\"\n  - \"8000\"\n  - \"8080-8085/tcp\""
     },
     {
-      "id": "intro-118",
-      "sectionId": "intro",
+      "id": "s2-115",
+      "sectionId": "s2",
       "title": "expose",
       "kind": "text",
       "body": "定义 Compose 从容器公开的（传入）端口或端口范围。这些端口必须可供链接服务访问，并且不应发布到主机。只能指定内部容器端口。"
     },
     {
-      "id": "intro-119",
-      "sectionId": "intro",
+      "id": "s2-116",
+      "sectionId": "s2",
       "title": "links",
       "kind": "code",
       "lang": "yml",
       "code": "web:\n  links:\n    - db\n    - db:database\n    - redis"
     },
     {
-      "id": "intro-120",
-      "sectionId": "intro",
+      "id": "s2-117",
+      "sectionId": "s2",
       "title": "links",
       "kind": "text",
       "body": "定义到另一个服务中的容器的网络链接。同时指定服务名称和链接别名 (SERVICE:ALIAS)，或者仅指定服务名称。"
     },
     {
-      "id": "intro-121",
-      "sectionId": "intro",
+      "id": "s2-118",
+      "sectionId": "s2",
       "title": "pids_limit",
       "kind": "code",
       "lang": "yml",
       "code": "pids_limit: 10"
     },
     {
-      "id": "intro-122",
-      "sectionId": "intro",
+      "id": "s2-119",
+      "sectionId": "s2",
       "title": "pids_limit",
       "kind": "text",
       "body": "调整容器的 PID 限制。设置为 -1 以获取无限 PID。"
     },
     {
-      "id": "intro-123",
-      "sectionId": "intro",
+      "id": "s2-120",
+      "sectionId": "s2",
       "title": "devices",
       "kind": "code",
       "lang": "yml",
       "code": "devices:\n  - \"/dev/ttyUSB0:/dev/ttyUSB0\"\n  - \"/dev/sda:/dev/xvda:rwm\""
     },
     {
-      "id": "intro-124",
-      "sectionId": "intro",
+      "id": "s2-121",
+      "sectionId": "s2",
       "title": "devices",
       "kind": "text",
       "body": "定义已创建容器的设备映射列表"
     },
     {
-      "id": "intro-125",
-      "sectionId": "intro",
+      "id": "s2-122",
+      "sectionId": "s2",
       "title": "devices",
       "kind": "code",
       "lang": "sh",
       "code": "HOST_PATH:CONTAINER_PATH[:CGROUP_PERMISSIONS]"
     },
     {
-      "id": "intro-126",
-      "sectionId": "intro",
+      "id": "s2-123",
+      "sectionId": "s2",
       "title": "dns",
       "kind": "code",
       "lang": "yml",
       "code": "dns: 8.8.8.8\ndns:\n  - 8.8.8.8\n  - 9.9.9.9"
     },
     {
-      "id": "intro-127",
-      "sectionId": "intro",
+      "id": "s2-124",
+      "sectionId": "s2",
       "title": "dns",
       "kind": "text",
       "body": "定义在容器网络接口配置上设置的自定义 DNS 服务器。它可以是单个值或列表。"
     },
     {
-      "id": "intro-128",
-      "sectionId": "intro",
+      "id": "s2-125",
+      "sectionId": "s2",
       "title": "dns_opt",
       "kind": "code",
       "lang": "yml",
       "code": "dns_opt:\n  - use-vc\n  - no-tld-query"
     },
     {
-      "id": "intro-129",
-      "sectionId": "intro",
+      "id": "s2-126",
+      "sectionId": "s2",
       "title": "dns_opt",
       "kind": "text",
       "body": "列出要传递给容器的 DNS 解析器（Linux 上的 /etc/resolv.conf 文件）的自定义 DNS 选项。"
     },
     {
-      "id": "intro-130",
-      "sectionId": "intro",
+      "id": "s2-127",
+      "sectionId": "s2",
       "title": "dns_search",
       "kind": "code",
       "lang": "yml",
       "code": "dns_search: example.com\ndns_search:\n  - dc1.example.com\n  - dc2.example.com"
     },
     {
-      "id": "intro-131",
-      "sectionId": "intro",
+      "id": "s2-128",
+      "sectionId": "s2",
       "title": "dns_search",
       "kind": "text",
       "body": "定义在容器网络接口配置上设置的自定义 DNS 搜索域。它可以是单个值或列表。"
@@ -1007,7 +998,6 @@
     "path": "docs/docker-compose.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/docker-compose.md",
-    "generatedAt": "2025-12-16T07:36:11.175Z",
     "lang": "zh",
     "mode": "local"
   }

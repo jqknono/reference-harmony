@@ -1,6 +1,8 @@
 {
   "id": "gnupg",
-  "title": "GnuPG",
+  "name": "GnuPG",
+  "title": "A cheatsheet for GnuPG, the encryption and signing software.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/gnupg.svg",
   "sections": [
     {
       "id": "intro",
@@ -11,6 +13,11 @@
       "id": "s1",
       "title": "Getting Started",
       "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Encryption",
+      "startIndex": 17
     }
   ],
   "cards": [
@@ -62,394 +69,341 @@
       "title": "Create a key-pair",
       "kind": "code",
       "lang": "",
-      "code": "\n... or fully configure your keys."
+      "code": "\n... or fully configure your keys.\n\n```shell script\n$ gpg --generate-full-keys"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "Create a key-pair",
       "kind": "text",
-      "body": "$ gpg --generate-full-keys"
+      "body": "**Note:** Choose a strong passphrase! The encryption is only as strong as your passphrase."
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\n**Note:** Choose a strong passphrase! The encryption is only as strong as your passphrase.\n\n### Key management\n\nList your keys:"
+      "title": "Key management",
+      "kind": "text",
+      "body": "List your keys:"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
-      "title": "Create a key-pair",
+      "title": "Key management",
       "kind": "text",
-      "body": "$ gpg --list-keys"
+      "body": "```shell script\n$ gpg --list-keys"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
-      "title": "Create a key-pair",
+      "title": "Key management",
       "kind": "code",
       "lang": "",
-      "code": "\nList your secret keys:"
+      "code": "\nList your secret keys:\n\n```shell script\n$ gpg --list-secret-keys"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
-      "title": "Create a key-pair",
+      "title": "Key management",
       "kind": "text",
-      "body": "$ gpg --list-secret-keys"
+      "body": "Export your public key:"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nExport your public key:"
+      "title": "Key management",
+      "kind": "text",
+      "body": "```shell script\n$ gpg --export --armor <ID>"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ gpg --export --armor <ID>"
+      "title": "Key management",
+      "kind": "code",
+      "lang": "",
+      "code": "\nExport your secret key:\n\n```shell script\n$ gpg --export-secret-key --armor <ID>"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nExport your secret key:"
+      "title": "Key management",
+      "kind": "text",
+      "body": "Delete your public key:"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "Create a key-pair",
+      "title": "Key management",
       "kind": "text",
-      "body": "$ gpg --export-secret-key --armor <ID>"
+      "body": "```shell script\n$ gpg --delete-key <ID>"
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
-      "title": "Create a key-pair",
+      "title": "Key management",
       "kind": "code",
       "lang": "",
-      "code": "\nDelete your public key:"
+      "code": "\nDelete your secret key:\n\n```shell script\n$ gpg --delete-secret-key <ID>"
     },
     {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-17",
+      "sectionId": "s2",
+      "title": "Symmetric",
       "kind": "text",
-      "body": "$ gpg --delete-key <ID>"
+      "body": "Encrypt with a passphrase:"
     },
     {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-18",
+      "sectionId": "s2",
+      "title": "Symmetric",
+      "kind": "text",
+      "body": "```shell script\n$ gpg -c <FILE>"
+    },
+    {
+      "id": "s2-19",
+      "sectionId": "s2",
+      "title": "Symmetric",
       "kind": "code",
       "lang": "",
-      "code": "\nDelete your secret key:"
+      "code": "\nEncrypt as ASCII with `-a` flag:\n\n```shell script\n$ gpg -ac <FILE>"
     },
     {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-20",
+      "sectionId": "s2",
+      "title": "Symmetric",
       "kind": "text",
-      "body": "$ gpg --delete-secret-key <ID>"
+      "body": "Set output file path with `-o` flag:"
     },
     {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-21",
+      "sectionId": "s2",
+      "title": "Symmetric",
+      "kind": "text",
+      "body": "```shell script\n$ gpg -c <FILE> -o <PATH>"
+    },
+    {
+      "id": "s2-22",
+      "sectionId": "s2",
+      "title": "Symmetric",
       "kind": "code",
       "lang": "",
-      "code": "\n## Encryption\n\n### Symmetric\n\nEncrypt with a passphrase:"
+      "code": "\nDecrypt with a passphrase:\n\n```shell script\n$ gpg <FILE>"
     },
     {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-23",
+      "sectionId": "s2",
+      "title": "Symmetric",
       "kind": "text",
-      "body": "$ gpg -c <FILE>"
+      "body": "**Note:** Choose a strong passphrase! The encryption is only as strong as your passphrase."
     },
     {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-24",
+      "sectionId": "s2",
+      "title": "Asymmetric",
+      "kind": "text",
+      "body": "Encrypt using public-private key encryption:"
+    },
+    {
+      "id": "s2-25",
+      "sectionId": "s2",
+      "title": "Asymmetric",
+      "kind": "text",
+      "body": "```shell script\n$ gpg -e -r <RECIPIENT> <FILE>"
+    },
+    {
+      "id": "s2-26",
+      "sectionId": "s2",
+      "title": "Asymmetric",
       "kind": "code",
       "lang": "",
-      "code": "\nEncrypt as ASCII with `-a` flag:"
+      "code": "\nEncrypt as ASCII output with `-a` flag:\n\n```shell script\n$ gpg -ea -r <RECIPIENT> <FILE>"
     },
     {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-27",
+      "sectionId": "s2",
+      "title": "Asymmetric",
       "kind": "text",
-      "body": "$ gpg -ac <FILE>"
+      "body": "Encrypt and sign with `-s` flag:"
     },
     {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-28",
+      "sectionId": "s2",
+      "title": "Asymmetric",
+      "kind": "text",
+      "body": "```shell script\n$ gpg -se -r <RECIPIENT> <FILE>"
+    },
+    {
+      "id": "s2-29",
+      "sectionId": "s2",
+      "title": "Asymmetric",
       "kind": "code",
       "lang": "",
-      "code": "\nSet output file path with `-o` flag:"
+      "code": "\nAdd multiple recipients:\n\n```shell script\n$ gpg -e -r <RECIPIENT1> -r <RECIPIENT2> <FILE>"
     },
     {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "Asymmetric",
       "kind": "text",
-      "body": "$ gpg -c <FILE> -o <PATH>"
+      "body": "Set output file path with `-o` flag:"
     },
     {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-31",
+      "sectionId": "s2",
+      "title": "Asymmetric",
+      "kind": "text",
+      "body": "```shell script\n$ gpg -e -o <PATH> -r <RECIPIENT> <FILE>"
+    },
+    {
+      "id": "s2-32",
+      "sectionId": "s2",
+      "title": "Asymmetric",
       "kind": "code",
       "lang": "",
-      "code": "\nDecrypt with a passphrase:"
+      "code": "\nDecrypt with your private key:\n\n```shell script\n$ gpg <FILE>"
     },
     {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-33",
+      "sectionId": "s2",
+      "title": "Asymmetric",
       "kind": "text",
-      "body": "$ gpg <FILE>"
+      "body": "Replace `<RECIPIENT>` with your intended recipient's [imported public key](#importing-a-public-key) ID."
     },
     {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-34",
+      "sectionId": "s2",
+      "title": "Importing a public key",
+      "kind": "text",
+      "body": "Import using a file:"
+    },
+    {
+      "id": "s2-35",
+      "sectionId": "s2",
+      "title": "Importing a public key",
+      "kind": "text",
+      "body": "```shell script\n$ gpg --import <FILE>"
+    },
+    {
+      "id": "s2-36",
+      "sectionId": "s2",
+      "title": "Importing a public key",
       "kind": "code",
       "lang": "",
-      "code": "\n**Note:** Choose a strong passphrase! The encryption is only as strong as your passphrase.\n\n### Asymmetric\n\nEncrypt using public-private key encryption:"
+      "code": "\nImport using a link (macOS/Linux):\n\n```shell script\n$ curl <WEBSITE> | gpg --import"
     },
     {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-37",
+      "sectionId": "s2",
+      "title": "Importing a public key",
       "kind": "text",
-      "body": "$ gpg -e -r <RECIPIENT> <FILE>"
+      "body": "Don't forget to sign the imported key:"
     },
     {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-38",
+      "sectionId": "s2",
+      "title": "Importing a public key",
+      "kind": "text",
+      "body": "```shell script\n$ gpg --sign-key <ID>"
+    },
+    {
+      "id": "s2-39",
+      "sectionId": "s2",
+      "title": "Importing a public key",
       "kind": "code",
       "lang": "",
-      "code": "\nEncrypt as ASCII output with `-a` flag:"
+      "code": "\n## Commit Signing\n\n### Local Git Setup\n\nEnable GPG signing:\n\n```shell script\n$ git config --global commit.gpgsign true"
     },
     {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-40",
+      "sectionId": "s2",
+      "title": "Importing a public key",
       "kind": "text",
-      "body": "$ gpg -ea -r <RECIPIENT> <FILE>"
+      "body": "Set the signing key:"
     },
     {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-41",
+      "sectionId": "s2",
+      "title": "Importing a public key",
+      "kind": "text",
+      "body": "```shell script\n$ git config --global user.signingkey <ID>"
+    },
+    {
+      "id": "s2-42",
+      "sectionId": "s2",
+      "title": "Importing a public key",
       "kind": "code",
       "lang": "",
-      "code": "\nEncrypt and sign with `-s` flag:"
+      "code": "\nSet location of GPG:\n\n```shell script\n$ git config --global gpg.program <PROGRAM>"
     },
     {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-43",
+      "sectionId": "s2",
+      "title": "Importing a public key",
       "kind": "text",
-      "body": "$ gpg -se -r <RECIPIENT> <FILE>"
+      "body": "**Note:** Your name and email must match on Git and GnuPG."
     },
     {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-44",
+      "sectionId": "s2",
+      "title": "GPG Program List",
+      "kind": "text",
+      "body": "Replace `<PROGRAM>` with one of the following:"
+    },
+    {
+      "id": "s2-45",
+      "sectionId": "s2",
+      "title": "GPG Program List",
+      "kind": "qa",
+      "front": "Windows",
+      "back": "`C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe`"
+    },
+    {
+      "id": "s2-46",
+      "sectionId": "s2",
+      "title": "GPG Program List",
+      "kind": "qa",
+      "front": "macOS/Linux",
+      "back": "/usr/local/bin/gpg"
+    },
+    {
+      "id": "s2-47",
+      "sectionId": "s2",
+      "title": "Exporting your public key",
+      "kind": "text",
+      "body": "Export as ASCII:"
+    },
+    {
+      "id": "s2-48",
+      "sectionId": "s2",
+      "title": "Exporting your public key",
+      "kind": "text",
+      "body": "```shell script\n$ gpg --export --armor <ID>"
+    },
+    {
+      "id": "s2-49",
+      "sectionId": "s2",
+      "title": "Exporting your public key",
       "kind": "code",
       "lang": "",
-      "code": "\nAdd multiple recipients:"
+      "code": "\n**Note:** Platforms, like GitHub, may ask you to verify the email you set in Git and GnuPG.\n\n## Windows: Add to Startup Apps {.cols-1}\n\n### PowerShell Commands\n\nWhen you do a full restart, the GPG agent might not automatically start. Add the GnuPG's IPC tool to Startup Apps using\nPowerShell:\n\n```shell script\n$ $shell = New-Object -ComObject WScript.Shell\n$ $shortcut = $shell.CreateShortcut(\"C:\\Users\\$($Env:UserName)\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\gpg-connect-agent.lnk\")\n$ $shortcut.TargetPath = \"C:\\Program Files (x86)\\GnuPG\\bin\\gpg-connect-agent.exe\"\n$ $shortcut.Arguments = \"/bye\"\n$ $shortcut.Save()"
     },
     {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-50",
+      "sectionId": "s2",
+      "title": "Exporting your public key",
       "kind": "text",
-      "body": "$ gpg -e -r <RECIPIENT1> -r <RECIPIENT2> <FILE>"
+      "body": "Start up manually instead:"
     },
     {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSet output file path with `-o` flag:"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-51",
+      "sectionId": "s2",
+      "title": "Exporting your public key",
       "kind": "text",
-      "body": "$ gpg -e -o <PATH> -r <RECIPIENT> <FILE>"
+      "body": "```shell script\n$ gpgconf --launch gpg-agent"
     },
     {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDecrypt with your private key:"
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ gpg <FILE>"
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nReplace `<RECIPIENT>` with your intended recipient's [imported public key](#importing-a-public-key) ID.\n\n### Importing a public key\n\nImport using a file:"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ gpg --import <FILE>"
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nImport using a link (macOS/Linux):"
-    },
-    {
-      "id": "s1-43",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ curl <WEBSITE> | gpg --import"
-    },
-    {
-      "id": "s1-44",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDon't forget to sign the imported key:"
-    },
-    {
-      "id": "s1-45",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ gpg --sign-key <ID>"
-    },
-    {
-      "id": "s1-46",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\n## Commit Signing\n\n### Local Git Setup\n\nEnable GPG signing:"
-    },
-    {
-      "id": "s1-47",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ git config --global commit.gpgsign true"
-    },
-    {
-      "id": "s1-48",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSet the signing key:"
-    },
-    {
-      "id": "s1-49",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ git config --global user.signingkey <ID>"
-    },
-    {
-      "id": "s1-50",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSet location of GPG:"
-    },
-    {
-      "id": "s1-51",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ git config --global gpg.program <PROGRAM>"
-    },
-    {
-      "id": "s1-52",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\n**Note:** Your name and email must match on Git and GnuPG.\n\n### GPG Program List\n\nReplace `<PROGRAM>` with one of the following:\n\n| Platform    | Value                                      |\n| ----------- | ------------------------------------------ |\n| Windows     | `C:\\Program Files (x86)\\GnuPG\\bin\\gpg.exe` |\n| macOS/Linux | /usr/local/bin/gpg                         |\n\n{.left-text}\n\n### Exporting your public key\n\nExport as ASCII:"
-    },
-    {
-      "id": "s1-53",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ gpg --export --armor <ID>"
-    },
-    {
-      "id": "s1-54",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\n**Note:** Platforms, like GitHub, may ask you to verify the email you set in Git and GnuPG.\n\n## Windows: Add to Startup Apps {.cols-1}\n\n### PowerShell Commands\n\nWhen you do a full restart, the GPG agent might not automatically start. Add the GnuPG's IPC tool to Startup Apps using\nPowerShell:"
-    },
-    {
-      "id": "s1-55",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ $shell = New-Object -ComObject WScript.Shell\n$ $shortcut = $shell.CreateShortcut(\"C:\\Users\\$($Env:UserName)\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\gpg-connect-agent.lnk\")\n$ $shortcut.TargetPath = \"C:\\Program Files (x86)\\GnuPG\\bin\\gpg-connect-agent.exe\"\n$ $shortcut.Arguments = \"/bye\"\n$ $shortcut.Save()"
-    },
-    {
-      "id": "s1-56",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "code",
-      "lang": "",
-      "code": "\nStart up manually instead:"
-    },
-    {
-      "id": "s1-57",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
-      "kind": "text",
-      "body": "$ gpgconf --launch gpg-agent"
-    },
-    {
-      "id": "s1-58",
-      "sectionId": "s1",
-      "title": "Create a key-pair",
+      "id": "s2-52",
+      "sectionId": "s2",
+      "title": "Exporting your public key",
       "kind": "code",
       "lang": "",
       "code": "\nCheck if it was successfully added [here](ms-settings:startupapps)."
@@ -460,7 +414,6 @@
     "path": "source/_posts/gnupg.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/gnupg.md",
-    "generatedAt": "2025-12-16T07:36:11.663Z",
     "lang": "en",
     "mode": "local"
   }

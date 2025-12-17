@@ -1,11 +1,63 @@
 {
   "id": "laravel",
-  "title": "laravel",
+  "name": "Laravel 8 备忘清单",
+  "title": "Laravel 8 备忘清单是最好的 Laravel 代码段和备忘清单参考",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/laravel.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "DB",
+      "startIndex": 49
+    },
+    {
+      "id": "s3",
+      "title": "Input",
+      "startIndex": 61
+    },
+    {
+      "id": "s4",
+      "title": "路由",
+      "startIndex": 64
+    },
+    {
+      "id": "s5",
+      "title": "Model",
+      "startIndex": 76
+    },
+    {
+      "id": "s6",
+      "title": "Schema",
+      "startIndex": 81
+    },
+    {
+      "id": "s7",
+      "title": "Mail",
+      "startIndex": 90
+    },
+    {
+      "id": "s8",
+      "title": "Auth",
+      "startIndex": 92
+    },
+    {
+      "id": "s9",
+      "title": "Helper",
+      "startIndex": 94
+    },
+    {
+      "id": "s10",
+      "title": "另见",
+      "startIndex": 99
     }
   ],
   "cards": [
@@ -14,858 +66,781 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Laravel 8 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "Laravel 8 备忘清单是最好的 Laravel 代码段和备忘清单参考"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n----"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "Artisan",
       "kind": "code",
       "lang": "bash",
       "code": "# 5.1.11 新增：http://laravel.com/docs/authorization#creating-policies\n$ php artisan make:policy PostPolicy\n# 显示给定命令的帮助\n$ php artisan --help 或 -h\n# 不输出任何信息\n$ php artisan --quiet 或 -q\n# 显示此应用程序版本\n$ php artisan --version 或 -V\n# 不要问任何互动问题\n$ php artisan --no-interaction OR -n\n# 强制 ANSI 输出\n$ php artisan --ansi\n# 禁用 ANSI 输出\n$ php artisan --no-ansi\n# 命令应运行的环境\n$ php artisan --env\n# -v|vv|vvv 增加消息的详细程度：1 表示正常输出，2 表示更详细的输出，3 表示调试\n$ php artisan --verbose\n# 删除编译的类文件\n$ php artisan clear-compiled\n# 显示当前框架环境\n$ php artisan env\n# 显示命令的帮助\n$ php artisan help\n# 列出命令\n$ php artisan list\n# 与您的应用程序交互\n$ php artisan tinker\n# 将应用程序置于维护模式\n$ php artisan down\n# 使应用程序退出维护模式\n$ php artisan up\n# 优化框架以获得更好的性能\n# --force 强制写入已编译的类文件\n# --psr 不要优化 Composer dump-autoload\n$ php artisan optimize [--force] [--psr]\n# 在 PHP 开发服务器上提供应用程序\n$ php artisan serve\n# 更改默认端口\n$ php artisan serve --port 8080\n# 让它在本地主机之外工作\n$ php artisan serve --host 0.0.0.0\n# 设置应用命名空间\n$ php artisan app:name namespace\n# 刷新过期的密码重置令牌\n$ php artisan auth:clear-resets\n# 刷新应用程序缓存\n$ php artisan cache:clear\n# 为缓存数据库表创建迁移\n$ php artisan cache:table\n# 创建缓存文件以加快配置加载\n$ php artisan config:cache\n# 删除配置缓存文件\n$ php artisan config:clear\n# 在节目中\n$exitCode = Artisan::call('config:cache');\n# 用记录播种数据库\n# --class 根播种器的类名（默认值：\"DatabaseSeeder\"）\n# --database 种子的数据库连接\n# --force 强制操作在生产中运行\n$ php artisan db:seed [--class[=\"...\"]] [--database[=\"...\"]] [--force]\n\n# 根据注册生成缺失的事件和处理程序\n$ php artisan event:generate\n\n# 创建一个新的命令处理程序类\n# --command 处理程序处理的命令类\n$ php artisan handler:command [--command=\"...\"] name\n# 创建一个新的事件处理程序类\n# --event 处理程序处理的事件类\n# --queued 表示事件处理程序应该排队\n$ php artisan handler:event [--event=\"...\"] [--queued] name\n\n# 设置应用程序密钥\n$ php artisan key:generate\n\n# 默认情况下，这会创建一个不会推送到队列的自我处理命令\n# 传递 --handler 标志以生成处理程序，传递 --queued 标志以使其排队\n$ php artisan make:command [--handler] [--queued] name\n# 创建一个新的 Artisan 命令\n#   --command 应分配的终端命令。 （默认值：“命令：名称”）\nmake:console [--command[=\"...\"]] name\n# 创建一个新的足智多谋的控制器\n# --plain 生成一个空的控制器类\n$ php artisan make:controller [--plain] name\n$ php artisan make:controller App\\\\Admin\\\\Http\\\\Controllers\\\\DashboardController\n# 创建一个新的事件类\n$ php artisan make:event name\n# 新建一个中间件类\n$ php artisan make:middleware name\n# 创建一个新的迁移文件\n# --create 要创建的表\n# --table 要迁移的表\n$ php artisan make:migration [--create[=\"...\"]] [--table[=\"...\"]] name\n# 创建一个新的 Eloquent 模型类\n$ php artisan make:model name\n# 创建一个新的服务提供者类\n$ php artisan make:provider name\n# 新建一个表单请求类\n$ php artisan make:request name\n# 数据库迁移\n# --database 要使用的数据库连接\n# --force 强制操作在生产中运行\n# --path 要执行的迁移文件的路径\n# --pretend 转储将要运行的 SQL 查询\n# --seed 指示是否应重新运行种子任务\n$ php artisan migrate [--database[=\"...\"]] [--force] [--path[=\"...\"]] [--pretend] [--seed]\n# 创建迁移存储库\n$ php artisan migrate:install [--database[=\"...\"]]\n# 创建一个新的迁移文件\n# --seeder 根播种机的类名。\n$ php artisan migrate:refresh [--database[=\"...\"]] [--force] [--seed] [--seeder[=\"...\"]]\n# 回滚所有数据库迁移\n# --pretend 转储将要运行的 SQL 查询。\n$ php artisan migrate:reset [--database[=\"...\"]] [--force] [--pretend]\n# 回滚上次数据库迁移\n$ php artisan migrate:rollback [--database[=\"...\"]] [--force] [--pretend]\n# 显示上/下迁移列表\n$ php artisan migrate:status\n# 为队列作业数据库表创建迁移\n$ php artisan queue:table\n# 收听给定的队列\n# --queue 要监听的队列\n# --delay 延迟失败作业的时间量（默认值：0）\n# --memory 以兆字节为单位的内存限制（默认值：128）\n# --timeout 超时前作业可能运行的秒数（默认值：60）\n# --sleep 在检查作业队列之前等待的秒数（默认值：3）\n# --tries 在记录失败之前尝试作业的次数（默认值：0）\n$ php artisan queue:listen [--queue[=\"...\"]] [--delay[=\"...\"]] [--memory[=\"...\"]] [--timeout[=\"...\"]] [--sleep[=\"...\"]] [--tries[=\"...\"]] [connection]\n# 列出所有失败的队列作业\n$ php artisan queue:failed\n# 为失败队列作业数据库表创建迁移\n$ php artisan queue:failed-table\n# 刷新所有失败的队列作业\n$ php artisan queue:flush\n# 删除失败的队列作业\n$ php artisan queue:forget\n# 在完成当前作业后重新启动队列工作守护进程\n$ php artisan queue:restart\n# 重试一个失败的队列作业（id：失败作业的ID）\n$ php artisan queue:retry id\n# 订阅 Iron.io 推送队列的 URL\n# 队列：Iron.io 队列的名称\n# url：要订阅的URL\n# --type 队列的推送类型\n$ php artisan queue:subscribe [--type[=\"...\"]] queue url\n# 处理队列中的下一个作业\n# --queue 要监听的队列\n# --daemon 以守护进程模式运行worker\n# --delay 延迟失败作业的时间量（默认值：0）\n# --force 即使在维护模式下也强制 worker 运行\n# --memory 以兆字节为单位的内存限制（默认值：128）\n# --sleep 没有工作时休眠的秒数（默认值：3）\n# --tries 在记录失败之前尝试作业的次数（默认值：0）\n$ php artisan queue:work [--queue[=\"...\"]] [--daemon] [--delay[=\"...\"]] [--force] [--memory[=\"...\"]] [--sleep[=\"...\"]] [--tries[=\"...\"]] [connection]\n\n# 创建路由缓存文件以加快路由注册\n$ php artisan route:cache\n# 移除路由缓存文件\n$ php artisan route:clear\n# 列出所有注册的路由\n$ php artisan route:list\n\n# 运行预定的命令\n$ php artisan schedule:run\n\n# 为会话数据库表创建迁移\n$ php artisan session:table\n\n# 从供应商包中发布任何可发布的资产\n# --force 覆盖任何现有文件\n# --provider 具有您要发布的资产的服务提供商\n# --tag 包含您要发布的资产的标签\n$ php artisan vendor:publish [--force] [--provider[=\"...\"]] [--tag[=\"...\"]]\n$ php artisan tail [--path[=\"...\"]] [--lines[=\"...\"]] [connection]"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "Composer",
       "kind": "code",
       "lang": "bash",
       "code": "$ composer create-project laravel/laravel folder_name\n$ composer install\n$ composer update\n$ composer dump-autoload [--optimize]\n$ composer self-update\n$ composer require [options] [--] [vender/packages]..."
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "Config",
       "kind": "code",
       "lang": "php",
       "code": "Config::get('app.timezone');\n// 使用默认值获取\nConfig::get('app.timezone', 'UTC');\n// 设置配置\nConfig::set('database.default', 'sqlite');"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "Environment",
       "kind": "code",
       "lang": "php",
       "code": "$environment = app()->environment();\n$environment = App::environment();\n$environment = $app->environment();\n// 环境是当地的\nif ($app->environment('local')){}\n// 环境要么是本地的，要么是暂存的……\nif ($app->environment('local', 'staging')){}"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "Log 日志",
       "kind": "code",
       "lang": "php",
       "code": "// 记录器提供 RFC 5424 中定义的七个日志记录级别：\n// 调试、信息、通知、警告、错误、严重和警报\n// debug, info, notice, warning, error, critical, 和 alert\nLog::info('info');\nLog::info('info',array('context'=>'additional info'));\nLog::error('error');\nLog::warning('warning');\n// 获取独白实例\nLog::getMonolog();\n// 添加监听器\nLog::listen(function($level, $message, $context) {});"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "Log 日志",
       "kind": "text",
       "body": "查询记录"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "Log 日志",
       "kind": "code",
       "lang": "php",
       "code": "// 启用日志\nDB::connection()->enableQueryLog();\n// 获取已执行查询的数组\nDB::getQueryLog();"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "URL",
       "kind": "code",
       "lang": "php",
       "code": "URL::full();\nURL::current();\nURL::previous();\nURL::to('foo/bar', $parameters, $secure);\nURL::action('NewsController@item', ['id'=>123]);\n// 需要在适当的命名空间中\nURL::action('Auth\\AuthController@logout');\nURL::action('FooController@method', $parameters, $absolute);\nURL::route('foo', $parameters, $absolute);\nURL::secure('foo/bar', $parameters);\nURL::asset('css/foo.css', $secure);\nURL::secureAsset('css/foo.css');\nURL::isValidUrl('http://example.com');\nURL::getRequest();\nURL::setRequest($request);"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "Event",
       "kind": "code",
       "lang": "php",
       "code": "Event::fire('foo.bar', array($bar));\n// 向调度程序注册一个事件侦听器\n// void listen(string|array $events, mixed $listener, int $priority)\nEvent::listen('App\\Events\\UserSignup', function($bar){});\nEvent::listen('foo.*', function($bar){});\nEvent::listen('foo.bar', 'FooHandler', 10);\nEvent::listen('foo.bar', 'BarHandler', 5);\n// 停止传播事件\n// 您可以通过从处理程序返回 false 来执行此操作\nEvent::listen('foor.bar', function($event){ return false; });\nEvent::subscribe('UserEventHandler');"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "Pagination",
       "kind": "code",
       "lang": "php",
       "code": "// 自动魔术分页\nModel::paginate(15);\nModel::where('cars', 2)->paginate(15);\n// 仅“下一个”和“上一个”\nModel::where('cars', 2)->simplePaginate(15);\n// 手动分页器\nPaginator::make($items, $totalItems, $perPage);\n// 在视图中打印页面导航器\n$variable->links();"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "Lang",
       "kind": "code",
       "lang": "php",
       "code": "App::setLocale('en');\nLang::get('messages.welcome');\nLang::get('messages.welcome', array('foo' => 'Bar'));\nLang::has('messages.welcome');\nLang::choice('messages.apples', 10);\n// Lang::get alias\ntrans('messages.welcome');"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "File",
       "kind": "code",
       "lang": "php",
       "code": "File::exists('path');\nFile::get('path');\nFile::getRemote('path');\n// 通过请求获取文件的内容\nFile::getRequire('path');\n// 需要一次给定的文件\nFile::requireOnce('path');\n// 写一个文件的内容\nFile::put('path', 'contents');\n// 附加到文件\nFile::append('path', 'data');\n// 删除给定路径的文件\nFile::delete('path');\n// 将文件移动到新位置\nFile::move('path', 'target');\n// 将文件复制到新位置\nFile::copy('path', 'target');\n// 从文件路径中提取文件扩展名\nFile::extension('path');\n// 获取给定文件的文件类型\nFile::type('path');\n// 获取给定文件的文件大小\nFile::size('path');\n// 获取文件的最后修改时间\nFile::lastModified('path');\n// 确定给定路径是否为目录\nFile::isDirectory('directory');\n// 确定给定路径是否可写\nFile::isWritable('path');\n// 确定给定路径是否为文件\nFile::isFile('file');\n// 查找与给定模式匹配的路径名\nFile::glob($patterns, $flag);\n// 获取目录中所有文件的数组\nFile::files('directory');\n// 从给定目录中获取所有文件（递归）\nFile::allFiles('directory');\n// 获取给定目录中的所有目录\nFile::directories('directory');\n// 创建目录\nFile::makeDirectory('path',  $mode = 0777, $recursive = false);\n// 将目录从一个位置复制到另一个位置\nFile::copyDirectory('directory', 'destination', $options = null);\n// 递归删除目录\nFile::deleteDirectory('directory', $preserve = false);\n// 清空指定目录下的所有文件和文件夹\nFile::cleanDirectory('directory');"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "SSH",
       "kind": "text",
       "body": "执行命令"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "SSH",
       "kind": "code",
       "lang": "php",
       "code": "SSH::run(array $commands);\nSSH::into($remote)->run(array $commands); \n// 指定远程，否则假定默认\nSSH::run(array $commands, function($line)\n{\n  echo $line.PHP_EOL;\n});"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "SSH",
       "kind": "text",
       "body": "任务"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "SSH",
       "kind": "code",
       "lang": "php",
       "code": "// 定义\nSSH::define($taskName, array $commands);\n// 执行\nSSH::task($taskName, function($line)\n{\n  echo $line.PHP_EOL;\n});"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "SSH",
       "kind": "text",
       "body": "SFTP 上传"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "SSH",
       "kind": "code",
       "lang": "php",
       "code": "SSH::put($localFile, $remotePath);\nSSH::putString($string, $remotePath);"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "Cookie",
       "kind": "code",
       "lang": "php",
       "code": "Cookie::get('key');\nCookie::get('key', 'default');\n// 创建一个永远持续的 cookie\nCookie::forever('key', 'value');\n// 创建一个持续 N 分钟的 cookie\nCookie::make('key', 'value', 'minutes');\n// 在创建响应之前设置 cookie\nCookie::queue('key', 'value', 'minutes');\n// 忘记cookie\nCookie::forget('key');\n// 发送带有响应的 cookie\n$response = Response::make('Hello World');\n// 将 cookie 添加到响应中\n$response->withCookie(Cookie::make('name', 'value', $minutes));"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "UnitTest",
       "kind": "text",
       "body": "安装并运行"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "UnitTest",
       "kind": "code",
       "lang": "php",
       "code": "// 添加到作曲家并更新：\n\"phpunit/phpunit\": \"4.0.*\"\n// 运行测试（从项目根目录）\n./vendor/bin/phpunit"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "UnitTest",
       "kind": "text",
       "body": "断言"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s1-23",
+      "sectionId": "s1",
       "title": "UnitTest",
       "kind": "code",
       "lang": "php",
       "code": "$this->assertTrue(true);\n$this->assertEquals('foo', $bar);\n$this->assertCount(1,$times);\n$this->assertResponseOk();\n$this->assertResponseStatus(403);\n$this->assertRedirectedTo('foo');\n$this->assertRedirectedToRoute('route.name');\n$this->assertRedirectedToAction('Controller@method');\n$this->assertViewHas('name');\n$this->assertViewHas('age', $value);\n$this->assertSessionHasErrors();\n// 断言会话有给定键的错误...\n$this->assertSessionHasErrors('name');\n// 断言会话有几个键的错误...\n$this->assertSessionHasErrors(array('name', 'age'));\n$this->assertHasOldInput();"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s1-24",
+      "sectionId": "s1",
       "title": "UnitTest",
       "kind": "text",
       "body": "调用路由"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s1-25",
+      "sectionId": "s1",
       "title": "UnitTest",
       "kind": "code",
       "lang": "php",
       "code": "$response = $this->call($method, $uri, $parameters, $files, $server, $content);\n$response = $this->callSecure('GET', 'foo/bar');\n$this->session(['foo' => 'bar']);\n$this->flushSession();\n$this->seed();\n$this->seed($connection);"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s1-26",
+      "sectionId": "s1",
       "title": "Cache",
       "kind": "code",
       "lang": "php",
       "code": "Cache::put('key', 'value', $minutes);\nCache::add('key', 'value', $minutes);\nCache::forever('key', 'value');\nCache::remember('key', $minutes, function(){ return 'value' });\nCache::rememberForever('key', function(){ return 'value' });\nCache::forget('key');\nCache::has('key');\nCache::get('key');\nCache::get('key', 'default');\nCache::get('key', function(){ return 'default'; });\nCache::tags('my-tag')->put('key','value', $minutes);\nCache::tags('my-tag')->has('key');\nCache::tags('my-tag')->get('key');\nCache::tags('my-tag')->forget('key');\nCache::tags('my-tag')->flush();\nCache::increment('key');\nCache::increment('key', $amount);\nCache::decrement('key');\nCache::decrement('key', $amount);\nCache::section('group')->put('key', $value);\nCache::section('group')->get('key');\nCache::section('group')->flush();"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s1-27",
+      "sectionId": "s1",
       "title": "Session",
       "kind": "code",
       "lang": "php",
       "code": "Session::get('key');\n// 从会话中返回一个项目\nSession::get('key', 'default');\nSession::get('key', function(){ return 'default'; });\n// 获取会话 ID\nSession::getId();\n// 在会话中放置一个键/值对\nSession::put('key', 'value');\n// 将值推送到会话中的数组中\nSession::push('foo.bar','value');\n// 返回会话中的所有项目\nSession::all();\n// 检查一个项目是否被定义\nSession::has('key');\n// 从会话中删除项目\nSession::forget('key');\n// 从会话中删除所有项目\nSession::flush();\n// 生成新的会话标识符\nSession::regenerate();\n// 将键/值对闪存到会话\nSession::flash('key', 'value');\n// 刷新所有会话闪存数据\nSession::reflash();\n// 刷新当前闪存数据的一个子集\nSession::keep(array('key1', 'key2'));"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s1-28",
+      "sectionId": "s1",
       "title": "Response",
       "kind": "code",
       "lang": "php",
       "code": "return Response::make($contents);\nreturn Response::make($contents, 200);\nreturn Response::json(array('key' => 'value'));\nreturn Response::json(array('key' => 'value'))\n->setCallback(Input::get('callback'));\nreturn Response::download($filepath);\nreturn Response::download($filepath, $filename, $headers);\n// 创建响应并修改标头值\n$response = Response::make($contents, 200);\n$response->header('Content-Type', 'application/json');\nreturn $response;\n// 将 cookie 附加到响应\nreturn Response::make($content)\n->withCookie(Cookie::make('key', 'value'));"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s1-29",
+      "sectionId": "s1",
       "title": "Request",
       "kind": "code",
       "lang": "php",
       "code": "// url: http://xx.com/aa/bb\nRequest::url();\n// 路径：/aa/bb\nRequest::path();\n// getRequestUri: /aa/bb/?c=d\nRequest::getRequestUri();\n// 返回用户的IP\nRequest::getClientIp();\n// getUri: http://xx.com/aa/bb/?c=d\nRequest::getUri();\n// 获取查询字符串：c=d\nRequest::getQueryString();\n// 获取请求的端口方案（例如 80、443 等）\nRequest::getPort();\n// 确定当前请求 URI 是否与模式匹配\nRequest::is('foo/*');\n// 从 URI 中获取一个段（基于 1 的索引）\nRequest::segment(1);\n// 从请求中检索标头\nRequest::header('Content-Type');\n// 从请求中检索服务器变量\nRequest::server('PATH_INFO');\n// 确定请求是否是 AJAX 调用的结果\nRequest::ajax();\n// 确定请求是否通过 HTTPS\nRequest::secure();\n// 获取请求方法\nRequest::method();\n// 检查请求方法是否为指定类型\nRequest::isMethod('post');\n// 获取原始 POST 数据\nRequest::instance()->getContent();\n// 获取请求的响应格式\nRequest::format();\n// 如果 HTTP Content-Type 标头包含 */json，则为真\nRequest::isJson();\n// 如果 HTTP Accept 标头是 application/json，则为真\nRequest::wantsJson();"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s1-30",
+      "sectionId": "s1",
       "title": "Container",
       "kind": "code",
       "lang": "php",
       "code": "App::bind('foo', function($app){ return new Foo; });\nApp::make('foo');\n// 如果这个类存在，则返回\nApp::make('FooBar');\n// 在容器中注册共享绑定\nApp::singleton('foo', function(){ return new Foo; });\n// 将现有实例注册为在容器中共享\nApp::instance('foo', new Foo);\n// 注册与容器的绑定\nApp::bind('FooRepositoryInterface', 'BarRepository');\n// 使用应用程序注册服务提供商\nApp::register('FooServiceProvider');\n// 监听对象分辨率\nApp::resolving(function($object){});"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s1-31",
+      "sectionId": "s1",
       "title": "Redirect",
       "kind": "code",
       "lang": "php",
       "code": "return Redirect::to('foo/bar');\nreturn Redirect::to('foo/bar')->with('key', 'value');\nreturn Redirect::to('foo/bar')->withInput(Input::get());\nreturn Redirect::to('foo/bar')->withInput(Input::except('password'));\nreturn Redirect::to('foo/bar')->withErrors($validator);\n// 创建对先前位置的新重定向响应\nreturn Redirect::back();\n// 创建对命名路由的新重定向响应\nreturn Redirect::route('foobar');\nreturn Redirect::route('foobar', array('value'));\nreturn Redirect::route('foobar', array('key' => 'value'));\n// 创建对控制器操作的新重定向响应\nreturn Redirect::action('FooController@index');\nreturn Redirect::action('FooController@baz', array('value'));\nreturn Redirect::action('FooController@baz', array('key' => 'value'));\n// 如果未定义预期的重定向，则默认为 foo/bar。\nreturn Redirect::intended('foo/bar');"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s1-32",
+      "sectionId": "s1",
       "title": "Security",
       "kind": "text",
       "body": "Hashing"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s1-33",
+      "sectionId": "s1",
       "title": "Security",
       "kind": "code",
       "lang": "php",
       "code": "Hash::make('secretpassword');\nHash::check('secretpassword', $hashedPassword);\nHash::needsRehash($hashedPassword);"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s1-34",
+      "sectionId": "s1",
       "title": "Security",
       "kind": "text",
       "body": "Encryption"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s1-35",
+      "sectionId": "s1",
       "title": "Security",
       "kind": "code",
       "lang": "php",
       "code": "Crypt::encrypt('secretstring');\nCrypt::decrypt($encryptedString);\nCrypt::setMode('ctr');\nCrypt::setCipher($cipher);"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s1-36",
+      "sectionId": "s1",
       "title": "Queue",
       "kind": "code",
       "lang": "php",
       "code": "Queue::push('SendMail', array('message' => $message));\nQueue::push('SendEmail@send', array('message' => $message));\nQueue::push(function($job) use $id {});\n// 多个工人的相同有效载荷\nQueue::bulk(array('SendEmail', 'NotifyUser'), $payload);"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s1-37",
+      "sectionId": "s1",
       "title": "Queue",
       "kind": "text",
       "body": "Starting the queue listener"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s1-38",
+      "sectionId": "s1",
       "title": "Queue",
       "kind": "code",
       "lang": "bash",
       "code": "php artisan queue:listen\nphp artisan queue:listen connection\nphp artisan queue:listen --timeout=60\n# 只处理队列中的第一个作业\nphp artisan queue:work\n# 以守护进程模式启动一个队列工作者\nphp artisan queue:work --daemon\n# 为失败的作业创建迁移文件\nphp artisan queue:failed-table\n# 列出失败的工作\nphp artisan queue:failed\n# 通过 id 删除失败的作业\nphp artisan queue:forget 5\n# 删除所有失败的作业\nphp artisan queue:flush"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s1-39",
+      "sectionId": "s1",
       "title": "View",
       "kind": "code",
       "lang": "php",
       "code": "View::make('path/to/view');\nView::make('foo/bar')->with('key', 'value');\nView::make('foo/bar')->withKey('value');\nView::make('foo/bar', array('key' => 'value'));\nView::exists('foo/bar');\n// 在所有视图中共享一个值\nView::share('key', 'value');\n// 嵌套视图\nView::make('foo/bar')->nest('name', 'foo/baz', $data);\n// 注册视图编辑器\nView::composer('viewname', function($view){});\n// 向作曲家注册多个视图\nView::composer(array('view1', 'view2'), function($view){});\n// 注册作曲家类\nView::composer('viewname', 'FooComposer');\nView::creator('viewname', function($view){});"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s1-40",
+      "sectionId": "s1",
       "title": "Validation",
       "kind": "code",
       "lang": "php",
       "code": "Validator::make(\narray('key' => 'Foo'),\narray('key' => 'required|in:Foo')\n);\nValidator::extend('foo', function($attribute, $value, $params){});\nValidator::extend('foo', 'FooValidator@validate');\nValidator::resolver(function($translator, $data, $rules, $msgs)\n{\nreturn new FooValidator($translator, $data, $rules, $msgs);\n});"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s1-41",
+      "sectionId": "s1",
       "title": "Validation",
       "kind": "text",
       "body": "#### Rules"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s1-42",
+      "sectionId": "s1",
       "title": "Validation",
       "kind": "text",
       "body": "• accepted\n• active_url\n• after:YYYY-MM-DD\n• before:YYYY-MM-DD\n• alpha\n• alpha_dash\n• alpha_num\n• array\n• between:1,10\n• confirmed\n• date\n• date_format:YYYY-MM-DD\n• different:fieldname\n• digits:value\n• digits_between:min,max\n• boolean\n• email\n• exists:table,column\n• image\n• in:foo,bar,...\n• not_in:foo,bar,...\n• integer\n• numeric\n• ip\n• max:value\n• min:value\n• mimes:jpeg,png\n• regex:[0-9]\n• required\n• required_if:field,value\n• required_with:foo,bar,...\n• required_with_all:foo,bar,...\n• required_without:foo,bar,...\n• required_without_all:foo,bar,...\n• same:field\n• size:value\n• timezone\n• unique:table,column,except,idColumn\n• url"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s1-43",
+      "sectionId": "s1",
       "title": "Form",
       "kind": "code",
       "lang": "php",
       "code": "Form::open(array('url' => 'foo/bar', 'method' => 'PUT'));\nForm::open(array('route' => 'foo.bar'));\nForm::open(array('route' => array('foo.bar', $parameter)));\nForm::open(array('action' => 'FooController@method'));\nForm::open(array('action' => array('FooController@method', $parameter)));\nForm::open(array('url' => 'foo/bar', 'files' => true));\nForm::close();\nForm::token();\nForm::model($foo, array('route' => array('foo.bar', $foo->bar)));"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s1-44",
+      "sectionId": "s1",
       "title": "Form",
       "kind": "text",
       "body": "#### Form Elements"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s1-45",
+      "sectionId": "s1",
       "title": "Form",
       "kind": "code",
       "lang": "php",
       "code": "Form::label('id', 'Description');\nForm::label('id', 'Description', array('class' => 'foo'));\nForm::text('name');\nForm::text('name', $value);\nForm::text('name', $value, array('class' => 'name'));\nForm::textarea('name');\nForm::textarea('name', $value);\nForm::textarea('name', $value, array('class' => 'name'));\nForm::hidden('foo', $value);\nForm::password('password');\nForm::password('password', array('placeholder' => 'Password'));\nForm::email('name', $value, array());\nForm::file('name', array('class' => 'name'));\nForm::checkbox('name', 'value');\n// 生成一个被选中的复选框\nForm::checkbox('name', 'value', true, array('class' => 'name'));\nForm::radio('name', 'value');\n// 生成选定的无线电输入\nForm::radio('name', 'value', true, array('class' => 'name'));\nForm::select('name', array('key' => 'value'));\nForm::select('name', array('key' => 'value'), 'key', array('class' => 'name'));\nForm::selectRange('range', 1, 10);\nForm::selectYear('year', 2011, 2015);\nForm::selectMonth('month');\nForm::submit('Submit!', array('class' => 'name'));\nForm::button('name', array('class' => 'name'));\nForm::macro('fooField', function()\n{\nreturn '<input type=\"custom\"/>';\n});\nForm::fooField();"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s1-46",
+      "sectionId": "s1",
       "title": "String",
       "kind": "code",
       "lang": "php",
       "code": "// 将 UTF-8 值音译为 ASCII\nStr::ascii($value)\nStr::camel($value)\nStr::contains($haystack, $needle)\nStr::endsWith($haystack, $needles)\n// 用给定值的单个实例来限制字符串。\nStr::finish($value, $cap)\nStr::is($pattern, $value)\nStr::length($value)\nStr::limit($value, $limit = 100, $end = '...')\nStr::lower($value)\nStr::words($value, $words = 100, $end = '...')\nStr::plural($value, $count = 2)\n// 生成更真实的“随机”字母数字字符串。\nStr::random($length = 16)\n// 生成“随机”字母数字字符串。\nStr::quickRandom($length = 16)\nStr::upper($value)\nStr::title($value)\nStr::singular($value)\nStr::slug($title, $separator = '-')\nStr::snake($value, $delimiter = '_')\nStr::startsWith($haystack, $needles)\n// 将值转换为大写大小写。\nStr::studly($value)\nStr::macro($name, $macro)"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s1-47",
+      "sectionId": "s1",
       "title": "Blade",
       "kind": "code",
       "lang": "php",
       "code": "// 在模板中显示一个部分\n@yield('name')\n@extends('layout.name')\n// 开始一个部分\n@section('name')\n// 结束一段\n@stop\n// 结束一个部分并屈服\n@section('sidebar')\n@show\n@parent\n\n@include('view.name')\n@include('view.name', array('key' => 'value'));\n@lang('messages.name')\n@choice('messages.name', 1);\n\n@if\n@else\n@elseif\n@endif\n\n@unless\n@endunless\n\n@for\n@endfor\n\n@foreach\n@endforeach\n\n@while\n@endwhile\n\n// 预测 4.2 功能\n@forelse($users as $user)\n@empty\n@endforelse\n\n// Echo 内容\n{{ $var }}\n// Echo 转义内容\n{{{ $var }}}\n// Echo 未转义的内容； 5.0 功能\n{!! $var !!}\n{{-- Blade Comment --}}\n// 检查存在后 Echo 数据\n{{{ $name or 'Default' }}}\n// 显示带有花括号的原始文本\n@{{ This will not be processed by Blade }}"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s1-48",
+      "sectionId": "s1",
       "title": "HTML",
       "kind": "code",
       "lang": "php",
       "code": "HTML::macro('name', function(){});\n// 将 HTML 字符串转换为实体\nHTML::entities($value);\n// 将实体转换为 HTML 字符\nHTML::decode($value);\n// 生成指向 JavaScript 文件的链接\nHTML::script($url, $attributes);\n// 生成指向 CSS 文件的链接\nHTML::style($url, $attributes);\n// 生成 HTML 图像元素\nHTML::image($url, $alt, $attributes);\n// 生成 HTML 链接\nHTML::link($url, 'title', $attributes, $secure);\n// 生成 HTTPS HTML 链接\nHTML::secureLink($url, 'title', $attributes);\n// 生成资产的 HTML 链接\nHTML::linkAsset($url, 'title', $attributes, $secure);\n// 生成指向资产的 HTTPS HTML 链接\nHTML::linkSecureAsset($url, 'title', $attributes);\n// 生成指向命名路由的 HTML 链接\nHTML::linkRoute($name, 'title', $parameters, $attributes);\n// 生成指向控制器操作的 HTML 链接\nHTML::linkAction($action, 'title', $parameters, $attributes);\n// 生成指向电子邮件地址的 HTML 链接\nHTML::mailto($email, 'title', $attributes);\n// 混淆电子邮件地址以防止垃圾邮件机器人嗅探它\nHTML::email($email);\n// 生成有序的项目列表\nHTML::ol($list, $attributes);\n// 生成一个未排序的项目列表\nHTML::ul($list, $attributes);\n// 创建一个列表 HTML 元素\nHTML::listing($type, $list, $attributes);\n// 为列表元素创建 HTML\nHTML::listingElement($key, $type, $value);\n// 为嵌套列表属性创建 HTML\nHTML::nestedListing($key, $type, $value);\n// 从数组构建 HTML 属性字符串\nHTML::attributes($attributes);\n// 构建单个属性元素\nHTML::attributeElement($key, $value);\n// 混淆字符串以防止垃圾邮件机器人嗅探它\nHTML::obfuscate($value);"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
-      "title": "HTML",
-      "kind": "text",
-      "body": "DB\n---"
-    },
-    {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s2-49",
+      "sectionId": "s2",
       "title": "基本数据库使用",
       "kind": "code",
       "lang": "php",
       "code": "DB::connection('connection_name');\n// 运行选择查询\n$results = DB::select('select * from users where id = ?', [1]);\n$results = DB::select('select * from users where id = :id', ['id' => 1]);\n// 运行一般声明\nDB::statement('drop table users');\n// 侦听查询事件\nDB::listen(function($sql, $bindings, $time){ code_here; });\n// 数据库事务\nDB::transaction(function()\n{\n  DB::table('users')->update(['votes' => 1]);\n  DB::table('posts')->delete();\n});\nDB::beginTransaction();\nDB::rollback();\nDB::commit();"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s2-50",
+      "sectionId": "s2",
       "title": "查询生成器",
       "kind": "code",
       "lang": "php",
       "code": "// 从表中检索所有行\nDB::table('name')->get();\n// 表中的分块结果\nDB::table('users')->chunk(100, function($users)\n{\n  foreach ($users as $user)\n  {  \n//\n}\n});\n// 从表中检索单行\n$user = DB::table('users')->where('name', 'John')->first();\nDB::table('name')->first();\n// 从一行中检索单个列\n$name = DB::table('users')->where('name', 'John')->pluck('name');\nDB::table('name')->pluck('column');\n// 检索列值列表\n$roles = DB::table('roles')->lists('title');\n$roles = DB::table('roles')->lists('title', 'name');\n// 指定 Select 子句\n$users = DB::table('users')->select('name', 'email')->get();\n$users = DB::table('users')->distinct()->get();\n$users = DB::table('users')->select('name as user_name')->get();\n// 将 Select 子句添加到现有查询\n$query = DB::table('users')->select('name');\n$users = $query->addSelect('age')->get();\n// 使用 Where 运算符\n$users = DB::table('users')->where('votes', '>', 100)->get();\n$users = DB::table('users')\n              ->where('votes', '>', 100)\n              ->orWhere('name', 'John')\n              ->get();\n$users = DB::table('users')\n              ->whereBetween('votes', [1, 100])->get();\n$users = DB::table('users')\n              ->whereNotBetween('votes', [1, 100])->get();\n$users = DB::table('users')\n              ->whereIn('id', [1, 2, 3])->get();\n$users = DB::table('users')\n              ->whereNotIn('id', [1, 2, 3])->get();\n$users = DB::table('users')\n              ->whereNull('updated_at')->get();\nDB::table('name')->whereNotNull('column')->get();\n// 动态 Where 子句\n$admin = DB::table('users')->whereId(1)->first();\n$john = DB::table('users')\n              ->whereIdAndEmail(2, 'john@doe.com')\n              ->first();\n$jane = DB::table('users')\n              ->whereNameOrAge('Jane', 22)\n              ->first();\n// 排序依据、分组依据和拥有\n$users = DB::table('users')\n              ->orderBy('name', 'desc')\n              ->groupBy('count')\n              ->having('count', '>', 100)\n              ->get();\nDB::table('name')->orderBy('column')->get();\nDB::table('name')->orderBy('column','desc')->get();\nDB::table('name')->having('count', '>', 100)->get();\n// 偏移和限制\n$users = DB::table('users')->skip(10)->take(5)->get();"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s2-51",
+      "sectionId": "s2",
       "title": "Joins",
       "kind": "text",
       "body": "基本加入声明"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s2-52",
+      "sectionId": "s2",
       "title": "Joins",
       "kind": "code",
       "lang": "php",
       "code": "DB::table('users')\n      ->join('contacts', 'users.id', '=', 'contacts.user_id')\n      ->join('orders', 'users.id', '=', 'orders.user_id')\n      ->select('users.id', 'contacts.phone', 'orders.price')\n      ->get();"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s2-53",
+      "sectionId": "s2",
       "title": "Joins",
       "kind": "text",
       "body": "左连接语句"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s2-54",
+      "sectionId": "s2",
       "title": "Joins",
       "kind": "code",
       "lang": "php",
       "code": "DB::table('users')\n    ->leftJoin('posts', 'users.id', '=', 'posts.user_id')\n    ->get();\n// select * from name = 'John' or (votes > 100 and title <> 'Admin')\nDB::table('users')\n        ->where('name', '=', 'John')\n        ->orWhere(function($query)\n        {\n            $query->where('votes', '>', 100)\n                  ->where('title', '<>', 'Admin');\n        })\n        ->get();"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s2-55",
+      "sectionId": "s2",
       "title": "Aggregates",
       "kind": "code",
       "lang": "php",
       "code": "$users = DB::table('users')->count();\n$price = DB::table('orders')->max('price');\n$price = DB::table('orders')->min('price');\n$price = DB::table('orders')->avg('price');\n$total = DB::table('users')->sum('votes');\n\nDB::table('name')->remember(5)->get();\nDB::table('name')->remember(5, 'cache-key-name')->get();\nDB::table('name')->cacheTags('my-key')->remember(5)->get();\nDB::table('name')\n    ->cacheTags(array('my-first-key','my-second-key'))\n    ->remember(5)\n    ->get();"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s2-56",
+      "sectionId": "s2",
       "title": "原始表达式",
       "kind": "code",
       "lang": "php",
       "code": "$users = DB::table('users')\n        ->select(DB::raw('count(*) as user_count, status'))\n        ->where('status', '<>', 1)\n        ->groupBy('status')\n        ->get();\n// 返回行\nDB::select('select * from users where id = ?', array('value'));\n// 返回 nr 个受影响的行\nDB::insert('insert into foo set bar=2');\nDB::update('update foo set bar=2');\nDB::delete('delete from bar');\n// 返回无效\nDB::statement('update foo set bar=2');\n// 语句中的原始表达式\nDB::table('name')\n        ->select(DB::raw('count(*) as count, column2'))\n        ->get();"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s2-57",
+      "sectionId": "s2",
       "title": "Inserts 插入",
       "kind": "code",
       "lang": "php",
       "code": "DB::table('users')->insert(\n  ['email' => 'john@example.com', 'votes' => 0]\n);\n$id = DB::table('users')->insertGetId(\n  ['email' => 'john@example.com', 'votes' => 0]\n);\nDB::table('users')->insert([\n  ['email' => 'taylor@example.com', 'votes' => 0],\n  ['email' => 'dayle@example.com', 'votes' => 0]\n]);"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s2-58",
+      "sectionId": "s2",
       "title": "Updates 更新",
       "kind": "code",
       "lang": "php",
       "code": "DB::table('users')\n          ->where('id', 1)\n          ->update(['votes' => 1]);\nDB::table('users')->increment('votes');\nDB::table('users')->increment('votes', 5);\nDB::table('users')->decrement('votes');\nDB::table('users')->decrement('votes', 5);\nDB::table('users')->increment('votes', 1, ['name' => 'John']);"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s2-59",
+      "sectionId": "s2",
       "title": "Deletes 删除",
       "kind": "code",
       "lang": "php",
       "code": "DB::table('users')->where('votes', '<', 100)->delete();\nDB::table('users')->delete();\nDB::table('users')->truncate();"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
+      "id": "s2-60",
+      "sectionId": "s2",
       "title": "Unions 联合",
       "kind": "code",
       "lang": "php",
       "code": "// unionAll() 方法也可用，并且具有与 union 相同的方法签名\n$first = DB::table('users')->whereNull('first_name');\n$users = DB::table('users')->whereNull('last_name')->union($first)->get();\n// Pessimistic Locking 悲观锁定\nDB::table('users')->where('votes', '>', 100)->sharedLock()->get();\nDB::table('users')->where('votes', '>', 100)->lockForUpdate()->get();"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
-      "title": "Unions 联合",
-      "kind": "text",
-      "body": "Input\n---"
-    },
-    {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s3-61",
+      "sectionId": "s3",
       "title": "Input",
       "kind": "code",
       "lang": "php",
       "code": "Input::get('key');\n// 如果密钥丢失则默认\nInput::get('key', 'default');\nInput::has('key');\nInput::all();\n// 获取输入时仅检索“foo”和“bar”\nInput::only('foo', 'bar');\n// 获取输入时忽略“foo”\nInput::except('foo');\nInput::flush();"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s3-62",
+      "sectionId": "s3",
       "title": "Session Input (flash)",
       "kind": "code",
       "lang": "php",
       "code": "// 会话的闪存输入\nInput::flash();\n// 只闪烁会话的一些输入\nInput::flashOnly('foo', 'bar');\n// 只闪烁会话的一些输入\nInput::flashExcept('foo', 'baz');\n// 检索旧输入项\nInput::old('key','default_value');"
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s3-63",
+      "sectionId": "s3",
       "title": "Files",
       "kind": "code",
       "lang": "php",
       "code": "// 使用已上传的文件\nInput::file('filename');\n// 判断文件是否上传\nInput::hasFile('filename');\n// 访问文件属性\nInput::file('name')->getRealPath();\nInput::file('name')->getClientOriginalName();\nInput::file('name')->getClientOriginalExtension();\nInput::file('name')->getSize();\nInput::file('name')->getMimeType();\n// 移动上传的文件\nInput::file('name')->move($destinationPath);\n// 移动上传的文件\nInput::file('name')->move($destinationPath, $fileName);"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
-      "title": "Files",
-      "kind": "text",
-      "body": "路由\n---"
-    },
-    {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s4-64",
+      "sectionId": "s4",
       "title": "Route",
       "kind": "code",
       "lang": "php",
       "code": "Route::get('foo', function(){});\nRoute::get('foo', 'ControllerName@function');\nRoute::controller('foo', 'FooController');"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
+      "id": "s4-65",
+      "sectionId": "s4",
       "title": "RESTful 控制器",
       "kind": "code",
       "lang": "php",
       "code": "Route::resource('posts','PostsController');\n// 指定要在路线上处理的动作子集\nRoute::resource('photo', 'PhotoController',['only' => ['index', 'show']]);\nRoute::resource('photo', 'PhotoController',['except' => ['update', 'destroy']]);"
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s4-66",
+      "sectionId": "s4",
       "title": "触发错误",
       "kind": "code",
       "lang": "php",
       "code": "App::abort(404);\n$handler->missing(...) in ErrorServiceProvider::boot();\n\nthrow new NotFoundHttpException;"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
+      "id": "s4-67",
+      "sectionId": "s4",
       "title": "路由参数",
       "kind": "code",
       "lang": "php",
       "code": "Route::get('foo/{bar}', function($bar){});\nRoute::get('foo/{bar?}', function($bar = 'bar'){});"
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s4-68",
+      "sectionId": "s4",
       "title": "HTTP 动词",
       "kind": "code",
       "lang": "php",
       "code": "Route::any('foo', function(){});\nRoute::post('foo', function(){});\nRoute::put('foo', function(){});\nRoute::patch('foo', function(){});\nRoute::delete('foo', function(){});\n// RESTful 动作\nRoute::resource('foo', 'FooController');\n// 为多个动词注册一个路由\nRoute::match(['get', 'post'], '/', function(){});"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s4-69",
+      "sectionId": "s4",
       "title": "Secure Routes(TBD)",
       "kind": "code",
       "lang": "php",
       "code": "Route::get('foo', array('https', function(){}));"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s4-70",
+      "sectionId": "s4",
       "title": "路由约束",
       "kind": "code",
       "lang": "php",
       "code": "Route::get('foo/{bar}', function($bar){})\n->where('bar', '[0-9]+');\nRoute::get('foo/{bar}/{baz}', function($bar, $baz){})\n->where(array('bar' => '[0-9]+', 'baz' => '[A-Za-z]'))\n\n// 设置跨路线使用的模式\nRoute::pattern('bar', '[0-9]+')"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
+      "id": "s4-71",
+      "sectionId": "s4",
       "title": "HTTP 中间件",
       "kind": "code",
       "lang": "php",
       "code": "// 为路由分配中间件\nRoute::get('admin/profile', ['middleware' => 'auth', function(){}]);"
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
+      "id": "s4-72",
+      "sectionId": "s4",
       "title": "命名路由",
       "kind": "code",
       "lang": "php",
       "code": "Route::currentRouteName();\nRoute::get('foo/bar', array('as' => 'foobar', function(){}));\nRoute::get('user/profile', [\n  'as' => 'profile', 'uses' => 'UserController@showProfile'\n]);\n$url = route('profile');\n$redirect = redirect()->route('profile');"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
+      "id": "s4-73",
+      "sectionId": "s4",
       "title": "路由前缀",
       "kind": "code",
       "lang": "php",
       "code": "Route::group(['prefix' => 'admin'], function()\n{\n  Route::get('users', function(){\n      return 'Matches The \"/admin/users\" URL';\n  });\n});"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
+      "id": "s4-74",
+      "sectionId": "s4",
       "title": "路由命名空间",
       "kind": "code",
       "lang": "php",
       "code": "// 该路由组将携带命名空间“Foo\\Bar”\nRoute::group(array('namespace' => 'Foo\\Bar'), function(){})"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
+      "id": "s4-75",
+      "sectionId": "s4",
       "title": "子域路由",
       "kind": "code",
       "lang": "php",
       "code": "// {sub} 将被传递给闭包\nRoute::group(array('domain' => '{sub}.example.com'), function(){});"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
-      "title": "子域路由",
-      "kind": "text",
-      "body": "Model\n----"
-    },
-    {
-      "id": "intro-82",
-      "sectionId": "intro",
+      "id": "s5-76",
+      "sectionId": "s5",
       "title": "基本用法",
       "kind": "code",
       "lang": "php",
       "code": "// 定义 Eloquent 模型\nclass User extends Model {}\n// 生成 Eloquent 模型\nphp artisan make:model User\n// 指定自定义表名\nclass User extends Model {\n  protected $table = 'my_users';\n}"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
+      "id": "s5-77",
+      "sectionId": "s5",
       "title": "More",
       "kind": "code",
       "lang": "php",
       "code": "Model::create(array('key' => 'value'));\n// 按属性查找第一个匹配记录或创建\nModel::firstOrCreate(array('key' => 'value'));\n// 按属性查找第一条记录或实例化\nModel::firstOrNew(array('key' => 'value'));\n// 创建或更新匹配属性的记录，并填充值\nModel::updateOrCreate(array('search_key' => 'search_value'), array('key' => 'value'));\n// 用属性数组填充模型，注意批量赋值！\nModel::fill($attributes);\nModel::destroy(1);\nModel::all();\nModel::find(1);\n// 使用双主键查找\nModel::find(array('first', 'last'));\n// 如果查找失败则抛出异常\nModel::findOrFail(1);\n// 使用双主键查找并在查找失败时抛出异常\nModel::findOrFail(array('first', 'last'));\nModel::where('foo', '=', 'bar')->get();\nModel::where('foo', '=', 'bar')->first();\n// 动态的\nModel::whereFoo('bar')->first();\n// 如果查找失败则抛出异常\nModel::where('foo', '=', 'bar')->firstOrFail();\nModel::where('foo', '=', 'bar')->count();\nModel::where('foo', '=', 'bar')->delete();\n// 输出原始查询\nModel::where('foo', '=', 'bar')->toSql();\nModel::whereRaw('foo = bar and cars = 2', array(20))->get();\nModel::remember(5)->get();\nModel::remember(5, 'cache-key-name')->get();\nModel::cacheTags('my-tag')->remember(5)->get();\nModel::cacheTags(array('my-first-key','my-second-key'))->remember(5)->get();\nModel::on('connection-name')->find(1);\nModel::with('relation')->get();\nModel::all()->take(10);\nModel::all()->skip(10);\n// 默认 Eloquent 排序方兴未艾\nModel::all()->orderBy('column');\nModel::all()->orderBy('column','desc');"
     },
     {
-      "id": "intro-84",
-      "sectionId": "intro",
+      "id": "s5-78",
+      "sectionId": "s5",
       "title": "Soft Delete",
       "kind": "code",
       "lang": "php",
       "code": "Model::withTrashed()->where('cars', 2)->get();\n// 在结果中包含软删除模型\nModel::withTrashed()->where('cars', 2)->restore();\nModel::where('cars', 2)->forceDelete();\n// 强制结果集只包含软删除\nModel::onlyTrashed()->where('cars', 2)->get();"
     },
     {
-      "id": "intro-85",
-      "sectionId": "intro",
+      "id": "s5-79",
+      "sectionId": "s5",
       "title": "Events",
       "kind": "code",
       "lang": "php",
       "code": "Model::creating(function($model){});\nModel::created(function($model){});\nModel::updating(function($model){});\nModel::updated(function($model){});\nModel::saving(function($model){});\nModel::saved(function($model){});\nModel::deleting(function($model){});\nModel::deleted(function($model){});\nModel::observe(new FooObserver);"
     },
     {
-      "id": "intro-86",
-      "sectionId": "intro",
+      "id": "s5-80",
+      "sectionId": "s5",
       "title": "Eloquent Configuration",
       "kind": "code",
       "lang": "php",
       "code": "// 禁止从模型插入和更新中抛出批量分配异常\nEloquent::unguard();\n// 启用任何抛出批量分配异常的能力\nEloquent::reguard();"
     },
     {
-      "id": "intro-87",
-      "sectionId": "intro",
-      "title": "Eloquent Configuration",
-      "kind": "text",
-      "body": "Schema\n---"
-    },
-    {
-      "id": "intro-88",
-      "sectionId": "intro",
+      "id": "s6-81",
+      "sectionId": "s6",
       "title": "Schema",
       "kind": "code",
       "lang": "php",
       "code": "// 表示需要创建表\nSchema::create('table', function($table)\n{\n  $table->increments('id');\n});\n// 指定连接\nSchema::connection('foo')->create('table', function($table){});\n// 将表重命名为给定名称\nSchema::rename($from, $to);\n// 表示应该删除该表\nSchema::drop('table');\n// 指示如果表存在则应将其删除\nSchema::dropIfExists('table');\n// 确定给定表是否存在\nSchema::hasTable('table');\n// 确定给定表是否具有给定列\nSchema::hasColumn('table', 'column');\n// 更新现有表\nSchema::table('table', function($table){});\n// 指示应重命名给定的列\n$table->renameColumn('from', 'to');\n// 指示应删除给定的列\n$table->dropColumn(string|array);\n// 应该用于表的存储引擎\n$table->engine = 'InnoDB';\n// 仅适用于 MySQL\n$table->string('name')->after('email');"
     },
     {
-      "id": "intro-89",
-      "sectionId": "intro",
+      "id": "s6-82",
+      "sectionId": "s6",
       "title": "Indexes",
       "kind": "code",
       "lang": "php",
       "code": "$table->string('column')->unique();\n$table->primary('column');\n// 创建双主键\n$table->primary(array('first', 'last'));\n$table->unique('column');\n$table->unique('column', 'key_name');\n// 创建双唯一索引\n$table->unique(array('first', 'last'));\n$table->unique(array('first', 'last'), 'key_name');\n$table->index('column');\n$table->index('column', 'key_name');\n// 创建双索引\n$table->index(array('first', 'last'));\n$table->index(array('first', 'last'), 'key_name');\n$table->dropPrimary('table_column_primary');\n$table->dropUnique('table_column_unique');\n$table->dropIndex('table_column_index');"
     },
     {
-      "id": "intro-90",
-      "sectionId": "intro",
+      "id": "s6-83",
+      "sectionId": "s6",
       "title": "Foreign Keys",
       "kind": "code",
       "lang": "php",
       "code": "$table->foreign('user_id')->references('id')->on('users');\n$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'|'restrict'|'set null'|'no action');\n$table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade'|'restrict'|'set null'|'no action');\n$table->dropForeign('posts_user_id_foreign');"
     },
     {
-      "id": "intro-91",
-      "sectionId": "intro",
+      "id": "s6-84",
+      "sectionId": "s6",
       "title": "列类型 - 增量",
       "kind": "code",
       "lang": "php",
       "code": "$table->increments('id');\n$table->bigIncrements('id');"
     },
     {
-      "id": "intro-92",
-      "sectionId": "intro",
+      "id": "s6-85",
+      "sectionId": "s6",
       "title": "列类型 - 字符串和文本",
       "kind": "code",
       "lang": "php",
       "code": "$table->char('name', 4);\n$table->string('email');\n$table->string('name', 100);\n$table->text('description');\n$table->mediumText('description');\n$table->longText('description');"
     },
     {
-      "id": "intro-93",
-      "sectionId": "intro",
+      "id": "s6-86",
+      "sectionId": "s6",
       "title": "列类型 - 数字",
       "kind": "code",
       "lang": "php",
       "code": "$table->integer('votes');\n$table->tinyInteger('votes');\n$table->smallInteger('votes');\n$table->mediumInteger('votes');\n$table->bigInteger('votes');\n$table->float('amount');\n$table->double('column', 15, 8);\n$table->decimal('amount', 5, 2);"
     },
     {
-      "id": "intro-94",
-      "sectionId": "intro",
+      "id": "s6-87",
+      "sectionId": "s6",
       "title": "列类型 - 日期和时间",
       "kind": "code",
       "lang": "php",
       "code": "$table->date('created_at');\n$table->dateTime('created_at');\n$table->time('sunrise');\n$table->timestamp('added_on');"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
+      "id": "s6-88",
+      "sectionId": "s6",
       "title": "列类型 - 添加 created_at 和 updated_at 列",
       "kind": "code",
       "lang": "php",
       "code": "$table->timestamps();\n$table->nullableTimestamps();"
     },
     {
-      "id": "intro-96",
-      "sectionId": "intro",
+      "id": "s6-89",
+      "sectionId": "s6",
       "title": "列类型 - 其他",
       "kind": "code",
       "lang": "php",
       "code": "$table->binary('data');\n$table->boolean('confirmed');\n// 为软删除添加 deleted_at 列\n$table->softDeletes();\n$table->enum('choices', array('foo', 'bar'));\n// 添加 remember_token 作为 VARCHAR(100) NULL\n$table->rememberToken();\n// 添加 INTEGER parent_id 和 STRING parent_type\n$table->morphs('parent');\n->nullable()\n->default($value)\n->unsigned()"
     },
     {
-      "id": "intro-97",
-      "sectionId": "intro",
-      "title": "列类型 - 其他",
-      "kind": "text",
-      "body": "Mail\n---"
-    },
-    {
-      "id": "intro-98",
-      "sectionId": "intro",
+      "id": "s7-90",
+      "sectionId": "s7",
       "title": "Mail",
       "kind": "code",
       "lang": "php",
       "code": "Mail::send('email.view', $data, function($message){});\nMail::send(array('html.view', 'text.view'), $data, $callback);\nMail::queue('email.view', $data, function($message){});\nMail::queueOn('queue-name', 'email.view', $data, $callback);\nMail::later(5, 'email.view', $data, function($message){});\n// 将所有电子邮件写入日志而不是发送\nMail::pretend();"
     },
     {
-      "id": "intro-99",
-      "sectionId": "intro",
+      "id": "s7-91",
+      "sectionId": "s7",
       "title": "Messages",
       "kind": "code",
       "lang": "php",
       "code": "// 这些可以用在传递给 Mail::send() 或 Mail::queue() 的 $message 实例上\n$message->from('email@example.com', 'Mr. Example');\n$message->sender('email@example.com', 'Mr. Example');\n$message->returnPath('email@example.com');\n$message->to('email@example.com', 'Mr. Example');\n$message->cc('email@example.com', 'Mr. Example');\n$message->bcc('email@example.com', 'Mr. Example');\n$message->replyTo('email@example.com', 'Mr. Example');\n$message->subject('Welcome to the Jungle');\n$message->priority(2);\n$message->attach('foo\\bar.txt', $options);\n// 这使用内存中的数据作为附件\n$message->attachData('bar', 'Data Name', $options);\n// 在消息中嵌入文件并获取 CID\n$message->embed('foo\\bar.txt');\n$message->embedData('foo', 'Data Name', $options);\n// 获取底层的 Swift Message 实例\n$message->getSwiftMessage();"
     },
     {
-      "id": "intro-100",
-      "sectionId": "intro",
-      "title": "Messages",
-      "kind": "text",
-      "body": "Auth\n---"
-    },
-    {
-      "id": "intro-101",
-      "sectionId": "intro",
+      "id": "s8-92",
+      "sectionId": "s8",
       "title": "Authentication",
       "kind": "code",
       "lang": "php",
       "code": "// 判断当前用户是否通过认证\nAuth::check();\n// 获取当前认证的用户\nAuth::user();\n// 获取当前认证用户的ID\nAuth::id();\n// 尝试使用给定的凭据对用户进行身份验证\nAuth::attempt(array('email' => $email, 'password' => $password));\n// 通过将 true 传递给 Auth::attempt() 来“记住我”\nAuth::attempt($credentials, true);\n// 登录一个请求\nAuth::once($credentials);\n// 将用户登录到应用程序\nAuth::login(User::find(1));\n// 将给定的用户 ID 登录到应用程序中\nAuth::loginUsingId(1);\n// 从应用程序中注销用户\nAuth::logout();\n// 验证用户的凭据\nAuth::validate($credentials);\n// 尝试使用 HTTP Basic Auth 进行身份验证\nAuth::basic('username');\n// 执行无状态 HTTP 基本登录尝试\nAuth::onceBasic();\n// 向用户发送密码提醒\nPassword::remind($credentials, function($message, $user){});"
     },
     {
-      "id": "intro-102",
-      "sectionId": "intro",
+      "id": "s8-93",
+      "sectionId": "s8",
       "title": "Authorization",
       "kind": "code",
       "lang": "php",
       "code": "// 定义能力\nGate::define('update-post', 'Class@method');\nGate::define('update-post', function ($user, $post) {...});\n// 传递多个参数\nGate::define('delete-comment', function ($user, $post, $comment) {});\n\n// 检查能力\nGate::denies('update-post', $post);\nGate::allows('update-post', $post);\nGate::check('update-post', $post);\n// 指定一个用户进行检查\nGate::forUser($user)->allows('update-post', $post);\n// 通过 User 模型，使用 Authorizable trait\nUser::find(1)->can('update-post', $post);\nUser::find(1)->cannot('update-post', $post);\n\n// 拦截授权检查\nGate::before(function ($user, $ability) {});\nGate::after(function ($user, $ability) {});\n\n// 在 Blade 模板中检查\n@can('update-post', $post)\n@endcan\n// with else\n@can('update-post', $post)\n@else\n@endcan\n\n// 生成策略\nphp artisan make:policy PostPolicy\n// `policy` 辅助函数\npolicy($post)->update($user, $post)\n\n// 控制器授权\n$this->authorize('update', $post);\n// for $user\n$this->authorizeForUser($user, 'update', $post);"
     },
     {
-      "id": "intro-103",
-      "sectionId": "intro",
-      "title": "Authorization",
-      "kind": "text",
-      "body": "Helper\n---"
-    },
-    {
-      "id": "intro-104",
-      "sectionId": "intro",
+      "id": "s9-94",
+      "sectionId": "s9",
       "title": "Arrays",
       "kind": "code",
       "lang": "php",
       "code": "// 将给定的键/值对添加到数组中，如果\n// 数组中不存在给定的键\narray_add($array, 'key', 'value');\n// 将数组的数组折叠成一个数组\narray_collapse($array);\n// 将一个数组分成两个数组。一个有键，另一个有值\narray_divide($array);\n// 用点展平多维关联数组\narray_dot($array);\n// 获取所有给定的数组，除了指定的项目数组\narray_except($array, array('key'));\n// 返回数组中通过给定真值测试的第一个元素\narray_first($array, function($key, $value){}, $default);\n// 从数组中剥离键\narray_flatten($array);\n// 使用“点”表示法从给定数组中删除一个或多个数组项\narray_forget($array, 'foo');\n// 点符号\narray_forget($array, 'foo.bar');\n// 使用“点”表示法从数组中获取项目\narray_get($array, 'foo', 'default');\narray_get($array, 'foo.bar', 'default');\n// 使用“点”表示法检查给定项是否存在于数组中\narray_has($array, 'products.desk');\n// 从给定数组中获取项目的子集\narray_only($array, array('key'));\n// 返回键数组 => 值\narray_pluck($array, 'key');\n// 从数组中返回并删除“key”\narray_pull($array, 'key');\n// 使用“点”表示法将数组项设置为给定值\narray_set($array, 'key', 'value');\n// 点符号\narray_set($array, 'key.subkey', 'value');\n// 根据给定闭包的结果对数组进行排序\narray_sort($array, function(){});\n// 使用 sort 函数对数组进行递归排序\narray_sort_recursive();\n// 使用给定的闭包过滤数组\narray_where();\n// 数组的第一个元素\nhead($array);\n// 数组的最后一个元素\nlast($array);"
     },
     {
-      "id": "intro-105",
-      "sectionId": "intro",
+      "id": "s9-95",
+      "sectionId": "s9",
       "title": "Paths",
       "kind": "code",
       "lang": "php",
       "code": "// 应用程序目录的完全限定路径\napp_path();\n// 获取公共文件夹的路径\nbase_path();\n// 应用程序配置目录的完全限定路径\nconfig_path();\n// 应用程序数据库目录的完全限定路径\ndatabase_path();\n// 获取版本控制的 Elixir 文件的路径：\nelixir();\n// 公共目录的完全限定路径\npublic_path();\n// 获取存储文件夹的路径\nstorage_path();"
     },
     {
-      "id": "intro-106",
-      "sectionId": "intro",
+      "id": "s9-96",
+      "sectionId": "s9",
       "title": "Miscellaneous",
       "kind": "code",
       "lang": "php",
       "code": "// 验证器实例（Auth）\nauth()->user();\n// 生成对用户先前位置的重定向响应\nback();\n// 使用 Bcrypt (Hash) 散列给定值\nbcrypt('my-secret-password');\n// 从提供的项目创建一个集合实例\ncollect(['taylor', 'abigail']);\n// 获取配置变量的值\nconfig('app.timezone', $default);\n// 生成包含 CSRF 令牌值的 HTML 隐藏输入字段\n{!! csrf_field() !!}\n// 检索当前 CSRF 令牌的值\n$token = csrf_token();\n// 转储给定的变量并结束脚本的执行\ndd($value);\n// 获取环境变量的值或返回默认值\n$env = env('APP_ENV');\n$env = env('APP_ENV', 'production');\n// 将给定事件分派给它的侦听器：\nevent(new UserRegistered($user));\n// 为给定类创建模型工厂构建器\n$user = factory(App\\User::class)->make();\n// 生成一个 HTML 隐藏输入字段，其中包含表单的 HTTP 谓词的欺骗值\n{!! method_field('delete') !!}\n// 检索闪存到会话中的旧输入值\n$value = old('value');\n$value = old('value', 'default');\n// 返回重定向器的实例以进行重定向：\nreturn redirect('/home');\n// 返回当前请求实例或获取输入项\n$value = request('key', $default = null)\n// 创建响应实例或获取响应工厂的实例\nreturn response('Hello World', 200, $headers);\n// 用于获取/设置会话值\n$value = session('key');\n$value = session()->get('key');\nsession()->put('key', $value);\n// 将简单地返回给定的值。\nvalue(function(){ return 'bar'; });\n// 检索视图实例\nreturn view('auth.login');\n// 返回给定的值\n$value = with(new Foo)->work();"
     },
     {
-      "id": "intro-107",
-      "sectionId": "intro",
+      "id": "s9-97",
+      "sectionId": "s9",
       "title": "Strings",
       "kind": "code",
       "lang": "php",
       "code": "// 将值转换为驼峰大小写\ncamel_case($value);\n// 获取给定对象/类的类“basename”\nclass_basename($class);\n// 转义字符串\ne('<html>');\n// 确定给定字符串是否以给定子字符串开头\nstarts_with('Foo bar.', 'Foo');\n// 确定给定字符串是否以给定子字符串结尾\nends_with('Foo bar.', 'bar.');\n// 将字符串转换为蛇形大小写\nsnake_case('fooBar');\n// 限制字符串中的字符数\nstr_limit();\n// 确定给定的字符串是否包含给定的子字符串\nstr_contains('Hello foo bar.', 'foo');\n// 结果：foo/bar/\nstr_finish('foo/bar', '/');\nstr_is('foo*', 'foobar');\nstr_plural('car');\nstr_random(25);\nstr_singular('cars');\nstr_slug(\"Laravel 5 Framework\", \"-\");\n// 结果：FooBar\nstudly_case('foo_bar');\ntrans('foo.bar');\ntrans_choice('foo.bar', $count);"
     },
     {
-      "id": "intro-108",
-      "sectionId": "intro",
+      "id": "s9-98",
+      "sectionId": "s9",
       "title": "URLs and Links",
       "kind": "code",
       "lang": "php",
       "code": "action('FooController@method', $parameters);\n// HTML Link\nasset('img/photo.jpg', $title, $attributes);\n// HTTPS link\nsecure_asset('img/photo.jpg', $title, $attributes);\nroute($route, $parameters, $absolute = true);\nurl('path', $parameters = array(), $secure = null);"
     },
     {
-      "id": "intro-109",
-      "sectionId": "intro",
-      "title": "URLs and Links",
-      "kind": "text",
-      "body": "另见\n---"
-    },
-    {
-      "id": "intro-110",
-      "sectionId": "intro",
-      "title": "URLs and Links",
+      "id": "s10-99",
+      "sectionId": "s10",
+      "title": "另见",
       "kind": "text",
       "body": "• [Laravel 官网地址](https://laravel.com/)\n• [Laravel 8 Cheat Sheet](https://learninglaravel.net/cheatsheet/#)"
     }
@@ -875,7 +850,6 @@
     "path": "docs/laravel.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/laravel.md",
-    "generatedAt": "2025-12-16T07:36:11.301Z",
     "lang": "zh",
     "mode": "local"
   }

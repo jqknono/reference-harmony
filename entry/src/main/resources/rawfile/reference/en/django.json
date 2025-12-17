@@ -1,6 +1,8 @@
 {
   "id": "django",
-  "title": "Django",
+  "name": "Django",
+  "title": "A Django cheat sheet.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/django.svg",
   "sections": [
     {
       "id": "intro",
@@ -2017,318 +2019,341 @@
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "code",
       "lang": "",
-      "code": "\n- Save and close the file when you are finished.\n- Next, create and open a systemd service file for Gunicorn with sudo privileges in your text editor. The service\n  filename should match the socket filename with the exception of the extension:"
+      "code": "\n- Save and close the file when you are finished.\n- Next, create and open a systemd service file for Gunicorn with sudo privileges in your text editor. The service\n  filename should match the socket filename with the exception of the extension:\n\n```bash\nsudo nano /etc/systemd/system/gunicorn.service"
     },
     {
       "id": "s20-253",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "sudo nano /etc/systemd/system/gunicorn.service"
+      "kind": "code",
+      "lang": "bash",
+      "code": "[Unit]\nDescription=gunicorn daemon\nRequires=gunicorn.socket\nAfter=network.target\n\n[Service]\nUser=sammy\nGroup=www-data\nWorkingDirectory=/home/sammy/myprojectdir\nExecStart=/home/sammy/myprojectdir/myprojectenv/bin/gunicorn \\\n          --access-logfile - \\\n          --workers 3 \\\n          --bind unix:/run/gunicorn.sock \\\n          myproject.wsgi:application\n\n[Install]\nWantedBy=multi-user.target"
     },
     {
       "id": "s20-254",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "[Unit]\nDescription=gunicorn daemon\nRequires=gunicorn.socket\nAfter=network.target"
+      "body": "• You can now start and enable the Gunicorn socket. This will create the socket file at /run/gunicorn.sock now and at"
     },
     {
       "id": "s20-255",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "[Service]\nUser=sammy\nGroup=www-data\nWorkingDirectory=/home/sammy/myprojectdir\nExecStart=/home/sammy/myprojectdir/myprojectenv/bin/gunicorn \\\n--access-logfile - \\\n--workers 3 \\\n--bind unix:/run/gunicorn.sock \\\nmyproject.wsgi:application"
+      "body": "boot. When a connection is made to that socket, systemd will automatically start the gunicorn.service to handle it"
     },
     {
       "id": "s20-256",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "[Install]\nWantedBy=multi-user.target"
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo systemctl start gunicorn.socket\nsudo systemctl enable gunicorn.socket"
     },
     {
       "id": "s20-257",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\n- You can now start and enable the Gunicorn socket. This will create the socket file at /run/gunicorn.sock now and at\n  boot. When a connection is made to that socket, systemd will automatically start the gunicorn.service to handle it"
+      "kind": "text",
+      "body": "#### Step 8 — Checking for the Gunicorn Socket File"
     },
     {
       "id": "s20-258",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "sudo systemctl start gunicorn.socket\nsudo systemctl enable gunicorn.socket"
+      "body": "• Check the status of the process to find out whether it was able to start:"
     },
     {
       "id": "s20-259",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### Step 8 — Checking for the Gunicorn Socket File\n\n- Check the status of the process to find out whether it was able to start:"
+      "lang": "bash",
+      "code": "sudo systemctl status gunicorn.socket"
     },
     {
       "id": "s20-260",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "sudo systemctl status gunicorn.socket"
+      "body": "• Next, check for the existence of the gunicorn.sock file within the /run directory:"
     },
     {
       "id": "s20-261",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "code",
-      "lang": "",
-      "code": "\n- Next, check for the existence of the gunicorn.sock file within the /run directory:"
+      "lang": "bash",
+      "code": "file /run/gunicorn.sock"
     },
     {
       "id": "s20-262",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "file /run/gunicorn.sock"
+      "body": "#### Step 9 — Testing Socket Activation"
     },
     {
       "id": "s20-263",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### Step 9 — Testing Socket Activation"
+      "lang": "bash",
+      "code": "sudo systemctl status gunicorn"
     },
     {
       "id": "s20-264",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "sudo systemctl status gunicorn"
+      "body": "• To test the socket activation mechanism, you can send a connection to the socket through curl by typing:"
     },
     {
       "id": "s20-265",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "code",
-      "lang": "",
-      "code": "\n- To test the socket activation mechanism, you can send a connection to the socket through curl by typing:"
+      "lang": "bash",
+      "code": "curl --unix-socket /run/gunicorn.sock localhost"
     },
     {
       "id": "s20-266",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "curl --unix-socket /run/gunicorn.sock localhost"
+      "body": "• You should receive the HTML output from your application in the terminal. This indicates that Gunicorn was started and"
     },
     {
       "id": "s20-267",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\n- You should receive the HTML output from your application in the terminal. This indicates that Gunicorn was started and\n  was able to serve your Django application. You can verify that the Gunicorn service is running by typing:"
+      "kind": "text",
+      "body": "was able to serve your Django application. You can verify that the Gunicorn service is running by typing:"
     },
     {
       "id": "s20-268",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "sudo systemctl status gunicorn"
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo systemctl status gunicorn"
     },
     {
       "id": "s20-269",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\n- Check your /etc/systemd/system/gunicorn.service file for problems. If you make changes to the\n  /etc/systemd/system/gunicorn.service file, reload the daemon to reread the service definition and restart the Gunicorn\n  process by typing"
+      "kind": "text",
+      "body": "• Check your /etc/systemd/system/gunicorn.service file for problems. If you make changes to the"
     },
     {
       "id": "s20-270",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "sudo systemctl daemon-reload\nsudo systemctl restart gunicorn"
+      "body": "/etc/systemd/system/gunicorn.service file, reload the daemon to reread the service definition and restart the Gunicorn\nprocess by typing"
     },
     {
       "id": "s20-271",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "code",
-      "lang": "",
-      "code": "\n#### Step 10 — Configure Nginx to Proxy Pass to Gunicorn\n\n- Start by creating and opening a new server block in Nginx’s sites-available directory:"
+      "lang": "bash",
+      "code": "sudo systemctl daemon-reload\nsudo systemctl restart gunicorn"
     },
     {
       "id": "s20-272",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "sudo nano /etc/nginx/sites-available/myproject"
+      "body": "#### Step 10 — Configure Nginx to Proxy Pass to Gunicorn"
     },
     {
       "id": "s20-273",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "server {\nlisten 80;\nserver_name server_domain_or_IP;"
+      "body": "• Start by creating and opening a new server block in Nginx’s sites-available directory:"
     },
     {
       "id": "s20-274",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "location = /favicon.ico { access_log off; log_not_found off; }\nlocation /static/ {\nalias /home/sammy/myprojectdir/staticfiles/;\n}"
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo nano /etc/nginx/sites-available/myproject"
     },
     {
       "id": "s20-275",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "location /media {\nautoindex on;\nalias /home/sammy/myprojectdir/media/;\n}"
+      "kind": "code",
+      "lang": "bash",
+      "code": "server {\n    listen 80;\n    server_name server_domain_or_IP;\n\n    location = /favicon.ico { access_log off; log_not_found off; }\n    location /static/ {\n        alias /home/sammy/myprojectdir/staticfiles/;\n    }\n\n    location /media {\n        autoindex on;\n        alias /home/sammy/myprojectdir/media/;\n    }\n\n    location / {\n        include proxy_params;\n        proxy_pass http://unix:/run/gunicorn.sock;\n    }\n}"
     },
     {
       "id": "s20-276",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "location / {\ninclude proxy_params;\nproxy_pass http://unix:/run/gunicorn.sock;\n}\n}"
+      "body": "• Save and close the file when you are finished. Now, you can enable the file by linking it to the sites-enabled"
     },
     {
       "id": "s20-277",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\n- Save and close the file when you are finished. Now, you can enable the file by linking it to the sites-enabled\n  directory:"
+      "kind": "text",
+      "body": "directory:"
     },
     {
       "id": "s20-278",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled"
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled"
     },
     {
       "id": "s20-279",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\n- Test your Nginx configuration for syntax errors by typing:"
+      "kind": "text",
+      "body": "• Test your Nginx configuration for syntax errors by typing:"
     },
     {
       "id": "s20-280",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "sudo nginx -t"
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo nginx -t"
     },
     {
       "id": "s20-281",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\n- If no errors are reported, go ahead and restart Nginx by typing:"
+      "kind": "text",
+      "body": "• If no errors are reported, go ahead and restart Nginx by typing:"
     },
     {
       "id": "s20-282",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "sudo systemctl restart nginx"
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo systemctl restart nginx"
     },
     {
       "id": "s20-283",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\n- you need to open up your firewall to normal traffic on port 80"
+      "kind": "text",
+      "body": "• you need to open up your firewall to normal traffic on port 80"
     },
     {
       "id": "s20-284",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "sudo ufw allow 'Nginx Full'"
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo ufw allow 'Nginx Full'"
     },
     {
       "id": "s20-285",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\nYou should now be able to go to your server’s domain or IP address to view your application.\n\n#### Step 11 — Troubleshooting Nginx and Gunicorn\n\n- Nginx Is Showing the Default Page Instead of the Django Application"
+      "kind": "text",
+      "body": "You should now be able to go to your server’s domain or IP address to view your application."
     },
     {
       "id": "s20-286",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "sudo tail -F /var/log/nginx/error.log"
+      "body": "#### Step 11 — Troubleshooting Nginx and Gunicorn"
     },
     {
       "id": "s20-287",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\n- Django Is Displaying: “could not connect to server: Connection refused”"
+      "kind": "text",
+      "body": "• Nginx Is Showing the Default Page Instead of the Django Application"
     },
     {
       "id": "s20-288",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "sudo systemctl status postgresql"
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo tail -F /var/log/nginx/error.log"
     },
     {
       "id": "s20-289",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\n- If it is not, you can start it and enable it to start automatically at boot (if it is not already configured to do so)\n  by typing:"
+      "kind": "text",
+      "body": "• Django Is Displaying: “could not connect to server: Connection refused”"
     },
     {
       "id": "s20-290",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "text",
-      "body": "sudo systemctl start postgresql\nsudo systemctl enable postgresql"
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo systemctl status postgresql"
     },
     {
       "id": "s20-291",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
-      "kind": "code",
-      "lang": "",
-      "code": "\nIf you change Gunicorn socket or service files, reload the daemon and restart the process by typing:"
+      "kind": "text",
+      "body": "• If it is not, you can start it and enable it to start automatically at boot (if it is not already configured to do so)"
     },
     {
       "id": "s20-292",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "sudo systemctl daemon-reload\nsudo systemctl restart gunicorn.socket gunicorn.service"
+      "body": "by typing:"
     },
     {
       "id": "s20-293",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "code",
-      "lang": "",
-      "code": "\nIf you change the Nginx server block configuration, test the configuration and then Nginx by typing:"
+      "lang": "bash",
+      "code": "sudo systemctl start postgresql\nsudo systemctl enable postgresql"
     },
     {
       "id": "s20-294",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
       "kind": "text",
-      "body": "sudo nginx -t && sudo systemctl restart nginx"
+      "body": "If you change Gunicorn socket or service files, reload the daemon and restart the process by typing:"
+    },
+    {
+      "id": "s20-295",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo systemctl daemon-reload\nsudo systemctl restart gunicorn.socket gunicorn.service"
+    },
+    {
+      "id": "s20-296",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "text",
+      "body": "If you change the Nginx server block configuration, test the configuration and then Nginx by typing:"
+    },
+    {
+      "id": "s20-297",
+      "sectionId": "s20",
+      "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server",
+      "kind": "code",
+      "lang": "bash",
+      "code": "sudo nginx -t && sudo systemctl restart nginx"
     }
   ],
   "source": {
@@ -2336,7 +2361,6 @@
     "path": "source/_posts/django.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/django.md",
-    "generatedAt": "2025-12-16T07:36:11.606Z",
     "lang": "en",
     "mode": "local"
   }

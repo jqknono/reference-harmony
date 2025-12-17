@@ -1,6 +1,8 @@
 {
   "id": "graphql",
-  "title": "GraphQL",
+  "name": "GraphQL",
+  "title": "This quick reference cheat sheet provides a brief overview of GraphQL.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/graphql.svg",
   "sections": [
     {
       "id": "intro",
@@ -260,86 +262,65 @@
       "title": "Input Arguments",
       "kind": "code",
       "lang": "",
-      "code": "\n### Input Types"
+      "code": "\n### Input Types\n\n```js\ninput ListUsersInput {\n    limit: Int\n    since_id: ID\n}"
     },
     {
       "id": "s1-32",
       "sectionId": "s1",
       "title": "Input Arguments",
-      "kind": "text",
-      "body": "input ListUsersInput {\nlimit: Int\nsince_id: ID\n}"
+      "kind": "code",
+      "lang": "js",
+      "code": "type Mutation {\n    users(params: ListUsersInput): [User]!\n}"
     },
     {
       "id": "s1-33",
       "sectionId": "s1",
-      "title": "Input Arguments",
-      "kind": "text",
-      "body": "type Mutation {\nusers(params: ListUsersInput): [User]!\n}"
+      "title": "Custom Scalars",
+      "kind": "code",
+      "lang": "js",
+      "code": "scalar Url\ntype User {\n    name: String\n    homepage: Url\n}"
     },
     {
       "id": "s1-34",
       "sectionId": "s1",
-      "title": "Input Arguments",
+      "title": "Interfaces",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Custom Scalars"
+      "lang": "js",
+      "code": "interface Foo {\n    is_foo: Boolean\n}\ninterface Goo {\n    is_goo: Boolean\n}\ntype Bar implements Foo {\n    is_foo: Boolean\n    is_bar: Boolean\n}\ntype Baz implements Foo, Goo {\n    is_foo: Boolean\n    is_goo: Boolean\n    is_baz: Boolean\n}"
     },
     {
       "id": "s1-35",
       "sectionId": "s1",
-      "title": "Input Arguments",
+      "title": "Interfaces",
       "kind": "text",
-      "body": "scalar Url\ntype User {\nname: String\nhomepage: Url\n}"
+      "body": "Object implementing one or more Interfaces"
     },
     {
       "id": "s1-36",
       "sectionId": "s1",
-      "title": "Input Arguments",
+      "title": "Unions",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Interfaces"
+      "lang": "js",
+      "code": "type Foo {\n    name: String\n}\ntype Bar {\n    is_bar: String\n}\nunion SingleUnion = Foo\nunion MultipleUnion = Foo | Bar\ntype Root {\n    single: SingleUnion\n    multiple: MultipleUnion\n}"
     },
     {
       "id": "s1-37",
       "sectionId": "s1",
-      "title": "Input Arguments",
+      "title": "Unions",
       "kind": "text",
-      "body": "interface Foo {\nis_foo: Boolean\n}\ninterface Goo {\nis_goo: Boolean\n}\ntype Bar implements Foo {\nis_foo: Boolean\nis_bar: Boolean\n}\ntype Baz implements Foo, Goo {\nis_foo: Boolean\nis_goo: Boolean\nis_baz: Boolean\n}"
+      "body": "Union of one or more Objects"
     },
     {
       "id": "s1-38",
       "sectionId": "s1",
-      "title": "Input Arguments",
-      "kind": "code",
-      "lang": "",
-      "code": "\nObject implementing one or more Interfaces\n\n### Unions"
+      "title": "Enums",
+      "kind": "text",
+      "body": "```js {.wrap}\nenum USER_STATE {\nNOT_FOUND\nACTIVE\nINACTIVE\nSUSPENDED\n}\ntype Root {\nstateForUser(userID: ID!): USER_STATE!\nusers(state: USER_STATE, limit: Int = 10): [User]\n}"
     },
     {
       "id": "s1-39",
       "sectionId": "s1",
-      "title": "Input Arguments",
-      "kind": "text",
-      "body": "type Foo {\nname: String\n}\ntype Bar {\nis_bar: String\n}\nunion SingleUnion = Foo\nunion MultipleUnion = Foo | Bar\ntype Root {\nsingle: SingleUnion\nmultiple: MultipleUnion\n}"
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "Input Arguments",
-      "kind": "code",
-      "lang": "",
-      "code": "\nUnion of one or more Objects\n\n### Enums"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "Input Arguments",
-      "kind": "text",
-      "body": "enum USER_STATE {\nNOT_FOUND\nACTIVE\nINACTIVE\nSUSPENDED\n}\ntype Root {\nstateForUser(userID: ID!): USER_STATE!\nusers(state: USER_STATE, limit: Int = 10): [User]\n}"
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "Input Arguments",
+      "title": "Enums",
       "kind": "code",
       "lang": "",
       "code": "\n## Also see\n\n- [GraphQL Schema Language Cheat Sheet](https://github.com/sogko/graphql-schema-language-cheat-sheet) _(github.com)_"
@@ -350,7 +331,6 @@
     "path": "source/_posts/graphql.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/graphql.md",
-    "generatedAt": "2025-12-16T07:36:11.674Z",
     "lang": "en",
     "mode": "local"
   }

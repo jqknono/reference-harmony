@@ -1,8 +1,10 @@
 import preferences from '@ohos.data.preferences';
-
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
 import { ReferenceCard } from '../components/ReferenceCard';
+
+type Preferences = preferences.Preferences;
+type ValueType = preferences.ValueType;
 
 interface SectionWithCards {
   section: ReferenceSection;
@@ -34,25 +36,35 @@ struct Index {
   private async loadLangSetting(): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
-    try {
-      const prefs = await preferences.getPreferences(host, 'settings');
-      const saved = (await prefs.get('lang', 'zh')) as string;
-      this.lang = saved === 'en' ? 'en' : 'zh';
-    } catch (_) {
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) {
       this.lang = 'zh';
+      return;
     }
+    const saved: string = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get('lang', 'zh'))
+      .then(
+        (value: ValueType): string => (typeof value === 'string' ? value : String(value)),
+        (): string => 'zh',
+      );
+    this.lang = saved === 'en' ? 'en' : 'zh';
   }
 
   private async saveLangSetting(next: ReferenceLang): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
-    try {
-      const prefs = await preferences.getPreferences(host, 'settings');
-      await prefs.put('lang', next);
-      await prefs.flush();
-    } catch (_) {
-      // ignore
-    }
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put('lang', next))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
   }
 
   private async ensureRepository(): Promise<ReferenceRepository | undefined> {
@@ -104,17 +116,18 @@ struct Index {
 
     this.loading = true;
     this.errorText = '';
-    try {
-      const doc: ReferenceDoc = await repo.getDocByLang(this.lang, docId);
-      this.selectedDoc = doc;
-      this.selectedDocId = docId;
-      this.rebuildSectionCards(doc);
-      this.tabsController.changeIndex(1);
-    } catch (e) {
-      this.errorText = this.t(`加载文档失败：${String(e)}`, `Failed to load doc: ${String(e)}`);
-    } finally {
-      this.loading = false;
-    }
+    await repo.getDocByLang(this.lang, docId).then(
+      (doc: ReferenceDoc): void => {
+        this.selectedDoc = doc;
+        this.selectedDocId = docId;
+        this.rebuildSectionCards(doc);
+        this.tabsController.changeIndex(1);
+      },
+      (e: Error | string): void => {
+        this.errorText = this.t(`加载文档失败：${String(e)}`, `Failed to load doc: ${String(e)}`);
+      },
+    );
+    this.loading = false;
   }
 
   private async switchLang(next: ReferenceLang): Promise<void> {
@@ -135,20 +148,29 @@ struct Index {
 
     this.loading = true;
     this.errorText = '';
-    try {
-      const manifest: ReferenceManifest = await repo.getManifestByLang(this.lang);
-      this.docs = manifest.docs ?? [];
-      if (autoOpenFirst && !this.selectedDocId && this.docs.length > 0) {
-        await this.openDoc(this.docs[0].id);
-      }
-    } catch (e) {
-      this.errorText = this.t(
-        `加载 manifest 失败：${String(e)}\n\n请先运行 tools/sync_reference_docs.mjs 生成 rawfile 数据。`,
-        `Failed to load manifest: ${String(e)}\n\nRun tools/sync_reference_docs.mjs to generate rawfile data.`,
-      );
-    } finally {
-      this.loading = false;
-    }
+      await repo.getManifestByLang(this.lang).then(
+        async (manifest: ReferenceManifest): Promise<void> => {
+        this.docs = (manifest.docs ?? []).map((doc: ReferenceDocSummary): ReferenceDocSummary => ({
+          id: doc.id,
+          name: doc.name || doc.title || doc.id,
+          title: doc.title || doc.name || doc.id,
+          icon: doc.icon,
+          file: doc.file,
+          sectionCount: doc.sectionCount,
+          cardCount: doc.cardCount,
+        }));
+        if (autoOpenFirst && !this.selectedDocId && this.docs.length > 0) {
+          await this.openDoc(this.docs[0].id);
+        }
+      },
+      (e: Error | string): void => {
+        this.errorText = this.t(
+          `加载 manifest 失败：${String(e)}\n\n请先运行 tools/sync_reference_docs.mjs 生成 rawfile 数据。`,
+          `Failed to load manifest: ${String(e)}\n\nRun tools/sync_reference_docs.mjs to generate rawfile data.`,
+        );
+      },
+    );
+    this.loading = false;
   }
 
   async aboutToAppear(): Promise<void> {
@@ -175,9 +197,34 @@ struct Index {
       List() {
         ForEach(this.docs, (doc: ReferenceDocSummary) => {
           ListItem() {
-            Row() {
+            Row({ space: 12 }) {
+              if (doc.icon) {
+                Image(doc.icon)
+                  .width(34)
+                  .height(34)
+                  .borderRadius(10)
+                  .backgroundColor(0xe2e8f0);
+              } else {
+                Text((doc.name || doc.id).slice(0, 1).toUpperCase())
+                  .width(34)
+                  .height(34)
+                  .textAlign(TextAlign.Center)
+                  .fontSize(14)
+                  .fontColor(0x334155)
+                  .backgroundColor(0xe2e8f0)
+                  .borderRadius(10);
+              }
+
               Column({ space: 4 }) {
-                Text(doc.title).fontSize(16).fontColor(0x0f172a);
+                Text(doc.name || doc.id).fontSize(16).fontColor(0x0f172a);
+
+                if (doc.title && doc.title !== doc.name) {
+                  Text(doc.title)
+                    .fontSize(12)
+                    .fontColor(0x64748b)
+                    .maxLines(2);
+                }
+
                 Text(this.t(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`, `${doc.sectionCount} sections · ${doc.cardCount} cards`))
                   .fontSize(12)
                   .fontColor(0x64748b);
@@ -205,12 +252,26 @@ struct Index {
   @Builder
   private ReadTab(): void {
     Column({ space: 10 }) {
-      Row() {
-        Text(this.selectedDoc ? this.selectedDoc.title : this.t('未选择', 'No selection'))
-          .fontSize(18)
-          .fontWeight(FontWeight.Bold)
-          .fontColor(0x0f172a)
-          .layoutWeight(1);
+      Row({ space: 10 }) {
+        if (this.selectedDoc?.icon) {
+          Image(this.selectedDoc.icon)
+            .width(28)
+            .height(28)
+            .borderRadius(8)
+            .backgroundColor(0xe2e8f0);
+        }
+
+        Column({ space: 2 }) {
+          Text(this.selectedDoc ? (this.selectedDoc.name || this.selectedDoc.title) : this.t('未选择', 'No selection'))
+            .fontSize(18)
+            .fontWeight(FontWeight.Bold)
+            .fontColor(0x0f172a);
+
+          if (this.selectedDoc && this.selectedDoc.title && this.selectedDoc.title !== this.selectedDoc.name) {
+            Text(this.selectedDoc.title).fontSize(12).fontColor(0x64748b).maxLines(2);
+          }
+        }
+        .layoutWeight(1);
 
         if (this.selectedDocId) {
           Text(this.selectedDocId).fontSize(12).fontColor(0x64748b);

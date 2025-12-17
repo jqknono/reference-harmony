@@ -1,6 +1,8 @@
 {
   "id": "tmux",
-  "title": "Tmux",
+  "name": "Tmux",
+  "title": "The tmux cheat sheet quick reference of most commonly used shortcuts and commands",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/tmux.svg",
   "sections": [
     {
       "id": "intro",
@@ -11,6 +13,11 @@
       "id": "s1",
       "title": "Tmux CLI",
       "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Tmux Command Mode",
+      "startIndex": 43
     }
   ],
   "cards": [
@@ -41,44 +48,43 @@
       "title": "New session",
       "kind": "code",
       "lang": "",
-      "code": "\nStart a new named session"
+      "code": "\nStart a new named session\n\n```shell script\n$ tmux new -s myname"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "New session",
       "kind": "text",
-      "body": "$ tmux new -s myname"
+      "body": "Show all sessions"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "New session",
-      "kind": "code",
-      "lang": "",
-      "code": "\nShow all sessions"
+      "kind": "text",
+      "body": "```shell script\n$ tmux ls"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "New session",
-      "kind": "text",
-      "body": "$ tmux ls"
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Attach session\n\nAttach to last session\n\n```shell script\n$ tmux a"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "New session",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Attach session\n\nAttach to last session"
+      "kind": "text",
+      "body": "Attach to named"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "New session",
       "kind": "text",
-      "body": "$ tmux a"
+      "body": "```shell script\n$ tmux a -t myname"
     },
     {
       "id": "s1-9",
@@ -86,127 +92,442 @@
       "title": "New session",
       "kind": "code",
       "lang": "",
-      "code": "\nAttach to named"
+      "code": "\n### Kill session {.row-span-2}\n\nKill a session by name\n\n```shell script\n$ tmux kill-ses -t myname"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "New session",
       "kind": "text",
-      "body": "$ tmux a -t myname"
+      "body": "Kill sessions but the current"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
       "title": "New session",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Kill session {.row-span-2}\n\nKill a session by name"
+      "kind": "text",
+      "body": "```shell script\n$ tmux kill-ses -a"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "New session",
-      "kind": "text",
-      "body": "$ tmux kill-ses -t myname"
+      "kind": "code",
+      "lang": "",
+      "code": "\nKill sessions but 'myname'\n\n```shell script\n$ tmux kill-ses -a -t myname"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "code",
-      "lang": "",
-      "code": "\nKill sessions but the current"
+      "title": "Tmux help",
+      "kind": "text",
+      "body": "```shell script\n$ tmux info"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "text",
-      "body": "$ tmux kill-ses -a"
+      "title": "Tmux help",
+      "kind": "code",
+      "lang": "",
+      "code": "\n### Config\n\nReload config\n\n```shell script\n$ tmux source-file ~/.tmu­x.conf"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "code",
-      "lang": "",
-      "code": "\nKill sessions but 'myname'"
+      "title": "Tmux help",
+      "kind": "text",
+      "body": "Show config"
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
-      "title": "New session",
+      "title": "Tmux help",
       "kind": "text",
-      "body": "$ tmux kill-ses -a -t myname"
+      "body": "```shell script\n$ tmux show-options -g"
     },
     {
       "id": "s1-17",
       "sectionId": "s1",
-      "title": "New session",
+      "title": "Tmux help",
       "kind": "code",
       "lang": "",
-      "code": "\n### Tmux help"
+      "code": "\n### Copy Mode\n\n| Command      | Description                |\n| ------------ | -------------------------- |\n| `Ctrl+b` `[` | Enter copy mode            |\n| `<Space>`    | Start selection            |\n| `Enter`      | Copy selection             |\n| `q`          | Quit copy mode             |\n| `Ctrl+b` `]` | Paste contents of buffer_0 |\n\n---\n\nFor tmux version 3.5a on MacOS 15.3.1 Sequoia 'Copy Mode' functions lil bit differently Below I've written the\ndifferences | Command | Description | | ------------ | -------------------------- | | `Ctrl + <Space>` | Start selection\n| | `Ctrl + w` | Copy selection |\n\n---\n\n{.shortcuts}\n\nMainly works like selecting text in [Vim](/vim#motions)\n\n## Tmux shortcuts\n\n### Getting started {.secondary}\n\n| Shortcuts    | Description        |\n| ------------ | ------------------ |\n| `Ctrl+b` `?` | List all shortcuts |\n\n{.shortcuts .show-header}\n\n<br/>\n\n---\n\nShow every session, window, pane, etc.\n\n```shell script\n$ tmux info"
     },
     {
       "id": "s1-18",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "text",
-      "body": "$ tmux info"
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `\"` _/_ `%`",
+      "back": "Split Horiz/Vert"
     },
     {
       "id": "s1-19",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Config\n\nReload config"
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `!`",
+      "back": "Pane -> Window"
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "text",
-      "body": "$ tmux source-file ~/.tmu­x.conf"
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `x`",
+      "back": "Kill pane"
     },
     {
       "id": "s1-21",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "code",
-      "lang": "",
-      "code": "\nShow config"
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` <Arrow\\>",
+      "back": "Navigate panes"
     },
     {
       "id": "s1-22",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "text",
-      "body": "$ tmux show-options -g"
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` <Space\\>",
+      "back": "Toggle layouts"
     },
     {
       "id": "s1-23",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Copy Mode\n\n| Command      | Description                |\n| ------------ | -------------------------- |\n| `Ctrl+b` `[` | Enter copy mode            |\n| `<Space>`    | Start selection            |\n| `Enter`      | Copy selection             |\n| `q`          | Quit copy mode             |\n| `Ctrl+b` `]` | Paste contents of buffer_0 |\n\n---\n\nFor tmux version 3.5a on MacOS 15.3.1 Sequoia 'Copy Mode' functions lil bit differently Below I've written the\ndifferences | Command | Description | | ------------ | -------------------------- | | `Ctrl + <Space>` | Start selection\n| | `Ctrl + w` | Copy selection |\n\n---\n\n{.shortcuts}\n\nMainly works like selecting text in [Vim](/vim#motions)\n\n## Tmux shortcuts\n\n### Getting started {.secondary}\n\n| Shortcuts    | Description        |\n| ------------ | ------------------ |\n| `Ctrl+b` `?` | List all shortcuts |\n\n{.shortcuts .show-header}\n\n<br/>\n\n---\n\nShow every session, window, pane, etc."
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `{` _/_ `}`",
+      "back": "Move to Left/Right"
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "text",
-      "body": "$ tmux info"
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `o`",
+      "back": "Go to next panes"
     },
     {
       "id": "s1-25",
       "sectionId": "s1",
-      "title": "New session",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Panes (Splits) {.row-span-2}\n\n| Shortcuts              | Description        |\n| ---------------------- | ------------------ |\n| `Ctrl+b` `\"` _/_ `%`   | Split Horiz/Vert   |\n| `Ctrl+b` `!`           | Pane -> Window     |\n| `Ctrl+b` `x`           | Kill pane          |\n| `Ctrl+b` <Arrow\\>      | Navigate panes     |\n| `Ctrl+b` <Space\\>      | Toggle layouts     |\n| `Ctrl+b` `{` _/_ `}`   | Move to Left/Right |\n| `Ctrl+b` `o`           | Go to next panes   |\n| `Ctrl+b` `z`           | Toggle full-screen |\n| `Ctrl+b` `;`           | Toggle Last pane   |\n| `Ctrl+b` `q`           | Show numbers       |\n| `Ctrl+b` `q` `0`...`9` | Go to # pane       |\n\n{.shortcuts}\n\n### Window (Tabs) {.row-span-2}\n\n| -                    | -                    |\n| -------------------- | -------------------- |\n| `Ctrl+b` `c`         | Create window        |\n| `Ctrl+b` `p` _/_ `n` | Previous/Next window |\n| `Ctrl+b` `\"` _/_ `%` | Split Horiz/Vert     |\n| `Ctrl+b` `w`         | List window          |\n| `Ctrl+b` `,`         | Rename window        |\n| `Ctrl+b` `f`         | Find window          |\n| `Ctrl+b` `l`         | Last window          |\n| `Ctrl+b` `.`         | Move window          |\n| `Ctrl+b` `&`         | Close window         |\n| `Ctrl+b` `0`...`9`   | Go to # window       |\n\n{.shortcuts}\n\n### Session (Set of Windows)\n\n| -                    | -                              |\n| -------------------- | ------------------------------ |\n| `Ctrl+b` `d`         | <red>Detach from session</red> |\n| `Ctrl+b` `s`         | Show all sessions              |\n| `Ctrl+b` `$`         | Rename session                 |\n| `Ctrl+b` `(` _/_ `)` | Previous/Next session          |\n\n{.shortcuts}\n\n## Tmux Command Mode\n\n### Usage {.secondary}\n\n| Command      | Description        |\n| ------------ | ------------------ |\n| `Ctrl+b` `:` | Enter command mode |\n\n{.shortcuts}\n\n### Resizing\n\n| Command             | Description  |\n| ------------------- | ------------ |\n| `resize-pane -D 20` | Resize down  |\n| `resize-pane -U 20` | Resize up    |\n| `resize-pane -L 20` | Resize left  |\n| `resize-pane -R 20` | Resize right |\n\n### Listing\n\n| Command        | Description  |\n| -------------- | ------------ |\n| `list-keys`    | All commands |\n| `list-panes`   | All panes    |\n| `list-windows` | All Windows  |\n\n### Copying\n\n| Command              | Description      |\n| -------------------- | ---------------- |\n| `list-buffers`       | List all buffers |\n| `show-buffer`        | Show #0 contents |\n| `capture-pane`       | Copy of pane     |\n| `choose-buffer`      | Show and paste   |\n| `save-buffer a.txt`  | Save to file     |\n| `delete-buffer -b 1` | Delete buffer 1  |\n\n### Setting\n\n| Command                | Description          |\n| ---------------------- | -------------------- |\n| `set -g OPTION`        | Set for all sessions |\n| `setw -g OPTION`       | Set for all windows  |\n| `setw -g mode-keys vi` | Enable vi-mode       |\n| `set -g prefix C-a`    | Set prefix           |\n\n### Misc\n\n| Command                  | Description  |\n| ------------------------ | ------------ |\n| `swap-pane -s 3 -t 1`    | Swap pane    |\n| `swap-window -t -1`      | Move to left |\n| `setw synchronize-panes` | Sync Panes   |\n| `join-pane -t :#`        | Join pane    |"
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `z`",
+      "back": "Toggle full-screen"
+    },
+    {
+      "id": "s1-26",
+      "sectionId": "s1",
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `;`",
+      "back": "Toggle Last pane"
+    },
+    {
+      "id": "s1-27",
+      "sectionId": "s1",
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `q`",
+      "back": "Show numbers"
+    },
+    {
+      "id": "s1-28",
+      "sectionId": "s1",
+      "title": "Panes (Splits)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `q` `0`...`9`",
+      "back": "Go to # pane"
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `c`",
+      "back": "Create window"
+    },
+    {
+      "id": "s1-30",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `p` _/_ `n`",
+      "back": "Previous/Next window"
+    },
+    {
+      "id": "s1-31",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `\"` _/_ `%`",
+      "back": "Split Horiz/Vert"
+    },
+    {
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `w`",
+      "back": "List window"
+    },
+    {
+      "id": "s1-33",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `,`",
+      "back": "Rename window"
+    },
+    {
+      "id": "s1-34",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `f`",
+      "back": "Find window"
+    },
+    {
+      "id": "s1-35",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `l`",
+      "back": "Last window"
+    },
+    {
+      "id": "s1-36",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `.`",
+      "back": "Move window"
+    },
+    {
+      "id": "s1-37",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `&`",
+      "back": "Close window"
+    },
+    {
+      "id": "s1-38",
+      "sectionId": "s1",
+      "title": "Window (Tabs)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `0`...`9`",
+      "back": "Go to # window"
+    },
+    {
+      "id": "s1-39",
+      "sectionId": "s1",
+      "title": "Session (Set of Windows)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `d`",
+      "back": "<red>Detach from session</red>"
+    },
+    {
+      "id": "s1-40",
+      "sectionId": "s1",
+      "title": "Session (Set of Windows)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `s`",
+      "back": "Show all sessions"
+    },
+    {
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "Session (Set of Windows)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `$`",
+      "back": "Rename session"
+    },
+    {
+      "id": "s1-42",
+      "sectionId": "s1",
+      "title": "Session (Set of Windows)",
+      "kind": "qa",
+      "front": "`Ctrl+b` `(` _/_ `)`",
+      "back": "Previous/Next session"
+    },
+    {
+      "id": "s2-43",
+      "sectionId": "s2",
+      "title": "Usage",
+      "kind": "qa",
+      "front": "`Ctrl+b` `:`",
+      "back": "Enter command mode"
+    },
+    {
+      "id": "s2-44",
+      "sectionId": "s2",
+      "title": "Resizing",
+      "kind": "qa",
+      "front": "`resize-pane -D 20`",
+      "back": "Resize down"
+    },
+    {
+      "id": "s2-45",
+      "sectionId": "s2",
+      "title": "Resizing",
+      "kind": "qa",
+      "front": "`resize-pane -U 20`",
+      "back": "Resize up"
+    },
+    {
+      "id": "s2-46",
+      "sectionId": "s2",
+      "title": "Resizing",
+      "kind": "qa",
+      "front": "`resize-pane -L 20`",
+      "back": "Resize left"
+    },
+    {
+      "id": "s2-47",
+      "sectionId": "s2",
+      "title": "Resizing",
+      "kind": "qa",
+      "front": "`resize-pane -R 20`",
+      "back": "Resize right"
+    },
+    {
+      "id": "s2-48",
+      "sectionId": "s2",
+      "title": "Listing",
+      "kind": "qa",
+      "front": "`list-keys`",
+      "back": "All commands"
+    },
+    {
+      "id": "s2-49",
+      "sectionId": "s2",
+      "title": "Listing",
+      "kind": "qa",
+      "front": "`list-panes`",
+      "back": "All panes"
+    },
+    {
+      "id": "s2-50",
+      "sectionId": "s2",
+      "title": "Listing",
+      "kind": "qa",
+      "front": "`list-windows`",
+      "back": "All Windows"
+    },
+    {
+      "id": "s2-51",
+      "sectionId": "s2",
+      "title": "Copying",
+      "kind": "qa",
+      "front": "`list-buffers`",
+      "back": "List all buffers"
+    },
+    {
+      "id": "s2-52",
+      "sectionId": "s2",
+      "title": "Copying",
+      "kind": "qa",
+      "front": "`show-buffer`",
+      "back": "Show #0 contents"
+    },
+    {
+      "id": "s2-53",
+      "sectionId": "s2",
+      "title": "Copying",
+      "kind": "qa",
+      "front": "`capture-pane`",
+      "back": "Copy of pane"
+    },
+    {
+      "id": "s2-54",
+      "sectionId": "s2",
+      "title": "Copying",
+      "kind": "qa",
+      "front": "`choose-buffer`",
+      "back": "Show and paste"
+    },
+    {
+      "id": "s2-55",
+      "sectionId": "s2",
+      "title": "Copying",
+      "kind": "qa",
+      "front": "`save-buffer a.txt`",
+      "back": "Save to file"
+    },
+    {
+      "id": "s2-56",
+      "sectionId": "s2",
+      "title": "Copying",
+      "kind": "qa",
+      "front": "`delete-buffer -b 1`",
+      "back": "Delete buffer 1"
+    },
+    {
+      "id": "s2-57",
+      "sectionId": "s2",
+      "title": "Setting",
+      "kind": "qa",
+      "front": "`set -g OPTION`",
+      "back": "Set for all sessions"
+    },
+    {
+      "id": "s2-58",
+      "sectionId": "s2",
+      "title": "Setting",
+      "kind": "qa",
+      "front": "`setw -g OPTION`",
+      "back": "Set for all windows"
+    },
+    {
+      "id": "s2-59",
+      "sectionId": "s2",
+      "title": "Setting",
+      "kind": "qa",
+      "front": "`setw -g mode-keys vi`",
+      "back": "Enable vi-mode"
+    },
+    {
+      "id": "s2-60",
+      "sectionId": "s2",
+      "title": "Setting",
+      "kind": "qa",
+      "front": "`set -g prefix C-a`",
+      "back": "Set prefix"
+    },
+    {
+      "id": "s2-61",
+      "sectionId": "s2",
+      "title": "Misc",
+      "kind": "qa",
+      "front": "`swap-pane -s 3 -t 1`",
+      "back": "Swap pane"
+    },
+    {
+      "id": "s2-62",
+      "sectionId": "s2",
+      "title": "Misc",
+      "kind": "qa",
+      "front": "`swap-window -t -1`",
+      "back": "Move to left"
+    },
+    {
+      "id": "s2-63",
+      "sectionId": "s2",
+      "title": "Misc",
+      "kind": "qa",
+      "front": "`setw synchronize-panes`",
+      "back": "Sync Panes"
+    },
+    {
+      "id": "s2-64",
+      "sectionId": "s2",
+      "title": "Misc",
+      "kind": "qa",
+      "front": "`join-pane -t :#`",
+      "back": "Join pane"
     }
   ],
   "source": {
@@ -214,7 +535,6 @@
     "path": "source/_posts/tmux.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/tmux.md",
-    "generatedAt": "2025-12-16T07:50:03.317Z",
     "lang": "en",
     "mode": "local"
   }

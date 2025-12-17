@@ -1,11 +1,33 @@
 {
   "id": "ssh",
-  "title": "ssh",
+  "name": "SSH 备忘清单",
+  "title": "此快速参考备忘单提供了使用 SSH 的各种方法。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/ssh.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "SSH keygen",
+      "startIndex": 41
+    },
+    {
+      "id": "s3",
+      "title": "端口转发",
+      "startIndex": 60
+    },
+    {
+      "id": "s4",
+      "title": "另见",
+      "startIndex": 76
     }
   ],
   "cards": [
@@ -14,607 +36,572 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "SSH 备忘清单\n===="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "此快速参考备忘单提供了使用 SSH 的各种方法。"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n----"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "连接",
       "kind": "text",
       "body": "连接到服务器（默认端口 22）"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "连接",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh root@192.168.1.5"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "连接",
       "kind": "text",
       "body": "在特定端口上连接"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "连接",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh root@192.168.1.5 -p 6222"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "连接",
       "kind": "text",
       "body": "通过 pem 文件连接（0400 权限）"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "连接",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -i /path/file.pem root@192.168.1.5"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "连接",
       "kind": "text",
       "body": "请参阅：[SSH 权限](./chmod.md#ssh-权限)"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "执行",
       "kind": "text",
       "body": "执行远程命令"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "执行",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh root@192.168.1.5 'ls -l'"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "执行",
       "kind": "text",
       "body": "调用本地脚本"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "执行",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh root@192.168.1.5 bash < script.sh"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "执行",
       "kind": "text",
       "body": "从服务器压缩和下载"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "执行",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh root@192.168.1.5 \"tar cvzf - ~/source\" > output.tgz"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "text",
       "body": "从远程复制到本地"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "code",
       "lang": "shell",
       "code": "$ scp user@server:/dir/file.ext dest/"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "text",
       "body": "两台服务器之间的副本"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "code",
       "lang": "shell",
       "code": "$ scp user@server:/file user@server:/dir"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "text",
       "body": "从本地复制到远程"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "code",
       "lang": "shell",
       "code": "$ scp dest/file.ext user@server:/dir"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "text",
       "body": "复制整个文件夹"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "code",
       "lang": "shell",
       "code": "$ scp -r user@server:/dir dest/"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "text",
       "body": "复制文件夹中的所有文件"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s1-23",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "code",
       "lang": "shell",
       "code": "$ scp user@server:/dir/* dest/"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s1-24",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "text",
       "body": "从服务器文件夹复制到当前文件夹"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s1-25",
+      "sectionId": "s1",
       "title": "SCP",
       "kind": "code",
       "lang": "shell",
       "code": "$ scp user@server:/dir/* ."
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s1-26",
+      "sectionId": "s1",
       "title": "配置位置",
       "kind": "text",
       "body": "文件路径 | 说明\n:-|-\n`/etc/ssh/ssh_config`    | 系统范围的配置\n`~/.ssh/config`          | 用户特定的配置\n`~/.ssh/id_{type}`       | 私钥\n`~/.ssh/id_{type}.pub`   | 公钥\n`~/.ssh/known_hosts`     | 登录主机\n`~/.ssh/authorized_keys` | 授权登录密钥"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s1-27",
+      "sectionId": "s1",
       "title": "SCP 选项",
       "kind": "text",
       "body": "选项 | 说明\n:-|-\nscp `-r`      | 递归复制整个目录\nscp `-C`      | 压缩数据\nscp `-v`      | 打印详细信息\nscp `-P` 8080 | 使用特定端口\nscp `-B`      | 批处理模式_（防止密码）_\nscp `-p`      | 保留时间和模式"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s1-28",
+      "sectionId": "s1",
       "title": "配置示例",
       "kind": "code",
       "lang": "toml",
       "code": "Host server1 \n    HostName 192.168.1.5\n    User root\n    Port 22\n    IdentityFile ~/.ssh/server1.key"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s1-29",
+      "sectionId": "s1",
       "title": "配置示例",
       "kind": "text",
       "body": "通过别名启动"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s1-30",
+      "sectionId": "s1",
       "title": "配置示例",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh server1"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s1-31",
+      "sectionId": "s1",
       "title": "配置示例",
       "kind": "text",
       "body": "请参阅：完整 [配置选项](https://linux.die.net/man/5/ssh_config)"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s1-32",
+      "sectionId": "s1",
       "title": "ProxyJump",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -J proxy_host1 remote_host2"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s1-33",
+      "sectionId": "s1",
       "title": "ProxyJump",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -J user@proxy_host1 user@remote_host2"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s1-34",
+      "sectionId": "s1",
       "title": "ProxyJump",
       "kind": "text",
       "body": "多次跳跃"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s1-35",
+      "sectionId": "s1",
       "title": "ProxyJump",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -J user@proxy_host1:port1,user@proxy_host2:port2 user@remote_host3"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s1-36",
+      "sectionId": "s1",
       "title": "ssh-copy-id",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-copy-id user@server"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s1-37",
+      "sectionId": "s1",
       "title": "ssh-copy-id",
       "kind": "text",
       "body": "复制到别名服务器"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s1-38",
+      "sectionId": "s1",
       "title": "ssh-copy-id",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-copy-id server1"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s1-39",
+      "sectionId": "s1",
       "title": "ssh-copy-id",
       "kind": "text",
       "body": "复制特定密钥"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s1-40",
+      "sectionId": "s1",
       "title": "ssh-copy-id",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-copy-id -i ~/.ssh/id_rsa.pub user@server"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
-      "title": "ssh-copy-id",
-      "kind": "text",
-      "body": "SSH keygen\n---------------\n<!--rehype:body-class=cols-5-->"
-    },
-    {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s2-41",
+      "sectionId": "s2",
       "title": "ssh-keygen",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-keygen -t rsa -b 4096 -C \"your@mail.com\""
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s2-42",
+      "sectionId": "s2",
       "title": "ssh-keygen",
       "kind": "text",
       "body": "----"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s2-43",
+      "sectionId": "s2",
       "title": "ssh-keygen",
       "kind": "text",
       "body": "生成带有电子邮件作为注释的 RSA 4096 位密钥"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s2-44",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "text",
       "body": "以交互方式生成密钥"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s2-45",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-keygen"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s2-46",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "text",
       "body": "指定文件名"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s2-47",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-keygen -f ~/.ssh/filename"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s2-48",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "text",
       "body": "从私钥生成公钥"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s2-49",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-keygen -y -f private.key > public.pub"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s2-50",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "text",
       "body": "更改评论"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s2-51",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-keygen -c -f ~/.ssh/id_rsa"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s2-52",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "text",
       "body": "更改私钥密码"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s2-53",
+      "sectionId": "s2",
       "title": "产生",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-keygen -p -f ~/.ssh/id_rsa"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s2-54",
+      "sectionId": "s2",
       "title": "钥匙类型",
       "kind": "text",
       "body": "• rsa\n• ed25519\n• dsa\n• ecdsa"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s2-55",
+      "sectionId": "s2",
       "title": "known_hosts",
       "kind": "text",
       "body": "从 known_hosts 搜索"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s2-56",
+      "sectionId": "s2",
       "title": "known_hosts",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-keygen -F <ip/hostname>"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s2-57",
+      "sectionId": "s2",
       "title": "known_hosts",
       "kind": "text",
       "body": "从 known_hosts 中删除"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s2-58",
+      "sectionId": "s2",
       "title": "known_hosts",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh-keygen -R <ip/hostname>"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s2-59",
+      "sectionId": "s2",
       "title": "密钥格式",
       "kind": "text",
       "body": "• PEM\n• PKCS8"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
-      "title": "密钥格式",
-      "kind": "text",
-      "body": "端口转发\n---------------\n<!--rehype:body-class=cols-6-->"
-    },
-    {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s3-60",
+      "sectionId": "s3",
       "title": "动态端口转发语法",
       "kind": "text",
       "body": "将本地端口变成一个 SOCKS 代理，自动转发任意目标地址的请求（适用于代理上网）。"
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s3-61",
+      "sectionId": "s3",
       "title": "动态端口转发语法",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -D 本地SOCKS端口 用户名@SSH服务器 -N"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s3-62",
+      "sectionId": "s3",
       "title": "动态端口转发语法",
       "kind": "text",
       "body": "示例：开启本地 1080 端口作为 SOCKS5 代理："
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s3-63",
+      "sectionId": "s3",
       "title": "动态端口转发语法",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -D 1080 -N user@example.com"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
+      "id": "s3-64",
+      "sectionId": "s3",
       "title": "验证 SOCKS5 代理",
       "kind": "text",
       "body": "使用 curl 命令验证 SOCKS5 代理是否工作正常："
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s3-65",
+      "sectionId": "s3",
       "title": "验证 SOCKS5 代理",
       "kind": "code",
       "lang": "shell",
       "code": "# 设置\n$ ssh -D 1080 -N user@example.com\n# 验证\n$ curl --socks5 127.0.0.1:1080 https://ifconfig.me"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
+      "id": "s3-66",
+      "sectionId": "s3",
       "title": "验证 SOCKS5 代理",
       "kind": "text",
       "body": "如果返回的是 `example.com` 服务器的公网 IP，说明 SOCKS5 代理正常工作。"
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s3-67",
+      "sectionId": "s3",
       "title": "本地端口转发",
       "kind": "text",
       "body": "将本地端口的流量通过 SSH 隧道转发到目标服务器（适用于访问远程/内网服务）。"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
+      "id": "s3-68",
+      "sectionId": "s3",
       "title": "本地端口转发",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -L [本地IP:]本地端口:目标IP:目标端口 用户名@SSH服务器 -N"
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s3-69",
+      "sectionId": "s3",
       "title": "本地端口转发",
       "kind": "text",
       "body": "示例：将本地的 `4000` 端口转发到远程内网服务器 192.168.1.10:80："
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s3-70",
+      "sectionId": "s3",
       "title": "本地端口转发",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -L 4000:192.168.1.10:80 user@example.com -N"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s3-71",
+      "sectionId": "s3",
       "title": "本地端口转发",
       "kind": "text",
       "body": "其中 `-N` 表示不执行远程命令，只是建立隧道。"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
+      "id": "s3-72",
+      "sectionId": "s3",
       "title": "远程端口转发",
       "kind": "text",
       "body": "让远程 SSH 服务器上的端口转发到本地的某个服务（适用于让外部访问你本地服务）。"
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
+      "id": "s3-73",
+      "sectionId": "s3",
       "title": "远程端口转发",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -R [SSH服务器IP:]远程端口:本地IP:本地端口 用户名@SSH服务器 -N"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
+      "id": "s3-74",
+      "sectionId": "s3",
       "title": "远程端口转发",
       "kind": "text",
       "body": "示例：将远程服务器的 5000 端口映射到你本地的 localhost:3306（MySQL）："
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
+      "id": "s3-75",
+      "sectionId": "s3",
       "title": "远程端口转发",
       "kind": "code",
       "lang": "shell",
       "code": "$ ssh -R 5000:localhost:3306 user@example.com -N"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
-      "title": "远程端口转发",
-      "kind": "text",
-      "body": "另见\n--------"
-    },
-    {
-      "id": "intro-81",
-      "sectionId": "intro",
-      "title": "远程端口转发",
+      "id": "s4-76",
+      "sectionId": "s4",
+      "title": "另见",
       "kind": "text",
       "body": "• [OpenSSH 配置文件示例](https://www.cyberciti.biz/faq/create-ssh-config-file-on-linux-unix/) _(cyberciti.biz)_\n• [ssh_config](https://linux.die.net/man/5/ssh_config) _(linux.die.net)_"
     }
@@ -624,7 +611,6 @@
     "path": "docs/ssh.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/ssh.md",
-    "generatedAt": "2025-12-16T07:36:11.437Z",
     "lang": "zh",
     "mode": "local"
   }

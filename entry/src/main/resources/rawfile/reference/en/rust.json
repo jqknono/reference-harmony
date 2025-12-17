@@ -1,6 +1,8 @@
 {
   "id": "rust",
-  "title": "Rust",
+  "name": "Rust",
+  "title": "The Rust quick reference cheat sheet that aims at providing help on writing basic syntax and methods.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/rust.svg",
   "sections": [
     {
       "id": "intro",
@@ -11,6 +13,41 @@
       "id": "s1",
       "title": "Getting Started",
       "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Rust Types",
+      "startIndex": 25
+    },
+    {
+      "id": "s3",
+      "title": "Rust Strings",
+      "startIndex": 43
+    },
+    {
+      "id": "s4",
+      "title": "Rust Operators",
+      "startIndex": 51
+    },
+    {
+      "id": "s5",
+      "title": "Rust Flow Control",
+      "startIndex": 80
+    },
+    {
+      "id": "s6",
+      "title": "Rust Functions",
+      "startIndex": 94
+    },
+    {
+      "id": "s7",
+      "title": "Misc",
+      "startIndex": 101
+    },
+    {
+      "id": "s8",
+      "title": "Also see",
+      "startIndex": 113
     }
   ],
   "cards": [
@@ -162,1018 +199,731 @@
       "title": "Formatting",
       "kind": "code",
       "lang": "",
-      "code": "\n### Printing Styles"
+      "code": "\n### Printing Styles\n\n```rust\n// Prints the output\nprint!(\"Hello World\\n\");\n\n// Appends a new line after printing\nprintln!(\"Appending a new line\");\n\n// Prints as an error\neprint!(\"This is an error\\n\");\n\n// Prints as an error with new line\neprintln!(\"This is an error with new line\");"
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// Prints the output\nprint!(\"Hello World\\n\");"
+      "title": "Variables",
+      "kind": "code",
+      "lang": "rust",
+      "code": "// Initializing and declaring a variable\nlet some_variable = \"This_is_a_variable\";\n\n// Making a variable mutable\nlet mut mutable_variable = \"Mutable\";\n\n// Assigning multiple variables\nlet (name, age) = (\"ElementalX\", 20);\n\n// (Global) constant\nconst SCREAMING_SNAKE_CASE: i64 = 9;"
     },
     {
       "id": "s1-21",
       "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// Appends a new line after printing\nprintln!(\"Appending a new line\");"
+      "title": "Comments",
+      "kind": "code",
+      "lang": "rust",
+      "code": "// Line Comments\n/*.............Block Comments */\n/// Outer doc comments\n//! Inner doc comments"
     },
     {
       "id": "s1-22",
       "sectionId": "s1",
-      "title": "Formatting",
+      "title": "Comments",
       "kind": "text",
-      "body": "// Prints as an error\neprint!(\"This is an error\\n\");"
+      "body": "See: [Comment](https://doc.rust-lang.org/reference/comments.html)"
     },
     {
       "id": "s1-23",
       "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// Prints as an error with new line\neprintln!(\"This is an error with new line\");"
+      "title": "Functions",
+      "kind": "code",
+      "lang": "rust",
+      "code": "fn test() {\n    println!(\"This is a function!\");\n}\n\nfn main() {\n    test();\n}"
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
-      "title": "Formatting",
+      "title": "Functions",
+      "kind": "text",
+      "body": "See: [Functions](#rust-functions)"
+    },
+    {
+      "id": "s2-25",
+      "sectionId": "s2",
+      "title": "Integer",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let mut a: u32 = 8;\nlet b: u64 = 877;\nlet c: i64 = 8999;\nlet d = -90;"
+    },
+    {
+      "id": "s2-26",
+      "sectionId": "s2",
+      "title": "Floating-Point",
+      "kind": "code",
+      "lang": "rust",
+      "code": "let mut sixty_bit_float: f64 = 89.90;\nlet thirty_two_bit_float: f32 = 7.90;\nlet just_a_float = 69.69;"
+    },
+    {
+      "id": "s2-27",
+      "sectionId": "s2",
+      "title": "Boolean",
+      "kind": "text",
+      "body": "```rust {.wrap}\nlet true_val: bool = true;\nlet false_val: bool = false;\nlet just_a_bool = true;\nlet is_true = 8 < 5; // => false"
+    },
+    {
+      "id": "s2-28",
+      "sectionId": "s2",
+      "title": "Boolean",
       "kind": "code",
       "lang": "",
-      "code": "\n### Variables"
+      "code": "\n### Character\n\n```rust\nlet first_letter_of_alphabet = 'a';\nlet explicit_char: char = 'F';\nlet implicit_char = '8';\nlet emoji = \"\\u{1f600}\"; // => 😀"
     },
     {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-29",
+      "sectionId": "s2",
+      "title": "String Literal",
       "kind": "text",
-      "body": "// Initializing and declaring a variable\nlet some_variable = \"This_is_a_variable\";"
+      "body": "```rust {.wrap}\nlet community_name = \"AXIAL\";\nlet no_of_members: &str = \"ten\";"
     },
     {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// Making a variable mutable\nlet mut mutable_variable = \"Mutable\";"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// Assigning multiple variables\nlet (name, age) = (\"ElementalX\", 20);"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// (Global) constant\nconst SCREAMING_SNAKE_CASE: i64 = 9;"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Comments"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// Line Comments\n/*.............Block Comments */\n/// Outer doc comments\n//! Inner doc comments"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSee: [Comment](https://doc.rust-lang.org/reference/comments.html)\n\n### Functions"
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn test() {\nprintln!(\"This is a function!\");\n}"
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn main() {\ntest();\n}"
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\nSee: [Functions](#rust-functions)\n\n## Rust Types\n\n### Integer"
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let mut a: u32 = 8;\nlet b: u64 = 877;\nlet c: i64 = 8999;\nlet d = -90;"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Floating-Point"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let mut sixty_bit_float: f64 = 89.90;\nlet thirty_two_bit_float: f32 = 7.90;\nlet just_a_float = 69.69;"
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Boolean"
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let true_val: bool = true;\nlet false_val: bool = false;\nlet just_a_bool = true;\nlet is_true = 8 < 5; // => false"
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Character"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let first_letter_of_alphabet = 'a';\nlet explicit_char: char = 'F';\nlet implicit_char = '8';\nlet emoji = \"\\u{1f600}\"; // => 😀"
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### String Literal"
-    },
-    {
-      "id": "s1-43",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let community_name = \"AXIAL\";\nlet no_of_members: &str = \"ten\";"
-    },
-    {
-      "id": "s1-44",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "String Literal",
       "kind": "text",
       "body": "println!(\"The name of the community is {community_name} and it has {no_of_members} members\");"
     },
     {
-      "id": "s1-45",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-31",
+      "sectionId": "s2",
+      "title": "String Literal",
       "kind": "code",
       "lang": "",
-      "code": "\nSee: [Strings](#rust-strings)\n\n### Arrays"
+      "code": "\nSee: [Strings](#rust-strings)\n\n### Arrays\n\n```rust\n┌─────┬─────┬─────┬─────┬─────┬─────┐\n| 92  | 97  | 98  | 99  | 98  | 94  |\n└─────┴─────┴─────┴─────┴─────┴─────┘\n   0     1     2     3     4     5"
     },
     {
-      "id": "s1-46",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-32",
+      "sectionId": "s2",
+      "title": "String Literal",
       "kind": "text",
-      "body": "┌─────┬─────┬─────┬─────┬─────┬─────┐\n| 92  | 97  | 98  | 99  | 98  | 94  |\n└─────┴─────┴─────┴─────┴─────┴─────┘\n0     1     2     3     4     5"
+      "body": "---"
     },
     {
-      "id": "s1-47",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-33",
+      "sectionId": "s2",
+      "title": "String Literal",
       "kind": "code",
-      "lang": "",
-      "code": "\n---"
+      "lang": "rust",
+      "code": "let array: [i64; 6] = [92, 97, 98, 99, 98, 94];"
     },
     {
-      "id": "s1-48",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let array: [i64; 6] = [92, 97, 98, 99, 98, 94];"
-    },
-    {
-      "id": "s1-49",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-34",
+      "sectionId": "s2",
+      "title": "Multi-Dimensional Array",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Multi-Dimensional Array {.row-span-2}"
+      "lang": "rust",
+      "code": "     j0   j1   j2   j3   j4   j5\n   ┌────┬────┬────┬────┬────┬────┐\ni0 | 1  | 2  | 3  | 4  | 5  | 6  |\n   ├────┼────┼────┼────┼────┼────┤\ni1 | 6  | 5  | 4  | 3  | 2  | 1  |\n   └────┴────┴────┴────┴────┴────┘"
     },
     {
-      "id": "s1-50",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-35",
+      "sectionId": "s2",
+      "title": "Multi-Dimensional Array",
       "kind": "text",
-      "body": "j0   j1   j2   j3   j4   j5\n┌────┬────┬────┬────┬────┬────┐\ni0 | 1  | 2  | 3  | 4  | 5  | 6  |\n├────┼────┼────┼────┼────┼────┤\ni1 | 6  | 5  | 4  | 3  | 2  | 1  |\n└────┴────┴────┴────┴────┴────┘"
+      "body": "---"
     },
     {
-      "id": "s1-51",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-36",
+      "sectionId": "s2",
+      "title": "Multi-Dimensional Array",
       "kind": "code",
-      "lang": "",
-      "code": "\n---"
+      "lang": "rust",
+      "code": "let array: [[i64; 6]; 2] = [\n    [1, 2, 3, 4, 5, 6],\n    [6, 5, 4, 3, 2, 1]\n];"
     },
     {
-      "id": "s1-52",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let array: [[i64; 6]; 2] = [\n[1, 2, 3, 4, 5, 6],\n[6, 5, 4, 3, 2, 1]\n];"
-    },
-    {
-      "id": "s1-53",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-37",
+      "sectionId": "s2",
+      "title": "Mutable Array",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Mutable Array"
+      "lang": "rust",
+      "code": "let mut array: [i32; 3] = [2, 6, 10];\n\narray[1] = 4;\narray[2] = 6;"
     },
     {
-      "id": "s1-54",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-38",
+      "sectionId": "s2",
+      "title": "Mutable Array",
       "kind": "text",
-      "body": "let mut array: [i32; 3] = [2, 6, 10];"
+      "body": "Use the `mut` keyword to make it mutable."
     },
     {
-      "id": "s1-55",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "array[1] = 4;\narray[2] = 6;"
-    },
-    {
-      "id": "s1-56",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-39",
+      "sectionId": "s2",
+      "title": "Slices",
       "kind": "code",
-      "lang": "",
-      "code": "\nUse the `mut` keyword to make it mutable.\n\n### Slices"
+      "lang": "rust",
+      "code": "let mut array: [i64; 4] = [1, 2, 3, 4];\nlet mut slices: &[i64] = &array[0..3]; // Lower range is inclusive and upper range is exclusive\n\nprintln!(\"The elements of the slices are : {slices:?}\");"
     },
     {
-      "id": "s1-57",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let mut array: [i64; 4] = [1, 2, 3, 4];\nlet mut slices: &[i64] = &array[0..3]; // Lower range is inclusive and upper range is exclusive"
-    },
-    {
-      "id": "s1-58",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "println!(\"The elements of the slices are : {slices:?}\");"
-    },
-    {
-      "id": "s1-59",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-40",
+      "sectionId": "s2",
+      "title": "Vectors",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Vectors"
+      "lang": "rust",
+      "code": "let some_vector = vec![1, 2, 3, 4, 5];"
     },
     {
-      "id": "s1-60",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-41",
+      "sectionId": "s2",
+      "title": "Vectors",
       "kind": "text",
-      "body": "let some_vector = vec![1, 2, 3, 4, 5];"
+      "body": "A vector is declared using the `vec!` macro."
     },
     {
-      "id": "s1-61",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s2-42",
+      "sectionId": "s2",
+      "title": "Tuples",
       "kind": "code",
-      "lang": "",
-      "code": "\nA vector is declared using the `vec!` macro.\n\n### Tuples"
+      "lang": "rust",
+      "code": "let tuple = (1, 'A', \"Cool\", 78, true);"
     },
     {
-      "id": "s1-62",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let tuple = (1, 'A', \"Cool\", 78, true);"
-    },
-    {
-      "id": "s1-63",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s3-43",
+      "sectionId": "s3",
+      "title": "String Literal",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Rust Strings\n\n### String Literal"
+      "lang": "rust",
+      "code": "let cs: &str = \"cheat sheet\";\n\n// => Share cheat sheet for developers\nprintln!(\"Share {cs} for developers\");"
     },
     {
-      "id": "s1-64",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let cs: &str = \"cheat sheet\";"
-    },
-    {
-      "id": "s1-65",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// => Share cheat sheet for developers\nprintln!(\"Share {cs} for developers\");"
-    },
-    {
-      "id": "s1-66",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s3-44",
+      "sectionId": "s3",
+      "title": "String Object",
       "kind": "code",
-      "lang": "",
-      "code": "\n### String Object"
+      "lang": "rust",
+      "code": "// Creating an empty string object\nlet my_string = String::new();\n\n// Converting to a string object\nlet S_string = a_string.to_string();\n\n// Creating an initialized string object\nlet lang = String::from(\"Rust\");\nprintln!(\"First language is {lang}\");"
     },
     {
-      "id": "s1-67",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// Creating an empty string object\nlet my_string = String::new();"
-    },
-    {
-      "id": "s1-68",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// Converting to a string object\nlet S_string = a_string.to_string();"
-    },
-    {
-      "id": "s1-69",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// Creating an initialized string object\nlet lang = String::from(\"Rust\");\nprintln!(\"First language is {lang}\");"
-    },
-    {
-      "id": "s1-70",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s3-45",
+      "sectionId": "s3",
+      "title": ".capacity()",
       "kind": "code",
-      "lang": "",
-      "code": "\n### .capacity()"
+      "lang": "rust",
+      "code": "let rand = String::from(\"Random String\");\nrand.capacity() // => 13"
     },
     {
-      "id": "s1-71",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s3-46",
+      "sectionId": "s3",
+      "title": ".capacity()",
       "kind": "text",
-      "body": "let rand = String::from(\"Random String\");\nrand.capacity() // => 13"
+      "body": "Calculates the capacity of the string in bytes."
     },
     {
-      "id": "s1-72",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s3-47",
+      "sectionId": "s3",
+      "title": ".contains()",
       "kind": "code",
-      "lang": "",
-      "code": "\nCalculates the capacity of the string in bytes.\n\n### .contains()"
+      "lang": "rust",
+      "code": "let name = String::from(\"ElementalX\");\nname.contains(\"Element\") // => true"
     },
     {
-      "id": "s1-73",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s3-48",
+      "sectionId": "s3",
+      "title": ".contains()",
       "kind": "text",
-      "body": "let name = String::from(\"ElementalX\");\nname.contains(\"Element\") // => true"
+      "body": "Checks if the substring is contained inside the original string or not."
     },
     {
-      "id": "s1-74",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s3-49",
+      "sectionId": "s3",
+      "title": "Pushing a single character",
       "kind": "code",
-      "lang": "",
-      "code": "\nChecks if the substring is contained inside the original string or not.\n\n### Pushing a single character"
+      "lang": "rust",
+      "code": "let mut half_text = String::from(\"Hal\");\nhalf_text.push('f'); // => Half"
     },
     {
-      "id": "s1-75",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let mut half_text = String::from(\"Hal\");\nhalf_text.push('f'); // => Half"
-    },
-    {
-      "id": "s1-76",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s3-50",
+      "sectionId": "s3",
+      "title": "Pushing an entire String",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Pushing an entire String"
+      "lang": "rust",
+      "code": "let mut hi = String::from(\"Hey there...\");\nhi.push_str(\"How are you doing??\");\n\n// => Hey there...How are you doing??\nprintln!(\"{hi}\");"
     },
     {
-      "id": "s1-77",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-51",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`e == f`",
+      "back": "`e` is equal to `f`"
+    },
+    {
+      "id": "s4-52",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`e != f`",
+      "back": "`e` is NOT equal to `f`"
+    },
+    {
+      "id": "s4-53",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`e < f`",
+      "back": "`e` is less than `f`"
+    },
+    {
+      "id": "s4-54",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`e > f`",
+      "back": "`e` is greater than `f`"
+    },
+    {
+      "id": "s4-55",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`e <= f`",
+      "back": "`e` is less than or equal to `f`"
+    },
+    {
+      "id": "s4-56",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
+      "kind": "qa",
+      "front": "`e >= f`",
+      "back": "`e` is greater or equal to `f`"
+    },
+    {
+      "id": "s4-57",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
       "kind": "text",
-      "body": "let mut hi = String::from(\"Hey there...\");\nhi.push_str(\"How are you doing??\");"
+      "body": "---"
     },
     {
-      "id": "s1-78",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// => Hey there...How are you doing??\nprintln!(\"{hi}\");"
-    },
-    {
-      "id": "s1-79",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-58",
+      "sectionId": "s4",
+      "title": "Comparison Operators",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Rust Operators\n\n### Comparison Operators\n\n|          |                                  |\n| -------- | :------------------------------- |\n| `e == f` | `e` is equal to `f`              |\n| `e != f` | `e` is NOT equal to `f`          |\n| `e < f`  | `e` is less than `f`             |\n| `e > f`  | `e` is greater than `f`          |\n| `e <= f` | `e` is less than or equal to `f` |\n| `e >= f` | `e` is greater or equal to `f`   |\n\n---"
+      "lang": "rust",
+      "code": "let (e, f) = (1, 100);\n\nlet greater = f > e;        // => true\nlet less = f < e;           // => false\nlet greater_equal = f >= e; // => true\nlet less_equal = e <= f;    // => true\nlet equal_to = e == f;      // => false\nlet not_equal_to = e != f;  // => true"
     },
     {
-      "id": "s1-80",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-59",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`a +  b`",
+      "back": "`a` is added to `b`"
+    },
+    {
+      "id": "s4-60",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`a -  b`",
+      "back": "`b` is subtracted from `a`"
+    },
+    {
+      "id": "s4-61",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`a /  b`",
+      "back": "`a` is divided by `b`"
+    },
+    {
+      "id": "s4-62",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`a % b`",
+      "back": "Gets remainder of `a` by dividing with `b`"
+    },
+    {
+      "id": "s4-63",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
+      "kind": "qa",
+      "front": "`a * b`",
+      "back": "`a` is multiplied with `b`"
+    },
+    {
+      "id": "s4-64",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
       "kind": "text",
-      "body": "let (e, f) = (1, 100);"
+      "body": "---"
     },
     {
-      "id": "s1-81",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-65",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
       "kind": "text",
-      "body": "let greater = f > e;        // => true\nlet less = f < e;           // => false\nlet greater_equal = f >= e; // => true\nlet less_equal = e <= f;    // => true\nlet equal_to = e == f;      // => false\nlet not_equal_to = e != f;  // => true"
+      "body": "```rust {.wrap}\nlet (a, b) = (4, 5);"
     },
     {
-      "id": "s1-82",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Arithmetic Operators\n\n|          |                                            |\n| -------- | :----------------------------------------- |\n| `a +  b` | `a` is added to `b`                        |\n| `a -  b` | `b` is subtracted from `a`                 |\n| `a /  b` | `a` is divided by `b`                      |\n| `a % b`  | Gets remainder of `a` by dividing with `b` |\n| `a * b`  | `a` is multiplied with `b`                 |\n\n---"
-    },
-    {
-      "id": "s1-83",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let (a, b) = (4, 5);"
-    },
-    {
-      "id": "s1-84",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-66",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
       "kind": "text",
       "body": "let sum: i32 = a + b;            // => 9\nlet subtractions: i32 = a - b;   // => -1\nlet multiplication: i32 = a * b; // => 20\nlet division: i32 = a / b;       // => 0\nlet modulus: i32 = a % b;        // => 4"
     },
     {
-      "id": "s1-85",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-67",
+      "sectionId": "s4",
+      "title": "Arithmetic Operators",
       "kind": "code",
       "lang": "",
-      "code": "\n### Bitwise Operators\n\n| Operator            | Description             |\n| ------------------- | ----------------------- |\n| `g & h`             | Binary AND              |\n| <code>g \\| h</code> | Binary OR               |\n| `g ^ h`             | Binary XOR              |\n| `!g`                | Binary one's complement |\n| `g << h`            | Binary shift left       |\n| `g >> h`            | Binary shift right      |\n\n---"
+      "code": "\n### Bitwise Operators\n\n| Operator            | Description             |\n| ------------------- | ----------------------- |\n| `g & h`             | Binary AND              |\n| <code>g \\| h</code> | Binary OR               |\n| `g ^ h`             | Binary XOR              |\n| `!g`                | Binary one's complement |\n| `g << h`            | Binary shift left       |\n| `g >> h`            | Binary shift right      |\n\n---\n\n```rust {.wrap}\nlet (g, h) = (0x1, 0x2);\n\nlet bitwise_and = g & h;  // => 0\nlet bitwise_or = g | h;   // => 3\nlet bitwise_xor = g ^ h;  // => 3\nlet right_shift = g >> 2; // => 0\nlet left_shift = h << 4;  // => 32"
     },
     {
-      "id": "s1-86",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-68",
+      "sectionId": "s4",
+      "title": "Logical Operators",
+      "kind": "qa",
+      "front": "`c && d`",
+      "back": "Both are true _(AND)_"
+    },
+    {
+      "id": "s4-69",
+      "sectionId": "s4",
+      "title": "Logical Operators",
+      "kind": "qa",
+      "front": "<code>c \\",
+      "back": "\\ | d</code> | Either is true _(OR)_"
+    },
+    {
+      "id": "s4-70",
+      "sectionId": "s4",
+      "title": "Logical Operators",
+      "kind": "qa",
+      "front": "`!c`",
+      "back": "`c` is false _(NOT)_"
+    },
+    {
+      "id": "s4-71",
+      "sectionId": "s4",
+      "title": "Logical Operators",
       "kind": "text",
-      "body": "let (g, h) = (0x1, 0x2);"
+      "body": "---"
     },
     {
-      "id": "s1-87",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let bitwise_and = g & h;  // => 0\nlet bitwise_or = g | h;   // => 3\nlet bitwise_xor = g ^ h;  // => 3\nlet right_shift = g >> 2; // => 0\nlet left_shift = h << 4;  // => 32"
-    },
-    {
-      "id": "s1-88",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-72",
+      "sectionId": "s4",
+      "title": "Logical Operators",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Logical Operators\n\n| Example               | Meaning               |\n| --------------------- | --------------------- |\n| `c && d`              | Both are true _(AND)_ |\n| <code>c \\|\\| d</code> | Either is true _(OR)_ |\n| `!c`                  | `c` is false _(NOT)_  |\n\n---"
+      "lang": "rust",
+      "code": "let (c, d) = (true, false);\n\nlet and = c && d;  // => false\nlet or = c || d;   // => true\nlet not = !c;      // => false"
     },
     {
-      "id": "s1-89",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let (c, d) = (true, false);"
-    },
-    {
-      "id": "s1-90",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let and = c && d;  // => false\nlet or = c || d;   // => true\nlet not = !c;      // => false"
-    },
-    {
-      "id": "s1-91",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-73",
+      "sectionId": "s4",
+      "title": "Compound Assignment Operator",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Compound Assignment Operator"
+      "lang": "rust",
+      "code": "let mut k = 9;\nlet mut l = k;"
     },
     {
-      "id": "s1-92",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-74",
+      "sectionId": "s4",
+      "title": "Compound Assignment Operator",
       "kind": "text",
-      "body": "let mut k = 9;\nlet mut l = k;"
+      "body": "---"
     },
     {
-      "id": "s1-93",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s4-75",
+      "sectionId": "s4",
+      "title": "Compound Assignment Operator",
+      "kind": "qa",
+      "front": "`k += l`",
+      "back": "Add a value and assign, then k=18"
+    },
+    {
+      "id": "s4-76",
+      "sectionId": "s4",
+      "title": "Compound Assignment Operator",
+      "kind": "qa",
+      "front": "`k -= l`",
+      "back": "Subtract a value and assign, then k=0"
+    },
+    {
+      "id": "s4-77",
+      "sectionId": "s4",
+      "title": "Compound Assignment Operator",
+      "kind": "qa",
+      "front": "`k /= l`",
+      "back": "Divide a value and assign, then k=1"
+    },
+    {
+      "id": "s4-78",
+      "sectionId": "s4",
+      "title": "Compound Assignment Operator",
+      "kind": "qa",
+      "front": "`k *= l`",
+      "back": "Multiply a value and assign, then k=81"
+    },
+    {
+      "id": "s4-79",
+      "sectionId": "s4",
+      "title": "Compound Assignment Operator",
+      "kind": "qa",
+      "front": "<code>k \\",
+      "back": "= l</code> | Bitwise OR and assign, then k=89"
+    },
+    {
+      "id": "s5-80",
+      "sectionId": "s5",
+      "title": "If Expression",
       "kind": "code",
-      "lang": "",
-      "code": "\n---\n\n| Operator             | Description                             |\n| -------------------- | --------------------------------------- |\n| `k += l`             | Add a value and assign, then k=18       |\n| `k -= l`             | Subtract a value and assign, then k=0   |\n| `k /= l`             | Divide a value and assign, then k=1     |\n| `k *= l`             | Multiply a value and assign, then k=81  |\n| <code>k \\|= l</code> | Bitwise OR and assign, then k=89        |\n\n## Rust Flow Control\n\n### If Expression"
+      "lang": "rust",
+      "code": "let case1: i32 = 81;\nlet case2: i32 = 82;\n\nif case1 < case2 {\n  println!(\"case1 is less than case2\");\n}"
     },
     {
-      "id": "s1-94",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let case1: i32 = 81;\nlet case2: i32 = 82;"
-    },
-    {
-      "id": "s1-95",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "if case1 < case2 {\nprintln!(\"case1 is less than case2\");\n}"
-    },
-    {
-      "id": "s1-96",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-81",
+      "sectionId": "s5",
+      "title": "If...Else Expression",
       "kind": "code",
-      "lang": "",
-      "code": "\n### If...Else Expression"
+      "lang": "rust",
+      "code": "let case3 = 8;\nlet case4 = 9;\n\nif case3 >= case4 {\n    println!(\"case3 is better than case4\");\n} else {\n    println!(\"case4 is greater than case3\");\n}"
     },
     {
-      "id": "s1-97",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let case3 = 8;\nlet case4 = 9;"
-    },
-    {
-      "id": "s1-98",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "if case3 >= case4 {\nprintln!(\"case3 is better than case4\");\n} else {\nprintln!(\"case4 is greater than case3\");\n}"
-    },
-    {
-      "id": "s1-99",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-82",
+      "sectionId": "s5",
+      "title": "If...Else...if...Else Expression",
       "kind": "code",
-      "lang": "",
-      "code": "\n### If...Else...if...Else Expression"
+      "lang": "rust",
+      "code": "let foo = 12;\nlet bar = 13;\n\nif foo == bar {\n    println!(\"foo is equal to bar\");\n} else if foo < bar {\n    println!(\"foo less than bar\");\n} else if foo != bar {\n    println!(\"foo is not equal to bar\");\n} else {\n    println!(\"Nothing\");\n}"
     },
     {
-      "id": "s1-100",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let foo = 12;\nlet bar = 13;"
-    },
-    {
-      "id": "s1-101",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "if foo == bar {\nprintln!(\"foo is equal to bar\");\n} else if foo < bar {\nprintln!(\"foo less than bar\");\n} else if foo != bar {\nprintln!(\"foo is not equal to bar\");\n} else {\nprintln!(\"Nothing\");\n}"
-    },
-    {
-      "id": "s1-102",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-83",
+      "sectionId": "s5",
+      "title": "If...Let Expression",
       "kind": "code",
-      "lang": "",
-      "code": "\n### If...Let Expression {.row-span-3}"
+      "lang": "rust",
+      "code": "let mut arr1: [i64; 3] = [1, 2, 3];\nif let [1, 2, _] = arr1 {\n    println!(\"Works with array\");\n}\n\nlet mut arr2: [&str; 2] = [\"one\", \"two\"];\nif let [\"Apple\", _] = arr2 {\n    println!(\"Works with str array too\");\n}"
     },
     {
-      "id": "s1-103",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-84",
+      "sectionId": "s5",
+      "title": "If...Let Expression",
       "kind": "text",
-      "body": "let mut arr1: [i64; 3] = [1, 2, 3];\nif let [1, 2, _] = arr1 {\nprintln!(\"Works with array\");\n}"
+      "body": "---"
     },
     {
-      "id": "s1-104",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let mut arr2: [&str; 2] = [\"one\", \"two\"];\nif let [\"Apple\", _] = arr2 {\nprintln!(\"Works with str array too\");\n}"
-    },
-    {
-      "id": "s1-105",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-85",
+      "sectionId": "s5",
+      "title": "If...Let Expression",
       "kind": "code",
-      "lang": "",
-      "code": "\n---"
+      "lang": "rust",
+      "code": "let tuple_1 = (\"India\", 7, 90, 90.432);\nif let (_, 7, 9, 78.99) = tuple_1 {\n    println!(\"Works with tuples too\");\n}\n\nlet tuple_2 = (9, 7, 89, 12, \"Okay\");\nif let (9, 7, 89, 12, blank) = tuple_2 {\n    println!(\"Everything {blank} mate?\");\n}\n\nlet tuple_3 = (89, 90, \"Yes\");\nif let (9, 89, \"Yes\") = tuple_3 {\n    println!(\"Pattern did match\");\n} else {\n    println!(\"Pattern did not match\");\n}"
     },
     {
-      "id": "s1-106",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let tuple_1 = (\"India\", 7, 90, 90.432);\nif let (_, 7, 9, 78.99) = tuple_1 {\nprintln!(\"Works with tuples too\");\n}"
-    },
-    {
-      "id": "s1-107",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let tuple_2 = (9, 7, 89, 12, \"Okay\");\nif let (9, 7, 89, 12, blank) = tuple_2 {\nprintln!(\"Everything {blank} mate?\");\n}"
-    },
-    {
-      "id": "s1-108",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let tuple_3 = (89, 90, \"Yes\");\nif let (9, 89, \"Yes\") = tuple_3 {\nprintln!(\"Pattern did match\");\n} else {\nprintln!(\"Pattern did not match\");\n}"
-    },
-    {
-      "id": "s1-109",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-86",
+      "sectionId": "s5",
+      "title": "Match Expression",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Match Expression {.row-span-3}"
+      "lang": "rust",
+      "code": "let day_of_week = 2;\nmatch day_of_week {\n    1 => {\n        println!(\"Its Monday my dudes\");\n    }\n    2 => {\n        println!(\"It's Tuesday my dudes\");\n    }\n    3 => {\n        println!(\"It's Wednesday my dudes\");\n    }\n    4 => {\n        println!(\"It's Thursday my dudes\");\n    }\n    5 => {\n        println!(\"It's Friday my dudes\");\n    }\n    6 => {\n        println!(\"It's Saturday my dudes\");\n    }\n    7 => {\n        println!(\"It's Sunday my dudes\");\n    }\n    _ => {\n        println!(\"Default!\")\n    }\n};"
     },
     {
-      "id": "s1-110",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let day_of_week = 2;\nmatch day_of_week {\n1 => {\nprintln!(\"Its Monday my dudes\");\n}\n2 => {\nprintln!(\"It's Tuesday my dudes\");\n}\n3 => {\nprintln!(\"It's Wednesday my dudes\");\n}\n4 => {\nprintln!(\"It's Thursday my dudes\");\n}\n5 => {\nprintln!(\"It's Friday my dudes\");\n}\n6 => {\nprintln!(\"It's Saturday my dudes\");\n}\n7 => {\nprintln!(\"It's Sunday my dudes\");\n}\n_ => {\nprintln!(\"Default!\")\n}\n};"
-    },
-    {
-      "id": "s1-111",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-87",
+      "sectionId": "s5",
+      "title": "Nested...If Expression",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Nested...If Expression"
+      "lang": "rust",
+      "code": "let nested_conditions = 89;\nif nested_conditions == 89 {\n    let just_a_value = 98;\n    if just_a_value >= 97 {\n        println!(\"Greater than 97\");\n    }\n}"
     },
     {
-      "id": "s1-112",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let nested_conditions = 89;\nif nested_conditions == 89 {\nlet just_a_value = 98;\nif just_a_value >= 97 {\nprintln!(\"Greater than 97\");\n}\n}"
-    },
-    {
-      "id": "s1-113",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-88",
+      "sectionId": "s5",
+      "title": "For Loop",
       "kind": "code",
-      "lang": "",
-      "code": "\n### For Loop"
+      "lang": "rust",
+      "code": "for mut i in 0..15 {\n    i -= 1;\n    println!(\"The value of i is : {i}\");\n}"
     },
     {
-      "id": "s1-114",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "for mut i in 0..15 {\ni -= 1;\nprintln!(\"The value of i is : {i}\");\n}"
-    },
-    {
-      "id": "s1-115",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-89",
+      "sectionId": "s5",
+      "title": "While Loop",
       "kind": "code",
-      "lang": "",
-      "code": "\n### While Loop"
+      "lang": "rust",
+      "code": "let mut check = 0;\nwhile check < 11 {\n    println!(\"Check is : {check}\");\n    check += 1;\n    println!(\"After incrementing: {check}\");\n\n    if check == 10 {\n        break; // stop while\n    }\n}"
     },
     {
-      "id": "s1-116",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let mut check = 0;\nwhile check < 11 {\nprintln!(\"Check is : {check}\");\ncheck += 1;\nprintln!(\"After incrementing: {check}\");"
-    },
-    {
-      "id": "s1-117",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "if check == 10 {\nbreak; // stop while\n}\n}"
-    },
-    {
-      "id": "s1-118",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-90",
+      "sectionId": "s5",
+      "title": "Loop keyword",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Loop keyword"
+      "lang": "rust",
+      "code": "loop {\n    println!(\"hello world forever!\");\n}"
     },
     {
-      "id": "s1-119",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-91",
+      "sectionId": "s5",
+      "title": "Loop keyword",
       "kind": "text",
-      "body": "loop {\nprintln!(\"hello world forever!\");\n}"
+      "body": "The infinite loop indicated."
     },
     {
-      "id": "s1-120",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-92",
+      "sectionId": "s5",
+      "title": "Break Statement",
       "kind": "code",
-      "lang": "",
-      "code": "\nThe infinite loop indicated.\n\n### Break Statement"
+      "lang": "rust",
+      "code": "let mut i = 1;\nloop {\n    println!(\"i is {i}\");\n    if i > 100 {\n        break;\n    }\n    i *= 2;\n}"
     },
     {
-      "id": "s1-121",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "let mut i = 1;\nloop {\nprintln!(\"i is {i}\");\nif i > 100 {\nbreak;\n}\ni *= 2;\n}"
-    },
-    {
-      "id": "s1-122",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s5-93",
+      "sectionId": "s5",
+      "title": "Continue Statement",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Continue Statement"
+      "lang": "rust",
+      "code": "for (v, c) in (0..10 + 1).enumerate() {\n    println!(\"The {c} number loop\");\n    if v == 9 {\n        println!(\"Here we go continue?\");\n        continue;\n    }\n    println!(\"The value of v is : {v}\");\n}"
     },
     {
-      "id": "s1-123",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "for (v, c) in (0..10 + 1).enumerate() {\nprintln!(\"The {c} number loop\");\nif v == 9 {\nprintln!(\"Here we go continue?\");\ncontinue;\n}\nprintln!(\"The value of v is : {v}\");\n}"
-    },
-    {
-      "id": "s1-124",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s6-94",
+      "sectionId": "s6",
+      "title": "Basic function",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Rust Functions\n\n### Basic function"
+      "lang": "rust",
+      "code": "fn print_message() {\n    println!(\"Hello, CheatSheets.zip!\");\n}\n\nfn main() {\n    //Invoking a function in Rust.\n    print_message();\n}"
     },
     {
-      "id": "s1-125",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn print_message() {\nprintln!(\"Hello, CheatSheets.zip!\");\n}"
-    },
-    {
-      "id": "s1-126",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn main() {\n//Invoking a function in Rust.\nprint_message();\n}"
-    },
-    {
-      "id": "s1-127",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s6-95",
+      "sectionId": "s6",
+      "title": "Pass by Value",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Pass by Value"
+      "lang": "rust",
+      "code": "fn main() {\n    let x: u32 = 10;\n    let y: u32 = 20;\n\n    // => 200\n    println!(\"Calc: {}\", cal_rect(x, y));\n}\n\nfn cal_rect(x: u32, y: u32) -> u32 {\n    x * y\n}"
     },
     {
-      "id": "s1-128",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn main() {\nlet x: u32 = 10;\nlet y: u32 = 20;"
-    },
-    {
-      "id": "s1-129",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "// => 200\nprintln!(\"Calc: {}\", cal_rect(x, y));\n}"
-    },
-    {
-      "id": "s1-130",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn cal_rect(x: u32, y: u32) -> u32 {\nx * y\n}"
-    },
-    {
-      "id": "s1-131",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s6-96",
+      "sectionId": "s6",
+      "title": "Pass by Reference",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Pass by Reference"
+      "lang": "rust",
+      "code": "fn main() {\n    let mut by_ref = 3; // => 3\n    power_of_three(&mut by_ref);\n    println!(\"{by_ref}\"); // => 9\n}\n\nfn power_of_three(by_ref: &mut i32) {\n    // de-referencing is important\n    *by_ref = *by_ref * *by_ref;\n    println!(\"{by_ref}\"); // => 9\n}"
     },
     {
-      "id": "s1-132",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s6-97",
+      "sectionId": "s6",
+      "title": "Returns",
       "kind": "text",
-      "body": "fn main() {\nlet mut by_ref = 3; // => 3\npower_of_three(&mut by_ref);\nprintln!(\"{by_ref}\"); // => 9\n}"
+      "body": "```rust {.wrap}\nfn main() {\nlet (mut radius, mut pi) = (3.0, 3.14);\nlet (area, _perimeter) = calculate(\n&mut radius,\n&mut pi\n);\nprintln!(\"The area and the perimeter of the circle are: {area} & {_perimeter}\");\n}"
     },
     {
-      "id": "s1-133",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn power_of_three(by_ref: &mut i32) {\n// de-referencing is important\n*by_ref = *by_ref * *by_ref;\nprintln!(\"{by_ref}\"); // => 9\n}"
-    },
-    {
-      "id": "s1-134",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Returns"
-    },
-    {
-      "id": "s1-135",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn main() {\nlet (mut radius, mut pi) = (3.0, 3.14);\nlet (area, _perimeter) = calculate(\n&mut radius,\n&mut pi\n);\nprintln!(\"The area and the perimeter of the circle are: {area} & {_perimeter}\");\n}"
-    },
-    {
-      "id": "s1-136",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s6-98",
+      "sectionId": "s6",
+      "title": "Returns",
       "kind": "text",
       "body": "fn calculate(radius: &mut f64, pi: &mut f64) -> (f64, f64) {\nlet perimeter = 2.0 * *pi * *radius;\nlet area = *pi * *radius * *radius;\nreturn (area, perimeter);\n}"
     },
     {
-      "id": "s1-137",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s6-99",
+      "sectionId": "s6",
+      "title": "Returns",
       "kind": "code",
       "lang": "",
-      "code": "\n### Arrays as Arguments"
+      "code": "\n### Arrays as Arguments\n\n```rust\nfn main() {\n    let mut array: [i32; 5] = [1, 2, 3, 4, 6];\n    print_arrays(array);\n    println!(\"The elements: {array:?}\");\n}\n\nfn print_arrays(mut array: [i32; 5]) {\n    array[0] = 89;\n    array[1] = 90;\n    array[2] = 91;\n    array[3] = 92;\n    array[4] = 93;\n    println!(\"The elements: {array:?}\");\n}"
     },
     {
-      "id": "s1-138",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn main() {\nlet mut array: [i32; 5] = [1, 2, 3, 4, 6];\nprint_arrays(array);\nprintln!(\"The elements: {array:?}\");\n}"
-    },
-    {
-      "id": "s1-139",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn print_arrays(mut array: [i32; 5]) {\narray[0] = 89;\narray[1] = 90;\narray[2] = 91;\narray[3] = 92;\narray[4] = 93;\nprintln!(\"The elements: {array:?}\");\n}"
-    },
-    {
-      "id": "s1-140",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s6-100",
+      "sectionId": "s6",
+      "title": "Returning Arrays",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Returning Arrays"
+      "lang": "rust",
+      "code": "fn main() {\n    let mut arr: [i32; 5] = [2, 4, 6, 8, 10];\n    multiply(arr);\n    println!(\"The array is : {:?}\", multiply(arr));\n}\n\nfn multiply(mut arr: [i32; 5]) -> [i32; 5] {\n    arr[2] = 90;\n    for mut i in 0..5 {\n        arr[i] = arr[i] * arr[2];\n    }\n    return arr;\n}"
     },
     {
-      "id": "s1-141",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn main() {\nlet mut arr: [i32; 5] = [2, 4, 6, 8, 10];\nmultiply(arr);\nprintln!(\"The array is : {:?}\", multiply(arr));\n}"
-    },
-    {
-      "id": "s1-142",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "fn multiply(mut arr: [i32; 5]) -> [i32; 5] {\narr[2] = 90;\nfor mut i in 0..5 {\narr[i] = arr[i] * arr[2];\n}\nreturn arr;\n}"
-    },
-    {
-      "id": "s1-143",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-101",
+      "sectionId": "s7",
+      "title": "Type Casting",
       "kind": "code",
-      "lang": "",
-      "code": "\n## Misc\n\n### Type Casting"
+      "lang": "rust",
+      "code": "let a_int = 90; // int\n// int to float\nlet mut type_cast = (a_int as f64);"
     },
     {
-      "id": "s1-144",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-102",
+      "sectionId": "s7",
+      "title": "Type Casting",
       "kind": "text",
-      "body": "let a_int = 90; // int\n// int to float\nlet mut type_cast = (a_int as f64);"
+      "body": "---"
     },
     {
-      "id": "s1-145",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-103",
+      "sectionId": "s7",
+      "title": "Type Casting",
       "kind": "code",
-      "lang": "",
-      "code": "\n---"
+      "lang": "rust",
+      "code": "let original: char = 'I';\n// char to int => 73\nlet type_casted: i64 = original as i64;"
     },
     {
-      "id": "s1-146",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-104",
+      "sectionId": "s7",
+      "title": "Type Casting",
       "kind": "text",
-      "body": "let original: char = 'I';\n// char to int => 73\nlet type_casted: i64 = original as i64;"
+      "body": "To perform type-casting in Rust one must use the `as` keyword."
     },
     {
-      "id": "s1-147",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-105",
+      "sectionId": "s7",
+      "title": "Borrowing",
       "kind": "code",
-      "lang": "",
-      "code": "\nTo perform type-casting in Rust one must use the `as` keyword.\n\n### Borrowing"
+      "lang": "rust",
+      "code": "let mut foo = 4;\nlet mut borrowed_foo = &foo;\nprintln!(\"{borrowed_foo}\");"
     },
     {
-      "id": "s1-148",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-106",
+      "sectionId": "s7",
+      "title": "Borrowing",
       "kind": "text",
-      "body": "let mut foo = 4;\nlet mut borrowed_foo = &foo;\nprintln!(\"{borrowed_foo}\");"
+      "body": "---"
     },
     {
-      "id": "s1-149",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-107",
+      "sectionId": "s7",
+      "title": "Borrowing",
       "kind": "code",
-      "lang": "",
-      "code": "\n---"
+      "lang": "rust",
+      "code": "let mut bar = 3;\nlet mut mutable_borrowed_bar = &mut bar;\nprintln!(\"{mutable_borrowed_bar}\");"
     },
     {
-      "id": "s1-150",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-108",
+      "sectionId": "s7",
+      "title": "Borrowing",
       "kind": "text",
-      "body": "let mut bar = 3;\nlet mut mutable_borrowed_bar = &mut bar;\nprintln!(\"{mutable_borrowed_bar}\");"
+      "body": "Here borrowed value borrows the value from value one using `&` operator."
     },
     {
-      "id": "s1-151",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-109",
+      "sectionId": "s7",
+      "title": "De-referencing",
       "kind": "code",
-      "lang": "",
-      "code": "\nHere borrowed value borrows the value from value one using `&` operator.\n\n### De-referencing"
+      "lang": "rust",
+      "code": "let mut borrow = 10;\nlet deref = &mut borrow;\n\nprintln!(\"{}\", *deref);"
     },
     {
-      "id": "s1-152",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-110",
+      "sectionId": "s7",
+      "title": "De-referencing",
       "kind": "text",
-      "body": "let mut borrow = 10;\nlet deref = &mut borrow;"
+      "body": "De-referencing in rust can be done using the `*` operator"
     },
     {
-      "id": "s1-153",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "text",
-      "body": "println!(\"{}\", *deref);"
-    },
-    {
-      "id": "s1-154",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-111",
+      "sectionId": "s7",
+      "title": "Variable Scope",
       "kind": "code",
-      "lang": "",
-      "code": "\nDe-referencing in rust can be done using the `*` operator\n\n### Variable Scope"
+      "lang": "rust",
+      "code": "{\n    // The scope limited to this braces\n    let a_number = 1;\n}\nprintln!(\"{a_number}\");"
     },
     {
-      "id": "s1-155",
-      "sectionId": "s1",
-      "title": "Formatting",
+      "id": "s7-112",
+      "sectionId": "s7",
+      "title": "Variable Scope",
       "kind": "text",
-      "body": "{\n// The scope limited to this braces\nlet a_number = 1;\n}\nprintln!(\"{a_number}\");"
+      "body": "This will produce error as the scope of the variable `a_number` ends at the braces"
     },
     {
-      "id": "s1-156",
-      "sectionId": "s1",
-      "title": "Formatting",
-      "kind": "code",
-      "lang": "",
-      "code": "\nThis will produce error as the scope of the variable `a_number` ends at the braces\n\n## Also see\n\n- [The Rust Document](https://doc.rust-lang.org/book/ch00-00-introduction.html) _(doc.rust-lang.org)_\n- [The Rust Reference](https://doc.rust-lang.org/reference/introduction.html) _(doc.rust-lang.org)_\n- [Rust Cheatsheet](https://phaiax.github.io/rust-cheatsheet/) _(phaiax.github.io)_"
+      "id": "s8-113",
+      "sectionId": "s8",
+      "title": "Also see",
+      "kind": "text",
+      "body": "• [The Rust Document](https://doc.rust-lang.org/book/ch00-00-introduction.html) _(doc.rust-lang.org)_\n• [The Rust Reference](https://doc.rust-lang.org/reference/introduction.html) _(doc.rust-lang.org)_\n• [Rust Cheatsheet](https://phaiax.github.io/rust-cheatsheet/) _(phaiax.github.io)_"
     }
   ],
   "source": {
@@ -1181,7 +931,6 @@
     "path": "source/_posts/rust.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/rust.md",
-    "generatedAt": "2025-12-16T07:50:03.269Z",
     "lang": "en",
     "mode": "local"
   }

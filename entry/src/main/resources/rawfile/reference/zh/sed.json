@@ -1,11 +1,33 @@
 {
   "id": "sed",
-  "title": "sed",
+  "name": "Sed 备忘清单",
+  "title": "Sed 是一个流编辑器，此 Sed 备忘清单包含 Sed 命令和一些常见的 Sed 技巧。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/sed.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Sed 命令",
+      "startIndex": 16
+    },
+    {
+      "id": "s3",
+      "title": "Sed 示例",
+      "startIndex": 35
+    },
+    {
+      "id": "s4",
+      "title": "另见",
+      "startIndex": 99
     }
   ],
   "cards": [
@@ -14,792 +36,757 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Sed 备忘清单\n===="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "Sed 是一个流编辑器，此 Sed 备忘清单包含 Sed 命令和一些常见的 Sed 技巧。"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n----"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "Sed 用法",
       "kind": "text",
       "body": "语法"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "Sed 用法",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed [options] command [input-file]"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "Sed 用法",
       "kind": "text",
       "body": "带管道"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "Sed 用法",
       "kind": "code",
       "lang": "shell",
       "code": "$ cat report.txt | sed 's/Nick/John/g'"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "Sed 用法",
       "kind": "code",
       "lang": "shell",
       "code": "$ echo '123abc' | sed 's/[0-9]+//g'"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "选项示例",
       "kind": "qa",
       "front": "`-i`",
       "back": "sed -ibak 's/On/Off/' php.ini | 直接备份和修改输入文件"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "选项示例",
       "kind": "qa",
       "front": "`-E`",
       "back": "sed -E 's/[0-9]+//g' input-file | 使用扩展正则表达式"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "选项示例",
       "kind": "qa",
       "front": "`-n`",
       "back": "sed -n '3 p' config.conf | 禁止默认图案空间打印"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "选项示例",
       "kind": "qa",
       "front": "`-f`",
       "back": "sed -f script.sed config.conf | 执行 sed 脚本文件"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "选项示例",
       "kind": "qa",
       "front": "`-e`",
       "back": "sed -e 'command1' -e 'command2' input-file | 执行多个 sed 命令"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "多个命令",
       "kind": "code",
       "lang": "shell",
       "code": "$ echo \"hello world\" | sed -e 's/h/H/g' -e 's/w/W/g'\nHello World"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "多个命令",
       "kind": "text",
       "body": "使用 `-e` 执行多个 sed 命令"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "Sed 脚本",
       "kind": "code",
       "lang": "shell",
       "code": "$ echo 's/h/H/g' >> hello.sed\n$ echo 's/w/W/g' >> hello.sed\n$ echo \"hello world\" | sed -f hello.sed\nHello World"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "Sed 脚本",
       "kind": "text",
       "body": "使用 `-f` 执行 sed 脚本文件"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "Examples",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed 's/old/new/g' file.txt\n$ sed 's/old/new/g' file.txt > new.txt\n$ sed 's/old/new/g' -i file.txt\n$ sed 's/old/new/g' -i.backup file.txt"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
-      "title": "Examples",
-      "kind": "text",
-      "body": "Sed 命令\n-----------"
-    },
-    {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s2-16",
+      "sectionId": "s2",
       "title": "命令",
       "kind": "text",
       "body": "命令 | 示例 | 描述\n:- | :-  |:-\n`p`     | sed -n '1,4 p' input.txt               | 打印第 1-4 行\n`p`     | sed -n -e '1,4 p' -e '6,7 p' input.txt | 打印第 1-4 行和第 6-7 行\n`d`     | sed '1,4 d' input.txt                  | 打印除 1-4 之外的行\n`w`     | sed -n '1,4 w output.txt' input.txt    | 将模式空间写入文件\n`a`     | sed '2 a new-line' input.txt           | 在后面追加一行\n`i`     | sed '2 i new-line' input.txt           | 在前面插入行\n<!--rehype:className=show-header-->"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s2-17",
+      "sectionId": "s2",
       "title": "空间命令",
       "kind": "text",
       "body": "命令 | 描述\n:- | :-\n`n`     | 打印模式空间，空模式空间，读取下一行\n`x`     | 用保持空间交换模式空间\n`h`     | 复制模式空间以保持空间\n`H`     | 追加模式空间以保持空间\n`g`     | 将保持空间复制到模式空间\n`G`     | 将保持空间附加到模式空间"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s2-18",
+      "sectionId": "s2",
       "title": "Flags",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed 's/old/new/[flags]' [input-file]"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s2-19",
+      "sectionId": "s2",
       "title": "Flags",
       "kind": "text",
       "body": "---"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s2-20",
+      "sectionId": "s2",
       "title": "Flags",
       "kind": "qa",
       "front": "`g`",
       "back": "全球替代"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s2-21",
+      "sectionId": "s2",
       "title": "Flags",
       "kind": "qa",
       "front": "`1,2...`",
       "back": "替换第 n 次出现"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s2-22",
+      "sectionId": "s2",
       "title": "Flags",
       "kind": "qa",
       "front": "`p`",
       "back": "仅打印替换的行"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s2-23",
+      "sectionId": "s2",
       "title": "Flags",
       "kind": "qa",
       "front": "`w`",
       "back": "仅将替换的行写入文件"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s2-24",
+      "sectionId": "s2",
       "title": "Flags",
       "kind": "qa",
       "front": "`I`",
       "back": "搜索时忽略大小写"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s2-25",
+      "sectionId": "s2",
       "title": "Flags",
       "kind": "qa",
       "front": "`e`",
       "back": "在命令行中替换并执行"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s2-26",
+      "sectionId": "s2",
       "title": "循环命令",
       "kind": "qa",
       "front": "`b label`",
       "back": "分支到标签（用于循环）"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s2-27",
+      "sectionId": "s2",
       "title": "循环命令",
       "kind": "qa",
       "front": "`t label`",
       "back": "仅在成功替换时分支到标签（用于循环）"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s2-28",
+      "sectionId": "s2",
       "title": "循环命令",
       "kind": "qa",
       "front": "`:label`",
       "back": "b 和 t 命令的标签（用于循环）"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s2-29",
+      "sectionId": "s2",
       "title": "循环命令",
       "kind": "qa",
       "front": "`N`",
       "back": "将下一行追加到模式空间"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s2-30",
+      "sectionId": "s2",
       "title": "循环命令",
       "kind": "qa",
       "front": "`P`",
       "back": "多行打印第一行"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s2-31",
+      "sectionId": "s2",
       "title": "循环命令",
       "kind": "qa",
       "front": "`D`",
       "back": "删除多行中的第一行"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s2-32",
+      "sectionId": "s2",
       "title": "杂项标志",
       "kind": "qa",
       "front": "`/ \\",
       "back": "^ @ ! #` | 替换分隔符可以是任何字符"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s2-33",
+      "sectionId": "s2",
       "title": "杂项标志",
       "kind": "qa",
       "front": "`&`",
       "back": "获取匹配的模式"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s2-34",
+      "sectionId": "s2",
       "title": "杂项标志",
       "kind": "qa",
       "front": "`( ) \\1 \\2 \\3`",
       "back": "使用 `(` 和 `)` 进行分组。<br>使用 `\\1`、`\\2` 替换来引用组"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
-      "title": "杂项标志",
-      "kind": "text",
-      "body": "Sed 示例\n----------"
-    },
-    {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s3-35",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "text",
       "body": "替换所有出现的字符串"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s3-36",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed 's/old/new/g' file.txt"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s3-37",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "text",
       "body": "仅替换第 n 次出现的字符串"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s3-38",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed 's/old/new/2' file.txt"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s3-39",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "text",
       "body": "仅在第 5 行替换替换字符串"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s3-40",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '5 s/old/new/' file.txt"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s3-41",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "text",
       "body": "将“world”替换为“universe”，但前提是该行以“hello”开头"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s3-42",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/hello/s/world/universe/' file.txt"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s3-43",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "text",
       "body": "从每行的末尾删除“\\”"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s3-44",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed 's/\\\\$//' file.txt"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s3-45",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "text",
       "body": "删除每行开头的所有空格"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s3-46",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed 's/^\\s*//' file.txt"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s3-47",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "text",
       "body": "删除评论。 即使是那些在行尾的"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s3-48",
+      "sectionId": "s3",
       "title": "替换文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed 's/#.*$//' file.txt"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s3-49",
+      "sectionId": "s3",
       "title": "搜索文本",
       "kind": "text",
       "body": "搜索字符串并仅打印匹配的行"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s3-50",
+      "sectionId": "s3",
       "title": "搜索文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed -n '/hello/p' file.txt"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s3-51",
+      "sectionId": "s3",
       "title": "搜索文本",
       "kind": "text",
       "body": "不区分大小写的搜索"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s3-52",
+      "sectionId": "s3",
       "title": "搜索文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed -n '/hello/Ip' file.txt"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s3-53",
+      "sectionId": "s3",
       "title": "搜索文本",
       "kind": "text",
       "body": "搜索字符串，但仅输出不匹配的行"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s3-54",
+      "sectionId": "s3",
       "title": "搜索文本",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed -n '/hello/!p' file.txt"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s3-55",
+      "sectionId": "s3",
       "title": "追加行",
       "kind": "text",
       "body": "在第 2 行之后追加一行"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s3-56",
+      "sectionId": "s3",
       "title": "追加行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '2a Text after line 2' file.txt"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s3-57",
+      "sectionId": "s3",
       "title": "追加行",
       "kind": "text",
       "body": "在文件末尾追加一行"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s3-58",
+      "sectionId": "s3",
       "title": "追加行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '$a THE END!' file.txt"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
+      "id": "s3-59",
+      "sectionId": "s3",
       "title": "追加行",
       "kind": "text",
       "body": "从第 3 行开始，每 3 行后追加一行"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s3-60",
+      "sectionId": "s3",
       "title": "追加行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '3~3a Some text' file.txt"
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s3-61",
+      "sectionId": "s3",
       "title": "编号",
       "kind": "text",
       "body": "文件的数字行（简单的左对齐）"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s3-62",
+      "sectionId": "s3",
       "title": "编号",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed = file.txt | sed 'N;s/\\n/\\t/'"
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s3-63",
+      "sectionId": "s3",
       "title": "编号",
       "kind": "text",
       "body": "文件的数字行（数字在左，右对齐）"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
+      "id": "s3-64",
+      "sectionId": "s3",
       "title": "编号",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed = file.txt | sed 'N; s/^/   /; s/ *\\(.\\{6,\\}\\)\\n/\\1  /'"
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s3-65",
+      "sectionId": "s3",
       "title": "编号",
       "kind": "text",
       "body": "文件的数字行，但如果行不为空，则仅打印数字"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
+      "id": "s3-66",
+      "sectionId": "s3",
       "title": "编号",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/./=' file.txt | sed '/./N; s/\\n/ /'"
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s3-67",
+      "sectionId": "s3",
       "title": "编号",
       "kind": "text",
       "body": "计算行数（模拟“wc -l”）"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
+      "id": "s3-68",
+      "sectionId": "s3",
       "title": "编号",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed -n '$='"
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s3-69",
+      "sectionId": "s3",
       "title": "前置行",
       "kind": "text",
       "body": "在第 5 行之前插入文本"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s3-70",
+      "sectionId": "s3",
       "title": "前置行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '5i line number five' file.txt"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s3-71",
+      "sectionId": "s3",
       "title": "前置行",
       "kind": "text",
       "body": "在包含“hello”的每一行之前插入“示例：”"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
+      "id": "s3-72",
+      "sectionId": "s3",
       "title": "前置行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/hello/i Example: ' file.txt"
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
+      "id": "s3-73",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "text",
       "body": "删除文件中的第 5-7 行"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
+      "id": "s3-74",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '5,7d' file.txt"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
+      "id": "s3-75",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "text",
       "body": "删除从第 3 行开始的每 2 行"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
+      "id": "s3-76",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '3~2d' file.txt"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
+      "id": "s3-77",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "text",
       "body": "删除文件的最后一行"
     },
     {
-      "id": "intro-82",
-      "sectionId": "intro",
+      "id": "s3-78",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '$d' file.txt"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
+      "id": "s3-79",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "text",
       "body": "删除以“Hello”开头的行"
     },
     {
-      "id": "intro-84",
-      "sectionId": "intro",
+      "id": "s3-80",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/^Hello/d' file.txt"
     },
     {
-      "id": "intro-85",
-      "sectionId": "intro",
+      "id": "s3-81",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "text",
       "body": "删除所有空行"
     },
     {
-      "id": "intro-86",
-      "sectionId": "intro",
+      "id": "s3-82",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/^$/d' file.txt"
     },
     {
-      "id": "intro-87",
-      "sectionId": "intro",
+      "id": "s3-83",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "text",
       "body": "删除以“#”开头的行"
     },
     {
-      "id": "intro-88",
-      "sectionId": "intro",
+      "id": "s3-84",
+      "sectionId": "s3",
       "title": "删除行",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/^#/d' file.txt"
     },
     {
-      "id": "intro-89",
-      "sectionId": "intro",
+      "id": "s3-85",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "text",
       "body": "双倍行距"
     },
     {
-      "id": "intro-90",
-      "sectionId": "intro",
+      "id": "s3-86",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed G"
     },
     {
-      "id": "intro-91",
-      "sectionId": "intro",
+      "id": "s3-87",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "text",
       "body": "删除所有空行和双空格"
     },
     {
-      "id": "intro-92",
-      "sectionId": "intro",
+      "id": "s3-88",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/^$/d;G'"
     },
     {
-      "id": "intro-93",
-      "sectionId": "intro",
+      "id": "s3-89",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "text",
       "body": "三倍空间文件"
     },
     {
-      "id": "intro-94",
-      "sectionId": "intro",
+      "id": "s3-90",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed 'G;G'"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
+      "id": "s3-91",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "text",
       "body": "撤消双倍行距"
     },
     {
-      "id": "intro-96",
-      "sectionId": "intro",
+      "id": "s3-92",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed 'n;d'"
     },
     {
-      "id": "intro-97",
-      "sectionId": "intro",
+      "id": "s3-93",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "text",
       "body": "在匹配“正则表达式”的行上方插入一个空行"
     },
     {
-      "id": "intro-98",
-      "sectionId": "intro",
+      "id": "s3-94",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/regex/{x;p;x;}'"
     },
     {
-      "id": "intro-99",
-      "sectionId": "intro",
+      "id": "s3-95",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "text",
       "body": "在匹配“正则表达式”的行下方插入一个空行"
     },
     {
-      "id": "intro-100",
-      "sectionId": "intro",
+      "id": "s3-96",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/regex/G'"
     },
     {
-      "id": "intro-101",
-      "sectionId": "intro",
+      "id": "s3-97",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "text",
       "body": "在匹配“正则表达式”的行周围插入一个空行"
     },
     {
-      "id": "intro-102",
-      "sectionId": "intro",
+      "id": "s3-98",
+      "sectionId": "s3",
       "title": "文件间距",
       "kind": "code",
       "lang": "shell",
       "code": "$ sed '/regex/{x;p;x;G;}'"
     },
     {
-      "id": "intro-103",
-      "sectionId": "intro",
-      "title": "文件间距",
-      "kind": "text",
-      "body": "另见\n----------"
-    },
-    {
-      "id": "intro-104",
-      "sectionId": "intro",
-      "title": "文件间距",
+      "id": "s4-99",
+      "sectionId": "s4",
+      "title": "另见",
       "kind": "text",
       "body": "• [sed 备忘单](https://gist.github.com/ssstonebraker/6140154) _(gist.github.com)_"
     }
@@ -809,7 +796,6 @@
     "path": "docs/sed.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/sed.md",
-    "generatedAt": "2025-12-16T07:36:11.428Z",
     "lang": "zh",
     "mode": "local"
   }

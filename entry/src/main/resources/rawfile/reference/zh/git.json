@@ -1,11 +1,93 @@
 {
   "id": "git",
-  "title": "接收者保存邮件到文件 email.txt，然后应用补丁创建一个提交，会自动包含作者的信息",
+  "name": "Git 备忘清单",
+  "title": "本备忘单总结了常用的 [Git](https://git-scm.com/) 命令行指令，以供快速参考。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/git.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "忽略当前目录logs文件夹下的全部内容",
+      "startIndex": 74
+    },
+    {
+      "id": "s3",
+      "title": "上述几条规则等效",
+      "startIndex": 75
+    },
+    {
+      "id": "s4",
+      "title": "忽略 Mac 系统文件，包括任意子路径下的同名文件（夹）",
+      "startIndex": 75
+    },
+    {
+      "id": "s5",
+      "title": "忽略 node_modules 文件夹，包括任意子路径下的同名文件夹",
+      "startIndex": 76
+    },
+    {
+      "id": "s6",
+      "title": "忽略任意子路径下build、target文件夹，",
+      "startIndex": 77
+    },
+    {
+      "id": "s7",
+      "title": "但不忽略src/main、src/test下的build、target文件夹",
+      "startIndex": 77
+    },
+    {
+      "id": "s8",
+      "title": "使用 ! 重新包含指定文件（夹）",
+      "startIndex": 78
+    },
+    {
+      "id": "s9",
+      "title": "Commit",
+      "startIndex": 110
+    },
+    {
+      "id": "s10",
+      "title": "Git Submodule 子模块",
+      "startIndex": 136
+    },
+    {
+      "id": "s11",
+      "title": "Config 设置",
+      "startIndex": 150
+    },
+    {
+      "id": "s12",
+      "title": "Git 技巧",
+      "startIndex": 165
+    },
+    {
+      "id": "s13",
+      "title": "统计查询",
+      "startIndex": 237
+    },
+    {
+      "id": "s14",
+      "title": "Conventional Commmits",
+      "startIndex": 251
+    },
+    {
+      "id": "s15",
+      "title": "patch 补丁的使用",
+      "startIndex": 267
+    },
+    {
+      "id": "s16",
+      "title": "另见",
+      "startIndex": 275
     }
   ],
   "cards": [
@@ -14,2584 +96,2102 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Git 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "本备忘单总结了常用的 [Git](https://git-scm.com/) 命令行指令，以供快速参考。"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n----"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "创建存储库",
       "kind": "text",
       "body": "创建一个新的本地存储库"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "创建存储库",
       "kind": "code",
       "lang": "shell",
       "code": "$ git init [项目名称]"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "创建存储库",
       "kind": "text",
       "body": "克隆存储库(代码仓库)"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "创建存储库",
       "kind": "code",
       "lang": "shell",
       "code": "$ git clone <git_url>"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "创建存储库",
       "kind": "text",
       "body": "将存储库克隆到指定目录"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "创建存储库",
       "kind": "code",
       "lang": "shell",
       "code": "$ git clone <git_url> 指定目录"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "创建存储库",
       "kind": "text",
       "body": "将存储库克隆到指定目录，并指定分支"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "创建存储库",
       "kind": "code",
       "lang": "shell",
       "code": "$ git clone <git_url> -b <分支名称> 指定目录"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "在工作目录中**显示**修改后的文件，为您的下一次提交暂存"
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git status"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "暂存文件，准备提交"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git add [file]"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "暂存**所有**更改的文件，准备提交"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git add ."
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "将所有暂存文件提交到版本化历史记录"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git commit -m \"commit message\""
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "将所有跟踪的文件提交到版本化历史记录"
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git commit -am \"commit message\""
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
+      "id": "s1-19",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "取消暂存文件，保留文件更改"
     },
     {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s1-20",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git reset [file]"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s1-21",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "将所有内容恢复到最后一次提交"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s1-22",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git reset --hard"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s1-23",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "已更改但未暂存内容的差异"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s1-24",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git diff"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s1-25",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "已 commited 但尚未提交的内容的差异"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s1-26",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git diff --staged"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s1-27",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "text",
       "body": "在指定分支之前应用当前分支的任何提交"
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s1-28",
+      "sectionId": "s1",
       "title": "做出改变",
       "kind": "code",
       "lang": "shell",
       "code": "$ git rebase [branch]"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s1-29",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "text",
       "body": "设置将附加到您的提交和标签的名称"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s1-30",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "code",
       "lang": "shell",
       "code": "$ git config --global user.name \"name\""
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s1-31",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "text",
       "body": "设置将附加到您的提交和标签 tags 的**电子邮件地址**"
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s1-32",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "code",
       "lang": "shell",
       "code": "$ git config --global user.email \"email\""
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s1-33",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "text",
       "body": "启用 Git 输出的一些着色"
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s1-34",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "code",
       "lang": "shell",
       "code": "$ git config --global color.ui auto"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s1-35",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "text",
       "body": "在文本编辑器中编辑全局配置文件"
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s1-36",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "code",
       "lang": "shell",
       "code": "$ git config --global --edit"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
+      "id": "s1-37",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "text",
       "body": "显示本地 `repo` 配置设置"
     },
     {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s1-38",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "code",
       "lang": "shell",
       "code": "$ git config --list"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s1-39",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "text",
       "body": "删除全局设置"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s1-40",
+      "sectionId": "s1",
       "title": "配置",
       "kind": "code",
       "lang": "bash",
       "code": "$ git config --global --unset <entry-name>"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s1-41",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "text",
       "body": "列出所有本地分支"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s1-42",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "code",
       "lang": "shell",
       "code": "$ git branch"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s1-43",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "text",
       "body": "列出所有分支，本地和远程"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s1-44",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "code",
       "lang": "shell",
       "code": "$ git branch -av"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
+      "id": "s1-45",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "text",
       "body": "切换到 `my_branch`，并更新工作目录"
     },
     {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s1-46",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "code",
       "lang": "shell",
       "code": "$ git checkout my_branch"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s1-47",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "text",
       "body": "创建并切换到新分支`new_branch`"
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s1-48",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "code",
       "lang": "shell",
       "code": "$ git checkout -b new_branch"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s1-49",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "text",
       "body": "删除名为 `my_branch` 的分支"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s1-50",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "code",
       "lang": "shell",
       "code": "$ git branch -d my_branch"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s1-51",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "text",
       "body": "删除本地存在远程不存在的分支"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
+      "id": "s1-52",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "code",
       "lang": "shell",
       "code": "$ git remote prune origin"
     },
     {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s1-53",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "text",
       "body": "将分支 `A` 合并到分支 `B`"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s1-54",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "code",
       "lang": "shell",
       "code": "$ git checkout branchB\n$ git merge branchA"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s1-55",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "text",
       "body": "标记当前提交"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s1-56",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "code",
       "lang": "shell",
       "code": "$ git tag my_tag"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s1-57",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "text",
       "body": "从远程分支中创建并切换到本地分支"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s1-58",
+      "sectionId": "s1",
       "title": "使用分支",
       "kind": "code",
       "lang": "shell",
       "code": "$ git checkout -b <branch-name> origin/<branch-name>"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s1-59",
+      "sectionId": "s1",
       "title": "临时提交",
       "kind": "code",
       "lang": "shell",
       "code": "# 保存已修改和分阶段的更改\n$ git stash\n# 列出隐藏文件更改的堆栈顺序\n$ git stash list\n# 从存储堆栈顶部编写工作\n$ git stash pop\n# 丢弃存储堆栈顶部的更改\n$ git stash drop\n# 回到某个 stash 的状态\n$ git stash apply <stash@{n}>\n# 删除所有的 stash\n$ git stash clear"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s1-60",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "text",
       "body": "显示当前活动分支的提交历史"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
+      "id": "s1-61",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "code",
       "lang": "shell",
       "code": "$ git log"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s1-62",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "text",
       "body": "显示 branchA 上不在 branchB 上的提交"
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s1-63",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "code",
       "lang": "shell",
       "code": "$ git log branchB..branchA"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s1-64",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "text",
       "body": "显示更改文件的提交，即使跨重命名"
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s1-65",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "code",
       "lang": "shell",
       "code": "$ git log --follow [file]"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
+      "id": "s1-66",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "text",
       "body": "显示 branchA 中的内容与 branchB 中的内容的差异"
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s1-67",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "code",
       "lang": "shell",
       "code": "$ git diff branchB...branchA"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
+      "id": "s1-68",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "text",
       "body": "以人类可读的格式显示 Git 中的任何对象"
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s1-69",
+      "sectionId": "s1",
       "title": "观察你的存储库",
       "kind": "code",
       "lang": "shell",
       "code": "$ git show [SHA]"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
+      "id": "s1-70",
+      "sectionId": "s1",
       "title": "忽略文件 .gitignore",
       "kind": "text",
       "body": "文件 `.gitignore` 指定了 `Git` 应该忽略的 **未跟踪的** 文件"
     },
     {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s1-71",
+      "sectionId": "s1",
       "title": "忽略文件 .gitignore",
       "kind": "text",
       "body": ":- | :-\n:- | :-\n行首 `#` | 全行注释，不支持行尾类注释 _(转义 `\\#`)_\n行首 **`!`** | 否定模式 _(转义 `\\!`)_\n`**` | 匹配任意路径\n`*` | 匹配任意多个字符\n`?` | 匹配任意一个字符\n`doc/**` | 匹配 `doc` 文件夹下的全部内容\n`doc/**/a` | 匹配任意深度路径下的 `a` 文件或文件夹\n`/` | 表示路径分隔符，不区分操作系统\n`/` 结尾 | 仅会匹配文件夹，否则会匹配文件和文件夹\n空行 | 不匹配任何文件\n行尾空格 | 默认被忽略，可使用`\\`进行转义\n行首空格 | 被正常处理，不会被忽略"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s1-72",
+      "sectionId": "s1",
       "title": "忽略文件 .gitignore",
       "kind": "text",
       "body": "当前 `.gitignore` 文件定义规则的优先级高于上级路径 `.gitignore` 定义规则的优先级；后定义的规则优先级高于前面定义规则的优先级"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s1-73",
+      "sectionId": "s1",
       "title": "忽略文件 .gitignore",
       "kind": "text",
       "body": "```gitignore showLineNumbers"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s2-74",
+      "sectionId": "s2",
+      "title": "忽略当前目录logs文件夹下的全部内容",
       "kind": "text",
       "body": "/logs/\n/logs/*\n/logs/**"
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s4-75",
+      "sectionId": "s4",
+      "title": "忽略 Mac 系统文件，包括任意子路径下的同名文件（夹）",
       "kind": "text",
       "body": ".DS_store"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s5-76",
+      "sectionId": "s5",
+      "title": "忽略 node_modules 文件夹，包括任意子路径下的同名文件夹",
       "kind": "text",
       "body": "node_modules/"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s7-77",
+      "sectionId": "s7",
+      "title": "但不忽略src/main、src/test下的build、target文件夹",
       "kind": "text",
       "body": "build/\n!**/src/main/**/build/\n!**/src/test/**/build/\ntarget/\n!**/src/main/**/target/\n!**/src/test/**/target/"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-78",
+      "sectionId": "s8",
+      "title": "使用 ! 重新包含指定文件（夹）",
       "kind": "text",
       "body": "!logs/.gitkeep"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-79",
+      "sectionId": "s8",
+      "title": "使用 ! 重新包含指定文件（夹）",
       "kind": "code",
       "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 重构文件名"
+      "code": "<!--rehype:className=wrap-text-->\n\n### 重构文件名\n\n```bash\n# 从工作目录中删除文件并暂存删除\ngit rm <filename>\n\n# 从版本控制中删除文件但在本地保留文件\ngit rm --cached <filename>\n\n# 更改文件名并准备提交\ngit mv <filename-orig> <filename-renamed>"
     },
     {
-      "id": "intro-82",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-80",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "text",
-      "body": "git rm <filename>"
+      "body": "从该 Git 远程获取所有分支"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git rm --cached <filename>"
-    },
-    {
-      "id": "intro-84",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git mv <filename-orig> <filename-renamed>"
-    },
-    {
-      "id": "intro-85",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-81",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 同步\n<!--rehype:wrap-class=row-span-2-->\n\n从该 Git 远程获取所有分支"
+      "lang": "shell",
+      "code": "$ git fetch [alias]"
     },
     {
-      "id": "intro-86",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-82",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "text",
-      "body": "$ git fetch [alias]"
+      "body": "将远程分支合并到当前分支以使其保持最新状态"
     },
     {
-      "id": "intro-87",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-83",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "code",
-      "lang": "",
-      "code": "\n将远程分支合并到当前分支以使其保持最新状态"
-    },
-    {
-      "id": "intro-88",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git merge [alias]/[branch]"
+      "lang": "shell",
+      "code": "$ git merge [alias]/[branch]\n# 没有快进\n$ git merge --no-ff [alias]/[branch]\n# 仅快进\n$ git merge --ff-only [alias]/[branch]"
     },
     {
-      "id": "intro-89",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-84",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "text",
-      "body": "$ git merge --no-ff [alias]/[branch]"
+      "body": "将本地分支提交传输到远程存储库分支"
     },
     {
-      "id": "intro-90",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git merge --ff-only [alias]/[branch]"
-    },
-    {
-      "id": "intro-91",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-85",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "code",
-      "lang": "",
-      "code": "\n将本地分支提交传输到远程存储库分支"
+      "lang": "shell",
+      "code": "$ git push [alias] [branch]"
     },
     {
-      "id": "intro-92",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-86",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "text",
-      "body": "$ git push [alias] [branch]"
+      "body": "从跟踪远程分支获取并合并任何提交"
     },
     {
-      "id": "intro-93",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-87",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "code",
-      "lang": "",
-      "code": "\n从跟踪远程分支获取并合并任何提交"
+      "lang": "shell",
+      "code": "$ git pull"
     },
     {
-      "id": "intro-94",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-88",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "text",
-      "body": "$ git pull"
+      "body": "将另一个分支的一个特定提交合并到当前分支"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-89",
+      "sectionId": "s8",
+      "title": "同步",
       "kind": "code",
-      "lang": "",
-      "code": "\n将另一个分支的一个特定提交合并到当前分支"
+      "lang": "shell",
+      "code": "$ git cherry-pick [commit_id]"
     },
     {
-      "id": "intro-96",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-90",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "text",
-      "body": "$ git cherry-pick [commit_id]"
+      "body": "添加一个 git URL 作为别名"
     },
     {
-      "id": "intro-97",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-91",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 远程\n<!--rehype:wrap-class=row-span-2-->\n\n添加一个 git URL 作为别名"
+      "lang": "shell",
+      "code": "$ git remote add [alias] [url]"
     },
     {
-      "id": "intro-98",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-92",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "text",
-      "body": "$ git remote add [alias] [url]"
+      "body": "显示您设置的远程存储库的名称"
     },
     {
-      "id": "intro-99",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-93",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "code",
-      "lang": "",
-      "code": "\n显示您设置的远程存储库的名称"
+      "lang": "shell",
+      "code": "$ git remote"
     },
     {
-      "id": "intro-100",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-94",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "text",
-      "body": "$ git remote"
+      "body": "显示远程存储库的名称和 URL"
     },
     {
-      "id": "intro-101",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-95",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "code",
-      "lang": "",
-      "code": "\n显示远程存储库的名称和 URL"
+      "lang": "shell",
+      "code": "$ git remote -v"
     },
     {
-      "id": "intro-102",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-96",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "text",
-      "body": "$ git remote -v"
+      "body": "删除远程存储库"
     },
     {
-      "id": "intro-103",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-97",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "code",
-      "lang": "",
-      "code": "\n删除远程存储库"
+      "lang": "shell",
+      "code": "$ git remote rm [remote repo name]"
     },
     {
-      "id": "intro-104",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-98",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "text",
-      "body": "$ git remote rm [remote repo name]"
+      "body": "更改 git repo 的 URL"
     },
     {
-      "id": "intro-105",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-99",
+      "sectionId": "s8",
+      "title": "远程",
       "kind": "code",
-      "lang": "",
-      "code": "\n更改 git repo 的 URL"
+      "lang": "shell",
+      "code": "$ git remote set-url origin [git_url]"
     },
     {
-      "id": "intro-106",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-100",
+      "sectionId": "s8",
+      "title": "跟踪路径更改",
       "kind": "text",
-      "body": "$ git remote set-url origin [git_url]"
+      "body": "从项目中删除文件并暂存删除以进行提交"
     },
     {
-      "id": "intro-107",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-101",
+      "sectionId": "s8",
+      "title": "跟踪路径更改",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 跟踪路径更改\n\n从项目中删除文件并暂存删除以进行提交"
+      "lang": "shell",
+      "code": "$ git rm [file]"
     },
     {
-      "id": "intro-108",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-102",
+      "sectionId": "s8",
+      "title": "跟踪路径更改",
       "kind": "text",
-      "body": "$ git rm [file]"
+      "body": "更改现有文件路径并暂存移动"
     },
     {
-      "id": "intro-109",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-103",
+      "sectionId": "s8",
+      "title": "跟踪路径更改",
       "kind": "code",
-      "lang": "",
-      "code": "\n更改现有文件路径并暂存移动"
+      "lang": "shell",
+      "code": "$ git mv [existing-path] [new-path]"
     },
     {
-      "id": "intro-110",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-104",
+      "sectionId": "s8",
+      "title": "跟踪路径更改",
       "kind": "text",
-      "body": "$ git mv [existing-path] [new-path]"
+      "body": "显示所有提交日志，并指示任何移动的路径"
     },
     {
-      "id": "intro-111",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-105",
+      "sectionId": "s8",
+      "title": "跟踪路径更改",
       "kind": "code",
-      "lang": "",
-      "code": "\n显示所有提交日志，并指示任何移动的路径"
-    },
-    {
-      "id": "intro-112",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git log --stat -M"
+      "lang": "shell",
+      "code": "$ git log --stat -M"
     },
     {
-      "id": "intro-113",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-106",
+      "sectionId": "s8",
+      "title": ".gitattributes",
       "kind": "code",
-      "lang": "",
-      "code": "\n### .gitattributes\n<!--rehype:wrap-class=col-span-2 row-span-2-->"
-    },
-    {
-      "id": "intro-114",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "• text=auto"
-    },
-    {
-      "id": "intro-115",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "*.c text\n*.h text"
-    },
-    {
-      "id": "intro-116",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "*.sln text eol=crlf"
+      "lang": "ini",
+      "code": "# 设置默认行为，以防人们没有设置 core.autocrlf\n* text=auto\n# 明确声明您希望始终规范化并在结帐时\n# 转换为本机行结尾的文本文件\n*.c text\n*.h text\n# 声明在结帐时始终以 CRLF 行结尾的文件\n*.sln text eol=crlf\n# 表示所有真正二进制且不应修改的文件\n*.png binary\n*.jpg binary"
     },
     {
-      "id": "intro-117",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-107",
+      "sectionId": "s8",
+      "title": ".gitattributes",
       "kind": "text",
-      "body": "*.png binary\n*.jpg binary"
+      "body": "[计入存储库语言](https://github.com/github/linguist/blob/master/docs/overrides.md#using-gitattributes)"
     },
     {
-      "id": "intro-118",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-108",
+      "sectionId": "s8",
+      "title": ".gitattributes",
       "kind": "code",
-      "lang": "",
-      "code": "\n[计入存储库语言](https://github.com/github/linguist/blob/master/docs/overrides.md#using-gitattributes)"
-    },
-    {
-      "id": "intro-119",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "search/index.json linguist-generated=true"
-    },
-    {
-      "id": "intro-120",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "*.sql linguist-detectable=true"
+      "lang": "ini",
+      "code": "# 标记或取消标记要根据存储库的语言统计数据而\n# 忽略或默认隐藏差异的路径\nsearch/index.json linguist-generated=true\n# 以下属性统计 SQL 文件\n*.sql linguist-detectable=true\n# 从统计信息中排除\ndocs/formatter.rb linguist-documentation=false\n# 将它们从统计信息中排除\nspecial-vendored-path/* linguist-vendored\n# 将所有 .rb 文件检测为 Java 文件\n*.rb linguist-language=Java"
     },
     {
-      "id": "intro-121",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "docs/formatter.rb linguist-documentation=false"
-    },
-    {
-      "id": "intro-122",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "special-vendored-path/* linguist-vendored"
-    },
-    {
-      "id": "intro-123",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "*.rb linguist-language=Java"
-    },
-    {
-      "id": "intro-124",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s8-109",
+      "sectionId": "s8",
+      "title": "git 配置 ssh 代理",
       "kind": "code",
-      "lang": "",
-      "code": "\n### git 配置 ssh 代理"
-    },
-    {
-      "id": "intro-125",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ cat ~/.ssh/config\nHost gitlab.com"
-    },
-    {
-      "id": "intro-126",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p"
+      "lang": "bash",
+      "code": "$ cat ~/.ssh/config\nHost gitlab.com\n# 直接使用 sh**socks 提供的 socks5 代理端口\nProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p\n\nHost github.com\nProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p"
     },
     {
-      "id": "intro-127",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-110",
+      "sectionId": "s9",
+      "title": "改写历史",
       "kind": "text",
-      "body": "Host github.com\nProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p"
+      "body": "重写最后的提交消息"
     },
     {
-      "id": "intro-128",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-111",
+      "sectionId": "s9",
+      "title": "改写历史",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\nCommit\n---\n\n### 改写历史\n<!--rehype:wrap-class=row-span-2-->\n\n重写最后的提交消息"
+      "lang": "shell",
+      "code": "$ git commit --amend -m \"new message\""
     },
     {
-      "id": "intro-129",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-112",
+      "sectionId": "s9",
+      "title": "改写历史",
       "kind": "text",
-      "body": "$ git commit --amend -m \"new message\""
+      "body": "修改最新的提交而不更改提交消息"
     },
     {
-      "id": "intro-130",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-113",
+      "sectionId": "s9",
+      "title": "改写历史",
       "kind": "code",
-      "lang": "",
-      "code": "\n修改最新的提交而不更改提交消息"
-    },
-    {
-      "id": "intro-131",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git commit --amend --no-edit"
+      "lang": "shell",
+      "code": "$ git commit --amend --no-edit"
     },
     {
-      "id": "intro-132",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-114",
+      "sectionId": "s9",
+      "title": "在 commit log 中显示 GPG 签名",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 在 commit log 中显示 GPG 签名"
-    },
-    {
-      "id": "intro-133",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git log --show-signature"
+      "lang": "bash",
+      "code": "$ git log --show-signature"
     },
     {
-      "id": "intro-134",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-115",
+      "sectionId": "s9",
+      "title": "修改远程 Commit 记录",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 修改远程 Commit 记录\n<!--rehype:wrap-class=row-span-5-->"
-    },
-    {
-      "id": "intro-135",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git rebase -i HEAD~3"
-    },
-    {
-      "id": "intro-136",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "pick 96dc3f9 提交 commit 描述内容 1\npick f1cce8a 提交 commit 描述内容 2\npick 6293516 提交 commit 描述内容 3"
+      "lang": "shell",
+      "code": "$ git rebase -i HEAD~3\n# 表示要修改当前版本的倒数第三次状态\n# 将要更改的记录行首单词 pick 改为 edit\npick 96dc3f9 提交 commit 描述内容 1\npick f1cce8a 提交 commit 描述内容 2\npick 6293516 提交 commit 描述内容 3\n# Rebase eeb03a4..6293516 onto eeb03a4\n#                     (3 commands)\n#\n# Commands:\n# p, pick = 使用提交\n# r, reword = 使用提交，但编辑提交消息\n# e, edit = 使用提交，但停止修改\n# s, squash = 使用提交，但融合到先前的提交中\n# f, fixup = 像 squash，但丢弃此提交的日志消息\n# x, exec = 使用 shell 运行命令(该行的其余部分)\n# d, drop = 删除提交"
     },
     {
-      "id": "intro-137",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-116",
+      "sectionId": "s9",
+      "title": "修改远程 Commit 记录",
       "kind": "text",
-      "body": "#"
+      "body": "保存并退出，会弹出下面提示"
     },
     {
-      "id": "intro-138",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-117",
+      "sectionId": "s9",
+      "title": "修改远程 Commit 记录",
       "kind": "code",
-      "lang": "",
-      "code": "\n保存并退出，会弹出下面提示"
-    },
-    {
-      "id": "intro-139",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "#"
-    },
-    {
-      "id": "intro-140",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "#"
-    },
-    {
-      "id": "intro-141",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "#"
-    },
-    {
-      "id": "intro-142",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "#"
-    },
-    {
-      "id": "intro-143",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git commit --amend"
-    },
-    {
-      "id": "intro-144",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git rebase --continue"
+      "lang": "shell",
+      "code": "# 您现在可以修改提交，使用\n#\n#   git commit --amend\n#\n# 对更改感到满意后，运行\n#\n#   git rebase --continue\n#\n# 1. 通过这条命令进入编辑更改 commit，保存退出\n$ git commit --amend\n# 2. 保存退出确认修改，继续执行下面命令,\n$ git rebase --continue\n# 如果修改多条记录反复执行上面两条命令直到完成所有修改\n\n# 最后，确保没有人提交进行推送，最好不要加 -f 强制推送\n$ git push -f origin master"
     },
     {
-      "id": "intro-145",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git push -f origin master"
-    },
-    {
-      "id": "intro-146",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-118",
+      "sectionId": "s9",
+      "title": "Commit",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Commit"
+      "lang": "shell",
+      "code": "$ git commit -v --amend"
     },
     {
-      "id": "intro-147",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-119",
+      "sectionId": "s9",
+      "title": "Commit",
       "kind": "text",
-      "body": "$ git commit -v --amend"
+      "body": "重写最后的提交信息"
     },
     {
-      "id": "intro-148",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-120",
+      "sectionId": "s9",
+      "title": "撤销远程记录",
       "kind": "code",
-      "lang": "",
-      "code": "\n重写最后的提交信息\n\n### 撤销远程记录"
-    },
-    {
-      "id": "intro-149",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git reset --hard HEAD~1"
-    },
-    {
-      "id": "intro-150",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git push -f origin HEAD:master"
+      "lang": "shell",
+      "code": "# 撤销一条记录\n$ git reset --hard HEAD~1\n# 强制同步到远程仓库\n$ git push -f origin HEAD:master"
     },
     {
-      "id": "intro-151",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-121",
+      "sectionId": "s9",
+      "title": "放弃本地修改内容",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 放弃本地修改内容"
-    },
-    {
-      "id": "intro-152",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git reset --hard"
-    },
-    {
-      "id": "intro-153",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git checkout ."
-    },
-    {
-      "id": "intro-154",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git clean -xdf"
+      "lang": "shell",
+      "code": "# 如果有的修改以及加入暂存区的话\n$ git reset --hard\n# 还原所有修改，不会删除新增的文件\n$ git checkout .\n# 下面命令会删除新增的文件\n$ git clean -xdf"
     },
     {
-      "id": "intro-155",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-122",
+      "sectionId": "s9",
+      "title": "把 A 分支的某一个 commit，放到 B 分支上",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 把 A 分支的某一个 commit，放到 B 分支上"
-    },
-    {
-      "id": "intro-156",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git checkout <B>"
-    },
-    {
-      "id": "intro-157",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git cherry-pick <hash-id>"
+      "lang": "shell",
+      "code": "# 切换到 B 分支\n$ git checkout <B>\n# 将 A 分支 <hash-id> 的内容 pick 到 B 分支\n$ git cherry-pick <hash-id>"
     },
     {
-      "id": "intro-158",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-123",
+      "sectionId": "s9",
+      "title": "重设第一个 commit",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 重设第一个 commit"
+      "lang": "bash",
+      "code": "$ git update-ref -d HEAD"
     },
     {
-      "id": "intro-159",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-124",
+      "sectionId": "s9",
+      "title": "重设第一个 commit",
       "kind": "text",
-      "body": "$ git update-ref -d HEAD"
+      "body": "把所有的改动都重新放回工作区，并**清空所有的 commit**，这样就可以重新提交第一个 `commit` 了"
     },
     {
-      "id": "intro-160",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-125",
+      "sectionId": "s9",
+      "title": "回到远程仓库的状态",
       "kind": "code",
-      "lang": "",
-      "code": "\n把所有的改动都重新放回工作区，并**清空所有的 commit**，这样就可以重新提交第一个 `commit` 了\n\n### 回到远程仓库的状态"
+      "lang": "bash",
+      "code": "$ git fetch --all && git reset --hard origin/master"
     },
     {
-      "id": "intro-161",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-126",
+      "sectionId": "s9",
+      "title": "回到远程仓库的状态",
       "kind": "text",
-      "body": "$ git fetch --all && git reset --hard origin/master"
+      "body": "抛弃本地所有的修改，回到远程仓库的状态"
     },
     {
-      "id": "intro-162",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-127",
+      "sectionId": "s9",
+      "title": "commit 历史中显示 Branch1 有的但是 Branch2 没有 commit",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n抛弃本地所有的修改，回到远程仓库的状态\n\n### commit 历史中显示 Branch1 有的但是 Branch2 没有 commit"
+      "lang": "bash",
+      "code": "$ git log Branch1 ^Branch2"
     },
     {
-      "id": "intro-163",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-128",
+      "sectionId": "s9",
+      "title": "git 迁移",
       "kind": "text",
-      "body": "$ git log Branch1 ^Branch2"
+      "body": "• 从原地址克隆一份裸版本库"
     },
     {
-      "id": "intro-164",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-129",
+      "sectionId": "s9",
+      "title": "git 迁移",
       "kind": "code",
-      "lang": "",
-      "code": "\n### git 迁移\n<!--rehype:wrap-class=col-span-2-->\n\n- 从原地址克隆一份裸版本库"
+      "lang": "bash",
+      "code": "$ git clone --bare https://github.com/username/project.git"
     },
     {
-      "id": "intro-165",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-130",
+      "sectionId": "s9",
+      "title": "git 迁移",
       "kind": "text",
-      "body": "$ git clone --bare https://github.com/username/project.git"
+      "body": "• 然后新建一个地址，比如一下"
     },
     {
-      "id": "intro-166",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-131",
+      "sectionId": "s9",
+      "title": "git 迁移",
       "kind": "code",
-      "lang": "",
-      "code": "\n- 然后新建一个地址，比如一下"
+      "lang": "bash",
+      "code": "$ https://gitee.com/username/newproject.git"
     },
     {
-      "id": "intro-167",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-132",
+      "sectionId": "s9",
+      "title": "git 迁移",
       "kind": "text",
-      "body": "$ https://gitee.com/username/newproject.git"
+      "body": "• 进入project.git这个全裸版本库，以镜像推送的方式上传代码到newproject上。"
     },
     {
-      "id": "intro-168",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-133",
+      "sectionId": "s9",
+      "title": "git 迁移",
       "kind": "code",
       "lang": "",
-      "code": "\n- 进入project.git这个全裸版本库，以镜像推送的方式上传代码到newproject上。"
-    },
-    {
-      "id": "intro-169",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ cd project.git"
+      "code": "$ cd project.git\n\n$ git push --mirror https://gitee.com/username/newproject.git"
     },
     {
-      "id": "intro-170",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-134",
+      "sectionId": "s9",
+      "title": "git 迁移",
       "kind": "text",
-      "body": "$ git push --mirror https://gitee.com/username/newproject.git"
+      "body": "• 使用新地址，直接 Clone 到本地就可以了。"
     },
     {
-      "id": "intro-171",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s9-135",
+      "sectionId": "s9",
+      "title": "git 迁移",
       "kind": "code",
       "lang": "",
-      "code": "\n- 使用新地址，直接 Clone 到本地就可以了。"
-    },
-    {
-      "id": "intro-172",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git clone https://gitee.com/username/newproject.git"
+      "code": "$ git clone https://gitee.com/username/newproject.git"
     },
     {
-      "id": "intro-173",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-136",
+      "sectionId": "s10",
+      "title": "添加子模块",
       "kind": "code",
-      "lang": "",
-      "code": "\nGit Submodule 子模块\n------\n\n### 添加子模块"
+      "lang": "bash",
+      "code": "$ git submodule add <仓库地址> <子模块路径>"
     },
     {
-      "id": "intro-174",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule add <仓库地址> <子模块路径>"
-    },
-    {
-      "id": "intro-175",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-137",
+      "sectionId": "s10",
+      "title": "克隆包含子模块的仓库",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 克隆包含子模块的仓库"
-    },
-    {
-      "id": "intro-176",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git clone <repository_url> --recursive"
+      "lang": "bash",
+      "code": "$ git clone <repository_url> --recursive"
     },
     {
-      "id": "intro-177",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-138",
+      "sectionId": "s10",
+      "title": "更新子模块",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 更新子模块"
-    },
-    {
-      "id": "intro-178",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule update --remote"
+      "lang": "bash",
+      "code": "$ git submodule update --remote"
     },
     {
-      "id": "intro-179",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-139",
+      "sectionId": "s10",
+      "title": "切换到子模块的特定提交",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 切换到子模块的特定提交"
-    },
-    {
-      "id": "intro-180",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ cd <path_to_submodule>\n$ git checkout <commit_hash>"
+      "lang": "bash",
+      "code": "$ cd <path_to_submodule>\n$ git checkout <commit_hash>"
     },
     {
-      "id": "intro-181",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-140",
+      "sectionId": "s10",
+      "title": "查看当前仓库中的子模块",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 查看当前仓库中的子模块"
-    },
-    {
-      "id": "intro-182",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule status"
+      "lang": "bash",
+      "code": "$ git submodule status"
     },
     {
-      "id": "intro-183",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-141",
+      "sectionId": "s10",
+      "title": "初始化子模块",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 初始化子模块"
-    },
-    {
-      "id": "intro-184",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule init"
+      "lang": "bash",
+      "code": "$ git submodule init"
     },
     {
-      "id": "intro-185",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-142",
+      "sectionId": "s10",
+      "title": "切换到父仓库的特定提交，并更新子模块",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 切换到父仓库的特定提交，并更新子模块"
-    },
-    {
-      "id": "intro-186",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ cd ..\n$ git checkout <commit_hash>\n$ git submodule update --remote"
+      "lang": "bash",
+      "code": "$ cd ..\n$ git checkout <commit_hash>\n$ git submodule update --remote"
     },
     {
-      "id": "intro-187",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-143",
+      "sectionId": "s10",
+      "title": "获取并切换子模块的最新标签",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 获取并切换子模块的最新标签\n<!--rehype:wrap-class=col-span-2-->"
+      "lang": "bash",
+      "code": "$ cd <path_to_submodule>\n$ git fetch --tags\n$ git checkout $(git describe --tags $(git rev-list --tags --max-count=1))"
     },
     {
-      "id": "intro-188",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ cd <path_to_submodule>\n$ git fetch --tags\n$ git checkout $(git describe --tags $(git rev-list --tags --max-count=1))"
-    },
-    {
-      "id": "intro-189",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-144",
+      "sectionId": "s10",
+      "title": "子模块递归",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 子模块递归\n<!--rehype:wrap-class=col-span-2 row-span-3-->"
-    },
-    {
-      "id": "intro-190",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule foreach --recursive git submodule add <repository_url>"
-    },
-    {
-      "id": "intro-191",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule foreach --recursive git pull origin master"
-    },
-    {
-      "id": "intro-192",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule foreach --recursive git checkout <branch_name>"
-    },
-    {
-      "id": "intro-193",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule foreach --recursive git fetch"
-    },
-    {
-      "id": "intro-194",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule foreach --recursive git pull origin <branch_name>"
-    },
-    {
-      "id": "intro-195",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule foreach --recursive git checkout ."
-    },
-    {
-      "id": "intro-196",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule foreach --recursive git fetch --all\n$ git submodule foreach --recursive git reset --hard origin/master"
+      "lang": "bash",
+      "code": "# 添加所有已存在的子模块\n$ git submodule foreach --recursive git submodule add <repository_url>\n# 更新所有子模块到最新提交\n$ git submodule foreach --recursive git pull origin master\n# 检出特定的子模块路径\n$ git submodule foreach --recursive git checkout <branch_name>\n# 获取仓库中的所有子模块变化\n$ git submodule foreach --recursive git fetch\n# 获取并合并子模块的远程分支\n$ git submodule foreach --recursive git pull origin <branch_name>\n# 将子模块还原到父仓库中的初始提交\n$ git submodule foreach --recursive git checkout .\n# 获取子模块的更新并忽略本地修改\n$ git submodule foreach --recursive git fetch --all\n$ git submodule foreach --recursive git reset --hard origin/master"
     },
     {
-      "id": "intro-197",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-145",
+      "sectionId": "s10",
+      "title": "获取子模块的最新提交",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 获取子模块的最新提交"
-    },
-    {
-      "id": "intro-198",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ cd <path_to_submodule>\n$ git pull"
+      "lang": "bash",
+      "code": "$ cd <path_to_submodule>\n$ git pull"
     },
     {
-      "id": "intro-199",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-146",
+      "sectionId": "s10",
+      "title": "删除子模块",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 删除子模块"
-    },
-    {
-      "id": "intro-200",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule deinit <path_to_submodule>\n$ git rm <path_to_submodule>"
+      "lang": "bash",
+      "code": "$ git submodule deinit <path_to_submodule>\n$ git rm <path_to_submodule>"
     },
     {
-      "id": "intro-201",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-147",
+      "sectionId": "s10",
+      "title": "切换子模块的分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 切换子模块的分支"
+      "lang": "bash",
+      "code": "$ cd <path_to_submodule>\n$ git checkout <branch_name>"
     },
     {
-      "id": "intro-202",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ cd <path_to_submodule>\n$ git checkout <branch_name>"
-    },
-    {
-      "id": "intro-203",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-148",
+      "sectionId": "s10",
+      "title": "初始化并更新所有子模块",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 初始化并更新所有子模块"
-    },
-    {
-      "id": "intro-204",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git submodule init\n$ git submodule update"
+      "lang": "bash",
+      "code": "$ git submodule init\n$ git submodule update"
     },
     {
-      "id": "intro-205",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s10-149",
+      "sectionId": "s10",
+      "title": "切换子模块的特定标签",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 切换子模块的特定标签"
-    },
-    {
-      "id": "intro-206",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ cd <path_to_submodule>\n$ git checkout tags/<tag_name>"
+      "lang": "bash",
+      "code": "$ cd <path_to_submodule>\n$ git checkout tags/<tag_name>"
     },
     {
-      "id": "intro-207",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-150",
+      "sectionId": "s11",
+      "title": "查看配置的信息",
       "kind": "code",
-      "lang": "",
-      "code": "\nConfig 设置\n---\n\n### 查看配置的信息"
+      "lang": "bash",
+      "code": "$ git help config"
     },
     {
-      "id": "intro-208",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-151",
+      "sectionId": "s11",
+      "title": "查看配置的信息",
       "kind": "text",
-      "body": "$ git help config"
+      "body": "获取帮助信息，查看修改个人信息的参数"
     },
     {
-      "id": "intro-209",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-152",
+      "sectionId": "s11",
+      "title": "忽略文件的权限变化",
       "kind": "code",
-      "lang": "",
-      "code": "\n获取帮助信息，查看修改个人信息的参数\n\n### 忽略文件的权限变化"
+      "lang": "shell",
+      "code": "git config core.fileMode false"
     },
     {
-      "id": "intro-210",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-153",
+      "sectionId": "s11",
+      "title": "忽略文件的权限变化",
       "kind": "text",
-      "body": "git config core.fileMode false"
+      "body": "不再将文件的权限变化视作改动"
     },
     {
-      "id": "intro-211",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-154",
+      "sectionId": "s11",
+      "title": "配置自动换行",
       "kind": "code",
-      "lang": "",
-      "code": "\n不再将文件的权限变化视作改动\n\n### 配置自动换行"
+      "lang": "bash",
+      "code": "$ git config --global core.autocrlf input"
     },
     {
-      "id": "intro-212",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-155",
+      "sectionId": "s11",
+      "title": "配置自动换行",
       "kind": "text",
-      "body": "$ git config --global core.autocrlf input"
+      "body": "自动转换坑太大，提交到git是自动将换行符转换为 `lf`"
     },
     {
-      "id": "intro-213",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-156",
+      "sectionId": "s11",
+      "title": "获取帮助信息",
       "kind": "code",
-      "lang": "",
-      "code": "\n自动转换坑太大，提交到git是自动将换行符转换为 `lf`\n\n### 获取帮助信息"
-    },
-    {
-      "id": "intro-214",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git config --list"
+      "lang": "bash",
+      "code": "$ git config --list"
     },
     {
-      "id": "intro-215",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-157",
+      "sectionId": "s11",
+      "title": "中文乱码的解决方案",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 中文乱码的解决方案"
-    },
-    {
-      "id": "intro-216",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git config --global core.quotepath false"
+      "lang": "shell",
+      "code": "$ git config --global core.quotepath false"
     },
     {
-      "id": "intro-217",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-158",
+      "sectionId": "s11",
+      "title": "删除全局设置",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 删除全局设置"
+      "lang": "bash",
+      "code": "$ git config --global --unset <entry-name>"
     },
     {
-      "id": "intro-218",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git config --global --unset <entry-name>"
-    },
-    {
-      "id": "intro-219",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-159",
+      "sectionId": "s11",
+      "title": "配置 http 和 socks 代理",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 配置 http 和 socks 代理\n<!--rehype:wrap-class=col-span-2 row-span-2-->"
-    },
-    {
-      "id": "intro-220",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git config --global http.proxy\n$ git config --global https.proxy\n$ git config --global socks.proxy"
+      "lang": "bash",
+      "code": "# 查看代理\n$ git config --global http.proxy\n$ git config --global https.proxy\n$ git config --global socks.proxy\n\n# 设置代理\n# 适用于 privoxy 将 socks 协议转为 http 协议的 http 端口\n$ git config --global http.proxy http://127.0.0.1:1080\n$ git config --global https.proxy http://127.0.0.1:1080\n$ git config --global socks.proxy 127.0.0.1:1080\n\n# 取消代理\n$ git config --global --unset http.proxy\n$ git config --global --unset https.proxy\n$ git config --global --unset socks.proxy\n\n# 只对 github.com 设置代理\n$ git config --global http.https://github.com.proxy socks5://127.0.0.1:1080\n$ git config --global https.https://github.com.proxy socks5://127.0.0.1:1080\n\n# 取消 github.com 代理\n$ git config --global --unset http.https://github.com.proxy\n$ git config --global --unset https.https://github.com.proxy"
     },
     {
-      "id": "intro-221",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git config --global http.proxy http://127.0.0.1:1080\n$ git config --global https.proxy http://127.0.0.1:1080\n$ git config --global socks.proxy 127.0.0.1:1080"
+      "id": "s11-160",
+      "sectionId": "s11",
+      "title": "Git 别名",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ git config --global alias.co checkout\n$ git config --global alias.br branch\n$ git config --global alias.ci commit\n$ git config --global alias.st status"
     },
     {
-      "id": "intro-222",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-161",
+      "sectionId": "s11",
+      "title": "Git 别名",
       "kind": "text",
-      "body": "$ git config --global --unset http.proxy\n$ git config --global --unset https.proxy\n$ git config --global --unset socks.proxy"
+      "body": "配置好后，再输入 `git` 命令的时候就不用再输入一大段了，例如我们要查看状态，只需："
     },
     {
-      "id": "intro-223",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git config --global http.https://github.com.proxy socks5://127.0.0.1:1080\n$ git config --global https.https://github.com.proxy socks5://127.0.0.1:1080"
+      "id": "s11-162",
+      "sectionId": "s11",
+      "title": "Git 别名",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git st"
     },
     {
-      "id": "intro-224",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-163",
+      "sectionId": "s11",
+      "title": "Git 别名",
       "kind": "text",
-      "body": "$ git config --global --unset http.https://github.com.proxy\n$ git config --global --unset https.https://github.com.proxy"
+      "body": "也可以看看：[更多别名](https://gist.github.com/johnpolacek/69604a1f6861129ef088)"
     },
     {
-      "id": "intro-225",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s11-164",
+      "sectionId": "s11",
+      "title": "设置大小写敏感",
       "kind": "code",
-      "lang": "",
-      "code": "\n### Git 别名"
+      "lang": "shell",
+      "code": "# 查看git 的设置\n$ git config --get core.ignorecase\n# 设置大小写敏感\n$ git config core.ignorecase false\n# 远程有俩相同目录，通过这种方式清除掉，然后提交记录\n$ git rm -r --cached <目录/文件>"
     },
     {
-      "id": "intro-226",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-165",
+      "sectionId": "s12",
+      "title": "重命名分支",
       "kind": "text",
-      "body": "$ git config --global alias.co checkout\n$ git config --global alias.br branch\n$ git config --global alias.ci commit\n$ git config --global alias.st status"
+      "body": "• **重命名**为`new`"
     },
     {
-      "id": "intro-227",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-166",
+      "sectionId": "s12",
+      "title": "重命名分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n配置好后，再输入 `git` 命令的时候就不用再输入一大段了，例如我们要查看状态，只需："
+      "lang": "shell",
+      "code": "  $ git branch -m <new>\n  $ git branch -m <old> <new> #重命名分支"
     },
     {
-      "id": "intro-228",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-167",
+      "sectionId": "s12",
+      "title": "重命名分支",
       "kind": "text",
-      "body": "$ git st"
+      "body": "• **推送**并重置"
     },
     {
-      "id": "intro-229",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-168",
+      "sectionId": "s12",
+      "title": "重命名分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n也可以看看：[更多别名](https://gist.github.com/johnpolacek/69604a1f6861129ef088)\n\n### 设置大小写敏感"
+      "lang": "shell",
+      "code": "  $ git push origin -u <new>"
     },
     {
-      "id": "intro-230",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-169",
+      "sectionId": "s12",
+      "title": "重命名分支",
       "kind": "text",
-      "body": "$ git config --get core.ignorecase"
+      "body": "• **删除**远程分支"
     },
     {
-      "id": "intro-231",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git config core.ignorecase false"
+      "id": "s12-170",
+      "sectionId": "s12",
+      "title": "重命名分支",
+      "kind": "code",
+      "lang": "shell",
+      "code": "  $ git push origin --delete <old> #方法1\n  $ git push origin :oldBranchName #方法2"
     },
     {
-      "id": "intro-232",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-171",
+      "sectionId": "s12",
+      "title": "Log",
       "kind": "text",
-      "body": "$ git rm -r --cached <目录/文件>"
+      "body": "按内容搜索更改"
     },
     {
-      "id": "intro-233",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-172",
+      "sectionId": "s12",
+      "title": "Log",
       "kind": "code",
-      "lang": "",
-      "code": "\nGit 技巧\n------\n\n### 重命名分支\n\n- **重命名**为`new`\n\n  ```shell\n  $ git branch -m <new>\n  $ git branch -m <old> <new> #重命名分支\n  ```\n\n- **推送**并重置\n\n  ```shell\n  $ git push origin -u <new>\n  ```\n\n- **删除**远程分支\n\n  ```shell\n  $ git push origin --delete <old> #方法1\n  $ git push origin :oldBranchName #方法2\n  ```\n<!--rehype:className=style-timeline-->\n\n### Log\n\n按内容搜索更改"
+      "lang": "shell",
+      "code": "$ git log -S'<a term in the source>'"
     },
     {
-      "id": "intro-234",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-173",
+      "sectionId": "s12",
+      "title": "Log",
       "kind": "text",
-      "body": "$ git log -S'<a term in the source>'"
+      "body": "显示特定文件随时间的变化"
     },
     {
-      "id": "intro-235",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-174",
+      "sectionId": "s12",
+      "title": "Log",
       "kind": "code",
-      "lang": "",
-      "code": "\n显示特定文件随时间的变化"
+      "lang": "shell",
+      "code": "$ git log -p <file_name>"
     },
     {
-      "id": "intro-236",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-175",
+      "sectionId": "s12",
+      "title": "Log",
       "kind": "text",
-      "body": "$ git log -p <file_name>"
+      "body": "打印出很酷的日志可视化"
     },
     {
-      "id": "intro-237",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-176",
+      "sectionId": "s12",
+      "title": "Log",
       "kind": "code",
-      "lang": "",
-      "code": "\n打印出很酷的日志可视化"
+      "lang": "shell",
+      "code": "$ git log --pretty=oneline --graph --decorate --all"
     },
     {
-      "id": "intro-238",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-177",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "text",
-      "body": "$ git log --pretty=oneline --graph --decorate --all"
+      "body": "列出所有分支及其上游"
     },
     {
-      "id": "intro-239",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-178",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 分支\n<!--rehype:wrap-class=row-span-2-->\n\n列出所有分支及其上游"
+      "lang": "shell",
+      "code": "$ git branch -vv"
     },
     {
-      "id": "intro-240",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-179",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "text",
-      "body": "$ git branch -vv"
+      "body": "快速切换到上一个分支"
     },
     {
-      "id": "intro-241",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-180",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n快速切换到上一个分支"
+      "lang": "shell",
+      "code": "$ git checkout -"
     },
     {
-      "id": "intro-242",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-181",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "text",
-      "body": "$ git checkout -"
+      "body": "只获取所有远程分支"
     },
     {
-      "id": "intro-243",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-182",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n只获取所有远程分支"
+      "lang": "shell",
+      "code": "$ git branch -r"
     },
     {
-      "id": "intro-244",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-183",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "text",
-      "body": "$ git branch -r"
+      "body": "从另一个分支签出单个文件"
     },
     {
-      "id": "intro-245",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-184",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n从另一个分支签出单个文件"
+      "lang": "shell",
+      "code": "$ git checkout <branch> -- <file>"
     },
     {
-      "id": "intro-246",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-185",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "text",
-      "body": "$ git checkout <branch> -- <file>"
+      "body": "删除本地存在远程不存在的分支"
     },
     {
-      "id": "intro-247",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-186",
+      "sectionId": "s12",
+      "title": "分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n删除本地存在远程不存在的分支"
+      "lang": "shell",
+      "code": "$ git remote prune origin"
     },
     {
-      "id": "intro-248",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git remote prune origin"
+      "id": "s12-187",
+      "sectionId": "s12",
+      "title": "获取最近一次提交的 Hash",
+      "kind": "code",
+      "lang": "shell",
+      "code": "$ git rev-parse HEAD # e10721cb8859b2c\n# 获取短 hash\n$ git rev-parse --short HEAD # e10721c"
     },
     {
-      "id": "intro-249",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-188",
+      "sectionId": "s12",
+      "title": "删除已经合并到 master 的分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 获取最近一次提交的 Hash"
+      "lang": "shell",
+      "code": "$ git branch --merged master | grep -v '^\\*\\|  master' | xargs -n 1 git branch -d"
     },
     {
-      "id": "intro-250",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git rev-parse HEAD # e10721cb8859b2c"
+      "id": "s12-189",
+      "sectionId": "s12",
+      "title": "查看冲突文件列表",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git diff --name-only --diff-filter=U"
     },
     {
-      "id": "intro-251",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-190",
+      "sectionId": "s12",
+      "title": "展示工作区的冲突文件列表",
       "kind": "text",
-      "body": "$ git rev-parse --short HEAD # e10721c"
+      "body": "输出工作区和暂存区的 different (不同)。"
     },
     {
-      "id": "intro-252",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-191",
+      "sectionId": "s12",
+      "title": "展示工作区的冲突文件列表",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 删除已经合并到 master 的分支"
+      "lang": "bash",
+      "code": "$ git diff"
     },
     {
-      "id": "intro-253",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-192",
+      "sectionId": "s12",
+      "title": "展示工作区的冲突文件列表",
       "kind": "text",
-      "body": "$ git branch --merged master | grep -v '^\\*\\|  master' | xargs -n 1 git branch -d"
+      "body": "还可以展示本地仓库中任意两个 commit 之间的文件变动："
     },
     {
-      "id": "intro-254",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-193",
+      "sectionId": "s12",
+      "title": "展示工作区的冲突文件列表",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 查看冲突文件列表"
+      "lang": "bash",
+      "code": "$ git diff <commit-id> <commit-id>"
     },
     {
-      "id": "intro-255",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git diff --name-only --diff-filter=U"
+      "id": "s12-194",
+      "sectionId": "s12",
+      "title": "展示暂存区和最近版本的不同",
+      "kind": "code",
+      "lang": "bash",
+      "code": "git diff --cached"
     },
     {
-      "id": "intro-256",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-195",
+      "sectionId": "s12",
+      "title": "展示暂存区、工作区和最近版本的不同",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 展示工作区的冲突文件列表\n<!--rehype:wrap-class=row-span-2-->\n\n输出工作区和暂存区的 different (不同)。"
+      "lang": "bash",
+      "code": "$ git diff HEAD"
     },
     {
-      "id": "intro-257",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-196",
+      "sectionId": "s12",
+      "title": "展示暂存区、工作区和最近版本的不同",
       "kind": "text",
-      "body": "$ git diff"
+      "body": "输出工作区、暂存区 和本地最近的版本(commit)的different(不同)。"
     },
     {
-      "id": "intro-258",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-197",
+      "sectionId": "s12",
+      "title": "删除已经合并到 master 的分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n还可以展示本地仓库中任意两个 commit 之间的文件变动："
-    },
-    {
-      "id": "intro-259",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git diff <commit-id> <commit-id>"
+      "lang": "bash",
+      "code": "$ git branch --merged master | grep -v '^\\*\\|  master' | xargs -n 1 git branch -d"
     },
     {
-      "id": "intro-260",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-198",
+      "sectionId": "s12",
+      "title": "关联远程分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 展示暂存区和最近版本的不同"
+      "lang": "bash",
+      "code": "$ git branch -u origin/mybranch"
     },
     {
-      "id": "intro-261",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-199",
+      "sectionId": "s12",
+      "title": "关联远程分支",
       "kind": "text",
-      "body": "git diff --cached"
+      "body": "或者在 `push` 时加上 `-u` 参数"
     },
     {
-      "id": "intro-262",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-200",
+      "sectionId": "s12",
+      "title": "关联远程分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 展示暂存区、工作区和最近版本的不同"
+      "lang": "bash",
+      "code": "git push origin/mybranch -u"
     },
     {
-      "id": "intro-263",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-201",
+      "sectionId": "s12",
+      "title": "关联远程分支",
       "kind": "text",
-      "body": "$ git diff HEAD"
+      "body": "关联之后，`git branch -vv` 就可以展示关联的远程分支名了, 同时推送到远程仓库直接：`git push`，不需要指定远程仓库"
     },
     {
-      "id": "intro-264",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-202",
+      "sectionId": "s12",
+      "title": "查看远程分支和本地分支的对应关系",
       "kind": "code",
-      "lang": "",
-      "code": "\n输出工作区、暂存区 和本地最近的版本(commit)的different(不同)。\n\n### 删除已经合并到 master 的分支"
+      "lang": "bash",
+      "code": "$ git remote show origin"
     },
     {
-      "id": "intro-265",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git branch --merged master | grep -v '^\\*\\|  master' | xargs -n 1 git branch -d"
+      "id": "s12-203",
+      "sectionId": "s12",
+      "title": "展示当前分支的最近的 tag",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git describe --tags --abbrev=0"
     },
     {
-      "id": "intro-266",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-204",
+      "sectionId": "s12",
+      "title": "修改作者名",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 关联远程分支\n<!--rehype:wrap-class=row-span-2-->"
+      "lang": "bash",
+      "code": "$ git commit --amend --author='Author Name <email@address.com>'"
     },
     {
-      "id": "intro-267",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git branch -u origin/mybranch"
+      "id": "s12-205",
+      "sectionId": "s12",
+      "title": "增加远程仓库",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git remote add origin <remote-url>"
     },
     {
-      "id": "intro-268",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-206",
+      "sectionId": "s12",
+      "title": "列出所有远程仓库",
       "kind": "code",
-      "lang": "",
-      "code": "\n或者在 `push` 时加上 `-u` 参数"
+      "lang": "bash",
+      "code": "$ git remote -v"
     },
     {
-      "id": "intro-269",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git push origin/mybranch -u"
+      "id": "s12-207",
+      "sectionId": "s12",
+      "title": "从 stash 中拿出某个文件的修改",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git checkout <stash@{n}> -- <file-path>"
     },
     {
-      "id": "intro-270",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-208",
+      "sectionId": "s12",
+      "title": "展示所有 tracked 的文件",
       "kind": "code",
-      "lang": "",
-      "code": "\n关联之后，`git branch -vv` 就可以展示关联的远程分支名了, 同时推送到远程仓库直接：`git push`，不需要指定远程仓库\n\n### 查看远程分支和本地分支的对应关系"
+      "lang": "bash",
+      "code": "$ git ls-files -t"
     },
     {
-      "id": "intro-271",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git remote show origin"
+      "id": "s12-209",
+      "sectionId": "s12",
+      "title": "展示所有 untracked 的文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git ls-files --others"
     },
     {
-      "id": "intro-272",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-210",
+      "sectionId": "s12",
+      "title": "展示所有忽略的文件",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 展示当前分支的最近的 tag"
+      "lang": "bash",
+      "code": "$ git ls-files --others -i --exclude-standard"
     },
     {
-      "id": "intro-273",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git describe --tags --abbrev=0"
+      "id": "s12-211",
+      "sectionId": "s12",
+      "title": "把某一个分支导出成一个文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git bundle create <file> <branch-name>"
     },
     {
-      "id": "intro-274",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-212",
+      "sectionId": "s12",
+      "title": "从包中导入分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 修改作者名"
+      "lang": "bash",
+      "code": "$ git clone repo.bundle <repo-dir> -b <branch-name>"
     },
     {
-      "id": "intro-275",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-213",
+      "sectionId": "s12",
+      "title": "从包中导入分支",
       "kind": "text",
-      "body": "$ git commit --amend --author='Author Name <email@address.com>'"
+      "body": "新建一个分支，分支内容就是上面 `git bundle create` 命令导出的内容"
     },
     {
-      "id": "intro-276",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-214",
+      "sectionId": "s12",
+      "title": "执行 rebase 之前自动 stash",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 增加远程仓库"
+      "lang": "bash",
+      "code": "$ git rebase --autostash"
     },
     {
-      "id": "intro-277",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git remote add origin <remote-url>"
-    },
-    {
-      "id": "intro-278",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-215",
+      "sectionId": "s12",
+      "title": "从远程仓库根据 ID，拉下某一状态，到本地分支",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 列出所有远程仓库"
+      "lang": "bash",
+      "code": "$ git fetch origin pull/<id>/head:<branch-name>"
     },
     {
-      "id": "intro-279",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git remote -v"
+      "id": "s12-216",
+      "sectionId": "s12",
+      "title": "详细展示一行中的修改",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git diff --word-diff"
     },
     {
-      "id": "intro-280",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-217",
+      "sectionId": "s12",
+      "title": "清除 gitignore 文件中记录的文件",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 从 stash 中拿出某个文件的修改"
+      "lang": "bash",
+      "code": "$ git clean -X -f"
     },
     {
-      "id": "intro-281",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git checkout <stash@{n}> -- <file-path>"
+      "id": "s12-218",
+      "sectionId": "s12",
+      "title": "展示忽略的文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git status --ignored"
     },
     {
-      "id": "intro-282",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-219",
+      "sectionId": "s12",
+      "title": "新建并切换到新分支上，同时这个分支没有任何 commit",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 展示所有 tracked 的文件"
+      "lang": "bash",
+      "code": "$ git checkout --orphan <branch-name>"
     },
     {
-      "id": "intro-283",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-220",
+      "sectionId": "s12",
+      "title": "新建并切换到新分支上，同时这个分支没有任何 commit",
       "kind": "text",
-      "body": "$ git ls-files -t"
+      "body": "相当于保存修改，但是重写 commit 历史"
     },
     {
-      "id": "intro-284",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-221",
+      "sectionId": "s12",
+      "title": "展示任意分支某一文件的内容",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 展示所有 untracked 的文件"
-    },
-    {
-      "id": "intro-285",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git ls-files --others"
+      "lang": "bash",
+      "code": "$ git show <branch-name>:<file-name>"
     },
     {
-      "id": "intro-286",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-222",
+      "sectionId": "s12",
+      "title": "clone 最新一次提交",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 展示所有忽略的文件"
+      "lang": "bash",
+      "code": "$ git clone --depth=1 https://github.com/user/repo.git"
     },
     {
-      "id": "intro-287",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-223",
+      "sectionId": "s12",
+      "title": "clone 最新一次提交",
       "kind": "text",
-      "body": "$ git ls-files --others -i --exclude-standard"
-    },
-    {
-      "id": "intro-288",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 把某一个分支导出成一个文件"
+      "body": "只会 `clone` 最近一次提交，将减少 `clone` 时间"
     },
     {
-      "id": "intro-289",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-224",
+      "sectionId": "s12",
+      "title": "忽略某个文件的改动",
       "kind": "text",
-      "body": "$ git bundle create <file> <branch-name>"
+      "body": "关闭 track 指定文件的改动，也就是 Git 将不会在记录这个文件的改动"
     },
     {
-      "id": "intro-290",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-225",
+      "sectionId": "s12",
+      "title": "忽略某个文件的改动",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 从包中导入分支\n<!--rehype:wrap-class=row-span-2-->"
+      "lang": "bash",
+      "code": "git update-index --assume-unchanged path/to/file"
     },
     {
-      "id": "intro-291",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-226",
+      "sectionId": "s12",
+      "title": "忽略某个文件的改动",
       "kind": "text",
-      "body": "$ git clone repo.bundle <repo-dir> -b <branch-name>"
+      "body": "恢复 track 指定文件的改动"
     },
     {
-      "id": "intro-292",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-227",
+      "sectionId": "s12",
+      "title": "忽略某个文件的改动",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n新建一个分支，分支内容就是上面 `git bundle create` 命令导出的内容\n\n### 执行 rebase 之前自动 stash"
-    },
-    {
-      "id": "intro-293",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git rebase --autostash"
+      "lang": "bash",
+      "code": "git update-index --no-assume-unchanged path/to/file"
     },
     {
-      "id": "intro-294",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-228",
+      "sectionId": "s12",
+      "title": "以最后提交的顺序列出所有 Git 分支",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 从远程仓库根据 ID，拉下某一状态，到本地分支"
+      "lang": "bash",
+      "code": "git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads"
     },
     {
-      "id": "intro-295",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-229",
+      "sectionId": "s12",
+      "title": "以最后提交的顺序列出所有 Git 分支",
       "kind": "text",
-      "body": "$ git fetch origin pull/<id>/head:<branch-name>"
+      "body": "最新的放在最上面"
     },
     {
-      "id": "intro-296",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-230",
+      "sectionId": "s12",
+      "title": "把暂存区的指定 file 放到工作区中",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 详细展示一行中的修改"
+      "lang": "bash",
+      "code": "git reset <file-name>"
     },
     {
-      "id": "intro-297",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-231",
+      "sectionId": "s12",
+      "title": "把暂存区的指定 file 放到工作区中",
       "kind": "text",
-      "body": "$ git diff --word-diff"
+      "body": "不添加参数，默认是 `-mixed`"
     },
     {
-      "id": "intro-298",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-232",
+      "sectionId": "s12",
+      "title": "配置 SSH 协议代理",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 清除 gitignore 文件中记录的文件"
+      "lang": "shell",
+      "code": "# 对于使用 git@ 协议的，可以配置 socks5 代理\n# macOS 系统编辑 ~/.ssh/config 文件，添加这几行，设置 github 代理\nHost github.com\n  ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p"
     },
     {
-      "id": "intro-299",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-233",
+      "sectionId": "s12",
+      "title": "Fork仓库同步上游仓库",
       "kind": "text",
-      "body": "$ git clean -X -f"
+      "body": "• 设置上游仓库"
     },
     {
-      "id": "intro-300",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-234",
+      "sectionId": "s12",
+      "title": "Fork仓库同步上游仓库",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 展示忽略的文件"
+      "lang": "shell",
+      "code": "  $ git remote add upstream https://github.com/jaywcjlove/reference.git"
     },
     {
-      "id": "intro-301",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-235",
+      "sectionId": "s12",
+      "title": "Fork仓库同步上游仓库",
       "kind": "text",
-      "body": "$ git status --ignored"
+      "body": "• 本地项目操作"
     },
     {
-      "id": "intro-302",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s12-236",
+      "sectionId": "s12",
+      "title": "Fork仓库同步上游仓库",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 新建并切换到新分支上，同时这个分支没有任何 commit"
+      "lang": "shell",
+      "code": "  $ git fetch upstream # 获取上游仓库更新\n  $ git stach # 暂存本地修改(如果有)\n  $ git branch -a # 列出所有远程仓库地址(非必须)\n  $ git rebase remotes/upstream/main # 使用远程仓库的提交记录来重写本地提交记录\n  $ git push -f # 强制推送到远程(github)仓库\n  $ git stach pop # 恢复暂存的本地修改(如果有)"
     },
     {
-      "id": "intro-303",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-237",
+      "sectionId": "s13",
+      "title": "查看 git 上的个人代码量",
       "kind": "text",
-      "body": "$ git checkout --orphan <branch-name>"
+      "body": "• `username` 需要改成自己的"
     },
     {
-      "id": "intro-304",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-238",
+      "sectionId": "s13",
+      "title": "查看 git 上的个人代码量",
       "kind": "code",
-      "lang": "",
-      "code": "\n相当于保存修改，但是重写 commit 历史\n\n### 展示任意分支某一文件的内容"
-    },
-    {
-      "id": "intro-305",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git show <branch-name>:<file-name>"
+      "lang": "bash",
+      "code": "git log --author=\"username\" --pretty=tformat: --numstat | awk \\\n'{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' -"
     },
     {
-      "id": "intro-306",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-239",
+      "sectionId": "s13",
+      "title": "统计每个人增删行数",
       "kind": "code",
-      "lang": "",
-      "code": "\n### clone 最新一次提交"
+      "lang": "bash",
+      "code": "git log --format='%aN' | sort -u |\\\n  while read name; do echo -en \"$name\\t\";\\\n  git log --author=\"$name\" --pretty=tformat: --numstat | awk \\\n  '{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' -; done"
     },
     {
-      "id": "intro-307",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-240",
+      "sectionId": "s13",
+      "title": "查看仓库提交者排名",
       "kind": "text",
-      "body": "$ git clone --depth=1 https://github.com/user/repo.git"
+      "body": "这里是排名前十，也可以更改排名"
     },
     {
-      "id": "intro-308",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-241",
+      "sectionId": "s13",
+      "title": "查看仓库提交者排名",
       "kind": "code",
-      "lang": "",
-      "code": "\n只会 `clone` 最近一次提交，将减少 `clone` 时间\n\n### 忽略某个文件的改动\n<!--rehype:wrap-class=row-span-2-->\n\n关闭 track 指定文件的改动，也就是 Git 将不会在记录这个文件的改动"
+      "lang": "bash",
+      "code": "git log --pretty='%aN' | sort | uniq -c | sort -k1 -n -r | head -n 10"
     },
     {
-      "id": "intro-309",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git update-index --assume-unchanged path/to/file"
+      "id": "s13-242",
+      "sectionId": "s13",
+      "title": "提交数统计",
+      "kind": "code",
+      "lang": "bash",
+      "code": "git log --oneline | wc -l"
     },
     {
-      "id": "intro-310",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-243",
+      "sectionId": "s13",
+      "title": "查看某段代码是谁写的",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n恢复 track 指定文件的改动"
+      "lang": "bash",
+      "code": "$ git blame <file-name>"
     },
     {
-      "id": "intro-311",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-244",
+      "sectionId": "s13",
+      "title": "查看某段代码是谁写的",
       "kind": "text",
-      "body": "git update-index --no-assume-unchanged path/to/file"
+      "body": "`blame` 的意思为`责怪`，你懂的。"
     },
     {
-      "id": "intro-312",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-245",
+      "sectionId": "s13",
+      "title": "查看两个星期内的改动",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 以最后提交的顺序列出所有 Git 分支"
-    },
-    {
-      "id": "intro-313",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads"
+      "lang": "bash",
+      "code": "$ git whatchanged --since='2 weeks ago'"
     },
     {
-      "id": "intro-314",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-246",
+      "sectionId": "s13",
+      "title": "在 commit log 中查找相关内容",
       "kind": "code",
-      "lang": "",
-      "code": "\n最新的放在最上面\n\n### 把暂存区的指定 file 放到工作区中"
+      "lang": "bash",
+      "code": "$ git log --all --grep='<given-text>'"
     },
     {
-      "id": "intro-315",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-247",
+      "sectionId": "s13",
+      "title": "在 commit log 中查找相关内容",
       "kind": "text",
-      "body": "git reset <file-name>"
+      "body": "通过 grep 查找，given-text: 所需要查找的字段"
     },
     {
-      "id": "intro-316",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-248",
+      "sectionId": "s13",
+      "title": "Git 仓库的大小",
       "kind": "code",
-      "lang": "",
-      "code": "\n不添加参数，默认是 `-mixed`\n\n### 配置 SSH 协议代理"
-    },
-    {
-      "id": "intro-317",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "Host github.com\nProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p"
+      "lang": "bash",
+      "code": "$ git ls-files | xargs -r du -hs"
     },
     {
-      "id": "intro-318",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s13-249",
+      "sectionId": "s13",
+      "title": "Git 仓库的总大小",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### Fork仓库同步上游仓库\n<!--rehype:wrap-class=col-span-2-->\n\n- 设置上游仓库\n\n  ```shell\n  $ git remote add upstream https://github.com/jaywcjlove/reference.git\n  ```\n  \n- 本地项目操作\n\n  ```shell\n  $ git fetch upstream # 获取上游仓库更新\n  $ git stach # 暂存本地修改(如果有)\n  $ git branch -a # 列出所有远程仓库地址(非必须)\n  $ git rebase remotes/upstream/main # 使用远程仓库的提交记录来重写本地提交记录\n  $ git push -f # 强制推送到远程(github)仓库\n  $ git stach pop # 恢复暂存的本地修改(如果有)\n  ```\n\n<!--rehype:className=style-timeline-->\n\n统计查询\n---\n\n### 查看 git 上的个人代码量\n<!--rehype:wrap-class=row-span-2-->\n\n- `username` 需要改成自己的"
+      "lang": "bash",
+      "code": "$ git count-objects -vH"
     },
     {
-      "id": "intro-319",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git log --author=\"username\" --pretty=tformat: --numstat | awk \\\n'{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' -"
+      "id": "s13-250",
+      "sectionId": "s13",
+      "title": "查询历史体积大的 10 个文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | awk '/^blob/ {print substr($0,6)}' | sort --numeric-sort --key=2 --reverse | head -n 10 | cut -c 13-"
     },
     {
-      "id": "intro-320",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s14-251",
+      "sectionId": "s14",
+      "title": "格式",
       "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 统计每个人增删行数\n<!--rehype:wrap-class=row-span-2-->"
+      "lang": "text",
+      "code": "<type>(<scope>): <short summary>\n  │       │             │\n  │       │             └─⫸ 紧凑简短的描述，无需大写，也不需要用句号结尾\n  │       │\n  │       └─⫸ Commit 范围: animations|bazel|benchpress|common|compiler|compiler-cli|core|\n  │                          elements|forms|http|language-service|localize|platform-browser|\n  │                          platform-browser-dynamic|platform-server|router|service-worker|\n  │                          upgrade|zone.js|packaging|changelog|docs-infra|migrations|ngcc|ve|\n  │                          devtools....\n  │\n  └─⫸ Commit 类型: build|ci|doc|docs|feat|fix|perf|refactor|test\n                    website|chore|style|type|revert"
     },
     {
-      "id": "intro-321",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git log --format='%aN' | sort -u |\\\nwhile read name; do echo -en \"$name\\t\";\\\ngit log --author=\"$name\" --pretty=tformat: --numstat | awk \\\n'{ add += $1; subs += $2; loc += $1 - $2 } END { printf \"added lines: %s, removed lines: %s, total lines: %s\\n\", add, subs, loc }' -; done"
+      "id": "s14-252",
+      "sectionId": "s14",
+      "title": "常用",
+      "kind": "qa",
+      "front": "`feat:`",
+      "back": "新特性"
     },
     {
-      "id": "intro-322",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 查看仓库提交者排名\n\n这里是排名前十，也可以更改排名"
+      "id": "s14-253",
+      "sectionId": "s14",
+      "title": "常用",
+      "kind": "qa",
+      "front": "`fix(scope):`",
+      "back": "修复 scope 中的 Bug"
     },
     {
-      "id": "intro-323",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git log --pretty='%aN' | sort | uniq -c | sort -k1 -n -r | head -n 10"
+      "id": "s14-254",
+      "sectionId": "s14",
+      "title": "常用",
+      "kind": "qa",
+      "front": "`feat!:` / `feat(scope)!:`",
+      "back": "breaking change /  重构 API"
     },
     {
-      "id": "intro-324",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n### 提交数统计"
+      "id": "s14-255",
+      "sectionId": "s14",
+      "title": "常用",
+      "kind": "qa",
+      "front": "`chore(deps):`",
+      "back": "更新依赖"
     },
     {
-      "id": "intro-325",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git log --oneline | wc -l"
+      "id": "s14-256",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`build:`",
+      "back": "变更影响的是**构建系统**或者**外部依赖** (如: gulp, npm)"
     },
     {
-      "id": "intro-326",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 查看某段代码是谁写的"
+      "id": "s14-257",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`ci:`",
+      "back": "修改了 CI 配置文件或脚本 (如: Github Action, Travis)"
     },
     {
-      "id": "intro-327",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git blame <file-name>"
+      "id": "s14-258",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`chore:`",
+      "back": "**【重要】** 变更不影响源代码或测试（如更新了辅助工具、库等)"
     },
     {
-      "id": "intro-328",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`blame` 的意思为`责怪`，你懂的。\n\n### 查看两个星期内的改动"
+      "id": "s14-259",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`docs:`",
+      "back": "只修改了文档"
     },
     {
-      "id": "intro-329",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git whatchanged --since='2 weeks ago'"
+      "id": "s14-260",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`feat:`",
+      "back": "**【重要】** 一个新特性"
     },
     {
-      "id": "intro-330",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 在 commit log 中查找相关内容"
+      "id": "s14-261",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`fix:`",
+      "back": "**【重要】** 修复了一个 Bug"
     },
     {
-      "id": "intro-331",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git log --all --grep='<given-text>'"
+      "id": "s14-262",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`perf:`",
+      "back": "增强性能的代码变更"
     },
     {
-      "id": "intro-332",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n通过 grep 查找，given-text: 所需要查找的字段\n\n### Git 仓库的大小"
+      "id": "s14-263",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`refactor:`",
+      "back": "并非修复 Bug 或添加新特性的代码变更"
     },
     {
-      "id": "intro-333",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git ls-files | xargs -r du -hs"
+      "id": "s14-264",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`revert:`",
+      "back": "回退代码"
     },
     {
-      "id": "intro-334",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Git 仓库的总大小"
+      "id": "s14-265",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`style:`",
+      "back": "变更不影响一些有意义的代码 (如: 删除空格、格式化代码、添加分号等)"
     },
     {
-      "id": "intro-335",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git count-objects -vH"
+      "id": "s14-266",
+      "sectionId": "s14",
+      "title": "Commit 类型",
+      "kind": "qa",
+      "front": "`test:`",
+      "back": "添加测试代码或修正已有的测试"
     },
     {
-      "id": "intro-336",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s15-267",
+      "sectionId": "s15",
+      "title": "简单创建",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 查询历史体积大的 10 个文件"
+      "lang": "bash",
+      "code": "$ git diff commit_id > my.patch"
     },
     {
-      "id": "intro-337",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s15-268",
+      "sectionId": "s15",
+      "title": "简单应用",
       "kind": "text",
-      "body": "$ git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | awk '/^blob/ {print substr($0,6)}' | sort --numeric-sort --key=2 --reverse | head -n 10 | cut -c 13-"
+      "body": "• **检查**补丁"
     },
     {
-      "id": "intro-338",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s15-269",
+      "sectionId": "s15",
+      "title": "简单应用",
       "kind": "code",
-      "lang": "",
-      "code": "\nConventional Commmits\n----\n\n### 格式\n<!--rehype:wrap-class=col-span-3-->"
+      "lang": "bash",
+      "code": "    # 检查下这个补丁能否被正常应用\n    $ git apply --check path/to/my.patch"
     },
     {
-      "id": "intro-339",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s15-270",
+      "sectionId": "s15",
+      "title": "简单应用",
       "kind": "text",
-      "body": "<type>(<scope>): <short summary>\n│       │             │\n│       │             └─⫸ 紧凑简短的描述，无需大写，也不需要用句号结尾\n│       │\n│       └─⫸ Commit 范围: animations|bazel|benchpress|common|compiler|compiler-cli|core|\n│                          elements|forms|http|language-service|localize|platform-browser|\n│                          platform-browser-dynamic|platform-server|router|service-worker|\n│                          upgrade|zone.js|packaging|changelog|docs-infra|migrations|ngcc|ve|\n│                          devtools....\n│\n└─⫸ Commit 类型: build|ci|doc|docs|feat|fix|perf|refactor|test\nwebsite|chore|style|type|revert"
+      "body": "• **使用**补丁"
     },
     {
-      "id": "intro-340",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s15-271",
+      "sectionId": "s15",
+      "title": "简单应用",
       "kind": "code",
       "lang": "",
-      "code": "\n### 常用\n<!--rehype:wrap-class=row-span-1-->\n\n|   类型   |  描述 |\n| ----------|------------ |\n| `feat:`   | 新特性     |\n| `fix(scope):`   | 修复 scope 中的 Bug |\n| `feat!:` / `feat(scope)!:` | breaking change /  重构 API |\n| `chore(deps):` | 更新依赖 |\n<!--rehype:className=left-align-->\n\n### Commit 类型\n<!--rehype:wrap-class=col-span-2-->\n\n|   类型   |  描述 |\n| ----------|------------ |\n| `build:` | 变更影响的是**构建系统**或者**外部依赖** (如: gulp, npm) |\n| `ci:` | 修改了 CI 配置文件或脚本 (如: Github Action, Travis) |\n| `chore:` | **【重要】** 变更不影响源代码或测试（如更新了辅助工具、库等) |\n| `docs:` | 只修改了文档 |\n| `feat:` | **【重要】** 一个新特性 |\n| `fix:` | **【重要】** 修复了一个 Bug |\n| `perf:` | 增强性能的代码变更 |\n| `refactor:` | 并非修复 Bug 或添加新特性的代码变更 |\n| `revert:` | 回退代码 |\n| `style:` | 变更不影响一些有意义的代码 (如: 删除空格、格式化代码、添加分号等) |\n| `test:` | 添加测试代码或修正已有的测试 |\n<!--rehype:className=left-align-->\n\npatch 补丁的使用\n----\n\n### 简单创建"
+      "code": "    # 检查通过使用该补丁\n    $ git apply < path/to/my.patch"
     },
     {
-      "id": "intro-341",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s15-272",
+      "sectionId": "s15",
+      "title": "简单应用",
       "kind": "text",
-      "body": "$ git diff commit_id > my.patch"
+      "body": "• 若有冲突则**解决**"
     },
     {
-      "id": "intro-342",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s15-273",
+      "sectionId": "s15",
+      "title": "简单应用",
       "kind": "code",
       "lang": "",
-      "code": "\n### 简单应用\n\n- **检查**补丁\n\n    ```bash\n    # 检查下这个补丁能否被正常应用\n    $ git apply --check path/to/my.patch\n    ```\n\n- **使用**补丁\n\n    ```\n    # 检查通过使用该补丁\n    $ git apply < path/to/my.patch\n    ```\n\n- 若有冲突则**解决**\n\n    ```\n    # 检查不通过可以自动合入patch不冲突的代码，同时保留冲突部分\n    $ git apply --reject path/to/my.patch\n    ```\n\n<!--rehype:className=style-timeline-->\n\n### Email patch 方式"
+      "code": "    # 检查不通过可以自动合入patch不冲突的代码，同时保留冲突部分\n    $ git apply --reject path/to/my.patch"
     },
     {
-      "id": "intro-343",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git format-patch commit_id -n"
-    },
-    {
-      "id": "intro-344",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git format-patch commit_id -1"
-    },
-    {
-      "id": "intro-345",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ git format-patch -3"
+      "id": "s15-274",
+      "sectionId": "s15",
+      "title": "Email patch 方式",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# 创建指定 commit sha1 id 之前的 n 次提交补丁\n$ git format-patch commit_id -n\n# 创建 300f59991f22826c8478f0c019387c4ca815b085 这个提交的patch\n$ git format-patch commit_id -1\n# 提取当前分支最上面的3次提交，生成补丁\n$ git format-patch -3\n# 发送者可使用 git-send-email 发送 git format-patch 的结果给接收者\n# 接收者保存邮件到文件 email.txt，然后应用补丁创建一个提交，会自动包含作者的信息\n$ git am < email.txt"
     },
     {
-      "id": "intro-346",
-      "sectionId": "intro",
-      "title": "简介",
+      "id": "s16-275",
+      "sectionId": "s16",
+      "title": "另见",
       "kind": "text",
-      "body": "$ git am < email.txt"
-    },
-    {
-      "id": "intro-347",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n另见\n---\n\n- [最常用的 git 提示和技巧](https://github.com/git-tips/tips)\n- [Conventional Commits 官方网站](https://www.conventionalcommits.org/zh-hans/v1.0.0/) _(conventionalcommits.org)_\n- [Conventional Commits Cheatsheet](https://gist.github.com/Zekfad/f51cb06ac76e2457f11c80ed705c95a3) _(gist.github.com)_"
+      "body": "• [最常用的 git 提示和技巧](https://github.com/git-tips/tips)\n• [Conventional Commits 官方网站](https://www.conventionalcommits.org/zh-hans/v1.0.0/) _(conventionalcommits.org)_\n• [Conventional Commits Cheatsheet](https://gist.github.com/Zekfad/f51cb06ac76e2457f11c80ed705c95a3) _(gist.github.com)_"
     }
   ],
   "source": {
@@ -2599,7 +2199,6 @@
     "path": "docs/git.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/git.md",
-    "generatedAt": "2025-12-16T07:36:11.228Z",
     "lang": "zh",
     "mode": "local"
   }

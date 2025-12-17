@@ -1,6 +1,8 @@
 {
   "id": "socket-io",
-  "title": "Throttle high-frequency events and enable compression where possible.",
+  "name": "Socket io",
+  "title": "Socket.IO is a JavaScript library for real-time web applications. It enables bi-directional, event-based communication between clients (typically browsers or native apps) and servers.",
+  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/socket-io.svg",
   "sections": [
     {
       "id": "intro",
@@ -60,6 +62,31 @@
     {
       "id": "s11",
       "title": "Best Practices",
+      "startIndex": 119
+    },
+    {
+      "id": "s12",
+      "title": "Implement reconnection with exponential backoff on the client.",
+      "startIndex": 119
+    },
+    {
+      "id": "s13",
+      "title": "Sanitize and validate all data on both sides.",
+      "startIndex": 119
+    },
+    {
+      "id": "s14",
+      "title": "Use TLS in production and rotate authentication tokens frequently.",
+      "startIndex": 119
+    },
+    {
+      "id": "s15",
+      "title": "Separate concerns with namespaces and rooms.",
+      "startIndex": 119
+    },
+    {
+      "id": "s16",
+      "title": "Throttle high-frequency events and enable compression where possible.",
       "startIndex": 119
     }
   ],
@@ -640,8 +667,9 @@
       "id": "s5-77",
       "sectionId": "s5",
       "title": "Client (All Languages)",
-      "kind": "text",
-      "body": "```js\n// JavaScript/Python/C#/etc.\nsocket.emit('join', 'room1');\nsocket.on('msg', (data) => console.log('Room message:', data));\n```"
+      "kind": "code",
+      "lang": "js",
+      "code": "  // JavaScript/Python/C#/etc.\n  socket.emit('join', 'room1');\n  socket.on('msg', (data) => console.log('Room message:', data));"
     },
     {
       "id": "s5-78",
@@ -654,8 +682,9 @@
       "id": "s5-79",
       "sectionId": "s5",
       "title": "Server (All Languages)",
-      "kind": "text",
-      "body": "```js\nio.on('connection', (socket) => {\nsocket.on('join', (room) => {\nsocket.join(room);\nio.to(room).emit('msg', 'Hello Room');\n});\n});\n```"
+      "kind": "code",
+      "lang": "js",
+      "code": "  io.on('connection', (socket) => {\n    socket.on('join', (room) => {\n      socket.join(room);\n      io.to(room).emit('msg', 'Hello Room');\n    });\n  });"
     },
     {
       "id": "s5-80",
@@ -668,8 +697,9 @@
       "id": "s5-81",
       "sectionId": "s5",
       "title": "Server (All Languages)",
-      "kind": "text",
-      "body": "```python\n@sio.event\ndef join(sid, room):\nsio.enter_room(sid, room)\nsio.emit('msg', 'Hello Room', room=room)\n```"
+      "kind": "code",
+      "lang": "python",
+      "code": "  @sio.event\n  def join(sid, room):\n      sio.enter_room(sid, room)\n      sio.emit('msg', 'Hello Room', room=room)"
     },
     {
       "id": "s5-82",
@@ -682,8 +712,9 @@
       "id": "s5-83",
       "sectionId": "s5",
       "title": "Server (All Languages)",
-      "kind": "text",
-      "body": "```go\nserver.OnEvent(\"/\", \"join\", func(s socketio.Conn, room string) {\ns.Join(room)\nserver.BroadcastToRoom(\"/\", room, \"msg\", \"Welcome\")\n})\n```"
+      "kind": "code",
+      "lang": "go",
+      "code": "  server.OnEvent(\"/\", \"join\", func(s socketio.Conn, room string) {\n      s.Join(room)\n      server.BroadcastToRoom(\"/\", room, \"msg\", \"Welcome\")\n  })"
     },
     {
       "id": "s5-84",
@@ -820,8 +851,9 @@
       "id": "s9-101",
       "sectionId": "s9",
       "title": "Client",
-      "kind": "text",
-      "body": "```js\nsocket.onAny((event, ...args) => console.log(event, args));\n```"
+      "kind": "code",
+      "lang": "js",
+      "code": "  socket.onAny((event, ...args) => console.log(event, args));"
     },
     {
       "id": "s9-102",
@@ -841,8 +873,9 @@
       "id": "s9-104",
       "sectionId": "s9",
       "title": "Server",
-      "kind": "text",
-      "body": "```bash\nDEBUG=socket.io* node server.js\n```"
+      "kind": "code",
+      "lang": "bash",
+      "code": "  DEBUG=socket.io* node server.js"
     },
     {
       "id": "s9-105",
@@ -855,8 +888,9 @@
       "id": "s9-106",
       "sectionId": "s9",
       "title": "Server",
-      "kind": "text",
-      "body": "```python\nimport logging\nlogging.getLogger('socketio').setLevel(logging.DEBUG)\n```"
+      "kind": "code",
+      "lang": "python",
+      "code": "  import logging\n  logging.getLogger('socketio').setLevel(logging.DEBUG)"
     },
     {
       "id": "s9-107",
@@ -947,9 +981,9 @@
       "body": "---"
     },
     {
-      "id": "s11-119",
-      "sectionId": "s11",
-      "title": "Best Practices",
+      "id": "s16-119",
+      "sectionId": "s16",
+      "title": "Throttle high-frequency events and enable compression where possible.",
       "kind": "text",
       "body": "> Official docs: [https://socket.io/docs/v4/](https://socket.io/docs/v4/)"
     }
@@ -959,7 +993,6 @@
     "path": "source/_posts/socket-io.md",
     "ref": "main",
     "url": "https://github.com/Fechin/reference/tree/main/source/_posts/socket-io.md",
-    "generatedAt": "2025-12-16T07:50:03.287Z",
     "lang": "en",
     "mode": "local"
   }

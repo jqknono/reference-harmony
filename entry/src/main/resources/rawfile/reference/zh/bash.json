@@ -1,11 +1,73 @@
 {
   "id": "bash",
-  "title": "此处放置要执行的代码",
+  "name": "Bash 备忘清单",
+  "title": "这是开始使用 linux bash shell 脚本的快速参考备忘单。",
+  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/bash.svg",
   "sections": [
     {
       "id": "intro",
       "title": "简介",
       "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Bash 参数扩展",
+      "startIndex": 19
+    },
+    {
+      "id": "s3",
+      "title": "Bash 数组",
+      "startIndex": 36
+    },
+    {
+      "id": "s4",
+      "title": "Bash 字典",
+      "startIndex": 43
+    },
+    {
+      "id": "s5",
+      "title": "Bash 条件句",
+      "startIndex": 49
+    },
+    {
+      "id": "s6",
+      "title": "Bash 循环",
+      "startIndex": 66
+    },
+    {
+      "id": "s7",
+      "title": "Bash 函数",
+      "startIndex": 79
+    },
+    {
+      "id": "s8",
+      "title": "Bash 选项",
+      "startIndex": 87
+    },
+    {
+      "id": "s9",
+      "title": "Bash 历史",
+      "startIndex": 105
+    },
+    {
+      "id": "s10",
+      "title": "杂项",
+      "startIndex": 111
+    },
+    {
+      "id": "s11",
+      "title": "Bash 颜色",
+      "startIndex": 164
+    },
+    {
+      "id": "s12",
+      "title": "另见",
+      "startIndex": 183
     }
   ],
   "cards": [
@@ -14,1426 +76,1388 @@
       "sectionId": "intro",
       "title": "简介",
       "kind": "text",
-      "body": "Bash 备忘清单\n==="
-    },
-    {
-      "id": "intro-1",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
       "body": "这是开始使用 linux bash shell 脚本的快速参考备忘单。"
     },
     {
-      "id": "intro-2",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "入门\n-----"
-    },
-    {
-      "id": "intro-3",
-      "sectionId": "intro",
+      "id": "s1-1",
+      "sectionId": "s1",
       "title": "hello.sh",
       "kind": "code",
       "lang": "bash",
       "code": "#!/bin/bash\nVAR=\"world\"\necho \"Hello $VAR!\" # => Hello world!"
     },
     {
-      "id": "intro-4",
-      "sectionId": "intro",
+      "id": "s1-2",
+      "sectionId": "s1",
       "title": "hello.sh",
       "kind": "text",
       "body": "执行脚本"
     },
     {
-      "id": "intro-5",
-      "sectionId": "intro",
+      "id": "s1-3",
+      "sectionId": "s1",
       "title": "hello.sh",
       "kind": "code",
       "lang": "shell",
       "code": "$ bash hello.sh"
     },
     {
-      "id": "intro-6",
-      "sectionId": "intro",
+      "id": "s1-4",
+      "sectionId": "s1",
       "title": "变量",
       "kind": "code",
       "lang": "bash",
       "code": "NAME=\"John\"\necho ${NAME}    # => John (变量)\necho $NAME      # => John (变量)\necho \"$NAME\"    # => John (变量)\necho '$NAME'    # => $NAME (字符串原样输出)\necho \"${NAME}!\" # => John! (变量)\nNAME = \"John\"   # => Error (注意不能有空格)"
     },
     {
-      "id": "intro-7",
-      "sectionId": "intro",
+      "id": "s1-5",
+      "sectionId": "s1",
       "title": "注释",
       "kind": "code",
       "lang": "shell",
       "code": "# 这是一个内联 Bash 注释。\n\n: '\n这是一个\n非常整洁的\nbash 注释\n'"
     },
     {
-      "id": "intro-8",
-      "sectionId": "intro",
+      "id": "s1-6",
+      "sectionId": "s1",
       "title": "注释",
       "kind": "text",
       "body": "多行注释使用 `:'` 打开和 `'` 关闭"
     },
     {
-      "id": "intro-9",
-      "sectionId": "intro",
+      "id": "s1-7",
+      "sectionId": "s1",
       "title": "参数",
       "kind": "text",
       "body": "表示 | 描述\n:-|-\n`$1` … `$9` | 参数 1 ... 9\n`$0`        | 脚本本身的名称\n`$1`        | 第一个参数\n`${10}`     | 位置参数 10\n`$#`        | 参数数量\n`$$`        | shell 的进程 id\n`$*`        | 所有参数\n`$@`        | 所有参数，从第一个开始\n`$-`        | 当前选项\n`$_`        | 上一个命令的最后一个参数\n<!--rehype:className=left-align-->"
     },
     {
-      "id": "intro-10",
-      "sectionId": "intro",
+      "id": "s1-8",
+      "sectionId": "s1",
       "title": "参数",
       "kind": "text",
       "body": "见：[特殊参数](http://wiki.bash-hackers.org/syntax/shellvars#special_parameters_and_shell_variables)"
     },
     {
-      "id": "intro-11",
-      "sectionId": "intro",
+      "id": "s1-9",
+      "sectionId": "s1",
       "title": "函数",
       "kind": "code",
       "lang": "bash",
       "code": "get_name() {\n    echo \"John\"\n}\necho \"You are $(get_name)\""
     },
     {
-      "id": "intro-12",
-      "sectionId": "intro",
+      "id": "s1-10",
+      "sectionId": "s1",
       "title": "函数",
       "kind": "text",
       "body": "见：[函数](#bash-函数)"
     },
     {
-      "id": "intro-13",
-      "sectionId": "intro",
+      "id": "s1-11",
+      "sectionId": "s1",
       "title": "条件句",
       "kind": "code",
       "lang": "bash",
       "code": "if [[ -z \"$string\" ]]; then\n    echo \"String is empty\"\nelif [[ -n \"$string\" ]]; then\n    echo \"String is not empty\"\nfi"
     },
     {
-      "id": "intro-14",
-      "sectionId": "intro",
+      "id": "s1-12",
+      "sectionId": "s1",
       "title": "条件句",
       "kind": "text",
       "body": "见：[条件句](#bash-条件句)"
     },
     {
-      "id": "intro-15",
-      "sectionId": "intro",
+      "id": "s1-13",
+      "sectionId": "s1",
       "title": "大括号扩展",
       "kind": "code",
       "lang": "shell",
       "code": "echo {A,B}.js"
     },
     {
-      "id": "intro-16",
-      "sectionId": "intro",
+      "id": "s1-14",
+      "sectionId": "s1",
       "title": "大括号扩展",
       "kind": "text",
       "body": "---"
     },
     {
-      "id": "intro-17",
-      "sectionId": "intro",
+      "id": "s1-15",
+      "sectionId": "s1",
       "title": "大括号扩展",
       "kind": "text",
       "body": "表示 | 描述\n:-|-\n`{A,B}`    | 与 `A B` 相同\n`{A,B}.js` | 与 `A.js B.js` 相同\n`{1..5}`   | 与 `1 2 3 4 5` 相同"
     },
     {
-      "id": "intro-18",
-      "sectionId": "intro",
+      "id": "s1-16",
+      "sectionId": "s1",
       "title": "大括号扩展",
       "kind": "text",
       "body": "见：[大括号扩展](http://wiki.bash-hackers.org/syntax/expansion/brace)"
     },
     {
-      "id": "intro-19",
-      "sectionId": "intro",
+      "id": "s1-17",
+      "sectionId": "s1",
       "title": "Shell 执行",
       "kind": "code",
       "lang": "bash",
       "code": "# => I'm in /当前/的/路径\necho \"I'm in $(PWD)\"\n# Same as:\necho \"I'm in `pwd`\""
     },
     {
-      "id": "intro-20",
-      "sectionId": "intro",
+      "id": "s1-18",
+      "sectionId": "s1",
       "title": "Shell 执行",
       "kind": "text",
       "body": "见：[命令替换](http://wiki.bash-hackers.org/syntax/expansion/cmdsubst)"
     },
     {
-      "id": "intro-21",
-      "sectionId": "intro",
-      "title": "Shell 执行",
-      "kind": "text",
-      "body": "Bash 参数扩展\n-----"
-    },
-    {
-      "id": "intro-22",
-      "sectionId": "intro",
+      "id": "s2-19",
+      "sectionId": "s2",
       "title": "语法",
       "kind": "text",
       "body": "代码 | 描述\n:-|-\n`${FOO%suffix}`   | 删除后缀\n`${FOO#prefix}`   | 删除前缀\n`${FOO%%suffix}`  | 去掉长后缀\n`${FOO##prefix}`  | 删除长前缀\n`${FOO/from/to}`  | 替换第一个匹配项\n`${FOO//from/to}` | 全部替换\n`${FOO/%from/to}` | 替换后缀\n`${FOO/#from/to}` | 替换前缀"
     },
     {
-      "id": "intro-23",
-      "sectionId": "intro",
+      "id": "s2-20",
+      "sectionId": "s2",
       "title": "语法",
       "kind": "text",
       "body": "#### 子字符串"
     },
     {
-      "id": "intro-24",
-      "sectionId": "intro",
+      "id": "s2-21",
+      "sectionId": "s2",
       "title": "语法",
       "kind": "text",
       "body": "表示 | 描述\n:-|-\n`${FOO:0:3}`    | 子串 _(位置，长度)_\n`${FOO:(-3):3}` | 从右边开始的子串"
     },
     {
-      "id": "intro-25",
-      "sectionId": "intro",
+      "id": "s2-22",
+      "sectionId": "s2",
       "title": "语法",
       "kind": "text",
       "body": "#### Length"
     },
     {
-      "id": "intro-26",
-      "sectionId": "intro",
+      "id": "s2-23",
+      "sectionId": "s2",
       "title": "语法",
       "kind": "text",
       "body": "表示 | 描述\n:-|-\n`${#FOO}`  | `$FOO` 的长度"
     },
     {
-      "id": "intro-27",
-      "sectionId": "intro",
+      "id": "s2-24",
+      "sectionId": "s2",
       "title": "语法",
       "kind": "text",
       "body": "#### 默认值"
     },
     {
-      "id": "intro-28",
-      "sectionId": "intro",
+      "id": "s2-25",
+      "sectionId": "s2",
       "title": "语法",
       "kind": "text",
       "body": "表示 | 描述\n:-|-\n`${FOO:-val}`     | `$FOO`，如果未设置，则为 `val`\n`${FOO:=val}`     | 如果未设置，则将 `$FOO` 设置为 `val`\n`${FOO:+val}`     | `val` 如果设置了`$FOO`\n`${FOO:?message}` | 如果 `$FOO` 未设置，则显示消息并退出\n<!--rehype:className=code-nowrap left-align-->"
     },
     {
-      "id": "intro-29",
-      "sectionId": "intro",
+      "id": "s2-26",
+      "sectionId": "s2",
       "title": "替代 Substitution",
       "kind": "code",
       "lang": "bash",
       "code": "echo ${food:-Cake}  #=> $food or \"Cake\""
     },
     {
-      "id": "intro-30",
-      "sectionId": "intro",
+      "id": "s2-27",
+      "sectionId": "s2",
       "title": "替代 Substitution",
       "kind": "code",
       "lang": "bash",
       "code": "STR=\"/path/to/foo.cpp\"\necho ${STR%.cpp}    # /path/to/foo\necho ${STR%.cpp}.o  # /path/to/foo.o\necho ${STR%/*}      # /path/to\necho ${STR##*.}     # cpp (extension)\necho ${STR##*/}     # foo.cpp (basepath)\necho ${STR#*/}      # path/to/foo.cpp\necho ${STR##*/}     # foo.cpp\necho ${STR/foo/bar} # /path/to/bar.cpp"
     },
     {
-      "id": "intro-31",
-      "sectionId": "intro",
+      "id": "s2-28",
+      "sectionId": "s2",
       "title": "切片 Slicing",
       "kind": "code",
       "lang": "bash",
       "code": "name=\"John\"\necho ${name}           # => John\necho ${name:0:2}       # => Jo\necho ${name::2}        # => Jo\necho ${name::-1}       # => Joh\necho ${name:(-1)}      # => n\necho ${name:(-2)}      # => hn\necho ${name:(-2):2}    # => hn\n\nlength=2\necho ${name:0:length}  # => Jo"
     },
     {
-      "id": "intro-32",
-      "sectionId": "intro",
+      "id": "s2-29",
+      "sectionId": "s2",
       "title": "切片 Slicing",
       "kind": "text",
       "body": "见：[参数扩展](http://wiki.bash-hackers.org/syntax/pe)"
     },
     {
-      "id": "intro-33",
-      "sectionId": "intro",
+      "id": "s2-30",
+      "sectionId": "s2",
       "title": "基本路径和目录路径",
       "kind": "code",
       "lang": "bash",
       "code": "SRC=\"/path/to/foo.cpp\""
     },
     {
-      "id": "intro-34",
-      "sectionId": "intro",
+      "id": "s2-31",
+      "sectionId": "s2",
       "title": "基本路径和目录路径",
       "kind": "text",
       "body": "---"
     },
     {
-      "id": "intro-35",
-      "sectionId": "intro",
+      "id": "s2-32",
+      "sectionId": "s2",
       "title": "基本路径和目录路径",
       "kind": "code",
       "lang": "bash",
       "code": "BASEPATH=${SRC##*/}   \necho $BASEPATH  # => \"foo.cpp\""
     },
     {
-      "id": "intro-36",
-      "sectionId": "intro",
+      "id": "s2-33",
+      "sectionId": "s2",
       "title": "基本路径和目录路径",
       "kind": "text",
       "body": "---"
     },
     {
-      "id": "intro-37",
-      "sectionId": "intro",
+      "id": "s2-34",
+      "sectionId": "s2",
       "title": "基本路径和目录路径",
       "kind": "code",
       "lang": "bash",
       "code": "DIRPATH=${SRC%$BASEPATH}\necho $DIRPATH   # => \"/path/to/\""
     },
     {
-      "id": "intro-38",
-      "sectionId": "intro",
+      "id": "s2-35",
+      "sectionId": "s2",
       "title": "转换",
       "kind": "code",
       "lang": "bash",
       "code": "STR=\"HELLO WORLD!\"\necho ${STR,}      # => hELLO WORLD!\necho ${STR,,}     # => hello world!\n\nSTR=\"hello world!\"\necho ${STR^}      # => Hello world!\necho ${STR^^}     # => HELLO WORLD!\n\nARR=(hello World)\necho \"${ARR[@],}\" # => hello world\necho \"${ARR[@]^}\" # => Hello World"
     },
     {
-      "id": "intro-39",
-      "sectionId": "intro",
-      "title": "转换",
-      "kind": "text",
-      "body": "Bash 数组\n------"
-    },
-    {
-      "id": "intro-40",
-      "sectionId": "intro",
+      "id": "s3-36",
+      "sectionId": "s3",
       "title": "定义数组",
       "kind": "code",
       "lang": "bash",
       "code": "Fruits=('Apple' 'Banana' 'Orange')\n\nFruits[0]=\"Apple\"\nFruits[1]=\"Banana\"\nFruits[2]=\"Orange\"\n\nARRAY1=(foo{1..2}) # => foo1 foo2\nARRAY2=({A..D})    # => A B C D\n\n# 合并 => foo1 foo2 A B C D\nARRAY3=(${ARRAY1[@]} ${ARRAY2[@]})\n\n# 声明构造\ndeclare -a Numbers=(1 2 3)\nNumbers+=(4 5) # 附加 => 1 2 3 4 5"
     },
     {
-      "id": "intro-41",
-      "sectionId": "intro",
+      "id": "s3-37",
+      "sectionId": "s3",
       "title": "索引",
       "kind": "text",
       "body": ":- | -\n:- | -\n`${Fruits[0]}`     | 第一个元素\n`${Fruits[-1]}`    | 最后一个元素\n`${Fruits[*]}`     | 所有元素\n`${Fruits[@]}`     | 所有元素\n`${#Fruits[@]}`    | 总数\n`${#Fruits}`       | 第一节长度\n`${#Fruits[3]}`    | 第n个长度\n`${Fruits[@]:3:2}` | 范围\n`${!Fruits[@]}`    | 所有 Key"
     },
     {
-      "id": "intro-42",
-      "sectionId": "intro",
+      "id": "s3-38",
+      "sectionId": "s3",
       "title": "迭代 Iteration",
       "kind": "code",
       "lang": "bash",
       "code": "Fruits=('Apple' 'Banana' 'Orange')\nfor e in \"${Fruits[@]}\"; do\n    echo $e\ndone"
     },
     {
-      "id": "intro-43",
-      "sectionId": "intro",
+      "id": "s3-39",
+      "sectionId": "s3",
       "title": "迭代 Iteration",
       "kind": "text",
       "body": "#### 有索引"
     },
     {
-      "id": "intro-44",
-      "sectionId": "intro",
+      "id": "s3-40",
+      "sectionId": "s3",
       "title": "迭代 Iteration",
       "kind": "code",
       "lang": "bash",
       "code": "for i in \"${!Fruits[@]}\"; do\n  printf \"%s\\t%s\\n\" \"$i\" \"${Fruits[$i]}\"\ndone"
     },
     {
-      "id": "intro-45",
-      "sectionId": "intro",
+      "id": "s3-41",
+      "sectionId": "s3",
       "title": "操作",
       "kind": "code",
       "lang": "bash",
       "code": "Fruits=(\"${Fruits[@]}\" \"Watermelon\")         # 添加\nFruits+=('Watermelon')                       # 也是添加\nFruits=( ${Fruits[@]/Ap*/} )                 # 通过正则表达式匹配删除\nunset Fruits[2]                              # 删除一项\nFruits=(\"${Fruits[@]}\")                      # 复制\nFruits=(\"${Fruits[@]}\" \"${Veggies[@]}\")      # 连接\nlines=(`cat \"logfile\"`)                      # 从文件中读取"
     },
     {
-      "id": "intro-46",
-      "sectionId": "intro",
+      "id": "s3-42",
+      "sectionId": "s3",
       "title": "数组作为参数",
       "kind": "code",
       "lang": "bash",
       "code": "function extract()\n{\n  local -n myarray=$1\n  local idx=$2\n  echo \"${myarray[$idx]}\"\n}\nFruits=('Apple' 'Banana' 'Orange')\nextract Fruits 2     # => Orangle"
     },
     {
-      "id": "intro-47",
-      "sectionId": "intro",
-      "title": "数组作为参数",
-      "kind": "text",
-      "body": "Bash 字典\n------------"
-    },
-    {
-      "id": "intro-48",
-      "sectionId": "intro",
+      "id": "s4-43",
+      "sectionId": "s4",
       "title": "定义",
       "kind": "code",
       "lang": "bash",
       "code": "declare -A sounds"
     },
     {
-      "id": "intro-49",
-      "sectionId": "intro",
+      "id": "s4-44",
+      "sectionId": "s4",
       "title": "定义",
       "kind": "code",
       "lang": "bash",
       "code": "sounds[dog]=\"bark\"\nsounds[cow]=\"moo\"\nsounds[bird]=\"tweet\"\nsounds[wolf]=\"howl\""
     },
     {
-      "id": "intro-50",
-      "sectionId": "intro",
+      "id": "s4-45",
+      "sectionId": "s4",
       "title": "使用字典",
       "kind": "code",
       "lang": "bash",
       "code": "echo ${sounds[dog]} # Dog's sound\necho ${sounds[@]}   # All values\necho ${!sounds[@]}  # All keys\necho ${#sounds[@]}  # Number of elements\nunset sounds[dog]   # Delete dog"
     },
     {
-      "id": "intro-51",
-      "sectionId": "intro",
+      "id": "s4-46",
+      "sectionId": "s4",
       "title": "迭代",
       "kind": "code",
       "lang": "bash",
       "code": "for val in \"${sounds[@]}\"; do\n    echo $val\ndone"
     },
     {
-      "id": "intro-52",
-      "sectionId": "intro",
+      "id": "s4-47",
+      "sectionId": "s4",
       "title": "迭代",
       "kind": "text",
       "body": "---"
     },
     {
-      "id": "intro-53",
-      "sectionId": "intro",
+      "id": "s4-48",
+      "sectionId": "s4",
       "title": "迭代",
       "kind": "code",
       "lang": "bash",
       "code": "for key in \"${!sounds[@]}\"; do\n    echo $key\ndone"
     },
     {
-      "id": "intro-54",
-      "sectionId": "intro",
-      "title": "迭代",
-      "kind": "text",
-      "body": "Bash 条件句\n------------"
-    },
-    {
-      "id": "intro-55",
-      "sectionId": "intro",
+      "id": "s5-49",
+      "sectionId": "s5",
       "title": "整数条件",
       "kind": "text",
       "body": "条件 | 描述\n:- | -\n`[[ NUM -eq NUM ]]` | 等于 <yel>Eq</yel>ual\n`[[ NUM -ne NUM ]]` | 不等于 <yel>N</yel>ot <yel>e</yel>qual\n`[[ NUM -lt NUM ]]` | 小于 <yel>L</yel>ess <yel>t</yel>han\n`[[ NUM -le NUM ]]` | 小于等于 <yel>L</yel>ess than or <yel>e</yel>qual\n`[[ NUM -gt NUM ]]` | 大于 <yel>G</yel>reater <yel>t</yel>han\n`[[ NUM -ge NUM ]]` | 大于等于 <yel>G</yel>reater than or <yel>e</yel>qual\n`(( NUM < NUM ))`   | 小于\n`(( NUM <= NUM ))`  | 小于或等于\n`(( NUM > NUM ))`   | 比...更大\n`(( NUM >= NUM ))`  | 大于等于"
     },
     {
-      "id": "intro-56",
-      "sectionId": "intro",
+      "id": "s5-50",
+      "sectionId": "s5",
       "title": "字符串条件",
       "kind": "text",
       "body": "条件 | 描述\n:- | -\n`[[ -z STR ]]`     | 空字符串\n`[[ -n STR ]]`     | <yel>非</yel>空字符串\n`[[ STR == STR ]]` | 相等\n`[[ STR = STR ]]`  | 相等(同上)\n`[[ STR < STR ]]`  | 小于 _(ASCII)_\n`[[ STR > STR ]]`  | 大于 _(ASCII)_\n`[[ STR != STR ]]` | 不相等\n`[[ STR =~ STR ]]` | 正则表达式"
     },
     {
-      "id": "intro-57",
-      "sectionId": "intro",
+      "id": "s5-51",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "text",
       "body": "#### 字符串"
     },
     {
-      "id": "intro-58",
-      "sectionId": "intro",
+      "id": "s5-52",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "code",
       "lang": "bash",
       "code": "if [[ -z \"$string\" ]]; then\n    echo \"String is empty\"\nelif [[ -n \"$string\" ]]; then\n    echo \"String is not empty\"\nelse\n    echo \"This never happens\"\nfi"
     },
     {
-      "id": "intro-59",
-      "sectionId": "intro",
+      "id": "s5-53",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "text",
       "body": "#### 组合"
     },
     {
-      "id": "intro-60",
-      "sectionId": "intro",
+      "id": "s5-54",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "code",
       "lang": "bash",
       "code": "if [[ X && Y ]]; then\n    ...\nfi"
     },
     {
-      "id": "intro-61",
-      "sectionId": "intro",
+      "id": "s5-55",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "text",
       "body": "#### 相等"
     },
     {
-      "id": "intro-62",
-      "sectionId": "intro",
+      "id": "s5-56",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "code",
       "lang": "bash",
       "code": "if [[ \"$A\" == \"$B\" ]]; then\n    ...\nfi"
     },
     {
-      "id": "intro-63",
-      "sectionId": "intro",
+      "id": "s5-57",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "text",
       "body": "#### 正则表达式"
     },
     {
-      "id": "intro-64",
-      "sectionId": "intro",
+      "id": "s5-58",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "code",
       "lang": "bash",
       "code": "if [[ '1. abc' =~ ([a-z]+) ]]; then\n    echo ${BASH_REMATCH[1]}\nfi"
     },
     {
-      "id": "intro-65",
-      "sectionId": "intro",
+      "id": "s5-59",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "text",
       "body": "#### 小于"
     },
     {
-      "id": "intro-66",
-      "sectionId": "intro",
+      "id": "s5-60",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "code",
       "lang": "bash",
       "code": "if (( $a < $b )); then\n   echo \"$a is smaller than $b\"\nfi"
     },
     {
-      "id": "intro-67",
-      "sectionId": "intro",
+      "id": "s5-61",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "text",
       "body": "#### 存在"
     },
     {
-      "id": "intro-68",
-      "sectionId": "intro",
+      "id": "s5-62",
+      "sectionId": "s5",
       "title": "例子",
       "kind": "code",
       "lang": "bash",
       "code": "if [[ -e \"file.txt\" ]]; then\n    echo \"file exists\"\nfi"
     },
     {
-      "id": "intro-69",
-      "sectionId": "intro",
+      "id": "s5-63",
+      "sectionId": "s5",
       "title": "文件条件",
       "kind": "text",
       "body": "条件 | 描述\n:- | -\n`[[ -e FILE ]]`   | 存在\n`[[ -d FILE ]]`   | 目录\n`[[ -f FILE ]]`   | 文件\n`[[ -h FILE ]]`   | 符号链接\n`[[ -s FILE ]]`   | 大小 > 0 字节\n`[[ -r FILE ]]`   | 可读\n`[[ -w FILE ]]`   | 可写\n`[[ -x FILE ]]`   | 可执行文件\n`[[ f1 -nt f2 ]]` | f1 比 f2 新\n`[[ f1 -ot f2 ]]` | f2 比 f1 新\n`[[ f1 -ef f2 ]]` | 相同的文件"
     },
     {
-      "id": "intro-70",
-      "sectionId": "intro",
+      "id": "s5-64",
+      "sectionId": "s5",
       "title": "更多条件",
       "kind": "text",
       "body": "条件 | 描述\n:- | -\n`[[ -o noclobber ]]` | 如果启用 <pur>OPTION</pur>\n`[[ ! EXPR ]]`       | 不是 <pur>Not</pur>\n`[[ X && Y ]]`       | 和 <pur>And</pur>\n`[[ X \\|\\| Y ]]`     | 或者 <pur>Or</pur>"
     },
     {
-      "id": "intro-71",
-      "sectionId": "intro",
+      "id": "s5-65",
+      "sectionId": "s5",
       "title": "逻辑和，或",
       "kind": "code",
       "lang": "bash",
       "code": "if [ \"$1\" = 'y' -a $2 -gt 0 ]; then\n    echo \"yes\"\nfi\nif [ \"$1\" = 'n' -o $2 -lt 0 ]; then\n    echo \"no\"\nfi"
     },
     {
-      "id": "intro-72",
-      "sectionId": "intro",
-      "title": "逻辑和，或",
-      "kind": "text",
-      "body": "Bash 循环\n-----"
-    },
-    {
-      "id": "intro-73",
-      "sectionId": "intro",
+      "id": "s6-66",
+      "sectionId": "s6",
       "title": "基本 for 循环",
       "kind": "code",
       "lang": "bash",
       "code": "for i in /etc/rc.*; do\n    echo $i\ndone"
     },
     {
-      "id": "intro-74",
-      "sectionId": "intro",
+      "id": "s6-67",
+      "sectionId": "s6",
       "title": "类似 C 的 for 循环",
       "kind": "code",
       "lang": "bash",
       "code": "for ((i = 0 ; i < 100 ; i++)); do\n    echo $i\ndone"
     },
     {
-      "id": "intro-75",
-      "sectionId": "intro",
+      "id": "s6-68",
+      "sectionId": "s6",
       "title": "范围",
       "kind": "code",
       "lang": "bash",
       "code": "for i in {1..5}; do\n    echo \"Welcome $i\"\ndone"
     },
     {
-      "id": "intro-76",
-      "sectionId": "intro",
+      "id": "s6-69",
+      "sectionId": "s6",
       "title": "范围",
       "kind": "text",
       "body": "#### 步长"
     },
     {
-      "id": "intro-77",
-      "sectionId": "intro",
+      "id": "s6-70",
+      "sectionId": "s6",
       "title": "范围",
       "kind": "code",
       "lang": "bash",
       "code": "for i in {5..50..5}; do\n    echo \"Welcome $i\"\ndone"
     },
     {
-      "id": "intro-78",
-      "sectionId": "intro",
+      "id": "s6-71",
+      "sectionId": "s6",
       "title": "自动递增",
       "kind": "code",
       "lang": "bash",
       "code": "i=1\nwhile [[ $i -lt 4 ]]; do\n    echo \"Number: $i\"\n    ((i++))\ndone"
     },
     {
-      "id": "intro-79",
-      "sectionId": "intro",
+      "id": "s6-72",
+      "sectionId": "s6",
       "title": "自动递减",
       "kind": "code",
       "lang": "bash",
       "code": "i=3\nwhile [[ $i -gt 0 ]]; do\n    echo \"Number: $i\"\n    ((i--))\ndone"
     },
     {
-      "id": "intro-80",
-      "sectionId": "intro",
+      "id": "s6-73",
+      "sectionId": "s6",
       "title": "Continue",
       "kind": "text",
       "body": "```bash {data=3,5}\nfor number in $(seq 1 3); do\nif [[ $number == 2 ]]; then\ncontinue;\nfi\necho \"$number\"\ndone"
     },
     {
-      "id": "intro-81",
-      "sectionId": "intro",
+      "id": "s6-74",
+      "sectionId": "s6",
       "title": "Continue",
       "kind": "code",
       "lang": "",
-      "code": "\n### Break"
+      "code": "\n### Break\n\n```bash\nfor number in $(seq 1 3); do\n    if [[ $number == 2 ]]; then\n        # 跳过整个循环的其余部分。\n        break;\n    fi\n    # 这只会打印 1\n    echo \"$number\"\ndone"
     },
     {
-      "id": "intro-82",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s6-75",
+      "sectionId": "s6",
+      "title": "Until",
+      "kind": "code",
+      "lang": "bash",
+      "code": "count=0\nuntil [ $count -gt 10 ]; do\n    echo \"$count\"\n    ((count++))\ndone"
+    },
+    {
+      "id": "s6-76",
+      "sectionId": "s6",
+      "title": "死循环",
+      "kind": "code",
+      "lang": "bash",
+      "code": "while true; do\n    # 下面是一些代码\ndone"
+    },
+    {
+      "id": "s6-77",
+      "sectionId": "s6",
+      "title": "死循环(简写)",
+      "kind": "code",
+      "lang": "bash",
+      "code": "while :; do\n    # 下面是一些代码\ndone"
+    },
+    {
+      "id": "s6-78",
+      "sectionId": "s6",
+      "title": "读取文件的每一行",
+      "kind": "code",
+      "lang": "bash",
+      "code": "cat file.txt | while read line; do\n    echo $line\ndone"
+    },
+    {
+      "id": "s7-79",
+      "sectionId": "s7",
+      "title": "定义函数",
+      "kind": "code",
+      "lang": "bash",
+      "code": "myfunc() {\n  echo \"hello $1\"\n}"
+    },
+    {
+      "id": "s7-80",
+      "sectionId": "s7",
+      "title": "定义函数",
       "kind": "text",
-      "body": "for number in $(seq 1 3); do\nif [[ $number == 2 ]]; then\n# 跳过整个循环的其余部分。\nbreak;\nfi\n# 这只会打印 1\necho \"$number\"\ndone"
+      "body": "同上(替代语法)"
     },
     {
-      "id": "intro-83",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s7-81",
+      "sectionId": "s7",
+      "title": "定义函数",
+      "kind": "code",
+      "lang": "bash",
+      "code": "function myfunc() {\n  echo \"hello $1\"\n}"
+    },
+    {
+      "id": "s7-82",
+      "sectionId": "s7",
+      "title": "定义函数",
+      "kind": "code",
+      "lang": "bash",
+      "code": "myfunc \"John\""
+    },
+    {
+      "id": "s7-83",
+      "sectionId": "s7",
+      "title": "返回值",
+      "kind": "code",
+      "lang": "bash",
+      "code": "myfunc() {\n    local myresult='some value'\n    echo $myresult\n}"
+    },
+    {
+      "id": "s7-84",
+      "sectionId": "s7",
+      "title": "返回值",
+      "kind": "code",
+      "lang": "bash",
+      "code": "result=\"$(myfunc)\""
+    },
+    {
+      "id": "s7-85",
+      "sectionId": "s7",
+      "title": "抛出错误",
+      "kind": "code",
+      "lang": "bash",
+      "code": "myfunc() {\n    return 1\n}"
+    },
+    {
+      "id": "s7-86",
+      "sectionId": "s7",
+      "title": "抛出错误",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if myfunc; then\n    echo \"success\"\nelse\n    echo \"failure\"\nfi"
+    },
+    {
+      "id": "s8-87",
+      "sectionId": "s8",
+      "title": "选项",
+      "kind": "text",
+      "body": "避免覆盖文件"
+    },
+    {
+      "id": "s8-88",
+      "sectionId": "s8",
+      "title": "选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "# (echo \"hi\" > foo)\nset -o noclobber"
+    },
+    {
+      "id": "s8-89",
+      "sectionId": "s8",
+      "title": "选项",
+      "kind": "text",
+      "body": "用于出错时退出，避免级联错误"
+    },
+    {
+      "id": "s8-90",
+      "sectionId": "s8",
+      "title": "选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "set -o errexit"
+    },
+    {
+      "id": "s8-91",
+      "sectionId": "s8",
+      "title": "选项",
+      "kind": "text",
+      "body": "揭示隐藏的失败"
+    },
+    {
+      "id": "s8-92",
+      "sectionId": "s8",
+      "title": "选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "set -o pipefail"
+    },
+    {
+      "id": "s8-93",
+      "sectionId": "s8",
+      "title": "选项",
+      "kind": "text",
+      "body": "公开未设置的变量"
+    },
+    {
+      "id": "s8-94",
+      "sectionId": "s8",
+      "title": "选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "set -o nounset"
+    },
+    {
+      "id": "s8-95",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "text",
+      "body": "不匹配的 glob 被删除"
+    },
+    {
+      "id": "s8-96",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "shopt -s nullglob   # ('*.foo' => '')"
+    },
+    {
+      "id": "s8-97",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "text",
+      "body": "不匹配的 glob 抛出错误"
+    },
+    {
+      "id": "s8-98",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "shopt -s failglob"
+    },
+    {
+      "id": "s8-99",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "text",
+      "body": "不区分大小写的球体"
+    },
+    {
+      "id": "s8-100",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "shopt -s nocaseglob"
+    },
+    {
+      "id": "s8-101",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "text",
+      "body": "通配符匹配点文件"
+    },
+    {
+      "id": "s8-102",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "shopt -s dotglob    # (\"*.sh\" => \".foo.sh\")"
+    },
+    {
+      "id": "s8-103",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "text",
+      "body": "允许 ** 进行递归匹配"
+    },
+    {
+      "id": "s8-104",
+      "sectionId": "s8",
+      "title": "全局选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "shopt -s globstar   # ('lib/**/*.rb' => 'lib/a/b/c.rb')"
+    },
+    {
+      "id": "s9-105",
+      "sectionId": "s9",
+      "title": "命令",
+      "kind": "text",
+      "body": "命令 | 描述\n:- | -\n`history`             | 显示历史\n`sudo !!`             | 使用 `sudo` 运行上一个命令\n`shopt -s histverify` | 不要立即执行扩展结果\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "s9-106",
+      "sectionId": "s9",
+      "title": "表达式",
+      "kind": "text",
+      "body": "表达式 | 描述\n:- | -\n`!$`         | 展开最新命令的最后一个参数\n`!*`         | 展开最新命令的所有参数\n`!-n`        | 展开第 `n` 个最近的命令\n`!n`         | 展开历史中的第 `n` 个命令\n`!<command>` | 展开最近调用的命令 `<command>`\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "s9-107",
+      "sectionId": "s9",
+      "title": "操作",
+      "kind": "text",
+      "body": "代码 | 描述\n:- | -\n`!!`                 | 再次执行最后一条命令\n`!!:s/<FROM>/<TO>/`  | 在最近的命令中将第一次出现的 `<FROM>` 替换为 `<TO>`\n`!!:gs/<FROM>/<TO>/` | 在最近的命令中将所有出现的 `<FROM>` 替换为 `<TO>`\n`!$:t`               | 仅从最近命令的最后一个参数扩展基本名称\n`!$:h`               | 仅从最近命令的最后一个参数展开目录\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "s9-108",
+      "sectionId": "s9",
+      "title": "操作",
+      "kind": "text",
+      "body": "`!!` 和 `!$` 可以替换为任何有效的扩展。"
+    },
+    {
+      "id": "s9-109",
+      "sectionId": "s9",
+      "title": "切片 Slices",
+      "kind": "text",
+      "body": "代码 | 描述\n:- | -\n`!!:n`   | 仅扩展最近命令中的第 `n` 个标记(命令为 `0`；第一个参数为 `1`)\n`!^`     | 从最近的命令展开第一个参数\n`!$`     | 从最近的命令中展开最后一个标记\n`!!:n-m` | 从最近的命令扩展令牌范围\n`!!:n-$` | 从最近的命令中将第 `n` 个标记展开到最后\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "s9-110",
+      "sectionId": "s9",
+      "title": "切片 Slices",
+      "kind": "text",
+      "body": "`!!` 可以替换为任何有效的扩展，即 `!cat`、`!-2`、`!42` 等。"
+    },
+    {
+      "id": "s10-111",
+      "sectionId": "s10",
+      "title": "数值计算",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$((a + 200))      # $a 加 200"
+    },
+    {
+      "id": "s10-112",
+      "sectionId": "s10",
+      "title": "数值计算",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$(($RANDOM%200))  # 随机数 0..199"
+    },
+    {
+      "id": "s10-113",
+      "sectionId": "s10",
+      "title": "子 shell",
+      "kind": "code",
+      "lang": "bash",
+      "code": "(cd somedir; echo \"I'm now in $PWD\")\npwd # 仍然在第一个目录"
+    },
+    {
+      "id": "s10-114",
+      "sectionId": "s10",
+      "title": "检查命令",
+      "kind": "code",
+      "lang": "bash",
+      "code": "command -V cd\n#=> \"cd 是一个函数/别名/其他\""
+    },
+    {
+      "id": "s10-115",
+      "sectionId": "s10",
+      "title": "重定向",
+      "kind": "code",
+      "lang": "bash",
+      "code": "python hello.py > output.txt   # 标准输出到(文件)\npython hello.py >> output.txt  # 标准输出到(文件)，追加\npython hello.py 2> error.log   # 标准错误到(文件)\npython hello.py 2>&1           # 标准错误到标准输出\npython hello.py 2>/dev/null    # 标准错误到(空null)\npython hello.py &>/dev/null    # 标准输出和标准错误到(空null)"
+    },
+    {
+      "id": "s10-116",
+      "sectionId": "s10",
+      "title": "重定向",
+      "kind": "code",
+      "lang": "bash",
+      "code": "python hello.py < foo.txt      # 将 foo.txt 提供给 python 的标准输入"
+    },
+    {
+      "id": "s10-117",
+      "sectionId": "s10",
+      "title": "来源相对",
+      "kind": "code",
+      "lang": "bash",
+      "code": "source \"${0%/*}/../share/foo.sh\""
+    },
+    {
+      "id": "s10-118",
+      "sectionId": "s10",
+      "title": "脚本目录",
+      "kind": "code",
+      "lang": "bash",
+      "code": "DIR=\"${0%/*}\""
+    },
+    {
+      "id": "s10-119",
+      "sectionId": "s10",
+      "title": "Case/switch",
+      "kind": "code",
+      "lang": "bash",
+      "code": "case \"$1\" in\n    start | up)\n    vagrant up\n    ;;\n    *)\n    echo \"Usage: $0 {start|stop|ssh}\"\n    ;;\nesac"
+    },
+    {
+      "id": "s10-120",
+      "sectionId": "s10",
+      "title": "陷阱错误",
+      "kind": "code",
+      "lang": "bash",
+      "code": "trap 'echo Error at about $LINENO' ERR"
+    },
+    {
+      "id": "s10-121",
+      "sectionId": "s10",
+      "title": "陷阱错误",
+      "kind": "text",
+      "body": "或者"
+    },
+    {
+      "id": "s10-122",
+      "sectionId": "s10",
+      "title": "陷阱错误",
+      "kind": "code",
+      "lang": "bash",
+      "code": "traperr() {\n    echo \"ERROR: ${BASH_SOURCE[1]} at about ${BASH_LINENO[0]}\"\n}\nset -o errtrace\ntrap traperr ERR"
+    },
+    {
+      "id": "s10-123",
+      "sectionId": "s10",
+      "title": "printf",
+      "kind": "code",
+      "lang": "bash",
+      "code": "printf \"Hello %s, I'm %s\" Sven Olga\n#=> \"Hello Sven, I'm Olga\n\nprintf \"1 + 1 = %d\" 2\n#=> \"1 + 1 = 2\"\n\nprintf \"Print a float: %f\" 2\n#=> \"Print a float: 2.000000\""
+    },
+    {
+      "id": "s10-124",
+      "sectionId": "s10",
+      "title": "获取选项",
+      "kind": "code",
+      "lang": "bash",
+      "code": "while [[ \"$1\" =~ ^- && ! \"$1\" == \"--\" ]]; do case $1 in\n    -V | --version )\n    echo $version\n    exit\n    ;;\n    -s | --string )\n    shift; string=$1\n    ;;\n    -f | --flag )\n    flag=1\n    ;;\nesac; shift; done\nif [[ \"$1\" == '--' ]]; then shift; fi"
+    },
+    {
+      "id": "s10-125",
+      "sectionId": "s10",
+      "title": "检查命令的结果",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if ping -c 1 google.com; then\n    echo \"看来您的互联网连接正常\"\nfi"
+    },
+    {
+      "id": "s10-126",
+      "sectionId": "s10",
+      "title": "grep 检查",
+      "kind": "code",
+      "lang": "bash",
+      "code": "if grep -q 'foo' ~/.bash_history; then\n    echo \"您过去似乎输入过“foo”\"\nfi"
+    },
+    {
+      "id": "s10-127",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "text",
+      "body": ":-- | --\n:-- | --\n`cat` | 用于显示文本文件内容，全部输出\n`EOF` | `end of file`，表示文本结束符"
+    },
+    {
+      "id": "s10-128",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "text",
+      "body": "---"
+    },
+    {
+      "id": "s10-129",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "cat > output.txt <<EOF\nthis is test eof\nthis is test eof2\nEOF"
+    },
+    {
+      "id": "s10-130",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "text",
+      "body": "输出 `cat output.txt`"
+    },
+    {
+      "id": "s10-131",
+      "sectionId": "s10",
+      "title": "写入文件",
       "kind": "code",
       "lang": "",
-      "code": "\n### Until"
+      "code": "this is test eof\nthis is test eof2"
     },
     {
-      "id": "intro-84",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s10-132",
+      "sectionId": "s10",
+      "title": "写入文件",
       "kind": "text",
-      "body": "count=0\nuntil [ $count -gt 10 ]; do\necho \"$count\"\n((count++))\ndone"
+      "body": "追加内容"
     },
     {
-      "id": "intro-85",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s10-133",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "cat >>2.txt <<EOF\n456\n789\nEOF"
+    },
+    {
+      "id": "s10-134",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "text",
+      "body": "`$` 等特殊字符时，须利用转义字符 `\\`"
+    },
+    {
+      "id": "s10-135",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "cat > file <<EOF\nexport ORACLE_SID=yqpt \nexport PATH=\\$PATH:\\$ORACLE_HOME/bin  \nEOF"
+    },
+    {
+      "id": "s10-136",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "text",
+      "body": "取消变量替换，`EOF` 被加上双引号或者单引号，即可取消变量的替换"
+    },
+    {
+      "id": "s10-137",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "cat << \"EOF\" > output.sh\necho \"This is output\"\necho $1\nEOF"
+    },
+    {
+      "id": "s10-138",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "text",
+      "body": "所有TAB键将全部忽略[不能是空格]"
+    },
+    {
+      "id": "s10-139",
+      "sectionId": "s10",
+      "title": "写入文件",
+      "kind": "code",
+      "lang": "bash",
+      "code": "cat << -EOF\n        echo \"This is output\"\nEOF"
+    },
+    {
+      "id": "s10-140",
+      "sectionId": "s10",
+      "title": "特殊变量",
+      "kind": "text",
+      "body": "表达式 | 描述\n:- | -\n`$?`       | 最后一个任务的退出状态\n`$!`       | 最后一个后台任务的 PID\n`$$`       | shell PID\n`$0`       | shell 脚本的文件名"
+    },
+    {
+      "id": "s10-141",
+      "sectionId": "s10",
+      "title": "特殊变量",
+      "kind": "text",
+      "body": "见[特殊参数](http://wiki.bash-hackers.org/syntax/shellvars#special_parameters_and_shell_variables)。"
+    },
+    {
+      "id": "s10-142",
+      "sectionId": "s10",
+      "title": "反斜杠转义",
+      "kind": "text",
+      "body": "• &nbsp;\n• \\!\n• \\\"\n• \\#\n• \\&\n• \\'\n• \\(\n• \\)\n• \\,\n• \\;\n• \\<\n• \\>\n• \\[\n• \\|\n• \\\\\n• \\]\n• \\^\n• \\{\n• \\}\n• \\`\n• \\$\n• \\*\n• \\?"
+    },
+    {
+      "id": "s10-143",
+      "sectionId": "s10",
+      "title": "反斜杠转义",
+      "kind": "text",
+      "body": "使用 `\\` 转义这些特殊字符"
+    },
+    {
+      "id": "s10-144",
+      "sectionId": "s10",
+      "title": "Heredoc",
+      "kind": "code",
+      "lang": "sh",
+      "code": "cat <<END\nhello world\nEND"
+    },
+    {
+      "id": "s10-145",
+      "sectionId": "s10",
+      "title": "转到上一个目录",
+      "kind": "code",
+      "lang": "bash",
+      "code": "pwd     # /home/user/foo\ncd bar/\npwd     # /home/user/foo/bar\ncd -\npwd     # /home/user/foo"
+    },
+    {
+      "id": "s10-146",
+      "sectionId": "s10",
+      "title": "读取输入",
+      "kind": "code",
+      "lang": "bash",
+      "code": "echo -n \"Proceed? [y/n]: \"\nread ans\necho $ans"
+    },
+    {
+      "id": "s10-147",
+      "sectionId": "s10",
+      "title": "读取输入",
+      "kind": "code",
+      "lang": "bash",
+      "code": "read -n 1 ans    # 只有一个字符"
+    },
+    {
+      "id": "s10-148",
+      "sectionId": "s10",
+      "title": "条件执行",
+      "kind": "code",
+      "lang": "bash",
+      "code": "git commit && git push\ngit commit || echo \"Commit failed\""
+    },
+    {
+      "id": "s10-149",
+      "sectionId": "s10",
+      "title": "严格模式",
+      "kind": "code",
+      "lang": "bash",
+      "code": "set -euo pipefail\nIFS=$'\\n\\t'"
+    },
+    {
+      "id": "s10-150",
+      "sectionId": "s10",
+      "title": "严格模式",
+      "kind": "text",
+      "body": "参见：[非官方 bash 严格模式](http://redsymbol.net/articles/unofficial-bash-strict-mode/)"
+    },
+    {
+      "id": "s10-151",
+      "sectionId": "s10",
+      "title": "可选参数",
+      "kind": "code",
+      "lang": "bash",
+      "code": "args=(\"$@\")\nargs+=(foo)\nargs+=(bar)\necho \"${args[@]}\""
+    },
+    {
+      "id": "s10-152",
+      "sectionId": "s10",
+      "title": "可选参数",
+      "kind": "text",
+      "body": "将参数放入数组中，然后追加"
+    },
+    {
+      "id": "s10-153",
+      "sectionId": "s10",
+      "title": "调试模式",
+      "kind": "text",
+      "body": "启用调试模式，会把脚本中的每条命令的执行情况打印出来。它可以在整个会话或脚本上运行，也可以在脚本内以编程方式启用。"
+    },
+    {
+      "id": "s10-154",
+      "sectionId": "s10",
+      "title": "调试模式",
+      "kind": "text",
+      "body": "以调试模式运行脚本(整个脚本都会打印调试信息)："
+    },
+    {
+      "id": "s10-155",
+      "sectionId": "s10",
+      "title": "调试模式",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ bash -x myscript.sh"
+    },
+    {
+      "id": "s10-156",
+      "sectionId": "s10",
+      "title": "调试模式",
+      "kind": "text",
+      "body": "在 bash 脚本中打开调试(针对部分内容打印调试信息)"
+    },
+    {
+      "id": "s10-157",
+      "sectionId": "s10",
+      "title": "调试模式",
+      "kind": "code",
+      "lang": "bash",
+      "code": "#!/bin/bash\nset -x   # 启用调试模式（显示执行的每一行命令）\n# 此处放置要执行的代码\nset +x   # 关闭调试输出（停止显示命令）"
+    },
+    {
+      "id": "s10-158",
+      "sectionId": "s10",
+      "title": "命令行光标移动类",
+      "kind": "qa",
+      "front": "`Ctrl` + `A`",
+      "back": "移动到命令行开头"
+    },
+    {
+      "id": "s10-159",
+      "sectionId": "s10",
+      "title": "命令行光标移动类",
+      "kind": "qa",
+      "front": "`Ctrl` + `E`",
+      "back": "移动到命令行末尾"
+    },
+    {
+      "id": "s10-160",
+      "sectionId": "s10",
+      "title": "命令行光标移动类",
+      "kind": "qa",
+      "front": "`Alt` + `B`",
+      "back": "向左移动一个“词”"
+    },
+    {
+      "id": "s10-161",
+      "sectionId": "s10",
+      "title": "命令行光标移动类",
+      "kind": "qa",
+      "front": "`Alt` + `F`",
+      "back": "向右移动一个“词”"
+    },
+    {
+      "id": "s10-162",
+      "sectionId": "s10",
+      "title": "命令行光标移动类",
+      "kind": "qa",
+      "front": "`Ctrl` + `B`",
+      "back": "向左移动一个字符（←）"
+    },
+    {
+      "id": "s10-163",
+      "sectionId": "s10",
+      "title": "命令行光标移动类",
+      "kind": "qa",
+      "front": "`Ctrl` + `F`",
+      "back": "向右移动一个字符（→）"
+    },
+    {
+      "id": "s11-164",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
+      "kind": "text",
+      "body": "您可以通过为其输出着色来使您的 BASH 脚本更漂亮，使用以下模板编写彩色文本："
+    },
+    {
+      "id": "s11-165",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
+      "kind": "text",
+      "body": "#### 示例"
+    },
+    {
+      "id": "s11-166",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ echo -e \"\\e[31m命令行中显示红色文字\\e[0m\""
+    },
+    {
+      "id": "s11-167",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
+      "kind": "text",
+      "body": "<red>命令行中显示红色文字</red>"
+    },
+    {
+      "id": "s11-168",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
       "kind": "code",
       "lang": "",
-      "code": "\n### 死循环"
+      "code": "$ echo -e \"\\e[42m绿色背景\\e[0m\""
     },
     {
-      "id": "intro-86",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-169",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
       "kind": "text",
-      "body": "while true; do\n# 下面是一些代码\ndone"
+      "body": "`绿色背景`<!--rehype:style=background:green;color: black;-->"
     },
     {
-      "id": "intro-87",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-170",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
+      "kind": "text",
+      "body": "Option | Description\n:- | --\n`-e` | 启用反斜杠转义的解释\n`\\e[` 或 `\\x1b[` 或 `\\033[` | 开始颜色修改\n`COLORm` | 颜色代码 + `m` 在末尾\n`\\e[0m` 或 `\\x1b[0m` 或 `\\033[0m` | 结束颜色修改\n<!--rehype:className=left-align-->"
+    },
+    {
+      "id": "s11-171",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
+      "kind": "text",
+      "body": "`0x1b` 字面上称为 `ESC`"
+    },
+    {
+      "id": "s11-172",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
+      "kind": "text",
+      "body": "#### 示例"
+    },
+    {
+      "id": "s11-173",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 死循环(简写)"
+      "lang": "bash",
+      "code": "$ echo -e \"\\e[3m下划线文本\\e[0m\""
     },
     {
-      "id": "intro-88",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-174",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
       "kind": "text",
-      "body": "while :; do\n# 下面是一些代码\ndone"
+      "body": "`下划线文本`<!--rehype:style=text-decoration: underline;color: inherit;-->"
     },
     {
-      "id": "intro-89",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-175",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
       "kind": "code",
-      "lang": "",
-      "code": "\n### 读取文件的每一行"
+      "lang": "bash",
+      "code": "$ echo -e \"\\e[1;33;4;44m粗体下划线蓝色背景黄色文字的文本\\e[0m\""
     },
     {
-      "id": "intro-90",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-176",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
       "kind": "text",
-      "body": "cat file.txt | while read line; do\necho $line\ndone"
+      "body": "`粗体下划线蓝色背景黄色文字的文本`<!--rehype:style=text-decoration: underline;color: inherit;font-weight: bold;color: #cdcd00;background: #0000ee;-->"
     },
     {
-      "id": "intro-91",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-177",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
       "kind": "code",
-      "lang": "",
-      "code": "\nBash 函数\n---------\n\n### 定义函数"
+      "lang": "bash",
+      "code": "\\e[         # 启用转义\n1;33;4;44   # 参数 (1;33;4;44)\nm           # 设置图形模式"
     },
     {
-      "id": "intro-92",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-178",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
       "kind": "text",
-      "body": "myfunc() {\necho \"hello $1\"\n}"
+      "body": "#### 样式"
     },
     {
-      "id": "intro-93",
-      "sectionId": "intro",
-      "title": "Continue",
-      "kind": "code",
-      "lang": "",
-      "code": "\n同上(替代语法)"
-    },
-    {
-      "id": "intro-94",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-179",
+      "sectionId": "s11",
+      "title": "颜色着色语法示例",
       "kind": "text",
-      "body": "function myfunc() {\necho \"hello $1\"\n}"
+      "body": ":- | -- | --\n:- | -- | --\n`0` | 普通字符(复位或正常) | 关闭所有属性\n`1` | **粗体**字\n`2` | 弱化(降低强度) | 未广泛支持\n`3` | 斜体 | 未广泛支持有时为反相显示\n`4` | 下划线\n`5` | 缓慢闪烁\n`6` | 快速闪烁\n`7` | 反显\n`8` | 隐藏 | 未广泛支持\n`9` | 划除\n<!--rehype:className=left-align-->"
     },
     {
-      "id": "intro-95",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-180",
+      "sectionId": "s11",
+      "title": "ANSI — 颜色转义码",
       "kind": "text",
-      "body": "myfunc \"John\""
+      "body": "颜色 | 名称 | 前景色 | 背景色 | 示例\n:- | --| -- | -- | --\n`Black` | 黑色 | 30 | 40 | `黑`<!--rehype:style=background:#000;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Red` | 红色 | 31 | 41 | `红`<!--rehype:style=background:#c23621;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Green` | 绿色 | 32 | 42 | `绿`<!--rehype:style=background:#25bc26;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Yellow` | 黄色 | 33 | 43 | `黄`<!--rehype:style=background:#cdcd00;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Blue` | 蓝色 | 34 | 44 | `蓝`<!--rehype:style=background:#0000ee;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Purple` | 紫色 | 35 | 45 | `紫`<!--rehype:style=background:#cd00cd;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Cyan` | 青色 | 36 | 46 | `青`<!--rehype:style=background:#00AAAA;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`White` | 白色 | 37 | 47 | `白`<!--rehype:style=background:#e5e5e5;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n<!--rehype:className=show-header left-align-->"
     },
     {
-      "id": "intro-96",
-      "sectionId": "intro",
-      "title": "Continue",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 返回值"
-    },
-    {
-      "id": "intro-97",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-181",
+      "sectionId": "s11",
+      "title": "ANSI — 颜色转义码(亮色)",
       "kind": "text",
-      "body": "myfunc() {\nlocal myresult='some value'\necho $myresult\n}"
+      "body": "颜色 | 前色 | 背色 | 示例\n:- | -- | -- | --\n`BrightBlack(Gray)` 灰色 | 90 | 100 | `90`<!--rehype:style=background:#555555;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Red` 亮红色 | 91 | 101 | `91`<!--rehype:style=background:#FF5555;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Green` 亮绿色 | 92 | 102 | `92`<!--rehype:style=background:#55FF55;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Yellow` 亮黄色 | 93 | 103 | `93`<!--rehype:style=background:#FFFF55;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Blue` 亮蓝色 | 94 | 104 | `94`<!--rehype:style=background:#5555FF;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Magenta` 亮紫色 | 95 | 105 | `95`<!--rehype:style=background:#FF55FF;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Cyan` 亮青色 | 96 | 106 | `96`<!--rehype:style=background:#55FFFF;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright White` 浅灰 | 97 | 107 | `97`<!--rehype:style=background:#ffffff;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n<!--rehype:className=show-header left-align-->"
     },
     {
-      "id": "intro-98",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s11-182",
+      "sectionId": "s11",
+      "title": "可用功能",
       "kind": "text",
-      "body": "result=\"$(myfunc)\""
+      "body": ":- | -- | --\n:- | -- | --\n`n` A | 光标上移 | 光标向指定的方向移动 `n`(默认1)格\n`n` B | 光标下移 | 光标向指定的方向移动 `n`(默认1)格\n`n` C | 光标前移 | 光标向指定的方向移动 `n`(默认1)格\n`n` D | 光标后移 | 光标向指定的方向移动 `n`(默认1)格\n`n` E | 光标移到下一行 | 光标移动到下面第 `n`(默认1)行的开头(非ANSI.SYS)\n`n` F | 光标移到上一行 | 光标移动到上面第 `n`(默认1)行的开头(非ANSI.SYS)\n`n` G | 光标水平绝对 | 光标移动到第 `n`(默认1)列(非ANSI.SYS)\n`n`;`m` H | 光标位置 | 光标移动到第 `n`行、第 `m` 列。值从1开始，且默认为1(左上角)\n`n` J | ED – 擦除显示 | 清除屏幕的部分区域\n`n` K | EL – 擦除行 | 清除行内的部分区域\n`n` S | SU – 向上滚动 | 整页向上滚动 `n`(默认1)行。新行添加到底部 (非ANSI.SYS)\n`n` T | SD – 向下滚动 | 整页向下滚动 `n`(默认1)行。新行添加到顶部 (非ANSI.SYS)\n`n`;`m`f | HVP – 水平垂直位置 | 同CUP\n`n` `m` | SGR – 选择图形再现 | 设置SGR参数，包括文字颜色\n`5i` | 打开辅助端口 | 启用辅助串行端口，通常用于本地串行打印机\n`4i` | 关闭辅助端口 | 禁用辅助串行端口，通常用于本地串行打印机\n`6n` | DSR – 设备状态报告 | 以 `ESC[n;mR` (就像在键盘上输入)向应用程序报告光标位置(CPR)，其中 `n`是行， `m` 是列\n`s` | SCP – 保存光标位置 | 保存光标的当前位置\n`u` | RCP – 恢复光标位置 | 恢复保存的光标位置\n<!--rehype:className=left-align-->"
     },
     {
-      "id": "intro-99",
-      "sectionId": "intro",
-      "title": "Continue",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 抛出错误"
-    },
-    {
-      "id": "intro-100",
-      "sectionId": "intro",
-      "title": "Continue",
+      "id": "s12-183",
+      "sectionId": "s12",
+      "title": "另见",
       "kind": "text",
-      "body": "myfunc() {\nreturn 1\n}"
-    },
-    {
-      "id": "intro-101",
-      "sectionId": "intro",
-      "title": "Continue",
-      "kind": "text",
-      "body": "if myfunc; then\necho \"success\"\nelse\necho \"failure\"\nfi"
-    },
-    {
-      "id": "intro-102",
-      "sectionId": "intro",
-      "title": "Continue",
-      "kind": "code",
-      "lang": "",
-      "code": "\nBash 选项\n-------\n<!--rehype:body-class=cols-2-->\n\n### 选项\n\n避免覆盖文件"
-    },
-    {
-      "id": "intro-103",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "set -o noclobber"
-    },
-    {
-      "id": "intro-104",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n用于出错时退出，避免级联错误"
-    },
-    {
-      "id": "intro-105",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "set -o errexit"
-    },
-    {
-      "id": "intro-106",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n揭示隐藏的失败"
-    },
-    {
-      "id": "intro-107",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "set -o pipefail"
-    },
-    {
-      "id": "intro-108",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n公开未设置的变量"
-    },
-    {
-      "id": "intro-109",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "set -o nounset"
-    },
-    {
-      "id": "intro-110",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 全局选项\n\n不匹配的 glob 被删除"
-    },
-    {
-      "id": "intro-111",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "shopt -s nullglob   # ('*.foo' => '')"
-    },
-    {
-      "id": "intro-112",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n不匹配的 glob 抛出错误"
-    },
-    {
-      "id": "intro-113",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "shopt -s failglob"
-    },
-    {
-      "id": "intro-114",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n不区分大小写的球体"
-    },
-    {
-      "id": "intro-115",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "shopt -s nocaseglob"
-    },
-    {
-      "id": "intro-116",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n通配符匹配点文件"
-    },
-    {
-      "id": "intro-117",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "shopt -s dotglob    # (\"*.sh\" => \".foo.sh\")"
-    },
-    {
-      "id": "intro-118",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n允许 ** 进行递归匹配"
-    },
-    {
-      "id": "intro-119",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "shopt -s globstar   # ('lib/**/*.rb' => 'lib/a/b/c.rb')"
-    },
-    {
-      "id": "intro-120",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\nBash 历史\n-------\n<!--rehype:body-class=cols-2-->\n\n### 命令\n\n命令 | 描述\n:- | -\n`history`             | 显示历史\n`sudo !!`             | 使用 `sudo` 运行上一个命令\n`shopt -s histverify` | 不要立即执行扩展结果\n<!--rehype:className=left-align-->\n\n### 表达式\n\n表达式 | 描述\n:- | -\n`!$`         | 展开最新命令的最后一个参数\n`!*`         | 展开最新命令的所有参数\n`!-n`        | 展开第 `n` 个最近的命令\n`!n`         | 展开历史中的第 `n` 个命令\n`!<command>` | 展开最近调用的命令 `<command>`\n<!--rehype:className=left-align-->\n\n### 操作\n\n代码 | 描述\n:- | -\n`!!`                 | 再次执行最后一条命令\n`!!:s/<FROM>/<TO>/`  | 在最近的命令中将第一次出现的 `<FROM>` 替换为 `<TO>`\n`!!:gs/<FROM>/<TO>/` | 在最近的命令中将所有出现的 `<FROM>` 替换为 `<TO>`\n`!$:t`               | 仅从最近命令的最后一个参数扩展基本名称\n`!$:h`               | 仅从最近命令的最后一个参数展开目录\n<!--rehype:className=left-align-->\n\n`!!` 和 `!$` 可以替换为任何有效的扩展。\n\n### 切片 Slices\n\n代码 | 描述\n:- | -\n`!!:n`   | 仅扩展最近命令中的第 `n` 个标记(命令为 `0`；第一个参数为 `1`)\n`!^`     | 从最近的命令展开第一个参数\n`!$`     | 从最近的命令中展开最后一个标记\n`!!:n-m` | 从最近的命令扩展令牌范围\n`!!:n-$` | 从最近的命令中将第 `n` 个标记展开到最后\n<!--rehype:className=left-align-->\n\n`!!` 可以替换为任何有效的扩展，即 `!cat`、`!-2`、`!42` 等。\n\n杂项\n---\n\n### 数值计算"
-    },
-    {
-      "id": "intro-121",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$((a + 200))      # $a 加 200"
-    },
-    {
-      "id": "intro-122",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$(($RANDOM%200))  # 随机数 0..199"
-    },
-    {
-      "id": "intro-123",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 子 shell"
-    },
-    {
-      "id": "intro-124",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "(cd somedir; echo \"I'm now in $PWD\")\npwd # 仍然在第一个目录"
-    },
-    {
-      "id": "intro-125",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 检查命令"
-    },
-    {
-      "id": "intro-126",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "command -V cd\n#=> \"cd 是一个函数/别名/其他\""
-    },
-    {
-      "id": "intro-127",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 重定向\n<!--rehype:wrap-class=row-span-2 col-span-2-->"
-    },
-    {
-      "id": "intro-128",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "python hello.py > output.txt   # 标准输出到(文件)\npython hello.py >> output.txt  # 标准输出到(文件)，追加\npython hello.py 2> error.log   # 标准错误到(文件)\npython hello.py 2>&1           # 标准错误到标准输出\npython hello.py 2>/dev/null    # 标准错误到(空null)\npython hello.py &>/dev/null    # 标准输出和标准错误到(空null)"
-    },
-    {
-      "id": "intro-129",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "python hello.py < foo.txt      # 将 foo.txt 提供给 python 的标准输入"
-    },
-    {
-      "id": "intro-130",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 来源相对"
-    },
-    {
-      "id": "intro-131",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "source \"${0%/*}/../share/foo.sh\""
-    },
-    {
-      "id": "intro-132",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 脚本目录"
-    },
-    {
-      "id": "intro-133",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "DIR=\"${0%/*}\""
-    },
-    {
-      "id": "intro-134",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Case/switch"
-    },
-    {
-      "id": "intro-135",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "case \"$1\" in\nstart | up)\nvagrant up\n;;\n*)\necho \"Usage: $0 {start|stop|ssh}\"\n;;\nesac"
-    },
-    {
-      "id": "intro-136",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 陷阱错误\n<!--rehype:wrap-class=col-span-2-->"
-    },
-    {
-      "id": "intro-137",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "trap 'echo Error at about $LINENO' ERR"
-    },
-    {
-      "id": "intro-138",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n或者"
-    },
-    {
-      "id": "intro-139",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "traperr() {\necho \"ERROR: ${BASH_SOURCE[1]} at about ${BASH_LINENO[0]}\"\n}\nset -o errtrace\ntrap traperr ERR"
-    },
-    {
-      "id": "intro-140",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### printf"
-    },
-    {
-      "id": "intro-141",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "printf \"Hello %s, I'm %s\" Sven Olga\n#=> \"Hello Sven, I'm Olga"
-    },
-    {
-      "id": "intro-142",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "printf \"1 + 1 = %d\" 2\n#=> \"1 + 1 = 2\""
-    },
-    {
-      "id": "intro-143",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "printf \"Print a float: %f\" 2\n#=> \"Print a float: 2.000000\""
-    },
-    {
-      "id": "intro-144",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 获取选项\n<!--rehype:wrap-class=col-span-2-->"
-    },
-    {
-      "id": "intro-145",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "while [[ \"$1\" =~ ^- && ! \"$1\" == \"--\" ]]; do case $1 in\n-V | --version )\necho $version\nexit\n;;\n-s | --string )\nshift; string=$1\n;;\n-f | --flag )\nflag=1\n;;\nesac; shift; done\nif [[ \"$1\" == '--' ]]; then shift; fi"
-    },
-    {
-      "id": "intro-146",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 检查命令的结果"
-    },
-    {
-      "id": "intro-147",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "if ping -c 1 google.com; then\necho \"看来您的互联网连接正常\"\nfi"
-    },
-    {
-      "id": "intro-148",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### grep 检查"
-    },
-    {
-      "id": "intro-149",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "if grep -q 'foo' ~/.bash_history; then\necho \"您过去似乎输入过“foo”\"\nfi"
-    },
-    {
-      "id": "intro-150",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 写入文件\n<!--rehype:wrap-class=row-span-6-->\n\n:-- | --\n:-- | --\n`cat` | 用于显示文本文件内容，全部输出\n`EOF` | `end of file`，表示文本结束符\n\n---"
-    },
-    {
-      "id": "intro-151",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "cat > output.txt <<EOF\nthis is test eof\nthis is test eof2\nEOF"
-    },
-    {
-      "id": "intro-152",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n输出 `cat output.txt`"
-    },
-    {
-      "id": "intro-153",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "this is test eof\nthis is test eof2"
-    },
-    {
-      "id": "intro-154",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n追加内容"
-    },
-    {
-      "id": "intro-155",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "cat >>2.txt <<EOF\n456\n789\nEOF"
-    },
-    {
-      "id": "intro-156",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`$` 等特殊字符时，须利用转义字符 `\\`"
-    },
-    {
-      "id": "intro-157",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "cat > file <<EOF\nexport ORACLE_SID=yqpt\nexport PATH=\\$PATH:\\$ORACLE_HOME/bin\nEOF"
-    },
-    {
-      "id": "intro-158",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n取消变量替换，`EOF` 被加上双引号或者单引号，即可取消变量的替换"
-    },
-    {
-      "id": "intro-159",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "cat << \"EOF\" > output.sh\necho \"This is output\"\necho $1\nEOF"
-    },
-    {
-      "id": "intro-160",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n所有TAB键将全部忽略[不能是空格]"
-    },
-    {
-      "id": "intro-161",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "cat << -EOF\necho \"This is output\"\nEOF"
-    },
-    {
-      "id": "intro-162",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 特殊变量\n<!--rehype:wrap-class=row-span-2-->\n\n表达式 | 描述\n:- | -\n`$?`       | 最后一个任务的退出状态\n`$!`       | 最后一个后台任务的 PID\n`$$`       | shell PID\n`$0`       | shell 脚本的文件名\n\n见[特殊参数](http://wiki.bash-hackers.org/syntax/shellvars#special_parameters_and_shell_variables)。\n\n### 反斜杠转义\n<!--rehype:wrap-class=row-span-2-->\n\n- &nbsp;\n- \\!\n- \\\"\n- \\#\n- \\&\n- \\'\n- \\(\n- \\)\n- \\,\n- \\;\n- \\<\n- \\>\n- \\[\n- \\|\n- \\\\\n- \\]\n- \\^\n- \\{\n- \\}\n- \\`\n- \\$\n- \\*\n- \\?\n<!--rehype:className=cols-4 style-none-->\n\n使用 `\\` 转义这些特殊字符\n\n### Heredoc"
-    },
-    {
-      "id": "intro-163",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "cat <<END\nhello world\nEND"
-    },
-    {
-      "id": "intro-164",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 转到上一个目录"
-    },
-    {
-      "id": "intro-165",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "pwd     # /home/user/foo\ncd bar/\npwd     # /home/user/foo/bar\ncd -\npwd     # /home/user/foo"
-    },
-    {
-      "id": "intro-166",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 读取输入"
-    },
-    {
-      "id": "intro-167",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "echo -n \"Proceed? [y/n]: \"\nread ans\necho $ans"
-    },
-    {
-      "id": "intro-168",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "read -n 1 ans    # 只有一个字符"
-    },
-    {
-      "id": "intro-169",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 条件执行"
-    },
-    {
-      "id": "intro-170",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "git commit && git push\ngit commit || echo \"Commit failed\""
-    },
-    {
-      "id": "intro-171",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 严格模式"
-    },
-    {
-      "id": "intro-172",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "set -euo pipefail\nIFS=$'\\n\\t'"
-    },
-    {
-      "id": "intro-173",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n参见：[非官方 bash 严格模式](http://redsymbol.net/articles/unofficial-bash-strict-mode/)\n\n### 可选参数"
-    },
-    {
-      "id": "intro-174",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "args=(\"$@\")\nargs+=(foo)\nargs+=(bar)\necho \"${args[@]}\""
-    },
-    {
-      "id": "intro-175",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n将参数放入数组中，然后追加\n\n### 调试模式\n<!--rehype:wrap-class=col-span-2-->\n\n启用调试模式，会把脚本中的每条命令的执行情况打印出来。它可以在整个会话或脚本上运行，也可以在脚本内以编程方式启用。\n\n以调试模式运行脚本(整个脚本都会打印调试信息)："
-    },
-    {
-      "id": "intro-176",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ bash -x myscript.sh"
-    },
-    {
-      "id": "intro-177",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n在 bash 脚本中打开调试(针对部分内容打印调试信息)"
-    },
-    {
-      "id": "intro-178",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "#!/bin/bash\nset -x   # 启用调试模式（显示执行的每一行命令）"
-    },
-    {
-      "id": "intro-179",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "set +x   # 关闭调试输出（停止显示命令）"
-    },
-    {
-      "id": "intro-180",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 命令行光标移动类\n\n| 快捷键      | 作用          |\n|----------|-------------|\n| `Ctrl` + `A` | 移动到命令行开头    |\n| `Ctrl` + `E` | 移动到命令行末尾    |\n| `Alt` + `B`  | 向左移动一个“词”   |\n| `Alt` + `F`  | 向右移动一个“词”   |\n| `Ctrl` + `B` | 向左移动一个字符（←） |\n| `Ctrl` + `F` | 向右移动一个字符（→） |\n<!--rehype:className=shortcuts left-align-->\n\nBash 颜色\n----\n\n### 颜色着色语法示例\n<!--rehype:wrap-class=row-span-2-->\n\n您可以通过为其输出着色来使您的 BASH 脚本更漂亮，使用以下模板编写彩色文本：\n\n#### 示例"
-    },
-    {
-      "id": "intro-181",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ echo -e \"\\e[31m命令行中显示红色文字\\e[0m\""
-    },
-    {
-      "id": "intro-182",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n<red>命令行中显示红色文字</red>"
-    },
-    {
-      "id": "intro-183",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ echo -e \"\\e[42m绿色背景\\e[0m\""
-    },
-    {
-      "id": "intro-184",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`绿色背景`<!--rehype:style=background:green;color: black;-->\n\nOption | Description\n:- | --\n`-e` | 启用反斜杠转义的解释\n`\\e[` 或 `\\x1b[` 或 `\\033[` | 开始颜色修改\n`COLORm` | 颜色代码 + `m` 在末尾\n`\\e[0m` 或 `\\x1b[0m` 或 `\\033[0m` | 结束颜色修改\n<!--rehype:className=left-align-->\n\n`0x1b` 字面上称为 `ESC`\n\n#### 示例"
-    },
-    {
-      "id": "intro-185",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ echo -e \"\\e[3m下划线文本\\e[0m\""
-    },
-    {
-      "id": "intro-186",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`下划线文本`<!--rehype:style=text-decoration: underline;color: inherit;-->"
-    },
-    {
-      "id": "intro-187",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "$ echo -e \"\\e[1;33;4;44m粗体下划线蓝色背景黄色文字的文本\\e[0m\""
-    },
-    {
-      "id": "intro-188",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text-->\n\n`粗体下划线蓝色背景黄色文字的文本`<!--rehype:style=text-decoration: underline;color: inherit;font-weight: bold;color: #cdcd00;background: #0000ee;-->"
-    },
-    {
-      "id": "intro-189",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "text",
-      "body": "\\e[         # 启用转义\n1;33;4;44   # 参数 (1;33;4;44)\nm           # 设置图形模式"
-    },
-    {
-      "id": "intro-190",
-      "sectionId": "intro",
-      "title": "简介",
-      "kind": "code",
-      "lang": "",
-      "code": "\n#### 样式\n\n:- | -- | --\n:- | -- | --\n`0` | 普通字符(复位或正常) | 关闭所有属性\n`1` | **粗体**字\n`2` | 弱化(降低强度) | 未广泛支持\n`3` | 斜体 | 未广泛支持有时为反相显示\n`4` | 下划线\n`5` | 缓慢闪烁\n`6` | 快速闪烁\n`7` | 反显\n`8` | 隐藏 | 未广泛支持\n`9` | 划除\n<!--rehype:className=left-align-->\n\n### ANSI — 颜色转义码\n\n颜色 | 名称 | 前景色 | 背景色 | 示例\n:- | --| -- | -- | --\n`Black` | 黑色 | 30 | 40 | `黑`<!--rehype:style=background:#000;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Red` | 红色 | 31 | 41 | `红`<!--rehype:style=background:#c23621;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Green` | 绿色 | 32 | 42 | `绿`<!--rehype:style=background:#25bc26;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Yellow` | 黄色 | 33 | 43 | `黄`<!--rehype:style=background:#cdcd00;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Blue` | 蓝色 | 34 | 44 | `蓝`<!--rehype:style=background:#0000ee;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Purple` | 紫色 | 35 | 45 | `紫`<!--rehype:style=background:#cd00cd;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Cyan` | 青色 | 36 | 46 | `青`<!--rehype:style=background:#00AAAA;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`White` | 白色 | 37 | 47 | `白`<!--rehype:style=background:#e5e5e5;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n<!--rehype:className=show-header left-align-->\n\n### ANSI — 颜色转义码(亮色)\n\n颜色 | 前色 | 背色 | 示例\n:- | -- | -- | --\n`BrightBlack(Gray)` 灰色 | 90 | 100 | `90`<!--rehype:style=background:#555555;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Red` 亮红色 | 91 | 101 | `91`<!--rehype:style=background:#FF5555;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Green` 亮绿色 | 92 | 102 | `92`<!--rehype:style=background:#55FF55;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Yellow` 亮黄色 | 93 | 103 | `93`<!--rehype:style=background:#FFFF55;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Blue` 亮蓝色 | 94 | 104 | `94`<!--rehype:style=background:#5555FF;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Magenta` 亮紫色 | 95 | 105 | `95`<!--rehype:style=background:#FF55FF;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright Cyan` 亮青色 | 96 | 106 | `96`<!--rehype:style=background:#55FFFF;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n`Bright White` 浅灰 | 97 | 107 | `97`<!--rehype:style=background:#ffffff;padding:0.2rem 1.2rem;border: 1px solid #333;-->\n<!--rehype:className=show-header left-align-->\n\n### 可用功能\n<!--rehype:wrap-class=col-span-2-->\n\n:- | -- | --\n:- | -- | --\n`n` A | 光标上移 | 光标向指定的方向移动 `n`(默认1)格\n`n` B | 光标下移 | 光标向指定的方向移动 `n`(默认1)格\n`n` C | 光标前移 | 光标向指定的方向移动 `n`(默认1)格\n`n` D | 光标后移 | 光标向指定的方向移动 `n`(默认1)格\n`n` E | 光标移到下一行 | 光标移动到下面第 `n`(默认1)行的开头(非ANSI.SYS)\n`n` F | 光标移到上一行 | 光标移动到上面第 `n`(默认1)行的开头(非ANSI.SYS)\n`n` G | 光标水平绝对 | 光标移动到第 `n`(默认1)列(非ANSI.SYS)\n`n`;`m` H | 光标位置 | 光标移动到第 `n`行、第 `m` 列。值从1开始，且默认为1(左上角)\n`n` J | ED – 擦除显示 | 清除屏幕的部分区域\n`n` K | EL – 擦除行 | 清除行内的部分区域\n`n` S | SU – 向上滚动 | 整页向上滚动 `n`(默认1)行。新行添加到底部 (非ANSI.SYS)\n`n` T | SD – 向下滚动 | 整页向下滚动 `n`(默认1)行。新行添加到顶部 (非ANSI.SYS)\n`n`;`m`f | HVP – 水平垂直位置 | 同CUP\n`n` `m` | SGR – 选择图形再现 | 设置SGR参数，包括文字颜色\n`5i` | 打开辅助端口 | 启用辅助串行端口，通常用于本地串行打印机\n`4i` | 关闭辅助端口 | 禁用辅助串行端口，通常用于本地串行打印机\n`6n` | DSR – 设备状态报告 | 以 `ESC[n;mR` (就像在键盘上输入)向应用程序报告光标位置(CPR)，其中 `n`是行， `m` 是列\n`s` | SCP – 保存光标位置 | 保存光标的当前位置\n`u` | RCP – 恢复光标位置 | 恢复保存的光标位置\n<!--rehype:className=left-align-->\n\n另见\n----\n\n- [Shell 教程](https://jaywcjlove.github.io/shell-tutorial) _(jaywcjlove.github.io)_\n- [Devhints](https://devhints.io/bash) _(devhints.io)_\n- [Bash-hackers wiki](http://wiki.bash-hackers.org/) _(bash-hackers.org)_\n- [Shell vars](http://wiki.bash-hackers.org/syntax/shellvars) _(bash-hackers.org)_\n- [Learn bash in y minutes](https://learnxinyminutes.com/docs/bash/) _(learnxinyminutes.com)_\n- [Bash Guide](http://mywiki.wooledge.org/BashGuide) _(mywiki.wooledge.org)_\n- [ShellCheck](https://www.shellcheck.net/) _(shellcheck.net)_\n- [shell - Standard Shell](https://devmanual.gentoo.org/tools-reference/bash/index.html) _(devmanual.gentoo.org)_\n- [ANSI 转义序列](https://zh.wikipedia.org/wiki/ANSI转义序列) _(zh.wikipedia.org)_"
+      "body": "• [Shell 教程](https://jaywcjlove.github.io/shell-tutorial) _(jaywcjlove.github.io)_\n• [Devhints](https://devhints.io/bash) _(devhints.io)_\n• [Bash-hackers wiki](http://wiki.bash-hackers.org/) _(bash-hackers.org)_\n• [Shell vars](http://wiki.bash-hackers.org/syntax/shellvars) _(bash-hackers.org)_\n• [Learn bash in y minutes](https://learnxinyminutes.com/docs/bash/) _(learnxinyminutes.com)_\n• [Bash Guide](http://mywiki.wooledge.org/BashGuide) _(mywiki.wooledge.org)_\n• [ShellCheck](https://www.shellcheck.net/) _(shellcheck.net)_\n• [shell - Standard Shell](https://devmanual.gentoo.org/tools-reference/bash/index.html) _(devmanual.gentoo.org)_\n• [ANSI 转义序列](https://zh.wikipedia.org/wiki/ANSI转义序列) _(zh.wikipedia.org)_"
     }
   ],
   "source": {
@@ -1441,7 +1465,6 @@
     "path": "docs/bash.md",
     "ref": "main",
     "url": "https://github.com/jaywcjlove/reference/tree/main/docs/bash.md",
-    "generatedAt": "2025-12-16T07:36:11.122Z",
     "lang": "zh",
     "mode": "local"
   }
