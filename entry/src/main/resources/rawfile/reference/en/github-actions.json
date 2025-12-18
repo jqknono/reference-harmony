@@ -17,7 +17,7 @@
     {
       "id": "s2",
       "title": "Also see",
-      "startIndex": 76
+      "startIndex": 37
     }
   ],
   "cards": [
@@ -31,48 +31,36 @@
     {
       "id": "s1-1",
       "sectionId": "s1",
-      "title": "Introduction",
-      "kind": "text",
-      "body": "---"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
       "title": "Workflow Files",
       "kind": "text",
       "body": "Github Action Workflows are defined in special YAML files, typically stored in a `.github/workflows` directory in the\ngithub repository."
     },
     {
-      "id": "s1-3",
+      "id": "s1-2",
       "sectionId": "s1",
-      "title": "Workflow Files",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "name: hello-world\non: push\njobs:\n  hello-world-job:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Hello World\n        run: echo \"Hello World!\""
+      "code": "name%3A%20hello-world%0Aon%3A%20push%0Ajobs%3A%0A%20%20hello-world-job%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Hello%20World%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Hello%20World!%22",
+      "encoded": true
     },
     {
-      "id": "s1-4",
+      "id": "s1-3",
       "sectionId": "s1",
-      "title": "Workflow Files",
+      "title": "",
       "kind": "text",
       "body": "**Viewing your workflow runs**"
     },
     {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "",
+      "kind": "text",
+      "body": "%E2%80%A2%20On%20GitHub.com%2C%20navigate%20to%20the%20main%20page%20of%20the%20repository.%0A%E2%80%A2%20Under%20your%20repository%20name%2C%20click%20%60Actions%60.%0A%E2%80%A2%20In%20the%20left%20sidebar%2C%20click%20the%20workflow%20you%20want%20to%20display%2C%20in%20this%20example%20%22hello-world%22",
+      "encoded": true
+    },
+    {
       "id": "s1-5",
-      "sectionId": "s1",
-      "title": "Workflow Files",
-      "kind": "text",
-      "body": "• On GitHub.com, navigate to the main page of the repository.\n• Under your repository name, click `Actions`.\n• In the left sidebar, click the workflow you want to display, in this example \"hello-world\""
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "Workflow Files",
-      "kind": "text",
-      "body": "---"
-    },
-    {
-      "id": "s1-7",
       "sectionId": "s1",
       "title": "Workflow Syntax",
       "kind": "code",
@@ -80,364 +68,68 @@
       "code": "name: learn-github-actions\nrun-name: ${{ github.actor }} is learning GitHub Actions\non: [push]\njobs:\n  check-bats-version:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v3\n        with:\n          node-version: '14'\n      - run: npm install -g bats\n      - run: bats -v"
     },
     {
-      "id": "s1-8",
+      "id": "s1-6",
       "sectionId": "s1",
       "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`name:`",
-      "back": "Sets the name of the GitHub Actions workflow. It's a label used for identifying the workflow in the repository."
+      "kind": "text",
+      "body": "| Line                  | Description                                                                                                                                                                   |\n| :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| `name:`               | Sets the name of the GitHub Actions workflow. It's a label used for identifying the workflow in the repository.                                                               |\n| `run-name:`           | Sets a custom name for the run, using a GitHub context `${{ github.actor }}` to include the name of the user who initiated the run.                                           |\n| `on:`                 | Specifies the event that triggers the workflow. In this case, the workflow is triggered on any `push` event to the repository.                                                |\n| `jobs:`               | Defines a group of jobs that will be executed as part of the workflow. Each job runs independently in the workflow.                                                           |\n| `check-bats-version:` | Identifier for a specific job within the workflow. This job is named `check-bats-version`.                                                                                    |\n| `runs-on:`            | Specifies the type of machine to run the job on. Here, it's set to run on the latest version of Ubuntu.                                                                       |\n| `steps:`              | Contains a sequence of tasks (steps) that will be executed as part of the job.                                                                                                |\n| `uses:`               | Used to specify an action to include as part of a step. For example, `actions/checkout@v4` checks out the repository, and `actions/setup-node@v3` sets up a Node environment. |\n| `with:`               | Specifies additional parameters for the action. It's used in conjunction with `uses` to configure the action.                                                                 |\n| `node-version:`       | Contains parameter under `with`, specifying the version of Node.js to be set up by the `setup-node` action. In this case, it's set to version '14'.                           |"
     },
     {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`run-name:`",
-      "back": "Sets a custom name for the run, using a GitHub context `${{ github.actor }}` to include the name of the user who initiated the run."
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`on:`",
-      "back": "Specifies the event that triggers the workflow. In this case, the workflow is triggered on any `push` event to the repository."
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`jobs:`",
-      "back": "Defines a group of jobs that will be executed as part of the workflow. Each job runs independently in the workflow."
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`check-bats-version:`",
-      "back": "Identifier for a specific job within the workflow. This job is named `check-bats-version`."
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`runs-on:`",
-      "back": "Specifies the type of machine to run the job on. Here, it's set to run on the latest version of Ubuntu."
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`steps:`",
-      "back": "Contains a sequence of tasks (steps) that will be executed as part of the job."
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`uses:`",
-      "back": "Used to specify an action to include as part of a step. For example, `actions/checkout@v4` checks out the repository, and `actions/setup-node@v3` sets up a Node environment."
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`with:`",
-      "back": "Specifies additional parameters for the action. It's used in conjunction with `uses` to configure the action."
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "qa",
-      "front": "`node-version:`",
-      "back": "Contains parameter under `with`, specifying the version of Node.js to be set up by the `setup-node` action. In this case, it's set to version '14'."
-    },
-    {
-      "id": "s1-18",
+      "id": "s1-7",
       "sectionId": "s1",
       "title": "Events",
       "kind": "code",
       "lang": "yaml",
-      "code": "name: Event-trigger-on-push-example\n\non: [push] # event is defined here\n\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Run a script\n        run: echo \"This workflow runs on every push to the repository.\""
+      "code": "name%3A%20Event-trigger-on-push-example%0A%0Aon%3A%20%5Bpush%5D%20%23%20event%20is%20defined%20here%0A%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22This%20workflow%20runs%20on%20every%20push%20to%20the%20repository.%22",
+      "encoded": true
     },
     {
-      "id": "s1-19",
+      "id": "s1-8",
       "sectionId": "s1",
-      "title": "Events",
+      "title": "",
       "kind": "text",
       "body": "**Event Triggers**"
     },
     {
-      "id": "s1-20",
+      "id": "s1-9",
       "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`push`",
-      "back": "Triggers on a push to the repository."
+      "title": "",
+      "kind": "text",
+      "body": "| Event Name                    | Description                                     |\n| :---------------------------- | :---------------------------------------------- |\n| `push`                        | Triggers on a push to the repository.           |\n| `pull_request`                | Triggers on pull request events.                |\n| `pull_request_review`         | Triggers on pull request review events.         |\n| `pull_request_review_comment` | Triggers on comments on pull request reviews.   |\n| `pull_request_target`         | For workflows in forked repositories.           |\n| `fork`                        | Triggers when a repository is forked.           |\n| `issue_comment`               | Triggers on issue and PR comments.              |\n| `issues`                      | Triggers on issue events.                       |\n| `label`                       | Triggers on label events.                       |\n| `milestone`                   | Triggers on milestone events.                   |\n| `deployment`                  | Triggers on deployment.                         |\n| `deployment_status`           | Triggers on deployment status updates.          |\n| `public`                      | Triggers when repo goes from private to public. |\n| `repository_dispatch`         | Triggers on a custom repository event.          |\n| `schedule`                    | Triggers on a defined schedule.                 |\n| `workflow_dispatch`           | Allows manual triggering of the workflow.       |\n| `workflow_run`                | Triggers on the completion of another workflow. |\n| `create`                      | Triggers when a branch or tag is created.       |\n| `delete`                      | Triggers when a branch or tag is deleted.       |\n| `page_build`                  | Triggers on GitHub Pages build events.          |\n| `release`                     | Triggers on release events.                     |\n| `watch`                       | Triggers when someone stars the repo.           |\n| `registry_package`            | Triggers on registry package events.            |\n| `status`                      | Triggers on status updates to a Git commit.     |\n| `project`                     | Triggers on project board events.               |\n| `project_card`                | Triggers on project card events.                |\n| `project_column`              | Triggers on project column events.              |\n| `member`                      | Triggers on collaborator events.                |\n| `gollum`                      | Triggers on wiki page updates.                  |"
     },
     {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`pull_request`",
-      "back": "Triggers on pull request events."
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`pull_request_review`",
-      "back": "Triggers on pull request review events."
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`pull_request_review_comment`",
-      "back": "Triggers on comments on pull request reviews."
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`pull_request_target`",
-      "back": "For workflows in forked repositories."
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`fork`",
-      "back": "Triggers when a repository is forked."
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`issue_comment`",
-      "back": "Triggers on issue and PR comments."
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`issues`",
-      "back": "Triggers on issue events."
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`label`",
-      "back": "Triggers on label events."
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`milestone`",
-      "back": "Triggers on milestone events."
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`deployment`",
-      "back": "Triggers on deployment."
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`deployment_status`",
-      "back": "Triggers on deployment status updates."
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`public`",
-      "back": "Triggers when repo goes from private to public."
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`repository_dispatch`",
-      "back": "Triggers on a custom repository event."
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`schedule`",
-      "back": "Triggers on a defined schedule."
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`workflow_dispatch`",
-      "back": "Allows manual triggering of the workflow."
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`workflow_run`",
-      "back": "Triggers on the completion of another workflow."
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`create`",
-      "back": "Triggers when a branch or tag is created."
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`delete`",
-      "back": "Triggers when a branch or tag is deleted."
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`page_build`",
-      "back": "Triggers on GitHub Pages build events."
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`release`",
-      "back": "Triggers on release events."
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`watch`",
-      "back": "Triggers when someone stars the repo."
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`registry_package`",
-      "back": "Triggers on registry package events."
-    },
-    {
-      "id": "s1-43",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`status`",
-      "back": "Triggers on status updates to a Git commit."
-    },
-    {
-      "id": "s1-44",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`project`",
-      "back": "Triggers on project board events."
-    },
-    {
-      "id": "s1-45",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`project_card`",
-      "back": "Triggers on project card events."
-    },
-    {
-      "id": "s1-46",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`project_column`",
-      "back": "Triggers on project column events."
-    },
-    {
-      "id": "s1-47",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`member`",
-      "back": "Triggers on collaborator events."
-    },
-    {
-      "id": "s1-48",
-      "sectionId": "s1",
-      "title": "Events",
-      "kind": "qa",
-      "front": "`gollum`",
-      "back": "Triggers on wiki page updates."
-    },
-    {
-      "id": "s1-49",
+      "id": "s1-10",
       "sectionId": "s1",
       "title": "Jobs",
       "kind": "text",
       "body": "Single Job:"
     },
     {
-      "id": "s1-50",
+      "id": "s1-11",
       "sectionId": "s1",
-      "title": "Jobs",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
       "code": "name: Single Job\non: [push]\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Run a build script\n        run: script/build"
     },
     {
-      "id": "s1-51",
+      "id": "s1-12",
       "sectionId": "s1",
-      "title": "Jobs",
+      "title": "",
       "kind": "text",
       "body": "Multiple Jobs:"
     },
     {
-      "id": "s1-52",
+      "id": "s1-13",
       "sectionId": "s1",
-      "title": "Jobs",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "name: CI Workflow\n\non: [push]\n\njobs:\n  job-1:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Runs job 1\n        run: echo \"Running Job 1\"\n\n  job-2:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Runs job 2\n        run: echo \"Running Job 2\"\n\n  job-3:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Runs job 3\n        run: echo \"Running Job 3\""
+      "code": "name%3A%20CI%20Workflow%0A%0Aon%3A%20%5Bpush%5D%0A%0Ajobs%3A%0A%20%20job-1%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Runs%20job%201%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20Job%201%22%0A%0A%20%20job-2%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Runs%20job%202%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20Job%202%22%0A%0A%20%20job-3%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Runs%20job%203%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20Job%203%22",
+      "encoded": true
     },
     {
-      "id": "s1-53",
+      "id": "s1-14",
       "sectionId": "s1",
       "title": "Steps",
       "kind": "code",
@@ -445,104 +137,108 @@
       "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      # step 1\n      - name: Check out repository\n        uses: actions/checkout@v2\n\n      # step 2\n      - name: Set up Node.js\n        uses: actions/setup-node@v2\n        with:\n          node-version: '14'\n\n      # step 3\n      - name: Install dependencies\n        run: npm install\n\n      # step 4\n      - name: Run tests\n        run: npm test"
     },
     {
-      "id": "s1-54",
+      "id": "s1-15",
       "sectionId": "s1",
       "title": "Github Runners & Self Hosted Runners",
       "kind": "text",
       "body": "[Github Hosted Runner](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners):"
     },
     {
-      "id": "s1-55",
+      "id": "s1-16",
       "sectionId": "s1",
-      "title": "Github Runners & Self Hosted Runners",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "name: Workflow\non: [push]\njobs:\n  build:\n    runs-on: ubuntu-latest # default runner\n    steps:\n      - uses: actions/checkout@v2\n      - name: Run a script\n        run: echo \"Hello, world!\""
+      "code": "name%3A%20Workflow%0Aon%3A%20%5Bpush%5D%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%20%23%20default%20runner%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Hello%2C%20world!%22",
+      "encoded": true
     },
     {
-      "id": "s1-56",
+      "id": "s1-17",
       "sectionId": "s1",
-      "title": "Github Runners & Self Hosted Runners",
+      "title": "",
       "kind": "text",
       "body": "[Self Hosted Runner](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners)"
     },
     {
-      "id": "s1-57",
+      "id": "s1-18",
       "sectionId": "s1",
-      "title": "Github Runners & Self Hosted Runners",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "name: Workflow with Self-Hosted Runner\non: [push]\njobs:\n  build:\n    runs-on: self-hosted\n    steps:\n      - uses: actions/checkout@v2\n      - name: Run a script\n        run: echo \"Hello from self-hosted runner!\""
+      "code": "name%3A%20Workflow%20with%20Self-Hosted%20Runner%0Aon%3A%20%5Bpush%5D%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20self-hosted%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Hello%20from%20self-hosted%20runner!%22",
+      "encoded": true
     },
     {
-      "id": "s1-58",
+      "id": "s1-19",
       "sectionId": "s1",
       "title": "Environment Variables",
       "kind": "text",
       "body": "Custom variable defined using environments."
     },
     {
-      "id": "s1-59",
+      "id": "s1-20",
       "sectionId": "s1",
-      "title": "Environment Variables",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    env:\n      CUSTOM_VARIABLE: 'Hello, World!' # Custom variable defined using env:\n    steps:\n      - name: Check environment variable\n        run: echo \"Value of CUSTOM_VAR is $CUSTOM_VAR\""
+      "code": "jobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20env%3A%0A%20%20%20%20%20%20CUSTOM_VARIABLE%3A%20'Hello%2C%20World!'%20%23%20Custom%20variable%20defined%20using%20env%3A%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Check%20environment%20variable%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Value%20of%20CUSTOM_VAR%20is%20%24CUSTOM_VAR%22",
+      "encoded": true
     },
     {
-      "id": "s1-60",
+      "id": "s1-21",
       "sectionId": "s1",
       "title": "Secrets",
       "kind": "text",
       "body": "To add a new secret in your github repository nagivate to `Repository` > `Settings` > `Security` >\n`Secrets and Variables` > `Actions` > `New Repository Secret`"
     },
     {
-      "id": "s1-61",
+      "id": "s1-22",
       "sectionId": "s1",
-      "title": "Secrets",
+      "title": "",
       "kind": "text",
       "body": "Example Secrets workflow:"
     },
     {
-      "id": "s1-62",
+      "id": "s1-23",
       "sectionId": "s1",
-      "title": "Secrets",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "name: Workflow with Secrets\n\non: [push]\n\njobs:\n  example_job:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout repository\n        uses: actions/checkout@v2\n      - name: Use a secret\n        run: echo \"The secret is ${{ secrets.MY_SECRET }}\""
+      "code": "name%3A%20Workflow%20with%20Secrets%0A%0Aon%3A%20%5Bpush%5D%0A%0Ajobs%3A%0A%20%20example_job%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Checkout%20repository%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Use%20a%20secret%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22The%20secret%20is%20%24%7B%7B%20secrets.MY_SECRET%20%7D%7D%22",
+      "encoded": true
     },
     {
-      "id": "s1-63",
+      "id": "s1-24",
       "sectionId": "s1",
       "title": "Artifacts",
       "kind": "text",
       "body": "To access your artifact navigate to `Repository` > `Actions` > `Workflow Run` > `Artifacts`"
     },
     {
-      "id": "s1-64",
+      "id": "s1-25",
       "sectionId": "s1",
-      "title": "Artifacts",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
       "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Build project\n        run: make build\n      - name: Upload build artifact\n        uses: actions/upload-artifact@v3 # upload Artifacts prebuilt action\n        with:\n          name: my-artifact\n          path: path/to/artifact"
     },
     {
-      "id": "s1-65",
+      "id": "s1-26",
       "sectionId": "s1",
       "title": "Caching Dependencies",
       "kind": "text",
       "body": "Dependency caches stores downloaded packages or compiled binaries of your workflows."
     },
     {
-      "id": "s1-66",
+      "id": "s1-27",
       "sectionId": "s1",
-      "title": "Caching Dependencies",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
       "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Cache dependencies\n        uses: actions/cache@v2 # stores downloaded packages or compiled binaries\n        with:\n          path: |\n            path/to/dependencies\n            another/path\n          key: ${{ runner.os }}-deps-${{ hashFiles('**/lockfile') }} # hash of the dependency lock file is generated in the OS\n      - name: Install dependencies\n        run: install-command"
     },
     {
-      "id": "s1-67",
+      "id": "s1-28",
       "sectionId": "s1",
       "title": "Matrix Strategies",
       "kind": "code",
@@ -550,67 +246,71 @@
       "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    strategy:\n      matrix:\n        node-version: [12.x, 14.x, 16.x]\n        # matrix strategy runs enables you to run jobs across multiple combinations of environments and OS's\n        os: [ubuntu-latest, windows-latest, macOS-latest]\n    steps:\n      - uses: actions/checkout@v2\n      - name: Use Node.js ${{ matrix.node-version }}\n        uses: actions/setup-node@v1\n        with:\n          node-version: ${{ matrix.node-version }}\n      - run: npm install\n      - run: npm test\n        env:\n          CI: true"
     },
     {
-      "id": "s1-68",
+      "id": "s1-29",
       "sectionId": "s1",
       "title": "Conditions and Expressions",
       "kind": "text",
       "body": "Branch Conditions:"
     },
     {
-      "id": "s1-69",
+      "id": "s1-30",
       "sectionId": "s1",
-      "title": "Conditions and Expressions",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout code\n        uses: actions/checkout@v2\n      - name: Run build\n        if: github.ref == 'refs/heads/main' # \"Run build\" step will only execute if the current branch is main.\n        run: make build"
+      "code": "jobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Checkout%20code%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20build%0A%20%20%20%20%20%20%20%20if%3A%20github.ref%20%3D%3D%20'refs%2Fheads%2Fmain'%20%23%20%22Run%20build%22%20step%20will%20only%20execute%20if%20the%20current%20branch%20is%20main.%0A%20%20%20%20%20%20%20%20run%3A%20make%20build",
+      "encoded": true
     },
     {
-      "id": "s1-70",
+      "id": "s1-31",
       "sectionId": "s1",
-      "title": "Conditions and Expressions",
+      "title": "",
       "kind": "text",
       "body": "Event Trigger Conditions:"
     },
     {
-      "id": "s1-71",
+      "id": "s1-32",
       "sectionId": "s1",
-      "title": "Conditions and Expressions",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "jobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout code\n        uses: actions/checkout@v2\n      - name: Run tests\n        if: github.event_name == 'pull_request' # \"Run tests\" step is executed only when the workflow is triggered by a pull request event\n        run: npm test"
+      "code": "jobs%3A%0A%20%20test%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Checkout%20code%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20tests%0A%20%20%20%20%20%20%20%20if%3A%20github.event_name%20%3D%3D%20'pull_request'%20%23%20%22Run%20tests%22%20step%20is%20executed%20only%20when%20the%20workflow%20is%20triggered%20by%20a%20pull%20request%20event%0A%20%20%20%20%20%20%20%20run%3A%20npm%20test",
+      "encoded": true
     },
     {
-      "id": "s1-72",
+      "id": "s1-33",
       "sectionId": "s1",
       "title": "Workflow Commands",
       "kind": "text",
       "body": "Depending on your OS, if you are running ubuntu-latest, bash commands should work"
     },
     {
-      "id": "s1-73",
+      "id": "s1-34",
       "sectionId": "s1",
-      "title": "Workflow Commands",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "steps:\n  - name: Set environment variable\n    run: echo \"NAME=value\" >> $GITHUB_ENV"
+      "code": "steps%3A%0A%20%20-%20name%3A%20Set%20environment%20variable%0A%20%20%20%20run%3A%20echo%20%22NAME%3Dvalue%22%20%3E%3E%20%24GITHUB_ENV",
+      "encoded": true
     },
     {
-      "id": "s1-74",
+      "id": "s1-35",
       "sectionId": "s1",
       "title": "Concurrency",
       "kind": "text",
       "body": "The concurrency field creates a group based on the `github.head_ref`. If a new run starts within the same concurrency\ngroup, it cancels any in-progress runs."
     },
     {
-      "id": "s1-75",
+      "id": "s1-36",
       "sectionId": "s1",
-      "title": "Concurrency",
+      "title": "",
       "kind": "code",
       "lang": "yaml",
-      "code": "jobs:\n  my_job:\n    runs-on: ubuntu-latest\n    concurrency:\n      group: ${{ github.head_ref }}\n      cancel-in-progress: true\n    steps:\n      - name: Run a script\n        run: echo \"Running script...\""
+      "code": "jobs%3A%0A%20%20my_job%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20concurrency%3A%0A%20%20%20%20%20%20group%3A%20%24%7B%7B%20github.head_ref%20%7D%7D%0A%20%20%20%20%20%20cancel-in-progress%3A%20true%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20script...%22",
+      "encoded": true
     },
     {
-      "id": "s2-76",
+      "id": "s2-37",
       "sectionId": "s2",
       "title": "Also see",
       "kind": "text",

@@ -17,12 +17,12 @@
     {
       "id": "s2",
       "title": "Dockerfile 示例",
-      "startIndex": 38
+      "startIndex": 32
     },
     {
       "id": "s3",
       "title": "也可以看看",
-      "startIndex": 44
+      "startIndex": 38
     }
   ],
   "cards": [
@@ -43,14 +43,14 @@
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "继承",
+      "title": "",
       "kind": "text",
       "body": "• [Docker 备忘清单](./docker.md) _(github.io)_"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
-      "title": "继承",
+      "title": "",
       "kind": "code",
       "lang": "shell",
       "code": "docker build -f /path/to/a/Dockerfile ."
@@ -58,7 +58,7 @@
     {
       "id": "s1-4",
       "sectionId": "s1",
-      "title": "继承",
+      "title": "",
       "kind": "text",
       "body": "使用 `-f` 指向文件系统中任何位置的 `Dockerfile`。"
     },
@@ -73,14 +73,14 @@
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "继承",
+      "title": "",
       "kind": "text",
       "body": "示例"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
-      "title": "继承",
+      "title": "",
       "kind": "code",
       "lang": "dockerfile",
       "code": "FROM ruby:3.3.0\nFROM golang:1.20-alpine3.16 AS build-env"
@@ -88,29 +88,14 @@
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "变量 ENV",
+      "title": "%E5%8F%98%E9%87%8F%20ENV",
       "kind": "code",
       "lang": "dockerfile",
-      "code": "ENV <key>=<value> ..."
+      "code": "ENV%20%3Ckey%3E%3D%3Cvalue%3E%20...%0A%0AENV%20APP_HOME%20%2Fmyapp%0ARUN%20mkdir%20%24APP_HOME%0A%0AENV%20MY_NAME%3D%22John%20Doe%22%20MY_DOG%3DRex%5C%20The%5C%20Dog%20%5C%0A%20%20%20%20MY_CAT%3Dfluffy",
+      "encoded": true
     },
     {
       "id": "s1-9",
-      "sectionId": "s1",
-      "title": "变量 ENV",
-      "kind": "code",
-      "lang": "dockerfile",
-      "code": "ENV APP_HOME /myapp\nRUN mkdir $APP_HOME"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "变量 ENV",
-      "kind": "code",
-      "lang": "dockerfile",
-      "code": "ENV MY_NAME=\"John Doe\" MY_DOG=Rex\\ The\\ Dog \\\n    MY_CAT=fluffy"
-    },
-    {
-      "id": "s1-11",
       "sectionId": "s1",
       "title": "初始化",
       "kind": "code",
@@ -118,45 +103,38 @@
       "code": "RUN bundle install"
     },
     {
-      "id": "s1-12",
+      "id": "s1-10",
       "sectionId": "s1",
-      "title": "初始化",
+      "title": "",
       "kind": "text",
       "body": "`WORKDIR` 指令为任何 `RUN`、`CMD`、`ENTRYPOINT`、`COPY` 和 `ADD` 指令设置工作目录。"
     },
     {
-      "id": "s1-13",
+      "id": "s1-11",
       "sectionId": "s1",
-      "title": "初始化",
+      "title": "",
       "kind": "code",
       "lang": "dockerfile",
       "code": "WORKDIR /myapp"
     },
     {
-      "id": "s1-14",
+      "id": "s1-12",
       "sectionId": "s1",
-      "title": "初始化",
+      "title": "",
       "kind": "text",
       "body": "`VOLUME` 指令创建一个具有指定名称的挂载点，并将其标记为保存来自本机主机或其他容器的外部挂载卷。"
     },
     {
-      "id": "s1-15",
+      "id": "s1-13",
       "sectionId": "s1",
-      "title": "初始化",
+      "title": "",
       "kind": "code",
       "lang": "dockerfile",
-      "code": "VOLUME [\"/data\"]\n# 安装点规范"
+      "code": "VOLUME%20%5B%22%2Fdata%22%5D%0A%23%20%E5%AE%89%E8%A3%85%E7%82%B9%E8%A7%84%E8%8C%83%0A%0AADD%20file.xyz%20%2Ffile.xyz%0A%23%20%E5%A4%8D%E5%88%B6%0ACOPY%20--chown%3Duser%3Agroup%20host_file.xyz%20%2Fpath%2Fcontainer_file.xyz",
+      "encoded": true
     },
     {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "初始化",
-      "kind": "code",
-      "lang": "dockerfile",
-      "code": "ADD file.xyz /file.xyz\n# 复制\nCOPY --chown=user:group host_file.xyz /path/container_file.xyz"
-    },
-    {
-      "id": "s1-17",
+      "id": "s1-14",
       "sectionId": "s1",
       "title": "Onbuild",
       "kind": "code",
@@ -164,98 +142,87 @@
       "code": "ONBUILD RUN bundle install\n# 与另一个文件一起使用时\n\nONBUILD ADD . /app/src\nONBUILD RUN /usr/local/bin/python-build --dir /app/src"
     },
     {
-      "id": "s1-18",
+      "id": "s1-15",
       "sectionId": "s1",
-      "title": "Onbuild",
+      "title": "",
       "kind": "text",
       "body": "指令将触发指令添加到镜像中，以便稍后执行，此时镜像用作另一个构建的基础。"
     },
     {
-      "id": "s1-19",
+      "id": "s1-16",
       "sectionId": "s1",
-      "title": "在严格的 shell 中运行命令",
+      "title": "%E5%9C%A8%E4%B8%A5%E6%A0%BC%E7%9A%84%20shell%20%E4%B8%AD%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4",
       "kind": "code",
       "lang": "dockerfile",
-      "code": "ENV my_var\nSHELL [\"/bin/bash\", \"-euo\", \"pipefail\", \"-c\"]\n# 使用严格模式：\nRUN false         # ails 像使用 && 一样构建\nRUN echo \"$myvar\" # 由于拼写错误会抛出错误\nRUN true | false  # 将脱离管道"
+      "code": "ENV%20my_var%0ASHELL%20%5B%22%2Fbin%2Fbash%22%2C%20%22-euo%22%2C%20%22pipefail%22%2C%20%22-c%22%5D%0A%23%20%E4%BD%BF%E7%94%A8%E4%B8%A5%E6%A0%BC%E6%A8%A1%E5%BC%8F%EF%BC%9A%0ARUN%20false%20%20%20%20%20%20%20%20%20%23%20ails%20%E5%83%8F%E4%BD%BF%E7%94%A8%20%26%26%20%E4%B8%80%E6%A0%B7%E6%9E%84%E5%BB%BA%0ARUN%20echo%20%22%24myvar%22%20%23%20%E7%94%B1%E4%BA%8E%E6%8B%BC%E5%86%99%E9%94%99%E8%AF%AF%E4%BC%9A%E6%8A%9B%E5%87%BA%E9%94%99%E8%AF%AF%0ARUN%20true%20%7C%20false%20%20%23%20%E5%B0%86%E8%84%B1%E7%A6%BB%E7%AE%A1%E9%81%93",
+      "encoded": true
     },
     {
-      "id": "s1-20",
+      "id": "s1-17",
       "sectionId": "s1",
-      "title": "在严格的 shell 中运行命令",
+      "title": "",
       "kind": "text",
       "body": "使用 `shell` 将为 shell 命令打开严格模式。"
     },
     {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "%E5%91%BD%E4%BB%A4%20CMD",
+      "kind": "text",
+      "body": "%3A-%20%7C%20-%0A%3A-%20%7C%20-%0A%60CMD%20%5B%22executable%22%2C%22param1%22%2C%22param2%22%5D%60%20%7C%20(exec%20%E5%BD%A2%E5%BC%8F%EF%BC%8C%E8%BF%99%E6%98%AF%E9%A6%96%E9%80%89%E5%BD%A2%E5%BC%8F)%0A%60CMD%20%5B%22param1%22%2C%22param2%22%5D%60%20%7C%20(%E4%BD%9C%E4%B8%BA%20ENTRYPOINT%20%E7%9A%84%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0)%0A%60CMD%20command%20param1%20param2%60%20%7C%20(shell%E5%BD%A2%E5%BC%8F)%0A%3C!--rehype%3Aclass%3Dauto-wrap--%3E",
+      "encoded": true
+    },
+    {
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "EXPOSE%205900%0ACMD%20%5B%22bundle%22%2C%20%22exec%22%2C%20%22rails%22%2C%20%22server%22%5D",
+      "encoded": true
+    },
+    {
+      "id": "s1-20",
+      "sectionId": "s1",
+      "title": "%E5%85%A5%E5%8F%A3%E7%82%B9%20ENTRYPOINT",
+      "kind": "code",
+      "lang": "dockerfile",
+      "code": "ENTRYPOINT%20%5B%22executable%22%2C%20%22param1%22%2C%20%22param2%22%5D%0AENTRYPOINT%20command%20param1%20param2",
+      "encoded": true
+    },
+    {
       "id": "s1-21",
       "sectionId": "s1",
-      "title": "命令 CMD",
-      "kind": "text",
-      "body": ":- | -\n:- | -\n`CMD [\"executable\",\"param1\",\"param2\"]` | (exec 形式，这是首选形式)\n`CMD [\"param1\",\"param2\"]` | (作为 ENTRYPOINT 的默认参数)\n`CMD command param1 param2` | (shell形式)\n<!--rehype:class=auto-wrap-->"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "命令 CMD",
-      "kind": "code",
-      "lang": "dockerfile",
-      "code": "EXPOSE 5900\nCMD [\"bundle\", \"exec\", \"rails\", \"server\"]"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "入口点 ENTRYPOINT",
-      "kind": "code",
-      "lang": "dockerfile",
-      "code": "ENTRYPOINT [\"executable\", \"param1\", \"param2\"]\nENTRYPOINT command param1 param2"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "入口点 ENTRYPOINT",
+      "title": "",
       "kind": "text",
       "body": "配置将作为可执行文件运行的容器。"
     },
     {
-      "id": "s1-25",
+      "id": "s1-22",
       "sectionId": "s1",
-      "title": "入口点 ENTRYPOINT",
+      "title": "",
       "kind": "code",
       "lang": "dockerfile",
       "code": "ENTRYPOINT exec top -b"
     },
     {
-      "id": "s1-26",
+      "id": "s1-23",
       "sectionId": "s1",
-      "title": "入口点 ENTRYPOINT",
+      "title": "",
       "kind": "text",
       "body": "这将使用 shell 处理来替换 shell 变量，并将忽略任何 `CMD` 或 `docker run` 命令行参数。"
     },
     {
-      "id": "s1-27",
+      "id": "s1-24",
       "sectionId": "s1",
-      "title": "元数据 LABEL",
+      "title": "%E5%85%83%E6%95%B0%E6%8D%AE%20LABEL",
       "kind": "code",
       "lang": "dockerfile",
-      "code": "LABEL version=\"1.0\""
+      "code": "LABEL%20version%3D%221.0%22%0A%0ALABEL%20%22com.example.vendor%22%3D%22ACME%20Incorporated%22%0ALABEL%20com.example.label-with-value%3D%22foo%22%0ALABEL%20version%3D%221.0%22%0A%0ALABEL%20description%3D%22%E6%9C%AC%E6%96%87%E8%AF%B4%E6%98%8E%5C%0A%E6%A0%87%E7%AD%BE%E5%80%BC%E5%8F%AF%E4%BB%A5%E8%B7%A8%E8%B6%8A%E5%A4%9A%E8%A1%8C%E3%80%82%22%0ALABEL%20multi.label1%3D%22value1%22%20%5C%0A%20%20%20%20%20%20multi.label2%3D%22value2%22%20%5C%0A%20%20%20%20%20%20other%3D%22value3%22",
+      "encoded": true
     },
     {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "元数据 LABEL",
-      "kind": "code",
-      "lang": "dockerfile",
-      "code": "LABEL \"com.example.vendor\"=\"ACME Incorporated\"\nLABEL com.example.label-with-value=\"foo\"\nLABEL version=\"1.0\""
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "元数据 LABEL",
-      "kind": "code",
-      "lang": "dockerfile",
-      "code": "LABEL description=\"本文说明\\\n标签值可以跨越多行。\"\nLABEL multi.label1=\"value1\" \\\n      multi.label2=\"value2\" \\\n      other=\"value3\""
-    },
-    {
-      "id": "s1-30",
+      "id": "s1-25",
       "sectionId": "s1",
       "title": "ARG",
       "kind": "code",
@@ -263,22 +230,22 @@
       "code": "ARG <name>[=<default value>]"
     },
     {
-      "id": "s1-31",
+      "id": "s1-26",
       "sectionId": "s1",
-      "title": "ARG",
+      "title": "",
       "kind": "text",
       "body": "指令定义了一个变量，在构建时通过 `docker build` 命令使用 --build-arg `<varname>=<value>` 标志将其传递给构建器。"
     },
     {
-      "id": "s1-32",
+      "id": "s1-27",
       "sectionId": "s1",
-      "title": "ARG",
+      "title": "",
       "kind": "code",
       "lang": "dockerfile",
       "code": "FROM busybox\n# user1 默认值为 someuser\nARG user1=someuser\nARG buildno=1"
     },
     {
-      "id": "s1-33",
+      "id": "s1-28",
       "sectionId": "s1",
       "title": ".dockerignore 文件",
       "kind": "code",
@@ -286,35 +253,28 @@
       "code": "# 注释说明\n*/temp*\n*/*/temp*\ntemp?"
     },
     {
-      "id": "s1-34",
+      "id": "s1-29",
       "sectionId": "s1",
-      "title": ".dockerignore 文件",
-      "kind": "text",
-      "body": "----"
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": ".dockerignore 文件",
+      "title": "",
       "kind": "text",
       "body": ":- | -\n:- | -\n`# comment` | 忽略\n`*/temp*` | 在根的任何直接子目录中<br />排除名称以 `temp` 开头的文件和目录\n`*/*/temp*` | 从根以下两级的任何子目录中<br />排除以 `temp` 开头的文件和目录\n`temp?` | 排除根目录中名称为<br /> `temp` 的单字符扩展名的文件和目录\n<!--rehype:class=auto-wrap-->"
     },
     {
-      "id": "s1-36",
+      "id": "s1-30",
       "sectionId": "s1",
-      "title": ".dockerignore 文件",
+      "title": "",
       "kind": "text",
       "body": "如果此文件存在，排除与其中的模式匹配的文件和目录，有利于避免 `ADD` 或 `COPY` 将敏感文件添加到镜像中。匹配是使用 Go 的 [filepath.Match](https://golang.org/pkg/path/filepath#Match) 规则完成的。"
     },
     {
-      "id": "s1-37",
+      "id": "s1-31",
       "sectionId": "s1",
       "title": "主要命令",
       "kind": "text",
       "body": "命令 | 说明\n:- | -\n`FROM image` | 构建的基础镜像\n~~`MAINTAINER email`~~ | (已弃用)维护者的名字\n`COPY [--chown=<user>:<group>] <src>... <dest>` | 将上下文中的路径复制到位置 `dest` 的容器中\n`ADD [--chown=<user>:<group>] <src>... <dest>` | 与 `COPY` 相同，但解压缩存档并接受 http url。\n`RUN <command>` | 在容器内运行任意命令。\n`USER <user>[:<group>]` | 设置默认用户名。\n`WORKDIR /path/to/workdir` | 设置默认工作目录。\n`CMD command param1 param2` | 设置默认命令\n`ENV <key>=<value> ...` | 设置环境变量\n`EXPOSE <port> [<port>/<protocol>...]` | 运行时侦听指定的网络端口\n<!--rehype:class=auto-wrap-->"
     },
     {
-      "id": "s2-38",
+      "id": "s2-32",
       "sectionId": "s2",
       "title": "服务静态网站的最小 Docker 镜像",
       "kind": "code",
@@ -322,44 +282,46 @@
       "code": "FROM wcjiang/docker-static-website:latest\n# 使用 .dockerignore 文件来控制镜像中的内容！\n# 复制当前目录内容，到容器中\nCOPY ./ ."
     },
     {
-      "id": "s2-39",
+      "id": "s2-33",
       "sectionId": "s2",
-      "title": "服务静态网站的最小 Docker 镜像",
+      "title": "",
       "kind": "text",
       "body": "这会产生一个 **`154KB +`** 的单层镜像。 如果您需要以不同的方式配置 `httpd`，您可以覆盖 CMD 行："
     },
     {
-      "id": "s2-40",
+      "id": "s2-34",
       "sectionId": "s2",
-      "title": "服务静态网站的最小 Docker 镜像",
+      "title": "",
       "kind": "code",
       "lang": "dockerfile",
-      "code": "FROM wcjiang/docker-static-website:latest\nCOPY . .\n\nCMD [\"/busybox\",\"httpd\",\"-f\",\"-v\",\"-p\",\"3000\",\"-c\",\"httpd.conf\"]"
+      "code": "FROM%20wcjiang%2Fdocker-static-website%3Alatest%0ACOPY%20.%20.%0A%0ACMD%20%5B%22%2Fbusybox%22%2C%22httpd%22%2C%22-f%22%2C%22-v%22%2C%22-p%22%2C%223000%22%2C%22-c%22%2C%22httpd.conf%22%5D",
+      "encoded": true
     },
     {
-      "id": "s2-41",
+      "id": "s2-35",
       "sectionId": "s2",
-      "title": "服务静态网站的最小 Docker 镜像",
+      "title": "",
       "kind": "text",
       "body": "缩小镜像过程[查看原文](https://lipanski.com/posts/smallest-docker-image-static-website)，镜像 [Dockerfile 源码](https://github.com/forksss/docker-static-website)。"
     },
     {
-      "id": "s2-42",
+      "id": "s2-36",
       "sectionId": "s2",
-      "title": "Docker 镜像多阶段构建",
+      "title": "Docker%20%E9%95%9C%E5%83%8F%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA",
       "kind": "code",
       "lang": "dockerfile",
-      "code": "FROM golang:alpine as builder\nRUN apk --no-cache add git\nWORKDIR /go/src/github.com/go/helloworld/\nRUN go get -d -v github.com/go-sql-driver/mysql\nCOPY app.go .\nRUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o app .\n\nFROM alpine:latest as prod\nRUN apk --no-cache add ca-certificates\nWORKDIR /root/\nCOPY --from=builder /go/src/github.com/go/helloworld/app .\nCMD [\"./app\"]"
+      "code": "FROM%20golang%3Aalpine%20as%20builder%0ARUN%20apk%20--no-cache%20add%20git%0AWORKDIR%20%2Fgo%2Fsrc%2Fgithub.com%2Fgo%2Fhelloworld%2F%0ARUN%20go%20get%20-d%20-v%20github.com%2Fgo-sql-driver%2Fmysql%0ACOPY%20app.go%20.%0ARUN%20CGO_ENABLED%3D0%20GOOS%3Dlinux%20go%20build%20-a%20-installsuffix%20cgo%20-o%20app%20.%0A%0AFROM%20alpine%3Alatest%20as%20prod%0ARUN%20apk%20--no-cache%20add%20ca-certificates%0AWORKDIR%20%2Froot%2F%0ACOPY%20--from%3Dbuilder%20%2Fgo%2Fsrc%2Fgithub.com%2Fgo%2Fhelloworld%2Fapp%20.%0ACMD%20%5B%22.%2Fapp%22%5D",
+      "encoded": true
     },
     {
-      "id": "s2-43",
+      "id": "s2-37",
       "sectionId": "s2",
-      "title": "Docker 镜像多阶段构建",
+      "title": "",
       "kind": "text",
       "body": "使用多阶段构建能将构建依赖留在 builder 镜像中，只将编译完成后的二进制文件拷贝到运行环境中，大大减少镜像体积。"
     },
     {
-      "id": "s3-44",
+      "id": "s3-38",
       "sectionId": "s3",
       "title": "也可以看看",
       "kind": "text",

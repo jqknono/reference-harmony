@@ -33,20 +33,13 @@
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "Hello World",
-      "kind": "text",
-      "body": "#### hello.py"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "Hello World",
+      "title": "Hello World - hello.py",
       "kind": "code",
       "lang": "python",
       "code": "# 导入 Flask 类\nfrom flask import Flask\n\n# 创建应用实例\napp = Flask(__name__) # 'Flask' 参数是 应用程序模块 或 包 的名称\n                      # __name__是适用于大多数情况的便捷快捷方式\n\n# 路由 (装饰器)\n@app.route('/')           # route()装饰器告诉 Flask 什么路径触发下面的功能\ndef hello():\n   # 该函数返回我们想要在浏览器中显示的消息内容\n   return 'Hello World!'\n   # 默认类型 HTML, 因此字符串中的 HTML 将被浏览器渲染\n# 启动服务\nif __name__ == '__main__':\n   app.run()"
     },
     {
-      "id": "s1-4",
+      "id": "s1-3",
       "sectionId": "s1",
       "title": "运行 `hello.py` 程序",
       "kind": "code",
@@ -54,45 +47,39 @@
       "code": "$ python hello.py\n * Serving Flask app 'hello'\n * Running on http://127.0.0.1:5000\n * Press CTRL+C to quit"
     },
     {
-      "id": "s1-5",
+      "id": "s1-4",
       "sectionId": "s1",
-      "title": "运行 `hello.py` 程序",
-      "kind": "text",
-      "body": "#### 或"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "运行 `hello.py` 程序",
+      "title": "或",
       "kind": "code",
       "lang": "shell",
       "code": "$ flask --app hello run\n * Serving Flask app 'hello'\n * Running on http://127.0.0.1:5000\n * Press CTRL+C to quit\n$ flask run --host=0.0.0.0"
     },
     {
-      "id": "s1-7",
+      "id": "s1-5",
       "sectionId": "s1",
-      "title": "运行 `hello.py` 程序",
+      "title": "",
       "kind": "text",
       "body": "启用调试模式，使用 `--debug` 选项"
     },
     {
-      "id": "s1-8",
+      "id": "s1-6",
       "sectionId": "s1",
-      "title": "运行 `hello.py` 程序",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ flask --app hello --debug run"
     },
     {
-      "id": "s1-9",
+      "id": "s1-7",
       "sectionId": "s1",
-      "title": "HTML 转义",
+      "title": "HTML%20%E8%BD%AC%E4%B9%89",
       "kind": "code",
       "lang": "py",
-      "code": "from markupsafe import escape\n\n@app.route(\"/<name>\")\ndef hello(name):\n    return f\"Hello, {escape(name)}!\""
+      "code": "from%20markupsafe%20import%20escape%0A%0A%40app.route(%22%2F%3Cname%3E%22)%0Adef%20hello(name)%3A%0A%20%20%20%20return%20f%22Hello%2C%20%7Bescape(name)%7D!%22",
+      "encoded": true
     },
     {
-      "id": "s1-10",
+      "id": "s1-8",
       "sectionId": "s1",
       "title": "路由",
       "kind": "code",
@@ -100,7 +87,7 @@
       "code": "@app.route('/')\ndef index():\n    return 'Index Page'\n\n@app.route('/hello')\ndef hello():\n    return 'Hello, World'"
     },
     {
-      "id": "s1-11",
+      "id": "s1-9",
       "sectionId": "s1",
       "title": "变量规则",
       "kind": "code",
@@ -108,21 +95,21 @@
       "code": "from markupsafe import escape\n\n@app.route('/user/<username>')\ndef show_user_profile(username):\n    # 显示该用户的用户个人资料\n    return f'User {escape(username)}'\n\n@app.route('/post/<int:post_id>')\ndef show_post(post_id):\n    # 显示给定id的帖子，id是一个整数\n    return f'Post {post_id}'\n\n@app.route('/path/<path:subpath>')\ndef show_subpath(subpath):\n    # 在 /path/ 之后显示子路径\n    return f'Subpath {escape(subpath)}'"
     },
     {
-      "id": "s1-12",
+      "id": "s1-10",
       "sectionId": "s1",
-      "title": "变量规则",
+      "title": "",
       "kind": "text",
       "body": "转换器类型："
     },
     {
-      "id": "s1-13",
+      "id": "s1-11",
       "sectionId": "s1",
-      "title": "变量规则",
+      "title": "",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`string` | （默认）接受任何没有斜杠的文本\n`int` | 接受正整数\n`float` | 接受正浮点值\n`path` | 像字符串但也接受斜线\n`uuid` | 接受 UUID 字符串"
     },
     {
-      "id": "s1-14",
+      "id": "s1-12",
       "sectionId": "s1",
       "title": "唯一 URL / 重定向行为",
       "kind": "code",
@@ -130,14 +117,14 @@
       "code": "@app.route('/projects/')\ndef projects():\n    return 'The project page'\n\n@app.route('/about')\ndef about():\n    return 'The about page'"
     },
     {
-      "id": "s1-15",
+      "id": "s1-13",
       "sectionId": "s1",
-      "title": "唯一 URL / 重定向行为",
+      "title": "",
       "kind": "text",
       "body": "项目端点的规范 `URL` 有一个尾部斜杠。它类似于文件系统中的文件夹。如果您访问没有尾部斜杠 (`/projects`) 的 `URL`，`Flask` 会将您重定向到带有尾部斜杠 (`/projects/`) 的规范 `URL`"
     },
     {
-      "id": "s1-16",
+      "id": "s1-14",
       "sectionId": "s1",
       "title": "URL 建设",
       "kind": "code",
@@ -145,94 +132,98 @@
       "code": "from flask import url_for\n\n@app.route('/')\ndef index():\n    return 'index'\n\n@app.route('/login')\ndef login():\n    return 'login'\n\n@app.route('/user/<username>')\ndef profile(username):\n    return f'{username}\\'s profile'\n\nwith app.test_request_context():\n    print(url_for('index'))\n    print(url_for('login'))\n    print(url_for('login', next='/'))\n    print(url_for('profile', username='John Doe'))"
     },
     {
-      "id": "s1-17",
+      "id": "s1-15",
       "sectionId": "s1",
       "title": "HTTP 方法",
       "kind": "text",
       "body": "默认路由仅响应 `GET` 请求。可以使用 `route()` 装饰器的方法参数来处理不同的 `HTTP` 方法"
     },
     {
-      "id": "s1-18",
+      "id": "s1-16",
       "sectionId": "s1",
-      "title": "HTTP 方法",
+      "title": "",
       "kind": "code",
       "lang": "py",
       "code": "from flask import request\n\n@app.route('/login',methods=['GET','POST'])\ndef login():\n    if request.method == 'POST':\n        return do_the_login()\n    else:\n        return show_the_login_form()"
     },
     {
-      "id": "s1-19",
+      "id": "s1-17",
       "sectionId": "s1",
-      "title": "HTTP 方法",
+      "title": "",
       "kind": "text",
       "body": "您还可以将不同方法的视图分成不同的函数。 `Flask` 为每个常见的 `HTTP` 方法提供了一种快捷方式，用于使用 `get()`、`post()` 等来装饰此类路由"
     },
     {
-      "id": "s1-20",
+      "id": "s1-18",
       "sectionId": "s1",
-      "title": "HTTP 方法",
+      "title": "",
       "kind": "code",
       "lang": "py",
       "code": "@app.get('/login')\ndef login_get():\n    return show_the_login_form()\n\n@app.post('/login')\ndef login_post():\n    return do_the_login()"
     },
     {
-      "id": "s1-21",
+      "id": "s1-19",
       "sectionId": "s1",
       "title": "Blueprint",
       "kind": "text",
       "body": "创建蓝图Bp1"
     },
     {
-      "id": "s1-22",
+      "id": "s1-20",
       "sectionId": "s1",
-      "title": "Blueprint",
+      "title": "",
       "kind": "code",
       "lang": "py",
-      "code": "from flask import Blueprint, abort, jsonify\n\n# 定义Bp1，并定义url前缀为/img\nBp1 = Blueprint('imgBlue', __name__, template_folder='templates', url_prefix='/img')\n\n\n@Bp1.route('/getimg')\ndef getImg():\n    try:\n        return jsonify(name=\"img\", size=\"100KB\")\n    except Exception as e:\n        abort(e)"
+      "code": "from%20flask%20import%20Blueprint%2C%20abort%2C%20jsonify%0A%0A%23%20%E5%AE%9A%E4%B9%89Bp1%EF%BC%8C%E5%B9%B6%E5%AE%9A%E4%B9%89url%E5%89%8D%E7%BC%80%E4%B8%BA%2Fimg%0ABp1%20%3D%20Blueprint('imgBlue'%2C%20__name__%2C%20template_folder%3D'templates'%2C%20url_prefix%3D'%2Fimg')%0A%0A%0A%40Bp1.route('%2Fgetimg')%0Adef%20getImg()%3A%0A%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20return%20jsonify(name%3D%22img%22%2C%20size%3D%22100KB%22)%0A%20%20%20%20except%20Exception%20as%20e%3A%0A%20%20%20%20%20%20%20%20abort(e)",
+      "encoded": true
     },
     {
-      "id": "s1-23",
+      "id": "s1-21",
       "sectionId": "s1",
-      "title": "Blueprint",
+      "title": "",
       "kind": "text",
       "body": "创建蓝图Bp2"
     },
     {
-      "id": "s1-24",
+      "id": "s1-22",
       "sectionId": "s1",
-      "title": "Blueprint",
+      "title": "",
       "kind": "code",
       "lang": "py",
-      "code": "from flask import Blueprint, abort, jsonify\n\n# 定义Bp2，并定义url前缀为/video\nBp2 = Blueprint('videoBlue', __name__, template_folder='templates', url_prefix='/video')\n\n\n@Bp2.route('/getvideo')\ndef getvideo():\n    try:\n        return jsonify(name=\"video\", size=\"100GB\")\n    except Exception as e:\n        abort(e)"
+      "code": "from%20flask%20import%20Blueprint%2C%20abort%2C%20jsonify%0A%0A%23%20%E5%AE%9A%E4%B9%89Bp2%EF%BC%8C%E5%B9%B6%E5%AE%9A%E4%B9%89url%E5%89%8D%E7%BC%80%E4%B8%BA%2Fvideo%0ABp2%20%3D%20Blueprint('videoBlue'%2C%20__name__%2C%20template_folder%3D'templates'%2C%20url_prefix%3D'%2Fvideo')%0A%0A%0A%40Bp2.route('%2Fgetvideo')%0Adef%20getvideo()%3A%0A%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20return%20jsonify(name%3D%22video%22%2C%20size%3D%22100GB%22)%0A%20%20%20%20except%20Exception%20as%20e%3A%0A%20%20%20%20%20%20%20%20abort(e)",
+      "encoded": true
     },
     {
-      "id": "s1-25",
+      "id": "s1-23",
       "sectionId": "s1",
-      "title": "Blueprint",
+      "title": "",
       "kind": "text",
       "body": "在flask app中引用蓝图Bp1和Bp2"
     },
     {
-      "id": "s1-26",
+      "id": "s1-24",
       "sectionId": "s1",
-      "title": "Blueprint",
+      "title": "",
       "kind": "code",
       "lang": "py",
-      "code": "from flask import Flask, jsonify\nfrom lantu.img import Bp1\nfrom lantu.video import Bp2\n\napp = Flask(__name__)\n\n# 注册蓝图到app\napp.register_blueprint(Bp1)\napp.register_blueprint(Bp2)\n\n\n@app.route('/')\ndef index():\n    return jsonify(name='phyger')\n\n\nif __name__ == '__main__':\n    app.run(host=\"127.0.0.1\", debug=True)"
+      "code": "from%20flask%20import%20Flask%2C%20jsonify%0Afrom%20lantu.img%20import%20Bp1%0Afrom%20lantu.video%20import%20Bp2%0A%0Aapp%20%3D%20Flask(__name__)%0A%0A%23%20%E6%B3%A8%E5%86%8C%E8%93%9D%E5%9B%BE%E5%88%B0app%0Aapp.register_blueprint(Bp1)%0Aapp.register_blueprint(Bp2)%0A%0A%0A%40app.route('%2F')%0Adef%20index()%3A%0A%20%20%20%20return%20jsonify(name%3D'phyger')%0A%0A%0Aif%20__name__%20%3D%3D%20'__main__'%3A%0A%20%20%20%20app.run(host%3D%22127.0.0.1%22%2C%20debug%3DTrue)",
+      "encoded": true
     },
     {
-      "id": "s1-27",
+      "id": "s1-25",
       "sectionId": "s1",
-      "title": "Blueprint",
+      "title": "",
       "kind": "text",
       "body": "简单测试"
     },
     {
-      "id": "s1-28",
+      "id": "s1-26",
       "sectionId": "s1",
-      "title": "Blueprint",
+      "title": "",
       "kind": "code",
       "lang": "bash",
-      "code": "curl http://127.0.0.1:5000/\n>> {\"name\":\"phyger\"}\n\ncurl http://127.0.0.1:5000/img/getimg\n>> {\"name\": \"img\", \"size\": \"100KB\"}\n\ncurl http://127.0.0.1:5000/video/getvideo\n>> {\"name\": \"video\", \"size\": \"100GB\"}"
+      "code": "curl%20http%3A%2F%2F127.0.0.1%3A5000%2F%0A%3E%3E%20%7B%22name%22%3A%22phyger%22%7D%0A%0Acurl%20http%3A%2F%2F127.0.0.1%3A5000%2Fimg%2Fgetimg%0A%3E%3E%20%7B%22name%22%3A%20%22img%22%2C%20%22size%22%3A%20%22100KB%22%7D%0A%0Acurl%20http%3A%2F%2F127.0.0.1%3A5000%2Fvideo%2Fgetvideo%0A%3E%3E%20%7B%22name%22%3A%20%22video%22%2C%20%22size%22%3A%20%22100GB%22%7D",
+      "encoded": true
     }
   ],
   "source": {

@@ -17,32 +17,32 @@
     {
       "id": "s2",
       "title": "XPath Expressions",
-      "startIndex": 41
+      "startIndex": 10
     },
     {
       "id": "s3",
       "title": "XPath Predicates",
-      "startIndex": 49
+      "startIndex": 14
     },
     {
       "id": "s4",
       "title": "XPath Functions",
-      "startIndex": 62
+      "startIndex": 25
     },
     {
       "id": "s5",
       "title": "XPath Axes",
-      "startIndex": 68
+      "startIndex": 29
     },
     {
       "id": "s6",
       "title": "XPath More examples",
-      "startIndex": 96
+      "startIndex": 42
     },
     {
       "id": "s7",
       "title": "Also see",
-      "startIndex": 105
+      "startIndex": 51
     }
   ],
   "cards": [
@@ -63,433 +63,136 @@
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "Getting started",
+      "title": "",
       "kind": "text",
       "body": "Test in Firefox or Chromium based browser console:"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
-      "title": "Getting started",
+      "title": "",
       "kind": "code",
       "lang": "console",
-      "code": "$x('/html/body')\n$x('//h1')\n$x('//h1')[0].innerText\n$x('//a[text()=\"XPath\"]')[0].click()"
+      "code": "%24x('%2Fhtml%2Fbody')%0A%24x('%2F%2Fh1')%0A%24x('%2F%2Fh1')%5B0%5D.innerText%0A%24x('%2F%2Fa%5Btext()%3D%22XPath%22%5D')%5B0%5D.click()",
+      "encoded": true
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "Descendant selectors",
-      "kind": "qa",
-      "front": "`//h1`",
-      "back": "h1"
+      "kind": "text",
+      "body": "| Xpath        | CSS          |\n| ------------ | ------------ |\n| `//h1`       | h1           |\n| `//div//p`   | div p        |\n| `//ul/li`    | ul > li      |\n| `//ul/li/a`  | ul > li > a  |\n| `//div/*`    | div > \\*     |\n| `/`          | :root        |\n| `/html/body` | :root > body |"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "Descendant selectors",
-      "kind": "qa",
-      "front": "`//div//p`",
-      "back": "div p"
+      "title": "Order%20selectors",
+      "kind": "text",
+      "body": "%7C%20Xpath%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20CSS%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-------------------%20%7C%20--------------------%20%7C%0A%7C%20%60%2F%2Ful%2Fli%5B1%5D%60%20%20%20%20%20%20%20%20%7C%20ul%20%3E%20li%3Afirst-child%20%20%7C%0A%7C%20%60%2F%2Ful%2Fli%5B2%5D%60%20%20%20%20%20%20%20%20%7C%20ul%20%3E%20li%3Anth-child(2)%20%7C%0A%7C%20%60%2F%2Ful%2Fli%5Blast()%5D%60%20%20%20%7C%20ul%20%3E%20li%3Alast-child%20%20%20%7C%0A%7C%20%60%2F%2Fli%5B%40id%3D%22id%22%5D%5B1%5D%60%20%7C%20li%23id%3Afirst-child%20%20%20%20%7C%0A%7C%20%60%2F%2Fa%5B1%5D%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20a%3Afirst-child%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Fa%5Blast()%5D%60%20%20%20%20%20%20%20%7C%20a%3Alast-child%20%20%20%20%20%20%20%20%20%7C",
+      "encoded": true
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "Descendant selectors",
-      "kind": "qa",
-      "front": "`//ul/li`",
-      "back": "ul > li"
+      "title": "Attribute%20selectors",
+      "kind": "text",
+      "body": "%7C%20Xpath%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20CSS%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-------------------------------%20%7C%20--------------------%20%7C%0A%7C%20%60%2F%2F*%5B%40id%3D%22id%22%5D%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%23id%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2F*%5B%40class%3D%22class%22%5D%60%20%20%20%20%20%20%20%20%20%20%20%7C%20.class%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Finput%5B%40type%3D%22submit%22%5D%60%20%20%20%20%20%20%20%7C%20input%5Btype%3D%22submit%22%5D%20%7C%0A%7C%20%60%2F%2Fa%5B%40id%3D%22abc%22%5D%5B%40for%3D%22xyz%22%5D%60%20%20%20%20%7C%20a%23abc%5Bfor%3D%22xyz%22%5D%20%20%20%20%20%7C%0A%7C%20%60%2F%2Fa%5B%40rel%5D%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20a%5Brel%5D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Fa%5Bstarts-with(%40href%2C%20'%2F')%5D%60%20%20%7C%20a%5Bhref%5E%3D'%2F'%5D%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Fa%5Bends-with(%40href%2C%20'.pdf')%5D%60%20%7C%20a%5Bhref%24%3D'pdf'%5D%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Fa%5Bcontains(%40href%2C%20'%3A%2F%2F')%5D%60%20%20%20%7C%20a%5Bhref*%3D'%60%3A%60%2F%2F'%5D%20%20%20%20%20%7C%0A%7C%20%60%2F%2Fa%5Bcontains(%40rel%2C%20'help')%5D%60%20%20%20%7C%20a%5Brel~%3D'help'%5D%20%20%20%20%20%20%20%7C",
+      "encoded": true
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
-      "title": "Descendant selectors",
-      "kind": "qa",
-      "front": "`//ul/li/a`",
-      "back": "ul > li > a"
+      "title": "Siblings",
+      "kind": "text",
+      "body": "%7C%20Xpath%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20CSS%20%20%20%20%20%20%7C%0A%7C%20------------------------------------%20%7C%20--------%20%7C%0A%7C%20%60%2F%2Fh1%2Ffollowing-sibling%3A%3Aul%60%20%20%20%20%20%20%20%20%20%7C%20h1%20~%20ul%20%20%7C%0A%7C%20%60%2F%2Fh1%2Ffollowing-sibling%3A%3Aul%5B1%5D%60%20%20%20%20%20%20%7C%20h1%20%2B%20ul%20%20%7C%0A%7C%20%60%2F%2Fh1%2Ffollowing-sibling%3A%3A%5B%40id%3D%22id%22%5D%60%20%7C%20h1%20~%20%23id%20%7C",
+      "encoded": true
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "Descendant selectors",
-      "kind": "qa",
-      "front": "`//div/*`",
-      "back": "div > \\*"
+      "title": "jQuery",
+      "kind": "text",
+      "body": "| Xpath                            | CSS                        |\n| -------------------------------- | -------------------------- |\n| `//ul/li/..`                     | $('ul > li').parent()      |\n| `//li/ancestor-or-self::section` | $('li').closest('section') |\n| `//a/@href`                      | $('a').attr('href')        |\n| `//span/text()`                  | $('span').text()           |"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
-      "title": "Descendant selectors",
-      "kind": "qa",
-      "front": "`/`",
-      "back": ":root"
+      "title": "Misc%20selectors",
+      "kind": "text",
+      "body": "%7C%20Xpath%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20CSS%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20---------------------------------%20%7C%20-------------------------%20%7C%20---------------------%20%7C%0A%7C%20%60%2F%2Fh1%5Bnot(%40id)%5D%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20h1%3Anot(%5Bid%5D)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Fbutton%5Btext()%3D%22Submit%22%5D%60%20%20%20%20%20%20%20%7C%20Text%20match%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Fbutton%5Bcontains(text()%2C%22Go%22)%5D%60%20%7C%20Text%20contains%20(substring)%20%7C%0A%7C%20%60%2F%2Fproduct%5B%40price%20%3E%202.50%5D%60%20%20%20%20%20%20%20%20%7C%20Arithmetic%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Ful%5B*%5D%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Has%20children%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Ful%5Bli%5D%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Has%20children%20(specific)%20%20%20%7C%0A%7C%20%60%2F%2Fa%5B%40name%20or%20%40href%5D%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Or%20logic%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2Fa%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%2F%2Fdiv%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Union%20(joins%20results)%20%7C",
+      "encoded": true
     },
     {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "Descendant selectors",
-      "kind": "qa",
-      "front": "`/html/body`",
-      "back": ":root > body"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "Order selectors",
-      "kind": "qa",
-      "front": "`//ul/li[1]`",
-      "back": "ul > li:first-child"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "Order selectors",
-      "kind": "qa",
-      "front": "`//ul/li[2]`",
-      "back": "ul > li:nth-child(2)"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "Order selectors",
-      "kind": "qa",
-      "front": "`//ul/li[last()]`",
-      "back": "ul > li:last-child"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "Order selectors",
-      "kind": "qa",
-      "front": "`//li[@id=\"id\"][1]`",
-      "back": "li#id:first-child"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "Order selectors",
-      "kind": "qa",
-      "front": "`//a[1]`",
-      "back": "a:first-child"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "Order selectors",
-      "kind": "qa",
-      "front": "`//a[last()]`",
-      "back": "a:last-child"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "Attribute selectors",
-      "kind": "qa",
-      "front": "`//*[@id=\"id\"]`",
-      "back": "#id"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "Attribute selectors",
-      "kind": "qa",
-      "front": "`//*[@class=\"class\"]`",
-      "back": ".class"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "Attribute selectors",
-      "kind": "qa",
-      "front": "`//input[@type=\"submit\"]`",
-      "back": "input[type=\"submit\"]"
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "Attribute selectors",
-      "kind": "qa",
-      "front": "`//a[@id=\"abc\"][@for=\"xyz\"]`",
-      "back": "a#abc[for=\"xyz\"]"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "Attribute selectors",
-      "kind": "qa",
-      "front": "`//a[@rel]`",
-      "back": "a[rel]"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "Attribute selectors",
-      "kind": "qa",
-      "front": "`//a[starts-with(@href, '/')]`",
-      "back": "a[href^='/']"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "Attribute selectors",
-      "kind": "qa",
-      "front": "`//a[ends-with(@href, '.pdf')]`",
-      "back": "a[href$='pdf']"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "Attribute selectors",
-      "kind": "qa",
-      "front": "`//a[contains(@href, '://')]`",
-      "back": "a[href*='`:`//']"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "Attribute selectors",
-      "kind": "qa",
-      "front": "`//a[contains(@rel, 'help')]`",
-      "back": "a[rel~='help']"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "Siblings",
-      "kind": "qa",
-      "front": "`//h1/following-sibling::ul`",
-      "back": "h1 ~ ul"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "Siblings",
-      "kind": "qa",
-      "front": "`//h1/following-sibling::ul[1]`",
-      "back": "h1 + ul"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "Siblings",
-      "kind": "qa",
-      "front": "`//h1/following-sibling::[@id=\"id\"]`",
-      "back": "h1 ~ #id"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "jQuery",
-      "kind": "qa",
-      "front": "`//ul/li/..`",
-      "back": "$('ul > li').parent()"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "jQuery",
-      "kind": "qa",
-      "front": "`//li/ancestor-or-self::section`",
-      "back": "$('li').closest('section')"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "jQuery",
-      "kind": "qa",
-      "front": "`//a/@href`",
-      "back": "$('a').attr('href')"
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "jQuery",
-      "kind": "qa",
-      "front": "`//span/text()`",
-      "back": "$('span').text()"
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "Misc selectors",
-      "kind": "qa",
-      "front": "`//h1[not(@id)]`",
-      "back": "h1:not([id])"
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "Misc selectors",
-      "kind": "qa",
-      "front": "`//button[text()=\"Submit\"]`",
-      "back": "Text match"
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "Misc selectors",
-      "kind": "qa",
-      "front": "`//button[contains(text(),\"Go\")]`",
-      "back": "Text contains (substring)"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "Misc selectors",
-      "kind": "qa",
-      "front": "`//product[@price > 2.50]`",
-      "back": "Arithmetic"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "Misc selectors",
-      "kind": "qa",
-      "front": "`//ul[*]`",
-      "back": "Has children"
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "Misc selectors",
-      "kind": "qa",
-      "front": "`//ul[li]`",
-      "back": "Has children (specific)"
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "Misc selectors",
-      "kind": "qa",
-      "front": "`//a[@name or @href]`",
-      "back": "Or logic"
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "Misc selectors",
-      "kind": "qa",
-      "front": "`//a",
-      "back": "//div` | Union (joins results)"
-    },
-    {
-      "id": "s2-41",
+      "id": "s2-10",
       "sectionId": "s2",
       "title": "Steps and axes",
       "kind": "text",
       "body": "<br/>"
     },
     {
-      "id": "s2-42",
+      "id": "s2-11",
       "sectionId": "s2",
-      "title": "Steps and axes",
-      "kind": "qa",
-      "front": "`//`",
-      "back": "`ul` | `/` | `a[@id='link']`"
+      "title": "",
+      "kind": "text",
+      "body": "| -    | -    | -    | -               |\n| ---- | ---- | ---- | --------------- |\n| `//` | `ul` | `/`  | `a[@id='link']` |\n| Axis | Step | Axis | Step            |"
     },
     {
-      "id": "s2-43",
-      "sectionId": "s2",
-      "title": "Steps and axes",
-      "kind": "qa",
-      "front": "Axis",
-      "back": "Step | Axis | Step"
-    },
-    {
-      "id": "s2-44",
+      "id": "s2-12",
       "sectionId": "s2",
       "title": "Prefixes",
-      "kind": "qa",
-      "front": "`//`",
-      "back": "`//hr[@class='edge']` | Anywhere"
+      "kind": "text",
+      "body": "| Prefix | Example               | Means    |\n| ------ | --------------------- | -------- |\n| `//`   | `//hr[@class='edge']` | Anywhere |\n| `/`    | `/html/body/div`      | Root     |\n| `./`   | `./div/p`             | Relative |"
     },
     {
-      "id": "s2-45",
-      "sectionId": "s2",
-      "title": "Prefixes",
-      "kind": "qa",
-      "front": "`/`",
-      "back": "`/html/body/div` | Root"
-    },
-    {
-      "id": "s2-46",
-      "sectionId": "s2",
-      "title": "Prefixes",
-      "kind": "qa",
-      "front": "`./`",
-      "back": "`./div/p` | Relative"
-    },
-    {
-      "id": "s2-47",
+      "id": "s2-13",
       "sectionId": "s2",
       "title": "Axes",
-      "kind": "qa",
-      "front": "`/`",
-      "back": "`//ul/li/a` | Child"
+      "kind": "text",
+      "body": "%7C%20Axis%20%7C%20Example%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Means%20%20%20%20%20%20%7C%0A%7C%20----%20%7C%20-------------------%20%7C%20----------%20%7C%0A%7C%20%60%2F%60%20%20%7C%20%60%2F%2Ful%2Fli%2Fa%60%20%20%20%20%20%20%20%20%20%7C%20Child%20%20%20%20%20%20%7C%0A%7C%20%60%2F%2F%60%20%7C%20%60%2F%2F%5B%40id%3D%22list%22%5D%2F%2Fa%60%20%7C%20Descendant%20%7C",
+      "encoded": true
     },
     {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "Axes",
-      "kind": "qa",
-      "front": "`//`",
-      "back": "`//[@id=\"list\"]//a` | Descendant"
-    },
-    {
-      "id": "s3-49",
+      "id": "s3-14",
       "sectionId": "s3",
       "title": "Predicates",
       "kind": "code",
       "lang": "bash",
-      "code": "//div[true()]\n//div[@class=\"head\"]\n//div[@class=\"head\"][@id=\"top\"]"
+      "code": "%2F%2Fdiv%5Btrue()%5D%0A%2F%2Fdiv%5B%40class%3D%22head%22%5D%0A%2F%2Fdiv%5B%40class%3D%22head%22%5D%5B%40id%3D%22top%22%5D",
+      "encoded": true
     },
     {
-      "id": "s3-50",
+      "id": "s3-15",
       "sectionId": "s3",
-      "title": "Predicates",
+      "title": "",
       "kind": "text",
       "body": "Restricts a nodeset only if some condition is true. They can be chained."
     },
     {
-      "id": "s3-51",
+      "id": "s3-16",
       "sectionId": "s3",
       "title": "Operators",
       "kind": "code",
       "lang": "bash",
-      "code": "# Comparison\n//a[@id = \"xyz\"]\n//a[@id != \"xyz\"]\n//a[@price > 25]"
+      "code": "%23%20Comparison%0A%2F%2Fa%5B%40id%20%3D%20%22xyz%22%5D%0A%2F%2Fa%5B%40id%20!%3D%20%22xyz%22%5D%0A%2F%2Fa%5B%40price%20%3E%2025%5D%0A%0A%23%20Logic%20(and%2For)%0A%2F%2Fdiv%5B%40id%3D%22head%22%20and%20position()%3D2%5D%0A%2F%2Fdiv%5B(x%20and%20y)%20or%20not(z)%5D",
+      "encoded": true
     },
     {
-      "id": "s3-52",
-      "sectionId": "s3",
-      "title": "Operators",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# Logic (and/or)\n//div[@id=\"head\" and position()=2]\n//div[(x and y) or not(z)]"
-    },
-    {
-      "id": "s3-53",
+      "id": "s3-17",
       "sectionId": "s3",
       "title": "Using nodes",
       "kind": "code",
       "lang": "bash",
-      "code": "# Use them inside functions\n//ul[count(li) > 2]\n//ul[count(li[@class='hide']) > 0]"
+      "code": "# Use them inside functions\n//ul[count(li) > 2]\n//ul[count(li[@class='hide']) > 0]\n\n# Returns `<ul>` that has a `<li>` child\n//ul[li]"
     },
     {
-      "id": "s3-54",
+      "id": "s3-18",
       "sectionId": "s3",
-      "title": "Using nodes",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# Returns `<ul>` that has a `<li>` child\n//ul[li]"
-    },
-    {
-      "id": "s3-55",
-      "sectionId": "s3",
-      "title": "Using nodes",
+      "title": "",
       "kind": "text",
       "body": "You can use nodes inside predicates."
     },
     {
-      "id": "s3-56",
+      "id": "s3-19",
       "sectionId": "s3",
       "title": "Indexing",
       "kind": "code",
@@ -497,14 +200,14 @@
       "code": "//a[1]                # first <a>\n//a[last()]           # last <a>\n//ol/li[2]            # second <li>\n//ol/li[position()=2] # same as above\n//ol/li[position()>1] #:not(:first-child)"
     },
     {
-      "id": "s3-57",
+      "id": "s3-20",
       "sectionId": "s3",
-      "title": "Indexing",
+      "title": "",
       "kind": "text",
       "body": "Use `[]` with a number, or `last()` or `position()`."
     },
     {
-      "id": "s3-58",
+      "id": "s3-21",
       "sectionId": "s3",
       "title": "Chaining order",
       "kind": "code",
@@ -512,14 +215,14 @@
       "code": "a[1][@href='/']\na[@href='/'][1]"
     },
     {
-      "id": "s3-59",
+      "id": "s3-22",
       "sectionId": "s3",
-      "title": "Chaining order",
+      "title": "",
       "kind": "text",
       "body": "Order is significant, these two are different."
     },
     {
-      "id": "s3-60",
+      "id": "s3-23",
       "sectionId": "s3",
       "title": "Nesting predicates",
       "kind": "code",
@@ -527,54 +230,41 @@
       "code": "//section[.//h1[@id='hi']]"
     },
     {
-      "id": "s3-61",
+      "id": "s3-24",
       "sectionId": "s3",
-      "title": "Nesting predicates",
+      "title": "",
       "kind": "text",
       "body": "This returns `<section>` if it has an `<h1>` descendant with `id='hi'`."
     },
     {
-      "id": "s4-62",
+      "id": "s4-25",
       "sectionId": "s4",
-      "title": "Node functions",
+      "title": "Node%20functions",
       "kind": "code",
       "lang": "bash",
-      "code": "name()            # //[starts-with(name(), 'h')]\ntext()            # //button[text()=\"Submit\"]\n                  # //button/text()\nlang(str)\nnamespace-uri()"
+      "code": "name()%20%20%20%20%20%20%20%20%20%20%20%20%23%20%2F%2F%5Bstarts-with(name()%2C%20'h')%5D%0Atext()%20%20%20%20%20%20%20%20%20%20%20%20%23%20%2F%2Fbutton%5Btext()%3D%22Submit%22%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20%2F%2Fbutton%2Ftext()%0Alang(str)%0Anamespace-uri()%0A%0Acount()%20%20%20%20%20%20%20%20%20%20%20%23%20%2F%2Ftable%5Bcount(tr)%3D1%5D%0Aposition()%20%20%20%20%20%20%20%20%23%20%2F%2Fol%2Fli%5Bposition()%3D2%5D",
+      "encoded": true
     },
     {
-      "id": "s4-63",
+      "id": "s4-26",
       "sectionId": "s4",
-      "title": "Node functions",
+      "title": "String%20functions",
       "kind": "code",
       "lang": "bash",
-      "code": "count()           # //table[count(tr)=1]\nposition()        # //ol/li[position()=2]"
+      "code": "contains()%20%20%20%20%20%20%20%20%23%20font%5Bcontains(%40class%2C%22head%22)%5D%0Astarts-with()%20%20%20%20%20%23%20font%5Bstarts-with(%40class%2C%22head%22)%5D%0Aends-with()%20%20%20%20%20%20%20%23%20font%5Bends-with(%40class%2C%22head%22)%5D%0A%0Aconcat(x%2Cy)%0Asubstring(str%2C%20start%2C%20len)%0Asubstring-before(%2201%2F02%22%2C%20%22%2F%22)%20%20%23%3D%3E%2001%0Asubstring-after(%2201%2F02%22%2C%20%22%2F%22)%20%20%20%23%3D%3E%2002%0Atranslate()%0Anormalize-space()%0Astring-length()",
+      "encoded": true
     },
     {
-      "id": "s4-64",
+      "id": "s4-27",
       "sectionId": "s4",
-      "title": "String functions",
+      "title": "Boolean%20functions",
       "kind": "code",
       "lang": "bash",
-      "code": "contains()        # font[contains(@class,\"head\")]\nstarts-with()     # font[starts-with(@class,\"head\")]\nends-with()       # font[ends-with(@class,\"head\")]"
+      "code": "not(expr)%20%20%20%20%20%20%20%20%20%23%20button%5Bnot(starts-with(text()%2C%22Submit%22))%5D",
+      "encoded": true
     },
     {
-      "id": "s4-65",
-      "sectionId": "s4",
-      "title": "String functions",
-      "kind": "code",
-      "lang": "bash",
-      "code": "concat(x,y)\nsubstring(str, start, len)\nsubstring-before(\"01/02\", \"/\")  #=> 01\nsubstring-after(\"01/02\", \"/\")   #=> 02\ntranslate()\nnormalize-space()\nstring-length()"
-    },
-    {
-      "id": "s4-66",
-      "sectionId": "s4",
-      "title": "Boolean functions",
-      "kind": "code",
-      "lang": "bash",
-      "code": "not(expr)         # button[not(starts-with(text(),\"Submit\"))]"
-    },
-    {
-      "id": "s4-67",
+      "id": "s4-28",
       "sectionId": "s4",
       "title": "Type conversion",
       "kind": "code",
@@ -582,7 +272,7 @@
       "code": "string()\nnumber()\nboolean()"
     },
     {
-      "id": "s5-68",
+      "id": "s5-29",
       "sectionId": "s5",
       "title": "Using axes",
       "kind": "code",
@@ -590,37 +280,22 @@
       "code": "//ul/li                       # ul > li\n//ul/child::li                # ul > li (same)\n//ul/following-sibling::li    # ul ~ li\n//ul/descendant-or-self::li   # ul li\n//ul/ancestor-or-self::li     # $('ul').closest('li')"
     },
     {
-      "id": "s5-69",
+      "id": "s5-30",
       "sectionId": "s5",
-      "title": "Using axes",
+      "title": "",
       "kind": "text",
-      "body": "---"
+      "body": "|      |      |            |      |\n| ---- | ---- | ---------- | ---- |\n| `//` | `ul` | `/child::` | `li` |\n| Axis | Step | Axis       | Step |"
     },
     {
-      "id": "s5-70",
+      "id": "s5-31",
       "sectionId": "s5",
-      "title": "Using axes",
-      "kind": "qa",
-      "front": "`//`",
-      "back": "`ul` | `/child::` | `li`"
-    },
-    {
-      "id": "s5-71",
-      "sectionId": "s5",
-      "title": "Using axes",
-      "kind": "qa",
-      "front": "Axis",
-      "back": "Step | Axis | Step"
-    },
-    {
-      "id": "s5-72",
-      "sectionId": "s5",
-      "title": "Using axes",
+      "title": "",
       "kind": "text",
-      "body": "Steps of an expression are separated by `/`, usually used to pick child nodes. That's not always true: you can specify a\ndifferent \"axis\" with `::`."
+      "body": "Steps%20of%20an%20expression%20are%20separated%20by%20%60%2F%60%2C%20usually%20used%20to%20pick%20child%20nodes.%20That's%20not%20always%20true%3A%20you%20can%20specify%20a%0Adifferent%20%22axis%22%20with%20%60%3A%3A%60.",
+      "encoded": true
     },
     {
-      "id": "s5-73",
+      "id": "s5-32",
       "sectionId": "s5",
       "title": "Child axis",
       "kind": "code",
@@ -628,30 +303,22 @@
       "code": "# both the same\n//ul/li/a\n//child::ul/child::li/child::a"
     },
     {
-      "id": "s5-74",
+      "id": "s5-33",
       "sectionId": "s5",
-      "title": "Child axis",
+      "title": "",
       "kind": "text",
       "body": "`child::` is the default axis. This makes `//a/b/c` work."
     },
     {
-      "id": "s5-75",
+      "id": "s5-34",
       "sectionId": "s5",
-      "title": "Child axis",
+      "title": "",
       "kind": "code",
       "lang": "bash",
-      "code": "# both the same\n# this works because `child::li` is truthy\n//ul[li]\n//ul[child::li]"
+      "code": "# both the same\n# this works because `child::li` is truthy\n//ul[li]\n//ul[child::li]\n\n# both the same\n//ul[count(li) > 2]\n//ul[count(child::li) > 2]"
     },
     {
-      "id": "s5-76",
-      "sectionId": "s5",
-      "title": "Child axis",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# both the same\n//ul[count(li) > 2]\n//ul[count(child::li) > 2]"
-    },
-    {
-      "id": "s5-77",
+      "id": "s5-35",
       "sectionId": "s5",
       "title": "Descendant-or-self axis",
       "kind": "code",
@@ -659,133 +326,36 @@
       "code": "# both the same\n//div//h4\n//div/descendant-or-self::h4"
     },
     {
-      "id": "s5-78",
+      "id": "s5-36",
       "sectionId": "s5",
-      "title": "Descendant-or-self axis",
+      "title": "",
       "kind": "text",
       "body": "`//` is short for the `descendant-or-self::` axis."
     },
     {
-      "id": "s5-79",
+      "id": "s5-37",
       "sectionId": "s5",
-      "title": "Descendant-or-self axis",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "# both the same\n//ul//[last()]\n//ul/descendant-or-self::[last()]"
     },
     {
-      "id": "s5-80",
+      "id": "s5-38",
       "sectionId": "s5",
       "title": "Other axes",
-      "kind": "qa",
-      "front": "`ancestor`",
-      "back": "|"
+      "kind": "text",
+      "body": "| Axis                 | Abbrev | Notes                                            |\n| -------------------- | ------ | ------------------------------------------------ |\n| `ancestor`           |        |                                                  |\n| `ancestor-or-self`   |        |                                                  |\n| `attribute`          | `@`    | `@href` is short for `attribute::href`           |\n| `child`              |        | `div` is short for `child::div`                  |\n| `descendant`         |        |                                                  |\n| `descendant-or-self` | `//`   | `//` is short for `/descendant-or-self::node()/` |\n| `namespace`          |        |                                                  |\n| `self`               | `.`    | `.` is short for `self::node()`                  |\n| `parent`             | `..`   | `..` is short for `parent::node()`               |\n| `following`          |        |                                                  |\n| `following-sibling`  |        |                                                  |\n| `preceding`          |        |                                                  |\n| `preceding-sibling`  |        |                                                  |"
     },
     {
-      "id": "s5-81",
+      "id": "s5-39",
       "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`ancestor-or-self`",
-      "back": "|"
-    },
-    {
-      "id": "s5-82",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`attribute`",
-      "back": "`@` | `@href` is short for `attribute::href`"
-    },
-    {
-      "id": "s5-83",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`child`",
-      "back": "| `div` is short for `child::div`"
-    },
-    {
-      "id": "s5-84",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`descendant`",
-      "back": "|"
-    },
-    {
-      "id": "s5-85",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`descendant-or-self`",
-      "back": "`//` | `//` is short for `/descendant-or-self::node()/`"
-    },
-    {
-      "id": "s5-86",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`namespace`",
-      "back": "|"
-    },
-    {
-      "id": "s5-87",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`self`",
-      "back": "`.` | `.` is short for `self::node()`"
-    },
-    {
-      "id": "s5-88",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`parent`",
-      "back": "`..` | `..` is short for `parent::node()`"
-    },
-    {
-      "id": "s5-89",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`following`",
-      "back": "|"
-    },
-    {
-      "id": "s5-90",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`following-sibling`",
-      "back": "|"
-    },
-    {
-      "id": "s5-91",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`preceding`",
-      "back": "|"
-    },
-    {
-      "id": "s5-92",
-      "sectionId": "s5",
-      "title": "Other axes",
-      "kind": "qa",
-      "front": "`preceding-sibling`",
-      "back": "|"
-    },
-    {
-      "id": "s5-93",
-      "sectionId": "s5",
-      "title": "Other axes",
+      "title": "",
       "kind": "text",
       "body": "There are other axes you can use."
     },
     {
-      "id": "s5-94",
+      "id": "s5-40",
       "sectionId": "s5",
       "title": "Unions",
       "kind": "code",
@@ -793,14 +363,14 @@
       "code": "//a | //span"
     },
     {
-      "id": "s5-95",
+      "id": "s5-41",
       "sectionId": "s5",
-      "title": "Unions",
+      "title": "",
       "kind": "text",
       "body": "Use `|` to join two expressions."
     },
     {
-      "id": "s6-96",
+      "id": "s6-42",
       "sectionId": "s6",
       "title": "Examples",
       "kind": "code",
@@ -808,7 +378,7 @@
       "code": "//*                 # all elements\ncount(//*)          # count all elements\n(//h1)[1]/text()    # text of the first h1 heading\n//li[span]          # find a <li> with an <span> inside it\n                    # ...expands to //li[child::span]\n//ul/li/..          # use .. to select a parent"
     },
     {
-      "id": "s6-97",
+      "id": "s6-43",
       "sectionId": "s6",
       "title": "Find a parent",
       "kind": "code",
@@ -816,44 +386,45 @@
       "code": "//section[h1[@id='section-name']]"
     },
     {
-      "id": "s6-98",
+      "id": "s6-44",
       "sectionId": "s6",
-      "title": "Find a parent",
+      "title": "",
       "kind": "text",
       "body": "Finds a `<section>` that directly contains `h1#section-name`"
     },
     {
-      "id": "s6-99",
+      "id": "s6-45",
       "sectionId": "s6",
-      "title": "Find a parent",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "//section[//h1[@id='section-name']]"
     },
     {
-      "id": "s6-100",
+      "id": "s6-46",
       "sectionId": "s6",
-      "title": "Find a parent",
+      "title": "",
       "kind": "text",
       "body": "Finds a `<section>` that contains `h1#section-name`. (Same as above, but uses descendant-or-self instead of child)"
     },
     {
-      "id": "s6-101",
+      "id": "s6-47",
       "sectionId": "s6",
       "title": "Closest",
       "kind": "code",
       "lang": "bash",
-      "code": "./ancestor-or-self::[@class=\"box\"]"
+      "code": ".%2Fancestor-or-self%3A%3A%5B%40class%3D%22box%22%5D",
+      "encoded": true
     },
     {
-      "id": "s6-102",
+      "id": "s6-48",
       "sectionId": "s6",
-      "title": "Closest",
+      "title": "",
       "kind": "text",
       "body": "Works like jQuery's `$().closest('.box')`."
     },
     {
-      "id": "s6-103",
+      "id": "s6-49",
       "sectionId": "s6",
       "title": "Attributes",
       "kind": "code",
@@ -861,14 +432,14 @@
       "code": "//item[@price > 2*@discount]"
     },
     {
-      "id": "s6-104",
+      "id": "s6-50",
       "sectionId": "s6",
-      "title": "Attributes",
+      "title": "",
       "kind": "text",
       "body": "Finds `<item>` and check its attributes"
     },
     {
-      "id": "s7-105",
+      "id": "s7-51",
       "sectionId": "s7",
       "title": "Also see",
       "kind": "text",

@@ -17,7 +17,7 @@
     {
       "id": "s2",
       "title": "Also see",
-      "startIndex": 60
+      "startIndex": 50
     }
   ],
   "cards": [
@@ -38,14 +38,14 @@
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "Connecting",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ ssh root@192.168.1.5"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
-      "title": "Connecting",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nConnect on a specific port\n\n```shell script\n$ ssh root@192.168.1.5 -p 6222"
@@ -53,21 +53,21 @@
     {
       "id": "s1-4",
       "sectionId": "s1",
-      "title": "Connecting",
+      "title": "",
       "kind": "text",
       "body": "Connect via pem file (0400 permissions)"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "Connecting",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ ssh -i /path/file.pem root@192.168.1.5"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "Connecting",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nSee: [SSH Permissions](/chmod#ssh-permissions)\n\n### Executing\n\nExecutes remote command\n\n```shell script\n$ ssh root@192.168.1.5 'ls -l'"
@@ -75,24 +75,25 @@
     {
       "id": "s1-7",
       "sectionId": "s1",
-      "title": "Connecting",
+      "title": "",
       "kind": "text",
       "body": "Invoke a local script"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "Connecting",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ ssh root@192.168.1.5 bash < script.sh"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
-      "title": "Connecting",
+      "title": "",
       "kind": "code",
       "lang": "",
-      "code": "\nCompresses and downloads from a server\n\n```shell script {.wrap}\n$ ssh root@192.168.1.5 \"tar cvzf - ~/source\" > output.tgz"
+      "code": "%0ACompresses%20and%20downloads%20from%20a%20server%0A%0A%60%60%60shell%20script%20%7B.wrap%7D%0A%24%20ssh%20root%40192.168.1.5%20%22tar%20cvzf%20-%20~%2Fsource%22%20%3E%20output.tgz",
+      "encoded": true
     },
     {
       "id": "s1-10",
@@ -104,14 +105,14 @@
     {
       "id": "s1-11",
       "sectionId": "s1",
-      "title": "SCP",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ scp user@server:/dir/file.ext dest/"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
-      "title": "SCP",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nCopies between two servers\n\n```shell script\n$ scp user@server:/file user@server:/dir"
@@ -119,21 +120,21 @@
     {
       "id": "s1-13",
       "sectionId": "s1",
-      "title": "SCP",
+      "title": "",
       "kind": "text",
       "body": "Copies from local to remote"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
-      "title": "SCP",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ scp dest/file.ext user@server:/dir"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "SCP",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nCopies a whole folder\n\n```shell script\n$ scp -r user@server:/dir dest/"
@@ -141,21 +142,21 @@
     {
       "id": "s1-16",
       "sectionId": "s1",
-      "title": "SCP",
+      "title": "",
       "kind": "text",
       "body": "Copies all files from a folder"
     },
     {
       "id": "s1-17",
       "sectionId": "s1",
-      "title": "SCP",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ scp user@server:/dir/* dest/"
     },
     {
       "id": "s1-18",
       "sectionId": "s1",
-      "title": "SCP",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nCopies from a server folder to the current folder\n\n```shell script\n$ scp user@server:/dir/* ."
@@ -164,100 +165,18 @@
       "id": "s1-19",
       "sectionId": "s1",
       "title": "Config location",
-      "kind": "qa",
-      "front": "`/etc/ssh/ssh_config`",
-      "back": "System-wide config"
+      "kind": "text",
+      "body": "| File Path                | Description          |\n| ------------------------ | -------------------- |\n| `/etc/ssh/ssh_config`    | System-wide config   |\n| `~/.ssh/config`          | User-specific config |\n| `~/.ssh/id_{type}`       | Private key          |\n| `~/.ssh/id_{type}.pub`   | Public key           |\n| `~/.ssh/known_hosts`     | Known Servers        |\n| `~/.ssh/authorized_keys` | Authorized login key |"
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
-      "title": "Config location",
-      "kind": "qa",
-      "front": "`~/.ssh/config`",
-      "back": "User-specific config"
+      "title": "SCP Options",
+      "kind": "text",
+      "body": "| Options       | Description                                    |\n| ------------- | ---------------------------------------------- |\n| scp `-r`      | <yel>R</yel>ecursively copy entire directories |\n| scp `-C`      | <yel>C</yel>ompresses data                     |\n| scp `-v`      | Prints <yel>v</yel>erbose info                 |\n| scp `-P` 8080 | Uses a specific <yel>P</yel>ort                |\n| scp `-B`      | <yel>B</yel>atch mode _(Prevents password)_    |\n| scp `-p`      | <yel>P</yel>reserves times and modes           |"
     },
     {
       "id": "s1-21",
-      "sectionId": "s1",
-      "title": "Config location",
-      "kind": "qa",
-      "front": "`~/.ssh/id_{type}`",
-      "back": "Private key"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "Config location",
-      "kind": "qa",
-      "front": "`~/.ssh/id_{type}.pub`",
-      "back": "Public key"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "Config location",
-      "kind": "qa",
-      "front": "`~/.ssh/known_hosts`",
-      "back": "Known Servers"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "Config location",
-      "kind": "qa",
-      "front": "`~/.ssh/authorized_keys`",
-      "back": "Authorized login key"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "SCP Options",
-      "kind": "qa",
-      "front": "scp `-r`",
-      "back": "<yel>R</yel>ecursively copy entire directories"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "SCP Options",
-      "kind": "qa",
-      "front": "scp `-C`",
-      "back": "<yel>C</yel>ompresses data"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "SCP Options",
-      "kind": "qa",
-      "front": "scp `-v`",
-      "back": "Prints <yel>v</yel>erbose info"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "SCP Options",
-      "kind": "qa",
-      "front": "scp `-P` 8080",
-      "back": "Uses a specific <yel>P</yel>ort"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "SCP Options",
-      "kind": "qa",
-      "front": "scp `-B`",
-      "back": "<yel>B</yel>atch mode _(Prevents password)_"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "SCP Options",
-      "kind": "qa",
-      "front": "scp `-p`",
-      "back": "<yel>P</yel>reserves times and modes"
-    },
-    {
-      "id": "s1-31",
       "sectionId": "s1",
       "title": "Config sample",
       "kind": "code",
@@ -265,183 +184,184 @@
       "code": "Host server1\n    HostName 192.168.1.5\n    User root\n    Port 22\n    IdentityFile ~/.ssh/server1.key"
     },
     {
-      "id": "s1-32",
+      "id": "s1-22",
       "sectionId": "s1",
-      "title": "Config sample",
+      "title": "",
       "kind": "text",
       "body": "Launch by alias"
     },
     {
-      "id": "s1-33",
+      "id": "s1-23",
       "sectionId": "s1",
-      "title": "Config sample",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ ssh server1"
     },
     {
-      "id": "s1-34",
+      "id": "s1-24",
       "sectionId": "s1",
-      "title": "Config sample",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nSee: Full [Config Options](https://linux.die.net/man/5/ssh_config)\n\n### ProxyJump\n\n```shell script\n$ ssh -J proxy_host1 remote_host2"
     },
     {
-      "id": "s1-35",
+      "id": "s1-25",
       "sectionId": "s1",
-      "title": "Config sample",
+      "title": "",
       "kind": "text",
       "body": "```shell script {.wrap}\n$ ssh -J user@proxy_host1 user@remote_host2"
     },
     {
-      "id": "s1-36",
+      "id": "s1-26",
       "sectionId": "s1",
-      "title": "Config sample",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nMultiple jumps\n\n```shell script {.wrap}\n$ ssh -J user@proxy_host1:port1,user@proxy_host2:port2 user@remote_host3"
     },
     {
-      "id": "s1-37",
+      "id": "s1-27",
       "sectionId": "s1",
       "title": "ssh-copy-id",
       "kind": "text",
       "body": "```shell script {.wrap}\n$ ssh-copy-id user@server"
     },
     {
-      "id": "s1-38",
+      "id": "s1-28",
       "sectionId": "s1",
-      "title": "ssh-copy-id",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nCopy to alias server\n\n```shell script {.wrap}\n$ ssh-copy-id server1"
     },
     {
-      "id": "s1-39",
+      "id": "s1-29",
       "sectionId": "s1",
-      "title": "ssh-copy-id",
+      "title": "",
       "kind": "text",
       "body": "Copy specific key"
     },
     {
-      "id": "s1-40",
+      "id": "s1-30",
       "sectionId": "s1",
-      "title": "ssh-copy-id",
+      "title": "",
       "kind": "text",
       "body": "```shell script {.wrap}\n$ ssh-copy-id -i ~/.ssh/id_rsa.pub user@server"
     },
     {
-      "id": "s1-41",
+      "id": "s1-31",
       "sectionId": "s1",
-      "title": "ssh-copy-id",
+      "title": "",
       "kind": "code",
       "lang": "",
-      "code": "\n## SSH keygen {.cols-5}\n\n### ssh-keygen {.col-span-2}\n\n```shell script\n$ ssh-keygen -t rsa -b 4096 -C \"your@mail.com\""
+      "code": "%0A%23%23%20SSH%20keygen%20%7B.cols-5%7D%0A%0A%23%23%23%20ssh-keygen%20%7B.col-span-2%7D%0A%0A%60%60%60shell%20script%0A%24%20ssh-keygen%20-t%20rsa%20-b%204096%20-C%20%22your%40mail.com%22",
+      "encoded": true
     },
     {
-      "id": "s1-42",
+      "id": "s1-32",
       "sectionId": "s1",
-      "title": "ssh-copy-id",
+      "title": "",
       "kind": "text",
-      "body": "---"
+      "body": "| -   | -    | -                             |\n| --- | ---- | ----------------------------- |\n|     | `-t` | [Type](#key-type) of key      |\n|     | `-b` | The number of bits in the key |\n|     | `-C` | Provides a new comment        |"
     },
     {
-      "id": "s1-43",
+      "id": "s1-33",
       "sectionId": "s1",
-      "title": "ssh-copy-id",
+      "title": "",
       "kind": "text",
       "body": "Generate an RSA 4096 bit key with email as a comment"
     },
     {
-      "id": "s1-44",
+      "id": "s1-34",
       "sectionId": "s1",
       "title": "Generate",
       "kind": "text",
       "body": "Generate a key interactively"
     },
     {
-      "id": "s1-45",
+      "id": "s1-35",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ ssh-keygen"
     },
     {
-      "id": "s1-46",
+      "id": "s1-36",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nSpecify filename\n\n```shell script\n$ ssh-keygen -f ~/.ssh/filename"
     },
     {
-      "id": "s1-47",
+      "id": "s1-37",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "text",
       "body": "Generate public key from private key"
     },
     {
-      "id": "s1-48",
+      "id": "s1-38",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ ssh-keygen -y -f private.key > public.pub"
     },
     {
-      "id": "s1-49",
+      "id": "s1-39",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\nChange comment\n\n```shell script\n$ ssh-keygen -c -f ~/.ssh/id_rsa"
     },
     {
-      "id": "s1-50",
+      "id": "s1-40",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "text",
       "body": "Change private key passphrase"
     },
     {
-      "id": "s1-51",
+      "id": "s1-41",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ ssh-keygen -p -f ~/.ssh/id_rsa"
     },
     {
-      "id": "s1-52",
+      "id": "s1-42",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\n### Key type\n\n- rsa\n- ed25519\n- dsa\n- ecdsa\n\n### known_hosts {.col-span-2}\n\nSearch from known_hosts\n\n```shell script\n$ ssh-keygen -F <ip/hostname>"
     },
     {
-      "id": "s1-53",
+      "id": "s1-43",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "text",
       "body": "Remove from known_hosts"
     },
     {
-      "id": "s1-54",
+      "id": "s1-44",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ ssh-keygen -R <ip/hostname>"
     },
     {
-      "id": "s1-55",
+      "id": "s1-45",
       "sectionId": "s1",
-      "title": "Generate",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\n### Key format\n\n- PEM\n- PKCS8\n\n## SSH Tunneling\n\n### SSH Tunnel Options {.row-span-2}\n\n| Option | Description                                            |\n| ------ | :----------------------------------------------------- |\n| `-L`   | Local port forwarding                                  |\n| `-R`   | Remote port forwarding                                 |\n| `-D`   | Dynamic port forwarding                                |\n| `-f`   | Run in background                                      |\n| `-N`   | Do not execute a remote command                        |\n| `-g`   | Allow remote hosts to connect to local forwarded ports |\n\n{.left-text}\n\nmore details on flag above with `man ssh`\n\n### Local Port Forwarding {.col-span-2}\n\n```bash\n# Forward a local port to a remote server\nssh -L local_port:remote_host:remote_port user@ssh_server\n\n# Example: Forward local port 8080 to remote port 80 on example.com\nssh -L 8080:example.com:80 user@ssh_server"
     },
     {
-      "id": "s1-56",
+      "id": "s1-46",
       "sectionId": "s1",
       "title": "Dynamic Port Forwarding",
       "kind": "code",
@@ -449,7 +369,7 @@
       "code": "# Create a SOCKS proxy on a local port\nssh -D local_port user@ssh_server\n\n# Create a SOCKS proxy on local port 1080 in the background\nssh -f -N -D 1080 user@ssh_server"
     },
     {
-      "id": "s1-57",
+      "id": "s1-47",
       "sectionId": "s1",
       "title": "Background Tunnel",
       "kind": "code",
@@ -457,7 +377,7 @@
       "code": "# Create a local port forwarding tunnel in the background\nssh -f -N -L local_port:remote_host:remote_port user@ssh_server"
     },
     {
-      "id": "s1-58",
+      "id": "s1-48",
       "sectionId": "s1",
       "title": "Multiple Tunnels",
       "kind": "code",
@@ -465,7 +385,7 @@
       "code": "# Create multiple tunnels in a single SSH command\nssh -L 8080:example.com:80 -L 3306:db.example.com:3306 user@ssh_server"
     },
     {
-      "id": "s1-59",
+      "id": "s1-49",
       "sectionId": "s1",
       "title": "Combining Options",
       "kind": "code",
@@ -473,7 +393,7 @@
       "code": "# In background, no command, allow remote host, local port forward, identity_file\nssh -f -N -g -L 8080:example.com:80 -i ~/.ssh/custom_key user@ssh_server"
     },
     {
-      "id": "s2-60",
+      "id": "s2-50",
       "sectionId": "s2",
       "title": "Also see",
       "kind": "text",

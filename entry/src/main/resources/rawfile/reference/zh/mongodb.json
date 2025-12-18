@@ -51,10 +51,11 @@
     {
       "id": "s1-1",
       "sectionId": "s1",
-      "title": "连接 MongoDB Shell",
+      "title": "%E8%BF%9E%E6%8E%A5%20MongoDB%20Shell",
       "kind": "code",
       "lang": "bash",
-      "code": "mongo # 默认连接到 mongodb://127.0.0.1:27017\nmongo --host <host> --port <port> -u <user> -p <pwd> # 如果需要提示，请省略密码\nmongo \"mongodb://192.168.1.1:27017\"\n# MongoDB 地图集\nmongo \"mongodb+srv://cluster-name.abcde.mongodb.net/<dbname>\" --username <username>"
+      "code": "mongo%20%23%20%E9%BB%98%E8%AE%A4%E8%BF%9E%E6%8E%A5%E5%88%B0%20mongodb%3A%2F%2F127.0.0.1%3A27017%0Amongo%20--host%20%3Chost%3E%20--port%20%3Cport%3E%20-u%20%3Cuser%3E%20-p%20%3Cpwd%3E%20%23%20%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E6%8F%90%E7%A4%BA%EF%BC%8C%E8%AF%B7%E7%9C%81%E7%95%A5%E5%AF%86%E7%A0%81%0Amongo%20%22mongodb%3A%2F%2F192.168.1.1%3A27017%22%0A%23%20MongoDB%20%E5%9C%B0%E5%9B%BE%E9%9B%86%0Amongo%20%22mongodb%2Bsrv%3A%2F%2Fcluster-name.abcde.mongodb.net%2F%3Cdbname%3E%22%20--username%20%3Cusername%3E",
+      "encoded": true
     },
     {
       "id": "s1-2",
@@ -83,18 +84,20 @@
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "运行 JavaScript 文件",
+      "title": "%E8%BF%90%E8%A1%8C%20JavaScript%20%E6%96%87%E4%BB%B6",
       "kind": "code",
       "lang": "mongodb",
-      "code": "load(\"myScript.js\")"
+      "code": "load(%22myScript.js%22)",
+      "encoded": true
     },
     {
       "id": "s2-6",
       "sectionId": "s2",
-      "title": "创建",
+      "title": "%E5%88%9B%E5%BB%BA",
       "kind": "code",
       "lang": "mongodb",
-      "code": "db.coll.insertOne({ name: \"Max\" })\ndb.coll.insert([{ name: \"Max\"}, {name:\"Alex\"}]) // 批量插入\ndb.coll.insert([{ name: \"Max\"}, {name:\"Alex\"}], {ordered: false}) // 无序批量插入\ndb.coll.insert({ date: ISODate()})\ndb.coll.insert({ name: \"Max\"}, {\"writeConcern\": {\"w\": \"majority\", \"wtimeout\": 5000}})"
+      "code": "db.coll.insertOne(%7B%20name%3A%20%22Max%22%20%7D)%0Adb.coll.insert(%5B%7B%20name%3A%20%22Max%22%7D%2C%20%7Bname%3A%22Alex%22%7D%5D)%20%2F%2F%20%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%0Adb.coll.insert(%5B%7B%20name%3A%20%22Max%22%7D%2C%20%7Bname%3A%22Alex%22%7D%5D%2C%20%7Bordered%3A%20false%7D)%20%2F%2F%20%E6%97%A0%E5%BA%8F%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%0Adb.coll.insert(%7B%20date%3A%20ISODate()%7D)%0Adb.coll.insert(%7B%20name%3A%20%22Max%22%7D%2C%20%7B%22writeConcern%22%3A%20%7B%22w%22%3A%20%22majority%22%2C%20%22wtimeout%22%3A%205000%7D%7D)",
+      "encoded": true
     },
     {
       "id": "s2-7",
@@ -113,26 +116,29 @@
     {
       "id": "s2-9",
       "sectionId": "s2",
-      "title": "读取",
+      "title": "%E8%AF%BB%E5%8F%96",
       "kind": "code",
       "lang": "mongodb",
-      "code": "db.coll.findOne() // 返回单个文档\ndb.coll.find()    // 返回一个游标 - 显示 20 个结果 - \"it\" 显示更多\ndb.coll.find().pretty()\ndb.coll.find({name: \"Max\", age: 32}) // 隐式逻辑“与”。\ndb.coll.find({date: ISODate(\"2020-09-25T13:57:17.180Z\")})\n\n// 或“queryPlanner”或“allPlansExecution”\ndb.coll.find({name: \"Max\", age: 32}).explain(\"executionStats\") \ndb.coll.distinct(\"name\")\n\n// 数数\ndb.coll.count({age: 32})          // 基于馆藏元数据的估计\ndb.coll.estimatedDocumentCount()  // 基于馆藏元数据的估计\ndb.coll.countDocuments({age: 32}) // 聚合管道的别名 - 准确计数\n\n// Comparison 比较\ndb.coll.find({\"year\": {$gt: 1970}})\ndb.coll.find({\"year\": {$gte: 1970}})\ndb.coll.find({\"year\": {$lt: 1970}})\ndb.coll.find({\"year\": {$lte: 1970}})\ndb.coll.find({\"year\": {$ne: 1970}})\ndb.coll.find({\"year\": {$in: [1958, 1959]}})\ndb.coll.find({\"year\": {$nin: [1958, 1959]}})\n\n\n// Logical 逻辑\ndb.coll.find({name:{$not: {$eq: \"Max\"}}})\ndb.coll.find({$or: [{\"year\" : 1958}, {\"year\" : 1959}]})\ndb.coll.find({$nor: [{price: 1.99}, {sale: true}]})\ndb.coll.find({\n  $and: [\n    {$or: [{qty: {$lt :10}}, {qty :{$gt: 50}}]},\n    {$or: [{sale: true}, {price: {$lt: 5 }}]}\n  ]\n})\n\n// Element 元素\ndb.coll.find({name: {$exists: true}})\ndb.coll.find({\"zipCode\": {$type: 2 }})\ndb.coll.find({\"zipCode\": {$type: \"string\"}})\n\n// Aggregation Pipeline 聚合管道\ndb.coll.aggregate([\n  {$match: {status: \"A\"}},\n  {$group: {_id: \"$cust_id\", total: {$sum: \"$amount\"}}},\n  {$sort: {total: -1}}\n])\n\n// 使用“文本”索引进行文本搜索\ndb.coll.find({$text: {$search: \"cake\"}}, {score: {$meta: \"textScore\"}})\n        .sort({score: {$meta: \"textScore\"}})\n\n// Regex 正则表达式\ndb.coll.find({name: /^Max/})   // 正则表达式：以字母“M”开头\ndb.coll.find({name: /^Max$/i}) // 正则表达式不区分大小写\n\n// Array\ndb.coll.find({tags: {$all: [\"Realm\", \"Charts\"]}})\ndb.coll.find({field: {$size: 2}}) // 无法索引 - 更喜欢存储数组的大小并更新它\ndb.coll.find({results: {$elemMatch: {product: \"xyz\", score: {$gte: 8}}}})\n\n// Projections 预测\ndb.coll.find({\"x\": 1}, {\"actors\": 1})               // actors + _id\ndb.coll.find({\"x\": 1}, {\"actors\": 1, \"_id\": 0})     // actors\ndb.coll.find({\"x\": 1}, {\"actors\": 0, \"summary\": 0}) // 除了“actors”和“summary”之外的所有内容\n\n// Sort 排序, skip 跳过, limit 限制\ndb.coll.find({}).sort({\"year\": 1, \"rating\": -1}).skip(10).limit(3)\n\n// Read Concern 阅读关注\ndb.coll.find().readConcern(\"majority\")"
+      "code": "db.coll.findOne()%20%2F%2F%20%E8%BF%94%E5%9B%9E%E5%8D%95%E4%B8%AA%E6%96%87%E6%A1%A3%0Adb.coll.find()%20%20%20%20%2F%2F%20%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E6%B8%B8%E6%A0%87%20-%20%E6%98%BE%E7%A4%BA%2020%20%E4%B8%AA%E7%BB%93%E6%9E%9C%20-%20%22it%22%20%E6%98%BE%E7%A4%BA%E6%9B%B4%E5%A4%9A%0Adb.coll.find().pretty()%0Adb.coll.find(%7Bname%3A%20%22Max%22%2C%20age%3A%2032%7D)%20%2F%2F%20%E9%9A%90%E5%BC%8F%E9%80%BB%E8%BE%91%E2%80%9C%E4%B8%8E%E2%80%9D%E3%80%82%0Adb.coll.find(%7Bdate%3A%20ISODate(%222020-09-25T13%3A57%3A17.180Z%22)%7D)%0A%0A%2F%2F%20%E6%88%96%E2%80%9CqueryPlanner%E2%80%9D%E6%88%96%E2%80%9CallPlansExecution%E2%80%9D%0Adb.coll.find(%7Bname%3A%20%22Max%22%2C%20age%3A%2032%7D).explain(%22executionStats%22)%20%0Adb.coll.distinct(%22name%22)%0A%0A%2F%2F%20%E6%95%B0%E6%95%B0%0Adb.coll.count(%7Bage%3A%2032%7D)%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%9F%BA%E4%BA%8E%E9%A6%86%E8%97%8F%E5%85%83%E6%95%B0%E6%8D%AE%E7%9A%84%E4%BC%B0%E8%AE%A1%0Adb.coll.estimatedDocumentCount()%20%20%2F%2F%20%E5%9F%BA%E4%BA%8E%E9%A6%86%E8%97%8F%E5%85%83%E6%95%B0%E6%8D%AE%E7%9A%84%E4%BC%B0%E8%AE%A1%0Adb.coll.countDocuments(%7Bage%3A%2032%7D)%20%2F%2F%20%E8%81%9A%E5%90%88%E7%AE%A1%E9%81%93%E7%9A%84%E5%88%AB%E5%90%8D%20-%20%E5%87%86%E7%A1%AE%E8%AE%A1%E6%95%B0%0A%0A%2F%2F%20Comparison%20%E6%AF%94%E8%BE%83%0Adb.coll.find(%7B%22year%22%3A%20%7B%24gt%3A%201970%7D%7D)%0Adb.coll.find(%7B%22year%22%3A%20%7B%24gte%3A%201970%7D%7D)%0Adb.coll.find(%7B%22year%22%3A%20%7B%24lt%3A%201970%7D%7D)%0Adb.coll.find(%7B%22year%22%3A%20%7B%24lte%3A%201970%7D%7D)%0Adb.coll.find(%7B%22year%22%3A%20%7B%24ne%3A%201970%7D%7D)%0Adb.coll.find(%7B%22year%22%3A%20%7B%24in%3A%20%5B1958%2C%201959%5D%7D%7D)%0Adb.coll.find(%7B%22year%22%3A%20%7B%24nin%3A%20%5B1958%2C%201959%5D%7D%7D)%0A%0A%0A%2F%2F%20Logical%20%E9%80%BB%E8%BE%91%0Adb.coll.find(%7Bname%3A%7B%24not%3A%20%7B%24eq%3A%20%22Max%22%7D%7D%7D)%0Adb.coll.find(%7B%24or%3A%20%5B%7B%22year%22%20%3A%201958%7D%2C%20%7B%22year%22%20%3A%201959%7D%5D%7D)%0Adb.coll.find(%7B%24nor%3A%20%5B%7Bprice%3A%201.99%7D%2C%20%7Bsale%3A%20true%7D%5D%7D)%0Adb.coll.find(%7B%0A%20%20%24and%3A%20%5B%0A%20%20%20%20%7B%24or%3A%20%5B%7Bqty%3A%20%7B%24lt%20%3A10%7D%7D%2C%20%7Bqty%20%3A%7B%24gt%3A%2050%7D%7D%5D%7D%2C%0A%20%20%20%20%7B%24or%3A%20%5B%7Bsale%3A%20true%7D%2C%20%7Bprice%3A%20%7B%24lt%3A%205%20%7D%7D%5D%7D%0A%20%20%5D%0A%7D)%0A%0A%2F%2F%20Element%20%E5%85%83%E7%B4%A0%0Adb.coll.find(%7Bname%3A%20%7B%24exists%3A%20true%7D%7D)%0Adb.coll.find(%7B%22zipCode%22%3A%20%7B%24type%3A%202%20%7D%7D)%0Adb.coll.find(%7B%22zipCode%22%3A%20%7B%24type%3A%20%22string%22%7D%7D)%0A%0A%2F%2F%20Aggregation%20Pipeline%20%E8%81%9A%E5%90%88%E7%AE%A1%E9%81%93%0Adb.coll.aggregate(%5B%0A%20%20%7B%24match%3A%20%7Bstatus%3A%20%22A%22%7D%7D%2C%0A%20%20%7B%24group%3A%20%7B_id%3A%20%22%24cust_id%22%2C%20total%3A%20%7B%24sum%3A%20%22%24amount%22%7D%7D%7D%2C%0A%20%20%7B%24sort%3A%20%7Btotal%3A%20-1%7D%7D%0A%5D)%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8%E2%80%9C%E6%96%87%E6%9C%AC%E2%80%9D%E7%B4%A2%E5%BC%95%E8%BF%9B%E8%A1%8C%E6%96%87%E6%9C%AC%E6%90%9C%E7%B4%A2%0Adb.coll.find(%7B%24text%3A%20%7B%24search%3A%20%22cake%22%7D%7D%2C%20%7Bscore%3A%20%7B%24meta%3A%20%22textScore%22%7D%7D)%0A%20%20%20%20%20%20%20%20.sort(%7Bscore%3A%20%7B%24meta%3A%20%22textScore%22%7D%7D)%0A%0A%2F%2F%20Regex%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%0Adb.coll.find(%7Bname%3A%20%2F%5EMax%2F%7D)%20%20%20%2F%2F%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%9A%E4%BB%A5%E5%AD%97%E6%AF%8D%E2%80%9CM%E2%80%9D%E5%BC%80%E5%A4%B4%0Adb.coll.find(%7Bname%3A%20%2F%5EMax%24%2Fi%7D)%20%2F%2F%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8D%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%0A%0A%2F%2F%20Array%0Adb.coll.find(%7Btags%3A%20%7B%24all%3A%20%5B%22Realm%22%2C%20%22Charts%22%5D%7D%7D)%0Adb.coll.find(%7Bfield%3A%20%7B%24size%3A%202%7D%7D)%20%2F%2F%20%E6%97%A0%E6%B3%95%E7%B4%A2%E5%BC%95%20-%20%E6%9B%B4%E5%96%9C%E6%AC%A2%E5%AD%98%E5%82%A8%E6%95%B0%E7%BB%84%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%B9%B6%E6%9B%B4%E6%96%B0%E5%AE%83%0Adb.coll.find(%7Bresults%3A%20%7B%24elemMatch%3A%20%7Bproduct%3A%20%22xyz%22%2C%20score%3A%20%7B%24gte%3A%208%7D%7D%7D%7D)%0A%0A%2F%2F%20Projections%20%E9%A2%84%E6%B5%8B%0Adb.coll.find(%7B%22x%22%3A%201%7D%2C%20%7B%22actors%22%3A%201%7D)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20actors%20%2B%20_id%0Adb.coll.find(%7B%22x%22%3A%201%7D%2C%20%7B%22actors%22%3A%201%2C%20%22_id%22%3A%200%7D)%20%20%20%20%20%2F%2F%20actors%0Adb.coll.find(%7B%22x%22%3A%201%7D%2C%20%7B%22actors%22%3A%200%2C%20%22summary%22%3A%200%7D)%20%2F%2F%20%E9%99%A4%E4%BA%86%E2%80%9Cactors%E2%80%9D%E5%92%8C%E2%80%9Csummary%E2%80%9D%E4%B9%8B%E5%A4%96%E7%9A%84%E6%89%80%E6%9C%89%E5%86%85%E5%AE%B9%0A%0A%2F%2F%20Sort%20%E6%8E%92%E5%BA%8F%2C%20skip%20%E8%B7%B3%E8%BF%87%2C%20limit%20%E9%99%90%E5%88%B6%0Adb.coll.find(%7B%7D).sort(%7B%22year%22%3A%201%2C%20%22rating%22%3A%20-1%7D).skip(10).limit(3)%0A%0A%2F%2F%20Read%20Concern%20%E9%98%85%E8%AF%BB%E5%85%B3%E6%B3%A8%0Adb.coll.find().readConcern(%22majority%22)",
+      "encoded": true
     },
     {
       "id": "s2-10",
       "sectionId": "s2",
-      "title": "更新",
+      "title": "%E6%9B%B4%E6%96%B0",
       "kind": "code",
       "lang": "mongodb",
-      "code": "db.coll.update({\"_id\": 1}, {\"year\": 2016}) // 警告！ 替换整个文档\ndb.coll.update({\"_id\": 1}, {$set: {\"year\": 2016, name: \"Max\"}})\ndb.coll.update({\"_id\": 1}, {$unset: {\"year\": 1}})\ndb.coll.update({\"_id\": 1}, {$rename: {\"year\": \"date\"} })\ndb.coll.update({\"_id\": 1}, {$inc: {\"year\": 5}})\ndb.coll.update({\"_id\": 1}, {$mul: {price: NumberDecimal(\"1.25\"), qty: 2}})\ndb.coll.update({\"_id\": 1}, {$min: {\"imdb\": 5}})\ndb.coll.update({\"_id\": 1}, {$max: {\"imdb\": 8}})\ndb.coll.update({\"_id\": 1}, {$currentDate: {\"lastModified\": true}})\ndb.coll.update({\"_id\": 1}, {$currentDate: {\"lastModified\": {$type: \"timestamp\"}}})\n\n// Array\ndb.coll.update({\"_id\": 1}, {$push :{\"array\": 1}})\ndb.coll.update({\"_id\": 1}, {$pull :{\"array\": 1}})\ndb.coll.update({\"_id\": 1}, {$addToSet :{\"array\": 2}})\ndb.coll.update({\"_id\": 1}, {$pop: {\"array\": 1}})  // 最后一个元素\ndb.coll.update({\"_id\": 1}, {$pop: {\"array\": -1}}) // 第一个元素\ndb.coll.update({\"_id\": 1}, {$pullAll: {\"array\" :[3, 4, 5]}})\ndb.coll.update({\"_id\": 1}, {$push: {scores: {$each: [90, 92, 85]}}})\ndb.coll.updateOne({\"_id\": 1, \"grades\": 80}, {$set: {\"grades.$\": 82}})\ndb.coll.updateMany({}, {$inc: {\"grades.$[]\": 10}})\ndb.coll.update({}, {$set: {\"grades.$[element]\": 100}}, {multi: true, arrayFilters: [{\"element\": {$gte: 100}}]})\n\n// 更新很多\ndb.coll.update({\"year\": 1999}, {$set: {\"decade\": \"90's\"}}, {\"multi\":true})\ndb.coll.updateMany({\"year\": 1999}, {$set: {\"decade\": \"90's\"}})\n\n// FindOneAndUpdate 查找并更新\ndb.coll.findOneAndUpdate({\"name\": \"Max\"}, {$inc: {\"points\": 5}}, {returnNewDocument: true})\n\n// Upsert 更新插入\ndb.coll.update({\"_id\": 1}, {$set: {item: \"apple\"}, $setOnInsert: {defaultQty: 100}}, {upsert: true})\n\n// Replace 代替\ndb.coll.replaceOne({\"name\": \"Max\"}, {\"firstname\": \"Maxime\", \"surname\": \"Beugnet\"})\n\n// Save 保存\ndb.coll.save({\"item\": \"book\", \"qty\": 40})\n\n// Write concern 写关注\ndb.coll.update({}, {$set: {\"x\": 1}}, {\"writeConcern\": {\"w\": \"majority\", \"wtimeout\": 5000}})"
+      "code": "db.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%22year%22%3A%202016%7D)%20%2F%2F%20%E8%AD%A6%E5%91%8A%EF%BC%81%20%E6%9B%BF%E6%8D%A2%E6%95%B4%E4%B8%AA%E6%96%87%E6%A1%A3%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24set%3A%20%7B%22year%22%3A%202016%2C%20name%3A%20%22Max%22%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24unset%3A%20%7B%22year%22%3A%201%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24rename%3A%20%7B%22year%22%3A%20%22date%22%7D%20%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24inc%3A%20%7B%22year%22%3A%205%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24mul%3A%20%7Bprice%3A%20NumberDecimal(%221.25%22)%2C%20qty%3A%202%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24min%3A%20%7B%22imdb%22%3A%205%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24max%3A%20%7B%22imdb%22%3A%208%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24currentDate%3A%20%7B%22lastModified%22%3A%20true%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24currentDate%3A%20%7B%22lastModified%22%3A%20%7B%24type%3A%20%22timestamp%22%7D%7D%7D)%0A%0A%2F%2F%20Array%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24push%20%3A%7B%22array%22%3A%201%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24pull%20%3A%7B%22array%22%3A%201%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24addToSet%20%3A%7B%22array%22%3A%202%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24pop%3A%20%7B%22array%22%3A%201%7D%7D)%20%20%2F%2F%20%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24pop%3A%20%7B%22array%22%3A%20-1%7D%7D)%20%2F%2F%20%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24pullAll%3A%20%7B%22array%22%20%3A%5B3%2C%204%2C%205%5D%7D%7D)%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24push%3A%20%7Bscores%3A%20%7B%24each%3A%20%5B90%2C%2092%2C%2085%5D%7D%7D%7D)%0Adb.coll.updateOne(%7B%22_id%22%3A%201%2C%20%22grades%22%3A%2080%7D%2C%20%7B%24set%3A%20%7B%22grades.%24%22%3A%2082%7D%7D)%0Adb.coll.updateMany(%7B%7D%2C%20%7B%24inc%3A%20%7B%22grades.%24%5B%5D%22%3A%2010%7D%7D)%0Adb.coll.update(%7B%7D%2C%20%7B%24set%3A%20%7B%22grades.%24%5Belement%5D%22%3A%20100%7D%7D%2C%20%7Bmulti%3A%20true%2C%20arrayFilters%3A%20%5B%7B%22element%22%3A%20%7B%24gte%3A%20100%7D%7D%5D%7D)%0A%0A%2F%2F%20%E6%9B%B4%E6%96%B0%E5%BE%88%E5%A4%9A%0Adb.coll.update(%7B%22year%22%3A%201999%7D%2C%20%7B%24set%3A%20%7B%22decade%22%3A%20%2290's%22%7D%7D%2C%20%7B%22multi%22%3Atrue%7D)%0Adb.coll.updateMany(%7B%22year%22%3A%201999%7D%2C%20%7B%24set%3A%20%7B%22decade%22%3A%20%2290's%22%7D%7D)%0A%0A%2F%2F%20FindOneAndUpdate%20%E6%9F%A5%E6%89%BE%E5%B9%B6%E6%9B%B4%E6%96%B0%0Adb.coll.findOneAndUpdate(%7B%22name%22%3A%20%22Max%22%7D%2C%20%7B%24inc%3A%20%7B%22points%22%3A%205%7D%7D%2C%20%7BreturnNewDocument%3A%20true%7D)%0A%0A%2F%2F%20Upsert%20%E6%9B%B4%E6%96%B0%E6%8F%92%E5%85%A5%0Adb.coll.update(%7B%22_id%22%3A%201%7D%2C%20%7B%24set%3A%20%7Bitem%3A%20%22apple%22%7D%2C%20%24setOnInsert%3A%20%7BdefaultQty%3A%20100%7D%7D%2C%20%7Bupsert%3A%20true%7D)%0A%0A%2F%2F%20Replace%20%E4%BB%A3%E6%9B%BF%0Adb.coll.replaceOne(%7B%22name%22%3A%20%22Max%22%7D%2C%20%7B%22firstname%22%3A%20%22Maxime%22%2C%20%22surname%22%3A%20%22Beugnet%22%7D)%0A%0A%2F%2F%20Save%20%E4%BF%9D%E5%AD%98%0Adb.coll.save(%7B%22item%22%3A%20%22book%22%2C%20%22qty%22%3A%2040%7D)%0A%0A%2F%2F%20Write%20concern%20%E5%86%99%E5%85%B3%E6%B3%A8%0Adb.coll.update(%7B%7D%2C%20%7B%24set%3A%20%7B%22x%22%3A%201%7D%7D%2C%20%7B%22writeConcern%22%3A%20%7B%22w%22%3A%20%22majority%22%2C%20%22wtimeout%22%3A%205000%7D%7D)",
+      "encoded": true
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
-      "title": "删除",
+      "title": "%E5%88%A0%E9%99%A4",
       "kind": "code",
       "lang": "mongodb",
-      "code": "db.coll.remove({name: \"Max\"})\ndb.coll.remove({name: \"Max\"}, {justOne: true})\ndb.coll.remove({}) // 警告！删除所有文档但不删除集合本身及其索引定义\ndb.coll.remove({name: \"Max\"}, {\"writeConcern\": {\"w\": \"majority\", \"wtimeout\": 5000}})\ndb.coll.findOneAndDelete({\"name\": \"Max\"})"
+      "code": "db.coll.remove(%7Bname%3A%20%22Max%22%7D)%0Adb.coll.remove(%7Bname%3A%20%22Max%22%7D%2C%20%7BjustOne%3A%20true%7D)%0Adb.coll.remove(%7B%7D)%20%2F%2F%20%E8%AD%A6%E5%91%8A%EF%BC%81%E5%88%A0%E9%99%A4%E6%89%80%E6%9C%89%E6%96%87%E6%A1%A3%E4%BD%86%E4%B8%8D%E5%88%A0%E9%99%A4%E9%9B%86%E5%90%88%E6%9C%AC%E8%BA%AB%E5%8F%8A%E5%85%B6%E7%B4%A2%E5%BC%95%E5%AE%9A%E4%B9%89%0Adb.coll.remove(%7Bname%3A%20%22Max%22%7D%2C%20%7B%22writeConcern%22%3A%20%7B%22w%22%3A%20%22majority%22%2C%20%22wtimeout%22%3A%205000%7D%7D)%0Adb.coll.findOneAndDelete(%7B%22name%22%3A%20%22Max%22%7D)",
+      "encoded": true
     },
     {
       "id": "s3-12",
@@ -145,18 +151,20 @@
     {
       "id": "s3-13",
       "sectionId": "s3",
-      "title": "创建集合",
+      "title": "%E5%88%9B%E5%BB%BA%E9%9B%86%E5%90%88",
       "kind": "code",
       "lang": "mongodb",
-      "code": "// 使用 $jsonschema 创建集合\ndb.createCollection(\"contacts\", {\n   validator: {$jsonSchema: {\n      bsonType: \"object\",\n      required: [\"phone\"],\n      properties: {\n         phone: {\n            bsonType: \"string\",\n            description: \"必须是一个字符串并且是必需的\"\n         },\n         email: {\n            bsonType: \"string\",\n            pattern: \"@mongodb\\.com$\",\n            description: \"必须是字符串并匹配正则表达式模式\"\n         },\n         status: {\n            enum: [ \"Unknown\", \"Incomplete\" ],\n            description: \"只能是枚举值之一\"\n         }\n      }\n   }}\n})"
+      "code": "%2F%2F%20%E4%BD%BF%E7%94%A8%20%24jsonschema%20%E5%88%9B%E5%BB%BA%E9%9B%86%E5%90%88%0Adb.createCollection(%22contacts%22%2C%20%7B%0A%20%20%20validator%3A%20%7B%24jsonSchema%3A%20%7B%0A%20%20%20%20%20%20bsonType%3A%20%22object%22%2C%0A%20%20%20%20%20%20required%3A%20%5B%22phone%22%5D%2C%0A%20%20%20%20%20%20properties%3A%20%7B%0A%20%20%20%20%20%20%20%20%20phone%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20bsonType%3A%20%22string%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20description%3A%20%22%E5%BF%85%E9%A1%BB%E6%98%AF%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B9%B6%E4%B8%94%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84%22%0A%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20email%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20bsonType%3A%20%22string%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20pattern%3A%20%22%40mongodb%5C.com%24%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20description%3A%20%22%E5%BF%85%E9%A1%BB%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B9%B6%E5%8C%B9%E9%85%8D%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%A8%A1%E5%BC%8F%22%0A%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20status%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20enum%3A%20%5B%20%22Unknown%22%2C%20%22Incomplete%22%20%5D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20description%3A%20%22%E5%8F%AA%E8%83%BD%E6%98%AF%E6%9E%9A%E4%B8%BE%E5%80%BC%E4%B9%8B%E4%B8%80%22%0A%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%7D%7D%0A%7D)",
+      "encoded": true
     },
     {
       "id": "s3-14",
       "sectionId": "s3",
-      "title": "其他采集功能",
+      "title": "%E5%85%B6%E4%BB%96%E9%87%87%E9%9B%86%E5%8A%9F%E8%83%BD",
       "kind": "code",
       "lang": "mongodb",
-      "code": "db.coll.stats()\ndb.coll.storageSize()\ndb.coll.totalIndexSize()\ndb.coll.totalSize()\ndb.coll.validate({full: true})\n// 第二个参数用于删除目标集合（如果存在）\ndb.coll.renameCollection(\"new_coll\", true)"
+      "code": "db.coll.stats()%0Adb.coll.storageSize()%0Adb.coll.totalIndexSize()%0Adb.coll.totalSize()%0Adb.coll.validate(%7Bfull%3A%20true%7D)%0A%2F%2F%20%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0%E7%94%A8%E4%BA%8E%E5%88%A0%E9%99%A4%E7%9B%AE%E6%A0%87%E9%9B%86%E5%90%88%EF%BC%88%E5%A6%82%E6%9E%9C%E5%AD%98%E5%9C%A8%EF%BC%89%0Adb.coll.renameCollection(%22new_coll%22%2C%20true)",
+      "encoded": true
     },
     {
       "id": "s4-15",
@@ -169,26 +177,29 @@
     {
       "id": "s4-16",
       "sectionId": "s4",
-      "title": "创建索引",
+      "title": "%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95",
       "kind": "code",
       "lang": "mongodb",
-      "code": "// 索引类型\ndb.coll.createIndex({\"name\": 1})                // 单字段索引\ndb.coll.createIndex({\"name\": 1, \"date\": 1})     // 复合索引\ndb.coll.createIndex({foo: \"text\", bar: \"text\"}) // 文本索引\ndb.coll.createIndex({\"$**\": \"text\"})            // 通配符文本索引\ndb.coll.createIndex({\"userMetadata.$**\": 1})    // 通配符索引\ndb.coll.createIndex({\"loc\": \"2d\"})              // 二维索引\ndb.coll.createIndex({\"loc\": \"2dsphere\"})        // 2dsphere 索引\ndb.coll.createIndex({\"_id\": \"hashed\"})          // 哈希索引\n\n// Index Options\ndb.coll.createIndex({\"lastModifiedDate\": 1}, {expireAfterSeconds: 3600})      // TTL指数\ndb.coll.createIndex({\"name\": 1}, {unique: true})\ndb.coll.createIndex({\"name\": 1}, {partialFilterExpression: {age: {$gt: 18}}}) // 部分索引\n// 强度为 1 或 2 的不区分大小写的索引\ndb.coll.createIndex({\"name\": 1}, {collation: {locale: 'en', strength: 1}})\ndb.coll.createIndex({\"name\": 1 }, {sparse: true})"
+      "code": "%2F%2F%20%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8B%0Adb.coll.createIndex(%7B%22name%22%3A%201%7D)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%8D%95%E5%AD%97%E6%AE%B5%E7%B4%A2%E5%BC%95%0Adb.coll.createIndex(%7B%22name%22%3A%201%2C%20%22date%22%3A%201%7D)%20%20%20%20%20%2F%2F%20%E5%A4%8D%E5%90%88%E7%B4%A2%E5%BC%95%0Adb.coll.createIndex(%7Bfoo%3A%20%22text%22%2C%20bar%3A%20%22text%22%7D)%20%2F%2F%20%E6%96%87%E6%9C%AC%E7%B4%A2%E5%BC%95%0Adb.coll.createIndex(%7B%22%24**%22%3A%20%22text%22%7D)%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E9%80%9A%E9%85%8D%E7%AC%A6%E6%96%87%E6%9C%AC%E7%B4%A2%E5%BC%95%0Adb.coll.createIndex(%7B%22userMetadata.%24**%22%3A%201%7D)%20%20%20%20%2F%2F%20%E9%80%9A%E9%85%8D%E7%AC%A6%E7%B4%A2%E5%BC%95%0Adb.coll.createIndex(%7B%22loc%22%3A%20%222d%22%7D)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E4%BA%8C%E7%BB%B4%E7%B4%A2%E5%BC%95%0Adb.coll.createIndex(%7B%22loc%22%3A%20%222dsphere%22%7D)%20%20%20%20%20%20%20%20%2F%2F%202dsphere%20%E7%B4%A2%E5%BC%95%0Adb.coll.createIndex(%7B%22_id%22%3A%20%22hashed%22%7D)%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%93%88%E5%B8%8C%E7%B4%A2%E5%BC%95%0A%0A%2F%2F%20Index%20Options%0Adb.coll.createIndex(%7B%22lastModifiedDate%22%3A%201%7D%2C%20%7BexpireAfterSeconds%3A%203600%7D)%20%20%20%20%20%20%2F%2F%20TTL%E6%8C%87%E6%95%B0%0Adb.coll.createIndex(%7B%22name%22%3A%201%7D%2C%20%7Bunique%3A%20true%7D)%0Adb.coll.createIndex(%7B%22name%22%3A%201%7D%2C%20%7BpartialFilterExpression%3A%20%7Bage%3A%20%7B%24gt%3A%2018%7D%7D%7D)%20%2F%2F%20%E9%83%A8%E5%88%86%E7%B4%A2%E5%BC%95%0A%2F%2F%20%E5%BC%BA%E5%BA%A6%E4%B8%BA%201%20%E6%88%96%202%20%E7%9A%84%E4%B8%8D%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E7%B4%A2%E5%BC%95%0Adb.coll.createIndex(%7B%22name%22%3A%201%7D%2C%20%7Bcollation%3A%20%7Blocale%3A%20'en'%2C%20strength%3A%201%7D%7D)%0Adb.coll.createIndex(%7B%22name%22%3A%201%20%7D%2C%20%7Bsparse%3A%20true%7D)",
+      "encoded": true
     },
     {
       "id": "s4-17",
       "sectionId": "s4",
-      "title": "删除索引",
+      "title": "%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95",
       "kind": "code",
       "lang": "mongodb",
-      "code": "db.coll.dropIndex(\"name_1\")"
+      "code": "db.coll.dropIndex(%22name_1%22)",
+      "encoded": true
     },
     {
       "id": "s4-18",
       "sectionId": "s4",
-      "title": "隐藏/取消隐藏索引",
+      "title": "%E9%9A%90%E8%97%8F%2F%E5%8F%96%E6%B6%88%E9%9A%90%E8%97%8F%E7%B4%A2%E5%BC%95",
       "kind": "code",
       "lang": "mongodb",
-      "code": "db.coll.hideIndex(\"name_1\")\ndb.coll.unhideIndex(\"name_1\")"
+      "code": "db.coll.hideIndex(%22name_1%22)%0Adb.coll.unhideIndex(%22name_1%22)",
+      "encoded": true
     },
     {
       "id": "s5-19",
@@ -200,34 +211,38 @@
     {
       "id": "s5-20",
       "sectionId": "s5",
-      "title": "方便的命令",
+      "title": "%E6%96%B9%E4%BE%BF%E7%9A%84%E5%91%BD%E4%BB%A4",
       "kind": "code",
       "lang": "mongodb",
-      "code": "use admin\ndb.createUser({\"user\": \"root\", \"pwd\": passwordPrompt(), \"roles\": [\"root\"]})\ndb.dropUser(\"root\")\ndb.auth( \"user\", passwordPrompt() )\n\nuse test\ndb.getSiblingDB(\"dbname\")\ndb.currentOp()\ndb.killOp(123) // opid\n\ndb.fsyncLock()\ndb.fsyncUnlock()\n\ndb.getCollectionNames()\ndb.getCollectionInfos()\ndb.printCollectionStats()\ndb.stats()\n\ndb.getReplicationInfo()\ndb.printReplicationInfo()\ndb.isMaster()\ndb.hostInfo()\ndb.printShardingStatus()\ndb.shutdownServer()\ndb.serverStatus()\n\ndb.setSlaveOk()\ndb.getSlaveOk()\n\ndb.getProfilingLevel()\ndb.getProfilingStatus()\ndb.setProfilingLevel(1, 200) // 0 == OFF, 1 == ON with slowms, 2 == ON\n\ndb.enableFreeMonitoring()\ndb.disableFreeMonitoring()\ndb.getFreeMonitoringStatus()\n\ndb.createView(\"viewName\", \"sourceColl\", [{$project:{department: 1}}])"
+      "code": "use%20admin%0Adb.createUser(%7B%22user%22%3A%20%22root%22%2C%20%22pwd%22%3A%20passwordPrompt()%2C%20%22roles%22%3A%20%5B%22root%22%5D%7D)%0Adb.dropUser(%22root%22)%0Adb.auth(%20%22user%22%2C%20passwordPrompt()%20)%0A%0Ause%20test%0Adb.getSiblingDB(%22dbname%22)%0Adb.currentOp()%0Adb.killOp(123)%20%2F%2F%20opid%0A%0Adb.fsyncLock()%0Adb.fsyncUnlock()%0A%0Adb.getCollectionNames()%0Adb.getCollectionInfos()%0Adb.printCollectionStats()%0Adb.stats()%0A%0Adb.getReplicationInfo()%0Adb.printReplicationInfo()%0Adb.isMaster()%0Adb.hostInfo()%0Adb.printShardingStatus()%0Adb.shutdownServer()%0Adb.serverStatus()%0A%0Adb.setSlaveOk()%0Adb.getSlaveOk()%0A%0Adb.getProfilingLevel()%0Adb.getProfilingStatus()%0Adb.setProfilingLevel(1%2C%20200)%20%2F%2F%200%20%3D%3D%20OFF%2C%201%20%3D%3D%20ON%20with%20slowms%2C%202%20%3D%3D%20ON%0A%0Adb.enableFreeMonitoring()%0Adb.disableFreeMonitoring()%0Adb.getFreeMonitoringStatus()%0A%0Adb.createView(%22viewName%22%2C%20%22sourceColl%22%2C%20%5B%7B%24project%3A%7Bdepartment%3A%201%7D%7D%5D)",
+      "encoded": true
     },
     {
       "id": "s6-21",
       "sectionId": "s6",
-      "title": "改变流",
+      "title": "%E6%94%B9%E5%8F%98%E6%B5%81",
       "kind": "code",
       "lang": "mongodb",
-      "code": "watchCursor = db.coll.watch([\n   {\n      $match : {\"operationType\": \"insert\" }\n   }\n])\n\nwhile (!watchCursor.isExhausted()){\n   if (watchCursor.hasNext()){\n      print(tojson(watchCursor.next()));\n   }\n}"
+      "code": "watchCursor%20%3D%20db.coll.watch(%5B%0A%20%20%20%7B%0A%20%20%20%20%20%20%24match%20%3A%20%7B%22operationType%22%3A%20%22insert%22%20%7D%0A%20%20%20%7D%0A%5D)%0A%0Awhile%20(!watchCursor.isExhausted())%7B%0A%20%20%20if%20(watchCursor.hasNext())%7B%0A%20%20%20%20%20%20print(tojson(watchCursor.next()))%3B%0A%20%20%20%7D%0A%7D",
+      "encoded": true
     },
     {
       "id": "s6-22",
       "sectionId": "s6",
-      "title": "分片集群",
+      "title": "%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4",
       "kind": "code",
       "lang": "mongodb",
-      "code": "sh.status()\nsh.addShard(\"rs1/mongodbd1.example.net:27017\")\nsh.shardCollection(\"mydb.coll\", {zipcode: 1})\n\nsh.moveChunk(\"mydb.coll\", { zipcode: \"53187\" }, \"shard0019\")\nsh.splitAt(\"mydb.coll\", {x: 70})\nsh.splitFind(\"mydb.coll\", {x: 70})\nsh.disableAutoSplit()\nsh.enableAutoSplit()\n\nsh.startBalancer()\nsh.stopBalancer()\nsh.disableBalancing(\"mydb.coll\")\nsh.enableBalancing(\"mydb.coll\")\nsh.getBalancerState()\nsh.setBalancerState(true/false)\nsh.isBalancerRunning()\n\nsh.addTagRange(\"mydb.coll\", {state: \"NY\",zip: MinKey}, {state: \"NY\",zip: MaxKey}, \"NY\")\nsh.removeTagRange(\"mydb.coll\", {state: \"NY\",zip: MinKey}, {state: \"NY\",zip: MaxKey}, \"NY\")\nsh.addShardTag(\"shard0000\", \"NYC\")\nsh.removeShardTag(\"shard0000\", \"NYC\")\n\nsh.addShardToZone(\"shard0000\", \"JFK\")\nsh.removeShardFromZone(\"shard0000\", \"NYC\")\nsh.removeRangeFromZone(\"mydb.coll\", {a: 1, b: 1}, {a: 10, b: 10})"
+      "code": "sh.status()%0Ash.addShard(%22rs1%2Fmongodbd1.example.net%3A27017%22)%0Ash.shardCollection(%22mydb.coll%22%2C%20%7Bzipcode%3A%201%7D)%0A%0Ash.moveChunk(%22mydb.coll%22%2C%20%7B%20zipcode%3A%20%2253187%22%20%7D%2C%20%22shard0019%22)%0Ash.splitAt(%22mydb.coll%22%2C%20%7Bx%3A%2070%7D)%0Ash.splitFind(%22mydb.coll%22%2C%20%7Bx%3A%2070%7D)%0Ash.disableAutoSplit()%0Ash.enableAutoSplit()%0A%0Ash.startBalancer()%0Ash.stopBalancer()%0Ash.disableBalancing(%22mydb.coll%22)%0Ash.enableBalancing(%22mydb.coll%22)%0Ash.getBalancerState()%0Ash.setBalancerState(true%2Ffalse)%0Ash.isBalancerRunning()%0A%0Ash.addTagRange(%22mydb.coll%22%2C%20%7Bstate%3A%20%22NY%22%2Czip%3A%20MinKey%7D%2C%20%7Bstate%3A%20%22NY%22%2Czip%3A%20MaxKey%7D%2C%20%22NY%22)%0Ash.removeTagRange(%22mydb.coll%22%2C%20%7Bstate%3A%20%22NY%22%2Czip%3A%20MinKey%7D%2C%20%7Bstate%3A%20%22NY%22%2Czip%3A%20MaxKey%7D%2C%20%22NY%22)%0Ash.addShardTag(%22shard0000%22%2C%20%22NYC%22)%0Ash.removeShardTag(%22shard0000%22%2C%20%22NYC%22)%0A%0Ash.addShardToZone(%22shard0000%22%2C%20%22JFK%22)%0Ash.removeShardFromZone(%22shard0000%22%2C%20%22NYC%22)%0Ash.removeRangeFromZone(%22mydb.coll%22%2C%20%7Ba%3A%201%2C%20b%3A%201%7D%2C%20%7Ba%3A%2010%2C%20b%3A%2010%7D)",
+      "encoded": true
     },
     {
       "id": "s6-23",
       "sectionId": "s6",
-      "title": "副本集",
+      "title": "%E5%89%AF%E6%9C%AC%E9%9B%86",
       "kind": "code",
       "lang": "mongodb",
-      "code": "rs.status()\nrs.initiate({\"_id\": \"replicaTest\",\n  members: [\n    { _id: 0, host: \"127.0.0.1:27017\" },\n    { _id: 1, host: \"127.0.0.1:27018\" },\n    { _id: 2, host: \"127.0.0.1:27019\",\n    arbiterOnly:true }]\n})\nrs.add(\"mongodbd1.example.net:27017\")\nrs.addArb(\"mongodbd2.example.net:27017\")\nrs.remove(\"mongodbd1.example.net:27017\")\nrs.conf()\nrs.isMaster()\nrs.printReplicationInfo()\nrs.printSlaveReplicationInfo()\nrs.reconfig(<valid_conf>)\nrs.slaveOk()\nrs.stepDown(20, 5)\n// (stepDownSecs, secondaryCatchUpPeriodSecs)"
+      "code": "rs.status()%0Ars.initiate(%7B%22_id%22%3A%20%22replicaTest%22%2C%0A%20%20members%3A%20%5B%0A%20%20%20%20%7B%20_id%3A%200%2C%20host%3A%20%22127.0.0.1%3A27017%22%20%7D%2C%0A%20%20%20%20%7B%20_id%3A%201%2C%20host%3A%20%22127.0.0.1%3A27018%22%20%7D%2C%0A%20%20%20%20%7B%20_id%3A%202%2C%20host%3A%20%22127.0.0.1%3A27019%22%2C%0A%20%20%20%20arbiterOnly%3Atrue%20%7D%5D%0A%7D)%0Ars.add(%22mongodbd1.example.net%3A27017%22)%0Ars.addArb(%22mongodbd2.example.net%3A27017%22)%0Ars.remove(%22mongodbd1.example.net%3A27017%22)%0Ars.conf()%0Ars.isMaster()%0Ars.printReplicationInfo()%0Ars.printSlaveReplicationInfo()%0Ars.reconfig(%3Cvalid_conf%3E)%0Ars.slaveOk()%0Ars.stepDown(20%2C%205)%0A%2F%2F%20(stepDownSecs%2C%20secondaryCatchUpPeriodSecs)",
+      "encoded": true
     }
   ],
   "source": {

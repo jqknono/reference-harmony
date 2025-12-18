@@ -33,26 +33,29 @@
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "简单的 justfile",
+      "title": "%E7%AE%80%E5%8D%95%E7%9A%84%20justfile",
       "kind": "code",
       "lang": "bash",
-      "code": "#!/usr/bin/env just --justfile\n\n# hello 是配方(recipe)的名字\nhello:\n  echo \"Hello World!\""
+      "code": "%23!%2Fusr%2Fbin%2Fenv%20just%20--justfile%0A%0A%23%20hello%20%E6%98%AF%E9%85%8D%E6%96%B9(recipe)%E7%9A%84%E5%90%8D%E5%AD%97%0Ahello%3A%0A%20%20echo%20%22Hello%20World!%22",
+      "encoded": true
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
-      "title": "带参数的配方",
+      "title": "%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E9%85%8D%E6%96%B9",
       "kind": "code",
       "lang": "bash",
-      "code": "filter PATTERN:\n   echo {{PATTERN}}\n\n# 带有默认值的 param\nemail address='master@example.com':\n   echo {{address}}\n\n# 带表达式的参数\ntest triple=(arch() + \"-unknown-unknown\"):\n  ./test {{triple}}\n\n# 变量参数：“+”接受一个或多个值\nbackup +FILES:\n  scp {{FILES}} me@example.com\n\n# 带*的可变参数：零个或多个值\ncommit MESSAGE *FLAGS:\n  git commit {{FLAGS}} -m \"{{MESSAGE}}\""
+      "code": "filter%20PATTERN%3A%0A%20%20%20echo%20%7B%7BPATTERN%7D%7D%0A%0A%23%20%E5%B8%A6%E6%9C%89%E9%BB%98%E8%AE%A4%E5%80%BC%E7%9A%84%20param%0Aemail%20address%3D'master%40example.com'%3A%0A%20%20%20echo%20%7B%7Baddress%7D%7D%0A%0A%23%20%E5%B8%A6%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%8F%82%E6%95%B0%0Atest%20triple%3D(arch()%20%2B%20%22-unknown-unknown%22)%3A%0A%20%20.%2Ftest%20%7B%7Btriple%7D%7D%0A%0A%23%20%E5%8F%98%E9%87%8F%E5%8F%82%E6%95%B0%EF%BC%9A%E2%80%9C%2B%E2%80%9D%E6%8E%A5%E5%8F%97%E4%B8%80%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%80%BC%0Abackup%20%2BFILES%3A%0A%20%20scp%20%7B%7BFILES%7D%7D%20me%40example.com%0A%0A%23%20%E5%B8%A6*%E7%9A%84%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0%EF%BC%9A%E9%9B%B6%E4%B8%AA%E6%88%96%E5%A4%9A%E4%B8%AA%E5%80%BC%0Acommit%20MESSAGE%20*FLAGS%3A%0A%20%20git%20commit%20%7B%7BFLAGS%7D%7D%20-m%20%22%7B%7BMESSAGE%7D%7D%22",
+      "encoded": true
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
-      "title": "变量和子变量",
+      "title": "%E5%8F%98%E9%87%8F%E5%92%8C%E5%AD%90%E5%8F%98%E9%87%8F",
       "kind": "code",
       "lang": "bash",
-      "code": "version := \"0.2.7\"\ntardir  := \"awesomesauce-\" + version\ntarball := tardir + \".tar.gz\"\n\ntest:\n   echo {{version}}\n\n# 仅从命令行设置/覆盖变量\n$ just --set version 1.1.0"
+      "code": "version%20%3A%3D%20%220.2.7%22%0Atardir%20%20%3A%3D%20%22awesomesauce-%22%20%2B%20version%0Atarball%20%3A%3D%20tardir%20%2B%20%22.tar.gz%22%0A%0Atest%3A%0A%20%20%20echo%20%7B%7Bversion%7D%7D%0A%0A%23%20%E4%BB%85%E4%BB%8E%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%AE%BE%E7%BD%AE%2F%E8%A6%86%E7%9B%96%E5%8F%98%E9%87%8F%0A%24%20just%20--set%20version%201.1.0",
+      "encoded": true
     },
     {
       "id": "s1-5",
@@ -65,23 +68,25 @@
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "命令的环境变量",
+      "title": "%E5%91%BD%E4%BB%A4%E7%9A%84%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F",
       "kind": "code",
       "lang": "bash",
-      "code": "export RUST_BACKTRACE := \"1\"\n\ntest:\n    # 如果堆栈崩溃，将打印堆栈跟踪\n    cargo test"
+      "code": "export%20RUST_BACKTRACE%20%3A%3D%20%221%22%0A%0Atest%3A%0A%20%20%20%20%23%20%E5%A6%82%E6%9E%9C%E5%A0%86%E6%A0%88%E5%B4%A9%E6%BA%83%EF%BC%8C%E5%B0%86%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88%E8%B7%9F%E8%B8%AA%0A%20%20%20%20cargo%20test",
+      "encoded": true
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
-      "title": "backtick-从评估中捕获输出",
+      "title": "backtick-%E4%BB%8E%E8%AF%84%E4%BC%B0%E4%B8%AD%E6%8D%95%E8%8E%B7%E8%BE%93%E5%87%BA",
       "kind": "code",
       "lang": "bash",
-      "code": "JAVA_HOME := `jbang jdk home 11`\n# Backtick 代码块\nstuff := \\```\n   foo=\"hello\"\n   echo $foo \"world\"\n\\```\n\ndone BRANCH=`git rev-parse --abbrev-ref HEAD`:\n  git checkout master\n\nsloc:\n    @echo \"`wc -l *.c` lines of code\"\n\n# Backtick 在任何地方工作：字符串/变量/参数"
+      "code": "JAVA_HOME%20%3A%3D%20%60jbang%20jdk%20home%2011%60%0A%23%20Backtick%20%E4%BB%A3%E7%A0%81%E5%9D%97%0Astuff%20%3A%3D%20%5C%60%60%60%0A%20%20%20foo%3D%22hello%22%0A%20%20%20echo%20%24foo%20%22world%22%0A%5C%60%60%60%0A%0Adone%20BRANCH%3D%60git%20rev-parse%20--abbrev-ref%20HEAD%60%3A%0A%20%20git%20checkout%20master%0A%0Asloc%3A%0A%20%20%20%20%40echo%20%22%60wc%20-l%20*.c%60%20lines%20of%20code%22%0A%0A%23%20Backtick%20%E5%9C%A8%E4%BB%BB%E4%BD%95%E5%9C%B0%E6%96%B9%E5%B7%A5%E4%BD%9C%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%2F%E5%8F%98%E9%87%8F%2F%E5%8F%82%E6%95%B0",
+      "encoded": true
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "backtick-从评估中捕获输出",
+      "title": "",
       "kind": "text",
       "body": "注意： 上面示例中 <code>\\\\`</code> 没有转义过来"
     },
@@ -104,50 +109,56 @@
     {
       "id": "s1-11",
       "sectionId": "s1",
-      "title": "设置",
+      "title": "%E8%AE%BE%E7%BD%AE",
       "kind": "code",
       "lang": "bash",
-      "code": "set shell := [\"zsh\", \"-cu\"] \n\nset dotenv-load := true\nserv: \n   echo \"$DATABASE_ADDRESS from .env\"\n\nset positional-arguments := true\nfoo:\n  echo $0\n  echo $1"
+      "code": "set%20shell%20%3A%3D%20%5B%22zsh%22%2C%20%22-cu%22%5D%20%0A%0Aset%20dotenv-load%20%3A%3D%20true%0Aserv%3A%20%0A%20%20%20echo%20%22%24DATABASE_ADDRESS%20from%20.env%22%0A%0Aset%20positional-arguments%20%3A%3D%20true%0Afoo%3A%0A%20%20echo%20%240%0A%20%20echo%20%241",
+      "encoded": true
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
-      "title": "配置依赖性-之前、之后和周围",
+      "title": "%E9%85%8D%E7%BD%AE%E4%BE%9D%E8%B5%96%E6%80%A7-%E4%B9%8B%E5%89%8D%E3%80%81%E4%B9%8B%E5%90%8E%E5%92%8C%E5%91%A8%E5%9B%B4",
       "kind": "code",
       "lang": "bash",
-      "code": "# 执行序列：A-> B-> C-> D\nb: a && c d\n# 执行配方(recipe)“A”\nb:\n  echo 'B start!'\n  just a\n  echo 'B end!'\n# 通过表达式依赖参数\ndefault: (build \"main\")\n\nbuild target:\n  @echo 'Building {{target}}...'"
+      "code": "%23%20%E6%89%A7%E8%A1%8C%E5%BA%8F%E5%88%97%EF%BC%9AA-%3E%20B-%3E%20C-%3E%20D%0Ab%3A%20a%20%26%26%20c%20d%0A%23%20%E6%89%A7%E8%A1%8C%E9%85%8D%E6%96%B9(recipe)%E2%80%9CA%E2%80%9D%0Ab%3A%0A%20%20echo%20'B%20start!'%0A%20%20just%20a%0A%20%20echo%20'B%20end!'%0A%23%20%E9%80%9A%E8%BF%87%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%BE%9D%E8%B5%96%E5%8F%82%E6%95%B0%0Adefault%3A%20(build%20%22main%22)%0A%0Abuild%20target%3A%0A%20%20%40echo%20'Building%20%7B%7Btarget%7D%7D...'",
+      "encoded": true
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
-      "title": "Just 函数",
+      "title": "Just%20%E5%87%BD%E6%95%B0",
       "kind": "code",
       "lang": "shell",
-      "code": "hello name:\n   echo {{os()}}\n   echo {{uppercase(name)}}\n\n# 函数类别\n* 系统信息\n* 系统信息\n* Justfile 和 Justfile目录\n* 字符串操纵\n* 路径操纵\n\n# String contact:  (key + \":\" + value)"
+      "code": "hello%20name%3A%0A%20%20%20echo%20%7B%7Bos()%7D%7D%0A%20%20%20echo%20%7B%7Buppercase(name)%7D%7D%0A%0A%23%20%E5%87%BD%E6%95%B0%E7%B1%BB%E5%88%AB%0A*%20%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%0A*%20%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AF%0A*%20Justfile%20%E5%92%8C%20Justfile%E7%9B%AE%E5%BD%95%0A*%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E7%BA%B5%0A*%20%E8%B7%AF%E5%BE%84%E6%93%8D%E7%BA%B5%0A%0A%23%20String%20contact%3A%20%20(key%20%2B%20%22%3A%22%20%2B%20value)",
+      "encoded": true
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
-      "title": "字符串-用双引号转义",
+      "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2-%E7%94%A8%E5%8F%8C%E5%BC%95%E5%8F%B7%E8%BD%AC%E4%B9%89",
       "kind": "code",
       "lang": "bash",
-      "code": "tring-with-tab := \"\\t\"\nstring-with-newline := \"\\n\"\nescapes := '\\t\\n\\r\\\"\\\\'\n\n# 该字符串将评估为`foo\\nbar\\n`\nx := '''\n  foo\n  bar\n'''"
+      "code": "tring-with-tab%20%3A%3D%20%22%5Ct%22%0Astring-with-newline%20%3A%3D%20%22%5Cn%22%0Aescapes%20%3A%3D%20'%5Ct%5Cn%5Cr%5C%22%5C%5C'%0A%0A%23%20%E8%AF%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B0%86%E8%AF%84%E4%BC%B0%E4%B8%BA%60foo%5Cnbar%5Cn%60%0Ax%20%3A%3D%20'''%0A%20%20foo%0A%20%20bar%0A'''",
+      "encoded": true
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "命令注释：quiet(@)、suppre­ss(-)、invert(!)",
+      "title": "%E5%91%BD%E4%BB%A4%E6%B3%A8%E9%87%8A%EF%BC%9Aquiet(%40)%E3%80%81suppre%C2%ADss(-)%E3%80%81invert(!)",
       "kind": "code",
       "lang": "bash",
-      "code": "hello:\n  @ echo \"command will not be echoed\"\n  - echo \"ignore none-zero exit status and continue\"\n\n@hello2:\n  echo \"command will not be echoed\"\n\n# 反转命令退出状态！- shell 功能\nhello3:\n  # 如果命令成功（退出状态为0），请仅退出\n  ! git branch | grep '* master'"
+      "code": "hello%3A%0A%20%20%40%20echo%20%22command%20will%20not%20be%20echoed%22%0A%20%20-%20echo%20%22ignore%20none-zero%20exit%20status%20and%20continue%22%0A%0A%40hello2%3A%0A%20%20echo%20%22command%20will%20not%20be%20echoed%22%0A%0A%23%20%E5%8F%8D%E8%BD%AC%E5%91%BD%E4%BB%A4%E9%80%80%E5%87%BA%E7%8A%B6%E6%80%81%EF%BC%81-%20shell%20%E5%8A%9F%E8%83%BD%0Ahello3%3A%0A%20%20%23%20%E5%A6%82%E6%9E%9C%E5%91%BD%E4%BB%A4%E6%88%90%E5%8A%9F%EF%BC%88%E9%80%80%E5%87%BA%E7%8A%B6%E6%80%81%E4%B8%BA0%EF%BC%89%EF%BC%8C%E8%AF%B7%E4%BB%85%E9%80%80%E5%87%BA%0A%20%20!%20git%20branch%20%7C%20grep%20'*%20master'",
+      "encoded": true
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
-      "title": "条件表达式：if、loop 和 while",
+      "title": "%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%9Aif%E3%80%81loop%20%E5%92%8C%20while",
       "kind": "code",
       "lang": "shell",
-      "code": "# 正则表达匹配\nfo := if \"hi\" =~ 'h.+' { \"match\" } else { \"mismatch\" }\n\ntest:\n   if true; then echo 'True!'; fi\n   for file in `ls .`; do echo $file; done\n   while `server-is-dead`; do ping -c 1 server; done\n\nfoo bar:\n  echo {{ if bar == \"bar\" { \"hello\" } else { \"bye\" } }}"
+      "code": "%23%20%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%8C%B9%E9%85%8D%0Afo%20%3A%3D%20if%20%22hi%22%20%3D~%20'h.%2B'%20%7B%20%22match%22%20%7D%20else%20%7B%20%22mismatch%22%20%7D%0A%0Atest%3A%0A%20%20%20if%20true%3B%20then%20echo%20'True!'%3B%20fi%0A%20%20%20for%20file%20in%20%60ls%20.%60%3B%20do%20echo%20%24file%3B%20done%0A%20%20%20while%20%60server-is-dead%60%3B%20do%20ping%20-c%201%20server%3B%20done%0A%0Afoo%20bar%3A%0A%20%20echo%20%7B%7B%20if%20bar%20%3D%3D%20%22bar%22%20%7B%20%22hello%22%20%7D%20else%20%7B%20%22bye%22%20%7D%20%7D%7D",
+      "encoded": true
     },
     {
       "id": "s1-17",
@@ -160,10 +171,11 @@
     {
       "id": "s1-18",
       "sectionId": "s1",
-      "title": "其他语言的配置",
+      "title": "%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E7%9A%84%E9%85%8D%E7%BD%AE",
       "kind": "code",
       "lang": "bash",
-      "code": "bash-test:\n    #!/usr/bin/env bash\n    set -euxo pipefail\n    hello='Yo'\n    echo \"$hello from bash!\""
+      "code": "bash-test%3A%0A%20%20%20%20%23!%2Fusr%2Fbin%2Fenv%20bash%0A%20%20%20%20set%20-euxo%20pipefail%0A%20%20%20%20hello%3D'Yo'%0A%20%20%20%20echo%20%22%24hello%20from%20bash!%22",
+      "encoded": true
     },
     {
       "id": "s1-19",
@@ -184,10 +196,11 @@
     {
       "id": "s1-21",
       "sectionId": "s1",
-      "title": "作为 shell 别名的配置",
+      "title": "%E4%BD%9C%E4%B8%BA%20shell%20%E5%88%AB%E5%90%8D%E7%9A%84%E9%85%8D%E7%BD%AE",
       "kind": "code",
       "lang": "bash",
-      "code": "for recipe in `just -f ~/.justfile --summary`; do\n  alias $recipe=\"just -f ~/.justfile -d. $recipe\"\ndone"
+      "code": "for%20recipe%20in%20%60just%20-f%20~%2F.justfile%20--summary%60%3B%20do%0A%20%20alias%20%24recipe%3D%22just%20-f%20~%2F.justfile%20-d.%20%24recipe%22%0Adone",
+      "encoded": true
     },
     {
       "id": "s1-22",

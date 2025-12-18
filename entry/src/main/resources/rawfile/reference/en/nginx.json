@@ -72,12 +72,12 @@
     {
       "id": "s13",
       "title": "Stream (TCP/UDP)",
-      "startIndex": 57
+      "startIndex": 47
     },
     {
       "id": "s14",
       "title": "Snippets",
-      "startIndex": 60
+      "startIndex": 50
     }
   ],
   "cards": [
@@ -98,14 +98,14 @@
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "Install & Service",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ sudo apt update && sudo apt install -y nginx"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
-      "title": "Install & Service",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "- **RHEL/CentOS**\n  ```shell script\n  $ sudo yum install -y epel-release nginx && sudo systemctl enable --now nginx"
@@ -113,21 +113,21 @@
     {
       "id": "s1-4",
       "sectionId": "s1",
-      "title": "Install & Service",
+      "title": "",
       "kind": "text",
       "body": "• **Service**"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "Install & Service",
+      "title": "",
       "kind": "text",
       "body": "```shell script\n$ sudo systemctl status nginx\n$ sudo systemctl reload nginx\n$ sudo systemctl restart nginx\n$ sudo nginx -t   # test config\n$ nginx -V        # built modules"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "Install & Service",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\n### Key Paths\n\n- `/etc/nginx/nginx.conf` _(main config)_\n- `/etc/nginx/conf.d/*.conf` _(drop‑ins)_\n- `/etc/nginx/sites-available/` + `sites-enabled/` _(Debian style)_\n- `/var/www/html` _(default docroot)_\n- `logs`: `/var/log/nginx/access.log`, `/var/log/nginx/error.log`\n\n### Minimal HTTP Server\n\n```nginx\n# /etc/nginx/conf.d/example.conf\nserver {\n  listen 80;\n  server_name example.com;\n  root /var/www/example/public;\n\n  location / {\n    try_files $uri $uri/ =404;\n  }\n}"
@@ -142,7 +142,7 @@
     {
       "id": "s2-8",
       "sectionId": "s2",
-      "title": "Core Blocks",
+      "title": "",
       "kind": "code",
       "lang": "nginx",
       "code": "user  www-data;\nworker_processes auto;\n\nevents { worker_connections 1024; }\n\nhttp {\n  include       mime.types;\n  default_type  application/octet-stream;\n  sendfile      on;\n  keepalive_timeout 65;\n\n  # servers / includes go here...\n}"
@@ -157,7 +157,7 @@
     {
       "id": "s2-10",
       "sectionId": "s2",
-      "title": "Context & Order",
+      "title": "",
       "kind": "code",
       "lang": "nginx",
       "code": "location = /healthz { return 204; }\nlocation ^~ /static/ { expires 7d; }\nlocation ~* \\.(png|jpg|css|js)$ { expires 7d; }\nlocation / { try_files $uri $uri/ /index.html; }"
@@ -205,10 +205,11 @@
     {
       "id": "s4-16",
       "sectionId": "s4",
-      "title": "HSTS & Security Headers",
+      "title": "HSTS%20%26%20Security%20Headers",
       "kind": "code",
       "lang": "nginx",
-      "code": "add_header Strict-Transport-Security \"max-age=31536000; includeSubDomains; preload\" always;\nadd_header X-Content-Type-Options \"nosniff\" always;\nadd_header X-Frame-Options \"SAMEORIGIN\" always;\nadd_header Referrer-Policy \"no-referrer-when-downgrade\" always;\nadd_header Permissions-Policy \"geolocation=(), microphone=(), camera=()\" always;"
+      "code": "add_header%20Strict-Transport-Security%20%22max-age%3D31536000%3B%20includeSubDomains%3B%20preload%22%20always%3B%0Aadd_header%20X-Content-Type-Options%20%22nosniff%22%20always%3B%0Aadd_header%20X-Frame-Options%20%22SAMEORIGIN%22%20always%3B%0Aadd_header%20Referrer-Policy%20%22no-referrer-when-downgrade%22%20always%3B%0Aadd_header%20Permissions-Policy%20%22geolocation%3D()%2C%20microphone%3D()%2C%20camera%3D()%22%20always%3B",
+      "encoded": true
     },
     {
       "id": "s4-17",
@@ -220,7 +221,7 @@
     {
       "id": "s4-18",
       "sectionId": "s4",
-      "title": "Let’s Encrypt (Certbot)",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\n## Reverse Proxy {.cols-3}\n\n### Basic Proxy\n\n```nginx\nupstream app {\n  server 127.0.0.1:3000;\n  # server unix:/run/app.sock; # alternative\n}\n\nserver {\n  listen 80;\n  server_name api.example.com;\n\n  location / {\n    proxy_set_header Host $host;\n    proxy_set_header X-Real-IP $remote_addr;\n    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n    proxy_set_header X-Forwarded-Proto $scheme;\n    proxy_pass http://app;\n  }\n}"
@@ -228,10 +229,11 @@
     {
       "id": "s4-19",
       "sectionId": "s4",
-      "title": "WebSockets / HTTP Upgrade",
+      "title": "WebSockets%20%2F%20HTTP%20Upgrade",
       "kind": "code",
       "lang": "nginx",
-      "code": "location /socket.io/ {\n  proxy_http_version 1.1;\n  proxy_set_header Upgrade $http_upgrade;\n  proxy_set_header Connection \"upgrade\";\n  proxy_pass http://app;\n}"
+      "code": "location%20%2Fsocket.io%2F%20%7B%0A%20%20proxy_http_version%201.1%3B%0A%20%20proxy_set_header%20Upgrade%20%24http_upgrade%3B%0A%20%20proxy_set_header%20Connection%20%22upgrade%22%3B%0A%20%20proxy_pass%20http%3A%2F%2Fapp%3B%0A%7D",
+      "encoded": true
     },
     {
       "id": "s4-20",
@@ -244,10 +246,11 @@
     {
       "id": "s5-21",
       "sectionId": "s5",
-      "title": "Static Files",
+      "title": "Static%20Files",
       "kind": "code",
       "lang": "nginx",
-      "code": "location /assets/ {\n  alias /var/www/example/assets/;\n  access_log off;\n  expires 7d;\n  add_header Cache-Control \"public, max-age=604800, immutable\";\n}"
+      "code": "location%20%2Fassets%2F%20%7B%0A%20%20alias%20%2Fvar%2Fwww%2Fexample%2Fassets%2F%3B%0A%20%20access_log%20off%3B%0A%20%20expires%207d%3B%0A%20%20add_header%20Cache-Control%20%22public%2C%20max-age%3D604800%2C%20immutable%22%3B%0A%7D",
+      "encoded": true
     },
     {
       "id": "s5-22",
@@ -284,10 +287,11 @@
     {
       "id": "s6-26",
       "sectionId": "s6",
-      "title": "Conditional Bypass",
+      "title": "Conditional%20Bypass",
       "kind": "code",
       "lang": "nginx",
-      "code": "# Skip cache when logged in (example cookie)\nmap $http_cookie $logged_in {\n  default 0;\n  ~*\"(session|auth|logged_in)\" 1;\n}\nproxy_cache_bypass $logged_in;\nproxy_no_cache $logged_in;"
+      "code": "%23%20Skip%20cache%20when%20logged%20in%20(example%20cookie)%0Amap%20%24http_cookie%20%24logged_in%20%7B%0A%20%20default%200%3B%0A%20%20~*%22(session%7Cauth%7Clogged_in)%22%201%3B%0A%7D%0Aproxy_cache_bypass%20%24logged_in%3B%0Aproxy_no_cache%20%24logged_in%3B",
+      "encoded": true
     },
     {
       "id": "s7-27",
@@ -324,10 +328,11 @@
     {
       "id": "s8-31",
       "sectionId": "s8",
-      "title": "Regex Rewrites",
+      "title": "Regex%20Rewrites",
       "kind": "code",
       "lang": "nginx",
-      "code": "# Remove trailing slash (except root)\nif ($request_uri ~* \"^(.+)/+$\") { return 301 $1; }\n\n# Legacy path to new path\nrewrite ^/old/(.*)$ /new/$1 permanent;"
+      "code": "%23%20Remove%20trailing%20slash%20(except%20root)%0Aif%20(%24request_uri%20~*%20%22%5E(.%2B)%2F%2B%24%22)%20%7B%20return%20301%20%241%3B%20%7D%0A%0A%23%20Legacy%20path%20to%20new%20path%0Arewrite%20%5E%2Fold%2F(.*)%24%20%2Fnew%2F%241%20permanent%3B",
+      "encoded": true
     },
     {
       "id": "s8-32",
@@ -364,10 +369,11 @@
     {
       "id": "s10-36",
       "sectionId": "s10",
-      "title": "Basic Hardening",
+      "title": "Basic%20Hardening",
       "kind": "code",
       "lang": "nginx",
-      "code": "server_tokens off;\nadd_header X-Content-Type-Options \"nosniff\" always;\nadd_header X-Frame-Options \"SAMEORIGIN\" always;\nadd_header Referrer-Policy \"no-referrer-when-downgrade\" always;"
+      "code": "server_tokens%20off%3B%0Aadd_header%20X-Content-Type-Options%20%22nosniff%22%20always%3B%0Aadd_header%20X-Frame-Options%20%22SAMEORIGIN%22%20always%3B%0Aadd_header%20Referrer-Policy%20%22no-referrer-when-downgrade%22%20always%3B",
+      "encoded": true
     },
     {
       "id": "s10-37",
@@ -380,10 +386,11 @@
     {
       "id": "s10-38",
       "sectionId": "s10",
-      "title": "CORS (Example)",
+      "title": "CORS%20(Example)",
       "kind": "code",
       "lang": "nginx",
-      "code": "location /api/ {\n  add_header Access-Control-Allow-Origin \"https://app.example.com\" always;\n  add_header Access-Control-Allow-Credentials \"true\" always;\n  if ($request_method = OPTIONS) {\n    add_header Access-Control-Allow-Methods \"GET, POST, OPTIONS\";\n    add_header Access-Control-Allow-Headers \"Authorization, Content-Type\";\n    return 204;\n  }\n  proxy_pass http://app;\n}"
+      "code": "location%20%2Fapi%2F%20%7B%0A%20%20add_header%20Access-Control-Allow-Origin%20%22https%3A%2F%2Fapp.example.com%22%20always%3B%0A%20%20add_header%20Access-Control-Allow-Credentials%20%22true%22%20always%3B%0A%20%20if%20(%24request_method%20%3D%20OPTIONS)%20%7B%0A%20%20%20%20add_header%20Access-Control-Allow-Methods%20%22GET%2C%20POST%2C%20OPTIONS%22%3B%0A%20%20%20%20add_header%20Access-Control-Allow-Headers%20%22Authorization%2C%20Content-Type%22%3B%0A%20%20%20%20return%20204%3B%0A%20%20%7D%0A%20%20proxy_pass%20http%3A%2F%2Fapp%3B%0A%7D",
+      "encoded": true
     },
     {
       "id": "s11-39",
@@ -391,7 +398,8 @@
       "title": "Formats",
       "kind": "code",
       "lang": "nginx",
-      "code": "log_format main '$remote_addr - $remote_user [$time_local] \"$request\" '\n                '$status $body_bytes_sent \"$http_referer\" '\n                '\"$http_user_agent\" \"$http_x_forwarded_for\" '\n                '$request_time $upstream_response_time';\n\naccess_log /var/log/nginx/access.log main;\nerror_log  /var/log/nginx/error.log warn;"
+      "code": "log_format%20main%20'%24remote_addr%20-%20%24remote_user%20%5B%24time_local%5D%20%22%24request%22%20'%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'%24status%20%24body_bytes_sent%20%22%24http_referer%22%20'%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'%22%24http_user_agent%22%20%22%24http_x_forwarded_for%22%20'%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'%24request_time%20%24upstream_response_time'%3B%0A%0Aaccess_log%20%2Fvar%2Flog%2Fnginx%2Faccess.log%20main%3B%0Aerror_log%20%20%2Fvar%2Flog%2Fnginx%2Ferror.log%20warn%3B",
+      "encoded": true
     },
     {
       "id": "s11-40",
@@ -411,7 +419,7 @@
     {
       "id": "s11-42",
       "sectionId": "s11",
-      "title": "Debugging",
+      "title": "",
       "kind": "code",
       "lang": "",
       "code": "\n## Upstreams & LB {.cols-3}\n\n### Strategies\n\n| Directive     | Meaning                 |\n| ------------- | ----------------------- |\n| (default)     | round‑robin             |\n| `least_conn`  | least connections       |\n| `ip_hash`     | sticky by client IP     |\n| `hash key`    | hash by custom key      |\n\n{.show-header}\n\n### Example Upstream\n\n```nginx\nupstream api_backends {\n  least_conn;\n  server 10.0.0.11:8080 max_fails=3 fail_timeout=30s;\n  server 10.0.0.12:8080 max_fails=3 fail_timeout=30s;\n  # server backup.example:8080 backup;\n}"
@@ -428,108 +436,25 @@
       "id": "s12-44",
       "sectionId": "s12",
       "title": "Request & Client",
-      "kind": "qa",
-      "front": "`$host`",
-      "back": "Host header / server name"
+      "kind": "text",
+      "body": "| Variable               | Description                  |\n| --------------------- | ---------------------------- |\n| `$host`               | Host header / server name    |\n| `$server_name`        | Chosen server_name           |\n| `$remote_addr`        | Client IP                    |\n| `$http_user_agent`    | User‑Agent                   |\n| `$request_method`     | GET/POST/...                 |"
     },
     {
       "id": "s12-45",
       "sectionId": "s12",
-      "title": "Request & Client",
-      "kind": "qa",
-      "front": "`$server_name`",
-      "back": "Chosen server_name"
+      "title": "Paths & Files",
+      "kind": "text",
+      "body": "| Variable                 | Description            |\n| ----------------------- | ---------------------- |\n| `$document_root`        | Current root           |\n| `$realpath_root`        | Symlink‑resolved root  |\n| `$request_uri`          | Path + query           |\n| `$uri`                  | Normalized URI         |\n| `$args`                 | Raw query string       |"
     },
     {
       "id": "s12-46",
       "sectionId": "s12",
-      "title": "Request & Client",
-      "kind": "qa",
-      "front": "`$remote_addr`",
-      "back": "Client IP"
-    },
-    {
-      "id": "s12-47",
-      "sectionId": "s12",
-      "title": "Request & Client",
-      "kind": "qa",
-      "front": "`$http_user_agent`",
-      "back": "User‑Agent"
-    },
-    {
-      "id": "s12-48",
-      "sectionId": "s12",
-      "title": "Request & Client",
-      "kind": "qa",
-      "front": "`$request_method`",
-      "back": "GET/POST/..."
-    },
-    {
-      "id": "s12-49",
-      "sectionId": "s12",
-      "title": "Paths & Files",
-      "kind": "qa",
-      "front": "`$document_root`",
-      "back": "Current root"
-    },
-    {
-      "id": "s12-50",
-      "sectionId": "s12",
-      "title": "Paths & Files",
-      "kind": "qa",
-      "front": "`$realpath_root`",
-      "back": "Symlink‑resolved root"
-    },
-    {
-      "id": "s12-51",
-      "sectionId": "s12",
-      "title": "Paths & Files",
-      "kind": "qa",
-      "front": "`$request_uri`",
-      "back": "Path + query"
-    },
-    {
-      "id": "s12-52",
-      "sectionId": "s12",
-      "title": "Paths & Files",
-      "kind": "qa",
-      "front": "`$uri`",
-      "back": "Normalized URI"
-    },
-    {
-      "id": "s12-53",
-      "sectionId": "s12",
-      "title": "Paths & Files",
-      "kind": "qa",
-      "front": "`$args`",
-      "back": "Raw query string"
-    },
-    {
-      "id": "s12-54",
-      "sectionId": "s12",
       "title": "Upstream",
-      "kind": "qa",
-      "front": "`$upstream_addr`",
-      "back": "Upstream server(s)"
+      "kind": "text",
+      "body": "| Variable                    | Description        |\n| -------------------------- | ------------------ |\n| `$upstream_addr`           | Upstream server(s) |\n| `$upstream_status`         | Upstream status    |\n| `$upstream_response_time`  | Time from upstream |"
     },
     {
-      "id": "s12-55",
-      "sectionId": "s12",
-      "title": "Upstream",
-      "kind": "qa",
-      "front": "`$upstream_status`",
-      "back": "Upstream status"
-    },
-    {
-      "id": "s12-56",
-      "sectionId": "s12",
-      "title": "Upstream",
-      "kind": "qa",
-      "front": "`$upstream_response_time`",
-      "back": "Time from upstream"
-    },
-    {
-      "id": "s13-57",
+      "id": "s13-47",
       "sectionId": "s13",
       "title": "TCP Proxy",
       "kind": "code",
@@ -537,7 +462,7 @@
       "code": "stream {\n  upstream db {\n    server 10.0.0.10:5432;\n    server 10.0.0.11:5432;\n  }\n  server {\n    listen 5432;\n    proxy_pass db;\n  }\n}"
     },
     {
-      "id": "s13-58",
+      "id": "s13-48",
       "sectionId": "s13",
       "title": "UDP Proxy",
       "kind": "code",
@@ -545,7 +470,7 @@
       "code": "stream {\n  server {\n    listen 53 udp;\n    proxy_responses 1;\n    proxy_timeout 2s;\n    proxy_pass 1.1.1.1:53;\n  }\n}"
     },
     {
-      "id": "s13-59",
+      "id": "s13-49",
       "sectionId": "s13",
       "title": "Access Control",
       "kind": "code",
@@ -553,15 +478,16 @@
       "code": "stream {\n  server {\n    listen 6379;\n    allow 10.0.0.0/8;\n    deny all;\n    proxy_pass 127.0.0.1:6379;\n  }\n}"
     },
     {
-      "id": "s14-60",
+      "id": "s14-50",
       "sectionId": "s14",
-      "title": "Security Snippet",
+      "title": "Security%20Snippet",
       "kind": "code",
       "lang": "nginx",
-      "code": "# /etc/nginx/snippets/security.conf\nserver_tokens off;\nadd_header X-Content-Type-Options \"nosniff\" always;\nadd_header X-Frame-Options \"SAMEORIGIN\" always;\nadd_header Referrer-Policy \"no-referrer-when-downgrade\" always;"
+      "code": "%23%20%2Fetc%2Fnginx%2Fsnippets%2Fsecurity.conf%0Aserver_tokens%20off%3B%0Aadd_header%20X-Content-Type-Options%20%22nosniff%22%20always%3B%0Aadd_header%20X-Frame-Options%20%22SAMEORIGIN%22%20always%3B%0Aadd_header%20Referrer-Policy%20%22no-referrer-when-downgrade%22%20always%3B",
+      "encoded": true
     },
     {
-      "id": "s14-61",
+      "id": "s14-51",
       "sectionId": "s14",
       "title": "PHP Snippet",
       "kind": "code",
@@ -569,7 +495,7 @@
       "code": "# /etc/nginx/snippets/fastcgi-php.conf\nlocation ~ \\.php$ {\n  include fastcgi_params;\n  fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;\n  fastcgi_param DOCUMENT_ROOT $realpath_root;\n  fastcgi_pass unix:/run/php/php8.2-fpm.sock;\n}"
     },
     {
-      "id": "s14-62",
+      "id": "s14-52",
       "sectionId": "s14",
       "title": "Proxy Headers Snippet",
       "kind": "code",

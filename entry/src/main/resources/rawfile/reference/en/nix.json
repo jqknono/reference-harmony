@@ -17,32 +17,32 @@
     {
       "id": "s2",
       "title": "Scoping",
-      "startIndex": 14
+      "startIndex": 12
     },
     {
       "id": "s3",
       "title": "Conditionals",
-      "startIndex": 22
+      "startIndex": 18
     },
     {
       "id": "s4",
       "title": "Attribute Sets",
-      "startIndex": 23
+      "startIndex": 19
     },
     {
       "id": "s5",
       "title": "Concatenation & Interpolation",
-      "startIndex": 29
+      "startIndex": 24
     },
     {
       "id": "s6",
       "title": "Functions",
-      "startIndex": 32
+      "startIndex": 27
     },
     {
       "id": "s7",
       "title": "Sources",
-      "startIndex": 41
+      "startIndex": 33
     }
   ],
   "cards": [
@@ -59,7 +59,8 @@
       "title": "String",
       "kind": "code",
       "lang": "nix",
-      "code": "let\n  x = \"single-line string\";\n  y = ''\n    multi-line string\n  '';\nin"
+      "code": "let%0A%20%20x%20%3D%20%22single-line%20string%22%3B%0A%20%20y%20%3D%20''%0A%20%20%20%20multi-line%20string%0A%20%20''%3B%0Ain",
+      "encoded": true
     },
     {
       "id": "s1-2",
@@ -112,7 +113,7 @@
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "Attribute Set",
+      "title": "",
       "kind": "text",
       "body": "see [Attribute Sets](#attribute-sets)"
     },
@@ -122,40 +123,27 @@
       "title": "List",
       "kind": "code",
       "lang": "nix",
-      "code": "let\n  x = [ 1 2.0 ];\n  y = [\n    1\n    \"this is a string\"\n    23.0\n    null\n  ];\nin"
+      "code": "let%0A%20%20x%20%3D%20%5B%201%202.0%20%5D%3B%0A%20%20y%20%3D%20%5B%0A%20%20%20%201%0A%20%20%20%20%22this%20is%20a%20string%22%0A%20%20%20%2023.0%0A%20%20%20%20null%0A%20%20%5D%3B%0Ain",
+      "encoded": true
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
-      "title": "Comment",
-      "kind": "text",
-      "body": "#### ↓ single-line comment"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "Comment",
+      "title": "Comment - ↓ single-line comment",
       "kind": "code",
       "lang": "nix",
       "code": "# your comment"
     },
     {
-      "id": "s1-12",
+      "id": "s1-11",
       "sectionId": "s1",
-      "title": "Comment",
-      "kind": "text",
-      "body": "#### ↓ multi-line comment"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "Comment",
+      "title": "↓ multi-line comment",
       "kind": "code",
       "lang": "nix",
       "code": "/*\n  your comment\n*/"
     },
     {
-      "id": "s2-14",
+      "id": "s2-12",
       "sectionId": "s2",
       "title": "Define Local Variable",
       "kind": "code",
@@ -163,7 +151,7 @@
       "code": "let\n  x = 1;\n  y = 2;\nin\n  x + y # -> returns 3"
     },
     {
-      "id": "s2-15",
+      "id": "s2-13",
       "sectionId": "s2",
       "title": "Add Variables Into Scope",
       "kind": "code",
@@ -171,22 +159,15 @@
       "code": "let\n  x = 1;\nin\n  { inherit x; }"
     },
     {
-      "id": "s2-16",
+      "id": "s2-14",
       "sectionId": "s2",
-      "title": "Add Variables Into Scope",
-      "kind": "text",
-      "body": "#### ↓ desugars to"
-    },
-    {
-      "id": "s2-17",
-      "sectionId": "s2",
-      "title": "Add Variables Into Scope",
+      "title": "↓ desugars to",
       "kind": "code",
       "lang": "nix",
       "code": "let\n  x = 1;\nin\n  { x = x; }"
     },
     {
-      "id": "s2-18",
+      "id": "s2-15",
       "sectionId": "s2",
       "title": "Add Attributes Into Scope",
       "kind": "code",
@@ -194,22 +175,15 @@
       "code": "let\n  x = { y = 1; };\nin\n  { inherit (x) y; }"
     },
     {
-      "id": "s2-19",
+      "id": "s2-16",
       "sectionId": "s2",
-      "title": "Add Attributes Into Scope",
-      "kind": "text",
-      "body": "#### ↓ desugars to"
-    },
-    {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "Add Attributes Into Scope",
+      "title": "↓ desugars to",
       "kind": "code",
       "lang": "nix",
       "code": "let\n  x = { y = 1; };\nin\n  { y = x.y; }"
     },
     {
-      "id": "s2-21",
+      "id": "s2-17",
       "sectionId": "s2",
       "title": "Add All Attributes Into Scope",
       "kind": "code",
@@ -217,7 +191,7 @@
       "code": "let\n  x = { y = 1; z = 2;  };\nin\n  with x;\n  y + z # -> returns 3"
     },
     {
-      "id": "s3-22",
+      "id": "s3-18",
       "sectionId": "s3",
       "title": "Define Conditionals",
       "kind": "code",
@@ -225,7 +199,7 @@
       "code": "if x > 0\nthen 1\nelse -1"
     },
     {
-      "id": "s4-23",
+      "id": "s4-19",
       "sectionId": "s4",
       "title": "Define Attribute Sets",
       "kind": "code",
@@ -233,7 +207,7 @@
       "code": "let\n  x = {\n    a = 1;\n    b = 2;\n  };\n  y = { c = 3; };\nin"
     },
     {
-      "id": "s4-24",
+      "id": "s4-20",
       "sectionId": "s4",
       "title": "Update Attribute Sets",
       "kind": "code",
@@ -241,7 +215,7 @@
       "code": "{ x = 1; } // { y = 2; } # -> returns { x = 1; y = 2; }\n{ x = 1; } // { x = 2; } # -> returns { x = 2; }"
     },
     {
-      "id": "s4-25",
+      "id": "s4-21",
       "sectionId": "s4",
       "title": "Check For Attribute",
       "kind": "code",
@@ -249,7 +223,7 @@
       "code": "let\n  x = { y = 1; };\nin\n  x ? y # -> returns true"
     },
     {
-      "id": "s4-26",
+      "id": "s4-22",
       "sectionId": "s4",
       "title": "Reference Attirbute Keys",
       "kind": "code",
@@ -257,22 +231,15 @@
       "code": "let\n  x = { y = 1; };\nin\n  x.y # -> returns 1"
     },
     {
-      "id": "s4-27",
+      "id": "s4-23",
       "sectionId": "s4",
-      "title": "Reference Attirbute Keys",
-      "kind": "text",
-      "body": "#### ↓ optional"
-    },
-    {
-      "id": "s4-28",
-      "sectionId": "s4",
-      "title": "Reference Attirbute Keys",
+      "title": "↓ optional",
       "kind": "code",
       "lang": "nix",
       "code": "let\n  x = { y = 1; };\nin\n  x.z or 2 # -> returns 2"
     },
     {
-      "id": "s5-29",
+      "id": "s5-24",
       "sectionId": "s5",
       "title": "Concatenate Lists",
       "kind": "code",
@@ -280,23 +247,25 @@
       "code": "[ 1 2 ] ++ [ 3 4 ] # -> returns [ 1 2 3 4 ]"
     },
     {
-      "id": "s5-30",
+      "id": "s5-25",
       "sectionId": "s5",
-      "title": "Concatenate Paths & Strings",
+      "title": "Concatenate%20Paths%20%26%20Strings",
       "kind": "code",
       "lang": "nix",
-      "code": "/bin + /sh # -> returns /bin/sh\n/bin + \"/sh\" # -> returns /bin/sh\n\"/bin\" + \"/sh\" # -> returns \"/bin/sh\""
+      "code": "%2Fbin%20%2B%20%2Fsh%20%23%20-%3E%20returns%20%2Fbin%2Fsh%0A%2Fbin%20%2B%20%22%2Fsh%22%20%23%20-%3E%20returns%20%2Fbin%2Fsh%0A%22%2Fbin%22%20%2B%20%22%2Fsh%22%20%23%20-%3E%20returns%20%22%2Fbin%2Fsh%22",
+      "encoded": true
     },
     {
-      "id": "s5-31",
+      "id": "s5-26",
       "sectionId": "s5",
-      "title": "Interpolate Strings",
+      "title": "Interpolate%20Strings",
       "kind": "code",
       "lang": "nix",
-      "code": "let\n  x = \"bar\";\nin\n  \"foo ${x} baz\" # -> returns \"foo bar baz\""
+      "code": "let%0A%20%20x%20%3D%20%22bar%22%3B%0Ain%0A%20%20%22foo%20%24%7Bx%7D%20baz%22%20%23%20-%3E%20returns%20%22foo%20bar%20baz%22",
+      "encoded": true
     },
     {
-      "id": "s6-32",
+      "id": "s6-27",
       "sectionId": "s6",
       "title": "Simple Function",
       "kind": "code",
@@ -304,7 +273,7 @@
       "code": "let\n  f = x: x + 1;\nin\n  f 1 # -> returns 2"
     },
     {
-      "id": "s6-33",
+      "id": "s6-28",
       "sectionId": "s6",
       "title": "Multiple Arguments",
       "kind": "code",
@@ -312,7 +281,7 @@
       "code": "let\n  f = x: y: [ x  y ];\nin\n  f 1 2 # -> returns [ 1 2 ]"
     },
     {
-      "id": "s6-34",
+      "id": "s6-29",
       "sectionId": "s6",
       "title": "Named Arguments",
       "kind": "code",
@@ -320,52 +289,31 @@
       "code": "let\n  f = {x, y}: x + y;\nin\n  f { x=1; y=2; } # -> returns 3"
     },
     {
-      "id": "s6-35",
+      "id": "s6-30",
       "sectionId": "s6",
-      "title": "Named Arguments",
-      "kind": "text",
-      "body": "#### ↓ ignoring arguments"
-    },
-    {
-      "id": "s6-36",
-      "sectionId": "s6",
-      "title": "Named Arguments",
+      "title": "↓ ignoring arguments",
       "kind": "code",
       "lang": "nix",
       "code": "let\n  f = {x, y, ... }: x + y;\nin\n  f { x=1; y=2; z=3; } # -> returns 3"
     },
     {
-      "id": "s6-37",
+      "id": "s6-31",
       "sectionId": "s6",
-      "title": "Named Arguments",
-      "kind": "text",
-      "body": "#### ↓ default values"
-    },
-    {
-      "id": "s6-38",
-      "sectionId": "s6",
-      "title": "Named Arguments",
+      "title": "↓ default values",
       "kind": "code",
       "lang": "nix",
       "code": "let\n  f = {x, y ? 2 }: x + y;\nin\n  f { x=1; } # -> returns 3"
     },
     {
-      "id": "s6-39",
+      "id": "s6-32",
       "sectionId": "s6",
-      "title": "Named Arguments",
-      "kind": "text",
-      "body": "#### ↓ bind to variable"
-    },
-    {
-      "id": "s6-40",
-      "sectionId": "s6",
-      "title": "Named Arguments",
+      "title": "↓ bind to variable",
       "kind": "code",
       "lang": "nix",
       "code": "let\n  f = {x, y}@args: args.x + args.y;\nin\n  f { x=1; y=2; } # -> returns 3"
     },
     {
-      "id": "s7-41",
+      "id": "s7-33",
       "sectionId": "s7",
       "title": "Sources",
       "kind": "text",

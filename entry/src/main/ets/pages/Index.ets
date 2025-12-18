@@ -293,7 +293,7 @@ struct Index {
     this.searchResultCount = matchedCount;
   }
 
-  private async openDoc(docId: string): Promise<void> {
+  private async openDoc(docId: string, switchToReadTab: boolean = true): Promise<void> {
     const repo = await this.ensureRepository();
     if (!repo) {
       return;
@@ -307,7 +307,9 @@ struct Index {
         this.selectedDocId = docId;
         this.rebuildSectionCards(doc);
         this.rebuildSearchResults();
-        this.tabsController.changeIndex(1);
+        if (switchToReadTab) {
+          this.tabsController.changeIndex(1);
+        }
       },
       (e: Error | string): void => {
         this.errorText = this.t(`加载文档失败：${String(e)}`, `Failed to load doc: ${String(e)}`);
@@ -356,7 +358,7 @@ struct Index {
           cardCount: doc.cardCount,
         }));
         if (autoOpenFirst && !this.selectedDocId && this.docs.length > 0) {
-          await this.openDoc(this.docs[0].id);
+          await this.openDoc(this.docs[0].id, false);
         }
       },
       (e: Error | string): void => {
@@ -417,7 +419,7 @@ struct Index {
             .padding(14)
             .backgroundColor(this.theme.surfaceBackgroundColor)
             .borderRadius(12)
-            .onClick(() => this.openDoc(doc.id));
+            .onClick(() => this.openDoc(doc.id, true));
           }
           .margin({ bottom: 10 });
         }, (doc: ReferenceDocSummary) => doc.id);

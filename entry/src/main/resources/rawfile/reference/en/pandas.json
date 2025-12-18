@@ -33,7 +33,7 @@
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "Introduction",
+      "title": "",
       "kind": "code",
       "lang": "python",
       "code": "import pandas as pd"
@@ -42,497 +42,71 @@
       "id": "s1-3",
       "sectionId": "s1",
       "title": "Creating DataFrames",
-      "kind": "qa",
-      "front": "`pd.DataFrame(data={'col1': [1, 2], 'col2': [3, 4]})`",
-      "back": "From a dictionary"
+      "kind": "text",
+      "body": "| -                                                         | -                           |\n| --------------------------------------------------------- | --------------------------- |\n| `pd.DataFrame(data={'col1': [1, 2], 'col2': [3, 4]})`     | From a dictionary           |\n| `pd.DataFrame(data=[{'a': 1, 'b': 2}, {'a': 3, 'b': 4}])` | From a list of dictionaries |\n| `pd.read_csv('file.csv')`                                 | From a CSV file             |\n| `pd.read_excel('file.xlsx')`                              | From an Excel file          |"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
-      "title": "Creating DataFrames",
-      "kind": "qa",
-      "front": "`pd.DataFrame(data=[{'a': 1, 'b': 2}, {'a': 3, 'b': 4}])`",
-      "back": "From a list of dictionaries"
+      "title": "Inspecting Data",
+      "kind": "text",
+      "body": "| -               | -                          |\n| --------------- | -------------------------- |\n| `df.head()`     | First 5 rows               |\n| `df.tail()`     | Last 5 rows                |\n| `df.shape`      | Number of rows and columns |\n| `df.info()`     | Info on DataFrame          |\n| `df.describe()` | Summary statistics         |\n| `df.columns`    | Column names               |\n| `df.index`      | Index                      |\n| `df.dtypes`     | Data types of columns      |"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "Creating DataFrames",
-      "kind": "qa",
-      "front": "`pd.read_csv('file.csv')`",
-      "back": "From a CSV file"
+      "title": "Selecting Data",
+      "kind": "text",
+      "body": "| -                      | -                              |\n| ---------------------- | ------------------------------ |\n| `df['col1']`           | Select column                  |\n| `df[['col1', 'col2']]` | Select multiple columns        |\n| `df.loc[0]`            | Select row by index            |\n| `df.loc[:, 'col1']`    | Select all rows for 'col1'     |\n| `df.iloc[0]`           | Select row by position         |\n| `df.iloc[0, 1]`        | Select specific value          |\n| `df[df['col1'] > 2]`   | Select rows based on condition |"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "Creating DataFrames",
-      "kind": "qa",
-      "front": "`pd.read_excel('file.xlsx')`",
-      "back": "From an Excel file"
+      "title": "Data Cleaning",
+      "kind": "text",
+      "body": "| -                                             | -                                    |\n| --------------------------------------------- | ------------------------------------ |\n| `df.dropna()`                                 | Drop rows with any missing values    |\n| `df.dropna(axis=1)`                           | Drop columns with any missing values |\n| `df.fillna(0)`                                | Replace missing values with 0        |\n| `df.drop_duplicates()`                        | Drop duplicate rows                  |\n| `df.rename(columns={'old_name': 'new_name'})` | Rename columns                       |\n| `df.astype('int')`                            | Change data type                     |"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
-      "title": "Inspecting Data",
-      "kind": "qa",
-      "front": "`df.head()`",
-      "back": "First 5 rows"
+      "title": "Adding/Removing Data",
+      "kind": "text",
+      "body": "| -                                      | -                               |\n| -------------------------------------- | ------------------------------- |\n| `df['col3'] = df['col1'] + df['col2']` | Add new column                  |\n| `df.drop('col1', axis=1)`              | Drop column                     |\n| `df.append(new_row)`                   | Add new row                     |\n| `df.insert(2, 'new_col', new_data)`    | Insert new column at position 2 |"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "Inspecting Data",
-      "kind": "qa",
-      "front": "`df.tail()`",
-      "back": "Last 5 rows"
+      "title": "Combining Data",
+      "kind": "text",
+      "body": "| -                                                     | -                       |\n| ----------------------------------------------------- | ----------------------- |\n| `pd.concat([df1, df2])`                               | Concatenate rows        |\n| `pd.concat([df1, df2], axis=1)`                       | Concatenate columns     |\n| `pd.merge(df1, df2, on='key')`                        | Merge DataFrames on key |\n| `pd.merge(df1, df2, left_on='key1', right_on='key2')` | Merge on different keys |\n| `df1.join(df2, lsuffix='_left', rsuffix='_right')`    | Join DataFrames         |"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
-      "title": "Inspecting Data",
-      "kind": "qa",
-      "front": "`df.shape`",
-      "back": "Number of rows and columns"
+      "title": "Aggregating Data",
+      "kind": "text",
+      "body": "| -                                      | -                         |\n| -------------------------------------- | ------------------------- |\n| `df['col1'].sum()`                     | Sum of values in column   |\n| `df['col1'].mean()`                    | Mean of values in column  |\n| `df['col1'].count()`                   | Count of values in column |\n| `df['col1'].min()`                     | Minimum value in column   |\n| `df['col1'].max()`                     | Maximum value in column   |\n| `df['col1'].std()`                     | Standard deviation        |\n| `df['col1'].var()`                     | Variance                  |\n| `df.groupby('col1').sum()`             | Group by and sum          |\n| `df.groupby('col1').mean()`            | Group by and mean         |\n| `df.groupby(['col1', 'col2']).count()` | Group by multiple columns |"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
-      "title": "Inspecting Data",
-      "kind": "qa",
-      "front": "`df.info()`",
-      "back": "Info on DataFrame"
+      "title": "Applying Functions",
+      "kind": "text",
+      "body": "| -                                    | -                                    |\n| ------------------------------------ | ------------------------------------ |\n| `df.apply(np.sqrt)`                  | Apply function to all values         |\n| `df['col1'].apply(lambda x: x ** 2)` | Apply function to column             |\n| `df.applymap(str)`                   | Apply function to DataFrame elements |\n| `df['col1'].map({'a': 1, 'b': 2})`   | Map values                           |\n| `df['col1'].replace('a', 1)`         | Replace values                       |"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
-      "title": "Inspecting Data",
-      "kind": "qa",
-      "front": "`df.describe()`",
-      "back": "Summary statistics"
+      "title": "Handling Dates",
+      "kind": "text",
+      "body": "| -                                         | -                   |\n| ----------------------------------------- | ------------------- |\n| `df['date'] = pd.to_datetime(df['date'])` | Convert to datetime |\n| `df['year'] = df['date'].dt.year`         | Extract year        |\n| `df['month'] = df['date'].dt.month`       | Extract month       |\n| `df['day'] = df['date'].dt.day`           | Extract day         |\n| `df.set_index('date', inplace=True)`      | Set date as index   |"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
-      "title": "Inspecting Data",
-      "kind": "qa",
-      "front": "`df.columns`",
-      "back": "Column names"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "Inspecting Data",
-      "kind": "qa",
-      "front": "`df.index`",
-      "back": "Index"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "Inspecting Data",
-      "kind": "qa",
-      "front": "`df.dtypes`",
-      "back": "Data types of columns"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "Selecting Data",
-      "kind": "qa",
-      "front": "`df['col1']`",
-      "back": "Select column"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "Selecting Data",
-      "kind": "qa",
-      "front": "`df[['col1', 'col2']]`",
-      "back": "Select multiple columns"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "Selecting Data",
-      "kind": "qa",
-      "front": "`df.loc[0]`",
-      "back": "Select row by index"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "Selecting Data",
-      "kind": "qa",
-      "front": "`df.loc[:, 'col1']`",
-      "back": "Select all rows for 'col1'"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "Selecting Data",
-      "kind": "qa",
-      "front": "`df.iloc[0]`",
-      "back": "Select row by position"
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "Selecting Data",
-      "kind": "qa",
-      "front": "`df.iloc[0, 1]`",
-      "back": "Select specific value"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "Selecting Data",
-      "kind": "qa",
-      "front": "`df[df['col1'] > 2]`",
-      "back": "Select rows based on condition"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "Data Cleaning",
-      "kind": "qa",
-      "front": "`df.dropna()`",
-      "back": "Drop rows with any missing values"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "Data Cleaning",
-      "kind": "qa",
-      "front": "`df.dropna(axis=1)`",
-      "back": "Drop columns with any missing values"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "Data Cleaning",
-      "kind": "qa",
-      "front": "`df.fillna(0)`",
-      "back": "Replace missing values with 0"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "Data Cleaning",
-      "kind": "qa",
-      "front": "`df.drop_duplicates()`",
-      "back": "Drop duplicate rows"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "Data Cleaning",
-      "kind": "qa",
-      "front": "`df.rename(columns={'old_name': 'new_name'})`",
-      "back": "Rename columns"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "Data Cleaning",
-      "kind": "qa",
-      "front": "`df.astype('int')`",
-      "back": "Change data type"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "Adding/Removing Data",
-      "kind": "qa",
-      "front": "`df['col3'] = df['col1'] + df['col2']`",
-      "back": "Add new column"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "Adding/Removing Data",
-      "kind": "qa",
-      "front": "`df.drop('col1', axis=1)`",
-      "back": "Drop column"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "Adding/Removing Data",
-      "kind": "qa",
-      "front": "`df.append(new_row)`",
-      "back": "Add new row"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "Adding/Removing Data",
-      "kind": "qa",
-      "front": "`df.insert(2, 'new_col', new_data)`",
-      "back": "Insert new column at position 2"
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "Combining Data",
-      "kind": "qa",
-      "front": "`pd.concat([df1, df2])`",
-      "back": "Concatenate rows"
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "Combining Data",
-      "kind": "qa",
-      "front": "`pd.concat([df1, df2], axis=1)`",
-      "back": "Concatenate columns"
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "Combining Data",
-      "kind": "qa",
-      "front": "`pd.merge(df1, df2, on='key')`",
-      "back": "Merge DataFrames on key"
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "Combining Data",
-      "kind": "qa",
-      "front": "`pd.merge(df1, df2, left_on='key1', right_on='key2')`",
-      "back": "Merge on different keys"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "Combining Data",
-      "kind": "qa",
-      "front": "`df1.join(df2, lsuffix='_left', rsuffix='_right')`",
-      "back": "Join DataFrames"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df['col1'].sum()`",
-      "back": "Sum of values in column"
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df['col1'].mean()`",
-      "back": "Mean of values in column"
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df['col1'].count()`",
-      "back": "Count of values in column"
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df['col1'].min()`",
-      "back": "Minimum value in column"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df['col1'].max()`",
-      "back": "Maximum value in column"
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df['col1'].std()`",
-      "back": "Standard deviation"
-    },
-    {
-      "id": "s1-43",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df['col1'].var()`",
-      "back": "Variance"
-    },
-    {
-      "id": "s1-44",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df.groupby('col1').sum()`",
-      "back": "Group by and sum"
-    },
-    {
-      "id": "s1-45",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df.groupby('col1').mean()`",
-      "back": "Group by and mean"
-    },
-    {
-      "id": "s1-46",
-      "sectionId": "s1",
-      "title": "Aggregating Data",
-      "kind": "qa",
-      "front": "`df.groupby(['col1', 'col2']).count()`",
-      "back": "Group by multiple columns"
-    },
-    {
-      "id": "s1-47",
-      "sectionId": "s1",
-      "title": "Applying Functions",
-      "kind": "qa",
-      "front": "`df.apply(np.sqrt)`",
-      "back": "Apply function to all values"
-    },
-    {
-      "id": "s1-48",
-      "sectionId": "s1",
-      "title": "Applying Functions",
-      "kind": "qa",
-      "front": "`df['col1'].apply(lambda x: x ** 2)`",
-      "back": "Apply function to column"
-    },
-    {
-      "id": "s1-49",
-      "sectionId": "s1",
-      "title": "Applying Functions",
-      "kind": "qa",
-      "front": "`df.applymap(str)`",
-      "back": "Apply function to DataFrame elements"
-    },
-    {
-      "id": "s1-50",
-      "sectionId": "s1",
-      "title": "Applying Functions",
-      "kind": "qa",
-      "front": "`df['col1'].map({'a': 1, 'b': 2})`",
-      "back": "Map values"
-    },
-    {
-      "id": "s1-51",
-      "sectionId": "s1",
-      "title": "Applying Functions",
-      "kind": "qa",
-      "front": "`df['col1'].replace('a', 1)`",
-      "back": "Replace values"
-    },
-    {
-      "id": "s1-52",
-      "sectionId": "s1",
-      "title": "Handling Dates",
-      "kind": "qa",
-      "front": "`df['date'] = pd.to_datetime(df['date'])`",
-      "back": "Convert to datetime"
-    },
-    {
-      "id": "s1-53",
-      "sectionId": "s1",
-      "title": "Handling Dates",
-      "kind": "qa",
-      "front": "`df['year'] = df['date'].dt.year`",
-      "back": "Extract year"
-    },
-    {
-      "id": "s1-54",
-      "sectionId": "s1",
-      "title": "Handling Dates",
-      "kind": "qa",
-      "front": "`df['month'] = df['date'].dt.month`",
-      "back": "Extract month"
-    },
-    {
-      "id": "s1-55",
-      "sectionId": "s1",
-      "title": "Handling Dates",
-      "kind": "qa",
-      "front": "`df['day'] = df['date'].dt.day`",
-      "back": "Extract day"
-    },
-    {
-      "id": "s1-56",
-      "sectionId": "s1",
-      "title": "Handling Dates",
-      "kind": "qa",
-      "front": "`df.set_index('date', inplace=True)`",
-      "back": "Set date as index"
-    },
-    {
-      "id": "s1-57",
-      "sectionId": "s1",
       "title": "Input/Output",
-      "kind": "qa",
-      "front": "`df.to_csv('file.csv')`",
-      "back": "Save DataFrame to CSV"
-    },
-    {
-      "id": "s1-58",
-      "sectionId": "s1",
-      "title": "Input/Output",
-      "kind": "qa",
-      "front": "`df = pd.read_csv('file.csv')`",
-      "back": "Load DataFrame from CSV"
-    },
-    {
-      "id": "s1-59",
-      "sectionId": "s1",
-      "title": "Input/Output",
-      "kind": "qa",
-      "front": "`df.to_excel('file.xlsx')`",
-      "back": "Save DataFrame to Excel"
-    },
-    {
-      "id": "s1-60",
-      "sectionId": "s1",
-      "title": "Input/Output",
-      "kind": "qa",
-      "front": "`df = pd.read_excel('file.xlsx')`",
-      "back": "Load DataFrame from Excel"
-    },
-    {
-      "id": "s1-61",
-      "sectionId": "s1",
-      "title": "Input/Output",
-      "kind": "qa",
-      "front": "`from sqlalchemy import create_engine`",
-      "back": "Import SQLAlchemy for SQL operations"
-    },
-    {
-      "id": "s1-62",
-      "sectionId": "s1",
-      "title": "Input/Output",
-      "kind": "qa",
-      "front": "`engine = create_engine('sqlite:///:memory:')`",
-      "back": "Create SQL engine"
-    },
-    {
-      "id": "s1-63",
-      "sectionId": "s1",
-      "title": "Input/Output",
-      "kind": "qa",
-      "front": "`df.to_sql('table_name', engine)`",
-      "back": "Save to SQL table"
-    },
-    {
-      "id": "s1-64",
-      "sectionId": "s1",
-      "title": "Input/Output",
-      "kind": "qa",
-      "front": "`df = pd.read_sql('table_name', engine)`",
-      "back": "Load from SQL table"
+      "kind": "text",
+      "body": "| -                                              | -                                    |\n| ---------------------------------------------- | ------------------------------------ |\n| `df.to_csv('file.csv')`                        | Save DataFrame to CSV                |\n| `df = pd.read_csv('file.csv')`                 | Load DataFrame from CSV              |\n| `df.to_excel('file.xlsx')`                     | Save DataFrame to Excel              |\n| `df = pd.read_excel('file.xlsx')`              | Load DataFrame from Excel            |\n| `from sqlalchemy import create_engine`         | Import SQLAlchemy for SQL operations |\n| `engine = create_engine('sqlite:///:memory:')` | Create SQL engine                    |\n| `df.to_sql('table_name', engine)`              | Save to SQL table                    |\n| `df = pd.read_sql('table_name', engine)`       | Load from SQL table                  |"
     }
   ],
   "source": {

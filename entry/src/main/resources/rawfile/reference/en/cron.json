@@ -17,7 +17,7 @@
     {
       "id": "s2",
       "title": "Also see",
-      "startIndex": 43
+      "startIndex": 8
     }
   ],
   "cards": [
@@ -34,335 +34,55 @@
       "title": "Format",
       "kind": "code",
       "lang": "",
-      "code": "Min  Hour Day  Mon  Weekday"
+      "code": "Min  Hour Day  Mon  Weekday\n\n*    *    *    *    *  command to be executed\n\n┬    ┬    ┬    ┬    ┬\n│    │    │    │    └─  Day of Week   (0=Sun .. 6=Sat)\n│    │    │    └──────  Month         (1..12)\n│    │    └───────────  Day of Month  (1..31)\n│    └────────────────  Hour          (0..23)\n└─────────────────────  Minute        (0..59)"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "Format",
+      "title": "",
       "kind": "text",
-      "body": "---"
+      "body": "| Field        | Range  | Special characters |\n| ------------ | ------ | ------------------ |\n| Minute       | 0 - 59 | , - \\* /           |\n| Hour         | 0 - 23 | , - \\* /           |\n| Day of Month | 1 - 31 | , - \\* ? / L W     |\n| Month        | 1 - 12 | , - \\* /           |\n| Day of Week  | 0 - 6  | , - \\* ? / L #     |"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
-      "title": "Format",
-      "kind": "code",
-      "lang": "",
-      "code": "*    *    *    *    *  command to be executed"
+      "title": "Examples",
+      "kind": "text",
+      "body": "| Example        | Description                                                        |\n| -------------- |--------------------------------------------------------------------|\n| `*/15 * * * *` | Every 15 mins                                                      |\n| `0 * * * *`    | Every hour                                                         |\n| `0 */2 * * *`  | Every 2 hours                                                      |\n| `15 2 * * *`   | At 2:15AM (of every day)                                           |\n| `15 2 * * ?`   | At 2:15AM (of every day)                                           |\n| `10 9 * * 5`   | At 9:10AM (of every Friday)                                        |\n| `0 0 * * 0`    | At 12:00 AM, only on Sunday                                        |\n| `15 2 * * 1L`  | At 2:15am on the last monday of every month                        |\n| `15 0 * * 4#2` | At 00:15am on the second thursday of every month                   |\n| `0 0 1 * *`    | At 12:00 AM, on day 1 of the month (1st of month / monthly)        |\n| `0 0 1 1 *`    | At 12:00 AM, on day 1 of the month, only in January (1st of month) |\n| `@reboot`      | Every reboot <br>_(non-standard)_                                  |"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
-      "title": "Format",
-      "kind": "code",
-      "lang": "",
-      "code": "┬    ┬    ┬    ┬    ┬\n│    │    │    │    └─  Day of Week   (0=Sun .. 6=Sat)\n│    │    │    └──────  Month         (1..12)\n│    │    └───────────  Day of Month  (1..31)\n│    └────────────────  Hour          (0..23)\n└─────────────────────  Minute        (0..59)"
+      "title": "Cron%20Generator",
+      "kind": "text",
+      "body": "%3Cwidget%20name%3D%22cron%22%2F%3E",
+      "encoded": true
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "Format",
+      "title": "Special%20strings",
       "kind": "text",
-      "body": "---"
+      "body": "%7C%20Special%20String%20%7C%20Meaning%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20--------------%20%7C%20----------------------------------------------------%20%7C%0A%7C%20%40reboot%20%20%20%20%20%20%20%20%7C%20Run%20once%2C%20at%20system%20startup%20_(non-standard)_%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%40yearly%20%20%20%20%20%20%20%20%7C%20Run%20once%20every%20year%2C%20%220%200%201%201%20%5C*%22%20_(non-standard)_%20%20%20%7C%0A%7C%20%40annually%20%20%20%20%20%20%7C%20(same%20as%20%40yearly)%20_(non-standard)_%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%40monthly%20%20%20%20%20%20%20%7C%20Run%20once%20every%20month%2C%20%220%200%201%20%5C*%20%5C*%22%20_(non-standard)_%20%7C%0A%7C%20%40weekly%20%20%20%20%20%20%20%20%7C%20Run%20once%20every%20week%2C%20%220%200%20%5C*%20%5C*%200%22%20_(non-standard)_%20%20%7C%0A%7C%20%40daily%20%20%20%20%20%20%20%20%20%7C%20Run%20once%20each%20day%2C%20%220%200%20%5C*%20%5C*%20%5C*%22%20_(non-standard)_%20%20%20%7C%0A%7C%20%40midnight%20%20%20%20%20%20%7C%20(same%20as%20%40daily)%20_(non-standard)_%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%40hourly%20%20%20%20%20%20%20%20%7C%20Run%20once%20an%20hour%2C%20%220%20%5C*%20%5C*%20%5C*%20%5C*%22%20_(non-standard)_%20%20%20%7C",
+      "encoded": true
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "Format",
-      "kind": "qa",
-      "front": "Minute",
-      "back": "0 - 59 | , - \\* /"
+      "title": "Crontab command",
+      "kind": "text",
+      "body": "| -            | -                                                                       |\n| ------------ | ----------------------------------------------------------------------- |\n| `crontab -e` | Edit or create a crontab file if doesn’t already exist.                 |\n| `crontab -l` | Display the crontab file.                                               |\n| `crontab -r` | Remove the crontab file.                                                |\n| `crontab -v` | Display the last time you edited your crontab file.<br>_(non-standard)_ |"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
-      "title": "Format",
-      "kind": "qa",
-      "front": "Hour",
-      "back": "0 - 23 | , - \\* /"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "Format",
-      "kind": "qa",
-      "front": "Day of Month",
-      "back": "1 - 31 | , - \\* ? / L W"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "Format",
-      "kind": "qa",
-      "front": "Month",
-      "back": "1 - 12 | , - \\* /"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "Format",
-      "kind": "qa",
-      "front": "Day of Week",
-      "back": "0 - 6 | , - \\* ? / L #"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`*/15 * * * *`",
-      "back": "Every 15 mins"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`0 * * * *`",
-      "back": "Every hour"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`0 */2 * * *`",
-      "back": "Every 2 hours"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`15 2 * * *`",
-      "back": "At 2:15AM (of every day)"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`15 2 * * ?`",
-      "back": "At 2:15AM (of every day)"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`10 9 * * 5`",
-      "back": "At 9:10AM (of every Friday)"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`0 0 * * 0`",
-      "back": "At 12:00 AM, only on Sunday"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`15 2 * * 1L`",
-      "back": "At 2:15am on the last monday of every month"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`15 0 * * 4#2`",
-      "back": "At 00:15am on the second thursday of every month"
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`0 0 1 * *`",
-      "back": "At 12:00 AM, on day 1 of the month (1st of month / monthly)"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`0 0 1 1 *`",
-      "back": "At 12:00 AM, on day 1 of the month, only in January (1st of month)"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "Examples",
-      "kind": "qa",
-      "front": "`@reboot`",
-      "back": "Every reboot <br>_(non-standard)_"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "Cron Generator",
+      "title": "Special%20characters",
       "kind": "text",
-      "body": "<widget name=\"cron\"/>"
+      "body": "%7C%20Special%20Character%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-------------------%20%7C%20----------------------------------------------------------------------------------------------------------------------------------------------------%20%7C%0A%7C%20%60Asterik(*)%60%20%20%20%20%20%20%20%20%7C%20Matches%20all%20values%20in%20the%20field%20or%20any%20possible%20value.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60Hyphen(-)%60%20%20%20%20%20%20%20%20%20%7C%20Used%20to%20define%20a%20range.Ex%3A%201-5%20in%205th%20field(Day%20Of%20Week)%20Every%20Weekday%20i.e.%2C%20Monday%20to%20Friday%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60Slash%20(%2F)%60%20%20%20%20%20%20%20%20%20%7C%201st%20field(Minute)%20%2F15%20meaning%20every%20fifteen%20minute%20or%20increment%20of%20range.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60Comma%20(%2C)%60%20%20%20%20%20%20%20%20%20%7C%20Used%20to%20separate%20items.Ex%3A%202%2C6%2C8%20in%202nd%20fields(Hour)%20executes%20at%202am%2C6am%20and%208am%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60L%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20It%20is%20allowed%20only%20for%20Day%20of%20Month%20or%20Day%20Of%20Week%20field%2C%202L%20in%20Day%20of%20week%20indicates%20Last%20tuesday%20of%20every%20month%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60Hash%20(%23)%60%20%20%20%20%20%20%20%20%20%20%7C%20It%20is%20allowed%20only%20for%20Day%20Of%20Week%20field%2C%20which%20must%20be%20followed%20within%20range%20of%201%20to%205.%20For%20example%2C%204%231%20means%20%22The%20first%20Thursday%22%20of%20given%20month.%20%7C%0A%7C%20%60Question%20mark%20(%3F)%60%20%7C%20Can%20be%20instead%20of%20'%5C*'%20and%20allowed%20for%20Day%20of%20Month%20and%20Day%20Of%20Week.%20Usage%20is%20restricted%20to%20either%20Day%20of%20Month%20or%20Day%20Of%20Week%20in%20a%20cron%20expression.%20%7C",
+      "encoded": true
     },
     {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "Special strings",
-      "kind": "qa",
-      "front": "@reboot",
-      "back": "Run once, at system startup _(non-standard)_"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "Special strings",
-      "kind": "qa",
-      "front": "@yearly",
-      "back": "Run once every year, \"0 0 1 1 \\*\" _(non-standard)_"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "Special strings",
-      "kind": "qa",
-      "front": "@annually",
-      "back": "(same as @yearly) _(non-standard)_"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "Special strings",
-      "kind": "qa",
-      "front": "@monthly",
-      "back": "Run once every month, \"0 0 1 \\* \\*\" _(non-standard)_"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "Special strings",
-      "kind": "qa",
-      "front": "@weekly",
-      "back": "Run once every week, \"0 0 \\* \\* 0\" _(non-standard)_"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "Special strings",
-      "kind": "qa",
-      "front": "@daily",
-      "back": "Run once each day, \"0 0 \\* \\* \\*\" _(non-standard)_"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "Special strings",
-      "kind": "qa",
-      "front": "@midnight",
-      "back": "(same as @daily) _(non-standard)_"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "Special strings",
-      "kind": "qa",
-      "front": "@hourly",
-      "back": "Run once an hour, \"0 \\* \\* \\* \\*\" _(non-standard)_"
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "Crontab command",
-      "kind": "qa",
-      "front": "`crontab -e`",
-      "back": "Edit or create a crontab file if doesn’t already exist."
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "Crontab command",
-      "kind": "qa",
-      "front": "`crontab -l`",
-      "back": "Display the crontab file."
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "Crontab command",
-      "kind": "qa",
-      "front": "`crontab -r`",
-      "back": "Remove the crontab file."
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "Crontab command",
-      "kind": "qa",
-      "front": "`crontab -v`",
-      "back": "Display the last time you edited your crontab file.<br>_(non-standard)_"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "Special characters",
-      "kind": "qa",
-      "front": "`Asterik(*)`",
-      "back": "Matches all values in the field or any possible value."
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "Special characters",
-      "kind": "qa",
-      "front": "`Hyphen(-)`",
-      "back": "Used to define a range.Ex: 1-5 in 5th field(Day Of Week) Every Weekday i.e., Monday to Friday"
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "Special characters",
-      "kind": "qa",
-      "front": "`Slash (/)`",
-      "back": "1st field(Minute) /15 meaning every fifteen minute or increment of range."
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "Special characters",
-      "kind": "qa",
-      "front": "`Comma (,)`",
-      "back": "Used to separate items.Ex: 2,6,8 in 2nd fields(Hour) executes at 2am,6am and 8am"
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "Special characters",
-      "kind": "qa",
-      "front": "`L`",
-      "back": "It is allowed only for Day of Month or Day Of Week field, 2L in Day of week indicates Last tuesday of every month"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "Special characters",
-      "kind": "qa",
-      "front": "`Hash (#)`",
-      "back": "It is allowed only for Day Of Week field, which must be followed within range of 1 to 5. For example, 4#1 means \"The first Thursday\" of given month."
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "Special characters",
-      "kind": "qa",
-      "front": "`Question mark (?)`",
-      "back": "Can be instead of '\\*' and allowed for Day of Month and Day Of Week. Usage is restricted to either Day of Month or Day Of Week in a cron expression."
-    },
-    {
-      "id": "s2-43",
+      "id": "s2-8",
       "sectionId": "s2",
       "title": "Also see",
       "kind": "text",

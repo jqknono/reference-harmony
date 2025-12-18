@@ -61,7 +61,7 @@
     {
       "id": "s1-3",
       "sectionId": "s1",
-      "title": "认识 Pytorch",
+      "title": "",
       "kind": "text",
       "body": "Tensors 张量: 张量的概念类似于Numpy中的ndarray数据结构, 最大的区别在于Tensor可以利用GPU的加速功能."
     },
@@ -76,7 +76,7 @@
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "创建一个全零矩阵",
+      "title": "",
       "kind": "text",
       "body": "创建一个全零矩阵并可指定数据元素的类型为long"
     },
@@ -123,7 +123,7 @@
     {
       "id": "s2-11",
       "sectionId": "s2",
-      "title": "加法操作(4)",
+      "title": "",
       "kind": "text",
       "body": "注意: 所有 `in-place` 的操作函数都有一个下划线的后缀。\n比如 `x.copy_(y)`, `x.add_(y)`, 都会直接改变x的值"
     },
@@ -162,7 +162,7 @@
     {
       "id": "s2-16",
       "sectionId": "s2",
-      "title": "Torch Tensor 和 Numpy array互换",
+      "title": "",
       "kind": "text",
       "body": "Torch Tensor和Numpy array共享底层的内存空间, 因此改变其中一个的值, 另一个也会随之被改变"
     },
@@ -185,7 +185,7 @@
     {
       "id": "s2-19",
       "sectionId": "s2",
-      "title": "Numpy array转换为Torch Tensor",
+      "title": "",
       "kind": "text",
       "body": "注意: 所有在CPU上的Tensors, 除了CharTensor, 都可以转换为Numpy array并可以反向转换."
     },
@@ -216,18 +216,20 @@
     {
       "id": "s3-23",
       "sectionId": "s3",
-      "title": "列出 GPU 设备",
+      "title": "%E5%88%97%E5%87%BA%20GPU%20%E8%AE%BE%E5%A4%87",
       "kind": "code",
       "lang": "python",
-      "code": "import torch\n\ndevice_count = torch.cuda.device_count()\nprint(\"CUDA 设备\")\n\nfor i in range(device_count):\n    device_name = torch.cuda.get_device_name(i)\n    total_memory = torch.cuda.get_device_properties(i).total_memory / (1024 ** 3)\n    print(f\"├── 设备 {i}: {device_name}, 容量: {total_memory:.2f} GiB\")\n\nprint(\"└── (结束)\")"
+      "code": "import%20torch%0A%0Adevice_count%20%3D%20torch.cuda.device_count()%0Aprint(%22CUDA%20%E8%AE%BE%E5%A4%87%22)%0A%0Afor%20i%20in%20range(device_count)%3A%0A%20%20%20%20device_name%20%3D%20torch.cuda.get_device_name(i)%0A%20%20%20%20total_memory%20%3D%20torch.cuda.get_device_properties(i).total_memory%20%2F%20(1024%20**%203)%0A%20%20%20%20print(f%22%E2%94%9C%E2%94%80%E2%94%80%20%E8%AE%BE%E5%A4%87%20%7Bi%7D%3A%20%7Bdevice_name%7D%2C%20%E5%AE%B9%E9%87%8F%3A%20%7Btotal_memory%3A.2f%7D%20GiB%22)%0A%0Aprint(%22%E2%94%94%E2%94%80%E2%94%80%20(%E7%BB%93%E6%9D%9F)%22)",
+      "encoded": true
     },
     {
       "id": "s3-24",
       "sectionId": "s3",
-      "title": "将模型、张量等数据在 GPU 和内存之间进行搬运",
+      "title": "%E5%B0%86%E6%A8%A1%E5%9E%8B%E3%80%81%E5%BC%A0%E9%87%8F%E7%AD%89%E6%95%B0%E6%8D%AE%E5%9C%A8%20GPU%20%E5%92%8C%E5%86%85%E5%AD%98%E4%B9%8B%E9%97%B4%E8%BF%9B%E8%A1%8C%E6%90%AC%E8%BF%90",
       "kind": "code",
       "lang": "python",
-      "code": "import torch\n# 将 0 替换为您的 GPU 设备索引或者直接使用 \"cuda\"\ndevice = f\"cuda:0\"\n# 移动到GPU\ntensor_m = torch.tensor([1, 2, 3])\ntensor_g = tensor_m.to(device)\nmodel_m = torch.nn.Linear(1, 1)\nmodel_g = model_m.to(device)\n# 向后移动\ntensor_m = tensor_g.cpu()\nmodel_m = model_g.cpu()"
+      "code": "import%20torch%0A%23%20%E5%B0%86%200%20%E6%9B%BF%E6%8D%A2%E4%B8%BA%E6%82%A8%E7%9A%84%20GPU%20%E8%AE%BE%E5%A4%87%E7%B4%A2%E5%BC%95%E6%88%96%E8%80%85%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%20%22cuda%22%0Adevice%20%3D%20f%22cuda%3A0%22%0A%23%20%E7%A7%BB%E5%8A%A8%E5%88%B0GPU%0Atensor_m%20%3D%20torch.tensor(%5B1%2C%202%2C%203%5D)%0Atensor_g%20%3D%20tensor_m.to(device)%0Amodel_m%20%3D%20torch.nn.Linear(1%2C%201)%0Amodel_g%20%3D%20model_m.to(device)%0A%23%20%E5%90%91%E5%90%8E%E7%A7%BB%E5%8A%A8%0Atensor_m%20%3D%20tensor_g.cpu()%0Amodel_m%20%3D%20model_g.cpu()",
+      "encoded": true
     },
     {
       "id": "s4-25",
@@ -240,14 +242,14 @@
     {
       "id": "s4-26",
       "sectionId": "s4",
-      "title": "一般",
+      "title": "",
       "kind": "text",
       "body": "数据集表示和加载"
     },
     {
       "id": "s4-27",
       "sectionId": "s4",
-      "title": "一般",
+      "title": "",
       "kind": "code",
       "lang": "python",
       "code": "from torch.utils.data import Dataset, DataLoader"
@@ -263,14 +265,14 @@
     {
       "id": "s4-29",
       "sectionId": "s4",
-      "title": "神经网络 API",
+      "title": "",
       "kind": "text",
       "body": "神经网络"
     },
     {
       "id": "s4-30",
       "sectionId": "s4",
-      "title": "神经网络 API",
+      "title": "",
       "kind": "code",
       "lang": "python",
       "code": "import torch.nn as nn\n\n# 层、激活等\nimport torch.nn.functional as F\n# 优化器，例如 梯度下降、ADAM等\nimport torch.optim as optim"
@@ -278,14 +280,14 @@
     {
       "id": "s4-31",
       "sectionId": "s4",
-      "title": "神经网络 API",
+      "title": "",
       "kind": "text",
       "body": "混合前端装饰器和跟踪 jit"
     },
     {
       "id": "s4-32",
       "sectionId": "s4",
-      "title": "神经网络 API",
+      "title": "",
       "kind": "code",
       "lang": "python",
       "code": "from torch.jit import script, trace"
@@ -301,29 +303,30 @@
     {
       "id": "s4-34",
       "sectionId": "s4",
-      "title": "ONNX",
+      "title": "",
       "kind": "text",
       "body": "加载 ONNX 模型"
     },
     {
       "id": "s4-35",
       "sectionId": "s4",
-      "title": "ONNX",
+      "title": "",
       "kind": "code",
       "lang": "python",
-      "code": "model = onnx.load(\"alexnet.proto\")"
+      "code": "model%20%3D%20onnx.load(%22alexnet.proto%22)",
+      "encoded": true
     },
     {
       "id": "s4-36",
       "sectionId": "s4",
-      "title": "ONNX",
+      "title": "",
       "kind": "text",
       "body": "检查模型，IT 是否结构良好"
     },
     {
       "id": "s4-37",
       "sectionId": "s4",
-      "title": "ONNX",
+      "title": "",
       "kind": "code",
       "lang": "python",
       "code": "onnx.checker.check_model(model)"
@@ -331,14 +334,14 @@
     {
       "id": "s4-38",
       "sectionId": "s4",
-      "title": "ONNX",
+      "title": "",
       "kind": "text",
       "body": "打印一个人类可读的，图的表示"
     },
     {
       "id": "s4-39",
       "sectionId": "s4",
-      "title": "ONNX",
+      "title": "",
       "kind": "code",
       "lang": "python",
       "code": "onnx.helper.printable_graph(model.graph)"
@@ -354,14 +357,14 @@
     {
       "id": "s4-41",
       "sectionId": "s4",
-      "title": "Torchscript 和 JIT",
+      "title": "",
       "kind": "text",
       "body": "使用你的模块或函数和一个例子，数据输入，并追溯计算步骤，数据在模型中前进时遇到的情况"
     },
     {
       "id": "s4-42",
       "sectionId": "s4",
-      "title": "Torchscript 和 JIT",
+      "title": "",
       "kind": "code",
       "lang": "python",
       "code": "@script"
@@ -369,7 +372,7 @@
     {
       "id": "s4-43",
       "sectionId": "s4",
-      "title": "Torchscript 和 JIT",
+      "title": "",
       "kind": "text",
       "body": "装饰器用于指示被跟踪代码中的数据相关控制流"
     },

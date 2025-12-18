@@ -17,32 +17,32 @@
     {
       "id": "s2",
       "title": "项目配置",
-      "startIndex": 7
+      "startIndex": 5
     },
     {
       "id": "s3",
       "title": "核心交互与生命周期",
-      "startIndex": 20
+      "startIndex": 7
     },
     {
       "id": "s4",
       "title": "运行时 API (Runtime)",
-      "startIndex": 34
+      "startIndex": 15
     },
     {
       "id": "s5",
       "title": "应用打包与分发",
-      "startIndex": 59
+      "startIndex": 23
     },
     {
       "id": "s6",
       "title": "进阶主题与杂项",
-      "startIndex": 93
+      "startIndex": 46
     },
     {
       "id": "s7",
       "title": "参考资料",
-      "startIndex": 108
+      "startIndex": 57
     }
   ],
   "cards": [
@@ -72,28 +72,11 @@
       "id": "s1-3",
       "sectionId": "s1",
       "title": "常用命令参数",
-      "kind": "qa",
-      "front": "`init`",
-      "back": "`-n` | **项目名称 (必填)**"
+      "kind": "text",
+      "body": "| 命令      | 参数                      | 描述                                                         |\n| ------- | ----------------------- | ---------------------------------------------------------- |\n| `init`  | `-n`                    | **项目名称 (必填)**                                              |\n|         | `-t`                    | 模板名称 (`vue`, `react`, `svelte`, `angular`) 或模板 URL                              |\n|         | `-ide`                  | 为 `vscode` 或 `goland` 生成 IDE 配置                            |\n|         | `-f`                    | 强制覆盖现有目录                                                   |\n| `dev`   | `-browser`              | 在浏览器中打开前端界面进行调试                                            |\n|         | `-assetdir`             | 指定前端资产目录的路径                                                |\n|         | `-frontenddevserverurl` | 使用外部前端开发服务器的 URL                                           |\n|         | `-wailsjsdir`           | 指定生成的 Wails JS 模块目录                                        |\n|         | `-reload`               | 启用自动重载                                                     |\n| `build` | `-platform`             | 交叉编译目标平台, 如 `darwin/arm64`                                 |\n|         | `-clean`                | 构建前清理 `build/bin` 目录                                       |\n|         | `-upx`                  | 使用 UPX 压缩最终的二进制文件                                          |\n|         | `-nsis`                 | (Windows) 生成 NSIS 安装程序                                     |\n|         | `-webview2`             | (Windows) WebView2 依赖处理策略 (`download`, `embed`, `browser`) |\n|         | `-debug`                | 保留调试信息                                                     |\n|         | `-devtools`             | 在生产版本中启用开发者工具                                              |\n|         | `-ldflags`              | 传递给 Go 链接器的标志                                              |\n|         | `-tags`                 | 构建标签                                                       |"
     },
     {
       "id": "s1-4",
-      "sectionId": "s1",
-      "title": "常用命令参数",
-      "kind": "qa",
-      "front": "`dev`",
-      "back": "`-browser` | 在浏览器中打开前端界面进行调试"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "常用命令参数",
-      "kind": "qa",
-      "front": "`build`",
-      "back": "`-platform` | 交叉编译目标平台, 如 `darwin/arm64`"
-    },
-    {
-      "id": "s1-6",
       "sectionId": "s1",
       "title": "项目命令",
       "kind": "code",
@@ -101,7 +84,7 @@
       "code": "# 初始化新项目 (以 Vue 模板为例)\n$ wails init -n my-project -t vue\n\n# 使用自定义模板\n$ wails init -n my-project -t https://github.com/user/template\n\n# 进入项目目录并启动实时开发\n$ cd my-project\n$ wails dev\n\n# 构建生产版本 (以 Windows 平台为例)\n$ wails build -platform windows/amd64 -clean -upx\n\n# 检查环境依赖\n$ wails doctor\n\n# 生成绑定文件\n$ wails generate module"
     },
     {
-      "id": "s2-7",
+      "id": "s2-5",
       "sectionId": "s2",
       "title": "项目结构",
       "kind": "code",
@@ -109,768 +92,407 @@
       "code": "my-project/\n├── build/          # 构建输出目录\n├── frontend/       # 前端源文件\n│   └── wailsjs/    # Wails 自动生成的模块\n├── app.go          # 应用核心逻辑\n├── main.go         # 应用入口\n├── go.mod\n└── wails.json      # 项目配置文件"
     },
     {
-      "id": "s2-8",
+      "id": "s2-6",
       "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`name`",
-      "back": "项目名称 | `\"my-app\"`"
+      "title": "%60wails.json%60%20%E8%AF%A6%E8%A7%A3",
+      "kind": "text",
+      "body": "%7C%20%E9%85%8D%E7%BD%AE%E9%A1%B9%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E6%8F%8F%E8%BF%B0%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E7%A4%BA%E4%BE%8B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20----------------------%20%7C%20----------------------------%20%7C%20---------------------------%20%7C%0A%7C%20%60name%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E9%A1%B9%E7%9B%AE%E5%90%8D%E7%A7%B0%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22my-app%22%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60outputfilename%60%20%20%20%20%20%20%20%7C%20%E8%BE%93%E5%87%BA%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%90%8D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22my-app.exe%22%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60frontend%3Ainstall%60%20%20%20%20%20%7C%20%E5%89%8D%E7%AB%AF%E4%BE%9D%E8%B5%96%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22npm%20install%22%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60frontend%3Abuild%60%20%20%20%20%20%20%20%7C%20%E5%89%8D%E7%AB%AF%E6%9E%84%E5%BB%BA%E5%91%BD%E4%BB%A4%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22npm%20run%20build%22%60%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60frontend%3Adev%3Awatcher%60%20%7C%20%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F%E4%B8%8B%E8%BF%90%E8%A1%8C%E7%9A%84%E5%89%8D%E7%AB%AF%E7%9B%91%E8%A7%86%E5%91%BD%E4%BB%A4%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22npm%20run%20dev%22%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60frontend%3Adev%3AserverUrl%60%20%7C%20%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E6%9C%8D%E5%8A%A1%E5%99%A8%20URL%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22http%3A%2F%2Flocalhost%3A3000%22%60%20%20%20%7C%0A%7C%20%60wailsjsdir%60%20%20%20%20%20%20%20%20%20%20%20%7C%20%E7%94%9F%E6%88%90%20JS%20%E6%A8%A1%E5%9D%97%E7%9A%84%E7%9B%AE%E5%BD%95%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22.%2Ffrontend%2Fwailsjs%22%60%20%20%20%20%20%20%7C%0A%7C%20%60assetdir%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E5%89%8D%E7%AB%AF%E8%B5%84%E4%BA%A7%E7%9B%AE%E5%BD%95%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22.%2Ffrontend%2Fdist%22%60%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60reloaddirs%60%20%20%20%20%20%20%20%20%20%20%20%7C%20%E7%9B%91%E5%90%AC%E9%87%8D%E8%BD%BD%E7%9A%84%E7%9B%AE%E5%BD%95%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22frontend%2Fsrc%2Capp.go%22%60%20%20%20%20%20%7C%0A%7C%20%60author.name%60%20%20%20%20%20%20%20%20%20%20%7C%20%E4%BD%9C%E8%80%85%E5%90%8D%E7%A7%B0%EF%BC%8C%E7%94%A8%E4%BA%8E%E6%89%93%E5%8C%85%E5%85%83%E6%95%B0%E6%8D%AE%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22Your%20Name%22%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60author.email%60%20%20%20%20%20%20%20%20%20%7C%20%E4%BD%9C%E8%80%85%E9%82%AE%E7%AE%B1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%22you%40example.com%22%60%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60info%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20(macOS)%20%E7%94%A8%E4%BA%8E%20%60Info.plist%60%20%E7%9A%84%E5%85%83%E6%95%B0%E6%8D%AE%20%7C%20%60%7B%22CFBundleName%22%3A%20%22MyApp%22%7D%60%20%7C",
+      "encoded": true
     },
     {
-      "id": "s2-9",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`outputfilename`",
-      "back": "输出的二进制文件名 | `\"my-app.exe\"`"
-    },
-    {
-      "id": "s2-10",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`frontend:install`",
-      "back": "前端依赖安装命令 | `\"npm install\"`"
-    },
-    {
-      "id": "s2-11",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`frontend:build`",
-      "back": "前端构建命令 | `\"npm run build\"`"
-    },
-    {
-      "id": "s2-12",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`frontend:dev:watcher`",
-      "back": "开发模式下运行的前端监视命令 | `\"npm run dev\"`"
-    },
-    {
-      "id": "s2-13",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`frontend:dev:serverUrl`",
-      "back": "前端开发服务器 URL | `\"http://localhost:3000\"`"
-    },
-    {
-      "id": "s2-14",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`wailsjsdir`",
-      "back": "生成 JS 模块的目录 | `\"./frontend/wailsjs\"`"
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`assetdir`",
-      "back": "前端资产目录 | `\"./frontend/dist\"`"
-    },
-    {
-      "id": "s2-16",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`reloaddirs`",
-      "back": "监听重载的目录 | `\"frontend/src,app.go\"`"
-    },
-    {
-      "id": "s2-17",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`author.name`",
-      "back": "作者名称，用于打包元数据 | `\"Your Name\"`"
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`author.email`",
-      "back": "作者邮箱 | `\"you@example.com\"`"
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "`wails.json` 详解",
-      "kind": "qa",
-      "front": "`info`",
-      "back": "(macOS) 用于 `Info.plist` 的元数据 | `{\"CFBundleName\": \"MyApp\"}`"
-    },
-    {
-      "id": "s3-20",
+      "id": "s3-7",
       "sectionId": "s3",
       "title": "方法绑定 (Go <-> JS)",
       "kind": "text",
       "body": "在 Go 中定义公共方法，即可在前端直接调用。"
     },
     {
-      "id": "s3-21",
+      "id": "s3-8",
       "sectionId": "s3",
-      "title": "方法绑定 (Go <-> JS)",
+      "title": "",
       "kind": "code",
       "lang": "go",
-      "code": "// app.go\ntype App struct {\n    ctx context.Context\n}\n\nfunc (a *App) Greet(name string) string {\n    return fmt.Sprintf(\"Hello %s!\", name)\n}\n\n// main.go\napp := NewApp()\nerr := wails.Run(&options.App{\n    Title: \"My App\",\n    Bind: []interface{}{\n        app, // 暴露 app 实例的所有公共方法\n    },\n})"
+      "code": "%2F%2F%20app.go%0Atype%20App%20struct%20%7B%0A%20%20%20%20ctx%20context.Context%0A%7D%0A%0Afunc%20(a%20*App)%20Greet(name%20string)%20string%20%7B%0A%20%20%20%20return%20fmt.Sprintf(%22Hello%20%25s!%22%2C%20name)%0A%7D%0A%0A%2F%2F%20main.go%0Aapp%20%3A%3D%20NewApp()%0Aerr%20%3A%3D%20wails.Run(%26options.App%7B%0A%20%20%20%20Title%3A%20%22My%20App%22%2C%0A%20%20%20%20Bind%3A%20%5B%5Dinterface%7B%7D%7B%0A%20%20%20%20%20%20%20%20app%2C%20%2F%2F%20%E6%9A%B4%E9%9C%B2%20app%20%E5%AE%9E%E4%BE%8B%E7%9A%84%E6%89%80%E6%9C%89%E5%85%AC%E5%85%B1%E6%96%B9%E6%B3%95%0A%20%20%20%20%7D%2C%0A%7D)%0A%0A%2F%2F%20frontend%2Fmain.js%0Aimport%20%7B%20Greet%20%7D%20from%20'..%2Fwailsjs%2Fgo%2Fmain%2FApp'%3B%0A%0AGreet(%22World%22).then(result%20%3D%3E%20console.log(result))%3B",
+      "encoded": true
     },
     {
-      "id": "s3-22",
-      "sectionId": "s3",
-      "title": "方法绑定 (Go <-> JS)",
-      "kind": "code",
-      "lang": "js",
-      "code": "// frontend/main.js\nimport { Greet } from '../wailsjs/go/main/App';\n\nGreet(\"World\").then(result => console.log(result));"
-    },
-    {
-      "id": "s3-23",
+      "id": "s3-9",
       "sectionId": "s3",
       "title": "事件系统 (Events)",
       "kind": "text",
       "body": "用于在 Go 和前端之间异步发送和监听消息。"
     },
     {
-      "id": "s3-24",
+      "id": "s3-10",
       "sectionId": "s3",
-      "title": "事件系统 (Events)",
-      "kind": "text",
-      "body": "#### Go 端 (`runtime.Events*`)"
-    },
-    {
-      "id": "s3-25",
-      "sectionId": "s3",
-      "title": "事件系统 (Events)",
+      "title": "Go%20%E7%AB%AF%20(%60runtime.Events*%60)",
       "kind": "code",
       "lang": "go",
-      "code": "import \"github.com/wailsapp/wails/v2/pkg/runtime\"\n\n// 发送事件到前端\nruntime.EventsEmit(app.ctx, \"go-event\", \"data from Go\")\n\n// 监听来自前端的事件\nruntime.EventsOn(app.ctx, \"js-event\", func(optionalData ...interface{}) {\n    // ... 处理数据\n})"
+      "code": "import%20%22github.com%2Fwailsapp%2Fwails%2Fv2%2Fpkg%2Fruntime%22%0A%0A%2F%2F%20%E5%8F%91%E9%80%81%E4%BA%8B%E4%BB%B6%E5%88%B0%E5%89%8D%E7%AB%AF%0Aruntime.EventsEmit(app.ctx%2C%20%22go-event%22%2C%20%22data%20from%20Go%22)%0A%0A%2F%2F%20%E7%9B%91%E5%90%AC%E6%9D%A5%E8%87%AA%E5%89%8D%E7%AB%AF%E7%9A%84%E4%BA%8B%E4%BB%B6%0Aruntime.EventsOn(app.ctx%2C%20%22js-event%22%2C%20func(optionalData%20...interface%7B%7D)%20%7B%0A%20%20%20%20%2F%2F%20...%20%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%0A%7D)",
+      "encoded": true
     },
     {
-      "id": "s3-26",
+      "id": "s3-11",
       "sectionId": "s3",
-      "title": "事件系统 (Events)",
-      "kind": "text",
-      "body": "#### JavaScript 端 (`runtime.Events*`)"
-    },
-    {
-      "id": "s3-27",
-      "sectionId": "s3",
-      "title": "事件系统 (Events)",
+      "title": "JavaScript%20%E7%AB%AF%20(%60runtime.Events*%60)",
       "kind": "code",
       "lang": "js",
-      "code": "import { EventsOn, EventsEmit } from '../wailsjs/runtime';\n\n// 发送事件到 Go\nEventsEmit(\"js-event\", { \"payload\": 123 });\n\n// 监听来自 Go 的事件\nEventsOn(\"go-event\", (data) => {\n    console.log(\"Received data from Go:\", data);\n});"
+      "code": "import%20%7B%20EventsOn%2C%20EventsEmit%20%7D%20from%20'..%2Fwailsjs%2Fruntime'%3B%0A%0A%2F%2F%20%E5%8F%91%E9%80%81%E4%BA%8B%E4%BB%B6%E5%88%B0%20Go%0AEventsEmit(%22js-event%22%2C%20%7B%20%22payload%22%3A%20123%20%7D)%3B%0A%0A%2F%2F%20%E7%9B%91%E5%90%AC%E6%9D%A5%E8%87%AA%20Go%20%E7%9A%84%E4%BA%8B%E4%BB%B6%0AEventsOn(%22go-event%22%2C%20(data)%20%3D%3E%20%7B%0A%20%20%20%20console.log(%22Received%20data%20from%20Go%3A%22%2C%20data)%3B%0A%7D)%3B",
+      "encoded": true
     },
     {
-      "id": "s3-28",
+      "id": "s3-12",
       "sectionId": "s3",
       "title": "应用生命周期钩子",
       "kind": "text",
       "body": "在 `wails.Run()` 中定义，用于在应用关键节点执行 Go 代码。"
     },
     {
-      "id": "s3-29",
+      "id": "s3-13",
       "sectionId": "s3",
-      "title": "应用生命周期钩子",
+      "title": "",
       "kind": "code",
       "lang": "go",
       "code": "// main.go\nerr := wails.Run(&options.App{\n    // ...\n    OnStartup:     app.startup,\n    OnDomReady:    app.domReady,\n    OnShutdown:    app.shutdown,\n\n    // 返回 bool 值决定是否关闭\n    OnBeforeClose: app.beforeClose,\n})"
     },
     {
-      "id": "s3-30",
+      "id": "s3-14",
       "sectionId": "s3",
-      "title": "应用生命周期钩子",
-      "kind": "qa",
-      "front": "`OnStartup`",
-      "back": "应用启动时，在窗口创建前调用"
-    },
-    {
-      "id": "s3-31",
-      "sectionId": "s3",
-      "title": "应用生命周期钩子",
-      "kind": "qa",
-      "front": "`OnDomReady`",
-      "back": "前端 DOM 加载完成后调用"
-    },
-    {
-      "id": "s3-32",
-      "sectionId": "s3",
-      "title": "应用生命周期钩子",
-      "kind": "qa",
-      "front": "`OnShutdown`",
-      "back": "应用关闭前，在窗口销毁后调用"
-    },
-    {
-      "id": "s3-33",
-      "sectionId": "s3",
-      "title": "应用生命周期钩子",
-      "kind": "qa",
-      "front": "`OnBeforeClose`",
-      "back": "用户关闭窗口时调用，返回 `true` 可阻止关闭"
-    },
-    {
-      "id": "s4-34",
-      "sectionId": "s4",
-      "title": "窗口 (Window)",
-      "kind": "qa",
-      "front": "**设置标题**",
-      "back": "`WindowSetTitle(ctx, \"New\")` | `WindowSetTitle(\"New\")`"
-    },
-    {
-      "id": "s4-35",
-      "sectionId": "s4",
-      "title": "窗口 (Window)",
-      "kind": "qa",
-      "front": "**设置尺寸**",
-      "back": "`WindowSetSize(ctx, 800, 600)` | `WindowSetSize(800, 600)`"
-    },
-    {
-      "id": "s4-36",
-      "sectionId": "s4",
-      "title": "窗口 (Window)",
-      "kind": "qa",
-      "front": "**设置最小/最大尺寸**",
-      "back": "`WindowSetMinSize(ctx, 400, 300)` | `WindowSetMinSize(400, 300)`"
-    },
-    {
-      "id": "s4-37",
-      "sectionId": "s4",
-      "title": "窗口 (Window)",
-      "kind": "qa",
-      "front": "**居中**",
-      "back": "`WindowCenter(ctx)` | `WindowCenter()`"
-    },
-    {
-      "id": "s4-38",
-      "sectionId": "s4",
-      "title": "窗口 (Window)",
-      "kind": "qa",
-      "front": "**全屏/取消全屏**",
-      "back": "`WindowFullscreen(ctx)` | `WindowFullscreen()`"
-    },
-    {
-      "id": "s4-39",
-      "sectionId": "s4",
-      "title": "窗口 (Window)",
-      "kind": "qa",
-      "front": "**显示/隐藏**",
-      "back": "`WindowShow(ctx)` / `WindowHide(ctx)` | `WindowShow()` / `WindowHide()`"
-    },
-    {
-      "id": "s4-40",
-      "sectionId": "s4",
-      "title": "窗口 (Window)",
-      "kind": "qa",
-      "front": "**设为置顶**",
-      "back": "`WindowSetAlwaysOnTop(ctx, true)` | `WindowSetAlwaysOnTop(true)`"
-    },
-    {
-      "id": "s4-41",
-      "sectionId": "s4",
-      "title": "窗口 (Window)",
-      "kind": "qa",
-      "front": "**拖动窗口**",
-      "back": "(仅 JS) | 在 HTML 元素上设置 `style=\"--wails-draggable:drag\"`"
-    },
-    {
-      "id": "s4-42",
-      "sectionId": "s4",
-      "title": "对话框 (Dialog)",
+      "title": "",
       "kind": "text",
-      "body": "#### Go 端"
+      "body": "| 钩子              | 描述                        |\n| --------------- | ------------------------- |\n| `OnStartup`     | 应用启动时，在窗口创建前调用            |\n| `OnDomReady`    | 前端 DOM 加载完成后调用            |\n| `OnShutdown`    | 应用关闭前，在窗口销毁后调用            |\n| `OnBeforeClose` | 用户关闭窗口时调用，返回 `true` 可阻止关闭 |"
     },
     {
-      "id": "s4-43",
+      "id": "s4-15",
       "sectionId": "s4",
-      "title": "对话框 (Dialog)",
+      "title": "%E7%AA%97%E5%8F%A3%20(Window)",
+      "kind": "text",
+      "body": "%7C%20%E5%8A%9F%E8%83%BD%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Go%20%E7%A4%BA%E4%BE%8B%20(%60runtime.*%60)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20JS%20%E7%A4%BA%E4%BE%8B%20(%60runtime.*%60)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-------------%20%7C%20-------------------------------------%20%7C%20---------------------------------------------%20%7C%0A%7C%20**%E8%AE%BE%E7%BD%AE%E6%A0%87%E9%A2%98**%20%20%20%20%20%20%7C%20%60WindowSetTitle(ctx%2C%20%22New%22)%60%20%20%20%20%20%20%20%20%20%20%7C%20%60WindowSetTitle(%22New%22)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20**%E8%AE%BE%E7%BD%AE%E5%B0%BA%E5%AF%B8**%20%20%20%20%20%20%7C%20%60WindowSetSize(ctx%2C%20800%2C%20600)%60%20%20%20%20%20%20%20%20%7C%20%60WindowSetSize(800%2C%20600)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20**%E8%AE%BE%E7%BD%AE%E6%9C%80%E5%B0%8F%2F%E6%9C%80%E5%A4%A7%E5%B0%BA%E5%AF%B8**%20%7C%20%60WindowSetMinSize(ctx%2C%20400%2C%20300)%60%20%20%20%20%20%7C%20%60WindowSetMinSize(400%2C%20300)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20**%E5%B1%85%E4%B8%AD**%20%20%20%20%20%20%20%20%7C%20%60WindowCenter(ctx)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60WindowCenter()%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20**%E5%85%A8%E5%B1%8F%2F%E5%8F%96%E6%B6%88%E5%85%A8%E5%B1%8F**%20%20%20%7C%20%60WindowFullscreen(ctx)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60WindowFullscreen()%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20**%E6%98%BE%E7%A4%BA%2F%E9%9A%90%E8%97%8F**%20%20%20%20%20%7C%20%60WindowShow(ctx)%60%20%2F%20%60WindowHide(ctx)%60%20%7C%20%60WindowShow()%60%20%2F%20%60WindowHide()%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20**%E8%AE%BE%E4%B8%BA%E7%BD%AE%E9%A1%B6**%20%20%20%20%20%20%7C%20%60WindowSetAlwaysOnTop(ctx%2C%20true)%60%20%20%20%20%20%7C%20%60WindowSetAlwaysOnTop(true)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20**%E6%8B%96%E5%8A%A8%E7%AA%97%E5%8F%A3**%20%20%20%20%20%20%7C%20(%E4%BB%85%20JS)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E5%9C%A8%20HTML%20%E5%85%83%E7%B4%A0%E4%B8%8A%E8%AE%BE%E7%BD%AE%20%60style%3D%22--wails-draggable%3Adrag%22%60%20%7C",
+      "encoded": true
+    },
+    {
+      "id": "s4-16",
+      "sectionId": "s4",
+      "title": "%E5%AF%B9%E8%AF%9D%E6%A1%86%20(Dialog)%20-%20Go%20%E7%AB%AF",
       "kind": "code",
       "lang": "go",
-      "code": "dialogOpts := &runtime.OpenDialogOptions{ Title: \"Select File\" }\nfilePath, err := runtime.OpenFileDialog(app.ctx, *dialogOpts)"
+      "code": "dialogOpts%20%3A%3D%20%26runtime.OpenDialogOptions%7B%20Title%3A%20%22Select%20File%22%20%7D%0AfilePath%2C%20err%20%3A%3D%20runtime.OpenFileDialog(app.ctx%2C%20*dialogOpts)",
+      "encoded": true
     },
     {
-      "id": "s4-44",
+      "id": "s4-17",
       "sectionId": "s4",
-      "title": "对话框 (Dialog)",
-      "kind": "qa",
-      "front": "**信息框**",
-      "back": "`MessageDialog(ctx, runtime.MessageDialogOptions{...})`"
-    },
-    {
-      "id": "s4-45",
-      "sectionId": "s4",
-      "title": "对话框 (Dialog)",
-      "kind": "qa",
-      "front": "**打开文件**",
-      "back": "`OpenFileDialog(ctx, runtime.OpenDialogOptions{...})`"
-    },
-    {
-      "id": "s4-46",
-      "sectionId": "s4",
-      "title": "对话框 (Dialog)",
-      "kind": "qa",
-      "front": "**保存文件**",
-      "back": "`SaveFileDialog(ctx, runtime.SaveDialogOptions{...})`"
-    },
-    {
-      "id": "s4-47",
-      "sectionId": "s4",
-      "title": "对话框 (Dialog)",
-      "kind": "qa",
-      "front": "**打开目录**",
-      "back": "`OpenDirectoryDialog(ctx, runtime.OpenDialogOptions{...})`"
-    },
-    {
-      "id": "s4-48",
-      "sectionId": "s4",
-      "title": "对话框 (Dialog)",
+      "title": "",
       "kind": "text",
-      "body": "#### JavaScript 端"
+      "body": "| 对话框类型    | Go 方法 (`runtime.*`)                                        |\n| -------- | ---------------------------------------------------------- |\n| **信息框**  | `MessageDialog(ctx, runtime.MessageDialogOptions{...})`    |\n| **打开文件** | `OpenFileDialog(ctx, runtime.OpenDialogOptions{...})`      |\n| **保存文件** | `SaveFileDialog(ctx, runtime.SaveDialogOptions{...})`      |\n| **打开目录** | `OpenDirectoryDialog(ctx, runtime.OpenDialogOptions{...})` |"
     },
     {
-      "id": "s4-49",
+      "id": "s4-18",
       "sectionId": "s4",
-      "title": "对话框 (Dialog)",
+      "title": "JavaScript%20%E7%AB%AF",
       "kind": "code",
       "lang": "js",
-      "code": "import { OpenFileDialog } from '../wailsjs/runtime';\n\nasync function selectFile() {\n    const filePath = await OpenFileDialog({ title: \"Select File\" });\n}"
+      "code": "import%20%7B%20OpenFileDialog%20%7D%20from%20'..%2Fwailsjs%2Fruntime'%3B%0A%0Aasync%20function%20selectFile()%20%7B%0A%20%20%20%20const%20filePath%20%3D%20await%20OpenFileDialog(%7B%20title%3A%20%22Select%20File%22%20%7D)%3B%0A%7D",
+      "encoded": true
     },
     {
-      "id": "s4-50",
+      "id": "s4-19",
       "sectionId": "s4",
-      "title": "菜单 (Menu)",
+      "title": "%E8%8F%9C%E5%8D%95%20(Menu)",
       "kind": "code",
       "lang": "go",
-      "code": "// main.go\nappMenu := menu.NewMenu()\nfileMenu := appMenu.AddSubmenu(\"File\")\nfileMenu.AddText(\"Quit\", keys.CmdOrCtrl(\"q\"), func(_ *menu.CallbackData) {\n    runtime.Quit(app.ctx)\n})\n\nerr := wails.Run(&options.App{\n    // ...\n    Menu: appMenu,\n})"
+      "code": "%2F%2F%20main.go%0AappMenu%20%3A%3D%20menu.NewMenu()%0AfileMenu%20%3A%3D%20appMenu.AddSubmenu(%22File%22)%0AfileMenu.AddText(%22Quit%22%2C%20keys.CmdOrCtrl(%22q%22)%2C%20func(_%20*menu.CallbackData)%20%7B%0A%20%20%20%20runtime.Quit(app.ctx)%0A%7D)%0A%0Aerr%20%3A%3D%20wails.Run(%26options.App%7B%0A%20%20%20%20%2F%2F%20...%0A%20%20%20%20Menu%3A%20appMenu%2C%0A%7D)",
+      "encoded": true
     },
     {
-      "id": "s4-51",
+      "id": "s4-20",
       "sectionId": "s4",
-      "title": "菜单 (Menu)",
-      "kind": "qa",
-      "front": "**文本项**",
-      "back": "`menu.AddText(\"Item\", accelerator, callback)`"
-    },
-    {
-      "id": "s4-52",
-      "sectionId": "s4",
-      "title": "菜单 (Menu)",
-      "kind": "qa",
-      "front": "**复选框**",
-      "back": "`menu.AddCheckbox(\"Toggle\", true, accelerator, callback)`"
-    },
-    {
-      "id": "s4-53",
-      "sectionId": "s4",
-      "title": "菜单 (Menu)",
-      "kind": "qa",
-      "front": "**分隔符**",
-      "back": "`menu.AddSeparator()`"
-    },
-    {
-      "id": "s4-54",
-      "sectionId": "s4",
-      "title": "菜单 (Menu)",
-      "kind": "qa",
-      "front": "**子菜单**",
-      "back": "`menu.AddSubmenu(\"Submenu\")`"
-    },
-    {
-      "id": "s4-55",
-      "sectionId": "s4",
-      "title": "其他 Runtime API",
+      "title": "",
       "kind": "text",
-      "body": "#### 日志"
+      "body": "%7C%20%E8%8F%9C%E5%8D%95%E9%A1%B9%E7%B1%BB%E5%9E%8B%20%20%20%7C%20%E7%A4%BA%E4%BE%8B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-------%20%7C%20---------------------------------------------------------%20%7C%0A%7C%20**%E6%96%87%E6%9C%AC%E9%A1%B9**%20%7C%20%60menu.AddText(%22Item%22%2C%20accelerator%2C%20callback)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20**%E5%A4%8D%E9%80%89%E6%A1%86**%20%7C%20%60menu.AddCheckbox(%22Toggle%22%2C%20true%2C%20accelerator%2C%20callback)%60%20%7C%0A%7C%20**%E5%88%86%E9%9A%94%E7%AC%A6**%20%7C%20%60menu.AddSeparator()%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20**%E5%AD%90%E8%8F%9C%E5%8D%95**%20%7C%20%60menu.AddSubmenu(%22Submenu%22)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C",
+      "encoded": true
     },
     {
-      "id": "s4-56",
+      "id": "s4-21",
       "sectionId": "s4",
-      "title": "其他 Runtime API",
+      "title": "%E5%85%B6%E4%BB%96%20Runtime%20API%20-%20%E6%97%A5%E5%BF%97",
       "kind": "code",
       "lang": "go",
-      "code": "// Go 示例 (`runtime.*`) \nLogInfo(ctx, \"Message\") \n// JS 示例 (`runtime.*`)\nLogInfo(\"Message\")"
+      "code": "%2F%2F%20Go%20%E7%A4%BA%E4%BE%8B%20(%60runtime.*%60)%20%0ALogInfo(ctx%2C%20%22Message%22)%20%0A%2F%2F%20JS%20%E7%A4%BA%E4%BE%8B%20(%60runtime.*%60)%0ALogInfo(%22Message%22)",
+      "encoded": true
     },
     {
-      "id": "s4-57",
+      "id": "s4-22",
       "sectionId": "s4",
-      "title": "其他 Runtime API",
-      "kind": "text",
-      "body": "#### 剪贴板"
-    },
-    {
-      "id": "s4-58",
-      "sectionId": "s4",
-      "title": "其他 Runtime API",
+      "title": "%E5%89%AA%E8%B4%B4%E6%9D%BF",
       "kind": "code",
       "lang": "go",
-      "code": "// Go 示例 (`runtime.*`) \nClipboardSetText(ctx, \"text\")\n// JS 示例 (`runtime.*`)\nClipboardSetText(\"text\")"
+      "code": "%2F%2F%20Go%20%E7%A4%BA%E4%BE%8B%20(%60runtime.*%60)%20%0AClipboardSetText(ctx%2C%20%22text%22)%0A%2F%2F%20JS%20%E7%A4%BA%E4%BE%8B%20(%60runtime.*%60)%0AClipboardSetText(%22text%22)",
+      "encoded": true
     },
     {
-      "id": "s5-59",
+      "id": "s5-23",
       "sectionId": "s5",
-      "title": "Windows 打包",
-      "kind": "text",
-      "body": "#### <red>■</red> 默认生成: `.exe` 可执行文件\n<!--rehype:style=text-align: left;font-weight: bold;-->"
-    },
-    {
-      "id": "s5-60",
-      "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "Windows 打包 - <red>■</red> 默认生成: `.exe` 可执行文件",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform windows/amd64"
     },
     {
-      "id": "s5-61",
+      "id": "s5-24",
       "sectionId": "s5",
-      "title": "Windows 打包",
-      "kind": "text",
-      "body": "#### <red>■</red> 生成 NSIS 安装程序\n<!--rehype:style=text-align: left;font-weight: bold;-->"
-    },
-    {
-      "id": "s5-62",
-      "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "<red>■</red> 生成 NSIS 安装程序",
       "kind": "text",
       "body": "**前提条件**: 需要预先安装 [NSIS (Nullsoft Scriptable Install System)](https://nsis.sourceforge.io/Download)。"
     },
     {
-      "id": "s5-63",
+      "id": "s5-25",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "text",
       "body": "• **下载 NSIS**: 从 [NSIS 官方网站](https://nsis.sourceforge.io/Download) 下载最新版本的 NSIS 安装程序。\n• **安装 NSIS**: 运行安装程序并按照提示完成安装。**确保**在安装过程中选择将 NSIS 添加到系统的 `PATH` 环境变量中，以便 `makensis` 命令可以在命令行中全局访问。\n• **验证安装**:"
     },
     {
-      "id": "s5-64",
+      "id": "s5-26",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "  $ makensis -VERSION"
     },
     {
-      "id": "s5-65",
+      "id": "s5-27",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "text",
       "body": "如果安装正确，您将看到 NSIS 的版本号输出。"
     },
     {
-      "id": "s5-66",
+      "id": "s5-28",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "text",
       "body": "**生成安装程序**:"
     },
     {
-      "id": "s5-67",
+      "id": "s5-29",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform windows/amd64 -nsis"
     },
     {
-      "id": "s5-68",
+      "id": "s5-30",
       "sectionId": "s5",
-      "title": "Windows 打包",
-      "kind": "text",
-      "body": "#### <red>■</red> 处理 WebView2 依赖\n<!--rehype:style=text-align: left;font-weight: bold;-->"
-    },
-    {
-      "id": "s5-69",
-      "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "<red>■</red> 处理 WebView2 依赖",
       "kind": "text",
       "body": "`download`: 提示用户下载 WebView2。"
     },
     {
-      "id": "s5-70",
+      "id": "s5-31",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform windows/amd64 -webview2 download"
     },
     {
-      "id": "s5-71",
+      "id": "s5-32",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "text",
       "body": "`embed`: 将 WebView2 嵌入到应用中（推荐）。"
     },
     {
-      "id": "s5-72",
+      "id": "s5-33",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform windows/amd64 -webview2 embed"
     },
     {
-      "id": "s5-73",
+      "id": "s5-34",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "text",
       "body": "`browser`: 在浏览器中打开下载页面。"
     },
     {
-      "id": "s5-74",
+      "id": "s5-35",
       "sectionId": "s5",
-      "title": "Windows 打包",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform windows/amd64 -webview2 browser"
     },
     {
-      "id": "s5-75",
+      "id": "s5-36",
       "sectionId": "s5",
-      "title": "macOS 打包",
-      "kind": "text",
-      "body": "#### <red>■</red> 默认生成: `.app` 应用程序包\n<!--rehype:style=text-align: left;font-weight: bold;-->"
-    },
-    {
-      "id": "s5-76",
-      "sectionId": "s5",
-      "title": "macOS 打包",
+      "title": "macOS 打包 - <red>■</red> 默认生成: `.app` 应用程序包",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform darwin/amd64"
     },
     {
-      "id": "s5-77",
+      "id": "s5-37",
       "sectionId": "s5",
-      "title": "macOS 打包",
-      "kind": "text",
-      "body": "#### <red>■</red> 代码签名与公证\n<!--rehype:style=text-align: left;font-weight: bold;-->"
-    },
-    {
-      "id": "s5-78",
-      "sectionId": "s5",
-      "title": "macOS 打包",
+      "title": "<red>■</red> 代码签名与公证",
       "kind": "text",
       "body": "需要通过 Apple 开发者账户进行 **代码签名** 和 **公证** 才能分发。"
     },
     {
-      "id": "s5-79",
+      "id": "s5-38",
       "sectionId": "s5",
-      "title": "macOS 打包",
-      "kind": "text",
-      "body": "#### <red>■</red> 跳过打包成 `.app` 步骤\n<!--rehype:style=text-align: left;font-weight: bold;-->"
-    },
-    {
-      "id": "s5-80",
-      "sectionId": "s5",
-      "title": "macOS 打包",
+      "title": "<red>■</red> 跳过打包成 `.app` 步骤",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform darwin/amd64 -skippackage"
     },
     {
-      "id": "s5-81",
+      "id": "s5-39",
       "sectionId": "s5",
-      "title": "Linux 打包",
-      "kind": "text",
-      "body": "#### <red>■</red> 生成可执行文件\n<!--rehype:style=text-align: left;font-weight: bold;-->"
-    },
-    {
-      "id": "s5-82",
-      "sectionId": "s5",
-      "title": "Linux 打包",
+      "title": "Linux 打包 - <red>■</red> 生成可执行文件",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform linux/amd64"
     },
     {
-      "id": "s5-83",
+      "id": "s5-40",
       "sectionId": "s5",
-      "title": "Linux 打包",
-      "kind": "text",
-      "body": "#### <red>■</red> 打包成 `.deb`\n<!--rehype:style=text-align: left;font-weight: bold;-->"
-    },
-    {
-      "id": "s5-84",
-      "sectionId": "s5",
-      "title": "Linux 打包",
+      "title": "<red>■</red> 打包成 `.deb`",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform linux/amd64 -deb"
     },
     {
-      "id": "s5-85",
+      "id": "s5-41",
       "sectionId": "s5",
-      "title": "Linux 打包",
-      "kind": "text",
-      "body": "#### <red>■</red> 打包成 `.rpm`\n<!--rehype:style=text-align: left;font-weight: bold;-->"
-    },
-    {
-      "id": "s5-86",
-      "sectionId": "s5",
-      "title": "Linux 打包",
+      "title": "<red>■</red> 打包成 `.rpm`",
       "kind": "code",
       "lang": "bash",
       "code": "$ wails build -platform linux/amd64 -rpm"
     },
     {
-      "id": "s5-87",
+      "id": "s5-42",
       "sectionId": "s5",
-      "title": "Linux 打包",
-      "kind": "text",
-      "body": "---"
-    },
-    {
-      "id": "s5-88",
-      "sectionId": "s5",
-      "title": "Linux 打包",
-      "kind": "text",
-      "body": "#### AppImage 支持"
-    },
-    {
-      "id": "s5-89",
-      "sectionId": "s5",
-      "title": "Linux 打包",
+      "title": "AppImage 支持",
       "kind": "text",
       "body": "Wails 不直接内置对 AppImage 的支持，但可以使用外部工具手动创建。使用 `appimagetool`:"
     },
     {
-      "id": "s5-90",
+      "id": "s5-43",
       "sectionId": "s5",
-      "title": "Linux 打包",
+      "title": "",
       "kind": "code",
       "lang": "shell",
       "code": "appimagetool ./your-app-dir"
     },
     {
-      "id": "s5-91",
+      "id": "s5-44",
       "sectionId": "s5",
-      "title": "Linux 打包",
+      "title": "",
       "kind": "text",
       "body": "**安装 `appimagetool`**:"
     },
     {
-      "id": "s5-92",
+      "id": "s5-45",
       "sectionId": "s5",
-      "title": "Linux 打包",
+      "title": "",
       "kind": "text",
       "body": "• 您可以从 [AppImage 官方网站](https://appimage.org/) 获取 `appimagetool`。\n• 下载后，将其添加到您的 `PATH` 中以便全局访问。"
     },
     {
-      "id": "s6-93",
+      "id": "s6-46",
       "sectionId": "s6",
       "title": "平台特定构建选项",
       "kind": "text",
       "body": "在 `main.go` 的 `wails.Run()` 中为不同平台提供细粒度配置。"
     },
     {
-      "id": "s6-94",
+      "id": "s6-47",
       "sectionId": "s6",
-      "title": "平台特定构建选项",
+      "title": "",
       "kind": "code",
       "lang": "go",
-      "code": "err := wails.Run(&options.App{\n    // ...\n    Windows: &windows.Options{\n        WebviewIsTransparent: true, // WebView2 背景透明\n        WindowIsTranslucent:  true, // 窗口背景透明\n        DisableWindowIcon:    false, // 禁用窗口图标\n        Theme:                windows.SystemDefault, // 主题设置\n    },\n    Mac: &mac.Options{\n        TitleBar: &mac.TitleBar{\n            TitlebarAppearsTransparent: true, // 透明标题栏\n            HideTitle:                  false, // 隐藏标题\n            HideTitleBar:               false, // 隐藏标题栏\n            FullSizeContent:            false, // 全尺寸内容\n            UseToolbar:                 false, // 使用工具栏\n        },\n        About: &mac.AboutInfo{\n            Title:   \"My Awesome App\",\n            Message: \"© 2025 Me\",\n            Icon:    icon, // 应用图标\n        },\n        WebviewIsTransparent: true, // WebView 透明\n        WindowIsTranslucent:  false, // 窗口半透明\n    },\n    Linux: &linux.Options{\n        Icon: icon, // Linux 图标\n        WindowIsTranslucent: false, // 窗口半透明\n    },\n})"
+      "code": "err%20%3A%3D%20wails.Run(%26options.App%7B%0A%20%20%20%20%2F%2F%20...%0A%20%20%20%20Windows%3A%20%26windows.Options%7B%0A%20%20%20%20%20%20%20%20WebviewIsTransparent%3A%20true%2C%20%2F%2F%20WebView2%20%E8%83%8C%E6%99%AF%E9%80%8F%E6%98%8E%0A%20%20%20%20%20%20%20%20WindowIsTranslucent%3A%20%20true%2C%20%2F%2F%20%E7%AA%97%E5%8F%A3%E8%83%8C%E6%99%AF%E9%80%8F%E6%98%8E%0A%20%20%20%20%20%20%20%20DisableWindowIcon%3A%20%20%20%20false%2C%20%2F%2F%20%E7%A6%81%E7%94%A8%E7%AA%97%E5%8F%A3%E5%9B%BE%E6%A0%87%0A%20%20%20%20%20%20%20%20Theme%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20windows.SystemDefault%2C%20%2F%2F%20%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE%0A%20%20%20%20%7D%2C%0A%20%20%20%20Mac%3A%20%26mac.Options%7B%0A%20%20%20%20%20%20%20%20TitleBar%3A%20%26mac.TitleBar%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20TitlebarAppearsTransparent%3A%20true%2C%20%2F%2F%20%E9%80%8F%E6%98%8E%E6%A0%87%E9%A2%98%E6%A0%8F%0A%20%20%20%20%20%20%20%20%20%20%20%20HideTitle%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20false%2C%20%2F%2F%20%E9%9A%90%E8%97%8F%E6%A0%87%E9%A2%98%0A%20%20%20%20%20%20%20%20%20%20%20%20HideTitleBar%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20false%2C%20%2F%2F%20%E9%9A%90%E8%97%8F%E6%A0%87%E9%A2%98%E6%A0%8F%0A%20%20%20%20%20%20%20%20%20%20%20%20FullSizeContent%3A%20%20%20%20%20%20%20%20%20%20%20%20false%2C%20%2F%2F%20%E5%85%A8%E5%B0%BA%E5%AF%B8%E5%86%85%E5%AE%B9%0A%20%20%20%20%20%20%20%20%20%20%20%20UseToolbar%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20false%2C%20%2F%2F%20%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E6%A0%8F%0A%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20About%3A%20%26mac.AboutInfo%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Title%3A%20%20%20%22My%20Awesome%20App%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20Message%3A%20%22%C2%A9%202025%20Me%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20Icon%3A%20%20%20%20icon%2C%20%2F%2F%20%E5%BA%94%E7%94%A8%E5%9B%BE%E6%A0%87%0A%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20WebviewIsTransparent%3A%20true%2C%20%2F%2F%20WebView%20%E9%80%8F%E6%98%8E%0A%20%20%20%20%20%20%20%20WindowIsTranslucent%3A%20%20false%2C%20%2F%2F%20%E7%AA%97%E5%8F%A3%E5%8D%8A%E9%80%8F%E6%98%8E%0A%20%20%20%20%7D%2C%0A%20%20%20%20Linux%3A%20%26linux.Options%7B%0A%20%20%20%20%20%20%20%20Icon%3A%20icon%2C%20%2F%2F%20Linux%20%E5%9B%BE%E6%A0%87%0A%20%20%20%20%20%20%20%20WindowIsTranslucent%3A%20false%2C%20%2F%2F%20%E7%AA%97%E5%8F%A3%E5%8D%8A%E9%80%8F%E6%98%8E%0A%20%20%20%20%7D%2C%0A%7D)",
+      "encoded": true
     },
     {
-      "id": "s6-95",
+      "id": "s6-48",
       "sectionId": "s6",
       "title": "使用 TypeScript",
       "kind": "text",
       "body": "Wails 会自动为 Go 绑定的方法生成 TypeScript 定义。"
     },
     {
-      "id": "s6-96",
+      "id": "s6-49",
       "sectionId": "s6",
-      "title": "使用 TypeScript",
+      "title": "",
       "kind": "code",
       "lang": "bash",
-      "code": "# wails.json\n\"frontend:build\": \"npm run build\"\n\n# package.json\n\"scripts\": {\n  \"build\": \"tsc && vite build\"\n}"
+      "code": "%23%20wails.json%0A%22frontend%3Abuild%22%3A%20%22npm%20run%20build%22%0A%0A%23%20package.json%0A%22scripts%22%3A%20%7B%0A%20%20%22build%22%3A%20%22tsc%20%26%26%20vite%20build%22%0A%7D",
+      "encoded": true
     },
     {
-      "id": "s6-97",
+      "id": "s6-50",
       "sectionId": "s6",
       "title": "上下文 (Context)",
       "kind": "text",
       "body": "使用 Go 的 context 进行更好的资源管理和取消操作。"
     },
     {
-      "id": "s6-98",
+      "id": "s6-51",
       "sectionId": "s6",
-      "title": "上下文 (Context)",
+      "title": "",
       "kind": "code",
       "lang": "go",
       "code": "// app.go\nfunc (a *App) LongRunningTask(ctx context.Context) error {\n    select {\n    case <-time.After(5 * time.Second):\n        return nil\n    case <-ctx.Done():\n        return ctx.Err() // 任务被取消\n    }\n}"
     },
     {
-      "id": "s6-99",
+      "id": "s6-52",
       "sectionId": "s6",
       "title": "调试",
       "kind": "text",
       "body": "• **Go 部分**: 使用 `wails dev -debug` 启动并附加您的 Go 调试器。\n• **前端部分**: 在 `wails dev` 模式下，右键点击应用，选择“检查”打开浏览器开发者工具。"
     },
     {
-      "id": "s6-100",
+      "id": "s6-53",
       "sectionId": "s6",
-      "title": "性能优化",
-      "kind": "text",
-      "body": "#### 构建优化"
-    },
-    {
-      "id": "s6-101",
-      "sectionId": "s6",
-      "title": "性能优化",
+      "title": "%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%20-%20%E6%9E%84%E5%BB%BA%E4%BC%98%E5%8C%96",
       "kind": "code",
       "lang": "bash",
-      "code": "# 使用构建标签优化\n$ wails build -tags production\n\n# 使用 ldflags 减小二进制文件大小\n$ wails build -ldflags \"-s -w\"\n\n# 使用 UPX 压缩\n$ wails build -upx\n\n# 组合使用多个优化选项\n$ wails build -ldflags \"-s -w\" -upx -tags production"
+      "code": "%23%20%E4%BD%BF%E7%94%A8%E6%9E%84%E5%BB%BA%E6%A0%87%E7%AD%BE%E4%BC%98%E5%8C%96%0A%24%20wails%20build%20-tags%20production%0A%0A%23%20%E4%BD%BF%E7%94%A8%20ldflags%20%E5%87%8F%E5%B0%8F%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%A4%A7%E5%B0%8F%0A%24%20wails%20build%20-ldflags%20%22-s%20-w%22%0A%0A%23%20%E4%BD%BF%E7%94%A8%20UPX%20%E5%8E%8B%E7%BC%A9%0A%24%20wails%20build%20-upx%0A%0A%23%20%E7%BB%84%E5%90%88%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA%E4%BC%98%E5%8C%96%E9%80%89%E9%A1%B9%0A%24%20wails%20build%20-ldflags%20%22-s%20-w%22%20-upx%20-tags%20production",
+      "encoded": true
     },
     {
-      "id": "s6-102",
+      "id": "s6-54",
       "sectionId": "s6",
-      "title": "性能优化",
-      "kind": "text",
-      "body": "#### 前端优化 (wails.json)"
-    },
-    {
-      "id": "s6-103",
-      "sectionId": "s6",
-      "title": "性能优化",
+      "title": "%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%20(wails.json)",
       "kind": "code",
       "lang": "json",
-      "code": "{\n  \"frontend:build\": \"npm run build:prod\",\n  \"frontend:dev:build\": \"npm run build:dev\"\n}"
+      "code": "%7B%0A%20%20%22frontend%3Abuild%22%3A%20%22npm%20run%20build%3Aprod%22%2C%0A%20%20%22frontend%3Adev%3Abuild%22%3A%20%22npm%20run%20build%3Adev%22%0A%7D",
+      "encoded": true
     },
     {
-      "id": "s6-104",
+      "id": "s6-55",
       "sectionId": "s6",
-      "title": "常见问题与解决方案",
-      "kind": "text",
-      "body": "#### 构建问题"
-    },
-    {
-      "id": "s6-105",
-      "sectionId": "s6",
-      "title": "常见问题与解决方案",
+      "title": "常见问题与解决方案 - 构建问题",
       "kind": "code",
       "lang": "bash",
       "code": "# 清理构建缓存\n$ wails build -clean\n\n# 强制重新生成绑定\n$ wails generate module -f\n\n# 检查环境配置\n$ wails doctor"
     },
     {
-      "id": "s6-106",
+      "id": "s6-56",
       "sectionId": "s6",
-      "title": "常见问题与解决方案",
-      "kind": "text",
-      "body": "#### 开发问题"
-    },
-    {
-      "id": "s6-107",
-      "sectionId": "s6",
-      "title": "常见问题与解决方案",
+      "title": "开发问题",
       "kind": "code",
       "lang": "bash",
       "code": "# 重置前端依赖\n$ rm -rf frontend/node_modules\n$ wails dev\n\n# 使用外部开发服务器\n$ wails dev -frontenddevserverurl http://localhost:3000"
     },
     {
-      "id": "s7-108",
+      "id": "s7-57",
       "sectionId": "s7",
       "title": "参考资料",
       "kind": "text",
