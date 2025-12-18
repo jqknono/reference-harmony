@@ -1,58 +1,62 @@
 import type { ReferenceCardData, ReferenceLang } from '../common/referenceModels';
+import type { AppThemeTokens } from '../common/appTheme';
+import { MarkdownView } from './MarkdownView';
 
 @Component
 export struct ReferenceCard {
   @Prop card: ReferenceCardData;
   @Prop lang: ReferenceLang;
+  @Prop theme: AppThemeTokens;
 
   @State private showBack: boolean = false;
 
   @Builder
   private Body(): void {
     if (this.card.kind === 'qa') {
-      Text(this.showBack ? (this.card.back ?? '') : (this.card.front ?? ''))
-        .fontSize(15)
-        .fontColor(this.showBack ? 0x111111 : 0x222222)
-        .maxLines(999)
-        .textOverflow({ overflow: TextOverflow.Clip });
+      MarkdownView({
+        markdown: this.showBack ? (this.card.back ?? '') : (this.card.front ?? ''),
+        fontSize: 15,
+        fontColor: this.showBack ? this.theme.qaBackTextColor : this.theme.qaFrontTextColor,
+        theme: this.theme,
+      });
     } else if (this.card.kind === 'code') {
       Text(this.card.code ?? '')
         .fontFamily('monospace')
         .fontSize(13)
-        .fontColor(0x1f2328)
+        .fontColor(this.theme.markdown.codeTextColor)
         .maxLines(999)
         .textOverflow({ overflow: TextOverflow.Clip });
     } else {
-      Text(this.card.body ?? '')
-        .fontSize(15)
-        .fontColor(0x222222)
-        .maxLines(999)
-        .textOverflow({ overflow: TextOverflow.Clip });
+      MarkdownView({ markdown: this.card.body ?? '', fontSize: 15, fontColor: this.theme.textColor, theme: this.theme });
     }
   }
 
   build() {
     Column({ space: 8 }) {
       Row() {
-        Text(this.card.title)
-          .fontSize(16)
-          .fontWeight(FontWeight.Medium)
-          .fontColor(0x0f172a)
+        MarkdownView({
+          markdown: this.card.title,
+          inlineOnly: true,
+          fontSize: 16,
+          fontColor: this.theme.titleColor,
+          fontWeight: FontWeight.Medium,
+          theme: this.theme,
+        })
           .layoutWeight(1);
 
         if (this.card.kind === 'qa') {
           Text(this.showBack ? (this.lang === 'en' ? 'Back' : '背面') : (this.lang === 'en' ? 'Front' : '正面'))
             .fontSize(12)
-            .fontColor(0x64748b);
+            .fontColor(this.theme.mutedTextColor);
         }
       }
 
       this.Body()
     }
     .padding(14)
-    .backgroundColor(0xffffff)
+    .backgroundColor(this.theme.surfaceBackgroundColor)
     .borderRadius(14)
-    .shadow({ radius: 8, color: 0x14000000, offsetX: 0, offsetY: 2 })
+    .shadow({ radius: 8, color: this.theme.shadowColor, offsetX: 0, offsetY: 2 })
     .onClick(() => {
       if (this.card.kind !== 'qa') {
         return;

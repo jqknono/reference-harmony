@@ -1,6 +1,8 @@
 import preferences from '@ohos.data.preferences';
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
+import { getAppThemeTokens } from '../common/appTheme';
+import type { AppThemeId, AppThemeTokens } from '../common/appTheme';
 import { ReferenceCard } from '../components/ReferenceCard';
 
 type Preferences = preferences.Preferences;
@@ -18,6 +20,8 @@ struct Index {
   @State private loading: boolean = false;
   @State private errorText: string = '';
   @State private lang: ReferenceLang = 'zh';
+  @State private themeId: AppThemeId = 'reference';
+  @State private theme: AppThemeTokens = getAppThemeTokens('reference');
 
   @State private docs: Array<ReferenceDocSummary> = [];
   @State private selectedDoc: ReferenceDoc | undefined = undefined;
@@ -31,6 +35,42 @@ struct Index {
 
   private t(zh: string, en: string): string {
     return this.lang === 'en' ? en : zh;
+  }
+
+  private async loadThemeSetting(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) {
+      this.themeId = 'reference';
+      this.theme = getAppThemeTokens(this.themeId);
+      return;
+    }
+    const saved: string = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get('theme', 'reference'))
+      .then(
+        (value: ValueType): string => (typeof value === 'string' ? value : String(value)),
+        (): string => 'reference',
+      );
+    this.themeId = saved === 'coo' ? 'coo' : 'reference';
+    this.theme = getAppThemeTokens(this.themeId);
+  }
+
+  private async saveThemeSetting(next: AppThemeId): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put('theme', next))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
   }
 
   private async loadLangSetting(): Promise<void> {
@@ -140,6 +180,13 @@ struct Index {
     await this.loadManifest(false);
   }
 
+  private async switchTheme(next: AppThemeId): Promise<void> {
+    if (this.themeId === next) return;
+    this.themeId = next;
+    this.theme = getAppThemeTokens(next);
+    await this.saveThemeSetting(next);
+  }
+
   private async loadManifest(autoOpenFirst: boolean = true): Promise<void> {
     const repo = await this.ensureRepository();
     if (!repo) {
@@ -174,6 +221,7 @@ struct Index {
   }
 
   async aboutToAppear(): Promise<void> {
+    await this.loadThemeSetting();
     await this.loadLangSetting();
     await this.loadManifest();
   }
@@ -184,14 +232,14 @@ struct Index {
       Text(this.t('快速参考', 'Quick Reference'))
         .fontSize(22)
         .fontWeight(FontWeight.Bold)
-        .fontColor(0x0f172a);
+        .fontColor(this.theme.titleColor);
 
       if (this.loading) {
-        Text(this.t('加载中…', 'Loading…')).fontColor(0x64748b);
+        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor);
       }
 
       if (this.errorText) {
-        Text(this.errorText).fontColor(0xb91c1c).maxLines(6);
+        Text(this.errorText).fontColor(this.theme.dangerTextColor).maxLines(6);
       }
 
       List() {
@@ -203,37 +251,37 @@ struct Index {
                   .width(34)
                   .height(34)
                   .borderRadius(10)
-                  .backgroundColor(0xe2e8f0);
+                  .backgroundColor(this.theme.avatarBackgroundColor);
               } else {
                 Text((doc.name || doc.id).slice(0, 1).toUpperCase())
                   .width(34)
                   .height(34)
                   .textAlign(TextAlign.Center)
                   .fontSize(14)
-                  .fontColor(0x334155)
-                  .backgroundColor(0xe2e8f0)
+                  .fontColor(this.theme.avatarTextColor)
+                  .backgroundColor(this.theme.avatarBackgroundColor)
                   .borderRadius(10);
               }
 
               Column({ space: 4 }) {
-                Text(doc.name || doc.id).fontSize(16).fontColor(0x0f172a);
+                Text(doc.name || doc.id).fontSize(16).fontColor(this.theme.titleColor);
 
                 if (doc.title && doc.title !== doc.name) {
                   Text(doc.title)
                     .fontSize(12)
-                    .fontColor(0x64748b)
+                    .fontColor(this.theme.mutedTextColor)
                     .maxLines(2);
                 }
 
                 Text(this.t(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`, `${doc.sectionCount} sections · ${doc.cardCount} cards`))
                   .fontSize(12)
-                  .fontColor(0x64748b);
+                  .fontColor(this.theme.mutedTextColor);
               }.layoutWeight(1);
 
-              Text(this.t('打开', 'Open')).fontSize(12).fontColor(0x2563eb);
+              Text(this.t('打开', 'Open')).fontSize(12).fontColor(this.theme.accentColor);
             }
             .padding(14)
-            .backgroundColor(0xffffff)
+            .backgroundColor(this.theme.surfaceBackgroundColor)
             .borderRadius(12)
             .onClick(() => this.openDoc(doc.id));
           }
@@ -246,7 +294,7 @@ struct Index {
     .padding(16)
     .height('100%')
     .width('100%')
-    .backgroundColor(0xf1f5f9);
+    .backgroundColor(this.theme.pageBackgroundColor);
   }
 
   @Builder
@@ -258,33 +306,33 @@ struct Index {
             .width(28)
             .height(28)
             .borderRadius(8)
-            .backgroundColor(0xe2e8f0);
+            .backgroundColor(this.theme.avatarBackgroundColor);
         }
 
         Column({ space: 2 }) {
           Text(this.selectedDoc ? (this.selectedDoc.name || this.selectedDoc.title) : this.t('未选择', 'No selection'))
             .fontSize(18)
             .fontWeight(FontWeight.Bold)
-            .fontColor(0x0f172a);
+            .fontColor(this.theme.titleColor);
 
           if (this.selectedDoc && this.selectedDoc.title && this.selectedDoc.title !== this.selectedDoc.name) {
-            Text(this.selectedDoc.title).fontSize(12).fontColor(0x64748b).maxLines(2);
+            Text(this.selectedDoc.title).fontSize(12).fontColor(this.theme.mutedTextColor).maxLines(2);
           }
         }
         .layoutWeight(1);
 
         if (this.selectedDocId) {
-          Text(this.selectedDocId).fontSize(12).fontColor(0x64748b);
+          Text(this.selectedDocId).fontSize(12).fontColor(this.theme.mutedTextColor);
         }
       }
       .padding({ left: 16, right: 16, top: 14, bottom: 6 });
 
       if (this.loading) {
-        Text(this.t('加载中…', 'Loading…')).fontColor(0x64748b).padding({ left: 16, right: 16 });
+        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor).padding({ left: 16, right: 16 });
       }
 
       if (this.errorText) {
-        Text(this.errorText).fontColor(0xb91c1c).padding({ left: 16, right: 16 }).maxLines(6);
+        Text(this.errorText).fontColor(this.theme.dangerTextColor).padding({ left: 16, right: 16 }).maxLines(6);
       }
 
       List({ scroller: this.listScroller }) {
@@ -294,18 +342,18 @@ struct Index {
               Text(group.section.title)
                 .fontSize(14)
                 .fontWeight(FontWeight.Medium)
-                .fontColor(0x334155)
+                .fontColor(this.theme.textColor)
                 .padding({ left: 16, right: 16, top: 12, bottom: 4 });
             }
 
             ForEach(group.cards, (card: ReferenceCardData) => {
               ListItem() {
-                ReferenceCard({ card, lang: this.lang })
+                ReferenceCard({ card, lang: this.lang, theme: this.theme })
                   .margin({ left: 16, right: 16, top: 8, bottom: 8 });
               }
-            }, (card: ReferenceCardData) => card.id);
+            }, (card: ReferenceCardData) => `${this.selectedDocId}:${card.id}`);
           }
-        }, (group: SectionWithCards) => group.section.id);
+        }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
       }
       .layoutWeight(1)
       .divider({ strokeWidth: 0 });
@@ -316,68 +364,86 @@ struct Index {
             ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
               Text(group.section.title)
                 .fontSize(12)
-                .fontColor(0x0f172a)
+                .fontColor(this.theme.chipTextColor)
                 .padding({ left: 10, right: 10, top: 8, bottom: 8 })
-                .backgroundColor(0xe2e8f0)
+                .backgroundColor(this.theme.chipBackgroundColor)
                 .borderRadius(999)
                 .onClick(() => this.listScroller.scrollToItemInGroup(groupIndex, 0, true, ScrollAlign.START));
-            }, (group: SectionWithCards) => group.section.id);
+            }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
           }
           .padding({ left: 12, right: 12, top: 8, bottom: 8 });
         }
-        .backgroundColor(0xf8fafc)
+        .backgroundColor(this.theme.surfaceMutedBackgroundColor)
         .scrollable(ScrollDirection.Horizontal)
         .scrollBar(BarState.Off);
       }
     }
     .height('100%')
     .width('100%')
-    .backgroundColor(0xf1f5f9);
+    .backgroundColor(this.theme.pageBackgroundColor);
   }
 
   @Builder
   private SearchTab(): void {
     Column({ space: 10 }) {
-      Text(this.t('搜索', 'Search')).fontSize(22).fontWeight(FontWeight.Bold);
-      Text(this.t('TODO：搜索（按标题/内容过滤卡片）', 'TODO: Search (filter cards by title/body)')).fontColor(0x64748b);
+      Text(this.t('搜索', 'Search')).fontSize(22).fontWeight(FontWeight.Bold).fontColor(this.theme.titleColor);
+      Text(this.t('TODO：搜索（按标题/内容过滤卡片）', 'TODO: Search (filter cards by title/body)')).fontColor(this.theme.mutedTextColor);
     }
     .padding(16)
     .height('100%')
     .width('100%')
-    .backgroundColor(0xf1f5f9);
+    .backgroundColor(this.theme.pageBackgroundColor);
   }
 
   @Builder
   private SettingsTab(): void {
     Column({ space: 10 }) {
-      Text(this.t('设置', 'Settings')).fontSize(22).fontWeight(FontWeight.Bold);
+      Text(this.t('设置', 'Settings')).fontSize(22).fontWeight(FontWeight.Bold).fontColor(this.theme.titleColor);
 
       Row({ space: 10 }) {
-        Text(this.t('语言', 'Language')).fontColor(0x64748b);
+        Text(this.t('语言', 'Language')).fontColor(this.theme.mutedTextColor);
         Text(this.t('中文', '中文'))
           .fontSize(12)
-          .fontColor(this.lang === 'zh' ? 0xffffff : 0x0f172a)
+          .fontColor(this.lang === 'zh' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
           .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-          .backgroundColor(this.lang === 'zh' ? 0x2563eb : 0xe2e8f0)
+          .backgroundColor(this.lang === 'zh' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
           .borderRadius(999)
           .onClick(() => this.switchLang('zh'));
         Text('English')
           .fontSize(12)
-          .fontColor(this.lang === 'en' ? 0xffffff : 0x0f172a)
+          .fontColor(this.lang === 'en' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
           .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-          .backgroundColor(this.lang === 'en' ? 0x2563eb : 0xe2e8f0)
+          .backgroundColor(this.lang === 'en' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
           .borderRadius(999)
           .onClick(() => this.switchLang('en'));
       }
 
-      Text(this.t('中文数据源：jaywcjlove/reference/docs', 'ZH source: jaywcjlove/reference/docs')).fontColor(0x64748b);
-      Text(this.t('英文数据源：Fechin/reference/source/_posts', 'EN source: Fechin/reference/source/_posts')).fontColor(0x64748b);
-      Text(this.t('同步脚本：tools/sync_reference_docs.mjs', 'Sync script: tools/sync_reference_docs.mjs')).fontColor(0x64748b);
+      Row({ space: 10 }) {
+        Text(this.t('主题', 'Theme')).fontColor(this.theme.mutedTextColor);
+        Text('Reference')
+          .fontSize(12)
+          .fontColor(this.themeId === 'reference' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+          .padding({ left: 10, right: 10, top: 6, bottom: 6 })
+          .backgroundColor(this.themeId === 'reference' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+          .borderRadius(999)
+          .onClick(() => this.switchTheme('reference'));
+        Text('Coo')
+          .fontSize(12)
+          .fontColor(this.themeId === 'coo' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+          .padding({ left: 10, right: 10, top: 6, bottom: 6 })
+          .backgroundColor(this.themeId === 'coo' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+          .borderRadius(999)
+          .onClick(() => this.switchTheme('coo'));
+      }
+
+      Text(this.t('中文数据源：jaywcjlove/reference/docs', 'ZH source: jaywcjlove/reference/docs')).fontColor(this.theme.mutedTextColor);
+      Text(this.t('英文数据源：Fechin/reference/source/_posts', 'EN source: Fechin/reference/source/_posts')).fontColor(this.theme.mutedTextColor);
+      Text(this.t('同步脚本：tools/sync_reference_docs.mjs', 'Sync script: tools/sync_reference_docs.mjs')).fontColor(this.theme.mutedTextColor);
     }
     .padding(16)
     .height('100%')
     .width('100%')
-    .backgroundColor(0xf1f5f9);
+    .backgroundColor(this.theme.pageBackgroundColor);
   }
 
   build() {
