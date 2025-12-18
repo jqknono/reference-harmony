@@ -25,78 +25,56 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "此 [Curl](https://github.com/curl/curl) 备忘清单包含命令和一些常见的 Curl 技巧示例。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "介绍",
-      "kind": "text",
-      "body": "Curl 是一种在服务器之间传输数据的工具，支持协议，包括 HTTP/FTP/IMAP/LDAP/POP3/SCP/SFTP/SMB/SMTP 等"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• [Curl GitHub 源码仓库](https://github.com/curl/curl) _(github.com)_\n• [Curl 官方网站](https://curl.se/) _(curl.se)_"
+      "body": "Curl 是一种在服务器之间传输数据的工具，支持协议，包括 HTTP/FTP/IMAP/LDAP/POP3/SCP/SFTP/SMB/SMTP 等\n\n• [Curl GitHub 源码仓库](https://github.com/curl/curl) _(github.com)_\n• [Curl 官方网站](https://curl.se/) _(curl.se)_"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "Options",
-      "kind": "code",
-      "lang": "bash",
-      "code": "-o <file>    # --output: 写入文件\n-u user:pass # --user: 验证\n\n-v           # --verbose: 在操作期间使 curl 冗长\n-vv          # 更冗长\n-s           # --silent: 不显示进度表或错误\n-S           # --show-error: 与 --silent (-sS) 一起使用时，显示错误但没有进度表\n\n-i           # --include: 在输出中包含 HTTP 标头\n-I           # --head: 仅标头"
+      "body": "```bash\n-o <file>    # --output: 写入文件\n-u user:pass # --user: 验证\n```\n\n```bash\n-v           # --verbose: 在操作期间使 curl 冗长\n-vv          # 更冗长\n-s           # --silent: 不显示进度表或错误\n-S           # --show-error: 与 --silent (-sS) 一起使用时，显示错误但没有进度表\n```\n\n```bash\n-i           # --include: 在输出中包含 HTTP 标头\n-I           # --head: 仅标头\n```"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "请求",
-      "kind": "code",
-      "lang": "bash",
-      "code": "-X POST # --request\n-L  # 如果页面重定向，请点击链接\n-F  # --form: multipart/form-data 的 HTTP POST 数据"
+      "body": "```bash\n-X POST # --request\n-L  # 如果页面重定向，请点击链接\n-F  # --form: multipart/form-data 的 HTTP POST 数据\n```"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "%E6%95%B0%E6%8D%AE",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20--data%3A%20HTTP%20post%20%E6%95%B0%E6%8D%AE%0A%23%20URL%20%E7%BC%96%E7%A0%81(%E4%BE%8B%E5%A6%82%EF%BC%8Cstatus%3D%22Hello%22)%0A-d%20'data'%0A%0A%23%20--data%20%E9%80%9A%E8%BF%87%E6%96%87%E4%BB%B6%0A-d%20%40file%0A%0A%23%20--get%3A%20%E9%80%9A%E8%BF%87%20get%20%E5%8F%91%E9%80%81%20-d%20%E6%95%B0%E6%8D%AE%0A-G",
+      "body": "%60%60%60bash%0A%23%20--data%3A%20HTTP%20post%20%E6%95%B0%E6%8D%AE%0A%23%20URL%20%E7%BC%96%E7%A0%81(%E4%BE%8B%E5%A6%82%EF%BC%8Cstatus%3D%22Hello%22)%0A-d%20'data'%0A%0A%23%20--data%20%E9%80%9A%E8%BF%87%E6%96%87%E4%BB%B6%0A-d%20%40file%0A%0A%23%20--get%3A%20%E9%80%9A%E8%BF%87%20get%20%E5%8F%91%E9%80%81%20-d%20%E6%95%B0%E6%8D%AE%0A-G%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "%E5%A4%B4%E4%BF%A1%E6%81%AF%20Headers",
-      "kind": "code",
-      "lang": "bash",
-      "code": "-A%20%3Cstr%3E%20%20%20%20%20%23%20--user-agent%0A-b%20name%3Dval%20%20%23%20--cookie%0A%0A%23%20%E4%BB%8E%20URL%20%E7%9A%84%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%20cookie%0A-b%2C%20--cookie%20FILE%0A%23%20%E5%B0%86%20cookie%20%E4%BB%8E%20URL%20%E4%BF%9D%E5%AD%98%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%0A-c%2C%20--cookie-jar%20FILE%0A%0A-b%20FILE%20%20%20%20%20%20%20%20%20%20%23%20--cookie%0A-H%20%22X-Foo%3A%20y%22%20%20%20%20%23%20--header%0A--compressed%20%20%20%20%20%23%20%E4%BD%BF%E7%94%A8%20deflate%2Fgzip",
+      "body": "%60%60%60bash%0A-A%20%3Cstr%3E%20%20%20%20%20%23%20--user-agent%0A-b%20name%3Dval%20%20%23%20--cookie%0A%0A%23%20%E4%BB%8E%20URL%20%E7%9A%84%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%20cookie%0A-b%2C%20--cookie%20FILE%0A%23%20%E5%B0%86%20cookie%20%E4%BB%8E%20URL%20%E4%BF%9D%E5%AD%98%E5%88%B0%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%0A-c%2C%20--cookie-jar%20FILE%0A%0A-b%20FILE%20%20%20%20%20%20%20%20%20%20%23%20--cookie%0A-H%20%22X-Foo%3A%20y%22%20%20%20%20%23%20--header%0A--compressed%20%20%20%20%20%23%20%E4%BD%BF%E7%94%A8%20deflate%2Fgzip%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "SSL",
-      "kind": "code",
-      "lang": "bash",
-      "code": "    --cacert <file>\n    --capath <dir>\n\n-E, --cert <cert>     # --cert: 客户端证书文件\n    --cert-type       # der/pem/eng\n-k, --insecure        # 对于自签名证书"
+      "body": "```bash\n    --cacert <file>\n    --capath <dir>\n```\n\n```bash\n-E, --cert <cert>     # --cert: 客户端证书文件\n    --cert-type       # der/pem/eng\n-k, --insecure        # 对于自签名证书\n```"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "安装",
-      "kind": "code",
-      "lang": "bash",
-      "code": "apk add --update curl  # alpine linux 中安装"
+      "body": "```bash\napk add --update curl  # alpine linux 中安装\n```"
     },
     {
       "id": "s2-9",
       "sectionId": "s2",
       "title": "CURL%20GET%2FHEAD",
-      "kind": "text",
       "body": "%E5%91%BD%E4%BB%A4%20%7C%20%E8%AF%B4%E6%98%8E%0A%3A-%20%7C%20%3A-%0A%60curl%20-I%20https%3A%2F%2Fwww.baidu.com%60%20%7C%20%60curl%60%20%E5%8F%91%E8%AF%B7%E6%B1%82%0A%60curl%20-v%20-I%20https%3A%2F%2Fwww.baidu.com%60%20%7C%20%E5%B8%A6%E6%9C%89%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%E7%9A%84%20%60curl%60%20%E5%8F%91%E8%AF%B7%E6%B1%82%0A%60curl%20-X%20GET%20https%3A%2F%2Fwww.baidu.com%60%20%7C%20%E4%BD%BF%E7%94%A8%E6%98%BE%E5%BC%8F%20http%20%E6%96%B9%E6%B3%95%E8%BF%9B%E8%A1%8C%20%60curl%60%0A%60curl%20--noproxy%20127.0.0.1%20http%3A%2F%2Fwww.stackoverflow.com%60%20%7C%20%E6%B2%A1%E6%9C%89%20http%20%E4%BB%A3%E7%90%86%E7%9A%84%20%60curl%60%0A%60curl%20--connect-timeout%2010%20-I%20-k%20https%3A%2F%2Fwww.baidu.com%60%20%7C%20%60curl%60%20%E9%BB%98%E8%AE%A4%E6%B2%A1%E6%9C%89%E8%B6%85%E6%97%B6%0A%60curl%20--verbose%20--header%20%22Host%3A%20www.mytest.com%3A8182%22%20www.baidu.com%60%20%7C%20%60curl%60%20%E5%BE%97%E5%88%B0%E9%A2%9D%E5%A4%96%E7%9A%84%E6%A0%87%E9%A2%98%0A%60curl%20-k%20-v%20https%3A%2F%2Fwww.google.com%60%20%7C%20%60curl%60%20%E8%8E%B7%E5%8F%96%E5%B8%A6%E6%9C%89%E6%A0%87%E9%A2%98%E7%9A%84%E5%93%8D%E5%BA%94%0A%3C!--rehype%3Aclass%3Dauto-wrap--%3E",
       "encoded": true
     },
@@ -104,23 +82,18 @@
       "id": "s2-10",
       "sectionId": "s2",
       "title": "多文件上传",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ curl -v -include \\\n    --form key1=value1 \\\n    --form upload=@localfilename URL"
+      "body": "```bash\n$ curl -v -include \\\n    --form key1=value1 \\\n    --form upload=@localfilename URL\n```"
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
       "title": "为 curl 响应美化 json 输出",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ curl -XGET http://${elasticsearch_ip}:9200/_cluster/nodes | python -m json.tool"
+      "body": "```bash\n$ curl -XGET http://${elasticsearch_ip}:9200/_cluster/nodes | python -m json.tool\n```"
     },
     {
       "id": "s2-12",
       "sectionId": "s2",
       "title": "CURL%20POST",
-      "kind": "text",
       "body": "%E5%91%BD%E4%BB%A4%20%7C%20%E8%AF%B4%E6%98%8E%0A%3A-%20%7C%20%3A-%0A%60curl%20-d%20%22name%3Dusername%26password%3D123456%22%20%3CURL%3E%60%20%7C%20%60curl%60%20%E5%8F%91%E8%AF%B7%E6%B1%82%0A%60curl%20%3CURL%3E%20-H%20%22content-type%3A%20application%2Fjson%22%20-d%20%22%7B%20%5C%22woof%5C%22%3A%20%5C%22bark%5C%22%7D%22%60%20%7C%20%60curl%60%20%E5%8F%91%E9%80%81%20json%0A%3C!--rehype%3Aclass%3Dauto-wrap--%3E",
       "encoded": true
     },
@@ -128,164 +101,104 @@
       "id": "s2-13",
       "sectionId": "s2",
       "title": "CURL 脚本安装 rvm",
-      "kind": "code",
-      "lang": "shell",
-      "code": "curl -sSL https://get.rvm.io | bash"
+      "body": "```shell\ncurl -sSL https://get.rvm.io | bash\n```"
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
       "title": "CURL 高级",
-      "kind": "text",
       "body": "命令 | 说明\n:- | :-\n`curl -L -s http://ipecho.net/plain, curl -L -s http://whatismijnip.nl` | 获取我的公共 `IP`\n`curl -u $username:$password http://repo.dennyzhang.com/README.txt` | 带凭证的 `curl`\n`curl -v -F key1=value1 -F upload=@localfilename <URL>` | `curl` 上传\n`curl -k -v --http2 https://www.google.com/` | 使用 http2 curl\n`curl -T cryptopp552.zip -u test:test ftp://10.32.99.187/` | curl `ftp` 上传\n`curl -u test:test ftp://10.32.99.187/cryptopp552.zip -o cryptopp552.zip` | curl `ftp` 下载\n`curl -v -u admin:admin123 --upload-file package1.zip http://mysever:8081/dir/package1.zip` | 使用凭证 `curl` 上传\n<!--rehype:class=auto-wrap-->"
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
-      "title": "检查网站响应时间",
-      "kind": "code",
-      "lang": "shell",
-      "code": "curl -s -w \\\n     '\\nLookup time:\\t%{time_namelookup}\\nConnect time:\\t%{time_connect}\\nAppCon time:\\t%{time_appconnect}\\nRedirect time:\\t%{time_redirect}\\nPreXfer time:\\t%{time_pretransfer}\\nStartXfer time:\\t%{time_starttransfer}\\n\\nTotal time:\\t%{time_total}\\n' \\\n     -o /dev/null https://www.google.com"
+      "title": "%E6%A3%80%E6%9F%A5%E7%BD%91%E7%AB%99%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4",
+      "body": "%60%60%60shell%0Acurl%20-s%20-w%20%5C%0A%20%20%20%20%20'%5CnLookup%20time%3A%5Ct%25%7Btime_namelookup%7D%5CnConnect%20time%3A%5Ct%25%7Btime_connect%7D%5CnAppCon%20time%3A%5Ct%25%7Btime_appconnect%7D%5CnRedirect%20time%3A%5Ct%25%7Btime_redirect%7D%5CnPreXfer%20time%3A%5Ct%25%7Btime_pretransfer%7D%5CnStartXfer%20time%3A%5Ct%25%7Btime_starttransfer%7D%5Cn%5CnTotal%20time%3A%5Ct%25%7Btime_total%7D%5Cn'%20%5C%0A%20%20%20%20%20-o%20%2Fdev%2Fnull%20https%3A%2F%2Fwww.google.com%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
       "title": "%E4%BD%BF%E7%94%A8%20Curl%20%E6%A3%80%E6%9F%A5%E8%BF%9C%E7%A8%8B%E8%B5%84%E6%BA%90%E6%98%AF%E5%90%A6%E5%8F%AF%E7%94%A8",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl%20-o%20%2Fdev%2Fnull%20--silent%20-Iw%20%22%25%7Bhttp_code%7D%22%20https%3A%2F%2Fexample.com%2Fmy.remote.tarball.gz",
+      "body": "%60%60%60bash%0Acurl%20-o%20%2Fdev%2Fnull%20--silent%20-Iw%20%22%25%7Bhttp_code%7D%22%20https%3A%2F%2Fexample.com%2Fmy.remote.tarball.gz%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "%E6%AD%A3%E5%9C%A8%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl%20https%3A%2F%2Fexample.com%20%7C%20%5C%0Agrep%20--only-matching%20'src%3D%22%5B%5E%22%5D*.%5Bpng%5D%22'%20%7C%20%5C%0Acut%20-d%5C%22%20-f2%20%7C%20%5C%0Awhile%20read%20i%3B%20do%20curl%20https%3A%2F%2Fexample.com%2F%22%24%7Bi%7D%22%20%5C%0A-o%20%22%24%7Bi%23%23*%2F%7D%22%3B%20done",
+      "body": "%60%60%60bash%0Acurl%20https%3A%2F%2Fexample.com%20%7C%20%5C%0Agrep%20--only-matching%20'src%3D%22%5B%5E%22%5D*.%5Bpng%5D%22'%20%7C%20%5C%0Acut%20-d%5C%22%20-f2%20%7C%20%5C%0Awhile%20read%20i%3B%20do%20curl%20https%3A%2F%2Fexample.com%2F%22%24%7Bi%7D%22%20%5C%0A-o%20%22%24%7Bi%23%23*%2F%7D%22%3B%20done%0A%60%60%60%0A%0A%E4%BB%8E%E7%AB%99%E7%82%B9%E4%B8%8B%E8%BD%BD%E6%89%80%E6%9C%89%20PNG%20%E6%96%87%E4%BB%B6%EF%BC%88%E4%BD%BF%E7%94%A8GNU%20grep%EF%BC%89",
       "encoded": true
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "从站点下载所有 PNG 文件（使用GNU grep）"
     },
     {
       "id": "s2-19",
       "sectionId": "s2",
       "title": "%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6%EF%BC%8C%E4%BF%9D%E5%AD%98%E6%96%87%E4%BB%B6%E8%80%8C%E4%B8%8D%E6%9B%B4%E6%94%B9%E5%85%B6%E5%90%8D%E7%A7%B0",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl%20--remote-name%20%22https%3A%2F%2Fexample.com%2Flinux-distro.iso%22",
-      "encoded": true
-    },
-    {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "重命名文件"
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl%20--remote-name%20%22http%3A%2F%2Fexample.com%2Findex.html%22%20--output%20foo.html",
+      "body": "%60%60%60bash%0Acurl%20--remote-name%20%22https%3A%2F%2Fexample.com%2Flinux-distro.iso%22%0A%60%60%60%0A%0A%E9%87%8D%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6%0A%0A%60%60%60bash%0Acurl%20--remote-name%20%22http%3A%2F%2Fexample.com%2Findex.html%22%20--output%20foo.html%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-22",
       "sectionId": "s2",
       "title": "%E7%BB%A7%E7%BB%AD%E9%83%A8%E5%88%86%E4%B8%8B%E8%BD%BD",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl%20--remote-name%20--continue-at%20-%20%22https%3A%2F%2Fexample.com%2Flinux-distro.iso%22",
+      "body": "%60%60%60bash%0Acurl%20--remote-name%20--continue-at%20-%20%22https%3A%2F%2Fexample.com%2Flinux-distro.iso%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "%E4%BB%8E%E5%A4%9A%E4%B8%AA%E5%9F%9F%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl%20%22https%3A%2F%2Fwww.%7Bexample%2Cw3%2Ciana%7D.org%2Findex.html%22%20--output%20%22file_%231.html%22",
+      "body": "%60%60%60bash%0Acurl%20%22https%3A%2F%2Fwww.%7Bexample%2Cw3%2Ciana%7D.org%2Findex.html%22%20--output%20%22file_%231.html%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-24",
       "sectionId": "s2",
       "title": "%E4%B8%8B%E8%BD%BD%E4%B8%80%E7%B3%BB%E5%88%97%E6%96%87%E4%BB%B6",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl%20%22https%3A%2F%2F%7Bfoo%2Cbar%7D.com%2Ffile_%5B1-4%5D.webp%22%20--output%20%22%231_%232.webp%22",
+      "body": "%60%60%60bash%0Acurl%20%22https%3A%2F%2F%7Bfoo%2Cbar%7D.com%2Ffile_%5B1-4%5D.webp%22%20--output%20%22%231_%232.webp%22%0A%60%60%60%0A%0A%E4%B8%8B%E8%BD%BD%E4%B8%80%E7%B3%BB%E5%88%97%E6%96%87%E4%BB%B6%EF%BC%88%E8%BE%93%E5%87%BA%60foo_file1.webp%60%E3%80%81%60foo_file2.webp%E2%80%A6bar_file1_webp%60%E7%AD%89%EF%BC%89",
       "encoded": true
-    },
-    {
-      "id": "s2-25",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "下载一系列文件（输出`foo_file1.webp`、`foo_file2.webp…bar_file1_webp`等）"
     },
     {
       "id": "s2-26",
       "sectionId": "s2",
       "title": "将输出重定向到文件",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ curl http://url/file > file"
+      "body": "```bash\n$ curl http://url/file > file\n```"
     },
     {
       "id": "s2-27",
       "sectionId": "s2",
       "title": "基本认证",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ curl --user username:password http://example.com/\n$ curl -u username:password http://example.com/"
+      "body": "```bash\n$ curl --user username:password http://example.com/\n$ curl -u username:password http://example.com/\n```"
     },
     {
       "id": "s2-28",
       "sectionId": "s2",
       "title": "写入文件而不是标准输出",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ curl -o file http://url/file\n$ curl --output file http://url/file"
+      "body": "```bash\n$ curl -o file http://url/file\n$ curl --output file http://url/file\n```"
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
       "title": "下载头信息",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ curl -I url\n# 显示头信息"
+      "body": "```bash\n$ curl -I url\n# 显示头信息\n```"
     },
     {
       "id": "s2-30",
       "sectionId": "s2",
       "title": "将输出写入名为远程文件的文件",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ curl -o file http://url/file\n$ curl --output file http://url/file"
+      "body": "```bash\n$ curl -o file http://url/file\n$ curl --output file http://url/file\n```"
     },
     {
       "id": "s2-31",
       "sectionId": "s2",
       "title": "执行远程脚本",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ curl -s http://url/myscript.sh"
+      "body": "```bash\n$ curl -s http://url/myscript.sh\n```"
     },
     {
       "id": "s2-32",
       "sectionId": "s2",
       "title": "配置文件",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl -K file\n# 从文件中读取配置\ncurl --config file\n$HOME/.curlrc # 类 UNIX 系统中的默认配置文件"
+      "body": "```bash\ncurl -K file\n# 从文件中读取配置\ncurl --config file\n$HOME/.curlrc # 类 UNIX 系统中的默认配置文件\n```"
     }
   ],
   "source": {

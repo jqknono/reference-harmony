@@ -90,971 +90,550 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "The Nim quick reference cheat sheet that aims at providing help on writing basic syntax and methods."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "helloworld.nim",
-      "kind": "code",
-      "lang": "nim",
-      "code": "echo%20%22Hello%20World!%22%0A%0A%23%20This%20is%20a%20comment%0Aecho%20%22What's%20your%20name%3F%20%22%0Avar%20name%3A%20string%20%3D%20readLine(stdin)%0A%23%20readLine(stdin)%20asks%20you%20to%20type%20in%20a%20string.%0A%0Aecho%20%22Hi%2C%20%22%2C%20name%2C%20%22!%22",
+      "body": "%60%60%60nim%0Aecho%20%22Hello%20World!%22%0A%0A%23%20This%20is%20a%20comment%0Aecho%20%22What's%20your%20name%3F%20%22%0Avar%20name%3A%20string%20%3D%20readLine(stdin)%0A%23%20readLine(stdin)%20asks%20you%20to%20type%20in%20a%20string.%0A%0Aecho%20%22Hi%2C%20%22%2C%20name%2C%20%22!%22%0A%60%60%60%0A%0ACompile%20%60helloworld.nim%60%20with%20%60nim%20compile%60%0A%0A%60%60%60bash%0A%24%20nim%20compile%20helloworld.nim%0A%60%60%60%0A%0ARun%20the%20compiled%20binary%20%60helloworld%60%20(or%20%60helloworld.exe%60%20if%20you're%20on%20Windows)%0A%0A%60%60%60%0A.%2Fhelloworld%0AHello%2C%20World!%0AWhat's%20your%20name%3F%0AHi%2C%20%3Cname%3E!%0A%60%60%60%0A%0AThere%20is%20also%20a%20possibility%0Ato%20both%20compile%20and%20run%20the%0Aprogram%20with%20just%20one%20command.%0AWe%20need%20to%20type%3A%0A%60%24%20nim%20c%20-r%20helloworld.nim%60",
       "encoded": true
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Compile `helloworld.nim` with `nim compile`"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ nim compile helloworld.nim"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Run the compiled binary `helloworld` (or `helloworld.exe` if you're on Windows)"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "./helloworld\nHello, World!\nWhat's your name?\nHi, <name>!"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "There is also a possibility\nto both compile and run the\nprogram with just one command.\nWe need to type:\n`$ nim c -r helloworld.nim`"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "Common compile commands (terminal)",
-      "kind": "code",
-      "lang": "sh",
-      "code": "nim c -r main.nim          # debug build, run after compile\nnim c -d:release main.nim  # optimized release build\nnim c --mm:arc main.nim    # ARC memory management (Nim 2 default)"
+      "body": "```sh\nnim c -r main.nim          # debug build, run after compile\nnim c -d:release main.nim  # optimized release build\nnim c --mm:arc main.nim    # ARC memory management (Nim 2 default)\n```"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "Useful Resources",
-      "kind": "text",
       "body": "• [Nim](https://www.nim-lang.org/) _(nim-lang.org)_\n• [The Nim Manual](https://nim-lang.org/docs/manual.html) _(../docs/manual.html)_\n• [Nim Basics](https://narimiran.github.io/nim-basics/) _(narimiran.github.io)_\n• [Learn X in Y minutes](https://learnxinyminutes.com/docs/nim/) _(learnxinyminutes.com)_"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "Variables",
-      "kind": "code",
-      "lang": "nim",
-      "code": "%23%20'var'%20declares%20mutable%20variables.%0A%0Avar%20number%3A%20int%20%3D%20100%20%23%20Single%20line%20declaration%0A%0A%23%20A%20'var'%20block%20can%20declare%20multiple%20variables%20at%20once.%0A%0Avar%0A%20%20letter%3A%20char%20%3D%20'n'%0A%20%20lang%20%3D%20%22N%22%20%26%20%22im%22%0A%20%20length%20%3D%20len(lang)%0A%20%20counter%3A%20int%20%3D%207%0A%20%20boat%3A%20float%0A%20%20truth%20%3D%20true",
+      "body": "%60%60%60nim%0A%23%20'var'%20declares%20mutable%20variables.%0A%0Avar%20number%3A%20int%20%3D%20100%20%23%20Single%20line%20declaration%0A%0A%23%20A%20'var'%20block%20can%20declare%20multiple%20variables%20at%20once.%0A%0Avar%0A%20%20letter%3A%20char%20%3D%20'n'%0A%20%20lang%20%3D%20%22N%22%20%26%20%22im%22%0A%20%20length%20%3D%20len(lang)%0A%20%20counter%3A%20int%20%3D%207%0A%20%20boat%3A%20float%0A%20%20truth%20%3D%20true%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "Immutable%20Variables%20(let)",
-      "kind": "code",
-      "lang": "nim",
-      "code": "%23%20'let'%20declares%20immutable%20variables.%0Alet%0A%20%20salute%3A%20string%20%3D%20%22Hello!%22%0A%20%20x%3A%20int%20%3D%2010%0A%20%20y%20%3D%20x%20%2B%205%0A%0Alet%20z%20%3D%2020%0Az%20%3D%20500%20%20%20%23%20Error%3A%20'z'%20is%20immutable",
+      "body": "%60%60%60nim%0A%23%20'let'%20declares%20immutable%20variables.%0Alet%0A%20%20salute%3A%20string%20%3D%20%22Hello!%22%0A%20%20x%3A%20int%20%3D%2010%0A%20%20y%20%3D%20x%20%2B%205%0A%0Alet%20z%20%3D%2020%0Az%20%3D%20500%20%20%20%23%20Error%3A%20'z'%20is%20immutable%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
       "title": "Comments",
-      "kind": "code",
-      "lang": "nim",
-      "code": "# This is a comment\n\n#[\n  This is a multiline comment.\n  In Nim, multiline comments can be nested, beginning with #[\n  ... and ending with ]#\n]#"
+      "body": "```nim\n# This is a comment\n\n#[\n  This is a multiline comment.\n  In Nim, multiline comments can be nested, beginning with #[\n  ... and ending with ]#\n]#\n```"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "Constants",
-      "kind": "code",
-      "lang": "nim",
-      "code": "const\n  debug = true\n  compileBadCode = false\n\n# Constants are declared at compile time and cannot be changed."
+      "body": "```nim\nconst\n  debug = true\n  compileBadCode = false\n\n# Constants are declared at compile time and cannot be changed.\n```"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "%22For%22%20Loops",
-      "kind": "code",
-      "lang": "nim",
-      "code": "for%20item%20in%20(1%20..%3C%206)%3A%0A%20%20if%20item%20%3D%3D%203%3A%20break%0A%20%20echo%20item%0A%0Aecho%20%22All%20done!%22",
+      "body": "%60%60%60nim%0Afor%20item%20in%20(1%20..%3C%206)%3A%0A%20%20if%20item%20%3D%3D%203%3A%20break%0A%20%20echo%20item%0A%0Aecho%20%22All%20done!%22%0A%60%60%60%0A%0ASee%3A%20%5BLoops%5D(%23loops)",
       "encoded": true
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Loops](#loops)"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
       "title": "If%20Statements",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2Fstrutils%0Alet%20number%20%3D%20parseInt(readLine(stdin))%0A%0Aif%20number%20%3C%3D%205%3A%0A%20%20echo%20%22Small%20sized%20number.%22%0Aelif%20number%20%3E%205%20and%20number%20%3C%3D%2025%3A%0A%20%20echo%20%22Medium%20sized%20number.%22%0Aelse%3A%0A%20%20echo%20%22Big%20number.%22",
+      "body": "%60%60%60nim%0Aimport%20std%2Fstrutils%0Alet%20number%20%3D%20parseInt(readLine(stdin))%0A%0Aif%20number%20%3C%3D%205%3A%0A%20%20echo%20%22Small%20sized%20number.%22%0Aelif%20number%20%3E%205%20and%20number%20%3C%3D%2025%3A%0A%20%20echo%20%22Medium%20sized%20number.%22%0Aelse%3A%0A%20%20echo%20%22Big%20number.%22%0A%60%60%60%0A%0ASee%3A%20%5BFlow%20Control%5D(%23flow-control)",
       "encoded": true
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Flow Control](#flow-control)"
     },
     {
       "id": "s1-17",
       "sectionId": "s1",
       "title": "Procedures%20%2F%20Functions",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc%20myFunction()%20%3D%0A%20%20echo%20%22Hello%2C%20this%20is%20my%20function%22%0A%0AmyFunction()%0A%0A%23%20prints%20%22Hello%2C%20this%20is%20my%20function%22",
+      "body": "%60%60%60nim%0Aproc%20myFunction()%20%3D%0A%20%20echo%20%22Hello%2C%20this%20is%20my%20function%22%0A%0AmyFunction()%0A%0A%23%20prints%20%22Hello%2C%20this%20is%20my%20function%22%0A%60%60%60%0A%0ASee%3A%20%5BProcedures%5D(%23procedures)",
       "encoded": true
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Procedures](#procedures)"
     },
     {
       "id": "s1-19",
       "sectionId": "s1",
       "title": "Formatted%20Strings",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2Fstrformat%0A%0Alet%0A%20%20a%20%3D%20%22Hello%20there.%22%0A%20%20b%20%3D%20%22How's%20it%20going%3F%22%0A%20%20c%20%3D%20%22These%20are%20variables.%22%0A%0Aecho%20fmt%22%7Ba%7D%20%7Bb%7D%20%7Bc%7D%22%20%23%20%22Hello%20there.%20How's%20it%20going%3F%20These%20are%20variables.%22",
+      "body": "%60%60%60nim%0Aimport%20std%2Fstrformat%0A%0Alet%0A%20%20a%20%3D%20%22Hello%20there.%22%0A%20%20b%20%3D%20%22How's%20it%20going%3F%22%0A%20%20c%20%3D%20%22These%20are%20variables.%22%0A%0Aecho%20fmt%22%7Ba%7D%20%7Bb%7D%20%7Bc%7D%22%20%23%20%22Hello%20there.%20How's%20it%20going%3F%20These%20are%20variables.%22%0A%60%60%60%0A%0ASee%3A%20%5BImports%5D(%23imports-and-modules)",
       "encoded": true
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Imports](#imports-and-modules)"
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "Integers",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let%0A%20%20a%20%3D%2011%0A%20%20b%20%3D%204%0A%0Aecho%20%22a%20%2B%20b%20%3D%20%22%2C%20a%20%2B%20b%20%23%2015%0Aecho%20%22a%20-%20b%20%3D%20%22%2C%20a%20-%20b%20%23%207%0Aecho%20%22a%20*%20b%20%3D%20%22%2C%20a%20*%20b%20%23%2044%0Aecho%20%22a%20%2F%20b%20%3D%20%22%2C%20a%20%2F%20b%20%23%202.75%0Aecho%20%22a%20div%20b%20%3D%20%22%2C%20a%20div%20b%20%23%202%0Aecho%20%22a%20mod%20b%20%3D%20%22%2C%20a%20mod%20b%20%23%203",
+      "body": "%60%60%60nim%0Alet%0A%20%20a%20%3D%2011%0A%20%20b%20%3D%204%0A%0Aecho%20%22a%20%2B%20b%20%3D%20%22%2C%20a%20%2B%20b%20%23%2015%0Aecho%20%22a%20-%20b%20%3D%20%22%2C%20a%20-%20b%20%23%207%0Aecho%20%22a%20*%20b%20%3D%20%22%2C%20a%20*%20b%20%23%2044%0Aecho%20%22a%20%2F%20b%20%3D%20%22%2C%20a%20%2F%20b%20%23%202.75%0Aecho%20%22a%20div%20b%20%3D%20%22%2C%20a%20div%20b%20%23%202%0Aecho%20%22a%20mod%20b%20%3D%20%22%2C%20a%20mod%20b%20%23%203%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-22",
       "sectionId": "s2",
       "title": "Floats",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let%0A%20%20c%20%3D%206.75%0A%20%20d%20%3D%202.25%0A%0Aecho%20%22c%20%2B%20d%20%3D%20%22%2C%20c%20%2B%20d%20%23%209.0%0Aecho%20%22c%20-%20d%20%3D%20%22%2C%20c%20-%20d%20%23%204.5%0Aecho%20%22c%20*%20d%20%3D%20%22%2C%20c%20*%20d%20%23%2015.1875%0Aecho%20%22c%20%2F%20d%20%3D%20%22%2C%20c%20%2F%20d%20%23%203.0",
+      "body": "%60%60%60nim%0Alet%0A%20%20c%20%3D%206.75%0A%20%20d%20%3D%202.25%0A%0Aecho%20%22c%20%2B%20d%20%3D%20%22%2C%20c%20%2B%20d%20%23%209.0%0Aecho%20%22c%20-%20d%20%3D%20%22%2C%20c%20-%20d%20%23%204.5%0Aecho%20%22c%20*%20d%20%3D%20%22%2C%20c%20*%20d%20%23%2015.1875%0Aecho%20%22c%20%2F%20d%20%3D%20%22%2C%20c%20%2F%20d%20%23%203.0%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "Strings",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let%0A%20%20m%20%3D%20%22word%22%0A%20%20n%20%3D%20%22A%20sentence%20with%20punctuation.%22%0A%20%20o%20%3D%20%22%22%0A%20%20p%20%3D%20%2232%22%0A%20%20q%20%3D%20%22!%22%0A%0Aecho%20m%0A%23%20prints%20%22word%22%0Aecho%20p%2C%20%22%20is%20a%20string.%22%0A%23%20prints%20%2232%20is%20a%20string.%22",
+      "body": "%60%60%60nim%0Alet%0A%20%20m%20%3D%20%22word%22%0A%20%20n%20%3D%20%22A%20sentence%20with%20punctuation.%22%0A%20%20o%20%3D%20%22%22%0A%20%20p%20%3D%20%2232%22%0A%20%20q%20%3D%20%22!%22%0A%0Aecho%20m%0A%23%20prints%20%22word%22%0Aecho%20p%2C%20%22%20is%20a%20string.%22%0A%23%20prints%20%2232%20is%20a%20string.%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-24",
       "sectionId": "s2",
       "title": "String%20Concatenation",
-      "kind": "code",
-      "lang": "nim",
-      "code": "var%0A%20%20p%20%3D%20%22abc%22%0A%20%20q%20%3D%20%22xy%22%0A%20%20r%20%3D%20'z'%0A%0Ap.add(%22def%22)%20%20%20%23%20modifies%20p%0Aq.add(r)%20%20%20%20%20%20%20%23%20chars%20can%20be%20added%20to%20strings%0A%0Aecho%20p%20%20%20%20%20%20%20%20%20%23%20%22abcdef%22%0Aecho%20q%20%20%20%20%20%20%20%20%20%23%20%22xyz%22%0A%0A%23%20%60%26%60%20creates%20a%20new%20string%3A%0Aecho%20p%20%26%20q%20%20%20%20%20%23%20%22abcdefxyz%22",
+      "body": "%60%60%60nim%0Avar%0A%20%20p%20%3D%20%22abc%22%0A%20%20q%20%3D%20%22xy%22%0A%20%20r%20%3D%20'z'%0A%0Ap.add(%22def%22)%20%20%20%23%20modifies%20p%0Aq.add(r)%20%20%20%20%20%20%20%23%20chars%20can%20be%20added%20to%20strings%0A%0Aecho%20p%20%20%20%20%20%20%20%20%20%23%20%22abcdef%22%0Aecho%20q%20%20%20%20%20%20%20%20%20%23%20%22xyz%22%0A%0A%23%20%60%26%60%20creates%20a%20new%20string%3A%0Aecho%20p%20%26%20q%20%20%20%20%20%23%20%22abcdefxyz%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "Special%20Escape%20Sequences",
-      "kind": "code",
-      "lang": "nim",
-      "code": "echo%20%22line1%5Cnline2%22%20%20%20%20%20%23%20newline%0Aecho%20%22col1%5Ctcol2%22%20%20%20%20%20%20%20%23%20tab%0Aecho%20%22A%5C%5CB%5C%5CC%22%20%20%20%20%20%20%20%20%20%20%23%20backslash%0A%0A%23%20Raw%20strings%20ignore%20escapes%3A%0Aecho%20r%22line1%5Cnline2%22",
+      "body": "%60%60%60nim%0Aecho%20%22line1%5Cnline2%22%20%20%20%20%20%23%20newline%0Aecho%20%22col1%5Ctcol2%22%20%20%20%20%20%20%20%23%20tab%0Aecho%20%22A%5C%5CB%5C%5CC%22%20%20%20%20%20%20%20%20%20%20%23%20backslash%0A%0A%23%20Raw%20strings%20ignore%20escapes%3A%0Aecho%20r%22line1%5Cnline2%22%0A%60%60%60%0A%0ASee%20also%3A%20%5BEscape%20Sequences%5D(https%3A%2F%2Fnim-lang.org%2Fdocs%2Fmanual.html%23lexical-analysis-string-literals)",
       "encoded": true
-    },
-    {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "See also: [Escape Sequences](https://nim-lang.org/docs/manual.html#lexical-analysis-string-literals)"
     },
     {
       "id": "s2-27",
       "sectionId": "s2",
       "title": "Characters",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let\n  h = 'z'\n  i = '+'\n  j = '2'\n  k = '35'   # error: too many characters\n  l = 'xy'   # error: too many characters"
+      "body": "%60%60%60nim%0Alet%0A%20%20h%20%3D%20'z'%0A%20%20i%20%3D%20'%2B'%0A%20%20j%20%3D%20'2'%0A%20%20k%20%3D%20'35'%20%20%20%23%20error%3A%20too%20many%20characters%0A%20%20l%20%3D%20'xy'%20%20%20%23%20error%3A%20too%20many%20characters%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-28",
       "sectionId": "s2",
       "title": "Booleans",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let x = true\nlet y = false\n\n# Boolean literals are lowercase."
+      "body": "```nim\nlet x = true\nlet y = false\n\n# Boolean literals are lowercase.\n```"
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
       "title": "Type Conversion",
-      "kind": "code",
-      "lang": "nim",
-      "code": "\nlet e = 5\nlet f = 23.987\n\n# Converting between ints and floats:\necho float(e)    # 5.0\necho int(f)      # 23\n\n# Mixed operations require explicit conversion:\necho float(e) + f    # 28.987\necho e + int(f)      # 28"
+      "body": "```nim\n\nlet e = 5\nlet f = 23.987\n\n# Converting between ints and floats:\necho float(e)    # 5.0\necho int(f)      # 23\n\n# Mixed operations require explicit conversion:\necho float(e) + f    # 28.987\necho e + int(f)      # 28\n```"
     },
     {
       "id": "s3-30",
       "sectionId": "s3",
       "title": "Arrays",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type IntArray = array[0..3, int]\n\nlet a: IntArray = [10, 20, 30, 40]\n\necho a[0]      # 10\necho a.len     # 4"
+      "body": "```nim\ntype IntArray = array[0..3, int]\n\nlet a: IntArray = [10, 20, 30, 40]\n\necho a[0]      # 10\necho a.len     # 4\n```"
     },
     {
       "id": "s3-31",
       "sectionId": "s3",
       "title": "Sequences",
-      "kind": "code",
-      "lang": "nim",
-      "code": "var s: seq[int] = @[1, 2, 3]\ns.add(4)\n\necho s         # @[1, 2, 3, 4]\necho s.len     # 4"
+      "body": "```nim\nvar s: seq[int] = @[1, 2, 3]\ns.add(4)\n\necho s         # @[1, 2, 3, 4]\necho s.len     # 4\n```"
     },
     {
       "id": "s3-32",
       "sectionId": "s3",
       "title": "Objects",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type%20Person%20%3D%20object%0A%20%20name%3A%20string%0A%20%20age%3A%20int%0A%0Alet%20p%20%3D%20Person(name%3A%20%22Ana%22%2C%20age%3A%2020)%0Aecho%20p.name",
+      "body": "%60%60%60nim%0Atype%20Person%20%3D%20object%0A%20%20name%3A%20string%0A%20%20age%3A%20int%0A%0Alet%20p%20%3D%20Person(name%3A%20%22Ana%22%2C%20age%3A%2020)%0Aecho%20p.name%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-33",
       "sectionId": "s3",
       "title": "Tuples",
-      "kind": "code",
-      "lang": "nim",
-      "code": "var%20person%20%3D%20(name%3A%20%22Sophie%22%2C%20age%3A%2018)%0A%0Aecho%20person.name%20%23%20Sophie%0Aecho%20person.age%20%20%23%2018%0A%0A%23%20swapping%20values%3A%0Avar%20(x%2C%20y)%20%3D%20(1%2C%202)%0A(x%2C%20y)%20%3D%20(y%2C%20x)%0Aecho%20x%2C%20%22%20%22%2C%20y%20%20%20%20%20%23%202%201",
+      "body": "%60%60%60nim%0Avar%20person%20%3D%20(name%3A%20%22Sophie%22%2C%20age%3A%2018)%0A%0Aecho%20person.name%20%23%20Sophie%0Aecho%20person.age%20%20%23%2018%0A%0A%23%20swapping%20values%3A%0Avar%20(x%2C%20y)%20%3D%20(1%2C%202)%0A(x%2C%20y)%20%3D%20(y%2C%20x)%0Aecho%20x%2C%20%22%20%22%2C%20y%20%20%20%20%20%23%202%201%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-34",
       "sectionId": "s3",
       "title": "Sets",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type CharSet = set[char]\n\nlet letters: CharSet = {'a'..'z'}\n\necho 'a' in letters    # true\necho 'Z' in letters    # false"
+      "body": "%60%60%60nim%0Atype%20CharSet%20%3D%20set%5Bchar%5D%0A%0Alet%20letters%3A%20CharSet%20%3D%20%7B'a'..'z'%7D%0A%0Aecho%20'a'%20in%20letters%20%20%20%20%23%20true%0Aecho%20'Z'%20in%20letters%20%20%20%20%23%20false%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-35",
       "sectionId": "s3",
       "title": "Reference Objects",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type Node = ref object\n  value: int\n  next: Node     # linked list style\n\nvar n = Node(value: 10)\necho n.value"
-    },
-    {
-      "id": "s3-36",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Needed for Object Oriented Programming within Nim."
+      "body": "```nim\ntype Node = ref object\n  value: int\n  next: Node     # linked list style\n\nvar n = Node(value: 10)\necho n.value\n```\n\nNeeded for Object Oriented Programming within Nim."
     },
     {
       "id": "s3-37",
       "sectionId": "s3",
       "title": "Slicing%20Sequences%20and%20Strings",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let%20xs%20%3D%20%40%5B10%2C%2020%2C%2030%2C%2040%5D%0A%0Aecho%20xs%5B1..2%5D%20%20%20%20%23%20%40%5B20%2C%2030%5D%0Aecho%20xs%5B%5E2..%5E1%5D%20%20%23%20%40%5B30%2C%2040%5D%0A%0Alet%20s%20%3D%20%22abcdef%22%0A%0Aecho%20s%5B0..2%5D%20%20%20%20%20%23%20%22abc%22%0Aecho%20s%5B3..%5E1%5D%20%20%20%20%23%20%22def%22%20(%5E1%20%3D%20last%20char)%0Aecho%20s%5B1..%3C4%5D%20%20%20%20%23%20%22bcd%22",
+      "body": "%60%60%60nim%0Alet%20xs%20%3D%20%40%5B10%2C%2020%2C%2030%2C%2040%5D%0A%0Aecho%20xs%5B1..2%5D%20%20%20%20%23%20%40%5B20%2C%2030%5D%0Aecho%20xs%5B%5E2..%5E1%5D%20%20%23%20%40%5B30%2C%2040%5D%0A%60%60%60%0A%0A%60%60%60nim%0Alet%20s%20%3D%20%22abcdef%22%0A%0Aecho%20s%5B0..2%5D%20%20%20%20%20%23%20%22abc%22%0Aecho%20s%5B3..%5E1%5D%20%20%20%20%23%20%22def%22%20(%5E1%20%3D%20last%20char)%0Aecho%20s%5B1..%3C4%5D%20%20%20%20%23%20%22bcd%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-38",
       "sectionId": "s3",
       "title": "Tables%2FDictionaries",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2Ftables%0A%0Avar%20ages%20%3D%20initTable%5Bstring%2C%20int%5D()%0Aages%5B%22Ana%22%5D%20%3D%2020%0Aages%5B%22Sophie%22%5D%20%3D%2018%0A%0Aecho%20ages%5B%22Ana%22%5D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%2020%0Aecho%20ages.getOrDefault(%22X%22%2C%20-1)%20%20%23%20-1%0A%0Afor%20name%2C%20age%20in%20ages%3A%0A%20%20echo%20name%2C%20%22%3A%20%22%2C%20age",
+      "body": "%60%60%60nim%0Aimport%20std%2Ftables%0A%0Avar%20ages%20%3D%20initTable%5Bstring%2C%20int%5D()%0Aages%5B%22Ana%22%5D%20%3D%2020%0Aages%5B%22Sophie%22%5D%20%3D%2018%0A%0Aecho%20ages%5B%22Ana%22%5D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%2020%0Aecho%20ages.getOrDefault(%22X%22%2C%20-1)%20%20%23%20-1%0A%0Afor%20name%2C%20age%20in%20ages%3A%0A%20%20echo%20name%2C%20%22%3A%20%22%2C%20age%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-39",
       "sectionId": "s4",
       "title": "Arithmetic Operators",
-      "kind": "code",
-      "lang": "nim",
-      "code": "var\n  a = 10\n  b = 3\n\necho a + b      # 13\necho a - b      # 7\necho a * b      # 30\necho a / b      # 3.333333\necho a div b    # 3\necho a mod b    # 1\necho a ^ b      # 1000"
-    },
-    {
-      "id": "s4-40",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "| Operator | Name           | Example   |\n| -------- | -------------- | --------- |\n| `+`      | Add            | `x + y`   |\n| `-`      | Subtract       | `x - y`   |\n| `*`      | Multiply       | `x * y`   |\n| `/`      | Float Divide   | `x / y`   |\n| `div`    | Integer Divide | `x div y` |\n| `mod`    | Modulo         | `x mod y` |\n| `^`      | Power          | `x ^ y`   |"
+      "body": "```nim\nvar\n  a = 10\n  b = 3\n\necho a + b      # 13\necho a - b      # 7\necho a * b      # 30\necho a / b      # 3.333333\necho a div b    # 3\necho a mod b    # 1\necho a ^ b      # 1000\n```\n\n| Operator | Name           | Example   |\n| -------- | -------------- | --------- |\n| `+`      | Add            | `x + y`   |\n| `-`      | Subtract       | `x - y`   |\n| `*`      | Multiply       | `x * y`   |\n| `/`      | Float Divide   | `x / y`   |\n| `div`    | Integer Divide | `x div y` |\n| `mod`    | Modulo         | `x mod y` |\n| `^`      | Power          | `x ^ y`   |"
     },
     {
       "id": "s4-41",
       "sectionId": "s4",
       "title": "Assignment",
-      "kind": "text",
-      "body": "These only work on mutable (`var`) variables, not on `let` or `const`."
-    },
-    {
-      "id": "s4-42",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "nim",
-      "code": "var value = 1990\necho value # 1990\n\nvalue = 2\necho value # 2"
-    },
-    {
-      "id": "s4-43",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "| Operator | Description  | Example |\n| -------- | ------------ | ------- |\n| `=`      | Assign value | `x = y` |"
+      "body": "These only work on mutable (`var`) variables, not on `let` or `const`.\n\n```nim\nvar value = 1990\necho value # 1990\n\nvalue = 2\necho value # 2\n```\n\n| Operator | Description  | Example |\n| -------- | ------------ | ------- |\n| `=`      | Assign value | `x = y` |"
     },
     {
       "id": "s4-44",
       "sectionId": "s4",
       "title": "Update operations",
-      "kind": "text",
-      "body": "| Syntax   | Expands to  | Meaning          |\n| -------- | ----------- | ---------------- |\n| `x += y` | `x = x + y` | add, assign      |\n| `x -= y` | `x = x - y` | subtract, assign |\n| `x *= y` | `x = x * y` | multiply, assign |"
-    },
-    {
-      "id": "s4-45",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Other variants like `/=` or `mod=` are not available,\nso just write them out explicitly, e.g. `x = x / y`."
+      "body": "| Syntax   | Expands to  | Meaning          |\n| -------- | ----------- | ---------------- |\n| `x += y` | `x = x + y` | add, assign      |\n| `x -= y` | `x = x - y` | subtract, assign |\n| `x *= y` | `x = x * y` | multiply, assign |\n\nOther variants like `/=` or `mod=` are not available,\nso just write them out explicitly, e.g. `x = x / y`."
     },
     {
       "id": "s4-46",
       "sectionId": "s4",
       "title": "Comparison%20Operators",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let%0A%20%20x%20%3D%205%0A%20%20y%20%3D%203%0A%0Aecho%20x%20%3E%20y%0A%23%20prints%20%22true%22%20because%205%20is%20greater%20than%203",
+      "body": "%60%60%60nim%0Alet%0A%20%20x%20%3D%205%0A%20%20y%20%3D%203%0A%0Aecho%20x%20%3E%20y%0A%23%20prints%20%22true%22%20because%205%20is%20greater%20than%203%0A%60%60%60%0A%0A%7C%20Symbol%20%7C%20Meaning%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Example%20%20%20%20%20%20%20%20%7C%0A%7C%20------%20%7C%20------------------------%20%7C%20--------------%20%7C%0A%7C%20%60%3D%3D%60%20%20%20%7C%20equals%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60if%20x%20%3D%3D%20y%60...%20%7C%0A%7C%20%60!%3D%60%20%20%20%7C%20not%20equal%20to%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60if%20x%20!%3D%20y%60...%20%7C%0A%7C%20%60%3E%60%20%20%20%20%7C%20greater%20than%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60if%20x%20%3E%20y%60...%20%20%7C%0A%7C%20%60%3C%60%20%20%20%20%7C%20less%20than%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60if%20x%20%3C%20y%60...%20%20%7C%0A%7C%20%60%3E%3D%60%20%20%20%7C%20greater%20than%20or%20equal%20to%20%7C%20%60if%20x%20%3E%3D%20y%60...%20%7C%0A%7C%20%60%3C%3D%60%20%20%20%7C%20less%20than%20or%20equal%20to%20%20%20%20%7C%20%60if%20x%20%3C%3D%20y%60...%20%7C%0A%0AComparison%20operators%20are%20used%20to%20compare%20two%20values.",
       "encoded": true
-    },
-    {
-      "id": "s4-47",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "| Symbol | Meaning                  | Example        |\n| ------ | ------------------------ | -------------- |\n| `==`   | equals                   | `if x == y`... |\n| `!=`   | not equal to             | `if x != y`... |\n| `>`    | greater than             | `if x > y`...  |\n| `<`    | less than                | `if x < y`...  |\n| `>=`   | greater than or equal to | `if x >= y`... |\n| `<=`   | less than or equal to    | `if x <= y`... |"
-    },
-    {
-      "id": "s4-48",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Comparison operators are used to compare two values."
     },
     {
       "id": "s4-49",
       "sectionId": "s4",
-      "title": "Lexicographical Comparison",
-      "kind": "text",
-      "body": "They also work on `char` and `string` values via lexicographic order."
-    },
-    {
-      "id": "s4-50",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "nim",
-      "code": "echo%20%22apple%22%20%3C%20%22banana%22%20%20%23%20true%0Aecho%20%22axyz%22%20%3C%20%22axyb%22%20%20%20%20%20%23%20true%0Aecho%20%22ooooo%22%20%3E%20%22o%22%20%20%20%20%20%20%20%23%20true%0Aecho%20%22abc%22%20%3C%20%22ab%22%20%20%20%20%20%20%20%20%23%20false%0A%0Aecho%20'a'%20%3C%20'd'%20%20%20%20%20%20%20%20%20%20%20%23%20true%0Aecho%20'a'%20%3C%20'Z'%20%20%20%20%20%20%20%20%20%20%20%23%20false",
+      "title": "Lexicographical%20Comparison",
+      "body": "They%20also%20work%20on%20%60char%60%20and%20%60string%60%20values%20via%20lexicographic%20order.%0A%0A%60%60%60nim%0Aecho%20%22apple%22%20%3C%20%22banana%22%20%20%23%20true%0Aecho%20%22axyz%22%20%3C%20%22axyb%22%20%20%20%20%20%23%20true%0Aecho%20%22ooooo%22%20%3E%20%22o%22%20%20%20%20%20%20%20%23%20true%0Aecho%20%22abc%22%20%3C%20%22ab%22%20%20%20%20%20%20%20%20%23%20false%0A%0Aecho%20'a'%20%3C%20'd'%20%20%20%20%20%20%20%20%20%20%20%23%20true%0Aecho%20'a'%20%3C%20'Z'%20%20%20%20%20%20%20%20%20%20%20%23%20false%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-51",
       "sectionId": "s4",
       "title": "Logical Operators {.row-span-2}",
-      "kind": "text",
-      "body": "| Operator | Example                | Meaning                  |\n| -------- | ---------------------- | ------------------------ |\n| `and`    | `if a > 0 and a < 10:` | From 1 to 9              |\n| `or`     | `if x == 0 or y == 0:` | Either one of them is 0  |\n| `not`    | `if not isValid:`      | If `isValid` is not true |\n| `xor`    | `if flagA xor flagB:`  | Only one of them is true |"
-    },
-    {
-      "id": "s4-52",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Logical operators work on `bool`."
+      "body": "| Operator | Example                | Meaning                  |\n| -------- | ---------------------- | ------------------------ |\n| `and`    | `if a > 0 and a < 10:` | From 1 to 9              |\n| `or`     | `if x == 0 or y == 0:` | Either one of them is 0  |\n| `not`    | `if not isValid:`      | If `isValid` is not true |\n| `xor`    | `if flagA xor flagB:`  | Only one of them is true |\n\nLogical operators work on `bool`."
     },
     {
       "id": "s4-53",
       "sectionId": "s4",
       "title": "Extra Bitwise Operators",
-      "kind": "text",
-      "body": "| Operator | Example   | Result (with a = 60, b = 13) |\n| -------- | --------- | ---------------------------- |\n| `and`    | `a and b` | `12`                         |\n| `or`     | `a or b`  | `61`                         |\n| `xor`    | `a xor b` | `49`                         |\n| `not`    | `not a`   | `-61`                        |\n| `shl`    | `a shl 2` | `240`                        |\n| `shr`    | `a shr 2` | `15`                         |"
-    },
-    {
-      "id": "s4-54",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "These work on integers bit-by-bit; use them for flags, masks, low-level code, etc."
+      "body": "| Operator | Example   | Result (with a = 60, b = 13) |\n| -------- | --------- | ---------------------------- |\n| `and`    | `a and b` | `12`                         |\n| `or`     | `a or b`  | `61`                         |\n| `xor`    | `a xor b` | `49`                         |\n| `not`    | `not a`   | `-61`                        |\n| `shl`    | `a shl 2` | `240`                        |\n| `shr`    | `a shr 2` | `15`                         |\n\nThese work on integers bit-by-bit; use them for flags, masks, low-level code, etc."
     },
     {
       "id": "s5-55",
       "sectionId": "s5",
       "title": "Match%20Case",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let%20x%20%3D%205%0Acase%20x%3A%0Aof%200%2C%201%3A%0A%20%20echo%20%22small%22%0Aof%202%2C%203%2C%204%3A%0A%20%20echo%20%22medium%22%0Aelse%3A%0A%20%20echo%20%22large%22",
-      "encoded": true
-    },
-    {
-      "id": "s5-56",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "`case of` can look for ranges too."
-    },
-    {
-      "id": "s5-57",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let%20age%20%3D%2017%0A%0Acase%20age%3A%0Aof%200..12%3A%0A%20%20echo%20%22child%22%0Aof%2013..19%3A%0A%20%20echo%20%22teen%22%0Aelse%3A%0A%20%20echo%20%22adult%22",
-      "encoded": true
-    },
-    {
-      "id": "s5-58",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "...and `strings` and `chars`, too"
-    },
-    {
-      "id": "s5-59",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let%20cmd%20%3D%20%22quit%22%0A%0Acase%20cmd%3A%0Aof%20%22help%22%3A%0A%20%20echo%20%22show%20help%22%0Aof%20%22quit%22%2C%20%22exit%22%3A%0A%20%20echo%20%22bye!%22%0Aelse%3A%0A%20%20echo%20%22unknown%20command%22%0A%0Alet%20ch%20%3D%20'g'%0Acase%20ch%3A%0Aof%20%7B'a'%2C%20'e'%2C%20'i'%2C%20'o'%2C%20'u'%7D%3A%0A%20%20echo%20%22vowel%22%0Aelse%3A%0A%20%20echo%20%22consonant%20or%20symbol%22",
+      "body": "%60%60%60nim%0Alet%20x%20%3D%205%0Acase%20x%3A%0Aof%200%2C%201%3A%0A%20%20echo%20%22small%22%0Aof%202%2C%203%2C%204%3A%0A%20%20echo%20%22medium%22%0Aelse%3A%0A%20%20echo%20%22large%22%0A%60%60%60%0A%0A%60case%20of%60%20can%20look%20for%20ranges%20too.%0A%0A%60%60%60nim%0Alet%20age%20%3D%2017%0A%0Acase%20age%3A%0Aof%200..12%3A%0A%20%20echo%20%22child%22%0Aof%2013..19%3A%0A%20%20echo%20%22teen%22%0Aelse%3A%0A%20%20echo%20%22adult%22%0A%60%60%60%0A%0A...and%20%60strings%60%20and%20%60chars%60%2C%20too%0A%0A%60%60%60nim%0Alet%20cmd%20%3D%20%22quit%22%0A%0Acase%20cmd%3A%0Aof%20%22help%22%3A%0A%20%20echo%20%22show%20help%22%0Aof%20%22quit%22%2C%20%22exit%22%3A%0A%20%20echo%20%22bye!%22%0Aelse%3A%0A%20%20echo%20%22unknown%20command%22%0A%60%60%60%0A%0A%60%60%60nim%0Alet%20ch%20%3D%20'g'%0Acase%20ch%3A%0Aof%20%7B'a'%2C%20'e'%2C%20'i'%2C%20'o'%2C%20'u'%7D%3A%0A%20%20echo%20%22vowel%22%0Aelse%3A%0A%20%20echo%20%22consonant%20or%20symbol%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-60",
       "sectionId": "s5",
       "title": "Basic%20If-Else",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let%20num%20%3D%205%0A%0Aif%20num%20%3E%2010%3A%0A%20%20echo%20%22num%20is%20bigger%20than%2010%22%0Aelif%20num%20%3C%2010%3A%0A%20%20echo%20%22num%20is%20smaller%20than%2010%22%0Aelse%3A%0A%20%20echo%20%22num%20is%20exactly%2010%22",
+      "body": "%60%60%60nim%0Alet%20num%20%3D%205%0A%0Aif%20num%20%3E%2010%3A%0A%20%20echo%20%22num%20is%20bigger%20than%2010%22%0Aelif%20num%20%3C%2010%3A%0A%20%20echo%20%22num%20is%20smaller%20than%2010%22%0Aelse%3A%0A%20%20echo%20%22num%20is%20exactly%2010%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-61",
       "sectionId": "s5",
       "title": "One Liners",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let\n  a = 330\n  b = 200\n\nlet r = if a > b: a else: b\n\necho r # 330"
+      "body": "```nim\nlet\n  a = 330\n  b = 200\n\nlet r = if a > b: a else: b\n\necho r # 330\n```"
     },
     {
       "id": "s5-62",
       "sectionId": "s5",
       "title": "Compile-Time%20Conditions",
-      "kind": "code",
-      "lang": "nim",
-      "code": "when%20defined(linux)%3A%0A%20%20echo%20%22Compiled%20on%20Linux%22%0Aelif%20defined(windows)%3A%0A%20%20echo%20%22Compiled%20on%20Windows%22%0Aelse%3A%0A%20%20echo%20%22Unknown%20OS%22",
+      "body": "%60%60%60nim%0Awhen%20defined(linux)%3A%0A%20%20echo%20%22Compiled%20on%20Linux%22%0Aelif%20defined(windows)%3A%0A%20%20echo%20%22Compiled%20on%20Windows%22%0Aelse%3A%0A%20%20echo%20%22Unknown%20OS%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-63",
       "sectionId": "s6",
       "title": "For%20Loops",
-      "kind": "code",
-      "lang": "nim",
-      "code": "for%20i%20in%201..5%3A%0A%20%20echo%20i%0A%23%201%202%203%204%205%0A%0Afor%20i%20in%200..%3C3%3A%0A%20%20echo%20i%0A%23%200%201%202%0A%0A%23%20i%20%3D%20index%2C%20v%20%3D%20value%20in%20sequence%0Afor%20i%2C%20v%20in%20%40%5B10%2C%2020%2C%2030%5D%3A%0A%20%20echo%20i%2C%20%22%3A%20%22%2C%20v%0A%23%200%3A%2010%0A%23%201%3A%2020%0A%23%202%3A%2030",
+      "body": "%60%60%60nim%0Afor%20i%20in%201..5%3A%0A%20%20echo%20i%0A%23%201%202%203%204%205%0A%60%60%60%0A%0A%60%60%60nim%0Afor%20i%20in%200..%3C3%3A%0A%20%20echo%20i%0A%23%200%201%202%0A%60%60%60%0A%0A%60%60%60nim%0A%23%20i%20%3D%20index%2C%20v%20%3D%20value%20in%20sequence%0Afor%20i%2C%20v%20in%20%40%5B10%2C%2020%2C%2030%5D%3A%0A%20%20echo%20i%2C%20%22%3A%20%22%2C%20v%0A%23%200%3A%2010%0A%23%201%3A%2020%0A%23%202%3A%2030%0A%60%60%60%0A%0A**Keep%20in%20mind**%3A%20%5C%0A1..5%20%3D%20Inclusive%20(1%202%203%204%205)%20%5C%0A1..%3C5%20%3D%20Exclusive%20(1%202%203%204)",
       "encoded": true
-    },
-    {
-      "id": "s6-64",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "**Keep in mind**: \\\n1..5 = Inclusive (1 2 3 4 5) \\\n1..<5 = Exclusive (1 2 3 4)"
     },
     {
       "id": "s6-65",
       "sectionId": "s6",
       "title": "While Loops",
-      "kind": "code",
-      "lang": "nim",
-      "code": "var counter = 0\n\nwhile counter <= 10:\n  counter = counter + 1\n  echo counter # prints 1..10"
+      "body": "```nim\nvar counter = 0\n\nwhile counter <= 10:\n  counter = counter + 1\n  echo counter # prints 1..10\n```"
     },
     {
       "id": "s6-66",
       "sectionId": "s6",
       "title": "Infinite%20Loops",
-      "kind": "code",
-      "lang": "nim",
-      "code": "while%20true%3A%0A%20%20echo%20%22ay!%20%22%0A%0Awhile%201%20%3E%200%3A%0A%20%20echo%20%22echo...%20%22",
+      "body": "%60%60%60nim%0Awhile%20true%3A%0A%20%20echo%20%22ay!%20%22%0A%60%60%60%0A%0A%60%60%60nim%0Awhile%201%20%3E%200%3A%0A%20%20echo%20%22echo...%20%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-67",
       "sectionId": "s6",
       "title": "Break%20Statements",
-      "kind": "code",
-      "lang": "nim",
-      "code": "var%20query%20%3D%20%22%22%0Awhile%20true%3A%0A%20%20echo%20%22Do%20you%20want%20out%3F%22%0A%20%20query%20%3D%20readLine(stdin)%0A%20%20if%20query%20%3D%3D%20%22yes%22%3A%0A%20%20%20%20echo%20%22Well%20then.%22%0A%20%20%20%20break%0A%20%20else%3A%0A%20%20%20%20echo%20%22I'll%20ask%20again.%22",
+      "body": "%60%60%60nim%0Avar%20query%20%3D%20%22%22%0Awhile%20true%3A%0A%20%20echo%20%22Do%20you%20want%20out%3F%22%0A%20%20query%20%3D%20readLine(stdin)%0A%20%20if%20query%20%3D%3D%20%22yes%22%3A%0A%20%20%20%20echo%20%22Well%20then.%22%0A%20%20%20%20break%0A%20%20else%3A%0A%20%20%20%20echo%20%22I'll%20ask%20again.%22%0A%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-68",
       "sectionId": "s6",
       "title": "Continue Statements",
-      "kind": "code",
-      "lang": "nim",
-      "code": "for i in 1..5:\n  if i mod 2 == 0: continue\n  echo i\n# prints only odd numbers: 1 3 5"
+      "body": "```nim\nfor i in 1..5:\n  if i mod 2 == 0: continue\n  echo i\n# prints only odd numbers: 1 3 5\n```"
     },
     {
       "id": "s7-69",
       "sectionId": "s7",
       "title": "Simple%20Procedure",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc%20salute()%20%3D%0A%20%20echo%20%22Hello!%22%0A%0Asalute()%20%23%20prints%20%22Hello!%22",
+      "body": "%60%60%60nim%0Aproc%20salute()%20%3D%0A%20%20echo%20%22Hello!%22%0A%0Asalute()%20%23%20prints%20%22Hello!%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-70",
       "sectionId": "s7",
       "title": "Procedures with Parameters",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc addition(a: int, b: int): int =\n  a + b\n\necho addition(20, 30) # returns 50"
+      "body": "```nim\nproc addition(a: int, b: int): int =\n  a + b\n\necho addition(20, 30) # returns 50\n```"
     },
     {
       "id": "s7-71",
       "sectionId": "s7",
       "title": "Using result",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc double(x: int): int =\n  result = x * 2\n\necho double(5) # returns 10"
-    },
-    {
-      "id": "s7-72",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "Useful when building results step-by-step:"
-    },
-    {
-      "id": "s7-73",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc sumAll(xs: seq[int]): int =\n  for n in xs:\n    result += n\n\necho sumAll(@[1,1,1,1,1]) # returns 5"
+      "body": "```nim\nproc double(x: int): int =\n  result = x * 2\n\necho double(5) # returns 10\n```\n\nUseful when building results step-by-step:\n\n```nim\nproc sumAll(xs: seq[int]): int =\n  for n in xs:\n    result += n\n\necho sumAll(@[1,1,1,1,1]) # returns 5\n```"
     },
     {
       "id": "s7-74",
       "sectionId": "s7",
       "title": "Default%20Parameters",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc%20welcome(name%20%3D%20%22stranger%22)%20%3D%0A%20%20echo%20%22Hi%2C%20%22%2C%20name%0A%0Awelcome(%22Sophie%22)%20%23%20prints%20%22Hi%2C%20Sophie%22%0Awelcome()%20%20%20%20%20%20%20%20%20%23%20uses%20default%2C%20prints%20%22Hi%2C%20stranger%22",
+      "body": "%60%60%60nim%0Aproc%20welcome(name%20%3D%20%22stranger%22)%20%3D%0A%20%20echo%20%22Hi%2C%20%22%2C%20name%0A%0Awelcome(%22Sophie%22)%20%23%20prints%20%22Hi%2C%20Sophie%22%0Awelcome()%20%20%20%20%20%20%20%20%20%23%20uses%20default%2C%20prints%20%22Hi%2C%20stranger%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-75",
       "sectionId": "s7",
       "title": "Procedures%20returning%20multiple%20values",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc%20divmod(a%2C%20b%3A%20int)%3A%20(int%2C%20int)%20%3D%0A%20%20(a%20div%20b%2C%20a%20mod%20b)%0A%0Alet%20(q%2C%20r)%20%3D%20divmod(10%2C%203)%0Aecho%20q%2C%20%22%20%22%2C%20r%20%20%20%23%203%201",
+      "body": "%60%60%60nim%0Aproc%20divmod(a%2C%20b%3A%20int)%3A%20(int%2C%20int)%20%3D%0A%20%20(a%20div%20b%2C%20a%20mod%20b)%0A%0Alet%20(q%2C%20r)%20%3D%20divmod(10%2C%203)%0Aecho%20q%2C%20%22%20%22%2C%20r%20%20%20%23%203%201%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-76",
       "sectionId": "s7",
       "title": "Anonymous Procedures (Lambdas)",
-      "kind": "code",
-      "lang": "nim",
-      "code": "let square = proc(x: int): int = x * x\necho square(5) # 25"
+      "body": "```nim\nlet square = proc(x: int): int = x * x\necho square(5) # 25\n```"
     },
     {
       "id": "s7-77",
       "sectionId": "s7",
       "title": "Procedures within Procedures",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc outer() =\n  var count = 0\n\n  proc inner() =\n    inc(count)\n    echo count\n\n  inner()\n  inner()\n\nouter()   # prints 1 then 2"
+      "body": "```nim\nproc outer() =\n  var count = 0\n\n  proc inner() =\n    inc(count)\n    echo count\n\n  inner()\n  inner()\n\nouter()   # prints 1 then 2\n```"
     },
     {
       "id": "s7-78",
       "sectionId": "s7",
       "title": "Overloading",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc%20show(x%3A%20int)%20%3D%20echo%20%22int%3A%20%22%2C%20x%0Aproc%20show(x%3A%20string)%20%3D%20echo%20%22string%3A%20%22%2C%20x%0A%0Ashow(10)%0Ashow(%22hi%22)",
+      "body": "%60%60%60nim%0Aproc%20show(x%3A%20int)%20%3D%20echo%20%22int%3A%20%22%2C%20x%0Aproc%20show(x%3A%20string)%20%3D%20echo%20%22string%3A%20%22%2C%20x%0A%0Ashow(10)%0Ashow(%22hi%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-79",
       "sectionId": "s7",
       "title": "Discardable Procedure Returns",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc doSomething(): int {.discardable.} =\n  123\n\ndoSomething()      # allowed now"
+      "body": "```nim\nproc doSomething(): int {.discardable.} =\n  123\n\ndoSomething()      # allowed now\n```"
     },
     {
       "id": "s8-80",
       "sectionId": "s8",
       "title": "Ref%20Objects%20and%20Inheritance",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type%0A%20%20Animal%20%3D%20ref%20object%20of%20RootObj%0A%20%20%20%20name%3A%20string%0A%0A%20%20Dog%20%3D%20ref%20object%20of%20Animal%0A%20%20%20%20breed%3A%20string%0A%0Amethod%20speak(a%3A%20Animal)%20%7B.base.%7D%20%3D%0A%20%20echo%20a.name%2C%20%22%20makes%20a%20sound.%22%0A%0Amethod%20speak(d%3A%20Dog)%20%3D%0A%20%20echo%20d.name%2C%20%22%20barks!%22%0A%0Avar%0A%20%20a%3A%20Animal%20%3D%20Animal(name%3A%20%22Creature%22)%0A%20%20d%3A%20Animal%20%3D%20Dog(name%3A%20%22Fido%22%2C%20breed%3A%20%22Mutt%22)%20%20%23%20Dog%20upcasted%20to%20Animal%0A%0Aspeak(a)%20%20%23%20Creature%20makes%20a%20sound.%0Aspeak(d)%20%20%23%20Fido%20barks!",
+      "body": "%60%60%60nim%0Atype%0A%20%20Animal%20%3D%20ref%20object%20of%20RootObj%0A%20%20%20%20name%3A%20string%0A%0A%20%20Dog%20%3D%20ref%20object%20of%20Animal%0A%20%20%20%20breed%3A%20string%0A%0Amethod%20speak(a%3A%20Animal)%20%7B.base.%7D%20%3D%0A%20%20echo%20a.name%2C%20%22%20makes%20a%20sound.%22%0A%0Amethod%20speak(d%3A%20Dog)%20%3D%0A%20%20echo%20d.name%2C%20%22%20barks!%22%0A%0Avar%0A%20%20a%3A%20Animal%20%3D%20Animal(name%3A%20%22Creature%22)%0A%20%20d%3A%20Animal%20%3D%20Dog(name%3A%20%22Fido%22%2C%20breed%3A%20%22Mutt%22)%20%20%23%20Dog%20upcasted%20to%20Animal%0A%0Aspeak(a)%20%20%23%20Creature%20makes%20a%20sound.%0Aspeak(d)%20%20%23%20Fido%20barks!%0A%60%60%60%0A%0AUse%20%60ref%20object%20of%20RootObj%60%20%2B%20%60method%60%20when%20you%20need%20runtime%20polymorphism.",
       "encoded": true
-    },
-    {
-      "id": "s8-81",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "Use `ref object of RootObj` + `method` when you need runtime polymorphism."
     },
     {
       "id": "s8-82",
       "sectionId": "s8",
       "title": "Procs as Methods",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type\n  Counter = ref object\n    value: int\n\nproc inc(c: var Counter) =\n  inc c.value\n\nvar c = Counter(value: 0)\ninc(c)\necho c.value  # 1"
+      "body": "```nim\ntype\n  Counter = ref object\n    value: int\n\nproc inc(c: var Counter) =\n  inc c.value\n\nvar c = Counter(value: 0)\ninc(c)\necho c.value  # 1\n```"
     },
     {
       "id": "s8-83",
       "sectionId": "s8",
       "title": "Constructor%20Procs",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type%0A%20%20Dog%20%3D%20ref%20object%0A%20%20%20%20name%3A%20string%0A%20%20%20%20age%3A%20int%0A%0Aproc%20newDog(name%3A%20string%3B%20age%3A%20int)%3A%20Dog%20%3D%0A%20%20Dog(name%3A%20name%2C%20age%3A%20age)%0A%0Alet%20d%20%3D%20newDog(%22Fido%22%2C%203)%0Aecho%20d.name%2C%20%22%20is%20%22%2C%20d.age%2C%20%22%20years%20old%22",
+      "body": "%60%60%60nim%0Atype%0A%20%20Dog%20%3D%20ref%20object%0A%20%20%20%20name%3A%20string%0A%20%20%20%20age%3A%20int%0A%0Aproc%20newDog(name%3A%20string%3B%20age%3A%20int)%3A%20Dog%20%3D%0A%20%20Dog(name%3A%20name%2C%20age%3A%20age)%0A%0Alet%20d%20%3D%20newDog(%22Fido%22%2C%203)%0Aecho%20d.name%2C%20%22%20is%20%22%2C%20d.age%2C%20%22%20years%20old%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-84",
       "sectionId": "s8",
       "title": "Type%20tests%20and%20Downcasting",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type%0A%20%20Animal%20%3D%20ref%20object%20of%20RootObj%0A%20%20%20%20name%3A%20string%0A%0A%20%20Dog%20%3D%20ref%20object%20of%20Animal%0A%20%20%20%20breed%3A%20string%0A%0Aproc%20newDog(name%2C%20breed%3A%20string)%3A%20Dog%20%3D%0A%20%20Dog(name%3A%20name%2C%20breed%3A%20breed)%0A%0Avar%20a%3A%20Animal%20%3D%20newDog(%22Fido%22%2C%20%22mutt%22)%0A%0Aif%20a%20of%20Dog%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20runtime%20type%20check%0A%20%20let%20d%20%3D%20Dog(a)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20downcast%0A%20%20echo%20d.name%2C%20%22%20is%20a%20%22%2C%20d.breed",
+      "body": "%60%60%60nim%0Atype%0A%20%20Animal%20%3D%20ref%20object%20of%20RootObj%0A%20%20%20%20name%3A%20string%0A%0A%20%20Dog%20%3D%20ref%20object%20of%20Animal%0A%20%20%20%20breed%3A%20string%0A%0Aproc%20newDog(name%2C%20breed%3A%20string)%3A%20Dog%20%3D%0A%20%20Dog(name%3A%20name%2C%20breed%3A%20breed)%0A%0Avar%20a%3A%20Animal%20%3D%20newDog(%22Fido%22%2C%20%22mutt%22)%0A%0Aif%20a%20of%20Dog%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20runtime%20type%20check%0A%20%20let%20d%20%3D%20Dog(a)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20downcast%0A%20%20echo%20d.name%2C%20%22%20is%20a%20%22%2C%20d.breed%0A%0A%60%60%60%0A%0A%60x%20of%20Type%60%20checks%20the%20dynamic%20type%3B%20%60Type(x)%60%20downcasts%20(unsafe%20if%20you%20lie).",
       "encoded": true
-    },
-    {
-      "id": "s8-85",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "`x of Type` checks the dynamic type; `Type(x)` downcasts (unsafe if you lie)."
     },
     {
       "id": "s9-86",
       "sectionId": "s9",
       "title": "Basic Imports",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import std/math\n\necho sqrt(9.0) # 3.0"
-    },
-    {
-      "id": "s9-87",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "See also: [Standard Library](https://nim-lang.org/docs/lib.html)"
+      "body": "```nim\nimport std/math\n\necho sqrt(9.0) # 3.0\n```\n\nSee also: [Standard Library](https://nim-lang.org/docs/lib.html)"
     },
     {
       "id": "s9-88",
       "sectionId": "s9",
       "title": "Importing%20Multiple%20Modules",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2F%5Bstrutils%2C%20sequtils%5D%0A%0Aecho%20%22hi%22.toUpperAscii()%20%20%20%20%23%20%22HI%22%0Aecho%20%40%5B1%2C2%2C3%5D.mapIt(it%20*%202)%20%23%20%40%5B2%2C%204%2C%206%5D",
+      "body": "%60%60%60nim%0Aimport%20std%2F%5Bstrutils%2C%20sequtils%5D%0A%0Aecho%20%22hi%22.toUpperAscii()%20%20%20%20%23%20%22HI%22%0Aecho%20%40%5B1%2C2%2C3%5D.mapIt(it%20*%202)%20%23%20%40%5B2%2C%204%2C%206%5D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-89",
       "sectionId": "s9",
       "title": "Importing%20Specific%20Modules",
-      "kind": "code",
-      "lang": "nim",
-      "code": "from%20std%2Fstrutils%20import%20toLowerAscii%0A%0Aecho%20toLowerAscii(%22ABC%22)%20%20%23%20%22abc%22",
+      "body": "%60%60%60nim%0Afrom%20std%2Fstrutils%20import%20toLowerAscii%0A%0Aecho%20toLowerAscii(%22ABC%22)%20%20%23%20%22abc%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-90",
       "sectionId": "s9",
-      "title": "Renaming Modules",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import std/random as rng\n\nrng.randomize()\n\necho rng.rand(1..10) # anywhere from 1 to 10"
-    },
-    {
-      "id": "s9-91",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "_Don't forget to use randomize() if you're using the std/random library, or else you won't have randomness._"
+      "title": "Renaming%20Modules",
+      "body": "%60%60%60nim%0Aimport%20std%2Frandom%20as%20rng%0A%0Arng.randomize()%0A%0Aecho%20rng.rand(1..10)%20%23%20anywhere%20from%201%20to%2010%0A%60%60%60%0A%0A_Don't%20forget%20to%20use%20randomize()%20if%20you're%20using%20the%20std%2Frandom%20library%2C%20or%20else%20you%20won't%20have%20randomness._",
+      "encoded": true
     },
     {
       "id": "s9-92",
       "sectionId": "s9",
       "title": "Creating%20Modules",
-      "kind": "code",
-      "lang": "nim",
-      "code": "%23%20utils.nim%0Aproc%20greet*(name%3A%20string)%20%3D%0A%20%20echo%20%22Hello%2C%20%22%2C%20name",
-      "encoded": true
-    },
-    {
-      "id": "s9-93",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "(The%20asterisk%20means%20%22export%20this%20procedure%20from%20the%20module%22.)",
-      "encoded": true
-    },
-    {
-      "id": "s9-94",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "nim",
-      "code": "%23%20main.nim%0Aimport%20utils%0A%0Agreet(%22John%22)%20%23%20prints%20%22Hello%2C%20John%22",
+      "body": "%60%60%60nim%0A%23%20utils.nim%0Aproc%20greet*(name%3A%20string)%20%3D%0A%20%20echo%20%22Hello%2C%20%22%2C%20name%0A%60%60%60%0A%0A(The%20asterisk%20means%20%22export%20this%20procedure%20from%20the%20module%22.)%0A%0A%60%60%60nim%0A%23%20main.nim%0Aimport%20utils%0A%0Agreet(%22John%22)%20%23%20prints%20%22Hello%2C%20John%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-95",
       "sectionId": "s9",
       "title": "%60when%20isMainModule%60",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc%20run()%20%3D%0A%20%20echo%20%22Running...%22%0A%0Awhen%20isMainModule%3A%0A%20%20run()%20%20%23%20Only%20runs%20when%20this%20file%20is%20the%20program%20entry%20point",
+      "body": "%60%60%60nim%0Aproc%20run()%20%3D%0A%20%20echo%20%22Running...%22%0A%0Awhen%20isMainModule%3A%0A%20%20run()%20%20%23%20Only%20runs%20when%20this%20file%20is%20the%20program%20entry%20point%0A%60%60%60%0A%0A_Code%20inside%20when%20isMainModule%3A%20is%20skipped%20when%20the%20file%20is%20imported._",
       "encoded": true
-    },
-    {
-      "id": "s9-96",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "_Code inside when isMainModule: is skipped when the file is imported._"
     },
     {
       "id": "s9-97",
       "sectionId": "s9",
       "title": "Re-exporting",
-      "kind": "code",
-      "lang": "nim",
-      "code": "# utils.nim\nimport std/strutils\nexport strutils    # re-export everything from strutils"
-    },
-    {
-      "id": "s9-98",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "Now main.nim can use toUpperAscii directly, through utils."
-    },
-    {
-      "id": "s9-99",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "nim",
-      "code": "%23%20main.nim%0Aimport%20utils%0A%0Aecho%20%22hi%22.toUpperAscii()",
+      "body": "%60%60%60nim%0A%23%20utils.nim%0Aimport%20std%2Fstrutils%0Aexport%20strutils%20%20%20%20%23%20re-export%20everything%20from%20strutils%0A%60%60%60%0A%0ANow%20main.nim%20can%20use%20toUpperAscii%20directly%2C%20through%20utils.%0A%0A%60%60%60nim%0A%23%20main.nim%0Aimport%20utils%0A%0Aecho%20%22hi%22.toUpperAscii()%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-100",
       "sectionId": "s9",
       "title": "Prelude%20Module",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2Fprelude%0Ainclude%20std%2Fprelude%0A%20%20%23%20same%20as%3A%0A%20%20%23%20import%20std%2F%5Bos%2C%20strutils%2C%20times%2C%20parseutils%2C%20hashes%2C%20tables%2C%20sets%2C%20sequtils%2C%20parseopt%2C%20strformat%5D%0Alet%20x%20%3D%201%0Aassert%20%22foo%20%24%23%20%24%23%22%20%25%20%5B%24x%2C%20%22bar%22%5D%20%3D%3D%20%22foo%201%20bar%22%0Aassert%20toSeq(1..3)%20%3D%3D%20%40%5B1%2C%202%2C%203%5D%0Awhen%20not%20defined(js)%20or%20defined(nodejs)%3A%0A%20%20assert%20getCurrentDir().len%20%3E%200%0A%20%20assert%20(%24now()).startsWith%20%2220%22",
+      "body": "%60%60%60nim%0Aimport%20std%2Fprelude%0Ainclude%20std%2Fprelude%0A%20%20%23%20same%20as%3A%0A%20%20%23%20import%20std%2F%5Bos%2C%20strutils%2C%20times%2C%20parseutils%2C%20hashes%2C%20tables%2C%20sets%2C%20sequtils%2C%20parseopt%2C%20strformat%5D%0Alet%20x%20%3D%201%0Aassert%20%22foo%20%24%23%20%24%23%22%20%25%20%5B%24x%2C%20%22bar%22%5D%20%3D%3D%20%22foo%201%20bar%22%0Aassert%20toSeq(1..3)%20%3D%3D%20%40%5B1%2C%202%2C%203%5D%0Awhen%20not%20defined(js)%20or%20defined(nodejs)%3A%0A%20%20assert%20getCurrentDir().len%20%3E%200%0A%20%20assert%20(%24now()).startsWith%20%2220%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s10-101",
       "sectionId": "s10",
       "title": "Try%20-%20Except%20-%20Finally",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2Fstrutils%0A%0Atry%3A%0A%20%20let%20x%20%3D%20parseInt(%2242a%22)%20%20%20%20%20%20%20%20%20%23%20invalid%20integer%0A%20%20echo%20x%0Aexcept%20ValueError%20as%20e%3A%0A%20%20echo%20%22Value%20error%3A%20%22%2C%20e.msg%20%20%20%20%20%23%20catch%20conversion%20error%0Aexcept%20IOError%3A%0A%20%20echo%20%22I%2FO%20error!%22%0Afinally%3A%0A%20%20echo%20%22This%20always%20runs%22",
+      "body": "%60%60%60nim%0Aimport%20std%2Fstrutils%0A%0Atry%3A%0A%20%20let%20x%20%3D%20parseInt(%2242a%22)%20%20%20%20%20%20%20%20%20%23%20invalid%20integer%0A%20%20echo%20x%0Aexcept%20ValueError%20as%20e%3A%0A%20%20echo%20%22Value%20error%3A%20%22%2C%20e.msg%20%20%20%20%20%23%20catch%20conversion%20error%0Aexcept%20IOError%3A%0A%20%20echo%20%22I%2FO%20error!%22%0Afinally%3A%0A%20%20echo%20%22This%20always%20runs%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s10-102",
       "sectionId": "s10",
       "title": "Raising%20Exceptions",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type%0A%20%20MyError*%20%3D%20object%20of%20Exception%0A%0Aproc%20loadData(name%3A%20string)%20%3D%0A%20%20if%20name%20%3D%3D%20%22%22%3A%0A%20%20%20%20raise%20newException(MyError%2C%20%22No%20name%20provided%22)%0A%20%20%23%20...%20else%20proceed%0A%0AloadData(%22%22)%20%20%23%20raises%20MyError",
+      "body": "%60%60%60nim%0Atype%0A%20%20MyError*%20%3D%20object%20of%20Exception%0A%0Aproc%20loadData(name%3A%20string)%20%3D%0A%20%20if%20name%20%3D%3D%20%22%22%3A%0A%20%20%20%20raise%20newException(MyError%2C%20%22No%20name%20provided%22)%0A%20%20%23%20...%20else%20proceed%0A%0AloadData(%22%22)%20%20%23%20raises%20MyError%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s10-103",
       "sectionId": "s10",
       "title": "`defer` for Cleanup",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc processFile(path: string) =\n  var f = open(path, fmRead)\n  defer:\n    close(f)\n  # work with f …"
+      "body": "```nim\nproc processFile(path: string) =\n  var f = open(path, fmRead)\n  defer:\n    close(f)\n  # work with f …\n```"
     },
     {
       "id": "s10-104",
       "sectionId": "s10",
       "title": "Try%20as%20Exception",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2Fstrutils%0A%0Alet%20result%20%3D%20try%3A%20parseInt(%22bad%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20except%20ValueError%3A%20-1%0A%0Aecho%20result%20%20%23%20prints%20-1",
+      "body": "%60%60%60nim%0Aimport%20std%2Fstrutils%0A%0Alet%20result%20%3D%20try%3A%20parseInt(%22bad%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20except%20ValueError%3A%20-1%0A%0Aecho%20result%20%20%23%20prints%20-1%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s10-105",
       "sectionId": "s10",
       "title": "Exception%20Tracking%20with%20raises",
-      "kind": "code",
-      "lang": "nim",
-      "code": "proc%20riskyOperation()%20%7B.raises%3A%20%5BIOError%5D.%7D%20%3D%0A%20%20%23%20this%20proc%20may%20raise%20IOError%0A%20%20raise%20newException(IOError%2C%20%22fail%22)%0A%0A%23%20A%20proc%20with%20%7B.raises%3A%20%5B%5D%7D%20must%20not%20raise%20any%20catchable%20exception.",
+      "body": "%60%60%60nim%0Aproc%20riskyOperation()%20%7B.raises%3A%20%5BIOError%5D.%7D%20%3D%0A%20%20%23%20this%20proc%20may%20raise%20IOError%0A%20%20raise%20newException(IOError%2C%20%22fail%22)%0A%0A%23%20A%20proc%20with%20%7B.raises%3A%20%5B%5D%7D%20must%20not%20raise%20any%20catchable%20exception.%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s11-106",
       "sectionId": "s11",
       "title": "Basic%20Usage",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type%0A%20%20Direction%20%3D%20enum%0A%20%20%20%20north%2C%20east%2C%20south%2C%20west%0A%0Avar%20d%20%3D%20north%0A%0Aif%20d%20%3D%3D%20north%3A%0A%20%20echo%20%22Going%20up!%22",
+      "body": "%60%60%60nim%0Atype%0A%20%20Direction%20%3D%20enum%0A%20%20%20%20north%2C%20east%2C%20south%2C%20west%0A%0Avar%20d%20%3D%20north%0A%0Aif%20d%20%3D%3D%20north%3A%0A%20%20echo%20%22Going%20up!%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s11-107",
       "sectionId": "s11",
       "title": "Enums%20and%20%60case%60",
-      "kind": "code",
-      "lang": "nim",
-      "code": "%23%20with%20the%20same%20Direction%20enum%3A%0A%0Avar%20d%20%3D%20north%0A%0Acase%20d%3A%0A%20%20of%20north%3A%20echo%20%22N%22%0A%20%20of%20south%3A%20echo%20%22S%22%0A%20%20of%20east%3A%20%20echo%20%22E%22%0A%20%20of%20west%3A%20%20echo%20%22W%22",
+      "body": "%60%60%60nim%0A%23%20with%20the%20same%20Direction%20enum%3A%0A%0Avar%20d%20%3D%20north%0A%0Acase%20d%3A%0A%20%20of%20north%3A%20echo%20%22N%22%0A%20%20of%20south%3A%20echo%20%22S%22%0A%20%20of%20east%3A%20%20echo%20%22E%22%0A%20%20of%20west%3A%20%20echo%20%22W%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s11-108",
       "sectionId": "s11",
       "title": "Enum as an Ordinal",
-      "kind": "code",
-      "lang": "nim",
-      "code": "# with the same Direction enum:\necho ord(north)   # 0\necho succ(north)  # east\necho pred(south)  # east"
+      "body": "```nim\n# with the same Direction enum:\necho ord(north)   # 0\necho succ(north)  # east\necho pred(south)  # east\n```"
     },
     {
       "id": "s12-109",
       "sectionId": "s12",
       "title": "Basic Iterator",
-      "kind": "code",
-      "lang": "nim",
-      "code": "iterator countUp(a, b: int): int =\n  var i = a\n  while i <= b:\n    yield i      # `yield` produces a value for the `for` loop\n    inc i\n\nfor n in countUp(1, 5):\n  echo n\n# 1 2 3 4 5"
+      "body": "```nim\niterator countUp(a, b: int): int =\n  var i = a\n  while i <= b:\n    yield i      # `yield` produces a value for the `for` loop\n    inc i\n\nfor n in countUp(1, 5):\n  echo n\n# 1 2 3 4 5\n```"
     },
     {
       "id": "s12-110",
       "sectionId": "s12",
       "title": "Common Built-In Iterators",
-      "kind": "code",
-      "lang": "nim",
-      "code": "for i in countup(1, 3):\n  echo i               # 1 2 3\n\nfor i in countdown(3, 1):\n  echo i               # 3 2 1"
+      "body": "```nim\nfor i in countup(1, 3):\n  echo i               # 1 2 3\n\nfor i in countdown(3, 1):\n  echo i               # 3 2 1\n```"
     },
     {
       "id": "s12-111",
       "sectionId": "s12",
       "title": "Defining your own Iterator",
-      "kind": "code",
-      "lang": "nim",
-      "code": "iterator evensUpTo(n: int): int =\n  var x = 0\n  while x <= n:\n    yield x\n    x += 2\n\nfor e in evensUpTo(10):\n  echo e        # 0 2 4 6 8 10"
+      "body": "```nim\niterator evensUpTo(n: int): int =\n  var x = 0\n  while x <= n:\n    yield x\n    x += 2\n\nfor e in evensUpTo(10):\n  echo e        # 0 2 4 6 8 10\n```"
     },
     {
       "id": "s13-112",
       "sectionId": "s13",
       "title": "Check%20Paths%20and%20Existence",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2Fos%0A%0Aif%20fileExists(%22data.txt%22)%3A%0A%20%20echo%20%22File%20exists!%22%0A%0Aif%20dirExists(%22configs%22)%3A%0A%20%20echo%20%22Directory%20exists!%22%0A%0Aecho%20getCurrentDir()%0Aecho%20absolutePath(%22data.txt%22)",
+      "body": "%60%60%60nim%0Aimport%20std%2Fos%0A%0Aif%20fileExists(%22data.txt%22)%3A%0A%20%20echo%20%22File%20exists!%22%0A%0Aif%20dirExists(%22configs%22)%3A%0A%20%20echo%20%22Directory%20exists!%22%0A%0Aecho%20getCurrentDir()%0Aecho%20absolutePath(%22data.txt%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s13-113",
       "sectionId": "s13",
       "title": "Read%20%2F%20Write%20Whole%20File",
-      "kind": "code",
-      "lang": "nim",
-      "code": "%23%20Write%20whole%20file%0AwriteFile(%22out.txt%22%2C%20%22Hello%20Nim!%5Cn%22)%0A%0A%23%20Read%20whole%20file%0Alet%20text%20%3D%20readFile(%22out.txt%22)%0Aecho%20text",
+      "body": "%60%60%60nim%0A%23%20Write%20whole%20file%0AwriteFile(%22out.txt%22%2C%20%22Hello%20Nim!%5Cn%22)%0A%0A%23%20Read%20whole%20file%0Alet%20text%20%3D%20readFile(%22out.txt%22)%0Aecho%20text%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s13-114",
       "sectionId": "s13",
       "title": "Manual%20Open%2FClose%20with%20%60defer%60",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2Fsyncio%0A%0Aproc%20writeLog()%20%3D%0A%20%20var%20f%20%3D%20open(%22log.txt%22%2C%20fmWrite)%0A%20%20defer%3A%20f.close()%0A%20%20f.writeLine(%22entry%201%22)%0A%20%20f.writeLine(%22entry%202%22)%0A%0Awhen%20isMainModule%3A%0A%20%20writeLog()",
+      "body": "%60%60%60nim%0Aimport%20std%2Fsyncio%0A%0Aproc%20writeLog()%20%3D%0A%20%20var%20f%20%3D%20open(%22log.txt%22%2C%20fmWrite)%0A%20%20defer%3A%20f.close()%0A%20%20f.writeLine(%22entry%201%22)%0A%20%20f.writeLine(%22entry%202%22)%0A%0Awhen%20isMainModule%3A%0A%20%20writeLog()%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s13-115",
       "sectionId": "s13",
       "title": "Read%20a%20File%20Line-By-Line",
-      "kind": "code",
-      "lang": "nim",
-      "code": "for%20line%20in%20lines(%22data.txt%22)%3A%0A%20%20echo%20line",
+      "body": "%60%60%60nim%0Afor%20line%20in%20lines(%22data.txt%22)%3A%0A%20%20echo%20line%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s14-116",
       "sectionId": "s14",
       "title": "Generic%20Types%20and%20Procedures",
-      "kind": "code",
-      "lang": "nim",
-      "code": "type%0A%20%20Box%5BT%5D%20%3D%20object%0A%20%20%20%20value%3A%20T%0A%0Aproc%20wrap%5BT%5D(x%3A%20T)%3A%20Box%5BT%5D%20%3D%0A%20%20Box%5BT%5D(value%3A%20x)%0A%0Alet%20a%20%3D%20wrap(10)%20%20%20%20%20%20%20%20%23%20Box%5Bint%5D%0Alet%20b%20%3D%20wrap(%22hello%22)%20%20%20%23%20Box%5Bstring%5D%0A%0Aecho%20a.value%20%20%20%20%20%20%20%20%20%20%20%20%23%2010%0Aecho%20b.value%20%20%20%20%20%20%20%20%20%20%20%20%23%20hello",
+      "body": "%60%60%60nim%0Atype%0A%20%20Box%5BT%5D%20%3D%20object%0A%20%20%20%20value%3A%20T%0A%0Aproc%20wrap%5BT%5D(x%3A%20T)%3A%20Box%5BT%5D%20%3D%0A%20%20Box%5BT%5D(value%3A%20x)%0A%0Alet%20a%20%3D%20wrap(10)%20%20%20%20%20%20%20%20%23%20Box%5Bint%5D%0Alet%20b%20%3D%20wrap(%22hello%22)%20%20%20%23%20Box%5Bstring%5D%0A%0Aecho%20a.value%20%20%20%20%20%20%20%20%20%20%20%20%23%2010%0Aecho%20b.value%20%20%20%20%20%20%20%20%20%20%20%20%23%20hello%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s15-117",
       "sectionId": "s15",
       "title": "Templates",
-      "kind": "code",
-      "lang": "nim",
-      "code": "# Template = macro-like, expanded at compile time\ntemplate times2(x: untyped): untyped = (x) * 2\necho times2(21)  # 42"
+      "body": "```nim\n# Template = macro-like, expanded at compile time\ntemplate times2(x: untyped): untyped = (x) * 2\necho times2(21)  # 42\n```"
     },
     {
       "id": "s15-118",
       "sectionId": "s15",
       "title": "Macros%20%7B.row-span-2%7D",
-      "kind": "code",
-      "lang": "nim",
-      "code": "import%20std%2Fmacros%0A%0Amacro%20dbg(expr%3A%20untyped)%3A%20untyped%20%3D%0A%20%20%23%20prints%20both%20the%20expression%20and%20its%20value%0A%20%20result%20%3D%20quote%20do%3A%0A%20%20%20%20echo%20astToStr(%60expr%60)%2C%20%22%20%3D%20%22%2C%20%60expr%60%0A%0Alet%20x%20%3D%2010%0Adbg(x%20*%202)%0A%23%20prints%3A%20x%20*%202%20%3D%2020",
+      "body": "%60%60%60nim%0Aimport%20std%2Fmacros%0A%0Amacro%20dbg(expr%3A%20untyped)%3A%20untyped%20%3D%0A%20%20%23%20prints%20both%20the%20expression%20and%20its%20value%0A%20%20result%20%3D%20quote%20do%3A%0A%20%20%20%20echo%20astToStr(%60expr%60)%2C%20%22%20%3D%20%22%2C%20%60expr%60%0A%0Alet%20x%20%3D%2010%0Adbg(x%20*%202)%0A%23%20prints%3A%20x%20*%202%20%3D%2020%0A%60%60%60",
       "encoded": true
     }
   ],

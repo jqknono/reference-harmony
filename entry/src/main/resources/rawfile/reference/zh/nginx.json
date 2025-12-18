@@ -40,751 +40,345 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "这个 [nginx](https://nginx.org/en/) 快速参考备忘单显示了它的常用命和配置使用清单。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "服务管理",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl reload nginx  # 重新加载 nginx\nsudo systemctl restart nginx # 重启nginx\nnginx           # 启动\nnginx -s reload # 重启\nnginx -s stop   # 关闭进程\nnginx -s quit   # 平滑关闭nginx"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "状态"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl status nginx # nginx当前状态\nnginx -V        # 查看nginx的安装状态，"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "检查语法"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo nginx -t   # 检查语法"
+      "body": "```bash\nsudo systemctl reload nginx  # 重新加载 nginx\nsudo systemctl restart nginx # 重启nginx\nnginx           # 启动\nnginx -s reload # 重启\nnginx -s stop   # 关闭进程\nnginx -s quit   # 平滑关闭nginx\n```\n\n状态\n\n```bash\nsudo systemctl status nginx # nginx当前状态\nnginx -V        # 查看nginx的安装状态，\n```\n\n检查语法\n\n```bash\nsudo nginx -t   # 检查语法\n```"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "简单代理",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location / {\n  proxy_pass http://127.0.0.1:3000;\n  proxy_redirect      off;\n  proxy_set_header    Host $host;\n}"
+      "body": "```nginx\nlocation / {\n  proxy_pass http://127.0.0.1:3000;\n  proxy_redirect      off;\n  proxy_set_header    Host $host;\n}\n```"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "简单代理",
-      "kind": "text",
-      "body": "Ubuntu/Debian"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sudo apt update && sudo apt install -y nginx"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "RHEL/CentOS"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sudo yum install -y epel-release nginx && sudo systemctl enable --now nginx"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Docker 安装"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ docker run --name some-nginx -v /some/content:/usr/share/nginx/html:ro -d nginx"
+      "body": "Ubuntu/Debian\n\n```shell\n$ sudo apt update && sudo apt install -y nginx\n```\n\nRHEL/CentOS\n\n```shell\n$ sudo yum install -y epel-release nginx && sudo systemctl enable --now nginx\n```\n\nDocker 安装\n\n```bash\n$ docker run --name some-nginx -v /some/content:/usr/share/nginx/html:ro -d nginx\n```"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "配置路径",
-      "kind": "text",
       "body": "• `/etc/nginx/nginx.conf` _(main config)_\n• `/etc/nginx/conf.d/*.conf` _(drop‑ins)_\n• `/etc/nginx/sites-available/` + `sites-enabled/` _(Debian style)_\n• `/var/www/html` _(default docroot)_\n• `logs`: `/var/log/nginx/access.log`, `/var/log/nginx/error.log`"
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
       "title": "全局变量",
-      "kind": "text",
-      "body": "| 变量 | 说明\n:- | :-\n`$args` | 这个变量等于请求行中的参数，同 `$query_string`\n`$remote_port` | 客户端的端口\n`$content_length` | 请求头中的 `Content-length` 字段\n`$remote_user` | 已经经过 `Auth Basic Module` 验证的用户名\n`$content_type` | 请求头中的 `Content-Type` 字段\n`$request_filename` | 当前请求的文件路径，由 `root` 或alias指令与URI请求生成\n`$document_root` | 当前请求在 `root` 指令中指定的值\n`$scheme` | HTTP方法（如http，https）\n`$host` | 请求主机头字段，否则为服务器名称\n`$hostname` | 主机名\n`$http_user_agent` | 客户端`agent`信息\n`$http_cookie` | 客户端`cookie`信息\n`$server_protocol` | 请求使用的协议，通常是`HTTP/1.0`或`HTTP/1.1`\n`$server_addr` | 服务器地址，在完成一次系统调用后可以确定这个值\n`$server_name` | 服务器名称\n`$server_port` | 请求到达服务器的端口号\n`$limit_rate` | 这个变量可以限制连接速率\n`$request_method` | 客户端请求的动作，如 GET/POST\n`$request_uri` | 包含请求参数的原始URI，不包含主机名，如：`/foo/bar.php?arg=baz`\n`$remote_addr` | 客户端的IP地址\n`$uri` | 不带请求参数的当前URI，`$uri`不包含主机名，如 `/foo/bar.html`\n`$document_uri` | 与 `$uri` 相同\n`$nginx_version` | `nginx` 版本"
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "更多全局变量[查看官方文档](https://nginx.org/en/docs/varindex.html)"
+      "body": "| 变量 | 说明\n:- | :-\n`$args` | 这个变量等于请求行中的参数，同 `$query_string`\n`$remote_port` | 客户端的端口\n`$content_length` | 请求头中的 `Content-length` 字段\n`$remote_user` | 已经经过 `Auth Basic Module` 验证的用户名\n`$content_type` | 请求头中的 `Content-Type` 字段\n`$request_filename` | 当前请求的文件路径，由 `root` 或alias指令与URI请求生成\n`$document_root` | 当前请求在 `root` 指令中指定的值\n`$scheme` | HTTP方法（如http，https）\n`$host` | 请求主机头字段，否则为服务器名称\n`$hostname` | 主机名\n`$http_user_agent` | 客户端`agent`信息\n`$http_cookie` | 客户端`cookie`信息\n`$server_protocol` | 请求使用的协议，通常是`HTTP/1.0`或`HTTP/1.1`\n`$server_addr` | 服务器地址，在完成一次系统调用后可以确定这个值\n`$server_name` | 服务器名称\n`$server_port` | 请求到达服务器的端口号\n`$limit_rate` | 这个变量可以限制连接速率\n`$request_method` | 客户端请求的动作，如 GET/POST\n`$request_uri` | 包含请求参数的原始URI，不包含主机名，如：`/foo/bar.php?arg=baz`\n`$remote_addr` | 客户端的IP地址\n`$uri` | 不带请求参数的当前URI，`$uri`不包含主机名，如 `/foo/bar.html`\n`$document_uri` | 与 `$uri` 相同\n`$nginx_version` | `nginx` 版本\n\n更多全局变量[查看官方文档](https://nginx.org/en/docs/varindex.html)"
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
       "title": "监听端口",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;      # 标准 HTTP 协议\n  listen 443 ssl; # 标准 HTTPS 协议\n  listen 443 ssl http2; # 对于 http2\n  listen [::]:80; # 使用 IPv6 在 80 上收听\n  # 仅收听使用 IPv6\n  listen [::]:80 ipv6only=on;\n}"
+      "body": "```nginx\nserver {\n  listen 80;      # 标准 HTTP 协议\n  listen 443 ssl; # 标准 HTTPS 协议\n  listen 443 ssl http2; # 对于 http2\n  listen [::]:80; # 使用 IPv6 在 80 上收听\n  # 仅收听使用 IPv6\n  listen [::]:80 ipv6only=on;\n}\n```"
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "%E5%9F%9F%E5%90%8D%20(server_name)",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server%20%7B%0A%20%20%23%20%E7%9B%91%E5%90%AC%20example.com%0A%20%20server_name%20example.com%3B%0A%20%20%23%20%E7%9B%91%E5%90%AC%E5%A4%9A%E4%B8%AA%E5%9F%9F%0A%20%20server_name%20example.com%20www.example.com%3B%0A%20%20%23%20%E7%9B%91%E5%90%AC%E6%89%80%E6%9C%89%E5%AD%90%E5%9F%9F%0A%20%20server_name%20*.example.com%3B%0A%20%20%23%20%E7%9B%91%E5%90%AC%E6%89%80%E6%9C%89%E9%A1%B6%E7%BA%A7%E5%9F%9F%0A%20%20server_name%20example.*%3B%0A%20%20%23%20%E7%9B%91%E5%90%AC%E6%9C%AA%E6%8C%87%E5%AE%9A%E7%9A%84%E4%B8%BB%E6%9C%BA%E5%90%8D%EF%BC%88%E7%9B%91%E5%90%AC%20IP%20%E5%9C%B0%E5%9D%80%E6%9C%AC%E8%BA%AB%EF%BC%89%0A%20%20server_name%20%22%22%3B%0A%7D",
+      "body": "%60%60%60nginx%0Aserver%20%7B%0A%20%20%23%20%E7%9B%91%E5%90%AC%20example.com%0A%20%20server_name%20example.com%3B%0A%20%20%23%20%E7%9B%91%E5%90%AC%E5%A4%9A%E4%B8%AA%E5%9F%9F%0A%20%20server_name%20example.com%20www.example.com%3B%0A%20%20%23%20%E7%9B%91%E5%90%AC%E6%89%80%E6%9C%89%E5%AD%90%E5%9F%9F%0A%20%20server_name%20*.example.com%3B%0A%20%20%23%20%E7%9B%91%E5%90%AC%E6%89%80%E6%9C%89%E9%A1%B6%E7%BA%A7%E5%9F%9F%0A%20%20server_name%20example.*%3B%0A%20%20%23%20%E7%9B%91%E5%90%AC%E6%9C%AA%E6%8C%87%E5%AE%9A%E7%9A%84%E4%B8%BB%E6%9C%BA%E5%90%8D%EF%BC%88%E7%9B%91%E5%90%AC%20IP%20%E5%9C%B0%E5%9D%80%E6%9C%AC%E8%BA%AB%EF%BC%89%0A%20%20server_name%20%22%22%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-18",
       "sectionId": "s2",
       "title": "负载均衡(简单实例)",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "upstream node_js {\n  server 0.0.0.0:3000;\n  server 0.0.0.0:4000;\n  server 127.155.142.421;\n}"
+      "body": "```nginx\nupstream node_js {\n  server 0.0.0.0:3000;\n  server 0.0.0.0:4000;\n  server 127.155.142.421;\n}\n```"
     },
     {
       "id": "s2-19",
       "sectionId": "s2",
       "title": "负载均衡(权重)",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "upstream test {\n  server localhost:8080 weight=9;\n  server localhost:8081 weight=1;\n}"
+      "body": "```nginx\nupstream test {\n  server localhost:8080 weight=9;\n  server localhost:8081 weight=1;\n}\n```"
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "upstream ip_hash",
-      "kind": "text",
-      "body": "```nginx {2}\nupstream test {\nip_hash;\nserver localhost:8080;\nserver localhost:8081;\n}"
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n解决负载均衡 `session` 的问题\n\n### upstream fair\n\n```nginx {2}\nupstream backend {\n  fair;\n  server localhost:8080;\n  server localhost:8081;\n}"
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "响应时间短的优先分配"
+      "body": "```nginx {2}\nupstream test {\nip_hash;\nserver localhost:8080;\nserver localhost:8081;\n}\n\n```\n\n解决负载均衡 `session` 的问题\n\n### upstream fair\n\n```nginx {2}\nupstream backend {\n  fair;\n  server localhost:8080;\n  server localhost:8081;\n}\n```\n\n响应时间短的优先分配"
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "server 可选参数",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`weight` | 访问权重数值越高，收到请求越多\n`fail_timeout` | 指定的时间内必须提供响应\n`max_fails` | 尝试失败服务器连接的最大次数\n`down` | 标记一个服务器不再接受任何请求\n`backup` | 有服务器宕机，标记的机器接收请求"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "配置示例"
-    },
-    {
-      "id": "s2-25",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "upstream test {\n  server 127.0.0.1:83 weight=9; # 权重\n  server 127.0.0.1:83 weight=1; # 权重\n  # 失败超时时间\n  server 127.0.0.1:83 max_fails=3;\n  server 127.0.0.1:83 weight=3 down;\n}"
+      "body": ":- | :-\n:- | :-\n`weight` | 访问权重数值越高，收到请求越多\n`fail_timeout` | 指定的时间内必须提供响应\n`max_fails` | 尝试失败服务器连接的最大次数\n`down` | 标记一个服务器不再接受任何请求\n`backup` | 有服务器宕机，标记的机器接收请求\n\n配置示例\n\n```nginx\nupstream test {\n  server 127.0.0.1:83 weight=9; # 权重\n  server 127.0.0.1:83 weight=1; # 权重\n  # 失败超时时间\n  server 127.0.0.1:83 max_fails=3;\n  server 127.0.0.1:83 weight=3 down;\n}\n```"
     },
     {
       "id": "s2-26",
       "sectionId": "s2",
       "title": "upstream url_hash",
-      "kind": "text",
-      "body": "```nginx {2,3}\nupstream backend {\nhash $request_uri;\nhash_method crc32;\nserver localhost:8080;\nserver localhost:8081;\n}"
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n按访问url的hash结果来分配请求\n\n### upstream keepalive\n\n```nginx {4}\nupstream memcached_backend {\n    server 127.0.0.1:11211;\n    server 10.0.0.2:11211;\n    keepalive 32;\n}"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "激活缓存以连接到上游服务器"
+      "body": "```nginx {2,3}\nupstream backend {\nhash $request_uri;\nhash_method crc32;\nserver localhost:8080;\nserver localhost:8081;\n}\n\n```\n\n按访问url的hash结果来分配请求\n\n### upstream keepalive\n\n```nginx {4}\nupstream memcached_backend {\n    server 127.0.0.1:11211;\n    server 10.0.0.2:11211;\n    keepalive 32;\n}\n```\n\n激活缓存以连接到上游服务器"
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
       "title": "子文件夹中的代理",
-      "kind": "text",
-      "body": "```nginx {1,2}\nlocation /folder/ { # / 很重要！\nproxy_pass http://127.0.0.1:3000/; # / 很重要！\nproxy_redirect      off;\nproxy_set_header    Host            $host;\nproxy_set_header    X-Real-IP       $remote_addr;\nproxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;\n}"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 反向代理\n<!--rehype:wrap-class=row-span-3-->\n\n#### 基础\n\n```nginx\nserver {\n  listen 80;\n  server_name example.com;\n  \n  location / {\n    proxy_pass http://0.0.0.0:3000;\n    # 其中 0.0.0.0:3000 是绑定在 \n    # 0.0.0.0端口3000 列表上的 Node.js 服务器\n  }\n}"
+      "body": "```nginx {1,2}\nlocation /folder/ { # / 很重要！\nproxy_pass http://127.0.0.1:3000/; # / 很重要！\nproxy_redirect      off;\nproxy_set_header    Host            $host;\nproxy_set_header    X-Real-IP       $remote_addr;\nproxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;\n}\n\n```\n\n### 反向代理\n<!--rehype:wrap-class=row-span-3-->\n\n#### 基础\n\n```nginx\nserver {\n  listen 80;\n  server_name example.com;\n  \n  location / {\n    proxy_pass http://0.0.0.0:3000;\n    # 其中 0.0.0.0:3000 是绑定在 \n    # 0.0.0.0端口3000 列表上的 Node.js 服务器\n  }\n}\n```"
     },
     {
       "id": "s2-31",
       "sectionId": "s2",
       "title": "基础 + (upstream)",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "upstream node_js {\n  server 0.0.0.0:3000;\n  # 其中 0.0.0.0:3000 是绑定在 \n  # 0.0.0.0端口3000 列表上的 Node.js 服务器\n}\n\nserver {\n  listen 80;\n  server_name example.com;\n  \n  location / {\n    proxy_pass http://node_js;\n  }\n}"
+      "body": "```nginx\nupstream node_js {\n  server 0.0.0.0:3000;\n  # 其中 0.0.0.0:3000 是绑定在 \n  # 0.0.0.0端口3000 列表上的 Node.js 服务器\n}\n\nserver {\n  listen 80;\n  server_name example.com;\n  \n  location / {\n    proxy_pass http://node_js;\n  }\n}\n```"
     },
     {
       "id": "s2-32",
       "sectionId": "s2",
       "title": "%E5%8D%87%E7%BA%A7%E8%BF%9E%E6%8E%A5%EF%BC%88%E9%80%82%E7%94%A8%E4%BA%8E%E6%94%AF%E6%8C%81%20WebSockets%20%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%89",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "upstream%20node_js%20%7B%0A%20%20server%200.0.0.0%3A3000%3B%0A%7D%0A%0Aserver%20%7B%0A%20%20listen%2080%3B%0A%20%20server_name%20example.com%3B%0A%20%20%0A%20%20location%20%2F%20%7B%0A%20%20%20%20proxy_pass%20http%3A%2F%2Fnode_js%3B%0A%20%20%20%20proxy_redirect%20off%3B%0A%20%20%20%20proxy_http_version%201.1%3B%0A%20%20%20%20proxy_set_header%20Upgrade%20%24http_upgrade%3B%0A%20%20%20%20proxy_set_header%20Connection%20%22upgrade%22%3B%0A%20%20%20%20proxy_set_header%20Host%20%24host%3B%0A%20%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60nginx%0Aupstream%20node_js%20%7B%0A%20%20server%200.0.0.0%3A3000%3B%0A%7D%0A%0Aserver%20%7B%0A%20%20listen%2080%3B%0A%20%20server_name%20example.com%3B%0A%20%20%0A%20%20location%20%2F%20%7B%0A%20%20%20%20proxy_pass%20http%3A%2F%2Fnode_js%3B%0A%20%20%20%20proxy_redirect%20off%3B%0A%20%20%20%20proxy_http_version%201.1%3B%0A%20%20%20%20proxy_set_header%20Upgrade%20%24http_upgrade%3B%0A%20%20%20%20proxy_set_header%20Connection%20%22upgrade%22%3B%0A%20%20%20%20proxy_set_header%20Host%20%24host%3B%0A%20%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E9%80%82%E7%94%A8%E4%BA%8E%20Node.js%E3%80%81Streamlit%E3%80%81Jupyter%20%E7%AD%89",
       "encoded": true
-    },
-    {
-      "id": "s2-33",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "适用于 Node.js、Streamlit、Jupyter 等"
     },
     {
       "id": "s2-34",
       "sectionId": "s2",
-      "title": "静态资源（传统 Web 服务器）",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;\n  server_name example.com;\n  root /path/to/website;\n  # root /path/to/website/ 示例，如果里面没有'root'，它将寻找 /path/to/website/index.html\n  location / {\n  }\n  location /images/ { # 如果里面没有“root”，它将寻找 /path/to/website/images/index.html\n  }\n  location /videos/ { # 由于里面有“root”，它会寻找 /www/media/videos/index.html\n      root /www/media;\n  }\n}"
+      "title": "%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%EF%BC%88%E4%BC%A0%E7%BB%9F%20Web%20%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%89",
+      "body": "%60%60%60nginx%0Aserver%20%7B%0A%20%20listen%2080%3B%0A%20%20server_name%20example.com%3B%0A%20%20root%20%2Fpath%2Fto%2Fwebsite%3B%0A%20%20%23%20root%20%2Fpath%2Fto%2Fwebsite%2F%20%E7%A4%BA%E4%BE%8B%EF%BC%8C%E5%A6%82%E6%9E%9C%E9%87%8C%E9%9D%A2%E6%B2%A1%E6%9C%89'root'%EF%BC%8C%E5%AE%83%E5%B0%86%E5%AF%BB%E6%89%BE%20%2Fpath%2Fto%2Fwebsite%2Findex.html%0A%20%20location%20%2F%20%7B%0A%20%20%7D%0A%20%20location%20%2Fimages%2F%20%7B%20%23%20%E5%A6%82%E6%9E%9C%E9%87%8C%E9%9D%A2%E6%B2%A1%E6%9C%89%E2%80%9Croot%E2%80%9D%EF%BC%8C%E5%AE%83%E5%B0%86%E5%AF%BB%E6%89%BE%20%2Fpath%2Fto%2Fwebsite%2Fimages%2Findex.html%0A%20%20%7D%0A%20%20location%20%2Fvideos%2F%20%7B%20%23%20%E7%94%B1%E4%BA%8E%E9%87%8C%E9%9D%A2%E6%9C%89%E2%80%9Croot%E2%80%9D%EF%BC%8C%E5%AE%83%E4%BC%9A%E5%AF%BB%E6%89%BE%20%2Fwww%2Fmedia%2Fvideos%2Findex.html%0A%20%20%20%20%20%20root%20%2Fwww%2Fmedia%3B%0A%20%20%7D%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-35",
       "sectionId": "s2",
-      "title": "HTTPS 协议",
-      "kind": "text",
-      "body": "大多数 SSL 选项取决于您的应用程序做什么或需要什么"
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 443 ssl http2;\n  server_name example.com;\n\n  ssl_certificate /path/to/cert.pem;\n  ssl_certificate_key /path/to/privkey.pem;\n \n  # 优化 SSL 配置\n  ssl_protocols TLSv1.2 TLSv1.3;  # 禁用旧版 TLS\n  ssl_prefer_server_ciphers on;\n  ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';\n  ssl_session_timeout 1d;\n  ssl_session_cache shared:SSL:10m;\n\n  # 其他配置（如根目录、代理等）\n  root /var/www/html;\n  index index.html;\n\n  location / {\n      try_files $uri $uri/ =404;\n  }\n \n}"
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "您可以使用 Let's Encrypt 轻松保护您的网站/应用程序。去 [lets-encrypt](https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx.html) 获取更多信息"
+      "title": "HTTPS%20%E5%8D%8F%E8%AE%AE",
+      "body": "%E5%A4%A7%E5%A4%9A%E6%95%B0%20SSL%20%E9%80%89%E9%A1%B9%E5%8F%96%E5%86%B3%E4%BA%8E%E6%82%A8%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%81%9A%E4%BB%80%E4%B9%88%E6%88%96%E9%9C%80%E8%A6%81%E4%BB%80%E4%B9%88%0A%0A%60%60%60nginx%0Aserver%20%7B%0A%20%20listen%20443%20ssl%20http2%3B%0A%20%20server_name%20example.com%3B%0A%0A%20%20ssl_certificate%20%2Fpath%2Fto%2Fcert.pem%3B%0A%20%20ssl_certificate_key%20%2Fpath%2Fto%2Fprivkey.pem%3B%0A%20%0A%20%20%23%20%E4%BC%98%E5%8C%96%20SSL%20%E9%85%8D%E7%BD%AE%0A%20%20ssl_protocols%20TLSv1.2%20TLSv1.3%3B%20%20%23%20%E7%A6%81%E7%94%A8%E6%97%A7%E7%89%88%20TLS%0A%20%20ssl_prefer_server_ciphers%20on%3B%0A%20%20ssl_ciphers%20'ECDHE-ECDSA-AES128-GCM-SHA256%3AECDHE-RSA-AES128-GCM-SHA256'%3B%0A%20%20ssl_session_timeout%201d%3B%0A%20%20ssl_session_cache%20shared%3ASSL%3A10m%3B%0A%0A%20%20%23%20%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE%EF%BC%88%E5%A6%82%E6%A0%B9%E7%9B%AE%E5%BD%95%E3%80%81%E4%BB%A3%E7%90%86%E7%AD%89%EF%BC%89%0A%20%20root%20%2Fvar%2Fwww%2Fhtml%3B%0A%20%20index%20index.html%3B%0A%0A%20%20location%20%2F%20%7B%0A%20%20%20%20%20%20try_files%20%24uri%20%24uri%2F%20%3D404%3B%0A%20%20%7D%0A%20%0A%7D%0A%60%60%60%0A%0A%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20Let's%20Encrypt%20%E8%BD%BB%E6%9D%BE%E4%BF%9D%E6%8A%A4%E6%82%A8%E7%9A%84%E7%BD%91%E7%AB%99%2F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E3%80%82%E5%8E%BB%20%5Blets-encrypt%5D(https%3A%2F%2Fcertbot.eff.org%2Flets-encrypt%2Fubuntuxenial-nginx.html)%20%E8%8E%B7%E5%8F%96%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF",
+      "encoded": true
     },
     {
       "id": "s3-38",
       "sectionId": "s3",
       "title": "基础服务器块",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;\n  server_name example.com www.example.com;\n  root /var/www/example/public;\n  index index.html index.htm;\n}"
+      "body": "```nginx\nserver {\n  listen 80;\n  server_name example.com www.example.com;\n  root /var/www/example/public;\n  index index.html index.htm;\n}\n```"
     },
     {
       "id": "s3-39",
       "sectionId": "s3",
       "title": "HTTP→HTTPS 重定向",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;\n  server_name demo.com www.demo.com;\n  return 301 https://demo.com$request_uri;\n}"
+      "body": "```nginx\nserver {\n  listen 80;\n  server_name demo.com www.demo.com;\n  return 301 https://demo.com$request_uri;\n}\n```"
     },
     {
       "id": "s3-40",
       "sectionId": "s3",
       "title": "规范主机",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "# Force non-www\nserver {\n  listen 80;\n  server_name www.demo.com;\n  return 301 $scheme://demo.com$request_uri;\n}"
+      "body": "```nginx\n# Force non-www\nserver {\n  listen 80;\n  server_name www.demo.com;\n  return 301 $scheme://demo.com$request_uri;\n}\n```"
     },
     {
       "id": "s3-41",
       "sectionId": "s3",
       "title": "重定向(301永久)",
-      "kind": "text",
-      "body": "将 <www.demo.com> 重定向到 demo.com"
-    },
-    {
-      "id": "s3-42",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;\n  server_name www.demo.com;\n  return 301 http://demo.com$request_uri;\n}"
-    },
-    {
-      "id": "s3-43",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将 http 重定向到 https"
-    },
-    {
-      "id": "s3-44",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;\n  server_name demo.com;\n  return 301 https://demo.com$request_uri;\n}"
+      "body": "将 <www.demo.com> 重定向到 demo.com\n\n```nginx\nserver {\n  listen 80;\n  server_name www.demo.com;\n  return 301 http://demo.com$request_uri;\n}\n```\n\n将 http 重定向到 https\n\n```nginx\nserver {\n  listen 80;\n  server_name demo.com;\n  return 301 https://demo.com$request_uri;\n}\n```"
     },
     {
       "id": "s3-45",
       "sectionId": "s3",
       "title": "重定向(302临时)",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;\n  server_name yourdomain.com;\n  return 302 http://otherdomain.com;\n}"
+      "body": "```nginx\nserver {\n  listen 80;\n  server_name yourdomain.com;\n  return 302 http://otherdomain.com;\n}\n```"
     },
     {
       "id": "s3-46",
       "sectionId": "s3",
       "title": "永久重定向到 HTTPS 安全域",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;\n  server_name yourdomain.com;\n  return 301 https://$host$request_uri;\n}"
+      "body": "```nginx\nserver {\n  listen 80;\n  server_name yourdomain.com;\n  return 301 https://$host$request_uri;\n}\n```"
     },
     {
       "id": "s3-47",
       "sectionId": "s3",
       "title": "重定向参数",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`permanent` | 永久性重定向。日志中的状态码为 `301`\n`redirect` | 临时重定向。日志中的状态码为 `302`"
     },
     {
       "id": "s3-48",
       "sectionId": "s3",
       "title": "HTTP 请求端真实的IP",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location / {\n  proxy_set_header X-Forwarded-For $remote_addr;\n}"
+      "body": "```nginx\nlocation / {\n  proxy_set_header X-Forwarded-For $remote_addr;\n}\n```"
     },
     {
       "id": "s4-49",
       "sectionId": "s4",
       "title": "websocket%20%E7%9A%84%E4%BB%A3%E7%90%86%20keepalive",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "%23%20Upstreams%0Aupstream%20backend%20%7B%0A%20%20%20%20server%20127.0.0.1%3A3000%3B%0A%20%20%20%20keepalive%205%3B%0A%7D%0A%23%20HTTP%20Server%0Aserver%20%7B%0A%20%20server_name%20your_hostname.com%3B%0A%20%20error_log%20%2Fvar%2Flog%2Fnginx%2Frocketchat.access.log%3B%0A%20%20location%20%2F%20%7B%0A%20%20%20%20%20%20proxy_pass%20http%3A%2F%2Fbackend%3B%0A%20%20%20%20%20%20proxy_http_version%201.1%3B%0A%20%20%20%20%20%20proxy_set_header%20Upgrade%20%24http_upgrade%3B%0A%20%20%20%20%20%20proxy_set_header%20Connection%20%22upgrade%22%3B%0A%20%20%20%20%20%20proxy_set_header%20Host%20%24http_host%3B%0A%20%20%20%20%20%20proxy_set_header%20X-Real-IP%20%24remote_addr%3B%0A%20%20%20%20%20%20proxy_set_header%20X-Forward-For%20%24proxy_add_x_forwarded_for%3B%0A%20%20%20%20%20%20proxy_set_header%20X-Forward-Proto%20http%3B%0A%20%20%20%20%20%20proxy_set_header%20X-Nginx-Proxy%20true%3B%0A%20%20%20%20%20%20proxy_redirect%20off%3B%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60nginx%0A%23%20Upstreams%0Aupstream%20backend%20%7B%0A%20%20%20%20server%20127.0.0.1%3A3000%3B%0A%20%20%20%20keepalive%205%3B%0A%7D%0A%23%20HTTP%20Server%0Aserver%20%7B%0A%20%20server_name%20your_hostname.com%3B%0A%20%20error_log%20%2Fvar%2Flog%2Fnginx%2Frocketchat.access.log%3B%0A%20%20location%20%2F%20%7B%0A%20%20%20%20%20%20proxy_pass%20http%3A%2F%2Fbackend%3B%0A%20%20%20%20%20%20proxy_http_version%201.1%3B%0A%20%20%20%20%20%20proxy_set_header%20Upgrade%20%24http_upgrade%3B%0A%20%20%20%20%20%20proxy_set_header%20Connection%20%22upgrade%22%3B%0A%20%20%20%20%20%20proxy_set_header%20Host%20%24http_host%3B%0A%20%20%20%20%20%20proxy_set_header%20X-Real-IP%20%24remote_addr%3B%0A%20%20%20%20%20%20proxy_set_header%20X-Forward-For%20%24proxy_add_x_forwarded_for%3B%0A%20%20%20%20%20%20proxy_set_header%20X-Forward-Proto%20http%3B%0A%20%20%20%20%20%20proxy_set_header%20X-Nginx-Proxy%20true%3B%0A%20%20%20%20%20%20proxy_redirect%20off%3B%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-50",
       "sectionId": "s4",
       "title": "Apache%20%E7%9A%84%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server%20%7B%0A%20%20server_name%20domain.tld%3B%0A%0A%20%20access_log%20%2Flog%2Fdomain.tld.access.log%3B%0A%20%20error_log%20%2Flog%2Fdomain.tld.error.log%3B%0A%20%20root%20%2Fvar%2Fwww%2Fdomain.tld%2Fhtdocs%3B%0A%0A%20%20%23%20%E5%B0%86%E8%AF%B7%E6%B1%82%E4%BC%A0%E9%80%92%E7%BB%99%20Apache%20%E5%90%8E%E7%AB%AF%0A%20%20location%20%2F%20%7B%0A%20%20%20%20%20%20proxy_pass%20http%3A%2F%2Fbackend%3B%0A%20%20%7D%0A%20%20%23%20%E4%BD%BF%E7%94%A8%E5%90%8E%E5%A4%87%E5%A4%84%E7%90%86%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%0A%20%20location%20~*%20%5C.(ogg%7Cogv%7Csvg%7Csvgz%7Ceot%7Cotf%7Cwoff%7Cwoff2%7Cttf%7Cm4a%7Cmp4%7Cttf%7Crss%7Catom%7Cjpe%3Fg%7Cgif%7Ccur%7Cheic%7Cpng%7Ctiff%7Cico%7Czip%7Cwebm%7Cmp3%7Caac%7Ctgz%7Cgz%7Crar%7Cbz2%7Cdoc%7Cxls%7Cexe%7Cppt%7Ctar%7Cmid%7Cmidi%7Cwav%7Cbmp%7Crtf%7Cswf%7Cwebp)%24%20%7B%0A%20%20%20%20%20%20add_header%20%22Access-Control-Allow-Origin%22%20%22*%22%3B%0A%20%20%20%20%20%20access_log%20off%3B%0A%20%20%20%20%20%20log_not_found%20off%3B%0A%20%20%20%20%20%20expires%20max%3B%0A%20%20%20%20%20%20try_files%20%24uri%20%40fallback%3B%0A%20%20%7D%0A%20%20%23%20%E5%A6%82%E6%9E%9C%E6%89%BE%E4%B8%8D%E5%88%B0%E6%96%87%E4%BB%B6%EF%BC%8C%E5%88%99%E5%9B%9E%E9%80%80%E4%BB%A5%E5%B0%86%E8%AF%B7%E6%B1%82%E4%BC%A0%E9%80%92%E7%BB%99%20Apache%0A%20%20location%20%40fallback%20%7B%0A%20%20%20%20%20%20proxy_pass%20http%3A%2F%2Fbackend%3B%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60nginx%0Aserver%20%7B%0A%20%20server_name%20domain.tld%3B%0A%0A%20%20access_log%20%2Flog%2Fdomain.tld.access.log%3B%0A%20%20error_log%20%2Flog%2Fdomain.tld.error.log%3B%0A%20%20root%20%2Fvar%2Fwww%2Fdomain.tld%2Fhtdocs%3B%0A%0A%20%20%23%20%E5%B0%86%E8%AF%B7%E6%B1%82%E4%BC%A0%E9%80%92%E7%BB%99%20Apache%20%E5%90%8E%E7%AB%AF%0A%20%20location%20%2F%20%7B%0A%20%20%20%20%20%20proxy_pass%20http%3A%2F%2Fbackend%3B%0A%20%20%7D%0A%20%20%23%20%E4%BD%BF%E7%94%A8%E5%90%8E%E5%A4%87%E5%A4%84%E7%90%86%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%0A%20%20location%20~*%20%5C.(ogg%7Cogv%7Csvg%7Csvgz%7Ceot%7Cotf%7Cwoff%7Cwoff2%7Cttf%7Cm4a%7Cmp4%7Cttf%7Crss%7Catom%7Cjpe%3Fg%7Cgif%7Ccur%7Cheic%7Cpng%7Ctiff%7Cico%7Czip%7Cwebm%7Cmp3%7Caac%7Ctgz%7Cgz%7Crar%7Cbz2%7Cdoc%7Cxls%7Cexe%7Cppt%7Ctar%7Cmid%7Cmidi%7Cwav%7Cbmp%7Crtf%7Cswf%7Cwebp)%24%20%7B%0A%20%20%20%20%20%20add_header%20%22Access-Control-Allow-Origin%22%20%22*%22%3B%0A%20%20%20%20%20%20access_log%20off%3B%0A%20%20%20%20%20%20log_not_found%20off%3B%0A%20%20%20%20%20%20expires%20max%3B%0A%20%20%20%20%20%20try_files%20%24uri%20%40fallback%3B%0A%20%20%7D%0A%20%20%23%20%E5%A6%82%E6%9E%9C%E6%89%BE%E4%B8%8D%E5%88%B0%E6%96%87%E4%BB%B6%EF%BC%8C%E5%88%99%E5%9B%9E%E9%80%80%E4%BB%A5%E5%B0%86%E8%AF%B7%E6%B1%82%E4%BC%A0%E9%80%92%E7%BB%99%20Apache%0A%20%20location%20%40fallback%20%7B%0A%20%20%20%20%20%20proxy_pass%20http%3A%2F%2Fbackend%3B%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-51",
       "sectionId": "s4",
       "title": "Gitlab 的反向代理",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  #侦听的80端口\n  listen       80;\n  server_name  git.example.cn;\n  location / {\n    proxy_pass   http://localhost:3000;\n    # 以下是一些反向代理的配置可删除\n    proxy_redirect             off;\n    # 后端的Web服务器可以通过X-Forwarded-For获取用户真实IP\n    proxy_set_header           Host $host;\n    client_max_body_size       10m;  # 允许客户端请求的最大单文件字节数\n    client_body_buffer_size    128k; # 缓冲区代理缓冲用户端请求的最大字节数\n    proxy_connect_timeout      300;  # nginx跟后端服务器连接超时时间(代理连接超时)\n    proxy_send_timeout         300;  # 后端服务器数据回传时间(代理发送超时)\n    proxy_read_timeout         300;  # 连接成功后，后端服务器响应时间(代理接收超时)\n    # 设置代理服务器（nginx）保存用户头信息的缓冲区大小\n    proxy_buffer_size          4k;\n    # proxy_buffers缓冲区，网页平均在32k以下的话，这样设置\n    proxy_buffers              4 32k;\n    # 高负荷下缓冲大小（proxy_buffers*2）\n    proxy_busy_buffers_size    64k;\n  }\n}"
+      "body": "```nginx\nserver {\n  #侦听的80端口\n  listen       80;\n  server_name  git.example.cn;\n  location / {\n    proxy_pass   http://localhost:3000;\n    # 以下是一些反向代理的配置可删除\n    proxy_redirect             off;\n    # 后端的Web服务器可以通过X-Forwarded-For获取用户真实IP\n    proxy_set_header           Host $host;\n    client_max_body_size       10m;  # 允许客户端请求的最大单文件字节数\n    client_body_buffer_size    128k; # 缓冲区代理缓冲用户端请求的最大字节数\n    proxy_connect_timeout      300;  # nginx跟后端服务器连接超时时间(代理连接超时)\n    proxy_send_timeout         300;  # 后端服务器数据回传时间(代理发送超时)\n    proxy_read_timeout         300;  # 连接成功后，后端服务器响应时间(代理接收超时)\n    # 设置代理服务器（nginx）保存用户头信息的缓冲区大小\n    proxy_buffer_size          4k;\n    # proxy_buffers缓冲区，网页平均在32k以下的话，这样设置\n    proxy_buffers              4 32k;\n    # 高负荷下缓冲大小（proxy_buffers*2）\n    proxy_busy_buffers_size    64k;\n  }\n}\n```"
     },
     {
       "id": "s4-52",
       "sectionId": "s4",
       "title": "重定向整个网站",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  server_name old-site.com;\n  return 301 $scheme://new-site.com$request_uri;\n}"
+      "body": "```nginx\nserver {\n  server_name old-site.com;\n  return 301 $scheme://new-site.com$request_uri;\n}\n```"
     },
     {
       "id": "s4-53",
       "sectionId": "s4",
       "title": "重定向单页",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  location = /oldpage.html {\n    return 301 http://example.org/newpage.html;\n  }\n}"
+      "body": "```nginx\nserver {\n  location = /oldpage.html {\n    return 301 http://example.org/newpage.html;\n  }\n}\n```"
     },
     {
       "id": "s4-54",
       "sectionId": "s4",
       "title": "重定向整个子路径",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location /old-site {\n  rewrite ^/old-site/(.*) http://example.org/new-site/$1 permanent;\n}"
+      "body": "```nginx\nlocation /old-site {\n  rewrite ^/old-site/(.*) http://example.org/new-site/$1 permanent;\n}\n```"
     },
     {
       "id": "s4-55",
       "sectionId": "s4",
       "title": "负载均衡",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "upstream example {\n  ip_hash;\n  # upstream的负载均衡，weight是权重，可以根据机器配置定义权重。\n  # weigth参数表示权值，权值越高被分配到的几率越大。\n  server 192.168.122.11:8081 ;\n  server 127.0.0.1:82 weight=3;\n  server 127.0.0.1:83 weight=3 down;\n  server 127.0.0.1:84 weight=3; max_fails=3  fail_timeout=20s;\n  server 127.0.0.1:85 weight=4;\n  keepalive 32;\n}\nserver {\n  #侦听的80端口\n  listen       80;\n  server_name  git.example.cn;\n  location / {\n    # 在这里设置一个代理，和 upstream 的名字一样\n    proxy_pass   http://example;\n  }\n}"
+      "body": "```nginx\nupstream example {\n  ip_hash;\n  # upstream的负载均衡，weight是权重，可以根据机器配置定义权重。\n  # weigth参数表示权值，权值越高被分配到的几率越大。\n  server 192.168.122.11:8081 ;\n  server 127.0.0.1:82 weight=3;\n  server 127.0.0.1:83 weight=3 down;\n  server 127.0.0.1:84 weight=3; max_fails=3  fail_timeout=20s;\n  server 127.0.0.1:85 weight=4;\n  keepalive 32;\n}\nserver {\n  #侦听的80端口\n  listen       80;\n  server_name  git.example.cn;\n  location / {\n    # 在这里设置一个代理，和 upstream 的名字一样\n    proxy_pass   http://example;\n  }\n}\n```"
     },
     {
       "id": "s4-56",
       "sectionId": "s4",
       "title": "内容缓存",
-      "kind": "text",
-      "body": "允许浏览器基本上永久地缓存静态内容。 Nginx 将为您设置 Expires 和 Cache-Control 头信息"
-    },
-    {
-      "id": "s4-57",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "```nginx {3}\nlocation /static {\nroot /data;\nexpires max;\n}"
-    },
-    {
-      "id": "s4-58",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n如果要求浏览器永远不会缓存响应（例如用于跟踪请求），请使用 `-1`\n\n```nginx {3}\nlocation = /empty.gif {\n    empty_gif;\n    expires -1;\n}"
+      "body": "允许浏览器基本上永久地缓存静态内容。 Nginx 将为您设置 Expires 和 Cache-Control 头信息\n\n```nginx {3}\nlocation /static {\nroot /data;\nexpires max;\n}\n\n```\n\n如果要求浏览器永远不会缓存响应（例如用于跟踪请求），请使用 `-1`\n\n```nginx {3}\nlocation = /empty.gif {\n    empty_gif;\n    expires -1;\n}\n```"
     },
     {
       "id": "s4-59",
       "sectionId": "s4",
-      "title": "跨域问题",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;\n  server_name api.xxx.com;\n    \n  add_header 'Access-Control-Allow-Origin' '*';\n  add_header 'Access-Control-Allow-Credentials' 'true';\n  add_header 'Access-Control-Allow-Methods' 'GET,POST,HEAD';\n\n  location / {\n    proxy_pass http://127.0.0.1:3000;\n    proxy_set_header X-Real-IP $remote_addr;\n    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n    proxy_set_header Host  $http_host;    \n  } \n}"
+      "title": "%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98",
+      "body": "%60%60%60nginx%0Aserver%20%7B%0A%20%20listen%2080%3B%0A%20%20server_name%20api.xxx.com%3B%0A%20%20%20%20%0A%20%20add_header%20'Access-Control-Allow-Origin'%20'*'%3B%0A%20%20add_header%20'Access-Control-Allow-Credentials'%20'true'%3B%0A%20%20add_header%20'Access-Control-Allow-Methods'%20'GET%2CPOST%2CHEAD'%3B%0A%0A%20%20location%20%2F%20%7B%0A%20%20%20%20proxy_pass%20http%3A%2F%2F127.0.0.1%3A3000%3B%0A%20%20%20%20proxy_set_header%20X-Real-IP%20%24remote_addr%3B%0A%20%20%20%20proxy_set_header%20X-Forwarded-For%20%24proxy_add_x_forwarded_for%3B%0A%20%20%20%20proxy_set_header%20Host%20%20%24http_host%3B%20%20%20%20%0A%20%20%7D%20%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-60",
       "sectionId": "s4",
       "title": "重定向 URI 来解决跨域问题",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "upstream test {\n  server 127.0.0.1:8080;\n  server localhost:8081;\n}\nserver {\n  listen 80;\n  server_name api.xxx.com;\n  location / { \n    root  html;                   # 去请求../html文件夹里的文件\n    index  index.html index.htm;  # 首页响应地址\n  }\n  # 用于拦截请求，匹配任何以 /api/开头的地址，\n  # 匹配符合以后，停止往下搜索正则。\n  location ^~/api/{ \n    # 代表重写拦截进来的请求，并且只能对域名后边的除去传递的参数外的字符串起作用\n    # 例如www.a.com/api/msg?meth=1&par=2重写，只对/api/msg重写。\n    # rewrite后面的参数是一个简单的正则 ^/api/(.*)$，\n    # $1代表正则中的第一个()，$2代表第二个()的值，以此类推。\n    rewrite ^/api/(.*)$ /$1 break;\n    \n    # 把请求代理到其他主机 \n    # 其中 http://www.b.com/ 写法和 http://www.b.com写法的区别如下\n    # 如果你的请求地址是他 http://server/html/test.jsp\n    # 配置一： http://www.b.com/ 后面有“/” \n    #         将反向代理成 http://www.b.com/html/test.jsp 访问\n    # 配置一： http://www.b.com 后面没有有“/” \n    #         将反向代理成 http://www.b.com/test.jsp 访问\n    proxy_pass http://test;\n\n    # 如果 proxy_pass  URL 是 http://a.xx.com/platform/ 这种情况\n    # proxy_cookie_path应该设置成 /platform/ / (注意两个斜杠之间有空格)。\n    proxy_cookie_path /platfrom/ /;\n\n    # 设置 Cookie 头通过\n    proxy_pass_header Set-Cookie;\n  } \n}"
+      "body": "```nginx\nupstream test {\n  server 127.0.0.1:8080;\n  server localhost:8081;\n}\nserver {\n  listen 80;\n  server_name api.xxx.com;\n  location / { \n    root  html;                   # 去请求../html文件夹里的文件\n    index  index.html index.htm;  # 首页响应地址\n  }\n  # 用于拦截请求，匹配任何以 /api/开头的地址，\n  # 匹配符合以后，停止往下搜索正则。\n  location ^~/api/{ \n    # 代表重写拦截进来的请求，并且只能对域名后边的除去传递的参数外的字符串起作用\n    # 例如www.a.com/api/msg?meth=1&par=2重写，只对/api/msg重写。\n    # rewrite后面的参数是一个简单的正则 ^/api/(.*)$，\n    # $1代表正则中的第一个()，$2代表第二个()的值，以此类推。\n    rewrite ^/api/(.*)$ /$1 break;\n    \n    # 把请求代理到其他主机 \n    # 其中 http://www.b.com/ 写法和 http://www.b.com写法的区别如下\n    # 如果你的请求地址是他 http://server/html/test.jsp\n    # 配置一： http://www.b.com/ 后面有“/” \n    #         将反向代理成 http://www.b.com/html/test.jsp 访问\n    # 配置一： http://www.b.com 后面没有有“/” \n    #         将反向代理成 http://www.b.com/test.jsp 访问\n    proxy_pass http://test;\n\n    # 如果 proxy_pass  URL 是 http://a.xx.com/platform/ 这种情况\n    # proxy_cookie_path应该设置成 /platform/ / (注意两个斜杠之间有空格)。\n    proxy_cookie_path /platfrom/ /;\n\n    # 设置 Cookie 头通过\n    proxy_pass_header Set-Cookie;\n  } \n}\n```"
     },
     {
       "id": "s4-61",
       "sectionId": "s4",
       "title": "跳转到带 www 的域上面",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen 80;\n  # 配置正常的带www的域名\n  server_name www.wangchujiang.com;\n  root /home/www/wabg/download;\n  location / {\n      try_files $uri $uri/ /index.html =404;\n  }\n}\n\nserver {\n  # 将不带 www 的 wangchujiang.com \n  # 永久性重定向到 https://www.wangchujiang.com\n  server_name wangchujiang.com;\n  rewrite ^(.*) https://www.wangchujiang.com$1 permanent;\n}"
+      "body": "```nginx\nserver {\n  listen 80;\n  # 配置正常的带www的域名\n  server_name www.wangchujiang.com;\n  root /home/www/wabg/download;\n  location / {\n      try_files $uri $uri/ /index.html =404;\n  }\n}\n\nserver {\n  # 将不带 www 的 wangchujiang.com \n  # 永久性重定向到 https://www.wangchujiang.com\n  server_name wangchujiang.com;\n  rewrite ^(.*) https://www.wangchujiang.com$1 permanent;\n}\n```"
     },
     {
       "id": "s4-62",
       "sectionId": "s4",
       "title": "代理转发",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "upstream server-api {\n  # api 代理服务地址\n  server 127.0.0.1:3110;    \n}\nupstream server-resource {\n  # 静态资源 代理服务地址\n  server 127.0.0.1:3120;\n}\nserver {\n  listen       3111;\n  server_name  localhost; # 这里指定域名\n  root /home/www/server-statics;\n  # 匹配 api 路由的反向代理到API服务\n  location ^~/api/ {\n      rewrite ^/(.*)$ /$1 break;\n      proxy_pass http://server-api;\n  }\n  # 假设这里验证码也在API服务中\n  location ^~/captcha {\n      rewrite ^/(.*)$ /$1 break;\n      proxy_pass http://server-api;\n  }\n  # 假设你的图片资源全部在另外一个服务上面\n  location ^~/img/ {\n      rewrite ^/(.*)$ /$1 break;\n      proxy_pass http://server-resource;\n  }\n  # 路由在前端，后端没有真实路由，\n  # 路由不存在的 404 状态的页面返回 /index.html\n  # 使用场景，用在 React/Vue项目没有真实路由\n  location / {\n    try_files $uri $uri/ /index.html =404;\n    #                      空格很重要 ^\n  }\n}"
+      "body": "```nginx\nupstream server-api {\n  # api 代理服务地址\n  server 127.0.0.1:3110;    \n}\nupstream server-resource {\n  # 静态资源 代理服务地址\n  server 127.0.0.1:3120;\n}\nserver {\n  listen       3111;\n  server_name  localhost; # 这里指定域名\n  root /home/www/server-statics;\n  # 匹配 api 路由的反向代理到API服务\n  location ^~/api/ {\n      rewrite ^/(.*)$ /$1 break;\n      proxy_pass http://server-api;\n  }\n  # 假设这里验证码也在API服务中\n  location ^~/captcha {\n      rewrite ^/(.*)$ /$1 break;\n      proxy_pass http://server-api;\n  }\n  # 假设你的图片资源全部在另外一个服务上面\n  location ^~/img/ {\n      rewrite ^/(.*)$ /$1 break;\n      proxy_pass http://server-resource;\n  }\n  # 路由在前端，后端没有真实路由，\n  # 路由不存在的 404 状态的页面返回 /index.html\n  # 使用场景，用在 React/Vue项目没有真实路由\n  location / {\n    try_files $uri $uri/ /index.html =404;\n    #                      空格很重要 ^\n  }\n}\n```"
     },
     {
       "id": "s4-63",
       "sectionId": "s4",
       "title": "屏蔽 IP",
-      "kind": "text",
-      "body": "可以放到 `http`, `server`, `location`, `limit_except` 语句块"
-    },
-    {
-      "id": "s4-64",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "include blockip.conf;"
-    },
-    {
-      "id": "s4-65",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "在 `blockip.conf` 里面输入内容，如："
-    },
-    {
-      "id": "s4-66",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "deny 165.91.122.67;\n\ndeny IP;            # 屏蔽单个 ip 访问\nallow IP;           # 允许单个 ip 访问\ndeny all;           # 屏蔽所有 ip 访问\nallow all;          # 允许所有 ip 访问\ndeny 123.0.0.0/8;   # 屏蔽整个段即从 123.0.0.1 到 123.255.255.254 访问的命令\ndeny 124.45.0.0/16; # 屏蔽IP段即从 123.45.0.1 到 123.45.255.254 访问的命令\ndeny 123.45.6.0/24; # 屏蔽IP段即从 123.45.6.1 到 123.45.6.254 访问的命令\n\n# 如果你想实现这样的应用，除了几个IP外，其他全部拒绝\nallow 1.1.1.1; \nallow 1.1.1.2;\ndeny all;"
+      "body": "可以放到 `http`, `server`, `location`, `limit_except` 语句块\n\n```nginx\ninclude blockip.conf;\n```\n\n在 `blockip.conf` 里面输入内容，如：\n\n```nginx\ndeny 165.91.122.67;\n\ndeny IP;            # 屏蔽单个 ip 访问\nallow IP;           # 允许单个 ip 访问\ndeny all;           # 屏蔽所有 ip 访问\nallow all;          # 允许所有 ip 访问\ndeny 123.0.0.0/8;   # 屏蔽整个段即从 123.0.0.1 到 123.255.255.254 访问的命令\ndeny 124.45.0.0/16; # 屏蔽IP段即从 123.45.0.1 到 123.45.255.254 访问的命令\ndeny 123.45.6.0/24; # 屏蔽IP段即从 123.45.6.1 到 123.45.6.254 访问的命令\n\n# 如果你想实现这样的应用，除了几个IP外，其他全部拒绝\nallow 1.1.1.1; \nallow 1.1.1.2;\ndeny all; \n```"
     },
     {
       "id": "s4-67",
       "sectionId": "s4",
       "title": "强制将 http 重定向到 https",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n  listen       80;\n  server_name  example.com;\n  rewrite ^ https://$http_host$request_uri? permanent; # 强制将 http 重定向到 https\n  # 在错误页面和“服务器”响应头字段中启用或禁用发射nginx版本。 防止黑客利用版本漏洞攻击\n  server_tokens off;\n}"
+      "body": "```nginx\nserver {\n  listen       80;\n  server_name  example.com;\n  rewrite ^ https://$http_host$request_uri? permanent; # 强制将 http 重定向到 https\n  # 在错误页面和“服务器”响应头字段中启用或禁用发射nginx版本。 防止黑客利用版本漏洞攻击\n  server_tokens off;\n}\n```"
     },
     {
       "id": "s4-68",
       "sectionId": "s4",
       "title": "代理转发连接替换",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location ^~/api/upload {\n  rewrite ^/(.*)$ /wfs/v1/upload break;\n  proxy_pass http://wfs-api;\n}"
-    },
-    {
-      "id": "s4-69",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "将地址 `/api/upload` 替换为 `/wfs/v1/upload`"
+      "body": "```nginx\nlocation ^~/api/upload {\n  rewrite ^/(.*)$ /wfs/v1/upload break;\n  proxy_pass http://wfs-api;\n}\n```\n\n将地址 `/api/upload` 替换为 `/wfs/v1/upload`"
     },
     {
       "id": "s4-70",
       "sectionId": "s4",
       "title": "%E7%88%AC%E8%99%AB%20User-Agent%20%E8%BF%87%E6%BB%A4",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location%20%2F%20%7B%0A%20%20if%20(%24http_user_agent%20~*%20%22python%7Ccurl%7Cjava%7Cwget%7Chttpclient%7Cokhttp%22)%20%7B%0A%20%20%20%20%20%20return%20503%3B%0A%20%20%7D%0A%20%20%23%20%E6%AD%A3%E5%B8%B8%E5%A4%84%E7%90%86%0A%20%20%23%20...%0A%7D",
+      "body": "%60%60%60nginx%0Alocation%20%2F%20%7B%0A%20%20if%20(%24http_user_agent%20~*%20%22python%7Ccurl%7Cjava%7Cwget%7Chttpclient%7Cokhttp%22)%20%7B%0A%20%20%20%20%20%20return%20503%3B%0A%20%20%7D%0A%20%20%23%20%E6%AD%A3%E5%B8%B8%E5%A4%84%E7%90%86%0A%20%20%23%20...%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-71",
       "sectionId": "s4",
       "title": "图片防盗链",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location ~* \\.(gif|jpg|png|swf|flv)$ {\n  root html;\n\n  valid_referers none blocked *.nginx.com;\n\n  if ($invalid_referer) {\n    rewrite ^/ www.nginx.cn;\n    # return 404;\n  }\n}"
+      "body": "```nginx\nlocation ~* \\.(gif|jpg|png|swf|flv)$ {\n  root html;\n\n  valid_referers none blocked *.nginx.com;\n\n  if ($invalid_referer) {\n    rewrite ^/ www.nginx.cn;\n    # return 404;\n  }\n}\n```"
     },
     {
       "id": "s4-72",
       "sectionId": "s4",
       "title": "虚拟目录配置",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location /img/ {\n  alias /var/www/image/;\n}\n# 访问 /img/ 目录里面的文件时，\n# 会自动去 /var/www/image/ 目录找文件\nlocation /img/ {\n  root /var/www/image;\n}\n# 访问 /img/ 目录下的文件时，\n# 会去 /var/www/image/img/ 目录下找文件"
+      "body": "```nginx\nlocation /img/ {\n  alias /var/www/image/;\n}\n# 访问 /img/ 目录里面的文件时，\n# 会自动去 /var/www/image/ 目录找文件\nlocation /img/ {\n  root /var/www/image;\n}\n# 访问 /img/ 目录下的文件时，\n# 会去 /var/www/image/img/ 目录下找文件\n```"
     },
     {
       "id": "s4-73",
       "sectionId": "s4",
-      "title": "屏蔽文件目录",
-      "kind": "text",
-      "body": "通用备份和归档文件"
-    },
-    {
-      "id": "s4-74",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location%20~*%20%22%5C.(old%7Corig%7Coriginal%7Cphp%23%7Cphp~%7Cphp_bak%7Csave%7Cswo%7Caspx%3F%7Ctpl%7Csh%7Cbash%7Cbak%3F%7Ccfg%7Ccgi%7Cdll%7Cexe%7Cgit%7Chg%7Cini%7Cjsp%7Clog%7Cmdb%7Cout%7Csql%7Csvn%7Cswp%7Ctar%7Crdf)%24%22%20%7B%0A%20%20%20%20deny%20all%3B%0A%7D",
+      "title": "%E5%B1%8F%E8%94%BD%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95",
+      "body": "%E9%80%9A%E7%94%A8%E5%A4%87%E4%BB%BD%E5%92%8C%E5%BD%92%E6%A1%A3%E6%96%87%E4%BB%B6%0A%0A%60%60%60nginx%0Alocation%20~*%20%22%5C.(old%7Corig%7Coriginal%7Cphp%23%7Cphp~%7Cphp_bak%7Csave%7Cswo%7Caspx%3F%7Ctpl%7Csh%7Cbash%7Cbak%3F%7Ccfg%7Ccgi%7Cdll%7Cexe%7Cgit%7Chg%7Cini%7Cjsp%7Clog%7Cmdb%7Cout%7Csql%7Csvn%7Cswp%7Ctar%7Crdf)%24%22%20%7B%0A%20%20%20%20deny%20all%3B%0A%7D%0A%60%60%60%0A%0A%E6%8B%92%E7%BB%9D%E8%AE%BF%E9%97%AE%20%60.git%60%20%E5%92%8C%20%60.svn%60%20%E7%9B%AE%E5%BD%95%0A%0A%60%60%60nginx%0Alocation%20~%20(.git%7C.svn)%20%7B%0A%20%20%20%20deny%20all%3B%0A%7D%0A%60%60%60%0A%0A%E6%8B%92%E7%BB%9D%E8%AE%BF%E9%97%AE%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95%0A%0A%60%60%60nginx%0Alocation%20~%20%2F%5C.(%3F!well-known%5C%2F)%20%7B%0A%20%20%20%20deny%20all%3B%0A%7D%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s4-75",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "拒绝访问 `.git` 和 `.svn` 目录"
-    },
-    {
-      "id": "s4-76",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location ~ (.git|.svn) {\n    deny all;\n}"
-    },
-    {
-      "id": "s4-77",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "拒绝访问隐藏文件和目录"
-    },
-    {
-      "id": "s4-78",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location ~ /\\.(?!well-known\\/) {\n    deny all;\n}"
     },
     {
       "id": "s4-79",
       "sectionId": "s4",
       "title": "防盗图配置",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location ~ \\/public\\/(css|js|img)\\/.*\\.(js|css|gif|jpg|jpeg|png|bmp|swf) {\n  valid_referers none blocked *.jslite.io;\n  if ($invalid_referer) {\n      rewrite ^/  http://wangchujiang.com/piratesp.png;\n  }\n}"
+      "body": "```nginx\nlocation ~ \\/public\\/(css|js|img)\\/.*\\.(js|css|gif|jpg|jpeg|png|bmp|swf) {\n  valid_referers none blocked *.jslite.io;\n  if ($invalid_referer) {\n      rewrite ^/  http://wangchujiang.com/piratesp.png;\n  }\n}\n```"
     },
     {
       "id": "s4-80",
       "sectionId": "s4",
       "title": "ulimit 不继承系统设置的问题",
-      "kind": "text",
-      "body": "• 执行 status 命令"
-    },
-    {
-      "id": "s4-81",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "  sudo service nginx status"
-    },
-    {
-      "id": "s4-82",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "执行 status 命令，看到 Loaded: loaded (/lib/systemd/system/nginx.service;...) 这一行的nginx.service 文件位置"
-    },
-    {
-      "id": "s4-83",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "• 打开 service 文件"
-    },
-    {
-      "id": "s4-84",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "  sudo vim /lib/systemd/system/nginx.service"
-    },
-    {
-      "id": "s4-85",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "• 修改 service 中的配置"
-    },
-    {
-      "id": "s4-86",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "找到 `[Service]` 部分，将 `LimitNOFILE=65535` 添加到该部分"
-    },
-    {
-      "id": "s4-87",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "  [Service]\n  ...\n  LimitNOFILE=65535\n  ..."
-    },
-    {
-      "id": "s4-88",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "解决 `systemctl` 管理的 ulimit 不继承系统设置的问题"
+      "body": "• 执行 status 命令\n\n  ```bash\n  sudo service nginx status\n  ```\n\n执行 status 命令，看到 Loaded: loaded (/lib/systemd/system/nginx.service;...) 这一行的nginx.service 文件位置\n\n• 打开 service 文件\n\n  ```bash\n  sudo vim /lib/systemd/system/nginx.service\n  ```\n\n• 修改 service 中的配置\n\n找到 `[Service]` 部分，将 `LimitNOFILE=65535` 添加到该部分\n\n  ```bash\n  [Service]\n  ...\n  LimitNOFILE=65535\n  ...\n  ```\n\n解决 `systemctl` 管理的 ulimit 不继承系统设置的问题"
     },
     {
       "id": "s4-89",
       "sectionId": "s4",
       "title": "Gzip%20%E9%85%8D%E7%BD%AE",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "gzip%20%20on%3B%0Agzip_buffers%2016%208k%3B%0Agzip_comp_level%206%3B%0Agzip_http_version%201.1%3B%0Agzip_min_length%20256%3B%0Agzip_proxied%20any%3B%0Agzip_vary%20on%3B%0Agzip_types%0A%20%20%20%20text%2Fxml%20application%2Fxml%20application%2Fatom%2Bxml%20application%2Frss%2Bxml%20application%2Fxhtml%2Bxml%20image%2Fsvg%2Bxml%0A%20%20%20%20text%2Fjavascript%20application%2Fjavascript%20application%2Fx-javascript%0A%20%20%20%20text%2Fx-json%20application%2Fjson%20application%2Fx-web-app-manifest%2Bjson%0A%20%20%20%20text%2Fcss%20text%2Fplain%20text%2Fx-component%0A%20%20%20%20font%2Fopentype%20application%2Fx-font-ttf%20application%2Fvnd.ms-fontobject%0A%20%20%20%20image%2Fx-icon%3B%0Agzip_disable%20%20%22msie6%22%3B",
+      "body": "%60%60%60nginx%0Agzip%20%20on%3B%0Agzip_buffers%2016%208k%3B%0Agzip_comp_level%206%3B%0Agzip_http_version%201.1%3B%0Agzip_min_length%20256%3B%0Agzip_proxied%20any%3B%0Agzip_vary%20on%3B%0Agzip_types%0A%20%20%20%20text%2Fxml%20application%2Fxml%20application%2Fatom%2Bxml%20application%2Frss%2Bxml%20application%2Fxhtml%2Bxml%20image%2Fsvg%2Bxml%0A%20%20%20%20text%2Fjavascript%20application%2Fjavascript%20application%2Fx-javascript%0A%20%20%20%20text%2Fx-json%20application%2Fjson%20application%2Fx-web-app-manifest%2Bjson%0A%20%20%20%20text%2Fcss%20text%2Fplain%20text%2Fx-component%0A%20%20%20%20font%2Fopentype%20application%2Fx-font-ttf%20application%2Fvnd.ms-fontobject%0A%20%20%20%20image%2Fx-icon%3B%0Agzip_disable%20%20%22msie6%22%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-90",
       "sectionId": "s4",
       "title": "%E9%98%BB%E6%AD%A2%E5%B8%B8%E8%A7%81%E6%94%BB%E5%87%BB%20-%20base64%E7%BC%96%E7%A0%81%E7%9A%84%E7%BD%91%E5%9D%80",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location%20~*%20%22(base64_encode)(.*)(%5C()%22%20%7B%0A%20%20%20%20deny%20all%3B%0A%7D",
+      "body": "%60%60%60nginx%0Alocation%20~*%20%22(base64_encode)(.*)(%5C()%22%20%7B%0A%20%20%20%20deny%20all%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-91",
       "sectionId": "s4",
       "title": "javascript%20eval()%20url",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "location%20~*%20%22(eval%5C()%22%20%7B%0A%20%20%20%20deny%20all%3B%0A%7D",
+      "body": "%60%60%60nginx%0Alocation%20~*%20%22(eval%5C()%22%20%7B%0A%20%20%20%20deny%20all%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-92",
       "sectionId": "s4",
       "title": "%E4%BD%BF%E7%BD%91%E7%AB%99%E4%B8%8D%E5%8F%AF%E7%B4%A2%E5%BC%95",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "add_header%20X-Robots-Tag%20%22noindex%22%3B%0A%0Alocation%20%3D%20%2Frobots.txt%20%7B%0A%20%20return%20200%20%22User-agent%3A%20*%5CnDisallow%3A%20%2F%5Cn%22%3B%0A%7D",
+      "body": "%60%60%60nginx%0Aadd_header%20X-Robots-Tag%20%22noindex%22%3B%0A%0Alocation%20%3D%20%2Frobots.txt%20%7B%0A%20%20return%20200%20%22User-agent%3A%20*%5CnDisallow%3A%20%2F%5Cn%22%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-93",
       "sectionId": "s4",
       "title": "%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82ip",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server%20%7B%0A%20%20listen%2080%3B%0A%20%20server_name%20xxx.top%3B%0A%0A%20%20location%20%2F%20%7B%0A%20%20%20%20access_log%20%2Fdata%2Flogs%2Fnginx%2Fjson_ip.log%20json%3B%0A%20%20%20%20proxy_set_header%20Host%20%24http_host%3B%0A%20%20%20%20%20%20%20%20proxy_set_header%20X-Real-Ip%20%24remote_addr%3B%0A%20%20%20%20%20%20%20%20proxy_set_header%20X-Forwarded-For%20%24proxy_add_x_forwarded_for%3B%0A%20%20%20%20%20%20%20%20proxy_pass%20http%3A%2F%2F127.0.0.1%3A9999%3B%0A%20%20%7D%0A%7D%0A%0Aserver%20%7B%0A%20%20listen%209999%3B%0A%0A%20%20location%20%2F%20%7B%0A%20%20%20%20access_log%20off%3B%0A%20%20%20%20default_type%20application%2Fjson%3B%0A%20%20%20%20return%20200%20%22%7B%5C%22ip%5C%22%3A%5C%22%24http_X_Real_Ip%5C%22%7D%22%3B%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60nginx%0Aserver%20%7B%0A%20%20listen%2080%3B%0A%20%20server_name%20xxx.top%3B%0A%0A%20%20location%20%2F%20%7B%0A%20%20%20%20access_log%20%2Fdata%2Flogs%2Fnginx%2Fjson_ip.log%20json%3B%0A%20%20%20%20proxy_set_header%20Host%20%24http_host%3B%0A%20%20%20%20%20%20%20%20proxy_set_header%20X-Real-Ip%20%24remote_addr%3B%0A%20%20%20%20%20%20%20%20proxy_set_header%20X-Forwarded-For%20%24proxy_add_x_forwarded_for%3B%0A%20%20%20%20%20%20%20%20proxy_pass%20http%3A%2F%2F127.0.0.1%3A9999%3B%0A%20%20%7D%0A%7D%0A%0Aserver%20%7B%0A%20%20listen%209999%3B%0A%0A%20%20location%20%2F%20%7B%0A%20%20%20%20access_log%20off%3B%0A%20%20%20%20default_type%20application%2Fjson%3B%0A%20%20%20%20return%20200%20%22%7B%5C%22ip%5C%22%3A%5C%22%24http_X_Real_Ip%5C%22%7D%22%3B%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-94",
       "sectionId": "s4",
       "title": "%E5%88%A4%E6%96%AD%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "%23%20%E5%88%A4%E6%96%AD%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E7%A4%BA%E4%BE%8B%0Aset%20%24flagts%200%3B%0Aif%20(%20%24arg_aaa%20~%20%22%5Eaaa%22%20)%20%7B%0A%20%20%20%20set%20%24flagts%20%22%24%7Bflagts%7D1%22%3B%0A%7D%0Aif%20(%20%24arg_bbb%20~%20%22%5Ebbb%22%20)%20%7B%0A%20%20%20%20set%20%24flagts%20%22%24%7Bflagts%7D1%22%3B%0A%7D%0Aif%20(%20%24flagts%20%3D%20%22011%22%20)%20%7B%0A%20%20%20%20return%20200%3B%0A%7D",
+      "body": "%60%60%60nginx%0A%23%20%E5%88%A4%E6%96%AD%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%E7%A4%BA%E4%BE%8B%0Aset%20%24flagts%200%3B%0Aif%20(%20%24arg_aaa%20~%20%22%5Eaaa%22%20)%20%7B%0A%20%20%20%20set%20%24flagts%20%22%24%7Bflagts%7D1%22%3B%0A%7D%0Aif%20(%20%24arg_bbb%20~%20%22%5Ebbb%22%20)%20%7B%0A%20%20%20%20set%20%24flagts%20%22%24%7Bflagts%7D1%22%3B%0A%7D%0Aif%20(%20%24flagts%20%3D%20%22011%22%20)%20%7B%0A%20%20%20%20return%20200%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-95",
       "sectionId": "s4",
       "title": "流量镜像配置",
-      "kind": "code",
-      "lang": "nginx",
-      "code": "server {\n    listen       80;\n    server_name 192.168.1.1;\n\n    location = /mirror1 {\n        internal;\n        #### address1 ####\n        proxy_set_header Host mirror1.com;\n        proxy_pass http://127.0.0.1:8008/api/service/list;\n    }\n\n    location = /mirror2 {\n        internal;\n        #### address2 ####\n        proxy_set_header Host mirror2.com;\n        proxy_pass http://127.0.0.1:8009/api/service/list;\n    }\n\n    # 只转发这个接口\n    location /api/service/list {\n        access_log /data/logs/nginx/json_test_to_mirror.log json;\n        mirror /mirror1;\n        mirror /mirror2;\n        proxy_pass http://127.0.0.1:8007;\n    }\n\n    location / {\n        access_log /data/logs/nginx/json_test.log json;\n        proxy_pass http://192.168.1.1:8007;\n    }\n\n}"
+      "body": "```nginx\nserver {\n    listen       80;\n    server_name 192.168.1.1;\n\n    location = /mirror1 {\n        internal;\n        #### address1 ####\n        proxy_set_header Host mirror1.com;\n        proxy_pass http://127.0.0.1:8008/api/service/list;\n    }\n\n    location = /mirror2 {\n        internal;\n        #### address2 ####\n        proxy_set_header Host mirror2.com;\n        proxy_pass http://127.0.0.1:8009/api/service/list;\n    }\n\n    # 只转发这个接口\n    location /api/service/list {\n        access_log /data/logs/nginx/json_test_to_mirror.log json;\n        mirror /mirror1;\n        mirror /mirror2;\n        proxy_pass http://127.0.0.1:8007;\n    }\n\n    location / {\n        access_log /data/logs/nginx/json_test.log json;\n        proxy_pass http://192.168.1.1:8007;\n    }\n\n}\n```"
     },
     {
       "id": "s5-96",
       "sectionId": "s5",
       "title": "另见",
-      "kind": "text",
       "body": "• [Nginx 安装维护入门学习笔记](https://jaywcjlove.github.io/nginx-tutorial) _(jaywcjlove.github.io)_\n• [advanced-nginx-cheatsheet](https://virtubox.github.io/advanced-nginx-cheatsheet/) _(virtubox.github.io)_"
     }
   ],

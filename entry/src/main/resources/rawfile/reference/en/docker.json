@@ -40,391 +40,93 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "This is a quick reference cheat sheet for [Docker](https://docs.docker.com/get-started/). And you can find the most common Docker commands here."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Getting started",
-      "kind": "text",
-      "body": "Create and run a container in background"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n$ docker run -d -p 80:80 docker/getting-started"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n---\n\n- `-d` - Run the container in detached mode\n- `-p 80:80` - Map port 80 to port 80 in the container\n- `docker/getting-started` - The image to use\n\n{.marker-none}\n\nCreate and run a container in foreground\n\n```shell script\n$ docker run -it -p 8001:8080 --name my-nginx nginx"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• `-it` - Interactive bash mode\n• `-p 8001:8080` - Map port 8001 to port 8080 in the container\n• `--name my-nginx` - Specify a name\n• `nginx` - The image to use"
+      "body": "Create and run a container in background\n\n```shell script\n$ docker run -d -p 80:80 docker/getting-started\n\n```\n\n---\n\n- `-d` - Run the container in detached mode\n- `-p 80:80` - Map port 80 to port 80 in the container\n- `docker/getting-started` - The image to use\n\n{.marker-none}\n\nCreate and run a container in foreground\n\n```shell script\n$ docker run -it -p 8001:8080 --name my-nginx nginx\n```\n\n• `-it` - Interactive bash mode\n• `-p 8001:8080` - Map port 8001 to port 8080 in the container\n• `--name my-nginx` - Specify a name\n• `nginx` - The image to use"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "General commands",
-      "kind": "text",
-      "body": "| Example                             | Description                                      |\n| ----------------------------------- | ------------------------------------------------ |\n| `docker ps`                         | List running containers                          |\n| `docker ps -a`                      | List all containers                              |\n| `docker ps -s`                      | List running containers<br>_(with CPU / memory)_ |\n| `docker images`                     | List all images                                  |\n| `docker exec -it <container>  bash` | Connecting to container                          |\n| `docker logs <container>`           | Shows container's console log                    |\n| `docker stop <container>`           | Stop a container                                 |\n| `docker restart <container>`        | Restart a container                              |\n| `docker rm <container>`             | Remove a container                               |\n| `docker port <container>`           | Shows container's port mapping                   |\n| `docker top <container>`            | List processes                                   |\n| `docker kill <container>`           | Kill a container                                 |"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Parameter `<container>` can be container id or name"
+      "title": "General%20commands",
+      "body": "%7C%20Example%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-----------------------------------%20%7C%20------------------------------------------------%20%7C%0A%7C%20%60docker%20ps%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20List%20running%20containers%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20ps%20-a%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20List%20all%20containers%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20ps%20-s%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20List%20running%20containers%3Cbr%3E_(with%20CPU%20%2F%20memory)_%20%7C%0A%7C%20%60docker%20images%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20List%20all%20images%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20exec%20-it%20%3Ccontainer%3E%20%20bash%60%20%7C%20Connecting%20to%20container%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20logs%20%3Ccontainer%3E%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Shows%20container's%20console%20log%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20stop%20%3Ccontainer%3E%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Stop%20a%20container%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20restart%20%3Ccontainer%3E%60%20%20%20%20%20%20%20%20%7C%20Restart%20a%20container%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20rm%20%3Ccontainer%3E%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Remove%20a%20container%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20port%20%3Ccontainer%3E%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Shows%20container's%20port%20mapping%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20top%20%3Ccontainer%3E%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20List%20processes%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60docker%20kill%20%3Ccontainer%3E%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Kill%20a%20container%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%0AParameter%20%60%3Ccontainer%3E%60%20can%20be%20container%20id%20or%20name",
+      "encoded": true
     },
     {
       "id": "s2-7",
       "sectionId": "s2",
       "title": "Starting & Stopping",
-      "kind": "text",
       "body": "| Description               | Example                             |\n| ------------------------- | ----------------------------------- |\n| `docker start my-nginx`   | Starting                            |\n| `docker stop my-nginx`    | Stopping                            |\n| `docker restart my-nginx` | Restarting                          |\n| `docker pause my-nginx`   | Pausing                             |\n| `docker unpause my-nginx` | Unpausing                           |\n| `docker wait my-nginx`    | Blocking a Container                |\n| `docker kill my-nginx`    | Sending a SIGKILL                   |\n| `docker attach my-nginx`  | Connecting to an Existing Container |"
     },
     {
       "id": "s2-8",
       "sectionId": "s2",
       "title": "Information",
-      "kind": "text",
       "body": "| Example                   | Description                            |\n| ------------------------- | -------------------------------------- |\n| `docker ps`               | List running containers                |\n| `docker ps -a`            | List all containers                    |\n| `docker logs my-nginx`    | Container Logs                         |\n| `docker inspect my-nginx` | Inspecting Containers                  |\n| `docker events my-nginx`  | Containers Events                      |\n| `docker port my-nginx`    | Public Ports                           |\n| `docker top my-nginx`     | Running Processes                      |\n| `docker stats my-nginx`   | Container Resource Usage               |\n| `docker diff my-nginx`    | Lists the changes made to a container. |"
     },
     {
       "id": "s2-9",
       "sectionId": "s2",
       "title": "Creating",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "docker create [options] IMAGE\n  -a, --attach               # attach stdout/err\n  -i, --interactive          # attach stdin (interactive)\n  -t, --tty                  # pseudo-tty\n      --name NAME            # name your image\n  -p, --publish 5000:5000    # port map (host:container)\n      --expose 5432          # expose a port to containers\n  -P, --publish-all          # publish all ports\n      --link container:alias # linking\n  -v, --volume `pwd`:/app    # mount (absolute paths needed)\n  -e, --env NAME=hello       # env vars"
+      "body": "```yaml\ndocker create [options] IMAGE\n  -a, --attach               # attach stdout/err\n  -i, --interactive          # attach stdin (interactive)\n  -t, --tty                  # pseudo-tty\n      --name NAME            # name your image\n  -p, --publish 5000:5000    # port map (host:container)\n      --expose 5432          # expose a port to containers\n  -P, --publish-all          # publish all ports\n      --link container:alias # linking\n  -v, --volume `pwd`:/app    # mount (absolute paths needed)\n  -e, --env NAME=hello       # env vars\n```"
     },
     {
       "id": "s2-10",
       "sectionId": "s2",
       "title": "Example",
-      "kind": "text",
-      "body": "```shell script\n$ docker create --name my_redis --expose 6379 redis:3.0.2"
-    },
-    {
-      "id": "s2-11",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Manipulating\n\nRenaming a Container\n\n```shell script\ndocker rename my-nginx my-nginx"
-    },
-    {
-      "id": "s2-12",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Removing a Container"
-    },
-    {
-      "id": "s2-13",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\ndocker rm my-nginx"
-    },
-    {
-      "id": "s2-14",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nUpdating a Container\n\n```shell script\ndocker update --cpu-shares 512 -m 300M my-nginx"
+      "body": "```shell script\n$ docker create --name my_redis --expose 6379 redis:3.0.2\n\n```\n\n### Manipulating\n\nRenaming a Container\n\n```shell script\ndocker rename my-nginx my-nginx\n```\n\nRemoving a Container\n\n```shell script\ndocker rm my-nginx\n\n```\n\nUpdating a Container\n\n```shell script\ndocker update --cpu-shares 512 -m 300M my-nginx\n```"
     },
     {
       "id": "s3-15",
       "sectionId": "s3",
       "title": "Manipulating",
-      "kind": "text",
       "body": "| `Example`                          | Description                     |\n| ---------------------------------- | ------------------------------- |\n| `docker images`                    | Listing images                  |\n| `docker rmi nginx`                 | Removing an image               |\n| `docker load < ubuntu.tar.gz`      | Loading a tarred repository     |\n| `docker load --input ubuntu.tar`   | Loading a tarred repository     |\n| `docker save busybox > ubuntu.tar` | Save an image to a tar archive  |\n| `docker history`                   | Showing the history of an image |\n| `docker commit nginx`              | Save a container as an image.   |\n| `docker tag nginx eon01/nginx`     | Tagging an image                |\n| `docker push eon01/nginx`          | Pushing an image                |"
     },
     {
       "id": "s3-16",
       "sectionId": "s3",
-      "title": "Building Images",
-      "kind": "text",
-      "body": "```shell script\n$ docker build .\n$ docker build github.com/creack/docker-firefox\n$ docker build - < Dockerfile\n$ docker build - < context.tar.gz\n$ docker build -t eon/my-nginx .\n$ docker build -f myOtherDockerfile .\n$ curl example.com/remote/Dockerfile | docker build -f - ."
-    },
-    {
-      "id": "s3-17",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n## Docker Networking {.cols-2}\n\n### Manipulating\n\nRemoving a network\n\n```shell script\ndocker network rm MyOverlayNetwork"
-    },
-    {
-      "id": "s3-18",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Listing networks"
-    },
-    {
-      "id": "s3-19",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\ndocker network ls"
-    },
-    {
-      "id": "s3-20",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nGetting information about a network\n\n```shell script\ndocker network inspect MyOverlayNetwork"
-    },
-    {
-      "id": "s3-21",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Connecting a running container to a network"
-    },
-    {
-      "id": "s3-22",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\ndocker network connect MyOverlayNetwork nginx"
-    },
-    {
-      "id": "s3-23",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nConnecting a container to a network when it starts\n\n```shell script\ndocker run -it -d --network=MyOverlayNetwork nginx"
-    },
-    {
-      "id": "s3-24",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Disconnecting a container from a network"
-    },
-    {
-      "id": "s3-25",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\ndocker network disconnect MyOverlayNetwork nginx"
-    },
-    {
-      "id": "s3-26",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "%0A%23%23%23%20Creating%20Networks%0A%0A%60%60%60shell%20script%0Adocker%20network%20create%20-d%20overlay%20MyOverlayNetwork%0A%0Adocker%20network%20create%20-d%20bridge%20MyBridgeNetwork%0A%0Adocker%20network%20create%20-d%20overlay%20%5C%0A%20%20--subnet%3D192.168.0.0%2F16%20%5C%0A%20%20--subnet%3D192.170.0.0%2F16%20%5C%0A%20%20--gateway%3D192.168.0.100%20%5C%0A%20%20--gateway%3D192.170.0.100%20%5C%0A%20%20--ip-range%3D192.168.1.0%2F24%20%5C%0A%20%20--aux-address%3D%22my-router%3D192.168.1.5%22%20%5C%0A%20%20--aux-address%3D%22my-switch%3D192.168.1.6%22%20%5C%0A%20%20--aux-address%3D%22my-printer%3D192.170.1.5%22%20%5C%0A%20%20--aux-address%3D%22my-nas%3D192.170.1.6%22%20%5C%0A%20%20MyOverlayNetwork",
+      "title": "Building%20Images",
+      "body": "%60%60%60shell%20script%0A%24%20docker%20build%20.%0A%24%20docker%20build%20github.com%2Fcreack%2Fdocker-firefox%0A%24%20docker%20build%20-%20%3C%20Dockerfile%0A%24%20docker%20build%20-%20%3C%20context.tar.gz%0A%24%20docker%20build%20-t%20eon%2Fmy-nginx%20.%0A%24%20docker%20build%20-f%20myOtherDockerfile%20.%0A%24%20curl%20example.com%2Fremote%2FDockerfile%20%7C%20docker%20build%20-f%20-%20.%0A%0A%60%60%60%0A%0A%23%23%20Docker%20Networking%20%7B.cols-2%7D%0A%0A%23%23%23%20Manipulating%0A%0ARemoving%20a%20network%0A%0A%60%60%60shell%20script%0Adocker%20network%20rm%20MyOverlayNetwork%0A%60%60%60%0A%0AListing%20networks%0A%0A%60%60%60shell%20script%0Adocker%20network%20ls%0A%0A%60%60%60%0A%0AGetting%20information%20about%20a%20network%0A%0A%60%60%60shell%20script%0Adocker%20network%20inspect%20MyOverlayNetwork%0A%60%60%60%0A%0AConnecting%20a%20running%20container%20to%20a%20network%0A%0A%60%60%60shell%20script%0Adocker%20network%20connect%20MyOverlayNetwork%20nginx%0A%0A%60%60%60%0A%0AConnecting%20a%20container%20to%20a%20network%20when%20it%20starts%0A%0A%60%60%60shell%20script%0Adocker%20run%20-it%20-d%20--network%3DMyOverlayNetwork%20nginx%0A%60%60%60%0A%0ADisconnecting%20a%20container%20from%20a%20network%0A%0A%60%60%60shell%20script%0Adocker%20network%20disconnect%20MyOverlayNetwork%20nginx%0A%0A%60%60%60%0A%0A%23%23%23%20Creating%20Networks%0A%0A%60%60%60shell%20script%0Adocker%20network%20create%20-d%20overlay%20MyOverlayNetwork%0A%0Adocker%20network%20create%20-d%20bridge%20MyBridgeNetwork%0A%0Adocker%20network%20create%20-d%20overlay%20%5C%0A%20%20--subnet%3D192.168.0.0%2F16%20%5C%0A%20%20--subnet%3D192.170.0.0%2F16%20%5C%0A%20%20--gateway%3D192.168.0.100%20%5C%0A%20%20--gateway%3D192.170.0.100%20%5C%0A%20%20--ip-range%3D192.168.1.0%2F24%20%5C%0A%20%20--aux-address%3D%22my-router%3D192.168.1.5%22%20%5C%0A%20%20--aux-address%3D%22my-switch%3D192.168.1.6%22%20%5C%0A%20%20--aux-address%3D%22my-printer%3D192.170.1.5%22%20%5C%0A%20%20--aux-address%3D%22my-nas%3D192.170.1.6%22%20%5C%0A%20%20MyOverlayNetwork%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-27",
       "sectionId": "s4",
       "title": "Clean All",
-      "kind": "text",
-      "body": "Cleans up dangling images, containers, volumes, and networks (ie, not associated with a container)"
-    },
-    {
-      "id": "s4-28",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "docker system prune"
-    },
-    {
-      "id": "s4-29",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Additionally, remove any stopped containers and all unused images (not just dangling images)"
-    },
-    {
-      "id": "s4-30",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "docker system prune -a"
+      "body": "Cleans up dangling images, containers, volumes, and networks (ie, not associated with a container)\n\n```shell\ndocker system prune\n```\n\nAdditionally, remove any stopped containers and all unused images (not just dangling images)\n\n```shell\ndocker system prune -a\n```"
     },
     {
       "id": "s4-31",
       "sectionId": "s4",
       "title": "Containers",
-      "kind": "text",
-      "body": "Stop all running containers"
-    },
-    {
-      "id": "s4-32",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "docker stop $(docker ps -a -q)"
-    },
-    {
-      "id": "s4-33",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Delete stopped containers"
-    },
-    {
-      "id": "s4-34",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "docker container prune"
+      "body": "Stop all running containers\n\n```shell\ndocker stop $(docker ps -a -q)\n```\n\nDelete stopped containers\n\n```shell\ndocker container prune\n```"
     },
     {
       "id": "s4-35",
       "sectionId": "s4",
       "title": "Images",
-      "kind": "text",
-      "body": "Remove all dangling (not tagged and is not associated with a container) images:"
-    },
-    {
-      "id": "s4-36",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "docker image prune"
-    },
-    {
-      "id": "s4-37",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Remove all images which are not used by existing containers"
-    },
-    {
-      "id": "s4-38",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "docker image prune -a"
+      "body": "Remove all dangling (not tagged and is not associated with a container) images:\n\n```shell\ndocker image prune\n```\n\nRemove all images which are not used by existing containers\n\n```shell\ndocker image prune -a\n```"
     },
     {
       "id": "s4-39",
       "sectionId": "s4",
       "title": "Volumes",
-      "kind": "code",
-      "lang": "shell",
-      "code": "docker volume prune"
-    },
-    {
-      "id": "s4-40",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Remove all volumes not used by at least one container"
+      "body": "```shell\ndocker volume prune\n```\n\nRemove all volumes not used by at least one container"
     },
     {
       "id": "s5-41",
       "sectionId": "s5",
       "title": "Docker Hub",
-      "kind": "text",
       "body": "| Docker Syntax               | Description                         |\n| --------------------------- | ----------------------------------- |\n| `docker search search_word` | Search docker hub for images.       |\n| `docker pull user/image   ` | Downloads an image from docker hub. |\n| `docker login             ` | Authenticate to docker hub          |\n| `docker push user/image   ` | Uploads an image to docker hub.     |"
     },
     {
       "id": "s5-42",
       "sectionId": "s5",
       "title": "Registry commands",
-      "kind": "text",
-      "body": "Login to a Registry"
-    },
-    {
-      "id": "s5-43",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n$ docker login\n$ docker login localhost:8080"
-    },
-    {
-      "id": "s5-44",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nLogout from a Registry\n\n```shell script\n$ docker logout\n$ docker logout localhost:8080"
-    },
-    {
-      "id": "s5-45",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "Searching an Image"
-    },
-    {
-      "id": "s5-46",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n$ docker search nginx\n$ docker search nginx --stars=3 --no-trunc busybox"
-    },
-    {
-      "id": "s5-47",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nPulling an Image\n\n```shell script\n$ docker pull nginx\n$ docker pull eon01/nginx localhost:5000/myadmin/nginx"
-    },
-    {
-      "id": "s5-48",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "Pushing an Image"
-    },
-    {
-      "id": "s5-49",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n$ docker push eon01/nginx\n$ docker push eon01/nginx localhost:5000/myadmin/nginx"
-    },
-    {
-      "id": "s5-50",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Batch clean\n\n| Example                             | Description             |\n| ----------------------------------- | ----------------------- |\n| `docker stop -f $(docker ps -a -q)` | Stopping all containers |\n| `docker rm -f $(docker ps -a -q)`   | Removing all containers |\n| `docker rmi -f $(docker images -q)` | Removing all images     |\n\n### Volumes\n\nCheck volumes\n\n```shell script\n$ docker volume ls"
-    },
-    {
-      "id": "s5-51",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "Cleanup unused volumes"
-    },
-    {
-      "id": "s5-52",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n$ docker volume prune"
+      "body": "Login to a Registry\n\n```shell script\n$ docker login\n$ docker login localhost:8080\n\n```\n\nLogout from a Registry\n\n```shell script\n$ docker logout\n$ docker logout localhost:8080\n```\n\nSearching an Image\n\n```shell script\n$ docker search nginx\n$ docker search nginx --stars=3 --no-trunc busybox\n\n```\n\nPulling an Image\n\n```shell script\n$ docker pull nginx\n$ docker pull eon01/nginx localhost:5000/myadmin/nginx\n```\n\nPushing an Image\n\n```shell script\n$ docker push eon01/nginx\n$ docker push eon01/nginx localhost:5000/myadmin/nginx\n\n```\n\n### Batch clean\n\n| Example                             | Description             |\n| ----------------------------------- | ----------------------- |\n| `docker stop -f $(docker ps -a -q)` | Stopping all containers |\n| `docker rm -f $(docker ps -a -q)`   | Removing all containers |\n| `docker rmi -f $(docker images -q)` | Removing all images     |\n\n### Volumes\n\nCheck volumes\n\n```shell script\n$ docker volume ls\n```\n\nCleanup unused volumes\n\n```shell script\n$ docker volume prune\n\n```\n\n```"
     }
   ],
   "source": {

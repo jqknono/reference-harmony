@@ -20,92 +20,73 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "[NumPy](https://numpy.org/) is the fundamental package for scientific computing with Python. This cheat sheet is a quick reference for NumPy beginners."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Introduction",
-      "kind": "text",
-      "body": "You’ll also need to import numpy to get started:"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "import numpy as np"
+      "body": "You’ll also need to import numpy to get started:\n\n```python\nimport numpy as np\n```"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
-      "title": "Importing/exporting",
-      "kind": "text",
-      "body": "| -                                          | -                     |\n| ------------------------------------------ | --------------------- |\n| `np.loadtxt('file.txt')`                   | From a text file      |\n| `np.genfromtxt('file.csv',delimiter=',')`  | From a CSV file       |\n| `np.savetxt('file.txt',arr,delimiter=' ')` | Writes to a text file |\n| `np.savetxt('file.csv',arr,delimiter=',')` | Writes to a CSV file  |"
+      "title": "Importing%2Fexporting",
+      "body": "%7C%20-%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20-%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20------------------------------------------%20%7C%20---------------------%20%7C%0A%7C%20%60np.loadtxt('file.txt')%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20From%20a%20text%20file%20%20%20%20%20%20%7C%0A%7C%20%60np.genfromtxt('file.csv'%2Cdelimiter%3D'%2C')%60%20%20%7C%20From%20a%20CSV%20file%20%20%20%20%20%20%20%7C%0A%7C%20%60np.savetxt('file.txt'%2Carr%2Cdelimiter%3D'%20')%60%20%7C%20Writes%20to%20a%20text%20file%20%7C%0A%7C%20%60np.savetxt('file.csv'%2Carr%2Cdelimiter%3D'%2C')%60%20%7C%20Writes%20to%20a%20CSV%20file%20%20%7C",
+      "encoded": true
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "Creating Arrays",
-      "kind": "text",
       "body": "| -                                 | -                                                                 |\n| --------------------------------- | ----------------------------------------------------------------- |\n| `np.array([1,2,3])`               | One dimensional array                                             |\n| `np.array([(1,2,3),(4,5,6)])`     | Two dimensional array                                             |\n| `np.zeros(3)`                     | 1D array of length 3 all values 0                                 |\n| `np.ones((3,4))`                  | 3x4 array with all values 1                                       |\n| `np.eye(5)`                       | 5x5 array of 0 with 1 on diagonal (Identity matrix)               |\n| `np.linspace(0,100,6)`            | Array of 6 evenly divided values from 0 to 100                    |\n| `np.arange(0,10,3)`               | Array of values from 0 to less than 10 with step 3 (eg [0,3,6,9]) |\n| `np.full((2,3),8)`                | 2x3 array with all values 8                                       |\n| `np.random.rand(4,5)`             | 4x5 array of random floats between 0–1                            |\n| `np.random.rand(6,7)*100`         | 6x7 array of random floats between 0–100                          |\n| `np.random.randint(5,size=(2,3))` | 2x3 array with random ints between 0–4                            |"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "Inspecting Properties",
-      "kind": "text",
       "body": "| -                   | -                                        |\n| ------------------- | ---------------------------------------- |\n| `arr.size`          | Returns number of elements in arr        |\n| `arr.shape`         | Returns dimensions of arr (rows,columns) |\n| `arr.dtype`         | Returns type of elements in arr          |\n| `arr.astype(dtype)` | Convert arr elements to type dtype       |\n| `arr.tolist()`      | Convert arr to a Python list             |\n| `np.info(np.eye)`   | View documentation for np.eye            |"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "Copying/sorting/reshaping",
-      "kind": "text",
       "body": "| -                     | -                                                       |\n| --------------------- | ------------------------------------------------------- |\n| `np.copy(arr)`        | Copies arr to new memory                                |\n| `arr.view(dtype)`     | Creates view of arr elements with type dtype            |\n| `arr.sort()`          | Sorts arr                                               |\n| `arr.sort(axis=0)`    | Sorts specific axis of arr                              |\n| `two_d_arr.flatten()` | Flattens 2D array two_d_arr to 1D                       |\n| `arr.T`               | Transposes arr (rows become columns and vice versa)     |\n| `arr.reshape(3,4)`    | Reshapes arr to 3 rows, 4 columns without changing data |\n| `arr.resize((5,6))`   | Changes arr shape to 5x6 and fills new values with 0    |"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "Adding/removing Elements",
-      "kind": "text",
       "body": "| -                         | -                                      |\n| ------------------------- | -------------------------------------- |\n| `np.append(arr,values)`   | Appends values to end of arr           |\n| `np.insert(arr,2,values)` | Inserts values into arr before index 2 |\n| `np.delete(arr,3,axis=0)` | Deletes row on index 3 of arr          |\n| `np.delete(arr,4,axis=1)` | Deletes column on index 4 of arr       |"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "Combining/splitting",
-      "kind": "text",
       "body": "| -                                    | -                                        |\n| ------------------------------------ | ---------------------------------------- |\n| `np.concatenate((arr1,arr2),axis=0)` | Adds arr2 as rows to the end of arr1     |\n| `np.concatenate((arr1,arr2),axis=1)` | Adds arr2 as columns to end of arr1      |\n| `np.split(arr,3)`                    | Splits arr into 3 sub-arrays             |\n| `np.hsplit(arr,5)`                   | Splits arr horizontally on the 5th index |"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "Indexing/slicing/subsetting",
-      "kind": "text",
       "body": "| -                     | -                                                                         |\n| --------------------- | ------------------------------------------------------------------------- |\n| `arr[5]`              | Returns the element at index 5                                            |\n| `arr[2,5]`            | Returns the 2D array element on index [2][5]                              |\n| `arr[1]=4`            | Assigns array element on index 1 the value 4                              |\n| `arr[1,3]=10`         | Assigns array element on index [1][3] the value 10                        |\n| `arr[0:3]`            | Returns the elements at indices 0,1,2 (On a 2D array: returns rows 0,1,2) |\n| `arr[0:3,4]`          | Returns the elements on rows 0,1,2 at column 4                            |\n| `arr[:2]`             | Returns the elements at indices 0,1 (On a 2D array: returns rows 0,1)     |\n| `arr[:,1]`            | Returns the elements at index 1 on all rows                               |\n| `arr<5`               | Returns an array with boolean values                                      |\n| `(arr1<3) & (arr2>5)` | Returns an array with boolean values                                      |\n| `~arr`                | Inverts a boolean array                                                   |\n| `arr[arr<5]`          | Returns array elements smaller than 5                                     |"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "Vector Math",
-      "kind": "text",
       "body": "| -                           | -                                                           |\n| --------------------------- | ----------------------------------------------------------- |\n| `np.add(arr1,arr2)`         | Elementwise add arr2 to arr1                                |\n| `np.subtract(arr1,arr2)`    | Elementwise subtract arr2 from arr1                         |\n| `np.multiply(arr1,arr2)`    | Elementwise multiply arr1 by arr2                           |\n| `np.divide(arr1,arr2)`      | Elementwise divide arr1 by arr2                             |\n| `np.power(arr1,arr2)`       | Elementwise raise arr1 raised to the power of arr2          |\n| `np.array_equal(arr1,arr2)` | Returns True if the arrays have the same elements and shape |\n| `np.sqrt(arr)`              | Square root of each element in the array                    |\n| `np.sin(arr)`               | Sine of each element in the array                           |\n| `np.log(arr)`               | Natural log of each element in the array                    |\n| `np.abs(arr)`               | Absolute value of each element in the array                 |\n| `np.ceil(arr)`              | Rounds up to the nearest int                                |\n| `np.floor(arr)`             | Rounds down to the nearest int                              |\n| `np.round(arr)`             | Rounds to the nearest int                                   |"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
       "title": "Scalar Math",
-      "kind": "text",
       "body": "| -                    | -                                                                    |\n| -------------------- | -------------------------------------------------------------------- |\n| `np.add(arr,1)`      | Add 1 to each array element                                          |\n| `np.subtract(arr,2)` | Subtract 2 from each array element                                   |\n| `np.multiply(arr,3)` | Multiply each array element by 3                                     |\n| `np.divide(arr,4)`   | Divide each array element by 4 (returns np.nan for division by zero) |\n| `np.power(arr,5)`    | Raise each array element to the 5th power                            |"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "Statistics",
-      "kind": "text",
       "body": "| -                     | -                                               |\n| --------------------- | ----------------------------------------------- |\n| `np.mean(arr,axis=0)` | Returns mean along specific axis                |\n| `arr.sum()`           | Returns sum of arr                              |\n| `arr.min()`           | Returns minimum value of arr                    |\n| `arr.max(axis=0)`     | Returns maximum value of specific axis          |\n| `np.var(arr)`         | Returns the variance of array                   |\n| `np.std(arr,axis=1)`  | Returns the standard deviation of specific axis |\n| `arr.corrcoef()`      | Returns correlation coefficient of array        |"
     }
   ],

@@ -40,363 +40,165 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "Pytorch 是一种开源机器学习框架，可加速从研究原型设计到生产部署的过程，备忘单是  官网\n备忘清单为您提供了 [Pytorch](https://pytorch.org/) 基本语法和初步应用参考"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "介绍",
-      "kind": "text",
       "body": "• [Pytorch 官网](https://pytorch.org/) _(pytorch.org)_\n• [Pytorch 官方备忘清单](https://pytorch.org/tutorials/beginner/ptcheat.html) _(pytorch.org)_"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "认识 Pytorch",
-      "kind": "code",
-      "lang": "python",
-      "code": "from __future__ import print_function\nimport torch\nx = torch.empty(5, 3)\n>>> print(x)\ntensor([\n    [2.4835e+27, 2.5428e+30, 1.0877e-19],\n    [1.5163e+23, 2.2012e+12, 3.7899e+22],\n    [5.2480e+05, 1.0175e+31, 9.7056e+24],\n    [1.6283e+32, 3.7913e+22, 3.9653e+28],\n    [1.0876e-19, 6.2027e+26, 2.3685e+21]\n])"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Tensors 张量: 张量的概念类似于Numpy中的ndarray数据结构, 最大的区别在于Tensor可以利用GPU的加速功能."
+      "body": "```python\nfrom __future__ import print_function\nimport torch\nx = torch.empty(5, 3)\n>>> print(x)\ntensor([\n    [2.4835e+27, 2.5428e+30, 1.0877e-19],\n    [1.5163e+23, 2.2012e+12, 3.7899e+22],\n    [5.2480e+05, 1.0175e+31, 9.7056e+24],\n    [1.6283e+32, 3.7913e+22, 3.9653e+28],\n    [1.0876e-19, 6.2027e+26, 2.3685e+21]\n])\n```\n\nTensors 张量: 张量的概念类似于Numpy中的ndarray数据结构, 最大的区别在于Tensor可以利用GPU的加速功能."
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "创建一个全零矩阵",
-      "kind": "code",
-      "lang": "python",
-      "code": "x = torch.zeros(5, 3, dtype=torch.long)\n>>> print(x)\ntensor([[0, 0, 0],\n        [0, 0, 0],\n        [0, 0, 0],\n        [0, 0, 0],\n        [0, 0, 0]])"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "创建一个全零矩阵并可指定数据元素的类型为long"
+      "body": "```python\nx = torch.zeros(5, 3, dtype=torch.long)\n>>> print(x)\ntensor([[0, 0, 0],\n        [0, 0, 0],\n        [0, 0, 0],\n        [0, 0, 0],\n        [0, 0, 0]])\n```\n\n创建一个全零矩阵并可指定数据元素的类型为long"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "数据创建张量",
-      "kind": "code",
-      "lang": "python",
-      "code": "x = torch.tensor([2.5, 3.5])\n>>> print(x)\ntensor([2.5000, 3.3000])"
+      "body": "```python\nx = torch.tensor([2.5, 3.5])\n>>> print(x)\ntensor([2.5000, 3.3000])\n```"
     },
     {
       "id": "s2-7",
       "sectionId": "s2",
       "title": "加法操作(1)",
-      "kind": "code",
-      "lang": "python",
-      "code": "y = torch.rand(5, 3)\n>>> print(x + y)\ntensor([[ 1.6978, -1.6979,  0.3093],\n        [ 0.4953,  0.3954,  0.0595],\n        [-0.9540,  0.3353,  0.1251],\n        [ 0.6883,  0.9775,  1.1764],\n        [ 2.6784,  0.1209,  1.5542]])"
+      "body": "```python\ny = torch.rand(5, 3)\n>>> print(x + y)\ntensor([[ 1.6978, -1.6979,  0.3093],\n        [ 0.4953,  0.3954,  0.0595],\n        [-0.9540,  0.3353,  0.1251],\n        [ 0.6883,  0.9775,  1.1764],\n        [ 2.6784,  0.1209,  1.5542]])\n```"
     },
     {
       "id": "s2-8",
       "sectionId": "s2",
       "title": "加法操作(2)",
-      "kind": "code",
-      "lang": "python",
-      "code": ">>> print(torch.add(x, y))\ntensor([[ 1.6978, -1.6979,  0.3093],\n        [ 0.4953,  0.3954,  0.0595],\n        [-0.9540,  0.3353,  0.1251],\n        [ 0.6883,  0.9775,  1.1764],\n        [ 2.6784,  0.1209,  1.5542]])"
+      "body": "```python\n>>> print(torch.add(x, y))\ntensor([[ 1.6978, -1.6979,  0.3093],\n        [ 0.4953,  0.3954,  0.0595],\n        [-0.9540,  0.3353,  0.1251],\n        [ 0.6883,  0.9775,  1.1764],\n        [ 2.6784,  0.1209,  1.5542]])\n```"
     },
     {
       "id": "s2-9",
       "sectionId": "s2",
       "title": "加法操作(3)",
-      "kind": "code",
-      "lang": "python",
-      "code": "# 提前设定一个空的张量\nresult = torch.empty(5, 3)\n# 将空的张量作为加法的结果存储张量\n torch.add(x, y, out=result)\n>>> print(result)\ntensor([[ 1.6978, -1.6979,  0.3093],\n        [ 0.4953,  0.3954,  0.0595],\n        [-0.9540,  0.3353,  0.1251],\n        [ 0.6883,  0.9775,  1.1764],\n        [ 2.6784,  0.1209,  1.5542]])"
+      "body": "```python\n# 提前设定一个空的张量\nresult = torch.empty(5, 3)\n# 将空的张量作为加法的结果存储张量\n torch.add(x, y, out=result)\n>>> print(result)\ntensor([[ 1.6978, -1.6979,  0.3093],\n        [ 0.4953,  0.3954,  0.0595],\n        [-0.9540,  0.3353,  0.1251],\n        [ 0.6883,  0.9775,  1.1764],\n        [ 2.6784,  0.1209,  1.5542]])\n```"
     },
     {
       "id": "s2-10",
       "sectionId": "s2",
       "title": "加法操作(4)",
-      "kind": "code",
-      "lang": "python",
-      "code": "y.add_(x)\n>>> print(y)\ntensor([[ 1.6978, -1.6979,  0.3093],\n        [ 0.4953,  0.3954,  0.0595],\n        [-0.9540,  0.3353,  0.1251],\n        [ 0.6883,  0.9775,  1.1764],\n        [ 2.6784,  0.1209,  1.5542]])"
-    },
-    {
-      "id": "s2-11",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "注意: 所有 `in-place` 的操作函数都有一个下划线的后缀。\n比如 `x.copy_(y)`, `x.add_(y)`, 都会直接改变x的值"
+      "body": "```python\ny.add_(x)\n>>> print(y)\ntensor([[ 1.6978, -1.6979,  0.3093],\n        [ 0.4953,  0.3954,  0.0595],\n        [-0.9540,  0.3353,  0.1251],\n        [ 0.6883,  0.9775,  1.1764],\n        [ 2.6784,  0.1209,  1.5542]])\n```\n\n注意: 所有 `in-place` 的操作函数都有一个下划线的后缀。\n比如 `x.copy_(y)`, `x.add_(y)`, 都会直接改变x的值"
     },
     {
       "id": "s2-12",
       "sectionId": "s2",
       "title": "张量操作",
-      "kind": "code",
-      "lang": "python",
-      "code": ">>> print(x[:, 1])\ntensor([-2.0902, -0.4489, -0.1441,  0.8035, -0.8341])"
+      "body": "```python\n>>> print(x[:, 1])\ntensor([-2.0902, -0.4489, -0.1441,  0.8035, -0.8341])\n```"
     },
     {
       "id": "s2-13",
       "sectionId": "s2",
       "title": "张量形状",
-      "kind": "code",
-      "lang": "python",
-      "code": "x = torch.randn(4, 4)\n# tensor.view()操作需要保证数据元素的总数量不变\ny = x.view(16)\n# -1代表自动匹配个数\nz = x.view(-1, 8)\n>>> print(x.size(), y.size(), z.size())\ntorch.Size([4, 4]) torch.Size([16]) torch.Size([2, 8])"
+      "body": "```python\nx = torch.randn(4, 4)\n# tensor.view()操作需要保证数据元素的总数量不变\ny = x.view(16)\n# -1代表自动匹配个数\nz = x.view(-1, 8)\n>>> print(x.size(), y.size(), z.size())\ntorch.Size([4, 4]) torch.Size([16]) torch.Size([2, 8])\n```"
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
       "title": "取张量元素",
-      "kind": "code",
-      "lang": "python",
-      "code": "x = torch.randn(1)\n>>> print(x)\n>>> print(x.item())\ntensor([-0.3531])\n-0.3530771732330322"
+      "body": "```python\nx = torch.randn(1)\n>>> print(x)\n>>> print(x.item())\ntensor([-0.3531])\n-0.3530771732330322\n```"
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
       "title": "Torch Tensor 和 Numpy array互换",
-      "kind": "code",
-      "lang": "python",
-      "code": "a = torch.ones(5)\n>>> print(a)\ntensor([1., 1., 1., 1., 1.])"
-    },
-    {
-      "id": "s2-16",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Torch Tensor和Numpy array共享底层的内存空间, 因此改变其中一个的值, 另一个也会随之被改变"
+      "body": "```python\na = torch.ones(5)\n>>> print(a)\ntensor([1., 1., 1., 1., 1.])\n```\n\nTorch Tensor和Numpy array共享底层的内存空间, 因此改变其中一个的值, 另一个也会随之被改变"
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "Torch Tensor 转换为 Numpy array",
-      "kind": "code",
-      "lang": "python",
-      "code": "b = a.numpy()\n>>> print(b)\n[1. 1. 1. 1. 1.]"
+      "body": "```python\nb = a.numpy()\n>>> print(b)\n[1. 1. 1. 1. 1.]\n```"
     },
     {
       "id": "s2-18",
       "sectionId": "s2",
       "title": "Numpy array转换为Torch Tensor",
-      "kind": "code",
-      "lang": "python",
-      "code": "import numpy as np\na = np.ones(5)\nb = torch.from_numpy(a)\nnp.add(a, 1, out=a)\n>>> print(a)\n>>> print(b)\n[2. 2. 2. 2. 2.]\ntensor([2., 2., 2., 2., 2.], dtype=torch.float64)"
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "注意: 所有在CPU上的Tensors, 除了CharTensor, 都可以转换为Numpy array并可以反向转换."
+      "body": "```python\nimport numpy as np\na = np.ones(5)\nb = torch.from_numpy(a)\nnp.add(a, 1, out=a)\n>>> print(a)\n>>> print(b)\n[2. 2. 2. 2. 2.]\ntensor([2., 2., 2., 2., 2.], dtype=torch.float64)\n```\n\n注意: 所有在CPU上的Tensors, 除了CharTensor, 都可以转换为Numpy array并可以反向转换."
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "squeeze函数",
-      "kind": "code",
-      "lang": "python",
-      "code": ">>> x = torch.rand(1, 2, 1, 28, 1)\n\n# squeeze不加参数，默认去除所有为1的维度\n>>> x.squeeze().shape\ntorch.Size([2, 28])\n\n# squeeze加参数，去除指定为1的维度\n>>> x.squeeze(dim=0).shape\ntorch.Size([2, 1, 28, 1])\n\n# squeeze加参数，如果不为1，则不变\n>>> x.squeeze(1).shape\ntorch.Size([1, 2, 1, 28, 1])\n\n# 既可以是函数，也可以是方法\n>>> torch.squeeze(x,-1).shape\ntorch.Size([1, 2, 1, 28])"
+      "body": "```python\n>>> x = torch.rand(1, 2, 1, 28, 1)\n\n# squeeze不加参数，默认去除所有为1的维度\n>>> x.squeeze().shape\ntorch.Size([2, 28])\n\n# squeeze加参数，去除指定为1的维度\n>>> x.squeeze(dim=0).shape\ntorch.Size([2, 1, 28, 1])\n\n# squeeze加参数，如果不为1，则不变\n>>> x.squeeze(1).shape\ntorch.Size([1, 2, 1, 28, 1])\n\n# 既可以是函数，也可以是方法\n>>> torch.squeeze(x,-1).shape\ntorch.Size([1, 2, 1, 28])\n```"
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "unsqueeze函数",
-      "kind": "code",
-      "lang": "python",
-      "code": ">>> x = torch.rand(2, 28)\n# unsqueeze必须加参数，    _ 2 _ 28 _\n>>> x.unsqueeze(0).shape  \n# 参数代表在哪里添加维度    0   1    2\ntorch.Size([1, 2, 28])        \n# 既可以是函数，也可以是方法\n>>> torch.unsqueeze(x, -1).shape\ntorch.Size([2, 28, 1])"
+      "body": "```python\n>>> x = torch.rand(2, 28)\n# unsqueeze必须加参数，    _ 2 _ 28 _\n>>> x.unsqueeze(0).shape  \n# 参数代表在哪里添加维度    0   1    2\ntorch.Size([1, 2, 28])        \n# 既可以是函数，也可以是方法\n>>> torch.unsqueeze(x, -1).shape\ntorch.Size([2, 28, 1])\n```"
     },
     {
       "id": "s3-22",
       "sectionId": "s3",
       "title": "检查 Cuda 是否可用",
-      "kind": "code",
-      "lang": "python",
-      "code": ">>> import torch.cuda\n>>> torch.cuda.is_available()\n>>> True"
+      "body": "```python\n>>> import torch.cuda\n>>> torch.cuda.is_available()\n>>> True\n```"
     },
     {
       "id": "s3-23",
       "sectionId": "s3",
       "title": "%E5%88%97%E5%87%BA%20GPU%20%E8%AE%BE%E5%A4%87",
-      "kind": "code",
-      "lang": "python",
-      "code": "import%20torch%0A%0Adevice_count%20%3D%20torch.cuda.device_count()%0Aprint(%22CUDA%20%E8%AE%BE%E5%A4%87%22)%0A%0Afor%20i%20in%20range(device_count)%3A%0A%20%20%20%20device_name%20%3D%20torch.cuda.get_device_name(i)%0A%20%20%20%20total_memory%20%3D%20torch.cuda.get_device_properties(i).total_memory%20%2F%20(1024%20**%203)%0A%20%20%20%20print(f%22%E2%94%9C%E2%94%80%E2%94%80%20%E8%AE%BE%E5%A4%87%20%7Bi%7D%3A%20%7Bdevice_name%7D%2C%20%E5%AE%B9%E9%87%8F%3A%20%7Btotal_memory%3A.2f%7D%20GiB%22)%0A%0Aprint(%22%E2%94%94%E2%94%80%E2%94%80%20(%E7%BB%93%E6%9D%9F)%22)",
+      "body": "%60%60%60python%0Aimport%20torch%0A%0Adevice_count%20%3D%20torch.cuda.device_count()%0Aprint(%22CUDA%20%E8%AE%BE%E5%A4%87%22)%0A%0Afor%20i%20in%20range(device_count)%3A%0A%20%20%20%20device_name%20%3D%20torch.cuda.get_device_name(i)%0A%20%20%20%20total_memory%20%3D%20torch.cuda.get_device_properties(i).total_memory%20%2F%20(1024%20**%203)%0A%20%20%20%20print(f%22%E2%94%9C%E2%94%80%E2%94%80%20%E8%AE%BE%E5%A4%87%20%7Bi%7D%3A%20%7Bdevice_name%7D%2C%20%E5%AE%B9%E9%87%8F%3A%20%7Btotal_memory%3A.2f%7D%20GiB%22)%0A%0Aprint(%22%E2%94%94%E2%94%80%E2%94%80%20(%E7%BB%93%E6%9D%9F)%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-24",
       "sectionId": "s3",
       "title": "%E5%B0%86%E6%A8%A1%E5%9E%8B%E3%80%81%E5%BC%A0%E9%87%8F%E7%AD%89%E6%95%B0%E6%8D%AE%E5%9C%A8%20GPU%20%E5%92%8C%E5%86%85%E5%AD%98%E4%B9%8B%E9%97%B4%E8%BF%9B%E8%A1%8C%E6%90%AC%E8%BF%90",
-      "kind": "code",
-      "lang": "python",
-      "code": "import%20torch%0A%23%20%E5%B0%86%200%20%E6%9B%BF%E6%8D%A2%E4%B8%BA%E6%82%A8%E7%9A%84%20GPU%20%E8%AE%BE%E5%A4%87%E7%B4%A2%E5%BC%95%E6%88%96%E8%80%85%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%20%22cuda%22%0Adevice%20%3D%20f%22cuda%3A0%22%0A%23%20%E7%A7%BB%E5%8A%A8%E5%88%B0GPU%0Atensor_m%20%3D%20torch.tensor(%5B1%2C%202%2C%203%5D)%0Atensor_g%20%3D%20tensor_m.to(device)%0Amodel_m%20%3D%20torch.nn.Linear(1%2C%201)%0Amodel_g%20%3D%20model_m.to(device)%0A%23%20%E5%90%91%E5%90%8E%E7%A7%BB%E5%8A%A8%0Atensor_m%20%3D%20tensor_g.cpu()%0Amodel_m%20%3D%20model_g.cpu()",
+      "body": "%60%60%60python%0Aimport%20torch%0A%23%20%E5%B0%86%200%20%E6%9B%BF%E6%8D%A2%E4%B8%BA%E6%82%A8%E7%9A%84%20GPU%20%E8%AE%BE%E5%A4%87%E7%B4%A2%E5%BC%95%E6%88%96%E8%80%85%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%20%22cuda%22%0Adevice%20%3D%20f%22cuda%3A0%22%0A%23%20%E7%A7%BB%E5%8A%A8%E5%88%B0GPU%0Atensor_m%20%3D%20torch.tensor(%5B1%2C%202%2C%203%5D)%0Atensor_g%20%3D%20tensor_m.to(device)%0Amodel_m%20%3D%20torch.nn.Linear(1%2C%201)%0Amodel_g%20%3D%20model_m.to(device)%0A%23%20%E5%90%91%E5%90%8E%E7%A7%BB%E5%8A%A8%0Atensor_m%20%3D%20tensor_g.cpu()%0Amodel_m%20%3D%20model_g.cpu()%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-25",
       "sectionId": "s4",
       "title": "一般",
-      "kind": "code",
-      "lang": "python",
-      "code": "# 根包\nimport torch"
-    },
-    {
-      "id": "s4-26",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "数据集表示和加载"
-    },
-    {
-      "id": "s4-27",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "from torch.utils.data import Dataset, DataLoader"
+      "body": "```python\n# 根包\nimport torch\n```\n\n数据集表示和加载\n\n```python\nfrom torch.utils.data import Dataset, DataLoader\n```"
     },
     {
       "id": "s4-28",
       "sectionId": "s4",
       "title": "神经网络 API",
-      "kind": "code",
-      "lang": "python",
-      "code": "# 计算图\nimport torch.autograd as autograd\n# 计算图中的张量节点\nfrom torch import Tensor"
-    },
-    {
-      "id": "s4-29",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "神经网络"
-    },
-    {
-      "id": "s4-30",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "import torch.nn as nn\n\n# 层、激活等\nimport torch.nn.functional as F\n# 优化器，例如 梯度下降、ADAM等\nimport torch.optim as optim"
-    },
-    {
-      "id": "s4-31",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "混合前端装饰器和跟踪 jit"
-    },
-    {
-      "id": "s4-32",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "from torch.jit import script, trace"
+      "body": "```python\n# 计算图\nimport torch.autograd as autograd\n# 计算图中的张量节点\nfrom torch import Tensor\n```\n\n神经网络\n\n```python\nimport torch.nn as nn\n\n# 层、激活等\nimport torch.nn.functional as F\n# 优化器，例如 梯度下降、ADAM等\nimport torch.optim as optim\n```\n\n混合前端装饰器和跟踪 jit\n\n```python\nfrom torch.jit import script, trace\n```"
     },
     {
       "id": "s4-33",
       "sectionId": "s4",
       "title": "ONNX",
-      "kind": "code",
-      "lang": "python",
-      "code": "torch.onnx.export(model, dummy data, xxxx.proto)\n# 导出 ONNX 格式\n# 使用经过训练的模型模型，dummy\n# 数据和所需的文件名"
-    },
-    {
-      "id": "s4-34",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "加载 ONNX 模型"
-    },
-    {
-      "id": "s4-35",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "model%20%3D%20onnx.load(%22alexnet.proto%22)",
+      "body": "%60%60%60python%0Atorch.onnx.export(model%2C%20dummy%20data%2C%20xxxx.proto)%0A%23%20%E5%AF%BC%E5%87%BA%20ONNX%20%E6%A0%BC%E5%BC%8F%0A%23%20%E4%BD%BF%E7%94%A8%E7%BB%8F%E8%BF%87%E8%AE%AD%E7%BB%83%E7%9A%84%E6%A8%A1%E5%9E%8B%E6%A8%A1%E5%9E%8B%EF%BC%8Cdummy%0A%23%20%E6%95%B0%E6%8D%AE%E5%92%8C%E6%89%80%E9%9C%80%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%0A%60%60%60%0A%0A%E5%8A%A0%E8%BD%BD%20ONNX%20%E6%A8%A1%E5%9E%8B%0A%0A%60%60%60python%0Amodel%20%3D%20onnx.load(%22alexnet.proto%22)%0A%60%60%60%0A%0A%E6%A3%80%E6%9F%A5%E6%A8%A1%E5%9E%8B%EF%BC%8CIT%20%E6%98%AF%E5%90%A6%E7%BB%93%E6%9E%84%E8%89%AF%E5%A5%BD%0A%0A%60%60%60python%0Aonnx.checker.check_model(model)%0A%60%60%60%0A%0A%E6%89%93%E5%8D%B0%E4%B8%80%E4%B8%AA%E4%BA%BA%E7%B1%BB%E5%8F%AF%E8%AF%BB%E7%9A%84%EF%BC%8C%E5%9B%BE%E7%9A%84%E8%A1%A8%E7%A4%BA%0A%0A%60%60%60python%0Aonnx.helper.printable_graph(model.graph)%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s4-36",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "检查模型，IT 是否结构良好"
-    },
-    {
-      "id": "s4-37",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "onnx.checker.check_model(model)"
-    },
-    {
-      "id": "s4-38",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "打印一个人类可读的，图的表示"
-    },
-    {
-      "id": "s4-39",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "onnx.helper.printable_graph(model.graph)"
     },
     {
       "id": "s4-40",
       "sectionId": "s4",
       "title": "Torchscript 和 JIT",
-      "kind": "code",
-      "lang": "python",
-      "code": "torch.jit.trace()"
-    },
-    {
-      "id": "s4-41",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "使用你的模块或函数和一个例子，数据输入，并追溯计算步骤，数据在模型中前进时遇到的情况"
-    },
-    {
-      "id": "s4-42",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "@script"
-    },
-    {
-      "id": "s4-43",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "装饰器用于指示被跟踪代码中的数据相关控制流"
+      "body": "```python\ntorch.jit.trace()\n```\n\n使用你的模块或函数和一个例子，数据输入，并追溯计算步骤，数据在模型中前进时遇到的情况\n\n```python\n@script\n```\n\n装饰器用于指示被跟踪代码中的数据相关控制流"
     },
     {
       "id": "s4-44",
       "sectionId": "s4",
       "title": "Vision",
-      "kind": "code",
-      "lang": "python",
-      "code": "# 视觉数据集，架构 & 变换\nfrom torchvision import datasets, models, transforms\n# 组合转换\nimport torchvision.transforms as transforms"
+      "body": "```python\n# 视觉数据集，架构 & 变换\nfrom torchvision import datasets, models, transforms\n# 组合转换\nimport torchvision.transforms as transforms\n```"
     },
     {
       "id": "s4-45",
       "sectionId": "s4",
       "title": "分布式训练",
-      "kind": "code",
-      "lang": "python",
-      "code": "# 分布式通信\nimport torch.distributed as dist\n# 内存共享进程\nfrom torch.multiprocessing import Process"
+      "body": "```python\n# 分布式通信\nimport torch.distributed as dist\n# 内存共享进程\nfrom torch.multiprocessing import Process\n```"
     },
     {
       "id": "s5-46",
       "sectionId": "s5",
       "title": "另见",
-      "kind": "text",
       "body": "• [Pytorch 官网](https://pytorch.org/) _(pytorch.org)_\n• [Pytorch 官方备忘清单](https://pytorch.org/tutorials/beginner/ptcheat.html) _(pytorch.org)_"
     }
   ],

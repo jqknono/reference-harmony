@@ -25,133 +25,62 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "[![NPM version](https://img.shields.io/npm/v/@nestjs/core.svg?style=flat)](https://www.npmjs.com/package/@nestjs/core)\n[![Downloads](https://img.shields.io/npm/dm/@nestjs/core.svg?style=flat)](https://www.npmjs.com/package/@nestjs/core)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/nestjs/nest)](https://github.com/nestjs/nest/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/nestjs/nest)"
     },
     {
       "id": "intro-1",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "[NestJS](https://docs.nestjs.com/) 是一个用于构建高效、可扩展的 Node.js 服务器端应用程序的开发框架\n<!--rehype:style=padding-top: 12px;-->"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "NestCLI",
-      "kind": "text",
-      "body": "[NestJS](https://docs.nestjs.com/) 需要 [Node.js >= 12](https://nodejs.org)"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ npm i -g @nestjs/cli\n$ nest new project-name"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "[Nest CLI](https://docs.nestjs.com/cli/overview) 是一个命令行界面工具，可以帮助你初始化、开发和维护你的Nest应用程序，安装依赖并启动开发服务器"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cd <your-project-name>\n$ npm run start"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "当你准备将应用发布到生产环境时，请运行："
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ npm run build"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "此命令会在 `./dist` 文件夹中为你的应用创建一个生产环境的构建版本"
+      "body": "[NestJS](https://docs.nestjs.com/) 需要 [Node.js >= 12](https://nodejs.org)\n\n```bash\n$ npm i -g @nestjs/cli\n$ nest new project-name\n```\n\n[Nest CLI](https://docs.nestjs.com/cli/overview) 是一个命令行界面工具，可以帮助你初始化、开发和维护你的Nest应用程序，安装依赖并启动开发服务器\n\n```bash\n$ cd <your-project-name>\n$ npm run start\n```\n\n当你准备将应用发布到生产环境时，请运行：\n\n```bash\n$ npm run build\n```\n\n此命令会在 `./dist` 文件夹中为你的应用创建一个生产环境的构建版本"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "CLI指令",
-      "kind": "text",
       "body": "命令 | 别名 | 描述\n:-|-|-\n`new` | n | 使用模板快速创建应用\n`generate` | g | 自动生成`Controller`、`Providers` 和 `Modules`\n`build` | | 打包并输出./dist目录\n`start` | | 打包并运行\n`add`   | | 安装一个符合Nest的库，同`npm install`\n`info`  | i | 输出系统信息、CLI版本和Nest Package信息\n<!--rehype:className=show-header left-align-->"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "Platform(平台)",
-      "kind": "text",
       "body": "目前 `NestJS` 支持两个 `Node HTTP` 平台：[Express](https://expressjs.com/) 和 [Fastify](https://www.fastify.io/)。从技术上讲，一旦创建了适配器，Nest 便可以使用任何 Node HTTP 框架"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
       "title": "platform-express",
-      "kind": "code",
-      "lang": "ts",
-      "code": "import { NestFactory } from '@nestjs/core'\nimport { AppModule } from './app.module'\nimport { NestExpressApplication } from '@nestjs/platform-express'\n\nasync function bootstrap() {\n  const app = await NestFactory.create<NestExpressApplication>(AppModule)\n  await app.listen(3000)\n}\nbootstrap()"
+      "body": "%60%60%60ts%0Aimport%20%7B%20NestFactory%20%7D%20from%20'%40nestjs%2Fcore'%0Aimport%20%7B%20AppModule%20%7D%20from%20'.%2Fapp.module'%0Aimport%20%7B%20NestExpressApplication%20%7D%20from%20'%40nestjs%2Fplatform-express'%0A%0Aasync%20function%20bootstrap()%20%7B%0A%20%20const%20app%20%3D%20await%20NestFactory.create%3CNestExpressApplication%3E(AppModule)%0A%20%20await%20app.listen(3000)%0A%7D%0Abootstrap()%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "platform-fastify",
-      "kind": "code",
-      "lang": "ts",
-      "code": "import { NestFactory } from '@nestjs/core'\nimport { AppModule } from './app.module'\nimport { NestFastifyApplication } from '@nestjs/platform-fastify'\n\nasync function bootstrap() {\n  const app = await NestFactory.create<NestFastifyApplication>(AppModule)\n  app.enableCors() // 开启Cors\n  app.register(fastifyCsrf)\n  await app.listen(4000, '0.0.0.0')\n  \n  console.log(`Application is running on: ${await app.getUrl()}`)\n}\nbootstrap()"
+      "body": "%60%60%60ts%0Aimport%20%7B%20NestFactory%20%7D%20from%20'%40nestjs%2Fcore'%0Aimport%20%7B%20AppModule%20%7D%20from%20'.%2Fapp.module'%0Aimport%20%7B%20NestFastifyApplication%20%7D%20from%20'%40nestjs%2Fplatform-fastify'%0A%0Aasync%20function%20bootstrap()%20%7B%0A%20%20const%20app%20%3D%20await%20NestFactory.create%3CNestFastifyApplication%3E(AppModule)%0A%20%20app.enableCors()%20%2F%2F%20%E5%BC%80%E5%90%AFCors%0A%20%20app.register(fastifyCsrf)%0A%20%20await%20app.listen(4000%2C%20'0.0.0.0')%0A%20%20%0A%20%20console.log(%60Application%20is%20running%20on%3A%20%24%7Bawait%20app.getUrl()%7D%60)%0A%7D%0Abootstrap()%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "目录",
-      "kind": "code",
-      "lang": "bash",
-      "code": "├── src      # 源代码目录\n│   ├── app.module.ts          # 应用程序的根模块\n│   ├── app.controller.spec.ts # 控制器的单元测试\n│   ├── app.controller.ts      # 单个路由的基本控制器\n│   ├── app.service.ts         # 具有单一方法的基本服务\n│   └── main.ts # 应用程序的入口文件\n│               # 它使用核心函数 NestFactory \n│               # 来创建 Nest 应用程序的实例\n└── test      # 测试目录\n    ├── app.e2e-spec.ts\n    └── jest-e2e.json"
+      "body": "```bash\n├── src      # 源代码目录\n│   ├── app.module.ts          # 应用程序的根模块\n│   ├── app.controller.spec.ts # 控制器的单元测试\n│   ├── app.controller.ts      # 单个路由的基本控制器\n│   ├── app.service.ts         # 具有单一方法的基本服务\n│   └── main.ts # 应用程序的入口文件\n│               # 它使用核心函数 NestFactory \n│               # 来创建 Nest 应用程序的实例\n└── test      # 测试目录\n    ├── app.e2e-spec.ts\n    └── jest-e2e.json\n```"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "JavaScript",
-      "kind": "text",
-      "body": "`NestCLI` 默认是使用`TypeScript`进行初始化项目的，如果需要使用`JavaScript`请使用以下指令"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ git clone https://github.com/nestjs/javascript-starter.git\n\n$ cd <javascript-starter>\n$ npm install\n$ npm run start"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "需要[注意](<https://docs.nestjs.com/first-steps#language>)的一点是，`JavaScript` 的版本是需要 `Babel` 的"
+      "body": "`NestCLI` 默认是使用`TypeScript`进行初始化项目的，如果需要使用`JavaScript`请使用以下指令\n\n```bash\n$ git clone https://github.com/nestjs/javascript-starter.git\n\n$ cd <javascript-starter>\n$ npm install\n$ npm run start\n```\n\n需要[注意](<https://docs.nestjs.com/first-steps#language>)的一点是，`JavaScript` 的版本是需要 `Babel` 的"
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "另见",
-      "kind": "text",
       "body": "[NestJs 官方文档](https://docs.nestjs.com/)"
     }
   ],

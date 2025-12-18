@@ -35,121 +35,94 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "This is a quick reference list of cheat sheets for Tensorflow. See also [Tensorflow website](https://tensorflow.org/)."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "General",
-      "kind": "code",
-      "lang": "",
-      "code": "import tensorflow as tf                             # root package\nimport tensorflow_datasets as tfds                  # dataset representation and loading\nmodel.compile(optimizer, loss, metrics)             # compile necessary components for training and evaluation\nmodel.fit(x_train, y_train, epoch, batch_size)      # model training\nmodel.evaluate(x_test, y_test)                      # model evaluation"
+      "body": "```\nimport tensorflow as tf                             # root package\nimport tensorflow_datasets as tfds                  # dataset representation and loading\nmodel.compile(optimizer, loss, metrics)             # compile necessary components for training and evaluation\nmodel.fit(x_train, y_train, epoch, batch_size)      # model training\nmodel.evaluate(x_test, y_test)                      # model evaluation\n```"
     },
     {
       "id": "s2-2",
       "sectionId": "s2",
       "title": "Basic Operations",
-      "kind": "code",
-      "lang": "",
-      "code": "a = tf.constant(5) + tf.constant(3)      # tf.constant is an immutable tensor storing the fixed value\na.numpy()                                # This will return the value, which is 8\nb = tf.Variable(10)                      # tf.Variable is a shared state for an entire execution time\nb.assign(15)                             # this assign the new value to the variable\nwith tf.GradientTape() as tape:          # record operations on variables for automatic differentiation"
+      "body": "```\na = tf.constant(5) + tf.constant(3)      # tf.constant is an immutable tensor storing the fixed value\na.numpy()                                # This will return the value, which is 8\nb = tf.Variable(10)                      # tf.Variable is a shared state for an entire execution time\nb.assign(15)                             # this assign the new value to the variable\nwith tf.GradientTape() as tape:          # record operations on variables for automatic differentiation\n```"
     },
     {
       "id": "s2-3",
       "sectionId": "s2",
       "title": "Creation",
-      "kind": "code",
-      "lang": "",
-      "code": "x = \ntf.random_normal_initializer(mean, std)            # tensor with independent N(mean,stf) entries\ntf.random_uniform_initializer(min_val, max_val)    # tensor with independent Uniform(min_val, max_val) entries\nx = tf.[ones|zeros](*size)          # tensor with all 1's [or 0's]\ny = x.clone()                       # clone of x\nwith torch.no_grad():               # code wrap that stops autograd from tracking tensor history\nrequires_grad=True                  # arg, when set to True, tracks computation\n                                    # history for future derivative calculations"
+      "body": "%60%60%60%0Ax%20%3D%20%0Atf.random_normal_initializer(mean%2C%20std)%20%20%20%20%20%20%20%20%20%20%20%20%23%20tensor%20with%20independent%20N(mean%2Cstf)%20entries%0Atf.random_uniform_initializer(min_val%2C%20max_val)%20%20%20%20%23%20tensor%20with%20independent%20Uniform(min_val%2C%20max_val)%20entries%0Ax%20%3D%20tf.%5Bones%7Czeros%5D(*size)%20%20%20%20%20%20%20%20%20%20%23%20tensor%20with%20all%201's%20%5Bor%200's%5D%0Ay%20%3D%20x.clone()%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20clone%20of%20x%0Awith%20torch.no_grad()%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20code%20wrap%20that%20stops%20autograd%20from%20tracking%20tensor%20history%0Arequires_grad%3DTrue%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20arg%2C%20when%20set%20to%20True%2C%20tracks%20computation%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20history%20for%20future%20derivative%20calculations%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-4",
       "sectionId": "s2",
       "title": "Dimensionality",
-      "kind": "code",
-      "lang": "",
-      "code": "tf.shape                               # shape of the tensor\ntf.rank                                # number of dimension of the tensors\ntf.size                                # number of elements in the tensor?\nx = tf.concat(tensor_seq, axis=0)      # concatenates tensors along axis\ny = tf.reshape(tensor, [new_shape])    # reshapes x into size (a,b,...)\ny = tf.reshape(tensor, [(-1,a])        # reshapes x into size (b,a) for some b\ny = x.permute(*dims)                   # permutes dimensions\ny = tf.expand_dims(x)                  # tensor with added axis\ny = tf.expand_dims(x, axis=2)          # (a,b,c) tensor -> (a,b,1,c) tensor"
+      "body": "```\ntf.shape                               # shape of the tensor\ntf.rank                                # number of dimension of the tensors\ntf.size                                # number of elements in the tensor?\nx = tf.concat(tensor_seq, axis=0)      # concatenates tensors along axis\ny = tf.reshape(tensor, [new_shape])    # reshapes x into size (a,b,...)\ny = tf.reshape(tensor, [(-1,a])        # reshapes x into size (b,a) for some b\ny = x.permute(*dims)                   # permutes dimensions\ny = tf.expand_dims(x)                  # tensor with added axis\ny = tf.expand_dims(x, axis=2)          # (a,b,c) tensor -> (a,b,1,c) tensor\n```"
     },
     {
       "id": "s2-5",
       "sectionId": "s2",
       "title": "Algebra",
-      "kind": "code",
-      "lang": "",
-      "code": "tf.add(a, b), a + b        # matrix addition\ntf.multiply(a, b), a * b   # matrix-vector multiplication\ntf.matmul(a, b), a @ b     # matrix multiplication\ntf.transpose()             # matrix transpose"
+      "body": "```\ntf.add(a, b), a + b        # matrix addition\ntf.multiply(a, b), a * b   # matrix-vector multiplication\ntf.matmul(a, b), a @ b     # matrix multiplication\ntf.transpose()             # matrix transpose\n```"
     },
     {
       "id": "s2-6",
       "sectionId": "s2",
       "title": "GPU%20Usage",
-      "kind": "code",
-      "lang": "",
-      "code": "gpus%20%3D%20tf.config.list_physical_devices('GPU')%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20check%20whether%20there%20is%20a%20GPU%20usage%0Aif%20gpus%3A%0A%0Atf.device()%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20manual%20device%20placement%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20either%20%22%2FCPU%3A0%22%2C%20%22%2FGPU%3A0%22%2C%20or%20other%20qualified%20name%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20of%20the%20second%20GPU%20of%20your%20machine%0A%0Atry%3A%0A%20%20%20%20tf.config.set_visible_devices(gpus%5B0%5D%2C%20'GPU')%20%20%20%20%20%20%20%20%20%20%23%20Limiting%20GPU%20memory%20growth",
+      "body": "%60%60%60%0Agpus%20%3D%20tf.config.list_physical_devices('GPU')%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20check%20whether%20there%20is%20a%20GPU%20usage%0Aif%20gpus%3A%0A%0Atf.device()%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20manual%20device%20placement%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20either%20%22%2FCPU%3A0%22%2C%20%22%2FGPU%3A0%22%2C%20or%20other%20qualified%20name%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20of%20the%20second%20GPU%20of%20your%20machine%0A%0Atry%3A%0A%20%20%20%20tf.config.set_visible_devices(gpus%5B0%5D%2C%20'GPU')%20%20%20%20%20%20%20%20%20%20%23%20Limiting%20GPU%20memory%20growth%0A%0A%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-7",
       "sectionId": "s3",
       "title": "Creating Models",
-      "kind": "code",
-      "lang": "",
-      "code": "tf.keras.Sequential                                # stack layers in a way that the computation\n                                                   # will be performed sequentially"
+      "body": "```\ntf.keras.Sequential                                # stack layers in a way that the computation\n                                                   # will be performed sequentially\n```"
     },
     {
       "id": "s3-8",
       "sectionId": "s3",
       "title": "Layers",
-      "kind": "code",
-      "lang": "",
-      "code": "tf.keras.layers.Dense(m,n)                          # fully connected layer from\n                                                    # m to n units\n\ntf.keras.layers.ConvXd(m,n,s)                       # X dimensional conv layer from\n                                                    # m to n channels where X⍷{1,2,3}\n                                                    # and the kernel size is s\n\ntf.keras.layers.MaxPoolXd(s)                        # X dimension pooling layer\n                                                    # (notation as above)\n\ntf.keras.layers.BatchNormalization                  # batch norm layer\ntf.keras.layers.RNN/LSTM/GRU                        # recurrent layers\ntf.keras.layers.Dropout(rate=0.5)                   # dropout layer for any dimensional input\ntf.keras.layers.Embedding(input_dim, output_dim)    # (tensor-wise) mapping from\n                                                    # indices to embedding vectors"
+      "body": "```\ntf.keras.layers.Dense(m,n)                          # fully connected layer from\n                                                    # m to n units\n\ntf.keras.layers.ConvXd(m,n,s)                       # X dimensional conv layer from\n                                                    # m to n channels where X⍷{1,2,3}\n                                                    # and the kernel size is s\n\ntf.keras.layers.MaxPoolXd(s)                        # X dimension pooling layer\n                                                    # (notation as above)\n\ntf.keras.layers.BatchNormalization                  # batch norm layer\ntf.keras.layers.RNN/LSTM/GRU                        # recurrent layers\ntf.keras.layers.Dropout(rate=0.5)                   # dropout layer for any dimensional input\ntf.keras.layers.Embedding(input_dim, output_dim)    # (tensor-wise) mapping from\n                                                    # indices to embedding vectors\n```"
     },
     {
       "id": "s3-9",
       "sectionId": "s3",
       "title": "Loss Functions",
-      "kind": "code",
-      "lang": "",
-      "code": "tf.keras.losses.X                   # where X is BinaryCrossentropy, BinaryFocalCrossentropy, CTC\n                                    # CategoricalCrossentropy, CategoricalFocalCrossentropy,\n                                    # CategoricalHinge, CosineSimilarity, Dice, Hinge, Huber\n                                    # KLDivergence, LogCosh, MeanAbsoluteError, MeanAbsolutePercentageError\n                                    # MeanSquaredError, MeanSquaredLogarithmicError, Poisson\n                                    # Reduction, SparseCategoricalCrossentropy, SquaredHinge, Tversky"
+      "body": "```\ntf.keras.losses.X                   # where X is BinaryCrossentropy, BinaryFocalCrossentropy, CTC\n                                    # CategoricalCrossentropy, CategoricalFocalCrossentropy,\n                                    # CategoricalHinge, CosineSimilarity, Dice, Hinge, Huber\n                                    # KLDivergence, LogCosh, MeanAbsoluteError, MeanAbsolutePercentageError\n                                    # MeanSquaredError, MeanSquaredLogarithmicError, Poisson\n                                    # Reduction, SparseCategoricalCrossentropy, SquaredHinge, Tversky\n```"
     },
     {
       "id": "s3-10",
       "sectionId": "s3",
       "title": "Activation Functions",
-      "kind": "code",
-      "lang": "",
-      "code": "tf.keras.activations.X                # where X is ReLU, ReLU6, ELU, SELU, PReLU, LeakyReLU,\n                                      # RReLu, CELU, GELU, Threshold, Hardshrink, HardTanh,\n                                      # Sigmoid, LogSigmoid, Softplus, SoftShrink,\n                                      # Softsign, Tanh, TanhShrink, Softmin, Softmax,\n                                      # Softmax2d, LogSoftmax or AdaptiveSoftmaxWithLoss"
+      "body": "```\ntf.keras.activations.X                # where X is ReLU, ReLU6, ELU, SELU, PReLU, LeakyReLU,\n                                      # RReLu, CELU, GELU, Threshold, Hardshrink, HardTanh,\n                                      # Sigmoid, LogSigmoid, Softplus, SoftShrink,\n                                      # Softsign, Tanh, TanhShrink, Softmin, Softmax,\n                                      # Softmax2d, LogSoftmax or AdaptiveSoftmaxWithLoss\n```"
     },
     {
       "id": "s3-11",
       "sectionId": "s3",
       "title": "Optimizers",
-      "kind": "code",
-      "lang": "",
-      "code": "opt = tf.keras.optimizer.x(model.parameters(), ...)      # create optimizer\nopt.step()                                  # update weights\noptim.X                                     # where X is SGD, Adadelta, Adafactor,\n                                            # Adagrad, Adam, AdamW, Adamax, Ftrl, Lion,\n                                            # LossScaleOptimizer ,RMSprop or Rprop"
+      "body": "```\nopt = tf.keras.optimizer.x(model.parameters(), ...)      # create optimizer\nopt.step()                                  # update weights\noptim.X                                     # where X is SGD, Adadelta, Adafactor,\n                                            # Adagrad, Adam, AdamW, Adamax, Ftrl, Lion,\n                                            # LossScaleOptimizer ,RMSprop or Rprop\n```"
     },
     {
       "id": "s3-12",
       "sectionId": "s3",
       "title": "Learning rate scheduling - Callbacks",
-      "kind": "code",
-      "lang": "",
-      "code": "callbacks = tf.keras.callbacks.LearningRateScheduler(scheduler)     # create lr scheduler\nmodel.fit(..., callbacks=[callback], ....)                          # update lr after optimizer updates weights\n                                                                    # using with fit(), evaluate(), and predict()"
+      "body": "```\ncallbacks = tf.keras.callbacks.LearningRateScheduler(scheduler)     # create lr scheduler\nmodel.fit(..., callbacks=[callback], ....)                          # update lr after optimizer updates weights\n                                                                    # using with fit(), evaluate(), and predict()\n```"
     },
     {
       "id": "s3-13",
       "sectionId": "s3",
       "title": "Saving and Loading Models",
-      "kind": "code",
-      "lang": "",
-      "code": "tf.keras.models.clone_model(...)         # Clone a Functional or Sequential Model instance.\ntf.keras.models.load_model(...)          # Loads a model saved via model.save().\ntf.keras.models.model_from_json(...)     # Parses a JSON model configuration string and returns a model instance.\ntf.keras.models.save_model(...)          # Saves a model as a .keras file."
+      "body": "```\ntf.keras.models.clone_model(...)         # Clone a Functional or Sequential Model instance.\ntf.keras.models.load_model(...)          # Loads a model saved via model.save().\ntf.keras.models.model_from_json(...)     # Parses a JSON model configuration string and returns a model instance.\ntf.keras.models.save_model(...)          # Saves a model as a .keras file.\n```"
     },
     {
       "id": "s4-14",
       "sectionId": "s4",
       "title": "Datasets",
-      "kind": "code",
-      "lang": "",
-      "code": "pip install tensorflow-datasets          # install the module\ntfds.load('mnist', split, shuffle_files) # loading a dataset"
+      "body": "%60%60%60%0Apip%20install%20tensorflow-datasets%20%20%20%20%20%20%20%20%20%20%23%20install%20the%20module%0Atfds.load('mnist'%2C%20split%2C%20shuffle_files)%20%23%20loading%20a%20dataset%0A%60%60%60",
+      "encoded": true
     }
   ],
   "source": {

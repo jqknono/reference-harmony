@@ -75,512 +75,389 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "Nix 快速参考备忘单，旨在帮助编写基础的 Nix 代码。Nix 是一个纯函数式包管理器和 NixOS 系统的基础语言。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20x%20%3D%20%22%E5%8D%95%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%22%3B%0A%20%20y%20%3D%20''%0A%20%20%20%20%E5%A4%9A%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%20%20%20%20%E6%94%AF%E6%8C%81%E6%8D%A2%E8%A1%8C%E5%92%8C%E7%BC%A9%E8%BF%9B%0A%20%20''%3B%0A%20%20z%20%3D%20''%0A%20%20%20%20%E5%89%8D%E5%AF%BC%E7%A9%BA%E6%A0%BC%E4%BC%9A%E8%A2%AB%E8%87%AA%E5%8A%A8%E5%A4%84%E7%90%86%0A%20%20%20%20%20%20%E8%BF%99%E8%A1%8C%E4%BC%9A%E4%BF%9D%E6%8C%81%E7%BC%A9%E8%BF%9B%0A%20%20''%3B%0Ain",
+      "body": "%60%60%60nix%0Alet%0A%20%20x%20%3D%20%22%E5%8D%95%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%22%3B%0A%20%20y%20%3D%20''%0A%20%20%20%20%E5%A4%9A%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%20%20%20%20%E6%94%AF%E6%8C%81%E6%8D%A2%E8%A1%8C%E5%92%8C%E7%BC%A9%E8%BF%9B%0A%20%20''%3B%0A%20%20z%20%3D%20''%0A%20%20%20%20%E5%89%8D%E5%AF%BC%E7%A9%BA%E6%A0%BC%E4%BC%9A%E8%A2%AB%E8%87%AA%E5%8A%A8%E5%A4%84%E7%90%86%0A%20%20%20%20%20%20%E8%BF%99%E8%A1%8C%E4%BC%9A%E4%BF%9D%E6%8C%81%E7%BC%A9%E8%BF%9B%0A%20%20''%3B%0Ain%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20name%20%3D%20%22%E4%B8%96%E7%95%8C%22%3B%0A%20%20greeting%20%3D%20%22%E4%BD%A0%E5%A5%BD%EF%BC%8C%24%7Bname%7D%EF%BC%81%22%3B%0Ain",
+      "body": "%60%60%60nix%0Alet%0A%20%20name%20%3D%20%22%E4%B8%96%E7%95%8C%22%3B%0A%20%20greeting%20%3D%20%22%E4%BD%A0%E5%A5%BD%EF%BC%8C%24%7Bname%7D%EF%BC%81%22%3B%0Ain%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20escaped%20%3D%20''%0A%20%20%20%20%E5%BC%95%E5%8F%B7%EF%BC%9A%5C%22hello%5C%22%EF%BC%8C%E6%8D%A2%E8%A1%8C%EF%BC%9A%5Cn%EF%BC%8C%E5%88%B6%E8%A1%A8%E7%AC%A6%EF%BC%9A%5Ct%0A%20%20''%3B%0Ain",
+      "body": "%60%60%60nix%0Alet%0A%20%20escaped%20%3D%20''%0A%20%20%20%20%E5%BC%95%E5%8F%B7%EF%BC%9A%5C%22hello%5C%22%EF%BC%8C%E6%8D%A2%E8%A1%8C%EF%BC%9A%5Cn%EF%BC%8C%E5%88%B6%E8%A1%A8%E7%AC%A6%EF%BC%9A%5Ct%0A%20%20''%3B%0Ain%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "整数",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  x = -123;\n  y = 123;\n  # 支持不同进制\n  hex = 0xFF;          # 十六进制: 255\n  bin = 0b1010;        # 二进制: 10\n  oct = 0o755;         # 八进制: 493\nin"
+      "body": "```nix\nlet\n  x = -123;\n  y = 123;\n  # 支持不同进制\n  hex = 0xFF;          # 十六进制: 255\n  bin = 0b1010;        # 二进制: 10\n  oct = 0o755;         # 八进制: 493\nin\n```"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "浮点数",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  x = -0.32;\n  y = 0.45;\n  scientific = 1.23e-4;    # 科学记数法\n  inf = 1.0 / 0.0;         # 无穷大\nin"
+      "body": "```nix\nlet\n  x = -0.32;\n  y = 0.45;\n  scientific = 1.23e-4;    # 科学记数法\n  inf = 1.0 / 0.0;         # 无穷大\nin\n```"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "布尔值",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  x = true;\n  y = false;\n  # 布尔运算\n  and_result = true && false;   # false\n  or_result = true || false;    # true\n  not_result = !true;           # false\nin"
+      "body": "```nix\nlet\n  x = true;\n  y = false;\n  # 布尔运算\n  and_result = true && false;   # false\n  or_result = true || false;    # true\n  not_result = !true;           # false\nin\n```"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "空值",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  x = null;\n  # null 表示缺失值\n  # 类似于其他语言的 None 或 undefined\nin"
+      "body": "```nix\nlet\n  x = null;\n  # null 表示缺失值\n  # 类似于其他语言的 None 或 undefined\nin\n```"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "路径",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  absolute = /usr/bin/env;      # 绝对路径\n  relative = ./config.nix;      # 相对路径\n  home = ~/Documents;           # 家目录路径\n  # 路径会在构建时自动复制到 Nix store\nin"
+      "body": "```nix\nlet\n  absolute = /usr/bin/env;      # 绝对路径\n  relative = ./config.nix;      # 相对路径\n  home = ~/Documents;           # 家目录路径\n  # 路径会在构建时自动复制到 Nix store\nin\n```"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "%E5%B1%9E%E6%80%A7%E9%9B%86",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20x%20%3D%20%7B%0A%20%20%20%20name%20%3D%20%22%E5%BC%A0%E4%B8%89%22%3B%0A%20%20%20%20age%20%3D%2025%3B%0A%20%20%20%20address%20%3D%20%7B%0A%20%20%20%20%20%20city%20%3D%20%22%E5%8C%97%E4%BA%AC%22%3B%0A%20%20%20%20%20%20district%20%3D%20%22%E6%9C%9D%E9%98%B3%E5%8C%BA%22%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0A%20%20y%20%3D%20%7B%20c%20%3D%203%3B%20%7D%3B%0A%20%20%23%20%E9%80%92%E5%BD%92%E5%B1%9E%E6%80%A7%E9%9B%86%0A%20%20rec_set%20%3D%20rec%20%7B%0A%20%20%20%20x%20%3D%201%3B%0A%20%20%20%20y%20%3D%20x%20%2B%201%3B%20%20%20%20%23%20%E5%8F%AF%E4%BB%A5%E5%BC%95%E7%94%A8%E5%90%8C%E7%BA%A7%E5%B1%9E%E6%80%A7%0A%20%20%7D%3B%0Ain",
+      "body": "%60%60%60nix%0Alet%0A%20%20x%20%3D%20%7B%0A%20%20%20%20name%20%3D%20%22%E5%BC%A0%E4%B8%89%22%3B%0A%20%20%20%20age%20%3D%2025%3B%0A%20%20%20%20address%20%3D%20%7B%0A%20%20%20%20%20%20city%20%3D%20%22%E5%8C%97%E4%BA%AC%22%3B%0A%20%20%20%20%20%20district%20%3D%20%22%E6%9C%9D%E9%98%B3%E5%8C%BA%22%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0A%20%20y%20%3D%20%7B%20c%20%3D%203%3B%20%7D%3B%0A%20%20%23%20%E9%80%92%E5%BD%92%E5%B1%9E%E6%80%A7%E9%9B%86%0A%20%20rec_set%20%3D%20rec%20%7B%0A%20%20%20%20x%20%3D%201%3B%0A%20%20%20%20y%20%3D%20x%20%2B%201%3B%20%20%20%20%23%20%E5%8F%AF%E4%BB%A5%E5%BC%95%E7%94%A8%E5%90%8C%E7%BA%A7%E5%B1%9E%E6%80%A7%0A%20%20%7D%3B%0Ain%0A%60%60%60%0A%0A%E5%8F%82%E8%A7%81%20%5B%E5%B1%9E%E6%80%A7%E9%9B%86%E6%93%8D%E4%BD%9C%5D(%23%E5%B1%9E%E6%80%A7%E9%9B%86)",
       "encoded": true
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "参见 [属性集操作](#属性集)"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
       "title": "%E5%88%97%E8%A1%A8",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20numbers%20%3D%20%5B%201%202%203%204%205%20%5D%3B%0A%20%20mixed%20%3D%20%5B%0A%20%20%20%201%0A%20%20%20%20%22%E8%BF%99%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%22%0A%20%20%20%2023.0%0A%20%20%20%20null%0A%20%20%20%20%7B%20name%20%3D%20%22%E5%B1%9E%E6%80%A7%E9%9B%86%22%3B%20%7D%0A%20%20%5D%3B%0A%20%20%23%20%E5%88%97%E8%A1%A8%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%85%83%E7%B4%A0%0A%20%20nested%20%3D%20%5B%20%5B%201%202%20%5D%20%5B%203%204%20%5D%20%5D%3B%0Ain",
+      "body": "%60%60%60nix%0Alet%0A%20%20numbers%20%3D%20%5B%201%202%203%204%205%20%5D%3B%0A%20%20mixed%20%3D%20%5B%0A%20%20%20%201%0A%20%20%20%20%22%E8%BF%99%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%22%0A%20%20%20%2023.0%0A%20%20%20%20null%0A%20%20%20%20%7B%20name%20%3D%20%22%E5%B1%9E%E6%80%A7%E9%9B%86%22%3B%20%7D%0A%20%20%5D%3B%0A%20%20%23%20%E5%88%97%E8%A1%A8%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%85%83%E7%B4%A0%0A%20%20nested%20%3D%20%5B%20%5B%201%202%20%5D%20%5B%203%204%20%5D%20%5D%3B%0Ain%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "注释 - ↓ 单行注释",
-      "kind": "code",
-      "lang": "nix",
-      "code": "# 这是单行注释\nlet x = 1; in x  # 行末注释"
+      "body": "```nix\n# 这是单行注释\nlet x = 1; in x  # 行末注释\n```"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "↓ 多行注释",
-      "kind": "code",
-      "lang": "nix",
-      "code": "/*\n  这是多行注释\n  可以跨越多行\n  /* 可以嵌套 */\n*/"
+      "body": "```nix\n/*\n  这是多行注释\n  可以跨越多行\n  /* 可以嵌套 */\n*/\n```"
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
       "title": "定义局部变量",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  x = 1;\n  y = 2;\n  z = x + y;    # 可以引用前面定义的变量\nin\n  x + y + z     # 返回 6"
+      "body": "```nix\nlet\n  x = 1;\n  y = 2;\n  z = x + y;    # 可以引用前面定义的变量\nin\n  x + y + z     # 返回 6\n```"
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
       "title": "嵌套 let 表达式",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  outer = 10;\nin\n  let\n    inner = 5;\n  in\n    outer + inner   # 返回 15"
+      "body": "```nix\nlet\n  outer = 10;\nin\n  let\n    inner = 5;\n  in\n    outer + inner   # 返回 15\n```"
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
       "title": "将变量添加到作用域",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  x = 1;\n  y = 2;\nin\n  { inherit x y; }    # 继承多个变量"
+      "body": "```nix\nlet\n  x = 1;\n  y = 2;\nin\n  { inherit x y; }    # 继承多个变量\n```"
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "↓ 等价于",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  x = 1;\n  y = 2;\nin\n  { x = x; y = y; }"
+      "body": "```nix\nlet\n  x = 1;\n  y = 2;\nin\n  { x = x; y = y; }\n```"
     },
     {
       "id": "s2-18",
       "sectionId": "s2",
       "title": "%E4%BB%8E%E5%B1%9E%E6%80%A7%E9%9B%86%E7%BB%A7%E6%89%BF%E5%B1%9E%E6%80%A7",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20config%20%3D%20%7B%20%0A%20%20%20%20host%20%3D%20%22localhost%22%3B%20%0A%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20ssl%20%3D%20true%3B%0A%20%20%7D%3B%0Ain%0A%20%20%7B%20%0A%20%20%20%20inherit%20(config)%20host%20port%3B%0A%20%20%20%20%23%20%E5%8F%AA%E7%BB%A7%E6%89%BF%E7%89%B9%E5%AE%9A%E5%B1%9E%E6%80%A7%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20config%20%3D%20%7B%20%0A%20%20%20%20host%20%3D%20%22localhost%22%3B%20%0A%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20ssl%20%3D%20true%3B%0A%20%20%7D%3B%0Ain%0A%20%20%7B%20%0A%20%20%20%20inherit%20(config)%20host%20port%3B%0A%20%20%20%20%23%20%E5%8F%AA%E7%BB%A7%E6%89%BF%E7%89%B9%E5%AE%9A%E5%B1%9E%E6%80%A7%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-19",
       "sectionId": "s2",
       "title": "%E2%86%93%20%E7%AD%89%E4%BB%B7%E4%BA%8E",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20config%20%3D%20%7B%20%0A%20%20%20%20host%20%3D%20%22localhost%22%3B%20%0A%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20ssl%20%3D%20true%3B%0A%20%20%7D%3B%0Ain%0A%20%20%7B%20%0A%20%20%20%20host%20%3D%20config.host%3B%20%0A%20%20%20%20port%20%3D%20config.port%3B%20%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20config%20%3D%20%7B%20%0A%20%20%20%20host%20%3D%20%22localhost%22%3B%20%0A%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20ssl%20%3D%20true%3B%0A%20%20%7D%3B%0Ain%0A%20%20%7B%20%0A%20%20%20%20host%20%3D%20config.host%3B%20%0A%20%20%20%20port%20%3D%20config.port%3B%20%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "%E5%B0%86%E6%89%80%E6%9C%89%E5%B1%9E%E6%80%A7%E5%BC%95%E5%85%A5%E4%BD%9C%E7%94%A8%E5%9F%9F",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20config%20%3D%20%7B%20%0A%20%20%20%20host%20%3D%20%22localhost%22%3B%20%0A%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20database%20%3D%20%22myapp%22%3B%0A%20%20%7D%3B%0Ain%0A%20%20with%20config%3B%0A%20%20%22%24%7Bhost%7D%3A%24%7BtoString%20port%7D%2F%24%7Bdatabase%7D%22%20%20%20%20%23%20%E8%BF%94%E5%9B%9E%20%22localhost%3A8080%2Fmyapp%22",
+      "body": "%60%60%60nix%0Alet%0A%20%20config%20%3D%20%7B%20%0A%20%20%20%20host%20%3D%20%22localhost%22%3B%20%0A%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20database%20%3D%20%22myapp%22%3B%0A%20%20%7D%3B%0Ain%0A%20%20with%20config%3B%0A%20%20%22%24%7Bhost%7D%3A%24%7BtoString%20port%7D%2F%24%7Bdatabase%7D%22%20%20%20%20%23%20%E8%BF%94%E5%9B%9E%20%22localhost%3A8080%2Fmyapp%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "注意事项",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  x = 1;\n  attrs = { x = 2; y = 3; };\nin\n  with attrs;\n  x + y    # x = 1 (局部变量优先级更高), y = 3"
+      "body": "```nix\nlet\n  x = 1;\n  attrs = { x = 2; y = 3; };\nin\n  with attrs;\n  x + y    # x = 1 (局部变量优先级更高), y = 3\n```"
     },
     {
       "id": "s3-22",
       "sectionId": "s3",
       "title": "%E5%9F%BA%E6%9C%AC%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20x%20%3D%2010%3B%0A%20%20result%20%3D%20if%20x%20%3E%200%0A%20%20%20%20then%20%22%E6%AD%A3%E6%95%B0%22%0A%20%20%20%20else%20if%20x%20%3C%200%0A%20%20%20%20then%20%22%E8%B4%9F%E6%95%B0%22%0A%20%20%20%20else%20%22%E9%9B%B6%22%3B%0Ain%0A%20%20result",
+      "body": "%60%60%60nix%0Alet%0A%20%20x%20%3D%2010%3B%0A%20%20result%20%3D%20if%20x%20%3E%200%0A%20%20%20%20then%20%22%E6%AD%A3%E6%95%B0%22%0A%20%20%20%20else%20if%20x%20%3C%200%0A%20%20%20%20then%20%22%E8%B4%9F%E6%95%B0%22%0A%20%20%20%20else%20%22%E9%9B%B6%22%3B%0Ain%0A%20%20result%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-23",
       "sectionId": "s3",
       "title": "布尔条件判断",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  isEnabled = true;\n  config = if isEnabled\n    then { port = 8080; debug = true; }\n    else { port = 80; debug = false; };\nin\n  config"
+      "body": "```nix\nlet\n  isEnabled = true;\n  config = if isEnabled\n    then { port = 8080; debug = true; }\n    else { port = 80; debug = false; };\nin\n  config\n```"
     },
     {
       "id": "s3-24",
       "sectionId": "s3",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20env%20%3D%20%22production%22%3B%0A%20%20database%20%3D%20if%20env%20%3D%3D%20%22production%22%0A%20%20%20%20then%20%22prod-db.example.com%22%0A%20%20%20%20else%20if%20env%20%3D%3D%20%22staging%22%0A%20%20%20%20then%20%22staging-db.example.com%22%0A%20%20%20%20else%20%22localhost%22%3B%0Ain%0A%20%20database",
+      "body": "%60%60%60nix%0Alet%0A%20%20env%20%3D%20%22production%22%3B%0A%20%20database%20%3D%20if%20env%20%3D%3D%20%22production%22%0A%20%20%20%20then%20%22prod-db.example.com%22%0A%20%20%20%20else%20if%20env%20%3D%3D%20%22staging%22%0A%20%20%20%20then%20%22staging-db.example.com%22%0A%20%20%20%20else%20%22localhost%22%3B%0Ain%0A%20%20database%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-25",
       "sectionId": "s3",
       "title": "%E5%A4%8D%E6%9D%82%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20user%20%3D%20%7B%20name%20%3D%20%22%E5%BC%A0%E4%B8%89%22%3B%20age%20%3D%2025%3B%20isAdmin%20%3D%20true%3B%20%7D%3B%0A%20%20message%20%3D%20if%20user.isAdmin%20%26%26%20user.age%20%3E%3D%2018%0A%20%20%20%20then%20%22%E7%AE%A1%E7%90%86%E5%91%98%E7%94%A8%E6%88%B7%3A%20%24%7Buser.name%7D%22%0A%20%20%20%20else%20%22%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%3A%20%24%7Buser.name%7D%22%3B%0Ain%0A%20%20message",
+      "body": "%60%60%60nix%0Alet%0A%20%20user%20%3D%20%7B%20name%20%3D%20%22%E5%BC%A0%E4%B8%89%22%3B%20age%20%3D%2025%3B%20isAdmin%20%3D%20true%3B%20%7D%3B%0A%20%20message%20%3D%20if%20user.isAdmin%20%26%26%20user.age%20%3E%3D%2018%0A%20%20%20%20then%20%22%E7%AE%A1%E7%90%86%E5%91%98%E7%94%A8%E6%88%B7%3A%20%24%7Buser.name%7D%22%0A%20%20%20%20else%20%22%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%3A%20%24%7Buser.name%7D%22%3B%0Ain%0A%20%20message%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-26",
       "sectionId": "s3",
       "title": "%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E7%9A%84%E5%B1%9E%E6%80%A7%E9%9B%86",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20env%20%3D%20%22production%22%3B%0A%20%20config%20%3D%20if%20env%20%3D%3D%20%22development%22%0A%20%20%20%20then%20%7B%0A%20%20%20%20%20%20debug%20%3D%20true%3B%0A%20%20%20%20%20%20logLevel%20%3D%20%22debug%22%3B%0A%20%20%20%20%20%20database.host%20%3D%20%22localhost%22%3B%0A%20%20%20%20%7D%0A%20%20%20%20else%20%7B%0A%20%20%20%20%20%20debug%20%3D%20false%3B%0A%20%20%20%20%20%20logLevel%20%3D%20%22info%22%3B%0A%20%20%20%20%20%20database.host%20%3D%20%22prod-db.example.com%22%3B%0A%20%20%20%20%7D%3B%0Ain%0A%20%20config",
+      "body": "%60%60%60nix%0Alet%0A%20%20env%20%3D%20%22production%22%3B%0A%20%20config%20%3D%20if%20env%20%3D%3D%20%22development%22%0A%20%20%20%20then%20%7B%0A%20%20%20%20%20%20debug%20%3D%20true%3B%0A%20%20%20%20%20%20logLevel%20%3D%20%22debug%22%3B%0A%20%20%20%20%20%20database.host%20%3D%20%22localhost%22%3B%0A%20%20%20%20%7D%0A%20%20%20%20else%20%7B%0A%20%20%20%20%20%20debug%20%3D%20false%3B%0A%20%20%20%20%20%20logLevel%20%3D%20%22info%22%3B%0A%20%20%20%20%20%20database.host%20%3D%20%22prod-db.example.com%22%3B%0A%20%20%20%20%7D%3B%0Ain%0A%20%20config%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-27",
       "sectionId": "s4",
       "title": "%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7%E9%9B%86",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20person%20%3D%20%7B%0A%20%20%20%20name%20%3D%20%22%E6%9D%8E%E5%9B%9B%22%3B%0A%20%20%20%20age%20%3D%2030%3B%0A%20%20%20%20skills%20%3D%20%5B%20%22%E7%BC%96%E7%A8%8B%22%20%22%E8%AE%BE%E8%AE%A1%22%20%22%E7%AE%A1%E7%90%86%22%20%5D%3B%0A%20%20%20%20contact%20%3D%20%7B%0A%20%20%20%20%20%20email%20%3D%20%22lisi%40example.com%22%3B%0A%20%20%20%20%20%20phone%20%3D%20%22138-0000-0000%22%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0Ain%0A%20%20person",
+      "body": "%60%60%60nix%0Alet%0A%20%20person%20%3D%20%7B%0A%20%20%20%20name%20%3D%20%22%E6%9D%8E%E5%9B%9B%22%3B%0A%20%20%20%20age%20%3D%2030%3B%0A%20%20%20%20skills%20%3D%20%5B%20%22%E7%BC%96%E7%A8%8B%22%20%22%E8%AE%BE%E8%AE%A1%22%20%22%E7%AE%A1%E7%90%86%22%20%5D%3B%0A%20%20%20%20contact%20%3D%20%7B%0A%20%20%20%20%20%20email%20%3D%20%22lisi%40example.com%22%3B%0A%20%20%20%20%20%20phone%20%3D%20%22138-0000-0000%22%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0Ain%0A%20%20person%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-28",
       "sectionId": "s4",
       "title": "%E5%8A%A8%E6%80%81%E5%B1%9E%E6%80%A7%E5%90%8D",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20key%20%3D%20%22dynamicKey%22%3B%0A%20%20attrs%20%3D%20%7B%0A%20%20%20%20%24%7Bkey%7D%20%3D%20%22%E5%8A%A8%E6%80%81%E5%80%BC%22%3B%0A%20%20%20%20%22static-key%22%20%3D%20%22%E9%9D%99%E6%80%81%E5%80%BC%22%3B%0A%20%20%7D%3B%0Ain%0A%20%20attrs%20%20%20%20%23%20%7B%20dynamicKey%20%3D%20%22%E5%8A%A8%E6%80%81%E5%80%BC%22%3B%20static-key%20%3D%20%22%E9%9D%99%E6%80%81%E5%80%BC%22%3B%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20key%20%3D%20%22dynamicKey%22%3B%0A%20%20attrs%20%3D%20%7B%0A%20%20%20%20%24%7Bkey%7D%20%3D%20%22%E5%8A%A8%E6%80%81%E5%80%BC%22%3B%0A%20%20%20%20%22static-key%22%20%3D%20%22%E9%9D%99%E6%80%81%E5%80%BC%22%3B%0A%20%20%7D%3B%0Ain%0A%20%20attrs%20%20%20%20%23%20%7B%20dynamicKey%20%3D%20%22%E5%8A%A8%E6%80%81%E5%80%BC%22%3B%20static-key%20%3D%20%22%E9%9D%99%E6%80%81%E5%80%BC%22%3B%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-29",
       "sectionId": "s4",
       "title": "更新属性集",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  base = { x = 1; y = 2; };\n  updated = base // { y = 3; z = 4; };   # 合并属性集\nin\n  updated    # { x = 1; y = 3; z = 4; }"
+      "body": "```nix\nlet\n  base = { x = 1; y = 2; };\n  updated = base // { y = 3; z = 4; };   # 合并属性集\nin\n  updated    # { x = 1; y = 3; z = 4; }\n```"
     },
     {
       "id": "s4-30",
       "sectionId": "s4",
       "title": "%E6%B7%B1%E5%BA%A6%E5%90%88%E5%B9%B6",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20config1%20%3D%20%7B%0A%20%20%20%20server%20%3D%20%7B%20host%20%3D%20%22localhost%22%3B%20port%20%3D%208080%3B%20%7D%3B%0A%20%20%20%20database%20%3D%20%7B%20name%20%3D%20%22test%22%3B%20%7D%3B%0A%20%20%7D%3B%0A%20%20config2%20%3D%20%7B%0A%20%20%20%20server%20%3D%20%7B%20port%20%3D%209000%3B%20ssl%20%3D%20true%3B%20%7D%3B%0A%20%20%20%20cache%20%3D%20%7B%20enabled%20%3D%20true%3B%20%7D%3B%0A%20%20%7D%3B%0A%20%20%23%20%E6%B3%A8%E6%84%8F%EF%BC%9A%2F%2F%20%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%8F%AA%E8%BF%9B%E8%A1%8C%E6%B5%85%E5%90%88%E5%B9%B6%0A%20%20merged%20%3D%20config1%20%2F%2F%20config2%3B%0A%20%20%23%20server%20%E5%B1%9E%E6%80%A7%E4%BC%9A%E8%A2%AB%E5%AE%8C%E5%85%A8%E6%9B%BF%E6%8D%A2%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%B7%B1%E5%BA%A6%E5%90%88%E5%B9%B6%0Ain%0A%20%20merged",
+      "body": "%60%60%60nix%0Alet%0A%20%20config1%20%3D%20%7B%0A%20%20%20%20server%20%3D%20%7B%20host%20%3D%20%22localhost%22%3B%20port%20%3D%208080%3B%20%7D%3B%0A%20%20%20%20database%20%3D%20%7B%20name%20%3D%20%22test%22%3B%20%7D%3B%0A%20%20%7D%3B%0A%20%20config2%20%3D%20%7B%0A%20%20%20%20server%20%3D%20%7B%20port%20%3D%209000%3B%20ssl%20%3D%20true%3B%20%7D%3B%0A%20%20%20%20cache%20%3D%20%7B%20enabled%20%3D%20true%3B%20%7D%3B%0A%20%20%7D%3B%0A%20%20%23%20%E6%B3%A8%E6%84%8F%EF%BC%9A%2F%2F%20%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%8F%AA%E8%BF%9B%E8%A1%8C%E6%B5%85%E5%90%88%E5%B9%B6%0A%20%20merged%20%3D%20config1%20%2F%2F%20config2%3B%0A%20%20%23%20server%20%E5%B1%9E%E6%80%A7%E4%BC%9A%E8%A2%AB%E5%AE%8C%E5%85%A8%E6%9B%BF%E6%8D%A2%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%B7%B1%E5%BA%A6%E5%90%88%E5%B9%B6%0Ain%0A%20%20merged%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-31",
       "sectionId": "s4",
       "title": "%E6%A3%80%E6%9F%A5%E5%B1%9E%E6%80%A7%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20person%20%3D%20%7B%20name%20%3D%20%22%E7%8E%8B%E4%BA%94%22%3B%20age%20%3D%2028%3B%20%7D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20hasName%20%3D%20person%20%3F%20name%3B%20%20%20%20%20%20%23%20true%0A%20%20%20%20hasEmail%20%3D%20person%20%3F%20email%3B%20%20%20%20%23%20false%0A%20%20%20%20hasNested%20%3D%20person%20%3F%20contact.email%3B%20%20%23%20false%20(%E5%B5%8C%E5%A5%97%E6%A3%80%E6%9F%A5)%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20person%20%3D%20%7B%20name%20%3D%20%22%E7%8E%8B%E4%BA%94%22%3B%20age%20%3D%2028%3B%20%7D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20hasName%20%3D%20person%20%3F%20name%3B%20%20%20%20%20%20%23%20true%0A%20%20%20%20hasEmail%20%3D%20person%20%3F%20email%3B%20%20%20%20%23%20false%0A%20%20%20%20hasNested%20%3D%20person%20%3F%20contact.email%3B%20%20%23%20false%20(%E5%B5%8C%E5%A5%97%E6%A3%80%E6%9F%A5)%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-32",
       "sectionId": "s4",
       "title": "%E8%AE%BF%E9%97%AE%E5%B1%9E%E6%80%A7",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20config%20%3D%20%7B%0A%20%20%20%20server%20%3D%20%7B%0A%20%20%20%20%20%20host%20%3D%20%22localhost%22%3B%0A%20%20%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20host%20%3D%20config.server.host%3B%20%20%20%20%20%23%20%E8%AE%BF%E9%97%AE%E5%B5%8C%E5%A5%97%E5%B1%9E%E6%80%A7%0A%20%20%20%20port%20%3D%20config.server.port%3B%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20config%20%3D%20%7B%0A%20%20%20%20server%20%3D%20%7B%0A%20%20%20%20%20%20host%20%3D%20%22localhost%22%3B%0A%20%20%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20host%20%3D%20config.server.host%3B%20%20%20%20%20%23%20%E8%AE%BF%E9%97%AE%E5%B5%8C%E5%A5%97%E5%B1%9E%E6%80%A7%0A%20%20%20%20port%20%3D%20config.server.port%3B%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-33",
       "sectionId": "s4",
       "title": "%E5%8F%AF%E9%80%89%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20config%20%3D%20%7B%20server%20%3D%20%7B%20host%20%3D%20%22localhost%22%3B%20%7D%3B%20%7D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20port%20%3D%20config.server.port%20or%203000%3B%20%20%20%20%20%20%20%20%23%20%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%AD%98%E5%9C%A8%E5%88%99%E4%BD%BF%E7%94%A8%E9%BB%98%E8%AE%A4%E5%80%BC%0A%20%20%20%20timeout%20%3D%20config.timeout%20or%2030%3B%20%20%20%20%20%20%20%20%20%20%20%23%2030%0A%20%20%20%20ssl%20%3D%20config.server.ssl%20or%20false%3B%20%20%20%20%20%20%20%20%20%23%20false%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20config%20%3D%20%7B%20server%20%3D%20%7B%20host%20%3D%20%22localhost%22%3B%20%7D%3B%20%7D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20port%20%3D%20config.server.port%20or%203000%3B%20%20%20%20%20%20%20%20%23%20%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%AD%98%E5%9C%A8%E5%88%99%E4%BD%BF%E7%94%A8%E9%BB%98%E8%AE%A4%E5%80%BC%0A%20%20%20%20timeout%20%3D%20config.timeout%20or%2030%3B%20%20%20%20%20%20%20%20%20%20%20%23%2030%0A%20%20%20%20ssl%20%3D%20config.server.ssl%20or%20false%3B%20%20%20%20%20%20%20%20%20%23%20false%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-34",
       "sectionId": "s5",
       "title": "连接列表",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  list1 = [ 1 2 3 ];\n  list2 = [ 4 5 6 ];\n  combined = list1 ++ list2;     # [ 1 2 3 4 5 6 ]\n  \n  # 多个列表连接\n  all = [ 0 ] ++ list1 ++ list2 ++ [ 7 8 ];\nin\n  all    # [ 0 1 2 3 4 5 6 7 8 ]"
+      "body": "```nix\nlet\n  list1 = [ 1 2 3 ];\n  list2 = [ 4 5 6 ];\n  combined = list1 ++ list2;     # [ 1 2 3 4 5 6 ]\n  \n  # 多个列表连接\n  all = [ 0 ] ++ list1 ++ list2 ++ [ 7 8 ];\nin\n  all    # [ 0 1 2 3 4 5 6 7 8 ]\n```"
     },
     {
       "id": "s5-35",
       "sectionId": "s5",
       "title": "%E8%BF%9E%E6%8E%A5%E8%B7%AF%E5%BE%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20base%20%3D%20%2Fusr%2Fbin%3B%0A%20%20executable%20%3D%20base%20%2B%20%2Fpython3%3B%20%20%20%20%20%20%20%20%20%20%20%23%20%2Fusr%2Fbin%2Fpython3%0A%20%20%0A%20%20%23%20%E8%B7%AF%E5%BE%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5%0A%20%20config_path%20%3D%20%2Fetc%20%2B%20%22%2Fnginx%2Fnginx.conf%22%3B%20%20%20%23%20%2Fetc%2Fnginx%2Fnginx.conf%0A%20%20%0A%20%20%23%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5%0A%20%20greeting%20%3D%20%22%E4%BD%A0%E5%A5%BD%22%20%2B%20%22%EF%BC%8C%E4%B8%96%E7%95%8C%EF%BC%81%22%3B%20%20%20%20%20%20%20%20%20%20%20%20%23%20%22%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%EF%BC%81%22%0Ain%0A%20%20%7B%20inherit%20executable%20config_path%20greeting%3B%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20base%20%3D%20%2Fusr%2Fbin%3B%0A%20%20executable%20%3D%20base%20%2B%20%2Fpython3%3B%20%20%20%20%20%20%20%20%20%20%20%23%20%2Fusr%2Fbin%2Fpython3%0A%20%20%0A%20%20%23%20%E8%B7%AF%E5%BE%84%E4%B8%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5%0A%20%20config_path%20%3D%20%2Fetc%20%2B%20%22%2Fnginx%2Fnginx.conf%22%3B%20%20%20%23%20%2Fetc%2Fnginx%2Fnginx.conf%0A%20%20%0A%20%20%23%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5%0A%20%20greeting%20%3D%20%22%E4%BD%A0%E5%A5%BD%22%20%2B%20%22%EF%BC%8C%E4%B8%96%E7%95%8C%EF%BC%81%22%3B%20%20%20%20%20%20%20%20%20%20%20%20%23%20%22%E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C%EF%BC%81%22%0Ain%0A%20%20%7B%20inherit%20executable%20config_path%20greeting%3B%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-36",
       "sectionId": "s5",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20name%20%3D%20%22%E5%BC%A0%E4%B8%89%22%3B%0A%20%20age%20%3D%2025%3B%0A%20%20score%20%3D%2095.5%3B%0Ain%0A%20%20%7B%0A%20%20%20%20greeting%20%3D%20%22%E4%BD%A0%E5%A5%BD%EF%BC%8C%24%7Bname%7D%EF%BC%81%22%3B%0A%20%20%20%20info%20%3D%20%22%E5%A7%93%E5%90%8D%EF%BC%9A%24%7Bname%7D%EF%BC%8C%E5%B9%B4%E9%BE%84%EF%BC%9A%24%7BtoString%20age%7D%22%3B%0A%20%20%20%20result%20%3D%20%22%E8%80%83%E8%AF%95%E6%88%90%E7%BB%A9%EF%BC%9A%24%7BtoString%20score%7D%E5%88%86%22%3B%0A%20%20%20%20%0A%20%20%20%20%23%20%E5%A4%8D%E6%9D%82%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E5%80%BC%0A%20%20%20%20status%20%3D%20%22%E7%94%A8%E6%88%B7%20%24%7Bname%7D%20%24%7Bif%20age%20%3E%3D%2018%20then%20%22%E5%B7%B2%E6%88%90%E5%B9%B4%22%20else%20%22%E6%9C%AA%E6%88%90%E5%B9%B4%22%7D%22%3B%0A%20%20%20%20%0A%20%20%20%20%23%20%E8%B7%AF%E5%BE%84%E6%8F%92%E5%80%BC%0A%20%20%20%20config_file%20%3D%20%22%24%7B.%2Fconfigs%7D%2F%24%7Bname%7D.conf%22%3B%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20name%20%3D%20%22%E5%BC%A0%E4%B8%89%22%3B%0A%20%20age%20%3D%2025%3B%0A%20%20score%20%3D%2095.5%3B%0Ain%0A%20%20%7B%0A%20%20%20%20greeting%20%3D%20%22%E4%BD%A0%E5%A5%BD%EF%BC%8C%24%7Bname%7D%EF%BC%81%22%3B%0A%20%20%20%20info%20%3D%20%22%E5%A7%93%E5%90%8D%EF%BC%9A%24%7Bname%7D%EF%BC%8C%E5%B9%B4%E9%BE%84%EF%BC%9A%24%7BtoString%20age%7D%22%3B%0A%20%20%20%20result%20%3D%20%22%E8%80%83%E8%AF%95%E6%88%90%E7%BB%A9%EF%BC%9A%24%7BtoString%20score%7D%E5%88%86%22%3B%0A%20%20%20%20%0A%20%20%20%20%23%20%E5%A4%8D%E6%9D%82%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%8F%92%E5%80%BC%0A%20%20%20%20status%20%3D%20%22%E7%94%A8%E6%88%B7%20%24%7Bname%7D%20%24%7Bif%20age%20%3E%3D%2018%20then%20%22%E5%B7%B2%E6%88%90%E5%B9%B4%22%20else%20%22%E6%9C%AA%E6%88%90%E5%B9%B4%22%7D%22%3B%0A%20%20%20%20%0A%20%20%20%20%23%20%E8%B7%AF%E5%BE%84%E6%8F%92%E5%80%BC%0A%20%20%20%20config_file%20%3D%20%22%24%7B.%2Fconfigs%7D%2F%24%7Bname%7D.conf%22%3B%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-37",
       "sectionId": "s6",
       "title": "简单函数",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  # 单参数函数\n  increment = x: x + 1;\n  double = x: x * 2;\n  \n  # 使用函数\n  result1 = increment 5;    # 6\n  result2 = double 3;       # 6\nin\n  { inherit result1 result2; }"
+      "body": "```nix\nlet\n  # 单参数函数\n  increment = x: x + 1;\n  double = x: x * 2;\n  \n  # 使用函数\n  result1 = increment 5;    # 6\n  result2 = double 3;       # 6\nin\n  { inherit result1 result2; }\n```"
     },
     {
       "id": "s6-38",
       "sectionId": "s6",
       "title": "%E5%91%BD%E5%90%8D%E5%8F%82%E6%95%B0",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20%23%20%E5%9F%BA%E6%9C%AC%E5%91%BD%E5%90%8D%E5%8F%82%E6%95%B0%0A%20%20createUser%20%3D%20%7Bname%2C%20age%2C%20email%7D%3A%20%7B%0A%20%20%20%20inherit%20name%20age%20email%3B%0A%20%20%20%20id%20%3D%20builtins.hashString%20%22md5%22%20email%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20user%20%3D%20createUser%20%7B%0A%20%20%20%20name%20%3D%20%22%E5%BC%A0%E4%B8%89%22%3B%0A%20%20%20%20age%20%3D%2025%3B%0A%20%20%20%20email%20%3D%20%22zhangsan%40example.com%22%3B%0A%20%20%7D%3B%0Ain%0A%20%20user",
+      "body": "%60%60%60nix%0Alet%0A%20%20%23%20%E5%9F%BA%E6%9C%AC%E5%91%BD%E5%90%8D%E5%8F%82%E6%95%B0%0A%20%20createUser%20%3D%20%7Bname%2C%20age%2C%20email%7D%3A%20%7B%0A%20%20%20%20inherit%20name%20age%20email%3B%0A%20%20%20%20id%20%3D%20builtins.hashString%20%22md5%22%20email%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20user%20%3D%20createUser%20%7B%0A%20%20%20%20name%20%3D%20%22%E5%BC%A0%E4%B8%89%22%3B%0A%20%20%20%20age%20%3D%2025%3B%0A%20%20%20%20email%20%3D%20%22zhangsan%40example.com%22%3B%0A%20%20%7D%3B%0Ain%0A%20%20user%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-39",
       "sectionId": "s6",
       "title": "%E5%BF%BD%E7%95%A5%E9%A2%9D%E5%A4%96%E5%8F%82%E6%95%B0",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20%23%20%E4%BD%BF%E7%94%A8%20...%20%E5%BF%BD%E7%95%A5%E9%A2%9D%E5%A4%96%E7%9A%84%E5%8F%82%E6%95%B0%0A%20%20processConfig%20%3D%20%7Bhost%2C%20port%2C%20...%7D%3A%20%7B%0A%20%20%20%20url%20%3D%20%22%24%7Bhost%7D%3A%24%7BtoString%20port%7D%22%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20result%20%3D%20processConfig%20%7B%0A%20%20%20%20host%20%3D%20%22localhost%22%3B%0A%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20ssl%20%3D%20true%3B%20%20%20%20%20%20%20%20%23%20%E4%BC%9A%E8%A2%AB%E5%BF%BD%E7%95%A5%0A%20%20%20%20timeout%20%3D%2030%3B%20%20%20%20%20%20%23%20%E4%BC%9A%E8%A2%AB%E5%BF%BD%E7%95%A5%0A%20%20%7D%3B%0Ain%0A%20%20result%20%20%20%20%23%20%7B%20url%20%3D%20%22localhost%3A8080%22%3B%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20%23%20%E4%BD%BF%E7%94%A8%20...%20%E5%BF%BD%E7%95%A5%E9%A2%9D%E5%A4%96%E7%9A%84%E5%8F%82%E6%95%B0%0A%20%20processConfig%20%3D%20%7Bhost%2C%20port%2C%20...%7D%3A%20%7B%0A%20%20%20%20url%20%3D%20%22%24%7Bhost%7D%3A%24%7BtoString%20port%7D%22%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20result%20%3D%20processConfig%20%7B%0A%20%20%20%20host%20%3D%20%22localhost%22%3B%0A%20%20%20%20port%20%3D%208080%3B%0A%20%20%20%20ssl%20%3D%20true%3B%20%20%20%20%20%20%20%20%23%20%E4%BC%9A%E8%A2%AB%E5%BF%BD%E7%95%A5%0A%20%20%20%20timeout%20%3D%2030%3B%20%20%20%20%20%20%23%20%E4%BC%9A%E8%A2%AB%E5%BF%BD%E7%95%A5%0A%20%20%7D%3B%0Ain%0A%20%20result%20%20%20%20%23%20%7B%20url%20%3D%20%22localhost%3A8080%22%3B%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-40",
       "sectionId": "s6",
       "title": "%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0%E5%80%BC",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20%23%20%E4%B8%BA%E5%8F%82%E6%95%B0%E6%8F%90%E4%BE%9B%E9%BB%98%E8%AE%A4%E5%80%BC%0A%20%20createServer%20%3D%20%7B%0A%20%20%20%20host%20%3F%20%22localhost%22%2C%20%0A%20%20%20%20port%20%3F%208080%2C%20%0A%20%20%20%20ssl%20%3F%20false%0A%20%20%7D%3A%20%7B%0A%20%20%20%20inherit%20host%20port%20ssl%3B%0A%20%20%20%20url%20%3D%20%0A%20%20%20%20%20%20let%20proto%20%3D%20if%20ssl%20then%20%22https%22%20else%20%22http%22%3B%0A%20%20%20%20%20%20in%20%22%24%7Bproto%7D%3A%2F%2F%24%7Bhost%7D%3A%24%7BtoString%20port%7D%22%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20%23%20%E4%BD%BF%E7%94%A8%E6%89%80%E6%9C%89%E9%BB%98%E8%AE%A4%E5%80%BC%0A%20%20server1%20%3D%20createServer%20%7B%7D%3B%0A%20%20%23%20%E5%8F%AA%E8%A6%86%E7%9B%96%20port%20%20%0A%20%20server2%20%3D%20createServer%20%7Bport%20%3D%203000%3B%7D%3B%0A%20%20%23%20%E8%A6%86%E7%9B%96%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%0A%20%20server3%20%3D%20createServer%20%7B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20host%20%3D%20%22example.com%22%3B%0A%20%20%20%20port%20%3D%20443%3B%0A%20%20%20%20ssl%20%3D%20true%3B%0A%20%20%7D%3B%0Ain%0A%20%20%7B%20inherit%20server1%20server2%20server3%3B%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20%23%20%E4%B8%BA%E5%8F%82%E6%95%B0%E6%8F%90%E4%BE%9B%E9%BB%98%E8%AE%A4%E5%80%BC%0A%20%20createServer%20%3D%20%7B%0A%20%20%20%20host%20%3F%20%22localhost%22%2C%20%0A%20%20%20%20port%20%3F%208080%2C%20%0A%20%20%20%20ssl%20%3F%20false%0A%20%20%7D%3A%20%7B%0A%20%20%20%20inherit%20host%20port%20ssl%3B%0A%20%20%20%20url%20%3D%20%0A%20%20%20%20%20%20let%20proto%20%3D%20if%20ssl%20then%20%22https%22%20else%20%22http%22%3B%0A%20%20%20%20%20%20in%20%22%24%7Bproto%7D%3A%2F%2F%24%7Bhost%7D%3A%24%7BtoString%20port%7D%22%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20%23%20%E4%BD%BF%E7%94%A8%E6%89%80%E6%9C%89%E9%BB%98%E8%AE%A4%E5%80%BC%0A%20%20server1%20%3D%20createServer%20%7B%7D%3B%0A%20%20%23%20%E5%8F%AA%E8%A6%86%E7%9B%96%20port%20%20%0A%20%20server2%20%3D%20createServer%20%7Bport%20%3D%203000%3B%7D%3B%0A%20%20%23%20%E8%A6%86%E7%9B%96%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%0A%20%20server3%20%3D%20createServer%20%7B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20host%20%3D%20%22example.com%22%3B%0A%20%20%20%20port%20%3D%20443%3B%0A%20%20%20%20ssl%20%3D%20true%3B%0A%20%20%7D%3B%0Ain%0A%20%20%7B%20inherit%20server1%20server2%20server3%3B%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-41",
       "sectionId": "s6",
       "title": "%E7%BB%91%E5%AE%9A%E5%88%B0%E5%8F%98%E9%87%8F",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20%23%20%E5%B0%86%E6%95%B4%E4%B8%AA%E5%8F%82%E6%95%B0%E9%9B%86%E7%BB%91%E5%AE%9A%E5%88%B0%E5%8F%98%E9%87%8F%EF%BC%8C%E5%90%8C%E6%97%B6%E8%A7%A3%E6%9E%84%E9%83%A8%E5%88%86%E5%8F%82%E6%95%B0%0A%20%20logMessage%20%3D%20%7B%0A%20%20%20%20level%2C%20%0A%20%20%20%20message%2C%20%0A%20%20%20%20timestamp%20%3F%20null%0A%20%20%7D%40args%3A%20%7B%0A%20%20%20%20formatted%20%3D%20%22%5B%24%7Blevel%7D%5D%20%24%7Bmessage%7D%22%3B%0A%20%20%20%20raw%20%3D%20args%3B%20%20%23%20%E4%BF%9D%E7%95%99%E5%8E%9F%E5%A7%8B%E5%8F%82%E6%95%B0%E9%9B%86%0A%20%20%20%20hasTimestamp%20%3D%20%0A%20%20%20%20%20%20args%20%3F%20timestamp%20%26%26%20timestamp%20!%3D%20null%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20log%20%3D%20logMessage%20%7B%0A%20%20%20%20level%20%3D%20%22INFO%22%3B%0A%20%20%20%20message%20%3D%20%22%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F%22%3B%0A%20%20%20%20user%20%3D%20%22admin%22%3B%20%20%23%20%E9%A2%9D%E5%A4%96%E5%8F%82%E6%95%B0%E4%B9%9F%E4%BC%9A%E4%BF%9D%E5%AD%98%E5%9C%A8%20args%20%E4%B8%AD%0A%20%20%7D%3B%0Ain%0A%20%20log",
+      "body": "%60%60%60nix%0Alet%0A%20%20%23%20%E5%B0%86%E6%95%B4%E4%B8%AA%E5%8F%82%E6%95%B0%E9%9B%86%E7%BB%91%E5%AE%9A%E5%88%B0%E5%8F%98%E9%87%8F%EF%BC%8C%E5%90%8C%E6%97%B6%E8%A7%A3%E6%9E%84%E9%83%A8%E5%88%86%E5%8F%82%E6%95%B0%0A%20%20logMessage%20%3D%20%7B%0A%20%20%20%20level%2C%20%0A%20%20%20%20message%2C%20%0A%20%20%20%20timestamp%20%3F%20null%0A%20%20%7D%40args%3A%20%7B%0A%20%20%20%20formatted%20%3D%20%22%5B%24%7Blevel%7D%5D%20%24%7Bmessage%7D%22%3B%0A%20%20%20%20raw%20%3D%20args%3B%20%20%23%20%E4%BF%9D%E7%95%99%E5%8E%9F%E5%A7%8B%E5%8F%82%E6%95%B0%E9%9B%86%0A%20%20%20%20hasTimestamp%20%3D%20%0A%20%20%20%20%20%20args%20%3F%20timestamp%20%26%26%20timestamp%20!%3D%20null%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20log%20%3D%20logMessage%20%7B%0A%20%20%20%20level%20%3D%20%22INFO%22%3B%0A%20%20%20%20message%20%3D%20%22%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F%22%3B%0A%20%20%20%20user%20%3D%20%22admin%22%3B%20%20%23%20%E9%A2%9D%E5%A4%96%E5%8F%82%E6%95%B0%E4%B9%9F%E4%BC%9A%E4%BF%9D%E5%AD%98%E5%9C%A8%20args%20%E4%B8%AD%0A%20%20%7D%3B%0Ain%0A%20%20log%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-42",
       "sectionId": "s6",
       "title": "多参数函数",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  # 柯里化函数\n  add = x: y: x + y;\n  multiply = x: y: z: x * y * z;\n  \n  # 部分应用\n  add10 = add 10;  # 等价于 y: 10 + y\n  \n  # 使用示例\n  result1 = add 3 4;        # 7\n  result2 = add10 5;        # 15\n  result3 = multiply 2 3 4; # 24\nin\n  { inherit result1 result2 result3; }"
+      "body": "```nix\nlet\n  # 柯里化函数\n  add = x: y: x + y;\n  multiply = x: y: z: x * y * z;\n  \n  # 部分应用\n  add10 = add 10;  # 等价于 y: 10 + y\n  \n  # 使用示例\n  result1 = add 3 4;        # 7\n  result2 = add10 5;        # 15\n  result3 = multiply 2 3 4; # 24\nin\n  { inherit result1 result2 result3; }\n```"
     },
     {
       "id": "s6-43",
       "sectionId": "s6",
       "title": "高阶函数",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  # 接受函数作为参数的高阶函数\n  applyTwice = f: x: f (f x);\n  \n  # 返回函数的高阶函数\n  createMultiplier = factor: x: x * factor;\n  \n  # 函数组合\n  compose = f: g: x: f (g x);\n  \n  # 使用示例\n  double = x: x * 2;\n  increment = x: x + 1;\n  \n  result1 = applyTwice double 3;    # 12\n  triple = createMultiplier 3;\n  result2 = triple 5;               # 15\n  doubleAndIncrement = \n    compose increment double;\n  result3 = doubleAndIncrement 4;   # 9\nin\n  { inherit result1 result2 result3; }"
+      "body": "```nix\nlet\n  # 接受函数作为参数的高阶函数\n  applyTwice = f: x: f (f x);\n  \n  # 返回函数的高阶函数\n  createMultiplier = factor: x: x * factor;\n  \n  # 函数组合\n  compose = f: g: x: f (g x);\n  \n  # 使用示例\n  double = x: x * 2;\n  increment = x: x + 1;\n  \n  result1 = applyTwice double 3;    # 12\n  triple = createMultiplier 3;\n  result2 = triple 5;               # 15\n  doubleAndIncrement = \n    compose increment double;\n  result3 = doubleAndIncrement 4;   # 9\nin\n  { inherit result1 result2 result3; }\n```"
     },
     {
       "id": "s6-44",
       "sectionId": "s6",
       "title": "递归函数",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  # 计算阶乘\n  factorial = n:\n    if n <= 1\n    then 1\n    else n * factorial (n - 1);\n  \n  # 斐波那契数列\n  fibonacci = n:\n    if n <= 1\n    then n\n    else fibonacci (n - 1) + fibonacci (n - 2);\n  \n  # 列表长度计算\n  listLength = list:\n    if list == []\n    then 0\n    else 1 + listLength (builtins.tail list);\n  \n  # 使用示例\n  fact5 = factorial 5;        # 120\n  fib7 = fibonacci 7;         # 13\n  len = listLength [1 2 3 4]; # 4\nin\n  { inherit fact5 fib7 len; }"
+      "body": "```nix\nlet\n  # 计算阶乘\n  factorial = n:\n    if n <= 1\n    then 1\n    else n * factorial (n - 1);\n  \n  # 斐波那契数列\n  fibonacci = n:\n    if n <= 1\n    then n\n    else fibonacci (n - 1) + fibonacci (n - 2);\n  \n  # 列表长度计算\n  listLength = list:\n    if list == []\n    then 0\n    else 1 + listLength (builtins.tail list);\n  \n  # 使用示例\n  fact5 = factorial 5;        # 120\n  fib7 = fibonacci 7;         # 13\n  len = listLength [1 2 3 4]; # 4\nin\n  { inherit fact5 fib7 len; }\n```"
     },
     {
       "id": "s6-45",
       "sectionId": "s6",
       "title": "%E6%9D%A1%E4%BB%B6%E5%87%BD%E6%95%B0",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%60%60%60nix%0Alet%0A%20%20%23%20%E6%A0%B9%E6%8D%AE%E6%9D%A1%E4%BB%B6%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%9A%84%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%0A%20%20processData%20%3D%20condition%3A%20data%3A%0A%20%20%20%20let%0A%20%20%20%20%20%20uppercaseProcessor%20%3D%20str%3A%20%0A%20%20%20%20%20%20%20%20builtins.replaceStrings%20%0A%20%20%20%20%20%20%20%20%20%20%5B%22a%22%20%22e%22%20%22i%22%20%22o%22%20%22u%22%5D%20%0A%20%20%20%20%20%20%20%20%20%20%5B%22A%22%20%22E%22%20%22I%22%20%22O%22%20%22U%22%5D%20str%3B%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20lengthProcessor%20%3D%20str%3A%20%0A%20%20%20%20%20%20%20%20toString%20(builtins.stringLength%20str)%3B%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20reverseProcessor%20%3D%20str%3A%20%0A%20%20%20%20%20%20%20%20let%0A%20%20%20%20%20%20%20%20%20%20len%20%3D%20builtins.stringLength%20str%3B%0A%20%20%20%20%20%20%20%20%20%20chars%20%3D%20builtins.genList%20%0A%20%20%20%20%20%20%20%20%20%20%20%20(i%3A%20builtins.substring%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20(len%20-%201%20-%20i)%201%20str)%20len%3B%0A%20%20%20%20%20%20%20%20in%0A%20%20%20%20%20%20%20%20%20%20builtins.concatStringsSep%20%22%22%20chars%3B%0A%20%20%20%20in%0A%20%20%20%20%20%20if%20condition%20%3D%3D%20%22uppercase%22%0A%20%20%20%20%20%20then%20uppercaseProcessor%20data%0A%20%20%20%20%20%20else%20if%20condition%20%3D%3D%20%22length%22%0A%20%20%20%20%20%20then%20lengthProcessor%20data%0A%20%20%20%20%20%20else%20if%20condition%20%3D%3D%20%22reverse%22%0A%20%20%20%20%20%20then%20reverseProcessor%20data%0A%20%20%20%20%20%20else%20data%3B%0A%20%20%0A%20%20%23%20%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B%0A%20%20text%20%3D%20%22hello%20world%22%3B%0A%20%20result1%20%3D%20processData%20%22uppercase%22%20text%3B%0A%20%20result2%20%3D%20processData%20%22length%22%20text%3B%0A%20%20result3%20%3D%20processData%20%22reverse%22%20text%3B%0Ain%0A%20%20%7B%20inherit%20result1%20result2%20result3%3B%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%60%60%60nix%0Alet%0A%20%20%23%20%E6%A0%B9%E6%8D%AE%E6%9D%A1%E4%BB%B6%E9%80%89%E6%8B%A9%E4%B8%8D%E5%90%8C%E7%9A%84%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0%0A%20%20processData%20%3D%20condition%3A%20data%3A%0A%20%20%20%20let%0A%20%20%20%20%20%20uppercaseProcessor%20%3D%20str%3A%20%0A%20%20%20%20%20%20%20%20builtins.replaceStrings%20%0A%20%20%20%20%20%20%20%20%20%20%5B%22a%22%20%22e%22%20%22i%22%20%22o%22%20%22u%22%5D%20%0A%20%20%20%20%20%20%20%20%20%20%5B%22A%22%20%22E%22%20%22I%22%20%22O%22%20%22U%22%5D%20str%3B%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20lengthProcessor%20%3D%20str%3A%20%0A%20%20%20%20%20%20%20%20toString%20(builtins.stringLength%20str)%3B%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20reverseProcessor%20%3D%20str%3A%20%0A%20%20%20%20%20%20%20%20let%0A%20%20%20%20%20%20%20%20%20%20len%20%3D%20builtins.stringLength%20str%3B%0A%20%20%20%20%20%20%20%20%20%20chars%20%3D%20builtins.genList%20%0A%20%20%20%20%20%20%20%20%20%20%20%20(i%3A%20builtins.substring%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20(len%20-%201%20-%20i)%201%20str)%20len%3B%0A%20%20%20%20%20%20%20%20in%0A%20%20%20%20%20%20%20%20%20%20builtins.concatStringsSep%20%22%22%20chars%3B%0A%20%20%20%20in%0A%20%20%20%20%20%20if%20condition%20%3D%3D%20%22uppercase%22%0A%20%20%20%20%20%20then%20uppercaseProcessor%20data%0A%20%20%20%20%20%20else%20if%20condition%20%3D%3D%20%22length%22%0A%20%20%20%20%20%20then%20lengthProcessor%20data%0A%20%20%20%20%20%20else%20if%20condition%20%3D%3D%20%22reverse%22%0A%20%20%20%20%20%20then%20reverseProcessor%20data%0A%20%20%20%20%20%20else%20data%3B%0A%20%20%0A%20%20%23%20%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B%0A%20%20text%20%3D%20%22hello%20world%22%3B%0A%20%20result1%20%3D%20processData%20%22uppercase%22%20text%3B%0A%20%20result2%20%3D%20processData%20%22length%22%20text%3B%0A%20%20result3%20%3D%20processData%20%22reverse%22%20text%3B%0Ain%0A%20%20%7B%20inherit%20result1%20result2%20result3%3B%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-46",
       "sectionId": "s6",
       "title": "%E5%87%BD%E6%95%B0%E5%B7%A5%E5%8E%82",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20%23%20%E5%88%9B%E5%BB%BA%E9%AA%8C%E8%AF%81%E5%99%A8%E5%87%BD%E6%95%B0%E7%9A%84%E5%B7%A5%E5%8E%82%0A%20%20createValidator%20%3D%20rules%3A%20value%3A%0A%20%20%20%20let%0A%20%20%20%20%20%20checkRule%20%3D%20rule%3A%0A%20%20%20%20%20%20%20%20if%20rule.type%20%3D%3D%20%22minLength%22%0A%20%20%20%20%20%20%20%20then%20%0A%20%20%20%20%20%20%20%20%20%20builtins.stringLength%20value%20%3E%3D%20rule.value%0A%20%20%20%20%20%20%20%20else%20if%20rule.type%20%3D%3D%20%22maxLength%22%0A%20%20%20%20%20%20%20%20then%20%0A%20%20%20%20%20%20%20%20%20%20builtins.stringLength%20value%20%3C%3D%20rule.value%0A%20%20%20%20%20%20%20%20else%20if%20rule.type%20%3D%3D%20%22contains%22%0A%20%20%20%20%20%20%20%20then%20%0A%20%20%20%20%20%20%20%20%20%20builtins.match%20%22.*%24%7Brule.value%7D.*%22%20value%20%0A%20%20%20%20%20%20%20%20%20%20!%3D%20null%0A%20%20%20%20%20%20%20%20else%20true%3B%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20results%20%3D%20map%20checkRule%20rules%3B%0A%20%20%20%20%20%20allValid%20%3D%20builtins.all%20(x%3A%20x)%20results%3B%0A%20%20%20%20in%0A%20%20%20%20%20%20%7B%20%0A%20%20%20%20%20%20%20%20valid%20%3D%20allValid%3B%20%0A%20%20%20%20%20%20%20%20value%20%3D%20value%3B%0A%20%20%20%20%20%20%20%20errors%20%3D%20builtins.filter%20%0A%20%20%20%20%20%20%20%20%20%20(rule%3A%20!checkRule%20rule)%20rules%3B%0A%20%20%20%20%20%20%7D%3B%0A%20%20%0A%20%20%23%20%E5%88%9B%E5%BB%BA%E7%89%B9%E5%AE%9A%E7%9A%84%E9%AA%8C%E8%AF%81%E5%99%A8%0A%20%20emailValidator%20%3D%20createValidator%20%5B%0A%20%20%20%20%7B%20type%20%3D%20%22minLength%22%3B%20value%20%3D%205%3B%20%7D%0A%20%20%20%20%7B%20type%20%3D%20%22contains%22%3B%20value%20%3D%20%22%40%22%3B%20%7D%0A%20%20%20%20%7B%20type%20%3D%20%22contains%22%3B%20value%20%3D%20%22.%22%3B%20%7D%0A%20%20%5D%3B%0A%20%20%0A%20%20passwordValidator%20%3D%20createValidator%20%5B%0A%20%20%20%20%7B%20type%20%3D%20%22minLength%22%3B%20value%20%3D%208%3B%20%7D%0A%20%20%20%20%7B%20type%20%3D%20%22maxLength%22%3B%20value%20%3D%2032%3B%20%7D%0A%20%20%5D%3B%0A%20%20%0A%20%20%23%20%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B%0A%20%20email_result%20%3D%20emailValidator%20%22user%40example.com%22%3B%0A%20%20password_result%20%3D%20passwordValidator%20%22mypassword123%22%3B%0Ain%0A%20%20%7B%20inherit%20email_result%20password_result%3B%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20%23%20%E5%88%9B%E5%BB%BA%E9%AA%8C%E8%AF%81%E5%99%A8%E5%87%BD%E6%95%B0%E7%9A%84%E5%B7%A5%E5%8E%82%0A%20%20createValidator%20%3D%20rules%3A%20value%3A%0A%20%20%20%20let%0A%20%20%20%20%20%20checkRule%20%3D%20rule%3A%0A%20%20%20%20%20%20%20%20if%20rule.type%20%3D%3D%20%22minLength%22%0A%20%20%20%20%20%20%20%20then%20%0A%20%20%20%20%20%20%20%20%20%20builtins.stringLength%20value%20%3E%3D%20rule.value%0A%20%20%20%20%20%20%20%20else%20if%20rule.type%20%3D%3D%20%22maxLength%22%0A%20%20%20%20%20%20%20%20then%20%0A%20%20%20%20%20%20%20%20%20%20builtins.stringLength%20value%20%3C%3D%20rule.value%0A%20%20%20%20%20%20%20%20else%20if%20rule.type%20%3D%3D%20%22contains%22%0A%20%20%20%20%20%20%20%20then%20%0A%20%20%20%20%20%20%20%20%20%20builtins.match%20%22.*%24%7Brule.value%7D.*%22%20value%20%0A%20%20%20%20%20%20%20%20%20%20!%3D%20null%0A%20%20%20%20%20%20%20%20else%20true%3B%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20results%20%3D%20map%20checkRule%20rules%3B%0A%20%20%20%20%20%20allValid%20%3D%20builtins.all%20(x%3A%20x)%20results%3B%0A%20%20%20%20in%0A%20%20%20%20%20%20%7B%20%0A%20%20%20%20%20%20%20%20valid%20%3D%20allValid%3B%20%0A%20%20%20%20%20%20%20%20value%20%3D%20value%3B%0A%20%20%20%20%20%20%20%20errors%20%3D%20builtins.filter%20%0A%20%20%20%20%20%20%20%20%20%20(rule%3A%20!checkRule%20rule)%20rules%3B%0A%20%20%20%20%20%20%7D%3B%0A%20%20%0A%20%20%23%20%E5%88%9B%E5%BB%BA%E7%89%B9%E5%AE%9A%E7%9A%84%E9%AA%8C%E8%AF%81%E5%99%A8%0A%20%20emailValidator%20%3D%20createValidator%20%5B%0A%20%20%20%20%7B%20type%20%3D%20%22minLength%22%3B%20value%20%3D%205%3B%20%7D%0A%20%20%20%20%7B%20type%20%3D%20%22contains%22%3B%20value%20%3D%20%22%40%22%3B%20%7D%0A%20%20%20%20%7B%20type%20%3D%20%22contains%22%3B%20value%20%3D%20%22.%22%3B%20%7D%0A%20%20%5D%3B%0A%20%20%0A%20%20passwordValidator%20%3D%20createValidator%20%5B%0A%20%20%20%20%7B%20type%20%3D%20%22minLength%22%3B%20value%20%3D%208%3B%20%7D%0A%20%20%20%20%7B%20type%20%3D%20%22maxLength%22%3B%20value%20%3D%2032%3B%20%7D%0A%20%20%5D%3B%0A%20%20%0A%20%20%23%20%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B%0A%20%20email_result%20%3D%20emailValidator%20%22user%40example.com%22%3B%0A%20%20password_result%20%3D%20passwordValidator%20%22mypassword123%22%3B%0Ain%0A%20%20%7B%20inherit%20email_result%20password_result%3B%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-47",
       "sectionId": "s6",
       "title": "函数式编程工具",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  # 映射函数\n  mapList = f: list:\n    if list == []\n    then []\n    else \n      let head = f (builtins.head list);\n          tail = mapList f (builtins.tail list);\n      in [ head ] ++ tail;\n  \n  # 过滤函数\n  filterList = predicate: list:\n    if list == []\n    then []\n    else\n      let\n        head = builtins.head list;\n        tail = builtins.tail list;\n        filtered_tail = \n          filterList predicate tail;\n      in\n        if predicate head\n        then [ head ] ++ filtered_tail\n        else filtered_tail;\n  \n  # 归约函数\n  reduceList = f: initial: list:\n    if list == []\n    then initial\n    else \n      let head = builtins.head list;\n          tail = builtins.tail list;\n      in reduceList f (f initial head) tail;\n  \n  # 使用示例\n  numbers = [ 1 2 3 4 5 ];\n  doubled = mapList (x: x * 2) numbers;\n  evens = filterList (x: x mod 2 == 0) numbers;\n  sum = reduceList (acc: x: acc + x) 0 numbers;\n  product = reduceList (acc: x: acc * x) 1 numbers;\nin\n  { inherit doubled evens sum product; }"
+      "body": "```nix\nlet\n  # 映射函数\n  mapList = f: list:\n    if list == []\n    then []\n    else \n      let head = f (builtins.head list);\n          tail = mapList f (builtins.tail list);\n      in [ head ] ++ tail;\n  \n  # 过滤函数\n  filterList = predicate: list:\n    if list == []\n    then []\n    else\n      let\n        head = builtins.head list;\n        tail = builtins.tail list;\n        filtered_tail = \n          filterList predicate tail;\n      in\n        if predicate head\n        then [ head ] ++ filtered_tail\n        else filtered_tail;\n  \n  # 归约函数\n  reduceList = f: initial: list:\n    if list == []\n    then initial\n    else \n      let head = builtins.head list;\n          tail = builtins.tail list;\n      in reduceList f (f initial head) tail;\n  \n  # 使用示例\n  numbers = [ 1 2 3 4 5 ];\n  doubled = mapList (x: x * 2) numbers;\n  evens = filterList (x: x mod 2 == 0) numbers;\n  sum = reduceList (acc: x: acc + x) 0 numbers;\n  product = reduceList (acc: x: acc * x) 1 numbers;\nin\n  { inherit doubled evens sum product; }\n```"
     },
     {
       "id": "s7-48",
       "sectionId": "s7",
       "title": "%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E5%87%BD%E6%95%B0",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20value%20%3D%20%22hello%22%3B%0Ain%0A%20%20%7B%0A%20%20%20%20isString%20%3D%20builtins.isString%20value%3B%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%20%20isInt%20%3D%20builtins.isInt%20value%3B%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20false%0A%20%20%20%20isBool%20%3D%20builtins.isBool%20true%3B%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%20%20isList%20%3D%20builtins.isList%20%5B1%202%203%5D%3B%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%20%20isAttrs%20%3D%20builtins.isAttrs%20%7Bx%20%3D%201%3B%7D%3B%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%20%20isFunction%20%3D%20builtins.isFunction%20(x%3A%20x)%3B%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20value%20%3D%20%22hello%22%3B%0Ain%0A%20%20%7B%0A%20%20%20%20isString%20%3D%20builtins.isString%20value%3B%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%20%20isInt%20%3D%20builtins.isInt%20value%3B%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20false%0A%20%20%20%20isBool%20%3D%20builtins.isBool%20true%3B%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%20%20isList%20%3D%20builtins.isList%20%5B1%202%203%5D%3B%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%20%20isAttrs%20%3D%20builtins.isAttrs%20%7Bx%20%3D%201%3B%7D%3B%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%20%20isFunction%20%3D%20builtins.isFunction%20(x%3A%20x)%3B%20%0A%20%20%20%20%20%20%20%20%20%20%23%20true%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-49",
       "sectionId": "s7",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20text%20%3D%20%22Hello%2C%20Nix%20World!%22%3B%0Ain%0A%20%20%7B%0A%20%20%20%20length%20%3D%20builtins.stringLength%20text%3B%20%20%20%20%20%23%2018%0A%20%20%20%20substring%20%3D%20builtins.substring%207%203%20text%3B%20%23%20%22Nix%22%0A%20%20%20%20split%20%3D%20builtins.split%20%22%20%22%20text%3B%20%20%20%20%20%20%20%20%20%23%20%E5%88%86%E5%89%B2%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%20%20%20%20replace%20%3D%20builtins.replaceStrings%20%5B%22Nix%22%5D%20%5B%22%E4%B8%96%E7%95%8C%22%5D%20text%3B%20%20%23%20%22Hello%2C%20%E4%B8%96%E7%95%8C%20World!%22%0A%20%20%20%20%0A%20%20%20%20%23%20%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2%E9%9C%80%E8%A6%81%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AE%9E%E7%8E%B0%0A%20%20%20%20toLower%20%3D%20builtins.replaceStrings%20%0A%20%20%20%20%20%20%5B%22A%22%20%22B%22%20%22C%22%20%22D%22%20%22E%22%20%22F%22%20%22G%22%20%22H%22%20%22I%22%20%22J%22%20%22K%22%20%22L%22%20%22M%22%20%0A%20%20%20%20%20%20%20%22N%22%20%22O%22%20%22P%22%20%22Q%22%20%22R%22%20%22S%22%20%22T%22%20%22U%22%20%22V%22%20%22W%22%20%22X%22%20%22Y%22%20%22Z%22%5D%0A%20%20%20%20%20%20%5B%22a%22%20%22b%22%20%22c%22%20%22d%22%20%22e%22%20%22f%22%20%22g%22%20%22h%22%20%22i%22%20%22j%22%20%22k%22%20%22l%22%20%22m%22%20%0A%20%20%20%20%20%20%20%22n%22%20%22o%22%20%22p%22%20%22q%22%20%22r%22%20%22s%22%20%22t%22%20%22u%22%20%22v%22%20%22w%22%20%22x%22%20%22y%22%20%22z%22%5D%20%0A%20%20%20%20%20%20%22HELLO%22%3B%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20text%20%3D%20%22Hello%2C%20Nix%20World!%22%3B%0Ain%0A%20%20%7B%0A%20%20%20%20length%20%3D%20builtins.stringLength%20text%3B%20%20%20%20%20%23%2018%0A%20%20%20%20substring%20%3D%20builtins.substring%207%203%20text%3B%20%23%20%22Nix%22%0A%20%20%20%20split%20%3D%20builtins.split%20%22%20%22%20text%3B%20%20%20%20%20%20%20%20%20%23%20%E5%88%86%E5%89%B2%E5%AD%97%E7%AC%A6%E4%B8%B2%0A%20%20%20%20replace%20%3D%20builtins.replaceStrings%20%5B%22Nix%22%5D%20%5B%22%E4%B8%96%E7%95%8C%22%5D%20text%3B%20%20%23%20%22Hello%2C%20%E4%B8%96%E7%95%8C%20World!%22%0A%20%20%20%20%0A%20%20%20%20%23%20%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E6%8D%A2%E9%9C%80%E8%A6%81%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AE%9E%E7%8E%B0%0A%20%20%20%20toLower%20%3D%20builtins.replaceStrings%20%0A%20%20%20%20%20%20%5B%22A%22%20%22B%22%20%22C%22%20%22D%22%20%22E%22%20%22F%22%20%22G%22%20%22H%22%20%22I%22%20%22J%22%20%22K%22%20%22L%22%20%22M%22%20%0A%20%20%20%20%20%20%20%22N%22%20%22O%22%20%22P%22%20%22Q%22%20%22R%22%20%22S%22%20%22T%22%20%22U%22%20%22V%22%20%22W%22%20%22X%22%20%22Y%22%20%22Z%22%5D%0A%20%20%20%20%20%20%5B%22a%22%20%22b%22%20%22c%22%20%22d%22%20%22e%22%20%22f%22%20%22g%22%20%22h%22%20%22i%22%20%22j%22%20%22k%22%20%22l%22%20%22m%22%20%0A%20%20%20%20%20%20%20%22n%22%20%22o%22%20%22p%22%20%22q%22%20%22r%22%20%22s%22%20%22t%22%20%22u%22%20%22v%22%20%22w%22%20%22x%22%20%22y%22%20%22z%22%5D%20%0A%20%20%20%20%20%20%22HELLO%22%3B%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-50",
       "sectionId": "s7",
       "title": "%E5%88%97%E8%A1%A8%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20numbers%20%3D%20%5B1%202%203%204%205%5D%3B%0A%20%20strings%20%3D%20%5B%22apple%22%20%22banana%22%20%22cherry%22%5D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20length%20%3D%20builtins.length%20numbers%3B%20%20%20%20%20%20%20%20%23%205%0A%20%20%20%20head%20%3D%20builtins.head%20numbers%3B%20%20%20%20%20%20%20%20%20%20%20%20%23%201%0A%20%20%20%20tail%20%3D%20builtins.tail%20numbers%3B%20%20%20%20%20%20%20%20%20%20%20%20%23%20%5B2%203%204%205%5D%0A%20%20%20%20%0A%20%20%20%20%23%20%E6%98%A0%E5%B0%84%E5%87%BD%E6%95%B0%0A%20%20%20%20doubled%20%3D%20map%20(x%3A%20x%20*%202)%20numbers%3B%20%20%20%20%20%20%20%20%23%20%5B2%204%206%208%2010%5D%0A%20%20%20%20%23%20%E8%BF%87%E6%BB%A4%E5%87%BD%E6%95%B0%0A%20%20%20%20evens%20%3D%20builtins.filter%20(x%3A%20x%20mod%202%20%3D%3D%200)%20numbers%3B%20%20%23%20%5B2%204%5D%0A%20%20%20%20%23%20%E6%8A%98%E5%8F%A0%E5%87%BD%E6%95%B0%0A%20%20%20%20sum%20%3D%20builtins.foldl'%20(acc%3A%20x%3A%20acc%20%2B%20x)%200%20numbers%3B%20%20%23%2015%0A%20%20%20%20%23%20%E5%85%83%E7%B4%A0%E6%9F%A5%E6%89%BE%0A%20%20%20%20hasThree%20%3D%20builtins.elem%203%20numbers%3B%20%20%20%20%20%20%23%20true%0A%20%20%20%20%23%20%E6%8E%92%E5%BA%8F%0A%20%20%20%20sorted%20%3D%20builtins.sort%20(a%3A%20b%3A%20a%20%3C%20b)%20%5B3%201%204%201%205%209%5D%3B%20%20%23%20%5B1%201%203%204%205%209%5D%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20numbers%20%3D%20%5B1%202%203%204%205%5D%3B%0A%20%20strings%20%3D%20%5B%22apple%22%20%22banana%22%20%22cherry%22%5D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20length%20%3D%20builtins.length%20numbers%3B%20%20%20%20%20%20%20%20%23%205%0A%20%20%20%20head%20%3D%20builtins.head%20numbers%3B%20%20%20%20%20%20%20%20%20%20%20%20%23%201%0A%20%20%20%20tail%20%3D%20builtins.tail%20numbers%3B%20%20%20%20%20%20%20%20%20%20%20%20%23%20%5B2%203%204%205%5D%0A%20%20%20%20%0A%20%20%20%20%23%20%E6%98%A0%E5%B0%84%E5%87%BD%E6%95%B0%0A%20%20%20%20doubled%20%3D%20map%20(x%3A%20x%20*%202)%20numbers%3B%20%20%20%20%20%20%20%20%23%20%5B2%204%206%208%2010%5D%0A%20%20%20%20%23%20%E8%BF%87%E6%BB%A4%E5%87%BD%E6%95%B0%0A%20%20%20%20evens%20%3D%20builtins.filter%20(x%3A%20x%20mod%202%20%3D%3D%200)%20numbers%3B%20%20%23%20%5B2%204%5D%0A%20%20%20%20%23%20%E6%8A%98%E5%8F%A0%E5%87%BD%E6%95%B0%0A%20%20%20%20sum%20%3D%20builtins.foldl'%20(acc%3A%20x%3A%20acc%20%2B%20x)%200%20numbers%3B%20%20%23%2015%0A%20%20%20%20%23%20%E5%85%83%E7%B4%A0%E6%9F%A5%E6%89%BE%0A%20%20%20%20hasThree%20%3D%20builtins.elem%203%20numbers%3B%20%20%20%20%20%20%23%20true%0A%20%20%20%20%23%20%E6%8E%92%E5%BA%8F%0A%20%20%20%20sorted%20%3D%20builtins.sort%20(a%3A%20b%3A%20a%20%3C%20b)%20%5B3%201%204%201%205%209%5D%3B%20%20%23%20%5B1%201%203%204%205%209%5D%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-51",
       "sectionId": "s7",
       "title": "%E5%B1%9E%E6%80%A7%E9%9B%86%E6%93%8D%E4%BD%9C%E5%87%BD%E6%95%B0",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20attrs%20%3D%20%7B%20a%20%3D%201%3B%20b%20%3D%202%3B%20c%20%3D%203%3B%20%7D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20keys%20%3D%20builtins.attrNames%20attrs%3B%20%20%20%20%20%20%20%20%20%23%20%5B%22a%22%20%22b%22%20%22c%22%5D%0A%20%20%20%20values%20%3D%20builtins.attrValues%20attrs%3B%20%20%20%20%20%20%23%20%5B1%202%203%5D%0A%20%20%20%20hasAttr%20%3D%20builtins.hasAttr%20%22b%22%20attrs%3B%20%20%20%20%23%20true%0A%20%20%20%20%0A%20%20%20%20%23%20%E6%98%A0%E5%B0%84%E5%B1%9E%E6%80%A7%E5%80%BC%0A%20%20%20%20doubled%20%3D%20builtins.mapAttrs%20(name%3A%20value%3A%20value%20*%202)%20attrs%3B%0A%20%20%20%20%23%20%7B%20a%20%3D%202%3B%20b%20%3D%204%3B%20c%20%3D%206%3B%20%7D%0A%20%20%20%20%0A%20%20%20%20%23%20%E8%BF%87%E6%BB%A4%E5%B1%9E%E6%80%A7%0A%20%20%20%20filtered%20%3D%20builtins.filterAttrs%20(name%3A%20value%3A%20value%20%3E%201)%20attrs%3B%0A%20%20%20%20%23%20%7B%20b%20%3D%202%3B%20c%20%3D%203%3B%20%7D%0A%20%20%20%20%0A%20%20%20%20%23%20%E7%A7%BB%E9%99%A4%E5%B1%9E%E6%80%A7%0A%20%20%20%20removed%20%3D%20builtins.removeAttrs%20attrs%20%5B%22b%22%5D%3B%20%20%23%20%7B%20a%20%3D%201%3B%20c%20%3D%203%3B%20%7D%0A%20%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20attrs%20%3D%20%7B%20a%20%3D%201%3B%20b%20%3D%202%3B%20c%20%3D%203%3B%20%7D%3B%0Ain%0A%20%20%7B%0A%20%20%20%20keys%20%3D%20builtins.attrNames%20attrs%3B%20%20%20%20%20%20%20%20%20%23%20%5B%22a%22%20%22b%22%20%22c%22%5D%0A%20%20%20%20values%20%3D%20builtins.attrValues%20attrs%3B%20%20%20%20%20%20%23%20%5B1%202%203%5D%0A%20%20%20%20hasAttr%20%3D%20builtins.hasAttr%20%22b%22%20attrs%3B%20%20%20%20%23%20true%0A%20%20%20%20%0A%20%20%20%20%23%20%E6%98%A0%E5%B0%84%E5%B1%9E%E6%80%A7%E5%80%BC%0A%20%20%20%20doubled%20%3D%20builtins.mapAttrs%20(name%3A%20value%3A%20value%20*%202)%20attrs%3B%0A%20%20%20%20%23%20%7B%20a%20%3D%202%3B%20b%20%3D%204%3B%20c%20%3D%206%3B%20%7D%0A%20%20%20%20%0A%20%20%20%20%23%20%E8%BF%87%E6%BB%A4%E5%B1%9E%E6%80%A7%0A%20%20%20%20filtered%20%3D%20builtins.filterAttrs%20(name%3A%20value%3A%20value%20%3E%201)%20attrs%3B%0A%20%20%20%20%23%20%7B%20b%20%3D%202%3B%20c%20%3D%203%3B%20%7D%0A%20%20%20%20%0A%20%20%20%20%23%20%E7%A7%BB%E9%99%A4%E5%B1%9E%E6%80%A7%0A%20%20%20%20removed%20%3D%20builtins.removeAttrs%20attrs%20%5B%22b%22%5D%3B%20%20%23%20%7B%20a%20%3D%201%3B%20c%20%3D%203%3B%20%7D%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-52",
       "sectionId": "s8",
       "title": "导入文件",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  # 导入其他 Nix 文件\n  utils = import ./utils.nix;\n  config = import ./config.nix;\n  \n  # 带参数导入\n  lib = import <nixpkgs/lib>;\n  \n  # 导入并传递参数\n  myModule = import ./module.nix {\n    pkgs = import <nixpkgs> {};\n    config = { enableFeature = true; };\n  };\nin\n  {\n    inherit utils config lib myModule;\n  }"
+      "body": "```nix\nlet\n  # 导入其他 Nix 文件\n  utils = import ./utils.nix;\n  config = import ./config.nix;\n  \n  # 带参数导入\n  lib = import <nixpkgs/lib>;\n  \n  # 导入并传递参数\n  myModule = import ./module.nix {\n    pkgs = import <nixpkgs> {};\n    config = { enableFeature = true; };\n  };\nin\n  {\n    inherit utils config lib myModule;\n  }\n```"
     },
     {
       "id": "s8-53",
       "sectionId": "s8",
       "title": "%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89",
-      "kind": "code",
-      "lang": "nix",
-      "code": "%23%20module.nix%20%E7%A4%BA%E4%BE%8B%0A%7B%20pkgs%2C%20config%2C%20...%20%7D%3A%0A%0A%7B%0A%20%20%23%20%E6%A8%A1%E5%9D%97%E9%80%89%E9%A1%B9%0A%20%20options%20%3D%20%7B%0A%20%20%20%20services.myapp%20%3D%20%7B%0A%20%20%20%20%20%20enable%20%3D%20lib.mkOption%20%7B%0A%20%20%20%20%20%20%20%20type%20%3D%20lib.types.bool%3B%0A%20%20%20%20%20%20%20%20default%20%3D%20false%3B%0A%20%20%20%20%20%20%20%20description%20%3D%20%22%E5%90%AF%E7%94%A8%20MyApp%20%E6%9C%8D%E5%8A%A1%22%3B%0A%20%20%20%20%20%20%7D%3B%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20port%20%3D%20lib.mkOption%20%7B%0A%20%20%20%20%20%20%20%20type%20%3D%20lib.types.int%3B%0A%20%20%20%20%20%20%20%20default%20%3D%208080%3B%0A%20%20%20%20%20%20%20%20description%20%3D%20%22MyApp%20%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3%22%3B%0A%20%20%20%20%20%20%7D%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20%23%20%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE%0A%20%20config%20%3D%20lib.mkIf%20config.services.myapp.enable%20%7B%0A%20%20%20%20systemd.services.myapp%20%3D%20%7B%0A%20%20%20%20%20%20description%20%3D%20%22MyApp%20%E6%9C%8D%E5%8A%A1%22%3B%0A%20%20%20%20%20%20after%20%3D%20%5B%22network.target%22%5D%3B%0A%20%20%20%20%20%20serviceConfig%20%3D%20%7B%0A%20%20%20%20%20%20%20%20ExecStart%20%3D%20%22%24%7Bpkgs.myapp%7D%2Fbin%2Fmyapp%20--port%20%24%7BtoString%20config.services.myapp.port%7D%22%3B%0A%20%20%20%20%20%20%20%20Restart%20%3D%20%22always%22%3B%0A%20%20%20%20%20%20%7D%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0A%7D",
+      "body": "%60%60%60nix%0A%23%20module.nix%20%E7%A4%BA%E4%BE%8B%0A%7B%20pkgs%2C%20config%2C%20...%20%7D%3A%0A%0A%7B%0A%20%20%23%20%E6%A8%A1%E5%9D%97%E9%80%89%E9%A1%B9%0A%20%20options%20%3D%20%7B%0A%20%20%20%20services.myapp%20%3D%20%7B%0A%20%20%20%20%20%20enable%20%3D%20lib.mkOption%20%7B%0A%20%20%20%20%20%20%20%20type%20%3D%20lib.types.bool%3B%0A%20%20%20%20%20%20%20%20default%20%3D%20false%3B%0A%20%20%20%20%20%20%20%20description%20%3D%20%22%E5%90%AF%E7%94%A8%20MyApp%20%E6%9C%8D%E5%8A%A1%22%3B%0A%20%20%20%20%20%20%7D%3B%0A%20%20%20%20%20%20%0A%20%20%20%20%20%20port%20%3D%20lib.mkOption%20%7B%0A%20%20%20%20%20%20%20%20type%20%3D%20lib.types.int%3B%0A%20%20%20%20%20%20%20%20default%20%3D%208080%3B%0A%20%20%20%20%20%20%20%20description%20%3D%20%22MyApp%20%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3%22%3B%0A%20%20%20%20%20%20%7D%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20%23%20%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE%0A%20%20config%20%3D%20lib.mkIf%20config.services.myapp.enable%20%7B%0A%20%20%20%20systemd.services.myapp%20%3D%20%7B%0A%20%20%20%20%20%20description%20%3D%20%22MyApp%20%E6%9C%8D%E5%8A%A1%22%3B%0A%20%20%20%20%20%20after%20%3D%20%5B%22network.target%22%5D%3B%0A%20%20%20%20%20%20serviceConfig%20%3D%20%7B%0A%20%20%20%20%20%20%20%20ExecStart%20%3D%20%22%24%7Bpkgs.myapp%7D%2Fbin%2Fmyapp%20--port%20%24%7BtoString%20config.services.myapp.port%7D%22%3B%0A%20%20%20%20%20%20%20%20Restart%20%3D%20%22always%22%3B%0A%20%20%20%20%20%20%7D%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-54",
       "sectionId": "s9",
       "title": "%E5%9F%BA%E6%9C%AC%E5%8C%85%E5%AE%9A%E4%B9%89",
-      "kind": "code",
-      "lang": "nix",
-      "code": "%23%20default.nix%20%E6%88%96%20shell.nix%0A%7B%20pkgs%20%3F%20import%20%3Cnixpkgs%3E%20%7B%7D%20%7D%3A%0A%0Apkgs.stdenv.mkDerivation%20%7B%0A%20%20pname%20%3D%20%22my-app%22%3B%0A%20%20version%20%3D%20%221.0.0%22%3B%0A%20%20%0A%20%20src%20%3D%20.%2F.%3B%20%20%23%20%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%BD%9C%E4%B8%BA%E6%BA%90%E7%A0%81%0A%20%20%0A%20%20buildInputs%20%3D%20with%20pkgs%3B%20%5B%0A%20%20%20%20nodejs%0A%20%20%20%20yarn%0A%20%20%5D%3B%0A%20%20%0A%20%20buildPhase%20%3D%20''%0A%20%20%20%20yarn%20install%0A%20%20%20%20yarn%20build%0A%20%20''%3B%0A%20%20%0A%20%20installPhase%20%3D%20''%0A%20%20%20%20mkdir%20-p%20%24out%2Fbin%0A%20%20%20%20cp%20-r%20dist%2F*%20%24out%2F%0A%20%20%20%20makeWrapper%20%24%7Bpkgs.nodejs%7D%2Fbin%2Fnode%20%24out%2Fbin%2Fmy-app%20%5C%0A%20%20%20%20%20%20--add-flags%20%22%24out%2Findex.js%22%0A%20%20''%3B%0A%20%20%0A%20%20meta%20%3D%20with%20pkgs.lib%3B%20%7B%0A%20%20%20%20description%20%3D%20%22%E6%88%91%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%22%3B%0A%20%20%20%20homepage%20%3D%20%22https%3A%2F%2Fexample.com%22%3B%0A%20%20%20%20license%20%3D%20licenses.mit%3B%0A%20%20%20%20maintainers%20%3D%20with%20maintainers%3B%20%5B%20%22your-name%22%20%5D%3B%0A%20%20%7D%3B%0A%7D",
+      "body": "%60%60%60nix%0A%23%20default.nix%20%E6%88%96%20shell.nix%0A%7B%20pkgs%20%3F%20import%20%3Cnixpkgs%3E%20%7B%7D%20%7D%3A%0A%0Apkgs.stdenv.mkDerivation%20%7B%0A%20%20pname%20%3D%20%22my-app%22%3B%0A%20%20version%20%3D%20%221.0.0%22%3B%0A%20%20%0A%20%20src%20%3D%20.%2F.%3B%20%20%23%20%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%BD%9C%E4%B8%BA%E6%BA%90%E7%A0%81%0A%20%20%0A%20%20buildInputs%20%3D%20with%20pkgs%3B%20%5B%0A%20%20%20%20nodejs%0A%20%20%20%20yarn%0A%20%20%5D%3B%0A%20%20%0A%20%20buildPhase%20%3D%20''%0A%20%20%20%20yarn%20install%0A%20%20%20%20yarn%20build%0A%20%20''%3B%0A%20%20%0A%20%20installPhase%20%3D%20''%0A%20%20%20%20mkdir%20-p%20%24out%2Fbin%0A%20%20%20%20cp%20-r%20dist%2F*%20%24out%2F%0A%20%20%20%20makeWrapper%20%24%7Bpkgs.nodejs%7D%2Fbin%2Fnode%20%24out%2Fbin%2Fmy-app%20%5C%0A%20%20%20%20%20%20--add-flags%20%22%24out%2Findex.js%22%0A%20%20''%3B%0A%20%20%0A%20%20meta%20%3D%20with%20pkgs.lib%3B%20%7B%0A%20%20%20%20description%20%3D%20%22%E6%88%91%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%22%3B%0A%20%20%20%20homepage%20%3D%20%22https%3A%2F%2Fexample.com%22%3B%0A%20%20%20%20license%20%3D%20licenses.mit%3B%0A%20%20%20%20maintainers%20%3D%20with%20maintainers%3B%20%5B%20%22your-name%22%20%5D%3B%0A%20%20%7D%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-55",
       "sectionId": "s9",
       "title": "%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83",
-      "kind": "code",
-      "lang": "nix",
-      "code": "%23%20shell.nix%0A%7B%20pkgs%20%3F%20import%20%3Cnixpkgs%3E%20%7B%7D%20%7D%3A%0A%0Apkgs.mkShell%20%7B%0A%20%20buildInputs%20%3D%20with%20pkgs%3B%20%5B%0A%20%20%20%20%23%20%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%0A%20%20%20%20git%0A%20%20%20%20nodejs%0A%20%20%20%20yarn%0A%20%20%20%20python3%0A%20%20%20%20%0A%20%20%20%20%23%20%E7%B3%BB%E7%BB%9F%E5%BA%93%0A%20%20%20%20pkg-config%0A%20%20%20%20openssl%0A%20%20%20%20%0A%20%20%20%20%23%20%E6%95%B0%E6%8D%AE%E5%BA%93%0A%20%20%20%20postgresql%0A%20%20%20%20redis%0A%20%20%5D%3B%0A%20%20%0A%20%20%23%20%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%0A%20%20shellHook%20%3D%20''%0A%20%20%20%20echo%20%22%E6%AC%A2%E8%BF%8E%E8%BF%9B%E5%85%A5%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%81%22%0A%20%20%20%20export%20DATABASE_URL%3D%22postgresql%3A%2F%2Flocalhost%2Fmyapp%22%0A%20%20%20%20export%20REDIS_URL%3D%22redis%3A%2F%2Flocalhost%3A6379%22%0A%20%20%20%20%0A%20%20%20%20%23%20%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%0A%20%20%20%20if%20!%20pgrep%20-f%20%22postgres%22%20%3E%20%2Fdev%2Fnull%3B%20then%0A%20%20%20%20%20%20echo%20%22%E5%90%AF%E5%8A%A8%20PostgreSQL...%22%0A%20%20%20%20%20%20postgres%20-D%20%24HOME%2Fpostgres-data%20%26%0A%20%20%20%20fi%0A%20%20''%3B%0A%7D",
+      "body": "%60%60%60nix%0A%23%20shell.nix%0A%7B%20pkgs%20%3F%20import%20%3Cnixpkgs%3E%20%7B%7D%20%7D%3A%0A%0Apkgs.mkShell%20%7B%0A%20%20buildInputs%20%3D%20with%20pkgs%3B%20%5B%0A%20%20%20%20%23%20%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%0A%20%20%20%20git%0A%20%20%20%20nodejs%0A%20%20%20%20yarn%0A%20%20%20%20python3%0A%20%20%20%20%0A%20%20%20%20%23%20%E7%B3%BB%E7%BB%9F%E5%BA%93%0A%20%20%20%20pkg-config%0A%20%20%20%20openssl%0A%20%20%20%20%0A%20%20%20%20%23%20%E6%95%B0%E6%8D%AE%E5%BA%93%0A%20%20%20%20postgresql%0A%20%20%20%20redis%0A%20%20%5D%3B%0A%20%20%0A%20%20%23%20%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%0A%20%20shellHook%20%3D%20''%0A%20%20%20%20echo%20%22%E6%AC%A2%E8%BF%8E%E8%BF%9B%E5%85%A5%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%EF%BC%81%22%0A%20%20%20%20export%20DATABASE_URL%3D%22postgresql%3A%2F%2Flocalhost%2Fmyapp%22%0A%20%20%20%20export%20REDIS_URL%3D%22redis%3A%2F%2Flocalhost%3A6379%22%0A%20%20%20%20%0A%20%20%20%20%23%20%E8%87%AA%E5%8A%A8%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%0A%20%20%20%20if%20!%20pgrep%20-f%20%22postgres%22%20%3E%20%2Fdev%2Fnull%3B%20then%0A%20%20%20%20%20%20echo%20%22%E5%90%AF%E5%8A%A8%20PostgreSQL...%22%0A%20%20%20%20%20%20postgres%20-D%20%24HOME%2Fpostgres-data%20%26%0A%20%20%20%20fi%0A%20%20''%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s10-56",
       "sectionId": "s10",
       "title": "递归函数",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let\n  # 计算阶乘\n  factorial = n:\n    if n <= 1\n    then 1\n    else n * factorial (n - 1);\n  \n  # 列表求和\n  sumList = list:\n    if list == []\n    then 0\n    else builtins.head list + sumList (builtins.tail list);\n  \n  # 深度合并属性集\n  deepMerge = a: b:\n    let\n      mergeAttr = name:\n        let\n          aVal = a.${name};\n          bVal = b.${name};\n        in\n          if builtins.isAttrs aVal && builtins.isAttrs bVal\n          then deepMerge aVal bVal\n          else bVal;\n    in\n      a // b // builtins.listToAttrs (\n        map (name: { inherit name; value = mergeAttr name; })\n        (builtins.filter (name: builtins.hasAttr name a) (builtins.attrNames b))\n      );\nin\n  {\n    fact5 = factorial 5;           # 120\n    listSum = sumList [1 2 3 4 5]; # 15\n    merged = deepMerge \n      { a = { x = 1; y = 2; }; c = 3; }\n      { a = { y = 9; z = 4; }; d = 5; };\n  }"
+      "body": "```nix\nlet\n  # 计算阶乘\n  factorial = n:\n    if n <= 1\n    then 1\n    else n * factorial (n - 1);\n  \n  # 列表求和\n  sumList = list:\n    if list == []\n    then 0\n    else builtins.head list + sumList (builtins.tail list);\n  \n  # 深度合并属性集\n  deepMerge = a: b:\n    let\n      mergeAttr = name:\n        let\n          aVal = a.${name};\n          bVal = b.${name};\n        in\n          if builtins.isAttrs aVal && builtins.isAttrs bVal\n          then deepMerge aVal bVal\n          else bVal;\n    in\n      a // b // builtins.listToAttrs (\n        map (name: { inherit name; value = mergeAttr name; })\n        (builtins.filter (name: builtins.hasAttr name a) (builtins.attrNames b))\n      );\nin\n  {\n    fact5 = factorial 5;           # 120\n    listSum = sumList [1 2 3 4 5]; # 15\n    merged = deepMerge \n      { a = { x = 1; y = 2; }; c = 3; }\n      { a = { y = 9; z = 4; }; d = 5; };\n  }\n```"
     },
     {
       "id": "s11-57",
       "sectionId": "s11",
       "title": "%E6%96%AD%E8%A8%80",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20version%20%3D%20%221.2.3%22%3B%0A%20%20%0A%20%20%23%20%E5%9F%BA%E6%9C%AC%E6%96%AD%E8%A8%80%0A%20%20validVersion%20%3D%20assert%20builtins.stringLength%20version%20%3E%200%3B%20version%3B%0A%20%20%0A%20%20%23%20%E5%B8%A6%E6%B6%88%E6%81%AF%E7%9A%84%E6%96%AD%E8%A8%80%EF%BC%88%E9%80%9A%E8%BF%87%20throw%20%E5%AE%9E%E7%8E%B0%EF%BC%89%0A%20%20checkPort%20%3D%20port%3A%0A%20%20%20%20if%20port%20%3C%201%20%7C%7C%20port%20%3E%2065535%0A%20%20%20%20then%20throw%20%22%E7%AB%AF%E5%8F%A3%E5%8F%B7%E5%BF%85%E9%A1%BB%E5%9C%A8%201-65535%20%E4%B9%8B%E9%97%B4%EF%BC%8C%E5%BD%93%E5%89%8D%E5%80%BC%3A%20%24%7BtoString%20port%7D%22%0A%20%20%20%20else%20port%3B%0A%20%20%0A%20%20%23%20%E6%9D%A1%E4%BB%B6%E6%A3%80%E6%9F%A5%0A%20%20config%20%3D%20%7B%0A%20%20%20%20port%20%3D%20checkPort%208080%3B%0A%20%20%20%20host%20%3D%20if%20builtins.getEnv%20%22HOST%22%20!%3D%20%22%22%20%0A%20%20%20%20%20%20%20%20%20%20%20then%20builtins.getEnv%20%22HOST%22%20%0A%20%20%20%20%20%20%20%20%20%20%20else%20%22localhost%22%3B%0A%20%20%7D%3B%0Ain%0A%20%20config",
+      "body": "%60%60%60nix%0Alet%0A%20%20version%20%3D%20%221.2.3%22%3B%0A%20%20%0A%20%20%23%20%E5%9F%BA%E6%9C%AC%E6%96%AD%E8%A8%80%0A%20%20validVersion%20%3D%20assert%20builtins.stringLength%20version%20%3E%200%3B%20version%3B%0A%20%20%0A%20%20%23%20%E5%B8%A6%E6%B6%88%E6%81%AF%E7%9A%84%E6%96%AD%E8%A8%80%EF%BC%88%E9%80%9A%E8%BF%87%20throw%20%E5%AE%9E%E7%8E%B0%EF%BC%89%0A%20%20checkPort%20%3D%20port%3A%0A%20%20%20%20if%20port%20%3C%201%20%7C%7C%20port%20%3E%2065535%0A%20%20%20%20then%20throw%20%22%E7%AB%AF%E5%8F%A3%E5%8F%B7%E5%BF%85%E9%A1%BB%E5%9C%A8%201-65535%20%E4%B9%8B%E9%97%B4%EF%BC%8C%E5%BD%93%E5%89%8D%E5%80%BC%3A%20%24%7BtoString%20port%7D%22%0A%20%20%20%20else%20port%3B%0A%20%20%0A%20%20%23%20%E6%9D%A1%E4%BB%B6%E6%A3%80%E6%9F%A5%0A%20%20config%20%3D%20%7B%0A%20%20%20%20port%20%3D%20checkPort%208080%3B%0A%20%20%20%20host%20%3D%20if%20builtins.getEnv%20%22HOST%22%20!%3D%20%22%22%20%0A%20%20%20%20%20%20%20%20%20%20%20then%20builtins.getEnv%20%22HOST%22%20%0A%20%20%20%20%20%20%20%20%20%20%20else%20%22localhost%22%3B%0A%20%20%7D%3B%0Ain%0A%20%20config%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s11-58",
       "sectionId": "s11",
       "title": "%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86",
-      "kind": "code",
-      "lang": "nix",
-      "code": "let%0A%20%20%23%20%E5%AE%89%E5%85%A8%E7%9A%84%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE%0A%20%20safeGet%20%3D%20attrs%3A%20path%3A%20default%3A%0A%20%20%20%20let%0A%20%20%20%20%20%20keys%20%3D%20builtins.split%20%22%5C%5C.%22%20path%3B%0A%20%20%20%20%20%20getValue%20%3D%20obj%3A%20keyList%3A%0A%20%20%20%20%20%20%20%20if%20keyList%20%3D%3D%20%5B%5D%20then%20obj%0A%20%20%20%20%20%20%20%20else%20if%20!builtins.isAttrs%20obj%20then%20default%0A%20%20%20%20%20%20%20%20else%20if%20!builtins.hasAttr%20(builtins.head%20keyList)%20obj%20then%20default%0A%20%20%20%20%20%20%20%20else%20getValue%20(obj.%24%7Bbuiltins.head%20keyList%7D)%20(builtins.tail%20keyList)%3B%0A%20%20%20%20in%0A%20%20%20%20%20%20getValue%20attrs%20keys%3B%0A%20%20%0A%20%20config%20%3D%20%7B%0A%20%20%20%20database%20%3D%20%7B%0A%20%20%20%20%20%20host%20%3D%20%22localhost%22%3B%0A%20%20%20%20%20%20port%20%3D%205432%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20%23%20%E5%AE%89%E5%85%A8%E8%AE%BF%E9%97%AE%E5%B5%8C%E5%A5%97%E5%B1%9E%E6%80%A7%0A%20%20dbHost%20%3D%20safeGet%20config%20%22database.host%22%20%22default-host%22%3B%20%20%20%20%20%20%23%20%22localhost%22%0A%20%20dbUser%20%3D%20safeGet%20config%20%22database.user%22%20%22default-user%22%3B%20%20%20%20%20%20%23%20%22default-user%22%0Ain%0A%20%20%7B%20inherit%20dbHost%20dbUser%3B%20%7D",
+      "body": "%60%60%60nix%0Alet%0A%20%20%23%20%E5%AE%89%E5%85%A8%E7%9A%84%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE%0A%20%20safeGet%20%3D%20attrs%3A%20path%3A%20default%3A%0A%20%20%20%20let%0A%20%20%20%20%20%20keys%20%3D%20builtins.split%20%22%5C%5C.%22%20path%3B%0A%20%20%20%20%20%20getValue%20%3D%20obj%3A%20keyList%3A%0A%20%20%20%20%20%20%20%20if%20keyList%20%3D%3D%20%5B%5D%20then%20obj%0A%20%20%20%20%20%20%20%20else%20if%20!builtins.isAttrs%20obj%20then%20default%0A%20%20%20%20%20%20%20%20else%20if%20!builtins.hasAttr%20(builtins.head%20keyList)%20obj%20then%20default%0A%20%20%20%20%20%20%20%20else%20getValue%20(obj.%24%7Bbuiltins.head%20keyList%7D)%20(builtins.tail%20keyList)%3B%0A%20%20%20%20in%0A%20%20%20%20%20%20getValue%20attrs%20keys%3B%0A%20%20%0A%20%20config%20%3D%20%7B%0A%20%20%20%20database%20%3D%20%7B%0A%20%20%20%20%20%20host%20%3D%20%22localhost%22%3B%0A%20%20%20%20%20%20port%20%3D%205432%3B%0A%20%20%20%20%7D%3B%0A%20%20%7D%3B%0A%20%20%0A%20%20%23%20%E5%AE%89%E5%85%A8%E8%AE%BF%E9%97%AE%E5%B5%8C%E5%A5%97%E5%B1%9E%E6%80%A7%0A%20%20dbHost%20%3D%20safeGet%20config%20%22database.host%22%20%22default-host%22%3B%20%20%20%20%20%20%23%20%22localhost%22%0A%20%20dbUser%20%3D%20safeGet%20config%20%22database.user%22%20%22default-user%22%3B%20%20%20%20%20%20%23%20%22default-user%22%0Ain%0A%20%20%7B%20inherit%20dbHost%20dbUser%3B%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s12-59",
       "sectionId": "s12",
       "title": "来源",
-      "kind": "text",
       "body": "• [Nix 手册](https://nixos.org/manual/nix/stable/) - 官方用户手册\n• [NixOS 手册](https://nixos.org/manual/nixos/stable/) - NixOS 系统配置指南\n• [Nixpkgs 手册](https://nixos.org/manual/nixpkgs/stable/) - 包管理指南\n• [NixOS/nixpkgs](https://github.com/NixOS/nixpkgs) - 官方包仓库\n• [NixOS/nix](https://github.com/NixOS/nix) - Nix 包管理器源码\n• [Nix Pills](https://nixos.org/guides/nix-pills/) - 深入学习 Nix 的教程\n• [nix-shell](https://nixos.org/manual/nix/stable/command-ref/nix-shell.html) - 创建开发环境\n• [nix-build](https://nixos.org/manual/nix/stable/command-ref/nix-build.html) - 构建包\n• [nix-env](https://nixos.org/manual/nix/stable/command-ref/nix-env.html) - 用户环境管理\n• [nixos-rebuild](https://nixos.org/manual/nixos/stable/administration/administration.html) - 系统重构建\n• [NixOS/marketing](https://github.com/nixos/marketing) _(github.com)_\n• [Nix 语言官方文档](https://nixos.org/manual/nix/stable/expressions/language-values.html) _(nixos.org)_"
     }
   ],

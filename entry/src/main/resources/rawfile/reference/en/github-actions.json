@@ -25,295 +25,116 @@
       "id": "s1-0",
       "sectionId": "s1",
       "title": "Introduction",
-      "kind": "text",
       "body": "[GitHub Actions](https://docs.github.com/en/actions) is a CI/CD platform that enables automation of software workflows,\nallowing developers to build, test, and deploy code right from their GitHub repositories."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
-      "title": "Workflow Files",
-      "kind": "text",
-      "body": "Github Action Workflows are defined in special YAML files, typically stored in a `.github/workflows` directory in the\ngithub repository."
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "name%3A%20hello-world%0Aon%3A%20push%0Ajobs%3A%0A%20%20hello-world-job%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Hello%20World%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Hello%20World!%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "**Viewing your workflow runs**"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "%E2%80%A2%20On%20GitHub.com%2C%20navigate%20to%20the%20main%20page%20of%20the%20repository.%0A%E2%80%A2%20Under%20your%20repository%20name%2C%20click%20%60Actions%60.%0A%E2%80%A2%20In%20the%20left%20sidebar%2C%20click%20the%20workflow%20you%20want%20to%20display%2C%20in%20this%20example%20%22hello-world%22",
+      "title": "Workflow%20Files",
+      "body": "Github%20Action%20Workflows%20are%20defined%20in%20special%20YAML%20files%2C%20typically%20stored%20in%20a%20%60.github%2Fworkflows%60%20directory%20in%20the%0Agithub%20repository.%0A%0A%60%60%60yaml%0Aname%3A%20hello-world%0Aon%3A%20push%0Ajobs%3A%0A%20%20hello-world-job%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Hello%20World%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Hello%20World!%22%0A%60%60%60%0A%0A**Viewing%20your%20workflow%20runs**%0A%0A%E2%80%A2%20On%20GitHub.com%2C%20navigate%20to%20the%20main%20page%20of%20the%20repository.%0A%E2%80%A2%20Under%20your%20repository%20name%2C%20click%20%60Actions%60.%0A%E2%80%A2%20In%20the%20left%20sidebar%2C%20click%20the%20workflow%20you%20want%20to%20display%2C%20in%20this%20example%20%22hello-world%22",
       "encoded": true
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "Workflow Syntax",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "name: learn-github-actions\nrun-name: ${{ github.actor }} is learning GitHub Actions\non: [push]\njobs:\n  check-bats-version:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - uses: actions/setup-node@v3\n        with:\n          node-version: '14'\n      - run: npm install -g bats\n      - run: bats -v"
+      "title": "Workflow%20Syntax",
+      "body": "%60%60%60yaml%0Aname%3A%20learn-github-actions%0Arun-name%3A%20%24%7B%7B%20github.actor%20%7D%7D%20is%20learning%20GitHub%20Actions%0Aon%3A%20%5Bpush%5D%0Ajobs%3A%0A%20%20check-bats-version%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v4%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fsetup-node%40v3%0A%20%20%20%20%20%20%20%20with%3A%0A%20%20%20%20%20%20%20%20%20%20node-version%3A%20'14'%0A%20%20%20%20%20%20-%20run%3A%20npm%20install%20-g%20bats%0A%20%20%20%20%20%20-%20run%3A%20bats%20-v%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "Workflow Syntax Descriptions",
-      "kind": "text",
-      "body": "| Line                  | Description                                                                                                                                                                   |\n| :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| `name:`               | Sets the name of the GitHub Actions workflow. It's a label used for identifying the workflow in the repository.                                                               |\n| `run-name:`           | Sets a custom name for the run, using a GitHub context `${{ github.actor }}` to include the name of the user who initiated the run.                                           |\n| `on:`                 | Specifies the event that triggers the workflow. In this case, the workflow is triggered on any `push` event to the repository.                                                |\n| `jobs:`               | Defines a group of jobs that will be executed as part of the workflow. Each job runs independently in the workflow.                                                           |\n| `check-bats-version:` | Identifier for a specific job within the workflow. This job is named `check-bats-version`.                                                                                    |\n| `runs-on:`            | Specifies the type of machine to run the job on. Here, it's set to run on the latest version of Ubuntu.                                                                       |\n| `steps:`              | Contains a sequence of tasks (steps) that will be executed as part of the job.                                                                                                |\n| `uses:`               | Used to specify an action to include as part of a step. For example, `actions/checkout@v4` checks out the repository, and `actions/setup-node@v3` sets up a Node environment. |\n| `with:`               | Specifies additional parameters for the action. It's used in conjunction with `uses` to configure the action.                                                                 |\n| `node-version:`       | Contains parameter under `with`, specifying the version of Node.js to be set up by the `setup-node` action. In this case, it's set to version '14'.                           |"
+      "title": "Workflow%20Syntax%20Descriptions",
+      "body": "%7C%20Line%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%3A--------------------%20%7C%20%3A----------------------------------------------------------------------------------------------------------------------------------------------------------------------------%20%7C%0A%7C%20%60name%3A%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Sets%20the%20name%20of%20the%20GitHub%20Actions%20workflow.%20It's%20a%20label%20used%20for%20identifying%20the%20workflow%20in%20the%20repository.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60run-name%3A%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Sets%20a%20custom%20name%20for%20the%20run%2C%20using%20a%20GitHub%20context%20%60%24%7B%7B%20github.actor%20%7D%7D%60%20to%20include%20the%20name%20of%20the%20user%20who%20initiated%20the%20run.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60on%3A%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Specifies%20the%20event%20that%20triggers%20the%20workflow.%20In%20this%20case%2C%20the%20workflow%20is%20triggered%20on%20any%20%60push%60%20event%20to%20the%20repository.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60jobs%3A%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Defines%20a%20group%20of%20jobs%20that%20will%20be%20executed%20as%20part%20of%20the%20workflow.%20Each%20job%20runs%20independently%20in%20the%20workflow.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60check-bats-version%3A%60%20%7C%20Identifier%20for%20a%20specific%20job%20within%20the%20workflow.%20This%20job%20is%20named%20%60check-bats-version%60.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60runs-on%3A%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Specifies%20the%20type%20of%20machine%20to%20run%20the%20job%20on.%20Here%2C%20it's%20set%20to%20run%20on%20the%20latest%20version%20of%20Ubuntu.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60steps%3A%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Contains%20a%20sequence%20of%20tasks%20(steps)%20that%20will%20be%20executed%20as%20part%20of%20the%20job.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60uses%3A%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Used%20to%20specify%20an%20action%20to%20include%20as%20part%20of%20a%20step.%20For%20example%2C%20%60actions%2Fcheckout%40v4%60%20checks%20out%20the%20repository%2C%20and%20%60actions%2Fsetup-node%40v3%60%20sets%20up%20a%20Node%20environment.%20%7C%0A%7C%20%60with%3A%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Specifies%20additional%20parameters%20for%20the%20action.%20It's%20used%20in%20conjunction%20with%20%60uses%60%20to%20configure%20the%20action.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60node-version%3A%60%20%20%20%20%20%20%20%7C%20Contains%20parameter%20under%20%60with%60%2C%20specifying%20the%20version%20of%20Node.js%20to%20be%20set%20up%20by%20the%20%60setup-node%60%20action.%20In%20this%20case%2C%20it's%20set%20to%20version%20'14'.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C",
+      "encoded": true
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "Events",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "name%3A%20Event-trigger-on-push-example%0A%0Aon%3A%20%5Bpush%5D%20%23%20event%20is%20defined%20here%0A%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22This%20workflow%20runs%20on%20every%20push%20to%20the%20repository.%22",
+      "body": "%60%60%60yaml%0Aname%3A%20Event-trigger-on-push-example%0A%0Aon%3A%20%5Bpush%5D%20%23%20event%20is%20defined%20here%0A%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22This%20workflow%20runs%20on%20every%20push%20to%20the%20repository.%22%0A%60%60%60%0A%0A**Event%20Triggers**%0A%0A%7C%20Event%20Name%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%3A----------------------------%20%7C%20%3A----------------------------------------------%20%7C%0A%7C%20%60push%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20a%20push%20to%20the%20repository.%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60pull_request%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20pull%20request%20events.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60pull_request_review%60%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20pull%20request%20review%20events.%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60pull_request_review_comment%60%20%7C%20Triggers%20on%20comments%20on%20pull%20request%20reviews.%20%20%20%7C%0A%7C%20%60pull_request_target%60%20%20%20%20%20%20%20%20%20%7C%20For%20workflows%20in%20forked%20repositories.%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60fork%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20when%20a%20repository%20is%20forked.%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60issue_comment%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20issue%20and%20PR%20comments.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60issues%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20issue%20events.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60label%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20label%20events.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60milestone%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20milestone%20events.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60deployment%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20deployment.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60deployment_status%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20deployment%20status%20updates.%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60public%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20when%20repo%20goes%20from%20private%20to%20public.%20%7C%0A%7C%20%60repository_dispatch%60%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20a%20custom%20repository%20event.%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60schedule%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20a%20defined%20schedule.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60workflow_dispatch%60%20%20%20%20%20%20%20%20%20%20%20%7C%20Allows%20manual%20triggering%20of%20the%20workflow.%20%20%20%20%20%20%20%7C%0A%7C%20%60workflow_run%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20the%20completion%20of%20another%20workflow.%20%7C%0A%7C%20%60create%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20when%20a%20branch%20or%20tag%20is%20created.%20%20%20%20%20%20%20%7C%0A%7C%20%60delete%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20when%20a%20branch%20or%20tag%20is%20deleted.%20%20%20%20%20%20%20%7C%0A%7C%20%60page_build%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20GitHub%20Pages%20build%20events.%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60release%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20release%20events.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60watch%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20when%20someone%20stars%20the%20repo.%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60registry_package%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20registry%20package%20events.%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60status%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20status%20updates%20to%20a%20Git%20commit.%20%20%20%20%20%7C%0A%7C%20%60project%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20project%20board%20events.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60project_card%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20project%20card%20events.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60project_column%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20project%20column%20events.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60member%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20collaborator%20events.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60gollum%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Triggers%20on%20wiki%20page%20updates.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C",
       "encoded": true
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "**Event Triggers**"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "| Event Name                    | Description                                     |\n| :---------------------------- | :---------------------------------------------- |\n| `push`                        | Triggers on a push to the repository.           |\n| `pull_request`                | Triggers on pull request events.                |\n| `pull_request_review`         | Triggers on pull request review events.         |\n| `pull_request_review_comment` | Triggers on comments on pull request reviews.   |\n| `pull_request_target`         | For workflows in forked repositories.           |\n| `fork`                        | Triggers when a repository is forked.           |\n| `issue_comment`               | Triggers on issue and PR comments.              |\n| `issues`                      | Triggers on issue events.                       |\n| `label`                       | Triggers on label events.                       |\n| `milestone`                   | Triggers on milestone events.                   |\n| `deployment`                  | Triggers on deployment.                         |\n| `deployment_status`           | Triggers on deployment status updates.          |\n| `public`                      | Triggers when repo goes from private to public. |\n| `repository_dispatch`         | Triggers on a custom repository event.          |\n| `schedule`                    | Triggers on a defined schedule.                 |\n| `workflow_dispatch`           | Allows manual triggering of the workflow.       |\n| `workflow_run`                | Triggers on the completion of another workflow. |\n| `create`                      | Triggers when a branch or tag is created.       |\n| `delete`                      | Triggers when a branch or tag is deleted.       |\n| `page_build`                  | Triggers on GitHub Pages build events.          |\n| `release`                     | Triggers on release events.                     |\n| `watch`                       | Triggers when someone stars the repo.           |\n| `registry_package`            | Triggers on registry package events.            |\n| `status`                      | Triggers on status updates to a Git commit.     |\n| `project`                     | Triggers on project board events.               |\n| `project_card`                | Triggers on project card events.                |\n| `project_column`              | Triggers on project column events.              |\n| `member`                      | Triggers on collaborator events.                |\n| `gollum`                      | Triggers on wiki page updates.                  |"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "Jobs",
-      "kind": "text",
-      "body": "Single Job:"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "name: Single Job\non: [push]\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Run a build script\n        run: script/build"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Multiple Jobs:"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "name%3A%20CI%20Workflow%0A%0Aon%3A%20%5Bpush%5D%0A%0Ajobs%3A%0A%20%20job-1%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Runs%20job%201%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20Job%201%22%0A%0A%20%20job-2%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Runs%20job%202%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20Job%202%22%0A%0A%20%20job-3%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Runs%20job%203%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20Job%203%22",
+      "body": "Single%20Job%3A%0A%0A%60%60%60yaml%0Aname%3A%20Single%20Job%0Aon%3A%20%5Bpush%5D%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20build%20script%0A%20%20%20%20%20%20%20%20run%3A%20script%2Fbuild%0A%60%60%60%0A%0AMultiple%20Jobs%3A%0A%0A%60%60%60yaml%0Aname%3A%20CI%20Workflow%0A%0Aon%3A%20%5Bpush%5D%0A%0Ajobs%3A%0A%20%20job-1%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Runs%20job%201%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20Job%201%22%0A%0A%20%20job-2%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Runs%20job%202%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20Job%202%22%0A%0A%20%20job-3%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Runs%20job%203%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20Job%203%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "Steps",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      # step 1\n      - name: Check out repository\n        uses: actions/checkout@v2\n\n      # step 2\n      - name: Set up Node.js\n        uses: actions/setup-node@v2\n        with:\n          node-version: '14'\n\n      # step 3\n      - name: Install dependencies\n        run: npm install\n\n      # step 4\n      - name: Run tests\n        run: npm test"
+      "body": "%60%60%60yaml%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20%23%20step%201%0A%20%20%20%20%20%20-%20name%3A%20Check%20out%20repository%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%0A%20%20%20%20%20%20%23%20step%202%0A%20%20%20%20%20%20-%20name%3A%20Set%20up%20Node.js%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fsetup-node%40v2%0A%20%20%20%20%20%20%20%20with%3A%0A%20%20%20%20%20%20%20%20%20%20node-version%3A%20'14'%0A%0A%20%20%20%20%20%20%23%20step%203%0A%20%20%20%20%20%20-%20name%3A%20Install%20dependencies%0A%20%20%20%20%20%20%20%20run%3A%20npm%20install%0A%0A%20%20%20%20%20%20%23%20step%204%0A%20%20%20%20%20%20-%20name%3A%20Run%20tests%0A%20%20%20%20%20%20%20%20run%3A%20npm%20test%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "Github Runners & Self Hosted Runners",
-      "kind": "text",
-      "body": "[Github Hosted Runner](https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners/about-github-hosted-runners):"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "name%3A%20Workflow%0Aon%3A%20%5Bpush%5D%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%20%23%20default%20runner%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Hello%2C%20world!%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "[Self Hosted Runner](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners)"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "name%3A%20Workflow%20with%20Self-Hosted%20Runner%0Aon%3A%20%5Bpush%5D%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20self-hosted%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Hello%20from%20self-hosted%20runner!%22",
+      "title": "Github%20Runners%20%26%20Self%20Hosted%20Runners",
+      "body": "%5BGithub%20Hosted%20Runner%5D(https%3A%2F%2Fdocs.github.com%2Fen%2Factions%2Fusing-github-hosted-runners%2Fabout-github-hosted-runners%2Fabout-github-hosted-runners)%3A%0A%0A%60%60%60yaml%0Aname%3A%20Workflow%0Aon%3A%20%5Bpush%5D%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%20%23%20default%20runner%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Hello%2C%20world!%22%0A%60%60%60%0A%0A%5BSelf%20Hosted%20Runner%5D(https%3A%2F%2Fdocs.github.com%2Fen%2Factions%2Fhosting-your-own-runners%2Fmanaging-self-hosted-runners%2Fabout-self-hosted-runners)%0A%0A%60%60%60yaml%0Aname%3A%20Workflow%20with%20Self-Hosted%20Runner%0Aon%3A%20%5Bpush%5D%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20self-hosted%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Hello%20from%20self-hosted%20runner!%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-19",
       "sectionId": "s1",
-      "title": "Environment Variables",
-      "kind": "text",
-      "body": "Custom variable defined using environments."
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "jobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20env%3A%0A%20%20%20%20%20%20CUSTOM_VARIABLE%3A%20'Hello%2C%20World!'%20%23%20Custom%20variable%20defined%20using%20env%3A%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Check%20environment%20variable%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Value%20of%20CUSTOM_VAR%20is%20%24CUSTOM_VAR%22",
+      "title": "Environment%20Variables",
+      "body": "Custom%20variable%20defined%20using%20environments.%0A%0A%60%60%60yaml%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20env%3A%0A%20%20%20%20%20%20CUSTOM_VARIABLE%3A%20'Hello%2C%20World!'%20%23%20Custom%20variable%20defined%20using%20env%3A%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Check%20environment%20variable%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Value%20of%20CUSTOM_VAR%20is%20%24CUSTOM_VAR%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-21",
       "sectionId": "s1",
       "title": "Secrets",
-      "kind": "text",
-      "body": "To add a new secret in your github repository nagivate to `Repository` > `Settings` > `Security` >\n`Secrets and Variables` > `Actions` > `New Repository Secret`"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Example Secrets workflow:"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "name%3A%20Workflow%20with%20Secrets%0A%0Aon%3A%20%5Bpush%5D%0A%0Ajobs%3A%0A%20%20example_job%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Checkout%20repository%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Use%20a%20secret%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22The%20secret%20is%20%24%7B%7B%20secrets.MY_SECRET%20%7D%7D%22",
+      "body": "To%20add%20a%20new%20secret%20in%20your%20github%20repository%20nagivate%20to%20%60Repository%60%20%3E%20%60Settings%60%20%3E%20%60Security%60%20%3E%0A%60Secrets%20and%20Variables%60%20%3E%20%60Actions%60%20%3E%20%60New%20Repository%20Secret%60%0A%0AExample%20Secrets%20workflow%3A%0A%0A%60%60%60yaml%0Aname%3A%20Workflow%20with%20Secrets%0A%0Aon%3A%20%5Bpush%5D%0A%0Ajobs%3A%0A%20%20example_job%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Checkout%20repository%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Use%20a%20secret%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22The%20secret%20is%20%24%7B%7B%20secrets.MY_SECRET%20%7D%7D%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
       "title": "Artifacts",
-      "kind": "text",
-      "body": "To access your artifact navigate to `Repository` > `Actions` > `Workflow Run` > `Artifacts`"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Build project\n        run: make build\n      - name: Upload build artifact\n        uses: actions/upload-artifact@v3 # upload Artifacts prebuilt action\n        with:\n          name: my-artifact\n          path: path/to/artifact"
+      "body": "To access your artifact navigate to `Repository` > `Actions` > `Workflow Run` > `Artifacts`\n\n```yaml\njobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Build project\n        run: make build\n      - name: Upload build artifact\n        uses: actions/upload-artifact@v3 # upload Artifacts prebuilt action\n        with:\n          name: my-artifact\n          path: path/to/artifact\n```"
     },
     {
       "id": "s1-26",
       "sectionId": "s1",
-      "title": "Caching Dependencies",
-      "kind": "text",
-      "body": "Dependency caches stores downloaded packages or compiled binaries of your workflows."
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v2\n      - name: Cache dependencies\n        uses: actions/cache@v2 # stores downloaded packages or compiled binaries\n        with:\n          path: |\n            path/to/dependencies\n            another/path\n          key: ${{ runner.os }}-deps-${{ hashFiles('**/lockfile') }} # hash of the dependency lock file is generated in the OS\n      - name: Install dependencies\n        run: install-command"
+      "title": "Caching%20Dependencies",
+      "body": "Dependency%20caches%20stores%20downloaded%20packages%20or%20compiled%20binaries%20of%20your%20workflows.%0A%0A%60%60%60yaml%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Cache%20dependencies%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcache%40v2%20%23%20stores%20downloaded%20packages%20or%20compiled%20binaries%0A%20%20%20%20%20%20%20%20with%3A%0A%20%20%20%20%20%20%20%20%20%20path%3A%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20path%2Fto%2Fdependencies%0A%20%20%20%20%20%20%20%20%20%20%20%20another%2Fpath%0A%20%20%20%20%20%20%20%20%20%20key%3A%20%24%7B%7B%20runner.os%20%7D%7D-deps-%24%7B%7B%20hashFiles('**%2Flockfile')%20%7D%7D%20%23%20hash%20of%20the%20dependency%20lock%20file%20is%20generated%20in%20the%20OS%0A%20%20%20%20%20%20-%20name%3A%20Install%20dependencies%0A%20%20%20%20%20%20%20%20run%3A%20install-command%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-28",
       "sectionId": "s1",
-      "title": "Matrix Strategies",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "jobs:\n  build:\n    runs-on: ubuntu-latest\n    strategy:\n      matrix:\n        node-version: [12.x, 14.x, 16.x]\n        # matrix strategy runs enables you to run jobs across multiple combinations of environments and OS's\n        os: [ubuntu-latest, windows-latest, macOS-latest]\n    steps:\n      - uses: actions/checkout@v2\n      - name: Use Node.js ${{ matrix.node-version }}\n        uses: actions/setup-node@v1\n        with:\n          node-version: ${{ matrix.node-version }}\n      - run: npm install\n      - run: npm test\n        env:\n          CI: true"
+      "title": "Matrix%20Strategies",
+      "body": "%60%60%60yaml%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20strategy%3A%0A%20%20%20%20%20%20matrix%3A%0A%20%20%20%20%20%20%20%20node-version%3A%20%5B12.x%2C%2014.x%2C%2016.x%5D%0A%20%20%20%20%20%20%20%20%23%20matrix%20strategy%20runs%20enables%20you%20to%20run%20jobs%20across%20multiple%20combinations%20of%20environments%20and%20OS's%0A%20%20%20%20%20%20%20%20os%3A%20%5Bubuntu-latest%2C%20windows-latest%2C%20macOS-latest%5D%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Use%20Node.js%20%24%7B%7B%20matrix.node-version%20%7D%7D%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fsetup-node%40v1%0A%20%20%20%20%20%20%20%20with%3A%0A%20%20%20%20%20%20%20%20%20%20node-version%3A%20%24%7B%7B%20matrix.node-version%20%7D%7D%0A%20%20%20%20%20%20-%20run%3A%20npm%20install%0A%20%20%20%20%20%20-%20run%3A%20npm%20test%0A%20%20%20%20%20%20%20%20env%3A%0A%20%20%20%20%20%20%20%20%20%20CI%3A%20true%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-29",
       "sectionId": "s1",
-      "title": "Conditions and Expressions",
-      "kind": "text",
-      "body": "Branch Conditions:"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "jobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Checkout%20code%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20build%0A%20%20%20%20%20%20%20%20if%3A%20github.ref%20%3D%3D%20'refs%2Fheads%2Fmain'%20%23%20%22Run%20build%22%20step%20will%20only%20execute%20if%20the%20current%20branch%20is%20main.%0A%20%20%20%20%20%20%20%20run%3A%20make%20build",
-      "encoded": true
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Event Trigger Conditions:"
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "jobs%3A%0A%20%20test%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Checkout%20code%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20tests%0A%20%20%20%20%20%20%20%20if%3A%20github.event_name%20%3D%3D%20'pull_request'%20%23%20%22Run%20tests%22%20step%20is%20executed%20only%20when%20the%20workflow%20is%20triggered%20by%20a%20pull%20request%20event%0A%20%20%20%20%20%20%20%20run%3A%20npm%20test",
+      "title": "Conditions%20and%20Expressions",
+      "body": "Branch%20Conditions%3A%0A%0A%60%60%60yaml%0Ajobs%3A%0A%20%20build%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Checkout%20code%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20build%0A%20%20%20%20%20%20%20%20if%3A%20github.ref%20%3D%3D%20'refs%2Fheads%2Fmain'%20%23%20%22Run%20build%22%20step%20will%20only%20execute%20if%20the%20current%20branch%20is%20main.%0A%20%20%20%20%20%20%20%20run%3A%20make%20build%0A%60%60%60%0A%0AEvent%20Trigger%20Conditions%3A%0A%0A%60%60%60yaml%0Ajobs%3A%0A%20%20test%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Checkout%20code%0A%20%20%20%20%20%20%20%20uses%3A%20actions%2Fcheckout%40v2%0A%20%20%20%20%20%20-%20name%3A%20Run%20tests%0A%20%20%20%20%20%20%20%20if%3A%20github.event_name%20%3D%3D%20'pull_request'%20%23%20%22Run%20tests%22%20step%20is%20executed%20only%20when%20the%20workflow%20is%20triggered%20by%20a%20pull%20request%20event%0A%20%20%20%20%20%20%20%20run%3A%20npm%20test%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-33",
       "sectionId": "s1",
-      "title": "Workflow Commands",
-      "kind": "text",
-      "body": "Depending on your OS, if you are running ubuntu-latest, bash commands should work"
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "steps%3A%0A%20%20-%20name%3A%20Set%20environment%20variable%0A%20%20%20%20run%3A%20echo%20%22NAME%3Dvalue%22%20%3E%3E%20%24GITHUB_ENV",
+      "title": "Workflow%20Commands",
+      "body": "Depending%20on%20your%20OS%2C%20if%20you%20are%20running%20ubuntu-latest%2C%20bash%20commands%20should%20work%0A%0A%60%60%60yaml%0Asteps%3A%0A%20%20-%20name%3A%20Set%20environment%20variable%0A%20%20%20%20run%3A%20echo%20%22NAME%3Dvalue%22%20%3E%3E%20%24GITHUB_ENV%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-35",
       "sectionId": "s1",
       "title": "Concurrency",
-      "kind": "text",
-      "body": "The concurrency field creates a group based on the `github.head_ref`. If a new run starts within the same concurrency\ngroup, it cancels any in-progress runs."
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "jobs%3A%0A%20%20my_job%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20concurrency%3A%0A%20%20%20%20%20%20group%3A%20%24%7B%7B%20github.head_ref%20%7D%7D%0A%20%20%20%20%20%20cancel-in-progress%3A%20true%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20script...%22",
+      "body": "The%20concurrency%20field%20creates%20a%20group%20based%20on%20the%20%60github.head_ref%60.%20If%20a%20new%20run%20starts%20within%20the%20same%20concurrency%0Agroup%2C%20it%20cancels%20any%20in-progress%20runs.%0A%0A%60%60%60yaml%0Ajobs%3A%0A%20%20my_job%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20concurrency%3A%0A%20%20%20%20%20%20group%3A%20%24%7B%7B%20github.head_ref%20%7D%7D%0A%20%20%20%20%20%20cancel-in-progress%3A%20true%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20name%3A%20Run%20a%20script%0A%20%20%20%20%20%20%20%20run%3A%20echo%20%22Running%20script...%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-37",
       "sectionId": "s2",
       "title": "Also see",
-      "kind": "text",
       "body": "• [YAML](/yaml) _(cheatsheets.zip)_\n• [Github](/github) _(cheatsheets.zip)_\n• [Github Actions Documentation](https://docs.github.com/en/actions)_(docs.github.com/en/actions)_"
     }
   ],

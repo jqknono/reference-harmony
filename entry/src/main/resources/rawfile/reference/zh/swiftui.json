@@ -55,1467 +55,394 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "该备忘单提供了使用 [SwiftUI](https://developer.apple.com/xcode/swiftui/) 的标签的一些示例等"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "介绍",
-      "kind": "text",
-      "body": "[SwiftUI](https://developer.apple.com/xcode/swiftui/) 提供用于声明应用程序用户界面的视图、控件和布局结构"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• [SwiftUI Document](https://developer.apple.com/xcode/swiftui/) _(apple.com)_\n• [SwiftUI 2.0 备忘清单](https://wangchujiang.com/swiftui-example/cheat-sheet.html) _(swiftui-example)_\n• [Swift 备忘清单](./swift.md) _(jaywcjlove.github.io)_"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "import SwiftUI\n\nstruct AlbumDetail: View {\n  var album: Album\n  var body: some View {\n    List(album.songs) { song in \n      HStack {\n        Image(album.cover)\n        VStack(alignment: .leading) {\n          Text(song.title)\n        }\n      }\n    }\n  }\n}"
+      "body": "[SwiftUI](https://developer.apple.com/xcode/swiftui/) 提供用于声明应用程序用户界面的视图、控件和布局结构\n\n• [SwiftUI Document](https://developer.apple.com/xcode/swiftui/) _(apple.com)_\n• [SwiftUI 2.0 备忘清单](https://wangchujiang.com/swiftui-example/cheat-sheet.html) _(swiftui-example)_\n• [Swift 备忘清单](./swift.md) _(jaywcjlove.github.io)_\n\n```swift\nimport SwiftUI\n\nstruct AlbumDetail: View {\n  var album: Album\n  var body: some View {\n    List(album.songs) { song in \n      HStack {\n        Image(album.cover)\n        VStack(alignment: .leading) {\n          Text(song.title)\n        }\n      }\n    }\n  }\n}\n```"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "SwiftUI 与 UIKit 效果一致",
-      "kind": "text",
       "body": "• [Text](#text) & [Label](#label) _(UILabel)_\n• [Image](#image-图片) _(UIImageView)_\n• [TextField](#texteditor-多行可滚动文本编辑器) / [SecureField](#securefield-密码输入框) _(UITextField)_\n• [TextEditor](#texteditor-多行可滚动文本编辑器) _(UITextView)_\n• [Toggle](#toggle-开关选择器) _(UISwitch)_\n• [Slider](#slider-滑动输入条) _(UISlider)_\n• [Button](#button-按钮控件)/ [Link](#link) _(UIButton)_\n• [List](#link) _(UITableView)_\n• [LazyVGrid](#lazyvgrid) / [LazyHGrid](#lazyhgrid) _(UICollectionView)_\n• [NavigationView](#navigationview) _(UINavigationController)_\n• [TabView](#tabview) _(UITabBarController)_\n• [Alert](#alert) _(UIAlertController 带有样式 .alert)_\n• [ActionSheet](#actionsheet) _(UIAlertController 带有样式 .actionSheet)_\n• [HStack](#hstack) / [LazyHStack](#lazyhstack) _(UIStackView 带水平轴)_\n• [VStack](#vstack) / [LazyVStack](#lazyvstack) _(UIStackView 带垂直轴)_\n• [Picker](#picker-选择控件) _(UISegmentedControl)_\n• [Stepper](#stepper-执行语义递增和递减操作的控件) _(UIStepper)_\n• [DatePicker](#datepicker-日期控件) _(UIDatePicker)_\n• [Text](#text) _(NSAttributedString)无等效项)_\n• [Map](#map-地图界面的视图) _(MapKit)_\n• [ProgressView](#progressview-进度视图) _(UIProgressView)_\n• [Shape](#shape) / [Rectangle](#shape) / [Circle](#shape)"
     },
     {
       "id": "s2-5",
       "sectionId": "s2",
       "title": "Text",
-      "kind": "text",
-      "body": "要在UI中显示文本，只需编写："
-    },
-    {
-      "id": "s2-6",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Text(%22Hello%20World%22)",
-      "encoded": true
-    },
-    {
-      "id": "s2-7",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "添加样式"
-    },
-    {
-      "id": "s2-8",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Text(%22Hello%20World%22)%0A%20%20%20%20.font(.largeTitle)%0A%20%20%20%20.foregroundColor(Color.green)%0A%20%20%20%20.lineSpacing(50)%0A%20%20%20%20.lineLimit(nil)%0A%20%20%20%20.padding()",
+      "body": "%E8%A6%81%E5%9C%A8UI%E4%B8%AD%E6%98%BE%E7%A4%BA%E6%96%87%E6%9C%AC%EF%BC%8C%E5%8F%AA%E9%9C%80%E7%BC%96%E5%86%99%EF%BC%9A%0A%0A%60%60%60swift%0AText(%22Hello%20World%22)%0A%60%60%60%0A%0A%E6%B7%BB%E5%8A%A0%E6%A0%B7%E5%BC%8F%0A%0A%60%60%60swift%0AText(%22Hello%20World%22)%0A%20%20%20%20.font(.largeTitle)%0A%20%20%20%20.foregroundColor(Color.green)%0A%20%20%20%20.lineSpacing(50)%0A%20%20%20%20.lineLimit(nil)%0A%20%20%20%20.padding()%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-9",
       "sectionId": "s2",
       "title": "Text%20%E8%AE%BE%E7%BD%AE%E6%96%87%E6%9C%AC%E6%A0%BC%E5%BC%8F",
-      "kind": "code",
-      "lang": "swift",
-      "code": "static%20let%20dateFormatter%3A%20DateFormatter%20%3D%20%7B%0A%20%20let%20formatter%20%3D%20DateFormatter()%0A%20%20formatter.dateStyle%20%3D%20.long%0A%20%20return%20formatter%0A%7D()%0A%0Avar%20now%20%3D%20Date()%0Avar%20body%3A%20some%20View%20%7B%0A%20%20Text(%22Task%20due%20date%3A%20%5C(now%2C%20formatter%3A%20Self.dateFormatter)%22)%0A%7D",
+      "body": "%60%60%60swift%0Astatic%20let%20dateFormatter%3A%20DateFormatter%20%3D%20%7B%0A%20%20let%20formatter%20%3D%20DateFormatter()%0A%20%20formatter.dateStyle%20%3D%20.long%0A%20%20return%20formatter%0A%7D()%0A%0Avar%20now%20%3D%20Date()%0Avar%20body%3A%20some%20View%20%7B%0A%20%20Text(%22Task%20due%20date%3A%20%5C(now%2C%20formatter%3A%20Self.dateFormatter)%22)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-10",
       "sectionId": "s2",
       "title": "Label",
-      "kind": "text",
-      "body": "可以使用以下代码行在文本旁边设置图标。"
-    },
-    {
-      "id": "s2-11",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Label(%22SwiftUI%20CheatSheet%22%2C%20systemImage%3A%20%22up.icloud%22)",
+      "body": "%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8B%E4%BB%A3%E7%A0%81%E8%A1%8C%E5%9C%A8%E6%96%87%E6%9C%AC%E6%97%81%E8%BE%B9%E8%AE%BE%E7%BD%AE%E5%9B%BE%E6%A0%87%E3%80%82%0A%0A%60%60%60swift%0ALabel(%22SwiftUI%20CheatSheet%22%2C%20systemImage%3A%20%22up.icloud%22)%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BLabel%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Flabel)",
       "encoded": true
-    },
-    {
-      "id": "s2-12",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Label](https://developer.apple.com/documentation/swiftui/label)"
     },
     {
       "id": "s2-13",
       "sectionId": "s2",
       "title": "Link",
-      "kind": "text",
-      "body": "可以设置URL，单击后将重定向到浏览器。"
-    },
-    {
-      "id": "s2-14",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Link(%22Click%20me%22%2C%20destination%3A%20URL(string%3A%20%22your_url%22)!)",
+      "body": "%E5%8F%AF%E4%BB%A5%E8%AE%BE%E7%BD%AEURL%EF%BC%8C%E5%8D%95%E5%87%BB%E5%90%8E%E5%B0%86%E9%87%8D%E5%AE%9A%E5%90%91%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E3%80%82%0A%0A%60%60%60swift%0ALink(%22Click%20me%22%2C%20destination%3A%20URL(string%3A%20%22your_url%22)!)%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BLabel%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Flink)",
       "encoded": true
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Label](https://developer.apple.com/documentation/swiftui/link)"
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
-      "title": "Image 图片",
-      "kind": "text",
-      "body": "显示与环境相关的图像的视图。"
-    },
-    {
-      "id": "s2-17",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Image(%22foo%22)%20%2F%2F%20%E5%9B%BE%E5%83%8F%E5%90%8D%E7%A7%B0%E6%98%AFfoo",
+      "title": "Image%20%E5%9B%BE%E7%89%87",
+      "body": "%E6%98%BE%E7%A4%BA%E4%B8%8E%E7%8E%AF%E5%A2%83%E7%9B%B8%E5%85%B3%E7%9A%84%E5%9B%BE%E5%83%8F%E7%9A%84%E8%A7%86%E5%9B%BE%E3%80%82%0A%0A%60%60%60swift%0AImage(%22foo%22)%20%2F%2F%20%E5%9B%BE%E5%83%8F%E5%90%8D%E7%A7%B0%E6%98%AFfoo%0A%60%60%60%0A%0A%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%96%B0%E7%9A%84%20%60SF%20Symbols%60%0A%0A%60%60%60swift%0AImage(systemName%3A%20%22clock.fill%22)%0A%60%60%60%0A%0A%E6%82%A8%E5%8F%AF%E4%BB%A5%E5%90%91%E7%B3%BB%E7%BB%9F%E5%9B%BE%E6%A0%87%E9%9B%86%E6%B7%BB%E5%8A%A0%E6%A0%B7%E5%BC%8F%E4%BB%A5%E5%8C%B9%E9%85%8D%E6%82%A8%E4%BD%BF%E7%94%A8%E7%9A%84%E5%AD%97%E4%BD%93%0A%0A%60%60%60swift%0AImage(systemName%3A%20%22cloud.heavyrain.fill%22)%0A%20%20%20%20.foregroundColor(.red)%0A%20%20%20%20.font(.title)%0AImage(systemName%3A%20%22clock%22)%0A%20%20%20%20.foregroundColor(.red)%0A%20%20%20%20.font(Font.system(.largeTitle).bold())%0A%60%60%60%0A%0A%E4%B8%BA%E5%9B%BE%E5%83%8F%E6%B7%BB%E5%8A%A0%E6%A0%B7%E5%BC%8F%0A%0A%60%60%60swift%0AImage(%22foo%22)%0A%20%20.resizable()%20%2F%2F%20%E8%B0%83%E6%95%B4%E5%A4%A7%E5%B0%8F%E4%BB%A5%E4%BE%BF%E5%A1%AB%E5%85%85%E6%89%80%E6%9C%89%E5%8F%AF%E7%94%A8%E7%A9%BA%E9%97%B4%0A%20%20.aspectRatio(contentMode%3A%20.fit)%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BImage%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fimage)",
       "encoded": true
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "我们可以使用新的 `SF Symbols`"
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Image(systemName%3A%20%22clock.fill%22)",
-      "encoded": true
-    },
-    {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "您可以向系统图标集添加样式以匹配您使用的字体"
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Image(systemName%3A%20%22cloud.heavyrain.fill%22)%0A%20%20%20%20.foregroundColor(.red)%0A%20%20%20%20.font(.title)%0AImage(systemName%3A%20%22clock%22)%0A%20%20%20%20.foregroundColor(.red)%0A%20%20%20%20.font(Font.system(.largeTitle).bold())",
-      "encoded": true
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "为图像添加样式"
-    },
-    {
-      "id": "s2-23",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Image(%22foo%22)%0A%20%20.resizable()%20%2F%2F%20%E8%B0%83%E6%95%B4%E5%A4%A7%E5%B0%8F%E4%BB%A5%E4%BE%BF%E5%A1%AB%E5%85%85%E6%89%80%E6%9C%89%E5%8F%AF%E7%94%A8%E7%A9%BA%E9%97%B4%0A%20%20.aspectRatio(contentMode%3A%20.fit)",
-      "encoded": true
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Image](https://developer.apple.com/documentation/swiftui/image)"
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "Shape",
-      "kind": "text",
-      "body": "创建矩形的步骤"
-    },
-    {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Rectangle()\n    .fill(Color.red)\n    .frame(width: 200, height: 200)"
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "创建圆的步骤"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Circle()\n  .fill(Color.blue)\n  .frame(width: 50, height: 50)"
-    },
-    {
-      "id": "s2-29",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Image](https://developer.apple.com/documentation/swiftui/shapes)"
+      "body": "创建矩形的步骤\n\n```swift\nRectangle()\n    .fill(Color.red)\n    .frame(width: 200, height: 200)\n```\n\n创建圆的步骤\n\n```swift\nCircle()\n  .fill(Color.blue)\n  .frame(width: 50, height: 50)\n```\n\n文档 - [Image](https://developer.apple.com/documentation/swiftui/shapes)"
     },
     {
       "id": "s2-30",
       "sectionId": "s2",
-      "title": "ProgressView 进度视图",
-      "kind": "text",
-      "body": "显示任务完成进度的视图。"
-    },
-    {
-      "id": "s2-31",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20private%20var%20progress%20%3D%200.5%0A%0AVStack%20%7B%0A%20%20%20%20ProgressView(value%3A%20progress)%0A%20%20%20%20Button(%22More%22%2C%20action%3A%20%7B%20progress%20%2B%3D%200.05%20%7D)%0A%7D",
+      "title": "ProgressView%20%E8%BF%9B%E5%BA%A6%E8%A7%86%E5%9B%BE",
+      "body": "%E6%98%BE%E7%A4%BA%E4%BB%BB%E5%8A%A1%E5%AE%8C%E6%88%90%E8%BF%9B%E5%BA%A6%E7%9A%84%E8%A7%86%E5%9B%BE%E3%80%82%0A%0A%60%60%60swift%0A%40State%20private%20var%20progress%20%3D%200.5%0A%0AVStack%20%7B%0A%20%20%20%20ProgressView(value%3A%20progress)%0A%20%20%20%20Button(%22More%22%2C%20action%3A%20%7B%20progress%20%2B%3D%200.05%20%7D)%0A%7D%0A%60%60%60%0A%0A%E9%80%9A%E8%BF%87%E5%BA%94%E7%94%A8%20%60CircularProgressViewStyle%60%EF%BC%8C%E5%8F%AF%E4%BB%A5%E5%B0%86%E5%85%B6%E7%94%A8%E4%BD%9C%20%60UIActivityIndicatorView%60%E3%80%82%0A%0A%60%60%60swift%0AProgressView(value%3A%20progress)%0A%20%20%20%20.progressViewStyle(CircularProgressViewStyle())%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BProgressView%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fprogressview)",
       "encoded": true
-    },
-    {
-      "id": "s2-32",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "通过应用 `CircularProgressViewStyle`，可以将其用作 `UIActivityIndicatorView`。"
-    },
-    {
-      "id": "s2-33",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "ProgressView(value: progress)\n    .progressViewStyle(CircularProgressViewStyle())"
-    },
-    {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [ProgressView](https://developer.apple.com/documentation/swiftui/progressview)"
     },
     {
       "id": "s2-35",
       "sectionId": "s2",
       "title": "Map 地图界面的视图",
-      "kind": "text",
-      "body": "显示指定区域的地图"
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "import MapKit\n@State var region = MKCoordinateRegion(center: .init(latitude: 37.334722, longitude: -122.008889), latitudinalMeters: 300, longitudinalMeters: 300)\n\nMap(coordinateRegion: $region)"
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "您可以通过指定 `interactionModes`（使用`[]`禁用所有交互）来控制地图的交互。"
-    },
-    {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "struct PinItem: Identifiable {\n    let id = UUID()\n    let coordinate: CLLocationCoordinate2D\n}\n\nMap(coordinateRegion: $region, \n    interactionModes: [], \n    showsUserLocation: true, \n    userTrackingMode: nil, \n    annotationItems: [PinItem(coordinate: .init(latitude: 37.334722, longitude: -122.008889))]) { item in                    \n    MapMarker(coordinate: item.coordinate)\n}"
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Map](https://developer.apple.com/documentation/mapkit/map)"
+      "body": "显示指定区域的地图\n\n```swift\nimport MapKit\n@State var region = MKCoordinateRegion(center: .init(latitude: 37.334722, longitude: -122.008889), latitudinalMeters: 300, longitudinalMeters: 300)\n\nMap(coordinateRegion: $region)\n```\n\n您可以通过指定 `interactionModes`（使用`[]`禁用所有交互）来控制地图的交互。\n\n```swift\nstruct PinItem: Identifiable {\n    let id = UUID()\n    let coordinate: CLLocationCoordinate2D\n}\n\nMap(coordinateRegion: $region, \n    interactionModes: [], \n    showsUserLocation: true, \n    userTrackingMode: nil, \n    annotationItems: [PinItem(coordinate: .init(latitude: 37.334722, longitude: -122.008889))]) { item in                    \n    MapMarker(coordinate: item.coordinate)\n}\n```\n\n文档 - [Map](https://developer.apple.com/documentation/mapkit/map)"
     },
     {
       "id": "s3-40",
       "sectionId": "s3",
       "title": "VStack",
-      "kind": "text",
-      "body": "`VStack`是 `垂直` 堆栈布局，用于将子视图垂直排列。默认将子视图从上到下排列"
-    },
-    {
-      "id": "s3-41",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "VStack%20(alignment%3A%20.center%2C%20spacing%3A%2020)%7B%0A%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20Divider()%0A%20%20%20%20Text(%22World%22)%0A%7D",
+      "body": "%60VStack%60%E6%98%AF%20%60%E5%9E%82%E7%9B%B4%60%20%E5%A0%86%E6%A0%88%E5%B8%83%E5%B1%80%EF%BC%8C%E7%94%A8%E4%BA%8E%E5%B0%86%E5%AD%90%E8%A7%86%E5%9B%BE%E5%9E%82%E7%9B%B4%E6%8E%92%E5%88%97%E3%80%82%E9%BB%98%E8%AE%A4%E5%B0%86%E5%AD%90%E8%A7%86%E5%9B%BE%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E6%8E%92%E5%88%97%0A%0A%60%60%60swift%0AVStack%20(alignment%3A%20.center%2C%20spacing%3A%2020)%7B%0A%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20Divider()%0A%20%20%20%20Text(%22World%22)%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BVStack%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fvstack)",
       "encoded": true
-    },
-    {
-      "id": "s3-42",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [VStack](https://developer.apple.com/documentation/swiftui/vstack)"
     },
     {
       "id": "s3-43",
       "sectionId": "s3",
       "title": "HStack",
-      "kind": "text",
-      "body": "`HStack`是 `水平` 堆栈布局，用于将子视图水平排列。默认将子视图从左到右排列"
-    },
-    {
-      "id": "s3-44",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "HStack%20(alignment%3A%20.center%2C%20spacing%3A%2020)%7B%0A%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20Divider()%0A%20%20%20%20Text(%22World%22)%0A%7D",
+      "body": "%60HStack%60%E6%98%AF%20%60%E6%B0%B4%E5%B9%B3%60%20%E5%A0%86%E6%A0%88%E5%B8%83%E5%B1%80%EF%BC%8C%E7%94%A8%E4%BA%8E%E5%B0%86%E5%AD%90%E8%A7%86%E5%9B%BE%E6%B0%B4%E5%B9%B3%E6%8E%92%E5%88%97%E3%80%82%E9%BB%98%E8%AE%A4%E5%B0%86%E5%AD%90%E8%A7%86%E5%9B%BE%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%E6%8E%92%E5%88%97%0A%0A%60%60%60swift%0AHStack%20(alignment%3A%20.center%2C%20spacing%3A%2020)%7B%0A%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20Divider()%0A%20%20%20%20Text(%22World%22)%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BHStack%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fhstack)",
       "encoded": true
-    },
-    {
-      "id": "s3-45",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [HStack](https://developer.apple.com/documentation/swiftui/hstack)"
     },
     {
       "id": "s3-46",
       "sectionId": "s3",
       "title": "ZStack",
-      "kind": "text",
-      "body": "`ZStack`是 `层叠` 堆栈布局，用于将子视图重叠在一起。按照添加的顺序从下到上排列子视图，即先添加的视图会在下面，后添加的视图会覆盖在上面"
-    },
-    {
-      "id": "s3-47",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "ZStack%20%7B%0A%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20Text(%22World%22)%0A%7D",
+      "body": "%60ZStack%60%E6%98%AF%20%60%E5%B1%82%E5%8F%A0%60%20%E5%A0%86%E6%A0%88%E5%B8%83%E5%B1%80%EF%BC%8C%E7%94%A8%E4%BA%8E%E5%B0%86%E5%AD%90%E8%A7%86%E5%9B%BE%E9%87%8D%E5%8F%A0%E5%9C%A8%E4%B8%80%E8%B5%B7%E3%80%82%E6%8C%89%E7%85%A7%E6%B7%BB%E5%8A%A0%E7%9A%84%E9%A1%BA%E5%BA%8F%E4%BB%8E%E4%B8%8B%E5%88%B0%E4%B8%8A%E6%8E%92%E5%88%97%E5%AD%90%E8%A7%86%E5%9B%BE%EF%BC%8C%E5%8D%B3%E5%85%88%E6%B7%BB%E5%8A%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E4%BC%9A%E5%9C%A8%E4%B8%8B%E9%9D%A2%EF%BC%8C%E5%90%8E%E6%B7%BB%E5%8A%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E4%BC%9A%E8%A6%86%E7%9B%96%E5%9C%A8%E4%B8%8A%E9%9D%A2%0A%0A%60%60%60swift%0AZStack%20%7B%0A%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20Text(%22World%22)%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BZStack%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fzstack)",
       "encoded": true
-    },
-    {
-      "id": "s3-48",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [ZStack](https://developer.apple.com/documentation/swiftui/zstack)"
     },
     {
       "id": "s3-49",
       "sectionId": "s3",
-      "title": "懒加载 Lazy",
-      "kind": "text",
-      "body": "`iOS 14.0` 之后新增的视图，仅在需要时才会创建和渲染"
-    },
-    {
-      "id": "s3-50",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "ScrollView%20%7B%0A%20%20LazyVStack(alignment%3A%20.leading)%20%7B%0A%20%20%20%20ForEach(1...100%2C%20id%3A%20%5C.self)%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Row%20%5C(%240)%22)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "title": "%E6%87%92%E5%8A%A0%E8%BD%BD%20Lazy",
+      "body": "%60iOS%2014.0%60%20%E4%B9%8B%E5%90%8E%E6%96%B0%E5%A2%9E%E7%9A%84%E8%A7%86%E5%9B%BE%EF%BC%8C%E4%BB%85%E5%9C%A8%E9%9C%80%E8%A6%81%E6%97%B6%E6%89%8D%E4%BC%9A%E5%88%9B%E5%BB%BA%E5%92%8C%E6%B8%B2%E6%9F%93%0A%0A%60%60%60swift%0AScrollView%20%7B%0A%20%20LazyVStack(alignment%3A%20.leading)%20%7B%0A%20%20%20%20ForEach(1...100%2C%20id%3A%20%5C.self)%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Row%20%5C(%240)%22)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E2%80%A2%20%E6%87%92%E5%8A%A0%E8%BD%BD%EF%BC%9A%E5%8F%AA%E6%9C%89%E5%BD%93%E5%AD%90%E8%A7%86%E5%9B%BE%E8%BF%9B%E5%85%A5%E5%8F%AF%E8%A7%86%E5%8C%BA%E5%9F%9F%E6%97%B6%EF%BC%8C%E6%89%8D%E4%BC%9A%E8%A2%AB%E5%88%9B%E5%BB%BA%E5%92%8C%E6%B8%B2%E6%9F%93%0A%E2%80%A2%20%E8%87%AA%E9%80%82%E5%BA%94%EF%BC%9A%E5%AD%90%E8%A7%86%E5%9B%BE%E7%9A%84%E5%AE%BD%E9%AB%98%E5%8F%AF%E4%BB%A5%E8%87%AA%E9%80%82%E5%BA%94%0A%E2%80%A2%20%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%9A%E9%80%82%E7%94%A8%E4%BA%8E%E5%A4%A7%E9%87%8F%E5%AD%90%E8%A7%86%E5%9B%BE%E6%88%96%E5%8A%A8%E6%80%81%E5%86%85%E5%AE%B9%E7%9A%84%E5%9C%BA%E6%99%AF%0A%0A%E2%80%A2%20%E6%96%87%E6%A1%A3%20-%20%5BLazyVStack%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Flazyvstack)%0A%E2%80%A2%20%E6%96%87%E6%A1%A3%20-%20%5BLazyHStack%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Flazyhstack)",
       "encoded": true
-    },
-    {
-      "id": "s3-51",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• 懒加载：只有当子视图进入可视区域时，才会被创建和渲染\n• 自适应：子视图的宽高可以自适应\n• 性能优化：适用于大量子视图或动态内容的场景"
-    },
-    {
-      "id": "s3-52",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• 文档 - [LazyVStack](https://developer.apple.com/documentation/swiftui/lazyvstack)\n• 文档 - [LazyHStack](https://developer.apple.com/documentation/swiftui/lazyhstack)"
     },
     {
       "id": "s3-53",
       "sectionId": "s3",
       "title": "LazyVGrid",
-      "kind": "text",
-      "body": "容器视图，将其子视图排列在`垂直`增长的网格中，仅在需要时创建项目"
-    },
-    {
-      "id": "s3-54",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "var%20columns%3A%20%5BGridItem%5D%20%3D%20%0A%20%20Array(%0A%20%20%20%20repeating%3A%20.init(.fixed(20))%2C%20count%3A%205%0A%20%20)%0A%0AScrollView%20%7B%0A%20%20LazyVGrid(columns%3A%20columns)%20%7B%0A%20%20%20%20ForEach((0...100)%2C%20id%3A%20%5C.self)%20%7B%0A%20%20%20%20%20%20%20Text(%22%5C(%240)%22).background(Color.pink)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "body": "%E5%AE%B9%E5%99%A8%E8%A7%86%E5%9B%BE%EF%BC%8C%E5%B0%86%E5%85%B6%E5%AD%90%E8%A7%86%E5%9B%BE%E6%8E%92%E5%88%97%E5%9C%A8%60%E5%9E%82%E7%9B%B4%60%E5%A2%9E%E9%95%BF%E7%9A%84%E7%BD%91%E6%A0%BC%E4%B8%AD%EF%BC%8C%E4%BB%85%E5%9C%A8%E9%9C%80%E8%A6%81%E6%97%B6%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%0A%0A%60%60%60swift%0Avar%20columns%3A%20%5BGridItem%5D%20%3D%20%0A%20%20Array(%0A%20%20%20%20repeating%3A%20.init(.fixed(20))%2C%20count%3A%205%0A%20%20)%0A%0AScrollView%20%7B%0A%20%20LazyVGrid(columns%3A%20columns)%20%7B%0A%20%20%20%20ForEach((0...100)%2C%20id%3A%20%5C.self)%20%7B%0A%20%20%20%20%20%20%20Text(%22%5C(%240)%22).background(Color.pink)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BLazyVGrid%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Flazyvgrid)",
       "encoded": true
-    },
-    {
-      "id": "s3-55",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [LazyVGrid](https://developer.apple.com/documentation/swiftui/lazyvgrid)"
     },
     {
       "id": "s3-56",
       "sectionId": "s3",
       "title": "LazyHGrid",
-      "kind": "text",
-      "body": "容器视图，将其子视图排列在`水平`增长的网格中，仅在需要时创建项目"
-    },
-    {
-      "id": "s3-57",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "var%20rows%3A%20%5BGridItem%5D%20%3D%0A%20%20Array(%0A%20%20%20%20repeating%3A%20.init(.fixed(20))%2C%20count%3A%202%0A%20%20)%0A%0AScrollView(.horizontal)%20%7B%0A%20%20LazyHGrid(rows%3A%20rows%2C%20alignment%3A%20.top)%20%7B%0A%20%20%20%20%20ForEach((0...100)%2C%20id%3A%20%5C.self)%20%7B%0A%20%20%20%20%20%20%20Text(%22%5C(%240)%22).background(Color.pink)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "body": "%E5%AE%B9%E5%99%A8%E8%A7%86%E5%9B%BE%EF%BC%8C%E5%B0%86%E5%85%B6%E5%AD%90%E8%A7%86%E5%9B%BE%E6%8E%92%E5%88%97%E5%9C%A8%60%E6%B0%B4%E5%B9%B3%60%E5%A2%9E%E9%95%BF%E7%9A%84%E7%BD%91%E6%A0%BC%E4%B8%AD%EF%BC%8C%E4%BB%85%E5%9C%A8%E9%9C%80%E8%A6%81%E6%97%B6%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%0A%0A%60%60%60swift%0Avar%20rows%3A%20%5BGridItem%5D%20%3D%0A%20%20Array(%0A%20%20%20%20repeating%3A%20.init(.fixed(20))%2C%20count%3A%202%0A%20%20)%0A%0AScrollView(.horizontal)%20%7B%0A%20%20LazyHGrid(rows%3A%20rows%2C%20alignment%3A%20.top)%20%7B%0A%20%20%20%20%20ForEach((0...100)%2C%20id%3A%20%5C.self)%20%7B%0A%20%20%20%20%20%20%20Text(%22%5C(%240)%22).background(Color.pink)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BLazyHGrid%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Flazyhgrid)",
       "encoded": true
-    },
-    {
-      "id": "s3-58",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [LazyHGrid](https://developer.apple.com/documentation/swiftui/lazyhgrid)"
     },
     {
       "id": "s3-59",
       "sectionId": "s3",
       "title": "Spacer",
-      "kind": "text",
-      "body": "沿其包含的堆栈布局的主轴或如果不包含在堆栈中的两个轴上扩展的灵活空间。"
-    },
-    {
-      "id": "s3-60",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "HStack%20%7B%0A%20%20%20%20Image(systemName%3A%20%22clock%22)%0A%20%20%20%20Spacer()%0A%20%20%20%20Text(%22Time%22)%0A%7D",
+      "body": "%E6%B2%BF%E5%85%B6%E5%8C%85%E5%90%AB%E7%9A%84%E5%A0%86%E6%A0%88%E5%B8%83%E5%B1%80%E7%9A%84%E4%B8%BB%E8%BD%B4%E6%88%96%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%8C%85%E5%90%AB%E5%9C%A8%E5%A0%86%E6%A0%88%E4%B8%AD%E7%9A%84%E4%B8%A4%E4%B8%AA%E8%BD%B4%E4%B8%8A%E6%89%A9%E5%B1%95%E7%9A%84%E7%81%B5%E6%B4%BB%E7%A9%BA%E9%97%B4%E3%80%82%0A%0A%60%60%60swift%0AHStack%20%7B%0A%20%20%20%20Image(systemName%3A%20%22clock%22)%0A%20%20%20%20Spacer()%0A%20%20%20%20Text(%22Time%22)%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BSpacer%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fspacer)",
       "encoded": true
-    },
-    {
-      "id": "s3-61",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Spacer](https://developer.apple.com/documentation/swiftui/spacer)"
     },
     {
       "id": "s3-62",
       "sectionId": "s3",
       "title": "Divider",
-      "kind": "text",
-      "body": "可用于分隔其他内容的视觉元素。"
-    },
-    {
-      "id": "s3-63",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "HStack%20%7B%0A%20%20%20%20Image(systemName%3A%20%22clock%22)%0A%20%20%20%20Divider()%0A%20%20%20%20Text(%22Time%22)%0A%7D.fixedSize()",
+      "body": "%E5%8F%AF%E7%94%A8%E4%BA%8E%E5%88%86%E9%9A%94%E5%85%B6%E4%BB%96%E5%86%85%E5%AE%B9%E7%9A%84%E8%A7%86%E8%A7%89%E5%85%83%E7%B4%A0%E3%80%82%0A%0A%60%60%60swift%0AHStack%20%7B%0A%20%20%20%20Image(systemName%3A%20%22clock%22)%0A%20%20%20%20Divider()%0A%20%20%20%20Text(%22Time%22)%0A%7D.fixedSize()%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BDivider%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fdivider)",
       "encoded": true
-    },
-    {
-      "id": "s3-64",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Divider](https://developer.apple.com/documentation/swiftui/divider)"
     },
     {
       "id": "s3-65",
       "sectionId": "s3",
       "title": "Background",
-      "kind": "text",
-      "body": "将图像用作背景"
-    },
-    {
-      "id": "s3-66",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Text(%22Hello%20World%22)%0A%20%20%20%20.font(.largeTitle)%0A%20%20%20%20.background(%0A%20%20%20%20%20%20%20%20Image(%22hello_world%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20.resizable()%0A%20%20%20%20%20%20%20%20%20%20%20%20.frame(width%3A%20100%2C%20height%3A%20100)%0A%20%20%20%20)",
+      "body": "%E5%B0%86%E5%9B%BE%E5%83%8F%E7%94%A8%E4%BD%9C%E8%83%8C%E6%99%AF%0A%0A%60%60%60swift%0AText(%22Hello%20World%22)%0A%20%20%20%20.font(.largeTitle)%0A%20%20%20%20.background(%0A%20%20%20%20%20%20%20%20Image(%22hello_world%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20.resizable()%0A%20%20%20%20%20%20%20%20%20%20%20%20.frame(width%3A%20100%2C%20height%3A%20100)%0A%20%20%20%20)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-67",
       "sectionId": "s4",
-      "title": "Toggle 开关选择器",
-      "kind": "text",
-      "body": "在打开和关闭状态之间切换的控件。"
-    },
-    {
-      "id": "s4-68",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20isShowing%20%3D%20true%20%2F%2F%20toggle%20state%0A%0AToggle(isOn%3A%20%24isShowing)%20%7B%0A%20%20%20%20Text(%22Hello%20World%22)%0A%7D",
+      "title": "Toggle%20%E5%BC%80%E5%85%B3%E9%80%89%E6%8B%A9%E5%99%A8",
+      "body": "%E5%9C%A8%E6%89%93%E5%BC%80%E5%92%8C%E5%85%B3%E9%97%AD%E7%8A%B6%E6%80%81%E4%B9%8B%E9%97%B4%E5%88%87%E6%8D%A2%E7%9A%84%E6%8E%A7%E4%BB%B6%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20isShowing%20%3D%20true%20%2F%2F%20toggle%20state%0A%0AToggle(isOn%3A%20%24isShowing)%20%7B%0A%20%20%20%20Text(%22Hello%20World%22)%0A%7D%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E6%82%A8%E7%9A%84%20%60Toggle%60%20%E7%9A%84%E6%A0%87%E7%AD%BE%E5%8F%AA%E6%9C%89%20%60Text%60%EF%BC%8C%E5%88%99%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E7%AD%BE%E5%90%8D%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E3%80%82%0A%0A%60%60%60swift%0AToggle(%22Hello%20World%22%2C%20isOn%3A%20%24isShowing)%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BToggle%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Ftoggle)",
       "encoded": true
-    },
-    {
-      "id": "s4-69",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "如果您的 `Toggle` 的标签只有 `Text`，则可以使用此更简单的签名进行初始化。"
-    },
-    {
-      "id": "s4-70",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Toggle(%22Hello%20World%22%2C%20isOn%3A%20%24isShowing)",
-      "encoded": true
-    },
-    {
-      "id": "s4-71",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Toggle](https://developer.apple.com/documentation/swiftui/toggle)"
     },
     {
       "id": "s4-72",
       "sectionId": "s4",
-      "title": "Button 按钮控件",
-      "kind": "text",
-      "body": "在触发时执行操作的控件。"
-    },
-    {
-      "id": "s4-73",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Button(%0A%20%20%20%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20print(%22did%20tap%22)%0A%20%20%20%20%7D%2C%0A%20%20%20%20label%3A%20%7B%20Text(%22Click%20Me%22)%20%7D%0A)",
+      "title": "Button%20%E6%8C%89%E9%92%AE%E6%8E%A7%E4%BB%B6",
+      "body": "%E5%9C%A8%E8%A7%A6%E5%8F%91%E6%97%B6%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C%E7%9A%84%E6%8E%A7%E4%BB%B6%E3%80%82%0A%0A%60%60%60swift%0AButton(%0A%20%20%20%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20print(%22did%20tap%22)%0A%20%20%20%20%7D%2C%0A%20%20%20%20label%3A%20%7B%20Text(%22Click%20Me%22)%20%7D%0A)%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%20%60Button%60%20%E7%9A%84%E6%A0%87%E7%AD%BE%E4%BB%85%E4%B8%BA%20%60Text%60%EF%BC%8C%E5%88%99%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E7%AD%BE%E5%90%8D%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E3%80%82%0A%0A%60%60%60swift%0AButton(%22Click%20Me%22)%20%7B%0A%20%20%20%20print(%22did%20tap%22)%0A%7D%0A%60%60%60%0A%0A%E6%82%A8%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E6%AD%A4%E6%8C%89%E9%92%AE%E4%BA%86%E8%A7%A3%E4%B8%80%E4%B8%8B%0A%0A%60%60%60swift%0AButton(action%3A%20%7B%0A%20%20%20%20%2F%2F%20%E9%80%80%E5%87%BA%E5%BA%94%E7%94%A8%0A%20%20%20%20NSApplication.shared.terminate(self)%0A%7D%2C%20label%3A%20%7B%0A%20%20%20%20Image(systemName%3A%20%22clock%22)%0A%20%20%20%20Text(%22Click%20Me%22)%0A%20%20%20%20Text(%22Subtitle%22)%0A%7D)%0A.foregroundColor(Color.white)%0A.padding()%0A.background(Color.blue)%0A.cornerRadius(5)%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BButton%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fbutton)",
       "encoded": true
-    },
-    {
-      "id": "s4-74",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "如果 `Button` 的标签仅为 `Text`，则可以使用此更简单的签名进行初始化。"
-    },
-    {
-      "id": "s4-75",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Button(%22Click%20Me%22)%20%7B%0A%20%20%20%20print(%22did%20tap%22)%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s4-76",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "您可以通过此按钮了解一下"
-    },
-    {
-      "id": "s4-77",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Button(action%3A%20%7B%0A%20%20%20%20%2F%2F%20%E9%80%80%E5%87%BA%E5%BA%94%E7%94%A8%0A%20%20%20%20NSApplication.shared.terminate(self)%0A%7D%2C%20label%3A%20%7B%0A%20%20%20%20Image(systemName%3A%20%22clock%22)%0A%20%20%20%20Text(%22Click%20Me%22)%0A%20%20%20%20Text(%22Subtitle%22)%0A%7D)%0A.foregroundColor(Color.white)%0A.padding()%0A.background(Color.blue)%0A.cornerRadius(5)",
-      "encoded": true
-    },
-    {
-      "id": "s4-78",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Button](https://developer.apple.com/documentation/swiftui/button)"
     },
     {
       "id": "s4-79",
       "sectionId": "s4",
-      "title": "TextField 输入框",
-      "kind": "text",
-      "body": "显示可编辑文本界面的控件。"
-    },
-    {
-      "id": "s4-80",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20name%3A%20String%20%3D%20%22John%22%20%20%20%20%0Avar%20body%3A%20some%20View%20%7B%0A%20%20%20%20TextField(%22Name's%20placeholder%22%2C%20text%3A%20%24name)%0A%20%20%20%20%20%20%20%20.textFieldStyle(RoundedBorderTextFieldStyle())%0A%20%20%20%20%20%20%20%20.padding()%0A%7D",
+      "title": "TextField%20%E8%BE%93%E5%85%A5%E6%A1%86",
+      "body": "%E6%98%BE%E7%A4%BA%E5%8F%AF%E7%BC%96%E8%BE%91%E6%96%87%E6%9C%AC%E7%95%8C%E9%9D%A2%E7%9A%84%E6%8E%A7%E4%BB%B6%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20name%3A%20String%20%3D%20%22John%22%20%20%20%20%0Avar%20body%3A%20some%20View%20%7B%0A%20%20%20%20TextField(%22Name's%20placeholder%22%2C%20text%3A%20%24name)%0A%20%20%20%20%20%20%20%20.textFieldStyle(RoundedBorderTextFieldStyle())%0A%20%20%20%20%20%20%20%20.padding()%0A%7D%0A%60%60%60%0A%0A%E5%8F%96%E6%B6%88%E7%BC%96%E8%BE%91%E6%A1%86%E7%84%A6%E7%82%B9%E6%A0%B7%E5%BC%8F%E3%80%82%0A%0A%60%60%60swift%0Aextension%20NSTextField%20%7B%20%2F%2F%20%3C%3C%20workaround%20!!!%0A%20%20%20%20open%20override%20var%20focusRingType%3A%20NSFocusRingType%20%7B%0A%20%20%20%20%20%20%20%20get%20%7B%20.none%20%7D%0A%20%20%20%20%20%20%20%20set%20%7B%20%7D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E5%A6%82%E4%BD%95%E5%B1%85%E4%B8%AD%E6%94%BE%E7%BD%AE%20%60TextField%60%20%E7%9A%84%E6%96%87%E6%9C%AC%0A%0A%60%60%60swift%0Astruct%20ContentView%3A%20View%20%7B%0A%20%20%20%20%40State%20var%20text%3A%20String%20%3D%20%22TextField%20Text%22%0A%20%20%20%20var%20body%3A%20some%20View%20%7B%0A%20%20%20%20%20%20%20%20TextField(%22Placeholder%20Text%22%2C%20text%3A%20%24text)%0A%20%20%20%20%20%20%20%20%20%20%20%20.padding(.all%2C%2020)%0A%20%20%20%20%20%20%20%20%20%20%20%20.multilineTextAlignment(.center)%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BTextField%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Ftextfield)",
       "encoded": true
-    },
-    {
-      "id": "s4-81",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "取消编辑框焦点样式。"
-    },
-    {
-      "id": "s4-82",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "extension NSTextField { // << workaround !!!\n    open override var focusRingType: NSFocusRingType {\n        get { .none }\n        set { }\n    }\n}"
-    },
-    {
-      "id": "s4-83",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "如何居中放置 `TextField` 的文本"
-    },
-    {
-      "id": "s4-84",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "struct%20ContentView%3A%20View%20%7B%0A%20%20%20%20%40State%20var%20text%3A%20String%20%3D%20%22TextField%20Text%22%0A%20%20%20%20var%20body%3A%20some%20View%20%7B%0A%20%20%20%20%20%20%20%20TextField(%22Placeholder%20Text%22%2C%20text%3A%20%24text)%0A%20%20%20%20%20%20%20%20%20%20%20%20.padding(.all%2C%2020)%0A%20%20%20%20%20%20%20%20%20%20%20%20.multilineTextAlignment(.center)%0A%20%20%20%20%7D%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s4-85",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [TextField](https://developer.apple.com/documentation/swiftui/textfield)"
     },
     {
       "id": "s4-86",
       "sectionId": "s4",
-      "title": "SecureField 密码输入框",
-      "kind": "text",
-      "body": "用户安全地输入私人文本的控件。"
-    },
-    {
-      "id": "s4-87",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20password%3A%20String%20%3D%20%221234%22%20%20%20%20%0Avar%20body%3A%20some%20View%20%7B%0A%20%20SecureField(%24password)%0A%20%20%20%20.textFieldStyle(RoundedBorderTextFieldStyle())%0A%20%20%20%20.padding()%0A%7D",
+      "title": "SecureField%20%E5%AF%86%E7%A0%81%E8%BE%93%E5%85%A5%E6%A1%86",
+      "body": "%E7%94%A8%E6%88%B7%E5%AE%89%E5%85%A8%E5%9C%B0%E8%BE%93%E5%85%A5%E7%A7%81%E4%BA%BA%E6%96%87%E6%9C%AC%E7%9A%84%E6%8E%A7%E4%BB%B6%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20password%3A%20String%20%3D%20%221234%22%20%20%20%20%0Avar%20body%3A%20some%20View%20%7B%0A%20%20SecureField(%24password)%0A%20%20%20%20.textFieldStyle(RoundedBorderTextFieldStyle())%0A%20%20%20%20.padding()%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BSecureField%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fsecurefield)",
       "encoded": true
-    },
-    {
-      "id": "s4-88",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [SecureField](https://developer.apple.com/documentation/swiftui/securefield)"
     },
     {
       "id": "s4-89",
       "sectionId": "s4",
-      "title": "TextEditor 多行可滚动文本编辑器",
-      "kind": "text",
-      "body": "可以显示和编辑长格式文本的视图。"
-    },
-    {
-      "id": "s4-90",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20private%20var%20fullText%3A%20String%20%3D%20%22%E8%BF%99%E6%98%AF%E4%B8%80%E4%BA%9B%E5%8F%AF%E7%BC%96%E8%BE%91%E7%9A%84%E6%96%87%E6%9C%AC...%22%0A%0Avar%20body%3A%20some%20View%20%7B%0A%20%20TextEditor(text%3A%20%24fullText)%0A%7D",
+      "title": "TextEditor%20%E5%A4%9A%E8%A1%8C%E5%8F%AF%E6%BB%9A%E5%8A%A8%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8",
+      "body": "%E5%8F%AF%E4%BB%A5%E6%98%BE%E7%A4%BA%E5%92%8C%E7%BC%96%E8%BE%91%E9%95%BF%E6%A0%BC%E5%BC%8F%E6%96%87%E6%9C%AC%E7%9A%84%E8%A7%86%E5%9B%BE%E3%80%82%0A%0A%60%60%60swift%0A%40State%20private%20var%20fullText%3A%20String%20%3D%20%22%E8%BF%99%E6%98%AF%E4%B8%80%E4%BA%9B%E5%8F%AF%E7%BC%96%E8%BE%91%E7%9A%84%E6%96%87%E6%9C%AC...%22%0A%0Avar%20body%3A%20some%20View%20%7B%0A%20%20TextEditor(text%3A%20%24fullText)%0A%7D%0A%60%60%60%0A%0A%E8%AE%BE%E7%BD%AE%20%60TextEditor%60%20%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2%0A%0A%60%60%60swift%0Aextension%20NSTextView%20%7B%0A%20%20open%20override%20var%20frame%3A%20CGRect%20%7B%0A%20%20%20%20didSet%20%7B%0A%20%20%20%20%20%20backgroundColor%20%3D%20.clear%0A%2F%2F%20%20%20%20%20%20drawsBackground%20%3D%20true%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0Astruct%20DetailContent%3A%20View%20%7B%0A%20%20%40State%20private%20var%20profileText%3A%20String%20%3D%20%22%E8%BE%93%E5%85%A5%E6%82%A8%E7%9A%84%E7%AE%80%E5%8E%86%22%0A%20%20var%20body%3A%20some%20View%20%7B%0A%20%20%20%20VSplitView()%7B%0A%20%20%20%20%20%20TextEditor(text%3A%20%24profileText)%0A%20%20%20%20%20%20%20%20.background(Color.red)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BTextEditor%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Ftexteditor)",
       "encoded": true
-    },
-    {
-      "id": "s4-91",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "设置 `TextEditor` 背景颜色"
-    },
-    {
-      "id": "s4-92",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "extension%20NSTextView%20%7B%0A%20%20open%20override%20var%20frame%3A%20CGRect%20%7B%0A%20%20%20%20didSet%20%7B%0A%20%20%20%20%20%20backgroundColor%20%3D%20.clear%0A%2F%2F%20%20%20%20%20%20drawsBackground%20%3D%20true%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0Astruct%20DetailContent%3A%20View%20%7B%0A%20%20%40State%20private%20var%20profileText%3A%20String%20%3D%20%22%E8%BE%93%E5%85%A5%E6%82%A8%E7%9A%84%E7%AE%80%E5%8E%86%22%0A%20%20var%20body%3A%20some%20View%20%7B%0A%20%20%20%20VSplitView()%7B%0A%20%20%20%20%20%20TextEditor(text%3A%20%24profileText)%0A%20%20%20%20%20%20%20%20.background(Color.red)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s4-93",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [TextEditor](https://developer.apple.com/documentation/swiftui/texteditor)"
     },
     {
       "id": "s4-94",
       "sectionId": "s4",
-      "title": "DatePicker 日期控件",
-      "kind": "text",
-      "body": "日期选择器(DatePicker)的样式也会根据其祖先而改变。 在 `Form` 或 `List` 下，它显示为单个列表行，您可以点击以展开到日期选择器（就像日历应用程序一样）。"
-    },
-    {
-      "id": "s4-95",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20selectedDate%20%3D%20Date()%0A%0Avar%20dateClosedRange%3A%20ClosedRange%3CDate%3E%20%7B%0A%20%20%20%20let%20min%20%3D%20Calendar.current.date(byAdding%3A%20.day%2C%20value%3A%20-1%2C%20to%3A%20Date())!%0A%20%20%20%20let%20max%20%3D%20Calendar.current.date(byAdding%3A%20.day%2C%20value%3A%201%2C%20to%3A%20Date())!%0A%20%20%20%20return%20min...max%0A%7D%0ANavigationView%20%7B%0A%20%20Form%20%7B%0A%20%20%20%20%20%20Section%20%7B%0A%20%20%20%20%20%20%20%20%20%20DatePicker(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20selection%3A%20%24selectedDate%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20in%3A%20dateClosedRange%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20displayedComponents%3A%20.date%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3A%20%7B%20Text(%22Due%20Date%22)%20%7D%0A%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "title": "DatePicker%20%E6%97%A5%E6%9C%9F%E6%8E%A7%E4%BB%B6",
+      "body": "%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9%E5%99%A8(DatePicker)%E7%9A%84%E6%A0%B7%E5%BC%8F%E4%B9%9F%E4%BC%9A%E6%A0%B9%E6%8D%AE%E5%85%B6%E7%A5%96%E5%85%88%E8%80%8C%E6%94%B9%E5%8F%98%E3%80%82%20%E5%9C%A8%20%60Form%60%20%E6%88%96%20%60List%60%20%E4%B8%8B%EF%BC%8C%E5%AE%83%E6%98%BE%E7%A4%BA%E4%B8%BA%E5%8D%95%E4%B8%AA%E5%88%97%E8%A1%A8%E8%A1%8C%EF%BC%8C%E6%82%A8%E5%8F%AF%E4%BB%A5%E7%82%B9%E5%87%BB%E4%BB%A5%E5%B1%95%E5%BC%80%E5%88%B0%E6%97%A5%E6%9C%9F%E9%80%89%E6%8B%A9%E5%99%A8%EF%BC%88%E5%B0%B1%E5%83%8F%E6%97%A5%E5%8E%86%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%80%E6%A0%B7%EF%BC%89%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20selectedDate%20%3D%20Date()%0A%0Avar%20dateClosedRange%3A%20ClosedRange%3CDate%3E%20%7B%0A%20%20%20%20let%20min%20%3D%20Calendar.current.date(byAdding%3A%20.day%2C%20value%3A%20-1%2C%20to%3A%20Date())!%0A%20%20%20%20let%20max%20%3D%20Calendar.current.date(byAdding%3A%20.day%2C%20value%3A%201%2C%20to%3A%20Date())!%0A%20%20%20%20return%20min...max%0A%7D%0ANavigationView%20%7B%0A%20%20Form%20%7B%0A%20%20%20%20%20%20Section%20%7B%0A%20%20%20%20%20%20%20%20%20%20DatePicker(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20selection%3A%20%24selectedDate%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20in%3A%20dateClosedRange%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20displayedComponents%3A%20.date%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3A%20%7B%20Text(%22Due%20Date%22)%20%7D%0A%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E5%9C%A8%E8%A1%A8%E6%A0%BC%E5%92%8C%E5%88%97%E8%A1%A8%E7%9A%84%E5%A4%96%E9%83%A8%EF%BC%8C%E5%AE%83%E6%98%BE%E7%A4%BA%E4%B8%BA%E6%99%AE%E9%80%9A%E7%9A%84%E8%BD%AE%E5%BC%8F%E6%8B%BE%E5%8F%96%E5%99%A8%0A%0A%60%60%60swift%0A%40State%20var%20selectedDate%20%3D%20Date()%0A%0Avar%20dateClosedRange%3A%20ClosedRange%3CDate%3E%20%7B%0A%20%20let%20min%20%3D%20Calendar.current.date(byAdding%3A%20.day%2C%20value%3A%20-1%2C%20to%3A%20Date())!%0A%20%20let%20max%20%3D%20Calendar.current.date(byAdding%3A%20.day%2C%20value%3A%201%2C%20to%3A%20Date())!%0A%20%20return%20min...max%0A%7D%0A%0ADatePicker(selection%3A%20%24selectedDate%2C%20in%3A%20dateClosedRange%2C%0A%20%20displayedComponents%3A%20%5B.hourAndMinute%2C%20.date%5D%2C%0A%20%20label%3A%20%7B%20Text(%22Due%20Date%22)%20%7D%0A)%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%20%60DatePicker%60%20%E7%9A%84%E6%A0%87%E7%AD%BE%E4%BB%85%E6%98%AF%E7%BA%AF%E6%96%87%E6%9C%AC%EF%BC%8C%E5%88%99%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E7%AD%BE%E5%90%8D%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E3%80%82%0A%0A%60%60%60swift%0ADatePicker(%22Due%20Date%22%2C%20selection%3A%20%24selectedDate%2C%20in%3A%20dateClosedRange%2C%0A%20%20displayedComponents%3A%20%5B.hourAndMinute%2C%20.date%5D)%0A%60%60%60%0A%0A%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20%60ClosedRange%60%EF%BC%8C%60PartialRangeThrough%60%20%E5%92%8C%20%60PartialRangeFrom%60%20%E6%9D%A5%E8%AE%BE%E7%BD%AE%20%60minimumDate%60%20%E5%92%8C%20%60maximumDate%60%E3%80%82%0A%0A%60%60%60swift%0ADatePicker(%22Minimum%20Date%22%2C%20selection%3A%20%24selectedDate%2C%0A%20%20%20%20in%3A%20Date()...%2C%0A%20%20%20%20displayedComponents%3A%20%5B.date%5D)%0A%0ADatePicker(%22Maximum%20Date%22%2C%20selection%3A%20%24selectedDate%2C%0A%20%20%20%20in%3A%20...Date()%2C%0A%20%20%20%20displayedComponents%3A%20%5B.date%5D)%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BDatePicker%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fdatepicker)",
       "encoded": true
-    },
-    {
-      "id": "s4-96",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "在表格和列表的外部，它显示为普通的轮式拾取器"
-    },
-    {
-      "id": "s4-97",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20selectedDate%20%3D%20Date()%0A%0Avar%20dateClosedRange%3A%20ClosedRange%3CDate%3E%20%7B%0A%20%20let%20min%20%3D%20Calendar.current.date(byAdding%3A%20.day%2C%20value%3A%20-1%2C%20to%3A%20Date())!%0A%20%20let%20max%20%3D%20Calendar.current.date(byAdding%3A%20.day%2C%20value%3A%201%2C%20to%3A%20Date())!%0A%20%20return%20min...max%0A%7D%0A%0ADatePicker(selection%3A%20%24selectedDate%2C%20in%3A%20dateClosedRange%2C%0A%20%20displayedComponents%3A%20%5B.hourAndMinute%2C%20.date%5D%2C%0A%20%20label%3A%20%7B%20Text(%22Due%20Date%22)%20%7D%0A)",
-      "encoded": true
-    },
-    {
-      "id": "s4-98",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "如果 `DatePicker` 的标签仅是纯文本，则可以使用此更简单的签名进行初始化。"
-    },
-    {
-      "id": "s4-99",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "DatePicker(%22Due%20Date%22%2C%20selection%3A%20%24selectedDate%2C%20in%3A%20dateClosedRange%2C%0A%20%20displayedComponents%3A%20%5B.hourAndMinute%2C%20.date%5D)",
-      "encoded": true
-    },
-    {
-      "id": "s4-100",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "可以使用 `ClosedRange`，`PartialRangeThrough` 和 `PartialRangeFrom` 来设置 `minimumDate` 和 `maximumDate`。"
-    },
-    {
-      "id": "s4-101",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "DatePicker(%22Minimum%20Date%22%2C%20selection%3A%20%24selectedDate%2C%0A%20%20%20%20in%3A%20Date()...%2C%0A%20%20%20%20displayedComponents%3A%20%5B.date%5D)%0A%0ADatePicker(%22Maximum%20Date%22%2C%20selection%3A%20%24selectedDate%2C%0A%20%20%20%20in%3A%20...Date()%2C%0A%20%20%20%20displayedComponents%3A%20%5B.date%5D)",
-      "encoded": true
-    },
-    {
-      "id": "s4-102",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [DatePicker](https://developer.apple.com/documentation/swiftui/datepicker)"
     },
     {
       "id": "s4-103",
       "sectionId": "s4",
-      "title": "Slider 滑动输入条",
-      "kind": "text",
-      "body": "用于从值的有界线性范围中选择一个值的控件。"
-    },
-    {
-      "id": "s4-104",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "@State var progress: Float = 0\n\nSlider(value: $progress,\n  from: 0.0,\n  through: 100.0,\n  by: 5.0)"
-    },
-    {
-      "id": "s4-105",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "滑块缺少 `minimumValueImage` 和 `maximumValueImage`，但是我们可以通过 `HStack` 轻松地复制它"
-    },
-    {
-      "id": "s4-106",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20progress%3A%20Float%20%3D%200%0AHStack%20%7B%0A%20%20%20%20Image(systemName%3A%20%22sun.min%22)%0A%20%20%20%20Slider(value%3A%20%24progress%2C%0A%20%20%20%20%20%20%20%20from%3A%200.0%2C%0A%20%20%20%20%20%20%20%20through%3A%20100.0%2C%0A%20%20%20%20%20%20%20%20by%3A%205.0)%0A%20%20%20%20Image(systemName%3A%20%22sun.max.fill%22)%0A%7D.padding()",
+      "title": "Slider%20%E6%BB%91%E5%8A%A8%E8%BE%93%E5%85%A5%E6%9D%A1",
+      "body": "%E7%94%A8%E4%BA%8E%E4%BB%8E%E5%80%BC%E7%9A%84%E6%9C%89%E7%95%8C%E7%BA%BF%E6%80%A7%E8%8C%83%E5%9B%B4%E4%B8%AD%E9%80%89%E6%8B%A9%E4%B8%80%E4%B8%AA%E5%80%BC%E7%9A%84%E6%8E%A7%E4%BB%B6%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20progress%3A%20Float%20%3D%200%0A%0ASlider(value%3A%20%24progress%2C%0A%20%20from%3A%200.0%2C%0A%20%20through%3A%20100.0%2C%0A%20%20by%3A%205.0)%0A%60%60%60%0A%0A%E6%BB%91%E5%9D%97%E7%BC%BA%E5%B0%91%20%60minimumValueImage%60%20%E5%92%8C%20%60maximumValueImage%60%EF%BC%8C%E4%BD%86%E6%98%AF%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%20%60HStack%60%20%E8%BD%BB%E6%9D%BE%E5%9C%B0%E5%A4%8D%E5%88%B6%E5%AE%83%0A%0A%60%60%60swift%0A%40State%20var%20progress%3A%20Float%20%3D%200%0AHStack%20%7B%0A%20%20%20%20Image(systemName%3A%20%22sun.min%22)%0A%20%20%20%20Slider(value%3A%20%24progress%2C%0A%20%20%20%20%20%20%20%20from%3A%200.0%2C%0A%20%20%20%20%20%20%20%20through%3A%20100.0%2C%0A%20%20%20%20%20%20%20%20by%3A%205.0)%0A%20%20%20%20Image(systemName%3A%20%22sun.max.fill%22)%0A%7D.padding()%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BSlider%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fslider)",
       "encoded": true
-    },
-    {
-      "id": "s4-107",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Slider](https://developer.apple.com/documentation/swiftui/slider)"
     },
     {
       "id": "s4-108",
       "sectionId": "s4",
-      "title": "Picker 选择控件",
-      "kind": "text",
-      "body": "用于从一组互斥值中进行选择的控件。"
-    },
-    {
-      "id": "s4-109",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "选择器样式的更改基于其祖先，在 `Form` 或 `List` 下，它显示为单个列表行，您可以点击以进入一个显示所有可能选项的新屏幕。"
-    },
-    {
-      "id": "s4-110",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "NavigationView%20%7B%0A%20%20Form%20%7B%0A%20%20%20%20Section%20%7B%0A%20%20%20%20%20%20Picker(selection%3A%20%24selection%2C%0A%20%20%20%20%20%20%20%20label%3A%20Text(%22Picker%20Name%22)%2C%0A%20%20%20%20%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%201%22).tag(0)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%202%22).tag(1)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%203%22).tag(2)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%204%22).tag(3)%0A%20%20%20%20%20%20%7D)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "title": "Picker%20%E9%80%89%E6%8B%A9%E6%8E%A7%E4%BB%B6",
+      "body": "%E7%94%A8%E4%BA%8E%E4%BB%8E%E4%B8%80%E7%BB%84%E4%BA%92%E6%96%A5%E5%80%BC%E4%B8%AD%E8%BF%9B%E8%A1%8C%E9%80%89%E6%8B%A9%E7%9A%84%E6%8E%A7%E4%BB%B6%E3%80%82%0A%0A%E9%80%89%E6%8B%A9%E5%99%A8%E6%A0%B7%E5%BC%8F%E7%9A%84%E6%9B%B4%E6%94%B9%E5%9F%BA%E4%BA%8E%E5%85%B6%E7%A5%96%E5%85%88%EF%BC%8C%E5%9C%A8%20%60Form%60%20%E6%88%96%20%60List%60%20%E4%B8%8B%EF%BC%8C%E5%AE%83%E6%98%BE%E7%A4%BA%E4%B8%BA%E5%8D%95%E4%B8%AA%E5%88%97%E8%A1%A8%E8%A1%8C%EF%BC%8C%E6%82%A8%E5%8F%AF%E4%BB%A5%E7%82%B9%E5%87%BB%E4%BB%A5%E8%BF%9B%E5%85%A5%E4%B8%80%E4%B8%AA%E6%98%BE%E7%A4%BA%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E9%80%89%E9%A1%B9%E7%9A%84%E6%96%B0%E5%B1%8F%E5%B9%95%E3%80%82%0A%0A%60%60%60swift%0ANavigationView%20%7B%0A%20%20Form%20%7B%0A%20%20%20%20Section%20%7B%0A%20%20%20%20%20%20Picker(selection%3A%20%24selection%2C%0A%20%20%20%20%20%20%20%20label%3A%20Text(%22Picker%20Name%22)%2C%0A%20%20%20%20%20%20%20%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%201%22).tag(0)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%202%22).tag(1)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%203%22).tag(2)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%204%22).tag(3)%0A%20%20%20%20%20%20%7D)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20%60.pickerStyle(WheelPickerStyle())%60%20%E8%A6%86%E7%9B%96%E6%A0%B7%E5%BC%8F%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20mapChoioce%20%3D%200%0Avar%20settings%20%3D%20%5B%22Map%22%2C%20%22Transit%22%2C%20%22Satellite%22%5D%0APicker(%22Options%22%2C%20selection%3A%20%24mapChoioce)%20%7B%0A%20%20%20%20ForEach(0%20..%3C%20settings.count)%20%7B%20index%20in%0A%20%20%20%20%20%20%20%20Text(self.settings%5Bindex%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20.tag(index)%0A%20%20%20%20%7D%0A%0A%7D.pickerStyle(SegmentedPickerStyle())%0A%60%60%60%0A%0A%E5%9C%A8%20%60SwiftUI%60%20%E4%B8%AD%EF%BC%8C%60UISegmentedControl%60%20%E5%8F%AA%E6%98%AF%20%60Picker%60%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E6%A0%B7%E5%BC%8F%E3%80%82%E5%88%86%E6%AE%B5%E6%8E%A7%E5%88%B6(SegmentedControl)%E5%9C%A8%20%60iOS%2013%60%20%E4%B8%AD%E4%B9%9F%E7%84%95%E7%84%B6%E4%B8%80%E6%96%B0%E3%80%82%E6%96%87%E6%A1%A3%20-%20%5BPicker%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fpicker)",
       "encoded": true
-    },
-    {
-      "id": "s4-111",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "您可以使用 `.pickerStyle(WheelPickerStyle())` 覆盖样式。"
-    },
-    {
-      "id": "s4-112",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20mapChoioce%20%3D%200%0Avar%20settings%20%3D%20%5B%22Map%22%2C%20%22Transit%22%2C%20%22Satellite%22%5D%0APicker(%22Options%22%2C%20selection%3A%20%24mapChoioce)%20%7B%0A%20%20%20%20ForEach(0%20..%3C%20settings.count)%20%7B%20index%20in%0A%20%20%20%20%20%20%20%20Text(self.settings%5Bindex%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20.tag(index)%0A%20%20%20%20%7D%0A%0A%7D.pickerStyle(SegmentedPickerStyle())",
-      "encoded": true
-    },
-    {
-      "id": "s4-113",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "在 `SwiftUI` 中，`UISegmentedControl` 只是 `Picker`的另一种样式。分段控制(SegmentedControl)在 `iOS 13` 中也焕然一新。文档 - [Picker](https://developer.apple.com/documentation/swiftui/picker)"
     },
     {
       "id": "s4-114",
       "sectionId": "s4",
-      "title": "Stepper 执行语义递增和递减操作的控件",
-      "kind": "text",
-      "body": "用于执行语义递增和递减操作的控件。"
-    },
-    {
-      "id": "s4-115",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20quantity%3A%20Int%20%3D%200%0AStepper(%0A%20%20value%3A%20%24quantity%2C%0A%20%20in%3A%200...10%2C%0A%20%20label%3A%20%7B%20Text(%22Quantity%20%5C(quantity)%22)%7D%0A)",
+      "title": "Stepper%20%E6%89%A7%E8%A1%8C%E8%AF%AD%E4%B9%89%E9%80%92%E5%A2%9E%E5%92%8C%E9%80%92%E5%87%8F%E6%93%8D%E4%BD%9C%E7%9A%84%E6%8E%A7%E4%BB%B6",
+      "body": "%E7%94%A8%E4%BA%8E%E6%89%A7%E8%A1%8C%E8%AF%AD%E4%B9%89%E9%80%92%E5%A2%9E%E5%92%8C%E9%80%92%E5%87%8F%E6%93%8D%E4%BD%9C%E7%9A%84%E6%8E%A7%E4%BB%B6%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20quantity%3A%20Int%20%3D%200%0AStepper(%0A%20%20value%3A%20%24quantity%2C%0A%20%20in%3A%200...10%2C%0A%20%20label%3A%20%7B%20Text(%22Quantity%20%5C(quantity)%22)%7D%0A)%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%20%60Stepper%60%20%E7%9A%84%E6%A0%87%E7%AD%BE%E5%8F%AA%E6%9C%89%20%60Text%60%EF%BC%8C%E5%88%99%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E7%AD%BE%E5%90%8D%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E3%80%82%0A%0A%60%60%60swift%0AStepper(%0A%20%20%22Quantity%20%5C(quantity)%22%2C%0A%20%20value%3A%20%24quantity%2C%0A%20%20in%3A%200...10%0A)%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E8%A6%81%E5%AE%8C%E5%85%A8%E6%8E%A7%E5%88%B6%EF%BC%8C%E4%BB%96%E4%BB%AC%E5%8F%AF%E4%BB%A5%E6%8F%90%E4%BE%9B%E8%A3%B8%E6%9C%BA%E6%AD%A5%E8%BF%9B%E5%99%A8%EF%BC%8C%E6%82%A8%E5%8F%AF%E4%BB%A5%E5%9C%A8%E5%85%B6%E4%B8%AD%E7%AE%A1%E7%90%86%E8%87%AA%E5%B7%B1%E7%9A%84%E6%95%B0%E6%8D%AE%E6%BA%90%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20quantity%3A%20Int%20%3D%200%0AStepper(onIncrement%3A%20%7B%0A%20%20%20%20self.quantity%20%2B%3D%201%0A%7D%2C%20onDecrement%3A%20%7B%0A%20%20%20%20self.quantity%20-%3D%201%0A%7D%2C%20label%3A%20%7B%20Text(%22Quantity%20%5C(quantity)%22)%20%7D)%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E6%82%A8%E8%BF%98%E4%B8%BA%E5%B8%A6%E6%9C%89%20%60step%60%20%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%AF%8F%E4%B8%AA%E6%AD%A5%E9%AA%A4%E6%8C%87%E5%AE%9A%E4%BA%86%E4%B8%80%E4%B8%AA%E5%80%BC%E7%9A%84%E6%95%B0%E9%87%8F%E3%80%82%0A%0A%60%60%60swift%0AStepper(%0A%20%20value%3A%20%24quantity%2C%20in%3A%200...10%2C%20step%3A%202%0A)%20%7B%0A%20%20%20%20Text(%22Quantity%20%5C(quantity)%22)%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BStepper%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fstepper)",
       "encoded": true
-    },
-    {
-      "id": "s4-116",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "如果 `Stepper` 的标签只有 `Text`，则可以使用此更简单的签名进行初始化。"
-    },
-    {
-      "id": "s4-117",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Stepper(%0A%20%20%22Quantity%20%5C(quantity)%22%2C%0A%20%20value%3A%20%24quantity%2C%0A%20%20in%3A%200...10%0A)",
-      "encoded": true
-    },
-    {
-      "id": "s4-118",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "如果要完全控制，他们可以提供裸机步进器，您可以在其中管理自己的数据源。"
-    },
-    {
-      "id": "s4-119",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20quantity%3A%20Int%20%3D%200%0AStepper(onIncrement%3A%20%7B%0A%20%20%20%20self.quantity%20%2B%3D%201%0A%7D%2C%20onDecrement%3A%20%7B%0A%20%20%20%20self.quantity%20-%3D%201%0A%7D%2C%20label%3A%20%7B%20Text(%22Quantity%20%5C(quantity)%22)%20%7D)",
-      "encoded": true
-    },
-    {
-      "id": "s4-120",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "如果您还为带有 `step` 的初始化程序的每个步骤指定了一个值的数量。"
-    },
-    {
-      "id": "s4-121",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Stepper(%0A%20%20value%3A%20%24quantity%2C%20in%3A%200...10%2C%20step%3A%202%0A)%20%7B%0A%20%20%20%20Text(%22Quantity%20%5C(quantity)%22)%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s4-122",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Stepper](https://developer.apple.com/documentation/swiftui/stepper)"
     },
     {
       "id": "s4-123",
       "sectionId": "s4",
       "title": "Tap",
-      "kind": "text",
-      "body": "对于单次敲击"
-    },
-    {
-      "id": "s4-124",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Text(%22Tap%20me!%22).onTapGesture%20%7B%0A%20%20print(%22Tapped!%22)%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s4-125",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "用于双击"
-    },
-    {
-      "id": "s4-126",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Text(%22Tap%20me!%22).onTapGesture(count%3A%202)%20%7B%0A%20%20print(%22Tapped!%22)%0A%7D",
+      "body": "%E5%AF%B9%E4%BA%8E%E5%8D%95%E6%AC%A1%E6%95%B2%E5%87%BB%0A%0A%60%60%60swift%0AText(%22Tap%20me!%22).onTapGesture%20%7B%0A%20%20print(%22Tapped!%22)%0A%7D%0A%60%60%60%0A%0A%E7%94%A8%E4%BA%8E%E5%8F%8C%E5%87%BB%0A%0A%60%60%60swift%0AText(%22Tap%20me!%22).onTapGesture(count%3A%202)%20%7B%0A%20%20print(%22Tapped!%22)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-127",
       "sectionId": "s4",
-      "title": "Gesture 手势",
-      "kind": "text",
-      "body": "手势如轻敲手势、长按手势、拖拉手势"
-    },
-    {
-      "id": "s4-128",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "Text(%22Tap%22)%0A%20%20.gesture(%0A%20%20%20%20%20%20TapGesture()%0A%20%20%20%20%20%20%20%20%20%20.onEnded%20%7B%20_%20in%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20do%20something%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20)%0AText(%22Drag%20Me%22)%0A%20%20.gesture(%0A%20%20%20%20%20%20DragGesture(minimumDistance%3A%2050)%0A%20%20%20%20%20%20%20%20%20%20.onEnded%20%7B%20_%20in%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20do%20something%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20)%0AText(%22Long%20Press%22)%0A%20%20.gesture(%0A%20%20%20%20%20%20LongPressGesture(minimumDuration%3A%202)%0A%20%20%20%20%20%20%20%20%20%20.onEnded%20%7B%20_%20in%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20do%20something%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20)",
+      "title": "Gesture%20%E6%89%8B%E5%8A%BF",
+      "body": "%E6%89%8B%E5%8A%BF%E5%A6%82%E8%BD%BB%E6%95%B2%E6%89%8B%E5%8A%BF%E3%80%81%E9%95%BF%E6%8C%89%E6%89%8B%E5%8A%BF%E3%80%81%E6%8B%96%E6%8B%89%E6%89%8B%E5%8A%BF%0A%0A%60%60%60swift%0AText(%22Tap%22)%0A%20%20.gesture(%0A%20%20%20%20%20%20TapGesture()%0A%20%20%20%20%20%20%20%20%20%20.onEnded%20%7B%20_%20in%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20do%20something%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20)%0AText(%22Drag%20Me%22)%0A%20%20.gesture(%0A%20%20%20%20%20%20DragGesture(minimumDistance%3A%2050)%0A%20%20%20%20%20%20%20%20%20%20.onEnded%20%7B%20_%20in%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20do%20something%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20)%0AText(%22Long%20Press%22)%0A%20%20.gesture(%0A%20%20%20%20%20%20LongPressGesture(minimumDuration%3A%202)%0A%20%20%20%20%20%20%20%20%20%20.onEnded%20%7B%20_%20in%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20do%20something%0A%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-129",
       "sectionId": "s4",
       "title": "OnChange",
-      "kind": "text",
-      "body": "onChange 是一个新的视图修改器，可用于所有 SwiftUI 视图。它允许您侦听状态更改并相应地对视图执行操作"
-    },
-    {
-      "id": "s4-130",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "TextEditor(text%3A%20%24currentText)%0A%20%20.onChange(of%3A%20clearText)%20%7B%20value%20in%0A%20%20%20%20%20%20if%20clearText%7B%0A%20%20%20%20%20%20%20%20%20%20currentText%20%3D%20%22%22%0A%20%20%20%20%20%20%7D%0A%20%20%7D",
+      "body": "onChange%20%E6%98%AF%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E8%A7%86%E5%9B%BE%E4%BF%AE%E6%94%B9%E5%99%A8%EF%BC%8C%E5%8F%AF%E7%94%A8%E4%BA%8E%E6%89%80%E6%9C%89%20SwiftUI%20%E8%A7%86%E5%9B%BE%E3%80%82%E5%AE%83%E5%85%81%E8%AE%B8%E6%82%A8%E4%BE%A6%E5%90%AC%E7%8A%B6%E6%80%81%E6%9B%B4%E6%94%B9%E5%B9%B6%E7%9B%B8%E5%BA%94%E5%9C%B0%E5%AF%B9%E8%A7%86%E5%9B%BE%E6%89%A7%E8%A1%8C%E6%93%8D%E4%BD%9C%0A%0A%60%60%60swift%0ATextEditor(text%3A%20%24currentText)%0A%20%20.onChange(of%3A%20clearText)%20%7B%20value%20in%0A%20%20%20%20%20%20if%20clearText%7B%0A%20%20%20%20%20%20%20%20%20%20currentText%20%3D%20%22%22%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-131",
       "sectionId": "s5",
-      "title": "List 列表",
-      "kind": "text",
-      "body": "一个容器，用于显示排列在单列中的数据行。创建静态可滚动列表"
-    },
-    {
-      "id": "s5-132",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "List%20%7B%0A%20%20%20%20Text(%22Hello%20world%22)%0A%20%20%20%20Text(%22Hello%20world%22)%0A%20%20%20%20Text(%22Hello%20world%22)%0A%7D",
+      "title": "List%20%E5%88%97%E8%A1%A8",
+      "body": "%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%EF%BC%8C%E7%94%A8%E4%BA%8E%E6%98%BE%E7%A4%BA%E6%8E%92%E5%88%97%E5%9C%A8%E5%8D%95%E5%88%97%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E8%A1%8C%E3%80%82%E5%88%9B%E5%BB%BA%E9%9D%99%E6%80%81%E5%8F%AF%E6%BB%9A%E5%8A%A8%E5%88%97%E8%A1%A8%0A%0A%60%60%60swift%0AList%20%7B%0A%20%20%20%20Text(%22Hello%20world%22)%0A%20%20%20%20Text(%22Hello%20world%22)%0A%20%20%20%20Text(%22Hello%20world%22)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-133",
       "sectionId": "s5",
       "title": "%E5%88%9B%E5%BB%BA%E5%8A%A8%E6%80%81%E5%88%97%E8%A1%A8",
-      "kind": "code",
-      "lang": "swift",
-      "code": "let%20names%20%3D%20%5B%22John%22%2C%20%22Apple%22%2C%20%22Seed%22%5D%0AList(names)%20%7B%20name%20in%0A%20%20%20%20Text(name)%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s5-134",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "添加 `Section`"
-    },
-    {
-      "id": "s5-135",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "List%20%7B%0A%20%20%20%20Section(header%3A%20Text(%22UIKit%22)%2C%20footer%3A%20Text(%22We%20will%20miss%20you%22))%20%7B%0A%20%20%20%20%20%20%20%20Text(%22UITableView%22)%0A%20%20%20%20%7D%0A%0A%20%20%20%20Section(header%3A%20Text(%22SwiftUI%22)%2C%20footer%3A%20Text(%22A%20lot%20to%20learn%22))%20%7B%0A%20%20%20%20%20%20%20%20Text(%22List%22)%0A%20%20%20%20%7D%0A%7D",
+      "body": "%60%60%60swift%0Alet%20names%20%3D%20%5B%22John%22%2C%20%22Apple%22%2C%20%22Seed%22%5D%0AList(names)%20%7B%20name%20in%0A%20%20%20%20Text(name)%0A%7D%0A%60%60%60%0A%0A%E6%B7%BB%E5%8A%A0%20%60Section%60%0A%0A%60%60%60swift%0AList%20%7B%0A%20%20%20%20Section(header%3A%20Text(%22UIKit%22)%2C%20footer%3A%20Text(%22We%20will%20miss%20you%22))%20%7B%0A%20%20%20%20%20%20%20%20Text(%22UITableView%22)%0A%20%20%20%20%7D%0A%0A%20%20%20%20Section(header%3A%20Text(%22SwiftUI%22)%2C%20footer%3A%20Text(%22A%20lot%20to%20learn%22))%20%7B%0A%20%20%20%20%20%20%20%20Text(%22List%22)%0A%20%20%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-136",
       "sectionId": "s5",
       "title": "%E5%8F%AF%E6%B7%B7%E5%90%88%E7%9A%84%E5%88%97%E8%A1%A8",
-      "kind": "code",
-      "lang": "swift",
-      "code": "List%20%7B%0A%20%20%20%20Text(%22Hello%20world%22)%0A%20%20%20%20Image(systemName%3A%20%22clock%22)%0A%7D",
+      "body": "%60%60%60swift%0AList%20%7B%0A%20%20%20%20Text(%22Hello%20world%22)%0A%20%20%20%20Image(systemName%3A%20%22clock%22)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-137",
       "sectionId": "s5",
-      "title": "使其分组",
-      "kind": "text",
-      "body": "添加 `.listStyle(GroupedListStyle())`"
-    },
-    {
-      "id": "s5-138",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "List%20%7B%0A%20%20Section(header%3A%20Text(%22UIKit%22)%2C%0A%20%20%20%20footer%3A%20Text(%22%E6%88%91%E4%BB%AC%E4%BC%9A%E6%83%B3%E5%BF%B5%E4%BD%A0%E7%9A%84%22))%20%7B%0A%20%20%20%20%20%20Text(%22UITableView%22)%0A%20%20%7D%0A%0A%20%20Section(header%3A%20Text(%22SwiftUI%22)%2C%0A%20%20%20%20footer%3A%20Text(%22%E8%A6%81%E5%AD%A6%E7%9A%84%E4%B8%9C%E8%A5%BF%E5%BE%88%E5%A4%9A%22))%20%7B%0A%20%20%20%20%20%20Text(%22List%22)%0A%20%20%7D%0A%7D.listStyle(GroupedListStyle())",
+      "title": "%E4%BD%BF%E5%85%B6%E5%88%86%E7%BB%84",
+      "body": "%E6%B7%BB%E5%8A%A0%20%60.listStyle(GroupedListStyle())%60%0A%0A%60%60%60swift%0AList%20%7B%0A%20%20Section(header%3A%20Text(%22UIKit%22)%2C%0A%20%20%20%20footer%3A%20Text(%22%E6%88%91%E4%BB%AC%E4%BC%9A%E6%83%B3%E5%BF%B5%E4%BD%A0%E7%9A%84%22))%20%7B%0A%20%20%20%20%20%20Text(%22UITableView%22)%0A%20%20%7D%0A%0A%20%20Section(header%3A%20Text(%22SwiftUI%22)%2C%0A%20%20%20%20footer%3A%20Text(%22%E8%A6%81%E5%AD%A6%E7%9A%84%E4%B8%9C%E8%A5%BF%E5%BE%88%E5%A4%9A%22))%20%7B%0A%20%20%20%20%20%20Text(%22List%22)%0A%20%20%7D%0A%7D.listStyle(GroupedListStyle())%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-139",
       "sectionId": "s5",
-      "title": "插入分组",
-      "kind": "text",
-      "body": "要使其插入分组(`.insetGrouped`)，请添加 `.listStyle(GroupedListStyle())` 并强制使用常规水平尺寸类 ``.environment(\\.horizontalSizeClass, .regular)``。"
-    },
-    {
-      "id": "s5-140",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "List%20%7B%0A%20%20%20%20Section(header%3A%20Text(%22UIKit%22)%2C%20footer%3A%20Text(%22We%20will%20miss%20you%22))%20%7B%0A%20%20%20%20%20%20%20%20Text(%22UITableView%22)%0A%20%20%20%20%7D%0A%0A%20%20%20%20Section(header%3A%20Text(%22SwiftUI%22)%2C%20footer%3A%20Text(%22A%20lot%20to%20learn%22))%20%7B%0A%20%20%20%20%20%20%20%20Text(%22List%22)%0A%20%20%20%20%7D%0A%7D.listStyle(GroupedListStyle())%0A.environment(%5C.horizontalSizeClass%2C%20.regular)",
+      "title": "%E6%8F%92%E5%85%A5%E5%88%86%E7%BB%84",
+      "body": "%E8%A6%81%E4%BD%BF%E5%85%B6%E6%8F%92%E5%85%A5%E5%88%86%E7%BB%84(%60.insetGrouped%60)%EF%BC%8C%E8%AF%B7%E6%B7%BB%E5%8A%A0%20%60.listStyle(GroupedListStyle())%60%20%E5%B9%B6%E5%BC%BA%E5%88%B6%E4%BD%BF%E7%94%A8%E5%B8%B8%E8%A7%84%E6%B0%B4%E5%B9%B3%E5%B0%BA%E5%AF%B8%E7%B1%BB%20%60%60.environment(%5C.horizontalSizeClass%2C%20.regular)%60%60%E3%80%82%0A%0A%60%60%60swift%0AList%20%7B%0A%20%20%20%20Section(header%3A%20Text(%22UIKit%22)%2C%20footer%3A%20Text(%22We%20will%20miss%20you%22))%20%7B%0A%20%20%20%20%20%20%20%20Text(%22UITableView%22)%0A%20%20%20%20%7D%0A%0A%20%20%20%20Section(header%3A%20Text(%22SwiftUI%22)%2C%20footer%3A%20Text(%22A%20lot%20to%20learn%22))%20%7B%0A%20%20%20%20%20%20%20%20Text(%22List%22)%0A%20%20%20%20%7D%0A%7D.listStyle(GroupedListStyle())%0A.environment(%5C.horizontalSizeClass%2C%20.regular)%0A%60%60%60%0A%0A%3E%20%E6%8F%92%E5%9B%BE%E5%88%86%E7%BB%84%E5%B7%B2%E6%B7%BB%E5%8A%A0%E5%88%B0%20%60iOS%2013.2%60%20%E4%B8%AD%E7%9A%84%20%60SwiftUI%60%0A%0A%E5%9C%A8%20%60iOS%2014%60%20%E4%B8%AD%EF%BC%8C%E6%88%91%E4%BB%AC%E4%B8%BA%E6%AD%A4%E8%AE%BE%E7%BD%AE%E4%BA%86%E4%B8%93%E7%94%A8%E6%A0%B7%E5%BC%8F%E3%80%82%0A%0A%60%60%60swift%0A.listStyle(InsetGroupedListStyle())%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BList%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Flist)",
       "encoded": true
-    },
-    {
-      "id": "s5-141",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "> 插图分组已添加到 `iOS 13.2` 中的 `SwiftUI`"
-    },
-    {
-      "id": "s5-142",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "在 `iOS 14` 中，我们为此设置了专用样式。"
-    },
-    {
-      "id": "s5-143",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": ".listStyle(InsetGroupedListStyle())"
-    },
-    {
-      "id": "s5-144",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [List](https://developer.apple.com/documentation/swiftui/list)"
     },
     {
       "id": "s5-145",
       "sectionId": "s5",
-      "title": "ScrollView 滚动视图",
-      "kind": "text",
-      "body": "滚动视图。"
-    },
-    {
-      "id": "s5-146",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "ScrollView(alwaysBounceVertical%3A%20true)%20%7B%0A%20%20%20%20Image(%22foo%22)%0A%20%20%20%20Text(%22Hello%20World%22)%0A%7D",
+      "title": "ScrollView%20%E6%BB%9A%E5%8A%A8%E8%A7%86%E5%9B%BE",
+      "body": "%E6%BB%9A%E5%8A%A8%E8%A7%86%E5%9B%BE%E3%80%82%0A%0A%60%60%60swift%0AScrollView(alwaysBounceVertical%3A%20true)%20%7B%0A%20%20%20%20Image(%22foo%22)%0A%20%20%20%20Text(%22Hello%20World%22)%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BScrollView%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fscrollview)",
       "encoded": true
-    },
-    {
-      "id": "s5-147",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [ScrollView](https://developer.apple.com/documentation/swiftui/scrollview)"
     },
     {
       "id": "s6-148",
       "sectionId": "s6",
       "title": "NavigationView",
-      "kind": "text",
-      "body": "`NavigationView` 或多或少类似于 `UINavigationController`，它处理视图之间的导航，显示标题，将导航栏放在顶部。"
-    },
-    {
-      "id": "s6-149",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "NavigationView%20%7B%0A%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20%20%20.navigationBarTitle(Text(%22World%22)%2C%20displayMode%3A%20.inline)%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s6-150",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "大标题使用 `.large` 将条形图项添加到导航视图"
-    },
-    {
-      "id": "s6-151",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "NavigationView%20%7B%0A%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20.navigationBarTitle(Text(%22World%22)%2C%20displayMode%3A%20.inline)%0A%20%20%20%20%20%20.navigationBarItems(%0A%20%20%20%20%20%20%20%20trailing%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20Button(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20action%3A%20%7B%20print(%22Going%20to%20Setting%22)%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3A%20%7B%20Text(%22Setting%22)%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20)%0A%7D",
+      "body": "%60NavigationView%60%20%E6%88%96%E5%A4%9A%E6%88%96%E5%B0%91%E7%B1%BB%E4%BC%BC%E4%BA%8E%20%60UINavigationController%60%EF%BC%8C%E5%AE%83%E5%A4%84%E7%90%86%E8%A7%86%E5%9B%BE%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AF%BC%E8%88%AA%EF%BC%8C%E6%98%BE%E7%A4%BA%E6%A0%87%E9%A2%98%EF%BC%8C%E5%B0%86%E5%AF%BC%E8%88%AA%E6%A0%8F%E6%94%BE%E5%9C%A8%E9%A1%B6%E9%83%A8%E3%80%82%0A%0A%60%60%60swift%0ANavigationView%20%7B%0A%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20%20%20.navigationBarTitle(Text(%22World%22)%2C%20displayMode%3A%20.inline)%0A%7D%0A%60%60%60%0A%0A%E5%A4%A7%E6%A0%87%E9%A2%98%E4%BD%BF%E7%94%A8%20%60.large%60%20%E5%B0%86%E6%9D%A1%E5%BD%A2%E5%9B%BE%E9%A1%B9%E6%B7%BB%E5%8A%A0%E5%88%B0%E5%AF%BC%E8%88%AA%E8%A7%86%E5%9B%BE%0A%0A%60%60%60swift%0ANavigationView%20%7B%0A%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20.navigationBarTitle(Text(%22World%22)%2C%20displayMode%3A%20.inline)%0A%20%20%20%20%20%20.navigationBarItems(%0A%20%20%20%20%20%20%20%20trailing%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20Button(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20action%3A%20%7B%20print(%22Going%20to%20Setting%22)%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20label%3A%20%7B%20Text(%22Setting%22)%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20)%0A%20%20%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-152",
       "sectionId": "s6",
       "title": "NavigationLink",
-      "kind": "text",
-      "body": "按下时触发导航演示的按钮。这是 `pushViewController` 的替代品"
-    },
-    {
-      "id": "s6-153",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "NavigationView%20%7B%0A%20%20%20%20NavigationLink(destination%3A%0A%20%20%20%20%20%20%20%20Text(%22Detail%22)%0A%20%20%20%20%20%20%20%20.navigationBarTitle(Text(%22Detail%22))%0A%20%20%20%20)%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Push%22)%0A%20%20%20%20%7D.navigationBarTitle(Text(%22Master%22))%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s6-154",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "或者通过将组目标添加到自己的视图 `DetailView` 中，使其更具可读性"
-    },
-    {
-      "id": "s6-155",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "NavigationView%20%7B%0A%20%20%20%20NavigationLink(destination%3A%20DetailView())%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Push%22)%0A%20%20%20%20%7D.navigationBarTitle(Text(%22Master%22))%0A%7D",
+      "body": "%E6%8C%89%E4%B8%8B%E6%97%B6%E8%A7%A6%E5%8F%91%E5%AF%BC%E8%88%AA%E6%BC%94%E7%A4%BA%E7%9A%84%E6%8C%89%E9%92%AE%E3%80%82%E8%BF%99%E6%98%AF%20%60pushViewController%60%20%E7%9A%84%E6%9B%BF%E4%BB%A3%E5%93%81%0A%0A%60%60%60swift%0ANavigationView%20%7B%0A%20%20%20%20NavigationLink(destination%3A%0A%20%20%20%20%20%20%20%20Text(%22Detail%22)%0A%20%20%20%20%20%20%20%20.navigationBarTitle(Text(%22Detail%22))%0A%20%20%20%20)%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Push%22)%0A%20%20%20%20%7D.navigationBarTitle(Text(%22Master%22))%0A%7D%0A%60%60%60%0A%0A%E6%88%96%E8%80%85%E9%80%9A%E8%BF%87%E5%B0%86%E7%BB%84%E7%9B%AE%E6%A0%87%E6%B7%BB%E5%8A%A0%E5%88%B0%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A7%86%E5%9B%BE%20%60DetailView%60%20%E4%B8%AD%EF%BC%8C%E4%BD%BF%E5%85%B6%E6%9B%B4%E5%85%B7%E5%8F%AF%E8%AF%BB%E6%80%A7%0A%0A%60%60%60swift%0ANavigationView%20%7B%0A%20%20%20%20NavigationLink(destination%3A%20DetailView())%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Push%22)%0A%20%20%20%20%7D.navigationBarTitle(Text(%22Master%22))%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-156",
       "sectionId": "s6",
       "title": "Group",
-      "kind": "text",
-      "body": "Group 创建多个视图作为一个视图，同时也避免了 Stack 的10视图最大限制"
-    },
-    {
-      "id": "s6-157",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "VStack%20%7B%0A%20%20%20%20Group%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%7D%0A%20%20%20%20Group%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%7D%0A%7D",
+      "body": "Group%20%E5%88%9B%E5%BB%BA%E5%A4%9A%E4%B8%AA%E8%A7%86%E5%9B%BE%E4%BD%9C%E4%B8%BA%E4%B8%80%E4%B8%AA%E8%A7%86%E5%9B%BE%EF%BC%8C%E5%90%8C%E6%97%B6%E4%B9%9F%E9%81%BF%E5%85%8D%E4%BA%86%20Stack%20%E7%9A%8410%E8%A7%86%E5%9B%BE%E6%9C%80%E5%A4%A7%E9%99%90%E5%88%B6%0A%0A%60%60%60swift%0AVStack%20%7B%0A%20%20%20%20Group%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%7D%0A%20%20%20%20Group%20%7B%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%20%20%20%20Text(%22Hello%22)%0A%20%20%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-158",
       "sectionId": "s6",
       "title": "TabView",
-      "kind": "text",
-      "body": "一个视图，允许使用可交互的用户界面元素在多个子视图之间进行切换。"
-    },
-    {
-      "id": "s6-159",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "TabView%20%7B%0A%20%20%20%20Text(%22First%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%20Text(%22First%22)%20%7D)%0A%20%20%20%20%20%20%20%20.tag(0)%0A%20%20%20%20Text(%22Second%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%20Text(%22Second%22)%20%7D)%0A%20%20%20%20%20%20%20%20.tag(1)%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s6-160",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "图像和文本在一起。 您可以在此处使用 `SF Symbol`。"
-    },
-    {
-      "id": "s6-161",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "TabView%20%7B%0A%20%20%20%20Text(%22First%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Image(systemName%3A%20%22circle%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22First%22)%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20.tag(0)%0A%20%20%20%20Text(%22Second%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(VStack%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Image(%22second%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Second%22)%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20.tag(1)%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s6-162",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "或者您可以省略 `VStack`"
-    },
-    {
-      "id": "s6-163",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "TabView%20%7B%0A%20%20%20%20Text(%22First%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Image(systemName%3A%20%22circle%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22First%22)%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20.tag(0)%0A%20%20%20%20Text(%22Second%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Image(%22second%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Second%22)%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20.tag(1)%0A%7D",
+      "body": "%E4%B8%80%E4%B8%AA%E8%A7%86%E5%9B%BE%EF%BC%8C%E5%85%81%E8%AE%B8%E4%BD%BF%E7%94%A8%E5%8F%AF%E4%BA%A4%E4%BA%92%E7%9A%84%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2%E5%85%83%E7%B4%A0%E5%9C%A8%E5%A4%9A%E4%B8%AA%E5%AD%90%E8%A7%86%E5%9B%BE%E4%B9%8B%E9%97%B4%E8%BF%9B%E8%A1%8C%E5%88%87%E6%8D%A2%E3%80%82%0A%0A%60%60%60swift%0ATabView%20%7B%0A%20%20%20%20Text(%22First%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%20Text(%22First%22)%20%7D)%0A%20%20%20%20%20%20%20%20.tag(0)%0A%20%20%20%20Text(%22Second%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%20Text(%22Second%22)%20%7D)%0A%20%20%20%20%20%20%20%20.tag(1)%0A%7D%0A%60%60%60%0A%0A%E5%9B%BE%E5%83%8F%E5%92%8C%E6%96%87%E6%9C%AC%E5%9C%A8%E4%B8%80%E8%B5%B7%E3%80%82%20%E6%82%A8%E5%8F%AF%E4%BB%A5%E5%9C%A8%E6%AD%A4%E5%A4%84%E4%BD%BF%E7%94%A8%20%60SF%20Symbol%60%E3%80%82%0A%0A%60%60%60swift%0ATabView%20%7B%0A%20%20%20%20Text(%22First%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Image(systemName%3A%20%22circle%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22First%22)%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20.tag(0)%0A%20%20%20%20Text(%22Second%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(VStack%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Image(%22second%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Second%22)%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20.tag(1)%0A%7D%0A%60%60%60%0A%0A%E6%88%96%E8%80%85%E6%82%A8%E5%8F%AF%E4%BB%A5%E7%9C%81%E7%95%A5%20%60VStack%60%0A%0A%60%60%60swift%0ATabView%20%7B%0A%20%20%20%20Text(%22First%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Image(systemName%3A%20%22circle%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22First%22)%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20.tag(0)%0A%20%20%20%20Text(%22Second%20View%22)%0A%20%20%20%20%20%20%20%20.font(.title)%0A%20%20%20%20%20%20%20%20.tabItem(%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Image(%22second%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Second%22)%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20.tag(1)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-164",
       "sectionId": "s6",
       "title": "Form",
-      "kind": "text",
-      "body": "用于对用于数据输入的控件（例如在设置或检查器中）进行分组的容器。"
-    },
-    {
-      "id": "s6-165",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "NavigationView%20%7B%0A%20%20%20%20Form%20%7B%0A%20%20%20%20%20%20%20%20Section%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Plain%20Text%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Stepper(value%3A%20%24quantity%2C%20in%3A%200...10%2C%20label%3A%20%7B%20Text(%22Quantity%22)%20%7D)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20Section%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20DatePicker(%24date%2C%20label%3A%20%7B%20Text(%22Due%20Date%22)%20%7D)%0A%20%20%20%20%20%20%20%20%20%20%20%20Picker(selection%3A%20%24selection%2C%20label%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Picker%20Name%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2C%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%201%22).tag(0)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%202%22).tag(1)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%203%22).tag(2)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%204%22).tag(3)%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D",
+      "body": "%E7%94%A8%E4%BA%8E%E5%AF%B9%E7%94%A8%E4%BA%8E%E6%95%B0%E6%8D%AE%E8%BE%93%E5%85%A5%E7%9A%84%E6%8E%A7%E4%BB%B6%EF%BC%88%E4%BE%8B%E5%A6%82%E5%9C%A8%E8%AE%BE%E7%BD%AE%E6%88%96%E6%A3%80%E6%9F%A5%E5%99%A8%E4%B8%AD%EF%BC%89%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84%E7%9A%84%E5%AE%B9%E5%99%A8%E3%80%82%0A%0A%60%60%60swift%0ANavigationView%20%7B%0A%20%20%20%20Form%20%7B%0A%20%20%20%20%20%20%20%20Section%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Plain%20Text%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20Stepper(value%3A%20%24quantity%2C%20in%3A%200...10%2C%20label%3A%20%7B%20Text(%22Quantity%22)%20%7D)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20Section%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20DatePicker(%24date%2C%20label%3A%20%7B%20Text(%22Due%20Date%22)%20%7D)%0A%20%20%20%20%20%20%20%20%20%20%20%20Picker(selection%3A%20%24selection%2C%20label%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Picker%20Name%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2C%20content%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%201%22).tag(0)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%202%22).tag(1)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%203%22).tag(2)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Text(%22Value%204%22).tag(3)%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E6%82%A8%E5%87%A0%E4%B9%8E%E5%8F%AF%E4%BB%A5%E5%9C%A8%E6%AD%A4%E8%A1%A8%E5%8D%95%E4%B8%AD%E6%94%BE%E5%85%A5%E4%BB%BB%E4%BD%95%E5%86%85%E5%AE%B9%EF%BC%8C%E5%AE%83%E5%B0%86%E4%B8%BA%E8%A1%A8%E5%8D%95%E5%91%88%E7%8E%B0%E9%80%82%E5%BD%93%E7%9A%84%E6%A0%B7%E5%BC%8F%E3%80%82%E6%96%87%E6%A1%A3%20-%20%5BForm%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fform)",
       "encoded": true
-    },
-    {
-      "id": "s6-166",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "您几乎可以在此表单中放入任何内容，它将为表单呈现适当的样式。文档 - [Form](https://developer.apple.com/documentation/swiftui/form)"
     },
     {
       "id": "s6-167",
       "sectionId": "s6",
       "title": "Modal",
-      "kind": "text",
-      "body": "Modal 过渡。我们可以显示基于布尔的 Modal。"
-    },
-    {
-      "id": "s6-168",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20isModal%3A%20Bool%20%3D%20false%0A%0Avar%20modal%3A%20some%20View%20%7B%0A%20%20%20%20Text(%22Modal%22)%0A%7D%0A%0AButton(%22Modal%22)%20%7B%0A%20%20%20%20self.isModal%20%3D%20true%0A%7D.sheet(isPresented%3A%20%24isModal%2C%20content%3A%20%7B%0A%20%20%20%20self.modal%0A%7D)",
+      "body": "Modal%20%E8%BF%87%E6%B8%A1%E3%80%82%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E6%98%BE%E7%A4%BA%E5%9F%BA%E4%BA%8E%E5%B8%83%E5%B0%94%E7%9A%84%20Modal%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20isModal%3A%20Bool%20%3D%20false%0A%0Avar%20modal%3A%20some%20View%20%7B%0A%20%20%20%20Text(%22Modal%22)%0A%7D%0A%0AButton(%22Modal%22)%20%7B%0A%20%20%20%20self.isModal%20%3D%20true%0A%7D.sheet(isPresented%3A%20%24isModal%2C%20content%3A%20%7B%0A%20%20%20%20self.modal%0A%7D)%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BSheet%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Fview%2F3352791-sheet)",
       "encoded": true
-    },
-    {
-      "id": "s6-169",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Sheet](https://developer.apple.com/documentation/swiftui/view/3352791-sheet)"
     },
     {
       "id": "s6-170",
       "sectionId": "s6",
       "title": "Alert",
-      "kind": "text",
-      "body": "警报演示的容器。我们可以根据布尔值显示Alert。"
-    },
-    {
-      "id": "s6-171",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20isError%3A%20Bool%20%3D%20false%0A%0AButton(%22Alert%22)%20%7B%0A%20%20%20%20self.isError%20%3D%20true%0A%7D.alert(isPresented%3A%20%24isError%2C%20content%3A%20%7B%0A%20%20%20%20Alert(title%3A%20Text(%22Error%22)%2C%0A%20%20%20%20%20%20message%3A%20Text(%22Error%20Reason%22)%2C%0A%20%20%20%20%20%20dismissButton%3A%20.default(Text(%22OK%22))%0A%20%20%20%20)%0A%7D)",
+      "body": "%E8%AD%A6%E6%8A%A5%E6%BC%94%E7%A4%BA%E7%9A%84%E5%AE%B9%E5%99%A8%E3%80%82%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E6%A0%B9%E6%8D%AE%E5%B8%83%E5%B0%94%E5%80%BC%E6%98%BE%E7%A4%BAAlert%E3%80%82%0A%0A%60%60%60swift%0A%40State%20var%20isError%3A%20Bool%20%3D%20false%0A%0AButton(%22Alert%22)%20%7B%0A%20%20%20%20self.isError%20%3D%20true%0A%7D.alert(isPresented%3A%20%24isError%2C%20content%3A%20%7B%0A%20%20%20%20Alert(title%3A%20Text(%22Error%22)%2C%0A%20%20%20%20%20%20message%3A%20Text(%22Error%20Reason%22)%2C%0A%20%20%20%20%20%20dismissButton%3A%20.default(Text(%22OK%22))%0A%20%20%20%20)%0A%7D)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-172",
       "sectionId": "s6",
       "title": "Alert%20%E4%B9%9F%E4%B8%8E%E5%8F%AF%E8%AF%86%E5%88%AB%E9%A1%B9%E7%BB%91%E5%AE%9A",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20error%3A%20AlertError%3F%0A%0Avar%20body%3A%20some%20View%20%7B%0A%20%20%20%20Button(%22Alert%20Error%22)%20%7B%0A%20%20%20%20%20%20%20%20self.error%20%3D%20AlertError(reason%3A%20%22Reason%22)%0A%20%20%20%20%7D.alert(item%3A%20%24error%2C%20content%3A%20%7B%20error%20in%0A%20%20%20%20%20%20%20%20alert(reason%3A%20error.reason)%0A%20%20%20%20%7D)%20%20%20%20%0A%7D%0A%0Afunc%20alert(reason%3A%20String)%20-%3E%20Alert%20%7B%0A%20%20%20%20Alert(title%3A%20Text(%22Error%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20message%3A%20Text(reason)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20dismissButton%3A%20.default(Text(%22OK%22))%0A%20%20%20%20)%0A%7D%0A%0Astruct%20AlertError%3A%20Identifiable%20%7B%0A%20%20%20%20var%20id%3A%20String%20%7B%0A%20%20%20%20%20%20%20%20return%20reason%0A%20%20%20%20%7D%0A%20%20%20%20%0A%20%20%20%20let%20reason%3A%20String%0A%7D",
+      "body": "%60%60%60swift%0A%40State%20var%20error%3A%20AlertError%3F%0A%0Avar%20body%3A%20some%20View%20%7B%0A%20%20%20%20Button(%22Alert%20Error%22)%20%7B%0A%20%20%20%20%20%20%20%20self.error%20%3D%20AlertError(reason%3A%20%22Reason%22)%0A%20%20%20%20%7D.alert(item%3A%20%24error%2C%20content%3A%20%7B%20error%20in%0A%20%20%20%20%20%20%20%20alert(reason%3A%20error.reason)%0A%20%20%20%20%7D)%20%20%20%20%0A%7D%0A%0Afunc%20alert(reason%3A%20String)%20-%3E%20Alert%20%7B%0A%20%20%20%20Alert(title%3A%20Text(%22Error%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20message%3A%20Text(reason)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20dismissButton%3A%20.default(Text(%22OK%22))%0A%20%20%20%20)%0A%7D%0A%0Astruct%20AlertError%3A%20Identifiable%20%7B%0A%20%20%20%20var%20id%3A%20String%20%7B%0A%20%20%20%20%20%20%20%20return%20reason%0A%20%20%20%20%7D%0A%20%20%20%20%0A%20%20%20%20let%20reason%3A%20String%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BAlert%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Falert)",
       "encoded": true
-    },
-    {
-      "id": "s6-173",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [Alert](https://developer.apple.com/documentation/swiftui/alert)"
     },
     {
       "id": "s6-174",
       "sectionId": "s6",
       "title": "ActionSheet",
-      "kind": "text",
-      "body": "操作表演示文稿的存储类型。我们可以显示基于布尔值的 `ActionSheet`"
-    },
-    {
-      "id": "s6-175",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20isSheet%3A%20Bool%20%3D%20false%0A%0Avar%20actionSheet%3A%20ActionSheet%20%7B%0A%20%20ActionSheet(title%3A%20Text(%22Action%22)%2C%0A%20%20%20%20message%3A%20Text(%22Description%22)%2C%0A%20%20%20%20buttons%3A%20%5B%0A%20%20%20%20%20%20.default(Text(%22OK%22)%2C%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%7D)%2C%0A%20%20%20%20%20%20.destructive(Text(%22Delete%22)%2C%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%7D)%0A%20%20%20%20%5D%0A%20%20)%0A%7D%0A%0AButton(%22Action%20Sheet%22)%20%7B%0A%20%20%20%20self.isSheet%20%3D%20true%0A%7D.actionSheet(isPresented%3A%20%24isSheet%2C%0A%20%20content%3A%20%7B%0A%20%20%20%20self.actionSheet%0A%7D)",
+      "body": "%E6%93%8D%E4%BD%9C%E8%A1%A8%E6%BC%94%E7%A4%BA%E6%96%87%E7%A8%BF%E7%9A%84%E5%AD%98%E5%82%A8%E7%B1%BB%E5%9E%8B%E3%80%82%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E6%98%BE%E7%A4%BA%E5%9F%BA%E4%BA%8E%E5%B8%83%E5%B0%94%E5%80%BC%E7%9A%84%20%60ActionSheet%60%0A%0A%60%60%60swift%0A%40State%20var%20isSheet%3A%20Bool%20%3D%20false%0A%0Avar%20actionSheet%3A%20ActionSheet%20%7B%0A%20%20ActionSheet(title%3A%20Text(%22Action%22)%2C%0A%20%20%20%20message%3A%20Text(%22Description%22)%2C%0A%20%20%20%20buttons%3A%20%5B%0A%20%20%20%20%20%20.default(Text(%22OK%22)%2C%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%7D)%2C%0A%20%20%20%20%20%20.destructive(Text(%22Delete%22)%2C%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%7D)%0A%20%20%20%20%5D%0A%20%20)%0A%7D%0A%0AButton(%22Action%20Sheet%22)%20%7B%0A%20%20%20%20self.isSheet%20%3D%20true%0A%7D.actionSheet(isPresented%3A%20%24isSheet%2C%0A%20%20content%3A%20%7B%0A%20%20%20%20self.actionSheet%0A%7D)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-176",
       "sectionId": "s6",
       "title": "ActionSheet%20%E4%B9%9F%E4%B8%8E%E5%8F%AF%E8%AF%86%E5%88%AB%E9%A1%B9%E7%BB%91%E5%AE%9A",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%40State%20var%20sheetDetail%3A%20SheetDetail%3F%0A%0Avar%20body%3A%20some%20View%20%7B%0A%20%20%20%20Button(%22Action%20Sheet%22)%20%7B%0A%20%20%20%20%20%20%20%20self.sheetDetail%20%3D%20ModSheetDetail(body%3A%20%22Detail%22)%0A%20%20%20%20%7D.actionSheet(item%3A%20%24sheetDetail%2C%20content%3A%20%7B%20detail%20in%0A%20%20%20%20%20%20%20%20self.sheet(detail%3A%20detail.body)%0A%20%20%20%20%7D)%0A%7D%0A%0Afunc%20sheet(detail%3A%20String)%20-%3E%20ActionSheet%20%7B%0A%20%20%20%20ActionSheet(title%3A%20Text(%22Action%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20message%3A%20Text(detail)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20buttons%3A%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.default(Text(%22OK%22)%2C%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.destructive(Text(%22Delete%22)%2C%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20)%0A%7D%0A%0Astruct%20SheetDetail%3A%20Identifiable%20%7B%0A%20%20%20%20var%20id%3A%20String%20%7B%0A%20%20%20%20%20%20%20%20return%20body%0A%20%20%20%20%7D%0A%20%20%20%20let%20body%3A%20String%0A%7D",
+      "body": "%60%60%60swift%0A%40State%20var%20sheetDetail%3A%20SheetDetail%3F%0A%0Avar%20body%3A%20some%20View%20%7B%0A%20%20%20%20Button(%22Action%20Sheet%22)%20%7B%0A%20%20%20%20%20%20%20%20self.sheetDetail%20%3D%20ModSheetDetail(body%3A%20%22Detail%22)%0A%20%20%20%20%7D.actionSheet(item%3A%20%24sheetDetail%2C%20content%3A%20%7B%20detail%20in%0A%20%20%20%20%20%20%20%20self.sheet(detail%3A%20detail.body)%0A%20%20%20%20%7D)%0A%7D%0A%0Afunc%20sheet(detail%3A%20String)%20-%3E%20ActionSheet%20%7B%0A%20%20%20%20ActionSheet(title%3A%20Text(%22Action%22)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20message%3A%20Text(detail)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20buttons%3A%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.default(Text(%22OK%22)%2C%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20.destructive(Text(%22Delete%22)%2C%20action%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20)%0A%7D%0A%0Astruct%20SheetDetail%3A%20Identifiable%20%7B%0A%20%20%20%20var%20id%3A%20String%20%7B%0A%20%20%20%20%20%20%20%20return%20body%0A%20%20%20%20%7D%0A%20%20%20%20let%20body%3A%20String%0A%7D%0A%60%60%60%0A%0A%E6%96%87%E6%A1%A3%20-%20%5BActionSheet%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Fswiftui%2Factionsheet)",
       "encoded": true
-    },
-    {
-      "id": "s6-177",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "文档 - [ActionSheet](https://developer.apple.com/documentation/swiftui/actionsheet)"
     },
     {
       "id": "s7-178",
       "sectionId": "s7",
       "title": "SwiftData声明",
-      "kind": "code",
-      "lang": "swift",
-      "code": "import SwiftData\n// 通过@Model宏来定义模型schema\n// 支持基础值类型String、Int、CGFloat等\n// 支持复杂类型Struct、Enum、Codable、集合等\n@Model\nclass Person {\n    var id: String\n    var name: String\n    var age: Int\n    init(name: String, age: Int) {\n        self.id = UUID().uuidString\n        self.name = name\n        self.age = age\n    }\n}"
+      "body": "```swift\nimport SwiftData\n// 通过@Model宏来定义模型schema\n// 支持基础值类型String、Int、CGFloat等\n// 支持复杂类型Struct、Enum、Codable、集合等\n@Model\nclass Person {\n    var id: String\n    var name: String\n    var age: Int\n    init(name: String, age: Int) {\n        self.id = UUID().uuidString\n        self.name = name\n        self.age = age\n    }\n}\n```"
     },
     {
       "id": "s7-179",
       "sectionId": "s7",
       "title": "声明@Attribute",
-      "kind": "code",
-      "lang": "swift",
-      "code": "@Model\nclass Person {\n    // @Attribute(.unique)为id添加唯一约束\n    @Attribute(.unique) var id: String\n    var name: String\n    var age: Int\n    init(name: String, age: Int) {\n        self.id = UUID().uuidString\n        self.name = name\n        self.age = age\n    }\n}"
+      "body": "```swift\n@Model\nclass Person {\n    // @Attribute(.unique)为id添加唯一约束\n    @Attribute(.unique) var id: String\n    var name: String\n    var age: Int\n    init(name: String, age: Int) {\n        self.id = UUID().uuidString\n        self.name = name\n        self.age = age\n    }\n}\n```"
     },
     {
       "id": "s7-180",
       "sectionId": "s7",
       "title": "声明@Relationship",
-      "kind": "code",
-      "lang": "swift",
-      "code": "@Model\nclass Person {\n    @Attribute(.unique) \n    var id: String\n    var name: String\n    var age: Int\n    // @Relationship(deleteRule: .cascade) \n    // 使得Person在数据库里被删除时\n    // 删除掉所有关联的students\n    @Relationship(deleteRule: .cascade)\n    var students: [Student]? = []\n    init(name: String, age: Int) {\n        self.id = UUID().uuidString\n        self.name = name\n        self.age = age\n    }\n}"
+      "body": "```swift\n@Model\nclass Person {\n    @Attribute(.unique) \n    var id: String\n    var name: String\n    var age: Int\n    // @Relationship(deleteRule: .cascade) \n    // 使得Person在数据库里被删除时\n    // 删除掉所有关联的students\n    @Relationship(deleteRule: .cascade)\n    var students: [Student]? = []\n    init(name: String, age: Int) {\n        self.id = UUID().uuidString\n        self.name = name\n        self.age = age\n    }\n}\n```"
     },
     {
       "id": "s7-181",
       "sectionId": "s7",
       "title": "声明Transient",
-      "kind": "code",
-      "lang": "swift",
-      "code": "@Model\nclass Person {\n    @Attribute(.unique) \n    var id: String\n    var name: String\n    // @Transient表示不要持久化这个属性\n    // 需要提供一个默认值\n    @Transient\n    var age: Int = 0\n    init(name: String) {\n        self.id = UUID().uuidString\n        self.name = name\n    }\n}"
+      "body": "```swift\n@Model\nclass Person {\n    @Attribute(.unique) \n    var id: String\n    var name: String\n    // @Transient表示不要持久化这个属性\n    // 需要提供一个默认值\n    @Transient\n    var age: Int = 0\n    init(name: String) {\n        self.id = UUID().uuidString\n        self.name = name\n    }\n}\n```"
     },
     {
       "id": "s7-182",
       "sectionId": "s7",
       "title": "@Query",
-      "kind": "code",
-      "lang": "swift",
-      "code": "struct ContentView: View  {\n    // Query 可以高效地查询大型数据集，并自定义返回内容的方式，如排序、过滤\n    @Query(sort: \\.age, order: .reverse) var persons: [Person]\n    @Environment(\\.modelContext) var modelContext\n    var body: some View {\n       NavigationStack() {\n          List {\n             ForEach(trips) { trip in \n                 // ...\n             }\n          }\n       }\n    }\n}"
+      "body": "```swift\nstruct ContentView: View  {\n    // Query 可以高效地查询大型数据集，并自定义返回内容的方式，如排序、过滤\n    @Query(sort: \\.age, order: .reverse) var persons: [Person]\n    @Environment(\\.modelContext) var modelContext\n    var body: some View {\n       NavigationStack() {\n          List {\n             ForEach(trips) { trip in \n                 // ...\n             }\n          }\n       }\n    }\n}\n```"
     },
     {
       "id": "s7-183",
       "sectionId": "s7",
       "title": "%E6%9E%84%E5%BB%BAModelContainer",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%2F%2F%20%E7%94%A8%20Schema%20%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%0Alet%20container%20%3D%20try%20ModelContainer(for%3A%20Person.self)%0A%2F%2F%20%E7%94%A8%E9%85%8D%E7%BD%AE%EF%BC%88ModelConfiguration%EF%BC%89%E5%88%9D%E5%A7%8B%E5%8C%96%0Alet%20container%20%3D%20try%20ModelContainer(%0A%20%20%20%20for%3A%20Person.self%2C%0A%20%20%20%20configurations%3A%20ModelConfiguration(url%3A%20URL(%22path%22))%0A)%0A%2F%2F%20%E9%80%9A%E8%BF%87View%20%E5%92%8C%20Scene%20%E7%9A%84%E4%BF%AE%E9%A5%B0%E5%99%A8%E6%9D%A5%E5%BF%AB%E9%80%9F%E5%85%B3%E8%81%94%E4%B8%80%E4%B8%AA%20ModelContainer%0Astruct%20SwiftDataDemoApp%3A%20App%20%7B%0A%20%20%20%20var%20body%3A%20some%20Scene%20%7B%0A%20%20%20%20%20%20%20%20WindowGroup%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20ContentView()%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20.modelContainer(for%3A%20Person.self)%0A%20%20%20%20%7D%0A%7D",
+      "body": "%60%60%60swift%0A%2F%2F%20%E7%94%A8%20Schema%20%E8%BF%9B%E8%A1%8C%E5%88%9D%E5%A7%8B%E5%8C%96%0Alet%20container%20%3D%20try%20ModelContainer(for%3A%20Person.self)%0A%2F%2F%20%E7%94%A8%E9%85%8D%E7%BD%AE%EF%BC%88ModelConfiguration%EF%BC%89%E5%88%9D%E5%A7%8B%E5%8C%96%0Alet%20container%20%3D%20try%20ModelContainer(%0A%20%20%20%20for%3A%20Person.self%2C%0A%20%20%20%20configurations%3A%20ModelConfiguration(url%3A%20URL(%22path%22))%0A)%0A%2F%2F%20%E9%80%9A%E8%BF%87View%20%E5%92%8C%20Scene%20%E7%9A%84%E4%BF%AE%E9%A5%B0%E5%99%A8%E6%9D%A5%E5%BF%AB%E9%80%9F%E5%85%B3%E8%81%94%E4%B8%80%E4%B8%AA%20ModelContainer%0Astruct%20SwiftDataDemoApp%3A%20App%20%7B%0A%20%20%20%20var%20body%3A%20some%20Scene%20%7B%0A%20%20%20%20%20%20%20%20WindowGroup%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20ContentView()%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20.modelContainer(for%3A%20Person.self)%0A%20%20%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-184",
       "sectionId": "s7",
       "title": "构建ModelContext",
-      "kind": "code",
-      "lang": "swift",
-      "code": "// 在配置Model Container完成后\n// 通过Environment 来访问到 modelContext\nstruct ContextView : View {\n    @Environment(\\.modelContext) \n    private var context\n}\n// 或者直接获取共享的主Actor context\nlet context = container.mainContext\n// 或者直接初始化一个新的Context\nlet context = ModelContext(container)"
+      "body": "```swift\n// 在配置Model Container完成后\n// 通过Environment 来访问到 modelContext\nstruct ContextView : View {\n    @Environment(\\.modelContext) \n    private var context\n}\n// 或者直接获取共享的主Actor context\nlet context = container.mainContext\n// 或者直接初始化一个新的Context\nlet context = ModelContext(container)\n```"
     },
     {
       "id": "s7-185",
       "sectionId": "s7",
       "title": "%E5%A2%9E%E3%80%81%E5%88%A0%E3%80%81%E6%94%B9",
-      "kind": "code",
-      "lang": "swift",
-      "code": "let%20person%20%3D%20Person(name%3A%20%22Lily%22%2C%20age%3A%2010)%0A%2F%2F%20Insert%20a%20new%20person%0Acontext.insert(person)%0A%2F%2F%20Delete%20an%20existing%20person%0Acontext.delete(person)%0A%2F%2F%20Manually%20save%20changes%20to%20the%20context%0Atry%20context.save()",
+      "body": "%60%60%60swift%0Alet%20person%20%3D%20Person(name%3A%20%22Lily%22%2C%20age%3A%2010)%0A%2F%2F%20Insert%20a%20new%20person%0Acontext.insert(person)%0A%2F%2F%20Delete%20an%20existing%20person%0Acontext.delete(person)%0A%2F%2F%20Manually%20save%20changes%20to%20the%20context%0Atry%20context.save()%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-186",
       "sectionId": "s7",
       "title": "%E6%9F%A5%E8%AF%A2",
-      "kind": "code",
-      "lang": "swift",
-      "code": "let%20personPredicate%20%3D%20%23Predicate%3CPerson%3E%20%7B%0A%20%20%20%20%240.name%20%3D%3D%20%22Lily%22%20%26%26%0A%20%20%20%20%240.age%20%3D%3D%2010%0A%7D%0A%0Alet%20descriptor%20%3D%20FetchDescriptor%3CPerson%3E(predicate%3A%20personPredicate)%0Alet%20persons%20%3D%20try%3F%20context.fetch(descriptor)",
+      "body": "%60%60%60swift%0Alet%20personPredicate%20%3D%20%23Predicate%3CPerson%3E%20%7B%0A%20%20%20%20%240.name%20%3D%3D%20%22Lily%22%20%26%26%0A%20%20%20%20%240.age%20%3D%3D%2010%0A%7D%0A%0Alet%20descriptor%20%3D%20FetchDescriptor%3CPerson%3E(predicate%3A%20personPredicate)%0Alet%20persons%20%3D%20try%3F%20context.fetch(descriptor)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-187",
       "sectionId": "s8",
       "title": "另见",
-      "kind": "text",
       "body": "• [SwiftUI 2.0 Cheat Sheet](https://github.com/SimpleBoilerplates/SwiftUI-Cheat-Sheet) _(github.com)_\n• [SwiftUI 2.0 备忘清单](https://wangchujiang.com/swiftui-example/cheat-sheet.html) _(swiftui-example)_\n• [Swift 备忘清单](./swift.md) _(jaywcjlove.github.io)_"
     }
   ],

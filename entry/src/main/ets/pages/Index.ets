@@ -32,10 +32,17 @@ struct Index {
   @State private searchSectionCards: Array<SectionWithCards> = [];
   @State private searchResultCount: number = 0;
   @State private iconErrorKeys: Array<string> = [];
+  @State private catalogSearchQuery: string = '';
+  @State private catalogSearchResults: Array<ReferenceDocSummary> = [];
+  @State private showTocPanel: boolean = false;
+  @State private searchNavSectionIndex: number = 0;
 
   private tabsController: TabsController = new TabsController();
   private listScroller: ListScroller = new ListScroller();
   private sectionNavScroller: Scroller = new Scroller();
+  private listSearchScroller: ListScroller = new ListScroller();
+  private listSectionNavScroller: Scroller = new Scroller();
+  private listCardNavScroller: Scroller = new Scroller();
   private repository: ReferenceRepository | undefined = undefined;
 
   private t(zh: string, en: string): string {
@@ -182,6 +189,7 @@ struct Index {
     const bySection: Map<string, Array<ReferenceCardData>> = new Map<string, Array<ReferenceCardData>>();
     for (let i = 0; i < doc.cards.length; i++) {
       const card: ReferenceCardData = doc.cards[i];
+      if (card.sectionId === 'intro') continue;
       let list: Array<ReferenceCardData> | undefined = bySection.get(card.sectionId);
       if (!list) {
         list = new Array<ReferenceCardData>();
@@ -190,7 +198,9 @@ struct Index {
       list.push(card);
     }
 
-    let sections: Array<ReferenceSection> = doc.sections;
+    let sections: Array<ReferenceSection> = doc.sections.filter(
+      (s: ReferenceSection): boolean => s.id !== 'intro'
+    );
     if (sections.length === 0) {
       const defaultSection: ReferenceSection = { id: 'default', title: this.t('内容', 'Content'), startIndex: 0 };
       sections = [defaultSection];
@@ -217,7 +227,7 @@ struct Index {
 
   private cardMatchesTokens(card: ReferenceCardData, tokens: Array<string>): boolean {
     if (tokens.length === 0) return true;
-    const encoded = card.encoded;
+    const encoded: boolean = card.encoded === true;
     const haystack = [
       decodeIfEncoded(card.title ?? '', encoded),
       decodeIfEncoded(card.body ?? '', encoded),
@@ -250,6 +260,7 @@ struct Index {
 
     for (let i = 0; i < doc.cards.length; i++) {
       const card = doc.cards[i];
+      if (card.sectionId === 'intro') continue;
       if (!this.cardMatchesTokens(card, tokens)) continue;
       matchedCount++;
       let list = bySection.get(card.sectionId);
@@ -260,7 +271,9 @@ struct Index {
       list.push(card);
     }
 
-    let sections: Array<ReferenceSection> = doc.sections;
+    let sections: Array<ReferenceSection> = doc.sections.filter(
+      (s: ReferenceSection): boolean => s.id !== 'intro'
+    );
     if (sections.length === 0) {
       const defaultSection: ReferenceSection = { id: 'default', title: this.t('内容', 'Content'), startIndex: 0 };
       sections = [defaultSection];
@@ -291,6 +304,24 @@ struct Index {
 
     this.searchSectionCards = groups;
     this.searchResultCount = matchedCount;
+    this.searchNavSectionIndex = 0;
+  }
+
+  private rebuildCatalogSearchResults(): void {
+    const query = this.catalogSearchQuery.trim().toLowerCase();
+    if (!query) {
+      this.catalogSearchResults = [];
+      return;
+    }
+    const results: Array<ReferenceDocSummary> = [];
+    for (let i = 0; i < this.docs.length; i++) {
+      const doc = this.docs[i];
+      const haystack = [doc.name ?? '', doc.title ?? '', doc.id].join(' ').toLowerCase();
+      if (haystack.indexOf(query) >= 0) {
+        results.push(doc);
+      }
+    }
+    this.catalogSearchResults = results;
   }
 
   private async openDoc(docId: string, switchToReadTab: boolean = true): Promise<void> {
@@ -385,6 +416,39 @@ struct Index {
         .fontWeight(FontWeight.Bold)
         .fontColor(this.theme.titleColor);
 
+      Row({ space: 10 }) {
+        TextInput({
+          text: this.catalogSearchQuery,
+          placeholder: this.t('搜索文档…', 'Search docs…'),
+        })
+          .layoutWeight(1)
+          .fontSize(15)
+          .fontColor(this.theme.titleColor)
+          .placeholderColor(this.theme.mutedTextColor)
+          .backgroundColor(this.theme.surfaceBackgroundColor)
+          .border({ width: 1, color: this.theme.borderColor })
+          .borderRadius(12)
+          .padding({ left: 12, right: 12, top: 10, bottom: 10 })
+          .onChange((value: string) => {
+            this.catalogSearchQuery = value;
+            this.rebuildCatalogSearchResults();
+          });
+
+        if (this.catalogSearchQuery.trim()) {
+          Text(this.t('清除', 'Clear'))
+            .fontSize(12)
+            .fontColor(this.theme.mutedTextColor)
+            .padding({ left: 10, right: 10, top: 8, bottom: 8 })
+            .backgroundColor(this.theme.surfaceBackgroundColor)
+            .border({ width: 1, color: this.theme.borderColor })
+            .borderRadius(12)
+            .onClick(() => {
+              this.catalogSearchQuery = '';
+              this.catalogSearchResults = [];
+            });
+        }
+      }
+
       if (this.loading) {
         Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor);
       }
@@ -393,8 +457,12 @@ struct Index {
         Text(this.errorText).fontColor(this.theme.dangerTextColor).maxLines(6);
       }
 
+      if (this.catalogSearchQuery.trim() && this.catalogSearchResults.length === 0) {
+        Text(this.t('没有匹配的文档', 'No matching docs.')).fontColor(this.theme.mutedTextColor);
+      }
+
       List() {
-        ForEach(this.docs, (doc: ReferenceDocSummary) => {
+        ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.docs, (doc: ReferenceDocSummary) => {
           ListItem() {
             Row({ space: 12 }) {
               this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, 34, 10);
@@ -459,104 +527,29 @@ struct Index {
         }
         .layoutWeight(1);
 
-        if (this.selectedDocId) {
-          Text(this.selectedDocId).fontSize(12).fontColor(this.theme.mutedTextColor);
-        }
+        Text(this.t('目录', 'TOC'))
+          .fontSize(12)
+          .fontColor(this.theme.accentColor)
+          .onClick(() => {
+            this.showTocPanel = true;
+          });
       }
       .padding({ left: 16, right: 16, top: 14, bottom: 6 });
 
-      if (this.loading) {
-        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor).padding({ left: 16, right: 16 });
-      }
-
-      if (this.errorText) {
-        Text(this.errorText).fontColor(this.theme.dangerTextColor).padding({ left: 16, right: 16 }).maxLines(6);
-      }
-
-      List({ scroller: this.listScroller }) {
-        ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
-          ListItemGroup() {
-            ListItem() {
-              Text(group.section.title)
-                .fontSize(14)
-                .fontWeight(FontWeight.Medium)
-                .fontColor(this.theme.textColor)
-                .padding({ left: 16, right: 16, top: 12, bottom: 4 });
-            }
-
-            ForEach(group.cards, (card: ReferenceCardData) => {
-              ListItem() {
-                ReferenceCard({ card, lang: this.lang, theme: this.theme })
-                  .margin({ left: 16, right: 16, top: 8, bottom: 8 });
-              }
-            }, (card: ReferenceCardData) => `${this.selectedDocId}:${card.id}`);
-          }
-        }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
-      }
-      .layoutWeight(1)
-      .divider({ strokeWidth: 0 });
-
-      if (this.sectionCards.length > 0) {
-        Scroll(this.sectionNavScroller) {
-          Row({ space: 8 }) {
-            ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
-              Text(group.section.title)
-                .fontSize(12)
-                .fontColor(this.theme.chipTextColor)
-                .padding({ left: 10, right: 10, top: 8, bottom: 8 })
-                .backgroundColor(this.theme.chipBackgroundColor)
-                .borderRadius(999)
-                .onClick(() => this.listScroller.scrollToItemInGroup(groupIndex, 0, true, ScrollAlign.START));
-            }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
-          }
-          .padding({ left: 12, right: 12, top: 8, bottom: 8 });
-        }
-        .backgroundColor(this.theme.surfaceMutedBackgroundColor)
-        .scrollable(ScrollDirection.Horizontal)
-        .scrollBar(BarState.Off);
-      }
-    }
-    .height('100%')
-    .width('100%')
-    .backgroundColor(this.theme.pageBackgroundColor);
-  }
-
-  @Builder
-  private SearchTab(): void {
-    Column({ space: 10 }) {
-      Text(this.t('搜索', 'Search')).fontSize(22).fontWeight(FontWeight.Bold).fontColor(this.theme.titleColor);
-
-      if (!this.selectedDocId || !this.selectedDoc) {
-        Text(this.t('请先在“文档”中打开一个文档', 'Open a doc in “Docs” first.')).fontColor(this.theme.mutedTextColor);
-      } else {
-        Row({ space: 10 }) {
-          Column({ space: 2 }) {
-            Text(this.t('当前文档', 'Current doc')).fontSize(12).fontColor(this.theme.mutedTextColor);
-            Text(this.selectedDoc.name || this.selectedDoc.title || this.selectedDocId)
-              .fontSize(14)
-              .fontColor(this.theme.titleColor)
-              .maxLines(2);
-          }.layoutWeight(1);
-
-          Text(this.t('切换', 'Change'))
-            .fontSize(12)
-            .fontColor(this.theme.accentColor)
-            .onClick(() => this.tabsController.changeIndex(0));
-        }
-
+      if (this.selectedDoc) {
         Row({ space: 10 }) {
           TextInput({
             text: this.searchQuery,
-            placeholder: this.t('按标题/内容搜索…', 'Search title/body…'),
+            placeholder: this.t('搜索当前文档…', 'Search current doc…'),
           })
             .layoutWeight(1)
-            .fontSize(15)
+            .fontSize(14)
             .fontColor(this.theme.titleColor)
             .placeholderColor(this.theme.mutedTextColor)
             .backgroundColor(this.theme.surfaceBackgroundColor)
             .border({ width: 1, color: this.theme.borderColor })
             .borderRadius(12)
-            .padding({ left: 12, right: 12, top: 10, bottom: 10 })
+            .padding({ left: 12, right: 12, top: 8, bottom: 8 })
             .onChange((value: string) => {
               this.searchQuery = value;
               this.rebuildSearchResults();
@@ -566,7 +559,7 @@ struct Index {
             Text(this.t('清除', 'Clear'))
               .fontSize(12)
               .fontColor(this.theme.mutedTextColor)
-              .padding({ left: 10, right: 10, top: 8, bottom: 8 })
+              .padding({ left: 10, right: 10, top: 6, bottom: 6 })
               .backgroundColor(this.theme.surfaceBackgroundColor)
               .border({ width: 1, color: this.theme.borderColor })
               .borderRadius(12)
@@ -576,48 +569,217 @@ struct Index {
               });
           }
         }
+        .padding({ left: 16, right: 16 });
+      }
 
-        if (!this.searchQuery.trim()) {
-          Text(this.t('输入关键词开始搜索（当前仅搜索已打开的文档）', 'Type to search (current doc only).'))
-            .fontColor(this.theme.mutedTextColor);
+      if (this.loading) {
+        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor).padding({ left: 16, right: 16 });
+      }
+
+      if (this.errorText) {
+        Text(this.errorText).fontColor(this.theme.dangerTextColor).padding({ left: 16, right: 16 }).maxLines(6);
+      }
+
+      if (!this.selectedDoc) {
+        Text(this.t('请先在"目录"中打开一个文档', 'Open a doc in "Catalog" first.')).fontColor(this.theme.mutedTextColor).padding({ left: 16, right: 16 });
+      }
+
+      if (this.searchQuery.trim()) {
+        if (this.searchResultCount === 0) {
+          Text(this.t('没有匹配结果', 'No results.')).fontColor(this.theme.mutedTextColor).padding({ left: 16, right: 16 });
         } else {
-          Text(this.t(`${this.searchResultCount} 条结果`, `${this.searchResultCount} results`)).fontColor(this.theme.mutedTextColor);
+          Text(this.t(`${this.searchResultCount} 条结果`, `${this.searchResultCount} results`))
+            .fontSize(12)
+            .fontColor(this.theme.mutedTextColor)
+            .padding({ left: 16, right: 16 });
         }
 
-        if (this.searchQuery.trim() && this.searchResultCount === 0) {
-          Text(this.t('没有匹配结果', 'No results.')).fontColor(this.theme.mutedTextColor);
-        }
-
-        if (this.searchResultCount > 0) {
-          List() {
-            ForEach(this.searchSectionCards, (group: SectionWithCards) => {
-              ListItemGroup() {
-                ListItem() {
-                  Text(`${group.section.title} (${group.cards.length})`)
-                    .fontSize(14)
-                    .fontWeight(FontWeight.Medium)
-                    .fontColor(this.theme.textColor)
-                    .padding({ left: 16, right: 16, top: 12, bottom: 4 });
-                }
-
-                ForEach(group.cards, (card: ReferenceCardData) => {
-                  ListItem() {
-                    ReferenceCard({ card, lang: this.lang, theme: this.theme })
-                      .margin({ left: 16, right: 16, top: 8, bottom: 8 });
-                  }
-                }, (card: ReferenceCardData) => `${this.selectedDocId}:${card.id}`);
+        List({ scroller: this.listSearchScroller }) {
+          ForEach(this.searchSectionCards, (group: SectionWithCards, groupIndex: number) => {
+            ListItemGroup() {
+              ListItem() {
+                Text(`${group.section.title} (${group.cards.length})`)
+                  .fontSize(14)
+                  .fontWeight(FontWeight.Medium)
+                  .fontColor(this.theme.textColor)
+                  .padding({ left: 16, right: 16, top: 12, bottom: 4 });
               }
-            }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
-          }
-          .layoutWeight(1)
-          .divider({ strokeWidth: 0 });
+
+              ForEach(group.cards, (card: ReferenceCardData) => {
+                ListItem() {
+                  ReferenceCard({ card, lang: this.lang, theme: this.theme })
+                    .margin({ left: 16, right: 16, top: 8, bottom: 8 });
+                }
+              }, (card: ReferenceCardData) => `${this.selectedDocId}:search:${card.id}`);
+            }
+          }, (group: SectionWithCards) => `${this.selectedDocId}:search:${group.section.id}`);
         }
+        .layoutWeight(1)
+        .divider({ strokeWidth: 0 });
+
+        if (this.searchSectionCards.length > 0) {
+          Column() {
+            Scroll(this.listSectionNavScroller) {
+              Row({ space: 8 }) {
+                ForEach(this.searchSectionCards, (group: SectionWithCards, groupIndex: number) => {
+                  Text(group.section.title)
+                    .fontSize(12)
+                    .fontColor(this.searchNavSectionIndex === groupIndex ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+                    .padding({ left: 10, right: 10, top: 8, bottom: 8 })
+                    .backgroundColor(this.searchNavSectionIndex === groupIndex ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+                    .borderRadius(999)
+                    .onClick(() => {
+                      this.searchNavSectionIndex = groupIndex;
+                      this.listSearchScroller.scrollToItemInGroup(groupIndex, 0, true, ScrollAlign.START);
+                    });
+                }, (group: SectionWithCards) => `${this.selectedDocId}:search:nav:${group.section.id}:${this.searchNavSectionIndex}`);
+              }
+              .padding({ left: 12, right: 12, top: 8, bottom: 4 });
+            }
+            .scrollable(ScrollDirection.Horizontal)
+            .scrollBar(BarState.Off);
+
+            Scroll(this.listCardNavScroller) {
+              Row({ space: 6 }) {
+                ForEach(
+                  this.searchSectionCards[this.searchNavSectionIndex]?.cards ?? [],
+                  (card: ReferenceCardData, cardIndex: number) => {
+                    Text(this.getTocCardTitle(card))
+                      .fontSize(11)
+                      .fontColor(this.theme.mutedTextColor)
+                      .maxLines(1)
+                      .textOverflow({ overflow: TextOverflow.Ellipsis })
+                      .constraintSize({ maxWidth: 120 })
+                      .padding({ left: 8, right: 8, top: 6, bottom: 6 })
+                      .backgroundColor(this.theme.chipBackgroundColor)
+                      .borderRadius(6)
+                      .onClick(() => {
+                        this.listSearchScroller.scrollToItemInGroup(this.searchNavSectionIndex, cardIndex + 1, true, ScrollAlign.START);
+                      });
+                  },
+                  (card: ReferenceCardData) => `${this.selectedDocId}:search:cardnav:${card.id}`
+                );
+              }
+              .padding({ left: 12, right: 12, top: 4, bottom: 8 });
+            }
+            .scrollable(ScrollDirection.Horizontal)
+            .scrollBar(BarState.Off);
+          }
+          .backgroundColor(this.theme.surfaceMutedBackgroundColor);
+        }
+      } else {
+        List({ scroller: this.listScroller }) {
+          ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
+            ListItemGroup() {
+              ListItem() {
+                Text(group.section.title)
+                  .fontSize(14)
+                  .fontWeight(FontWeight.Medium)
+                  .fontColor(this.theme.textColor)
+                  .padding({ left: 16, right: 16, top: 12, bottom: 4 });
+              }
+
+              ForEach(group.cards, (card: ReferenceCardData, cardIndex: number) => {
+                ListItem() {
+                  ReferenceCard({ card, lang: this.lang, theme: this.theme })
+                    .margin({ left: 16, right: 16, top: 8, bottom: 8 });
+                }
+              }, (card: ReferenceCardData) => `${this.selectedDocId}:${card.id}`);
+            }
+          }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
+        }
+        .layoutWeight(1)
+        .divider({ strokeWidth: 0 });
       }
     }
-    .padding(16)
     .height('100%')
     .width('100%')
     .backgroundColor(this.theme.pageBackgroundColor);
+  }
+
+  private getTocCardTitle(card: ReferenceCardData): string {
+    const encoded = card.encoded === true;
+    if (card.title) {
+      return decodeIfEncoded(card.title, encoded);
+    }
+    if (card.kind === 'qa' && card.front) {
+      const front = decodeIfEncoded(card.front, encoded);
+      const firstLine = front.split('\n')[0] ?? '';
+      return firstLine.substring(0, 50) || card.id;
+    }
+    if (card.body) {
+      const body = decodeIfEncoded(card.body, encoded);
+      const firstLine = body.split('\n')[0] ?? '';
+      return firstLine.substring(0, 50) || card.id;
+    }
+    return card.id;
+  }
+
+  @Builder
+  private TocPanel(): void {
+    Column() {
+      Column() {
+        Row() {
+          Text(this.t('目录', 'Table of Contents'))
+            .fontSize(18)
+            .fontWeight(FontWeight.Bold)
+            .fontColor(this.theme.titleColor);
+          Blank();
+          Text(this.t('关闭', 'Close'))
+            .fontSize(14)
+            .fontColor(this.theme.accentColor)
+            .onClick(() => {
+              this.showTocPanel = false;
+            });
+        }
+        .width('100%')
+        .padding({ left: 16, right: 16, top: 16, bottom: 12 });
+
+        List() {
+          ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
+            ListItemGroup() {
+              ListItem() {
+                Text(group.section.title)
+                  .fontSize(14)
+                  .fontWeight(FontWeight.Medium)
+                  .fontColor(this.theme.accentColor)
+                  .padding({ left: 16, right: 16, top: 12, bottom: 6 });
+              }
+
+              ForEach(group.cards, (card: ReferenceCardData, cardIndex: number) => {
+                ListItem() {
+                  Text(this.getTocCardTitle(card))
+                    .fontSize(13)
+                    .fontColor(this.theme.textColor)
+                    .maxLines(1)
+                    .textOverflow({ overflow: TextOverflow.Ellipsis })
+                    .padding({ left: 24, right: 16, top: 8, bottom: 8 })
+                    .width('100%')
+                    .onClick(() => {
+                      this.showTocPanel = false;
+                      this.searchQuery = '';
+                      this.listScroller.scrollToItemInGroup(groupIndex, cardIndex + 1, true, ScrollAlign.START);
+                    });
+                }
+              }, (card: ReferenceCardData) => `toc:${this.selectedDocId}:${card.id}`);
+            }
+          }, (group: SectionWithCards) => `toc:${this.selectedDocId}:${group.section.id}`);
+        }
+        .layoutWeight(1)
+        .divider({ strokeWidth: 0 });
+      }
+      .width('100%')
+      .height('70%')
+      .backgroundColor(this.theme.surfaceBackgroundColor)
+      .borderRadius({ topLeft: 16, topRight: 16 });
+    }
+    .width('100%')
+    .height('100%')
+    .justifyContent(FlexAlign.End)
+    .backgroundColor('#80000000')
+    .onClick(() => {
+      this.showTocPanel = false;
+    });
   }
 
   @Builder
@@ -671,30 +833,52 @@ struct Index {
     .backgroundColor(this.theme.pageBackgroundColor);
   }
 
-  build() {
-    Tabs({ barPosition: BarPosition.End, index: this.currentTabIndex, controller: this.tabsController }) {
-      TabContent() {
-        this.DocListTab();
-      }
-      .tabBar(this.t('文档', 'Docs'));
+  private getTabLabel(index: number): string {
+    if (index === 0) return this.t('目录', 'Catalog');
+    if (index === 1) return this.t('清单', 'List');
+    return this.t('设置', 'Settings');
+  }
 
-      TabContent() {
-        this.ReadTab();
-      }
-      .tabBar(this.t('阅读', 'Read'));
-
-      TabContent() {
-        this.SearchTab();
-      }
-      .tabBar(this.t('搜索', 'Search'));
-
-      TabContent() {
-        this.SettingsTab();
-      }
-      .tabBar(this.t('设置', 'Settings'));
+  @Builder
+  private TabBarItem(index: number): void {
+    Column() {
+      Text(this.getTabLabel(index))
+        .fontSize(13)
+        .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
+        .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
     }
-    .onChange((index: number) => {
-      this.currentTabIndex = index;
-    });
+    .padding({ top: 8, bottom: 8, left: 16, right: 16 });
+  }
+
+  build() {
+    Stack() {
+      Tabs({ barPosition: BarPosition.End, index: this.currentTabIndex, controller: this.tabsController }) {
+        TabContent() {
+          this.DocListTab();
+        }
+        .tabBar(this.TabBarItem(0));
+
+        TabContent() {
+          this.ReadTab();
+        }
+        .tabBar(this.TabBarItem(1));
+
+        TabContent() {
+          this.SettingsTab();
+        }
+        .tabBar(this.TabBarItem(2));
+      }
+      .scrollable(false)
+      .barBackgroundColor(this.theme.surfaceBackgroundColor)
+      .onChange((index: number) => {
+        this.currentTabIndex = index;
+      });
+
+      if (this.showTocPanel) {
+        this.TocPanel();
+      }
+    }
+    .width('100%')
+    .height('100%');
   }
 }

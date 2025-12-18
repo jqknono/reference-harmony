@@ -42,7 +42,8 @@ function parseArgs(argv) {
 
 function cleanHeadingText(text) {
   // e.g. "1Password app {.row-span-2}" -> "1Password app"
-  return text.replace(/\s*\{[^}]*\}\s*$/, '').trim();
+  // 丢弃特殊字符串 "\</>" (常见于 htmx 等文档标题)
+  return text.replace(/\\<\s*\/\s*>\s*/g, '').replace(/\s*\{[^}]*\}\s*$/, '').trim();
 }
 
 function isTableSeparatorLine(line) {
@@ -320,16 +321,9 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
   };
 
   const pushCard = (card) => {
-    const allText = [
-      card.title ?? '',
-      card.body ?? '',
-      card.front ?? '',
-      card.back ?? '',
-      card.code ?? '',
-    ]
-      .join('\n');
+    const allText = [card.title ?? '', card.body ?? ''].join('\n');
 
-    const needsEncoding = allText.includes('"');
+    const needsEncoding = allText.includes('"') || allText.includes("'");
     if (!needsEncoding) {
       cards.push(card);
       return;
@@ -341,9 +335,6 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       encoded: true,
       title: encodeIfText(card.title),
       body: encodeIfText(card.body),
-      front: encodeIfText(card.front),
-      back: encodeIfText(card.back),
-      code: encodeIfText(card.code),
     });
   };
 
@@ -353,7 +344,6 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       id: `${currentSectionId}-${cards.length}`,
       sectionId: currentSectionId,
       title: nextCardTitle(),
-      kind: 'text',
       body: intro,
     });
   }
@@ -428,7 +418,6 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     const fence = parseFenceOpen(line);
     if (fence) {
       const codeParts = [];
-      let codeLang = fence.lang;
 
       const skipBetweenFences = (l) =>
         !l.trim() || /^\s*\{[.#][^}]+\}\s*$/.test(l) || /^\s*<!--/.test(l) || isHorizontalRuleLine(l);
@@ -436,7 +425,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       while (i < lines.length) {
         const openFence = parseFenceOpen(lines[i]);
         if (!openFence) break;
-        codeLang = codeLang || openFence.lang;
+        const fenceOpenLine = lines[i];
         const buf = [];
         i++; // move into fence body
         let fenceLines = 0;
@@ -446,8 +435,10 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
           fenceLines++;
           if (debug && fenceLines % 5000 === 0) console.log(`... fence ${lang}/${id} lines=${fenceLines}`);
         }
-        const code = buf.join('\n').trimEnd();
-        if (code) codeParts.push(code);
+        const fenceCloseLine = i < lines.length ? lines[i] : openFence.marker;
+        // 保留完整的代码块格式（包括围栏标记）
+        const codeBlock = `${fenceOpenLine}\n${buf.join('\n')}\n${fenceCloseLine}`;
+        codeParts.push(codeBlock);
 
         let j = i + 1;
         while (j < lines.length && skipBetweenFences(lines[j])) j++;
@@ -463,9 +454,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
           id: `${currentSectionId}-${cards.length}`,
           sectionId: currentSectionId,
           title: nextCardTitle(),
-          kind: 'code',
-          lang: codeLang,
-          code: mergedCode,
+          body: mergedCode,
         });
       }
       continue;
@@ -490,7 +479,6 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
           id: `${currentSectionId}-${cards.length}`,
           sectionId: currentSectionId,
           title: nextCardTitle(),
-          kind: 'text',
           body,
         });
       }
@@ -514,7 +502,6 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
           id: `${currentSectionId}-${cards.length}`,
           sectionId: currentSectionId,
           title: nextCardTitle(),
-          kind: 'text',
           body: text,
         });
       }
@@ -544,11 +531,40 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
           id: `${currentSectionId}-${cards.length}`,
           sectionId: currentSectionId,
           title: nextCardTitle(),
-          kind: 'text',
           body: text,
         });
       }
     }
+  }
+
+  // 后处理：合并空标题卡片到前一个卡片（空标题卡片通常表示与前一个卡片属于同一逻辑单元）
+  const decodeIfNeeded = (s, encoded) => (encoded && typeof s === 'string' ? decodeURIComponent(s) : s);
+  const mergedCards = [];
+  for (let i = 0; i < cards.length; i++) {
+    const card = cards[i];
+    if (card.title === '' && mergedCards.length > 0) {
+      const prev = mergedCards[mergedCards.length - 1];
+      if (prev.sectionId === card.sectionId) {
+        // 合并前先解码，合并后再统一检查是否需要编码
+        const prevBody = decodeIfNeeded(prev.body, prev.encoded);
+        const cardBody = decodeIfNeeded(card.body, card.encoded);
+        const prevTitle = decodeIfNeeded(prev.title, prev.encoded);
+        const mergedBody = (prevBody || '') + '\n\n' + (cardBody || '');
+        const needsEncoding = mergedBody.includes('"') || mergedBody.includes("'") || prevTitle.includes('"') || prevTitle.includes("'");
+        if (needsEncoding) {
+          prev.title = encodeURIComponent(prevTitle);
+          prev.body = encodeURIComponent(mergedBody);
+          prev.encoded = true;
+        } else {
+          prev.title = prevTitle;
+          prev.body = mergedBody;
+          delete prev.encoded;
+        }
+        if (card.lang && !prev.lang) prev.lang = card.lang;
+        continue;
+      }
+    }
+    mergedCards.push(card);
   }
 
   return {
@@ -557,7 +573,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     title,
     icon,
     sections,
-    cards,
+    cards: mergedCards,
     source: {
       repo: `https://github.com/${source.repo}`,
       path: sourcePath,

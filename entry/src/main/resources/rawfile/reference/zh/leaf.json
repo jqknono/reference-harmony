@@ -30,718 +30,178 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "[Leaf](https://github.com/vapor/leaf) 是 [Vapor](https://github.com/vapor/vapor) 的轻量级模板引擎，用于在服务端生成动态 HTML 页面。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Leaf",
-      "kind": "text",
-      "body": "`Leaf` 是一种强大的模板语言，其语法受 `Swift` 启发。"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• [Leaf 模板语言官方文档](https://docs.vapor.codes/zh/leaf/getting-started/) _(vapor.codes)_\n• [**LeafKit**：Swift 模板引擎库](https://github.com/vapor/leaf-kit) _(github.com)_\n• [**Leaf**：LeafKit 的 Vapor 集成模板系统](https://github.com/vapor/leaf) _(github.com)_"
+      "body": "`Leaf` 是一种强大的模板语言，其语法受 `Swift` 启发。\n\n• [Leaf 模板语言官方文档](https://docs.vapor.codes/zh/leaf/getting-started/) _(vapor.codes)_\n• [**LeafKit**：Swift 模板引擎库](https://github.com/vapor/leaf-kit) _(github.com)_\n• [**Leaf**：LeafKit 的 Vapor 集成模板系统](https://github.com/vapor/leaf) _(github.com)_"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "Package",
-      "kind": "code",
-      "lang": "swift",
-      "code": "%2F%2F%20swift-tools-version%3A5.2%0Aimport%20PackageDescription%0A%0Alet%20package%20%3D%20Package(%0A%20%20%20%20name%3A%20%22MyApp%22%2C%0A%20%20%20%20platforms%3A%20%5B%20.macOS(.v10_15)%20%5D%2C%0A%20%20%20%20dependencies%3A%20%5B%20%2F%2F%2F%20%E6%B7%BB%E5%8A%A0%E5%85%B6%E5%AE%83%E4%BE%9D%E8%B5%96%0A%20%20%20%20%20%20%20%20.package(url%3A%20%22https%3A%2F%2Fgithub.com%2Fvapor%2Fleaf.git%22%2C%20from%3A%20%224.0.0%22)%2C%0A%20%20%20%20%5D%2C%0A%20%20%20%20targets%3A%20%5B%0A%20%20%20%20%20%20%20%20.target(name%3A%20%22App%22%2C%20dependencies%3A%20%5B%20.product(name%3A%20%22Leaf%22%2C%20package%3A%20%22leaf%22)%20%5D)%2C%0A%20%20%20%20%5D%0A)",
+      "body": "%60%60%60swift%0A%2F%2F%20swift-tools-version%3A5.2%0Aimport%20PackageDescription%0A%0Alet%20package%20%3D%20Package(%0A%20%20%20%20name%3A%20%22MyApp%22%2C%0A%20%20%20%20platforms%3A%20%5B%20.macOS(.v10_15)%20%5D%2C%0A%20%20%20%20dependencies%3A%20%5B%20%2F%2F%2F%20%E6%B7%BB%E5%8A%A0%E5%85%B6%E5%AE%83%E4%BE%9D%E8%B5%96%0A%20%20%20%20%20%20%20%20.package(url%3A%20%22https%3A%2F%2Fgithub.com%2Fvapor%2Fleaf.git%22%2C%20from%3A%20%224.0.0%22)%2C%0A%20%20%20%20%5D%2C%0A%20%20%20%20targets%3A%20%5B%0A%20%20%20%20%20%20%20%20.target(name%3A%20%22App%22%2C%20dependencies%3A%20%5B%20.product(name%3A%20%22Leaf%22%2C%20package%3A%20%22leaf%22)%20%5D)%2C%0A%20%20%20%20%5D%0A)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
-      "title": "配置",
-      "kind": "code",
-      "lang": "swift",
-      "code": "import Vapor\nimport Leaf"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "设置工作目录"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "app.directory.workingDirectory%20%3D%20%22....%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "设置模板目录"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "app.directory.viewsDirectory%20%3D%20%22....%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "设置模板引擎"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "app.views.use(.leaf)"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "配置自定义标签"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "app.leaf.tags%5B%22relative%22%5D%20%3D%20CustomTag()",
+      "title": "%E9%85%8D%E7%BD%AE",
+      "body": "%60%60%60swift%0Aimport%20Vapor%0Aimport%20Leaf%0A%60%60%60%0A%0A%E8%AE%BE%E7%BD%AE%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95%0A%0A%60%60%60swift%0Aapp.directory.workingDirectory%20%3D%20%22....%22%0A%60%60%60%0A%0A%E8%AE%BE%E7%BD%AE%E6%A8%A1%E6%9D%BF%E7%9B%AE%E5%BD%95%0A%0A%60%60%60swift%0Aapp.directory.viewsDirectory%20%3D%20%22....%22%0A%60%60%60%0A%0A%E8%AE%BE%E7%BD%AE%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%0A%0A%60%60%60swift%0Aapp.views.use(.leaf)%0A%60%60%60%0A%0A%E9%85%8D%E7%BD%AE%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%0A%0A%60%60%60swift%0Aapp.leaf.tags%5B%22relative%22%5D%20%3D%20CustomTag()%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "目录结构",
-      "kind": "code",
-      "lang": "",
-      "code": "VaporApp\n├── Package.swift\n├── Resources\n│   ├── Views\n│   │   └── hello.leaf\n├── Public\n│   ├── images (images 资源)\n│   ├── styles (css 资源)\n└── Sources\n    └── ..."
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• Views 文件夹来存储 `.leaf` 文件\n• 配置 [`FileMiddleware`](https://api.vapor.codes/vapor/documentation/vapor/filemiddleware/) 提供静态文件"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "app.middleware.use(FileMiddleware(\n    publicDirectory: \n        app.directory.publicDirectory\n))"
+      "body": "```\nVaporApp\n├── Package.swift\n├── Resources\n│   ├── Views\n│   │   └── hello.leaf\n├── Public\n│   ├── images (images 资源)\n│   ├── styles (css 资源)\n└── Sources\n    └── ...\n```\n\n• Views 文件夹来存储 `.leaf` 文件\n• 配置 [`FileMiddleware`](https://api.vapor.codes/vapor/documentation/vapor/filemiddleware/) 提供静态文件\n\n```swift\napp.middleware.use(FileMiddleware(\n    publicDirectory: \n        app.directory.publicDirectory\n))\n```"
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
       "title": "%E6%B8%B2%E6%9F%93%E8%A7%86%E5%9B%BE",
-      "kind": "code",
-      "lang": "swift",
-      "code": "app.get(%22hello%22)%20%7B%20%0A%20%20%20%20req%20-%3E%20EventLoopFuture%3CView%3E%20in%0A%20%20%20%20return%20req.view.render(%22hello%22%2C%20%5B%0A%20%20%20%20%20%20%20%20%22name%22%3A%20%22Leaf%22%0A%20%20%20%20%5D)%0A%7D%0A%2F%2F%20%E6%88%96%0Aapp.get(%22hello%22)%20%7B%20%0A%20%20%20%20req%20async%20throws%20-%3E%20View%20in%0A%20%20%20%20return%20try%20await%20req.view.render(%0A%20%20%20%20%20%20%20%20%22hello%22%2C%20%5B%22name%22%3A%20%22Leaf%22%5D%0A%20%20%20%20)%0A%7D",
+      "body": "%60%60%60swift%0Aapp.get(%22hello%22)%20%7B%20%0A%20%20%20%20req%20-%3E%20EventLoopFuture%3CView%3E%20in%0A%20%20%20%20return%20req.view.render(%22hello%22%2C%20%5B%0A%20%20%20%20%20%20%20%20%22name%22%3A%20%22Leaf%22%0A%20%20%20%20%5D)%0A%7D%0A%2F%2F%20%E6%88%96%0Aapp.get(%22hello%22)%20%7B%20%0A%20%20%20%20req%20async%20throws%20-%3E%20View%20in%0A%20%20%20%20return%20try%20await%20req.view.render(%0A%20%20%20%20%20%20%20%20%22hello%22%2C%20%5B%22name%22%3A%20%22Leaf%22%5D%0A%20%20%20%20)%0A%7D%0A%60%60%60%0A%0A%E5%9C%A8%20%60hello.leaf%60%20%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%20%60name%60%0A%0A%60%60%60%0AHello%2C%20%23(name)!%0A%60%60%60%0A%0A%E6%89%93%E5%BC%80%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE%20%60%2Fhello%60%20%E6%98%BE%E7%A4%BA%20%60Hello%2C%20Leaf!%60%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在 `hello.leaf` 模板中使用 `name`"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "Hello, #(name)!"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "打开浏览器访问 `/hello` 显示 `Hello, Leaf!`。"
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "模板语法",
-      "kind": "text",
-      "body": "一个基本的 `Leaf` 标签使用示例"
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "There are #count(users) users."
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "可以使用冒号和结束标签为某些标签提供可选的正文。"
-    },
-    {
-      "id": "s2-23",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• 标记 `#`：这表示 leaf 解析器开始寻找的标记。\n• 名称 `count`：标签的标识符。\n• 参数列表 (`users`)：可以接受零个或多个参数。"
+      "body": "一个基本的 `Leaf` 标签使用示例\n\n```swift\nThere are #count(users) users.\n```\n\n可以使用冒号和结束标签为某些标签提供可选的正文。\n\n• 标记 `#`：这表示 leaf 解析器开始寻找的标记。\n• 名称 `count`：标签的标识符。\n• 参数列表 (`users`)：可以接受零个或多个参数。"
     },
     {
       "id": "s2-24",
       "sectionId": "s2",
       "title": "%E5%86%85%E7%BD%AE%E6%A0%87%E7%AD%BE%E7%A4%BA%E4%BE%8B",
-      "kind": "code",
-      "lang": "html",
-      "code": "%23(variable)%0A%23extend(%22template%22)%3A%20%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%A8%A1%E6%9D%BF%E4%B8%AD%EF%BC%81%23endextend%0A%23export(%22title%22)%3A%20%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8%20Vapor%20%23endexport%0A%23import(%22body%22)%0A%23count(friends)%0A%23for(friend%20in%20friends)%3A%20%0A%20%20%20%20%3Cli%3E%23(friend.name)%3C%2Fli%3E%20%0A%23endfor",
-      "encoded": true
-    },
-    {
-      "id": "s2-25",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "文件夹中的模板"
-    },
-    {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%23extend(%22partials%2Fdetail-layout%22)%3A%0A%20%20%20%20%23export(%22body%22)%3A%20%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2%20%23endexport%0A%23endextend",
+      "body": "%60%60%60html%0A%23(variable)%0A%23extend(%22template%22)%3A%20%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%A8%A1%E6%9D%BF%E4%B8%AD%EF%BC%81%23endextend%0A%23export(%22title%22)%3A%20%E6%AC%A2%E8%BF%8E%E4%BD%BF%E7%94%A8%20Vapor%20%23endexport%0A%23import(%22body%22)%0A%23count(friends)%0A%23for(friend%20in%20friends)%3A%20%0A%20%20%20%20%3Cli%3E%23(friend.name)%3C%2Fli%3E%20%0A%23endfor%0A%60%60%60%0A%0A%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E7%9A%84%E6%A8%A1%E6%9D%BF%0A%0A%60%60%60html%0A%23extend(%22partials%2Fdetail-layout%22)%3A%0A%20%20%20%20%23export(%22body%22)%3A%20%E8%AF%A6%E6%83%85%E9%A1%B5%E9%9D%A2%20%23endexport%0A%23endextend%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-27",
       "sectionId": "s2",
       "title": "表达式",
-      "kind": "text",
-      "body": "• `+`\n• `%`\n• `>`\n• `==`\n• `||`"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "leaf",
-      "code": "#if(1 + 1 == 2):\n    Hello!\n#endif\n\n#if(index % 2 == 0):\n    This is even index.\n#else:\n    This is odd index.\n#endif"
+      "body": "• `+`\n• `%`\n• `>`\n• `==`\n• `||`\n\n```leaf\n#if(1 + 1 == 2):\n    Hello!\n#endif\n\n#if(index % 2 == 0):\n    This is even index.\n#else:\n    This is odd index.\n#endif\n```"
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
-      "title": "上下文",
-      "kind": "text",
-      "body": "Leaf 推荐用 `Encodable` 结构体传数据，数组需包装，`[String: Any]` 不支持。"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "struct%20WelcomeContext%3A%20Encodable%20%7B%0A%20%20%20%20var%20title%3A%20String%0A%20%20%20%20var%20numbers%3A%20%5BInt%5D%0A%7D%0Areturn%20req.view.render(%22home%22%2C%20%0A%20%20%20%20WelcomeContext(%0A%20%20%20%20%20%20%20%20title%3A%20%22Hello!%22%2C%20%0A%20%20%20%20%20%20%20%20numbers%3A%20%5B42%2C%209001%5D%0A%20%20%20%20)%0A)",
+      "title": "%E4%B8%8A%E4%B8%8B%E6%96%87",
+      "body": "Leaf%20%E6%8E%A8%E8%8D%90%E7%94%A8%20%60Encodable%60%20%E7%BB%93%E6%9E%84%E4%BD%93%E4%BC%A0%E6%95%B0%E6%8D%AE%EF%BC%8C%E6%95%B0%E7%BB%84%E9%9C%80%E5%8C%85%E8%A3%85%EF%BC%8C%60%5BString%3A%20Any%5D%60%20%E4%B8%8D%E6%94%AF%E6%8C%81%E3%80%82%0A%0A%60%60%60swift%0Astruct%20WelcomeContext%3A%20Encodable%20%7B%0A%20%20%20%20var%20title%3A%20String%0A%20%20%20%20var%20numbers%3A%20%5BInt%5D%0A%7D%0Areturn%20req.view.render(%22home%22%2C%20%0A%20%20%20%20WelcomeContext(%0A%20%20%20%20%20%20%20%20title%3A%20%22Hello!%22%2C%20%0A%20%20%20%20%20%20%20%20numbers%3A%20%5B42%2C%209001%5D%0A%20%20%20%20)%0A)%0A%60%60%60%0A%0A%60title%60%20%E5%92%8C%20%60numbers%60%20%E5%B0%86%E6%9A%B4%E9%9C%B2%E7%BB%99%20%60Leaf%60%20%E6%A8%A1%E6%9D%BF%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5%E5%9C%A8%E6%A0%87%E7%AD%BE%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%BF%99%E4%BA%9B%E5%8F%98%E9%87%8F%E3%80%82%0A%0A%60%60%60html%0A%3Ch1%3E%23(title)%3C%2Fh1%3E%0A%23for(number%20in%20numbers)%3A%0A%20%20%20%20%3Cp%3E%23(number)%3C%2Fp%3E%0A%23endfor%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s2-31",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`title` 和 `numbers` 将暴露给 `Leaf` 模板，就可以在标签中使用这些变量。"
-    },
-    {
-      "id": "s2-32",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<h1>#(title)</h1>\n#for(number in numbers):\n    <p>#(number)</p>\n#endfor"
     },
     {
       "id": "s2-33",
       "sectionId": "s2",
-      "title": "条件",
-      "kind": "text",
-      "body": "变量是否存在"
-    },
-    {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "#if(title):\n    The title is #(title)\n#endif"
-    },
-    {
-      "id": "s2-35",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "比较"
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%23if(title%20%3D%3D%20%22Welcome%22)%3A%0A%20%20%20%20This%20is%20a%20friendly%20web%20page.%0A%23endif",
-      "encoded": true
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用另一个标签作为判断条件的一部分，内部标签应该省略 `#`"
-    },
-    {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "#if(count(users) > 0):\n    You have users!\n#else:\n    There are no users yet :(\n#endif"
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "多个条件满足时才渲染内容的模板"
-    },
-    {
-      "id": "s2-40",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%23if(title%20%3D%3D%20%22user%22%20%26%26%20count(users)%20%3E%200)%3A%0A%20%20%20%20You%20have%20users!%0A%23endif",
+      "title": "%E6%9D%A1%E4%BB%B6",
+      "body": "%E5%8F%98%E9%87%8F%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%0A%0A%60%60%60html%0A%23if(title)%3A%0A%20%20%20%20The%20title%20is%20%23(title)%0A%23endif%0A%60%60%60%0A%0A%E6%AF%94%E8%BE%83%0A%0A%60%60%60html%0A%23if(title%20%3D%3D%20%22Welcome%22)%3A%0A%20%20%20%20This%20is%20a%20friendly%20web%20page.%0A%23endif%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%A0%87%E7%AD%BE%E4%BD%9C%E4%B8%BA%E5%88%A4%E6%96%AD%E6%9D%A1%E4%BB%B6%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%8C%E5%86%85%E9%83%A8%E6%A0%87%E7%AD%BE%E5%BA%94%E8%AF%A5%E7%9C%81%E7%95%A5%20%60%23%60%0A%0A%60%60%60html%0A%23if(count(users)%20%3E%200)%3A%0A%20%20%20%20You%20have%20users!%0A%23else%3A%0A%20%20%20%20There%20are%20no%20users%20yet%20%3A(%0A%23endif%0A%60%60%60%0A%0A%E5%A4%9A%E4%B8%AA%E6%9D%A1%E4%BB%B6%E6%BB%A1%E8%B6%B3%E6%97%B6%E6%89%8D%E6%B8%B2%E6%9F%93%E5%86%85%E5%AE%B9%E7%9A%84%E6%A8%A1%E6%9D%BF%0A%0A%60%60%60html%0A%23if(title%20%3D%3D%20%22user%22%20%26%26%20count(users)%20%3E%200)%3A%0A%20%20%20%20You%20have%20users!%0A%23endif%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-41",
       "sectionId": "s2",
       "title": "%23elseif",
-      "kind": "code",
-      "lang": "html",
-      "code": "%23if(title%20%3D%3D%20%22Welcome%22)%3A%0A%20%20%20%20Hello%20new%20user!%0A%23elseif(title%20%3D%3D%20%22Welcome%20back!%22)%3A%0A%20%20%20%20Hello%20old%20user%0A%23else%3A%0A%20%20%20%20Unexpected%20page!%0A%23endif",
+      "body": "%60%60%60html%0A%23if(title%20%3D%3D%20%22Welcome%22)%3A%0A%20%20%20%20Hello%20new%20user!%0A%23elseif(title%20%3D%3D%20%22Welcome%20back!%22)%3A%0A%20%20%20%20Hello%20old%20user%0A%23else%3A%0A%20%20%20%20Unexpected%20page!%0A%23endif%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-42",
       "sectionId": "s2",
       "title": "%E5%BE%AA%E7%8E%AF",
-      "kind": "code",
-      "lang": "swift",
-      "code": "struct%20SolarSystem%3A%20Codable%20%7B%0A%20%20let%20planets%20%3D%20%5B%22Venus%22%2C%20%22Earth%22%2C%20%22Mars%22%5D%0A%7D%0Areturn%20req.view.render(%0A%20%20%22solarSystem%22%2C%20SolarSystem()%0A)",
+      "body": "%60%60%60swift%0Astruct%20SolarSystem%3A%20Codable%20%7B%0A%20%20let%20planets%20%3D%20%5B%22Venus%22%2C%20%22Earth%22%2C%20%22Mars%22%5D%0A%7D%0Areturn%20req.view.render(%0A%20%20%22solarSystem%22%2C%20SolarSystem()%0A)%0A%60%60%60%0A%0A%E5%9C%A8%20%60Leaf%60%20%E4%B8%AD%E5%BE%AA%E7%8E%AF%E5%AE%83%E4%BB%AC%EF%BC%9A%0A%0A%60%60%60html%0A%3Cul%3E%0A%23for(planet%20in%20planets)%3A%0A%20%20%20%20%3Cli%3E%23(planet)%3C%2Fli%3E%0A%23endfor%0A%3C%2Ful%3E%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s2-43",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "在 `Leaf` 中循环它们："
-    },
-    {
-      "id": "s2-44",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<ul>\n#for(planet in planets):\n    <li>#(planet)</li>\n#endfor\n</ul>"
     },
     {
       "id": "s2-45",
       "sectionId": "s2",
       "title": "%E6%A8%A1%E6%9D%BF%E7%A4%BA%E4%BE%8B",
-      "kind": "text",
-      "body": "%E5%85%A5%E5%8F%A3%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%80%9A%E8%BF%87%20%60%23extend(%22main%22)%60%20%E5%B0%86%20%60mainleaf%60%20%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%86%85%E5%AE%B9%E5%A4%8D%E5%88%B6%E5%88%B0%E5%BD%93%E5%89%8D%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8",
+      "body": "%E5%85%A5%E5%8F%A3%E9%A1%B5%E9%9D%A2%EF%BC%8C%E9%80%9A%E8%BF%87%20%60%23extend(%22main%22)%60%20%E5%B0%86%20%60mainleaf%60%20%E6%A8%A1%E6%9D%BF%E7%9A%84%E5%86%85%E5%AE%B9%E5%A4%8D%E5%88%B6%E5%88%B0%E5%BD%93%E5%89%8D%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%0A%0A%60%60%60html%0A%23extend(%22main%22)%3A%0A%20%20%23export(%22body%22)%3A%0A%20%20%20%20%3Cp%3EWelcome%20to%20Vapor!%3C%2Fp%3E%0A%20%20%23endexport%0A%23endextend%0A%60%60%60%0A%0A%E5%9C%A8%E5%85%AC%E5%85%B1%E6%A8%A1%E6%9D%BF%20%60main.leaf%60%20%E4%B8%AD%0A%0A%60%60%60html%0A%3Chtml%3E%0A%20%20%3Chead%3E%0A%20%20%20%20%3Ctitle%3E%23(name)%3C%2Ftitle%3E%0A%20%20%3C%2Fhead%3E%0A%20%20%3Cbody%3E%23import(%22body%22)%3C%2Fbody%3E%0A%3C%2Fhtml%3E%0A%60%60%60%0A%0A%E5%91%88%E7%8E%B0%E5%A6%82%E4%B8%8B%E5%86%85%E5%AE%B9%EF%BC%9A%0A%0A%60%60%60html%0A%3Chtml%3E%0A%20%20%3Chead%3E%0A%20%20%20%20%3Ctitle%3ELeaf%3C%2Ftitle%3E%0A%20%20%3C%2Fhead%3E%0A%20%20%3Cbody%3E%0A%20%20%20%20%3Cp%3EWelcome%20to%20Vapor!%3C%2Fp%3E%0A%20%20%3C%2Fbody%3E%0A%3C%2Fhtml%3E%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s2-46",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%23extend(%22main%22)%3A%0A%20%20%23export(%22body%22)%3A%0A%20%20%20%20%3Cp%3EWelcome%20to%20Vapor!%3C%2Fp%3E%0A%20%20%23endexport%0A%23endextend",
-      "encoded": true
-    },
-    {
-      "id": "s2-47",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "在公共模板 `main.leaf` 中"
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Chtml%3E%0A%20%20%3Chead%3E%0A%20%20%20%20%3Ctitle%3E%23(name)%3C%2Ftitle%3E%0A%20%20%3C%2Fhead%3E%0A%20%20%3Cbody%3E%23import(%22body%22)%3C%2Fbody%3E%0A%3C%2Fhtml%3E",
-      "encoded": true
-    },
-    {
-      "id": "s2-49",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "呈现如下内容："
-    },
-    {
-      "id": "s2-50",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<html>\n  <head>\n    <title>Leaf</title>\n  </head>\n  <body>\n    <p>Welcome to Vapor!</p>\n  </body>\n</html>"
     },
     {
       "id": "s2-51",
       "sectionId": "s2",
-      "title": "扩展模板",
-      "kind": "text",
-      "body": "在模板中使用 `#export` 存储名为 `body` 的一些 HTML"
-    },
-    {
-      "id": "s2-52",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%23export(%22body%22)%3A%0A%20%20%20%20%3Cp%3EWelcome%20to%20Vapor!%3C%2Fp%3E%0A%23endexport",
-      "encoded": true
-    },
-    {
-      "id": "s2-53",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用 `#import` 获取传递给 `#extend` 标签的内容"
-    },
-    {
-      "id": "s2-54",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Cbody%3E%0A%20%20%23import(%22body%22)%0A%3C%2Fbody%3E",
+      "title": "%E6%89%A9%E5%B1%95%E6%A8%A1%E6%9D%BF",
+      "body": "%E5%9C%A8%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%20%60%23export%60%20%E5%AD%98%E5%82%A8%E5%90%8D%E4%B8%BA%20%60body%60%20%E7%9A%84%E4%B8%80%E4%BA%9B%20HTML%0A%0A%60%60%60html%0A%23export(%22body%22)%3A%0A%20%20%20%20%3Cp%3EWelcome%20to%20Vapor!%3C%2Fp%3E%0A%23endexport%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20%60%23import%60%20%E8%8E%B7%E5%8F%96%E4%BC%A0%E9%80%92%E7%BB%99%20%60%23extend%60%20%E6%A0%87%E7%AD%BE%E7%9A%84%E5%86%85%E5%AE%B9%0A%0A%60%60%60html%0A%3Cbody%3E%0A%20%20%23import(%22body%22)%0A%3C%2Fbody%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-55",
       "sectionId": "s2",
       "title": "#count",
-      "kind": "code",
-      "lang": "html",
-      "code": "Your search matched #count(matches) pages."
-    },
-    {
-      "id": "s2-56",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`#count` 标签返回数组中的项目数量"
+      "body": "```html\nYour search matched #count(matches) pages.\n```\n\n`#count` 标签返回数组中的项目数量"
     },
     {
       "id": "s2-57",
       "sectionId": "s2",
       "title": "#lowercased",
-      "kind": "code",
-      "lang": "html",
-      "code": "#lowercased(name)"
-    },
-    {
-      "id": "s2-58",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`#lowercased` 标签将字符串转成小写字母。"
+      "body": "```html\n#lowercased(name)\n```\n\n`#lowercased` 标签将字符串转成小写字母。"
     },
     {
       "id": "s2-59",
       "sectionId": "s2",
       "title": "#capitalized",
-      "kind": "code",
-      "lang": "html",
-      "code": "#capitalized(name)"
-    },
-    {
-      "id": "s2-60",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`#capitalized` 标签将字符串中每个单词的首字母大写，其他字母小写。"
+      "body": "```html\n#capitalized(name)\n```\n\n`#capitalized` 标签将字符串中每个单词的首字母大写，其他字母小写。"
     },
     {
       "id": "s2-61",
       "sectionId": "s2",
       "title": "%23contains",
-      "kind": "code",
-      "lang": "html",
-      "code": "%23if(contains(planets%2C%20%22Earth%22))%3A%0A%20%20%20%20Earth%20is%20here!%0A%23else%3A%0A%20%20%20%20Earth%20is%20not%20in%20this%20array.%0A%23endif",
+      "body": "%60%60%60html%0A%23if(contains(planets%2C%20%22Earth%22))%3A%0A%20%20%20%20Earth%20is%20here!%0A%23else%3A%0A%20%20%20%20Earth%20is%20not%20in%20this%20array.%0A%23endif%0A%60%60%60%0A%0A%60%23contains%60%20%E6%A0%87%E7%AD%BE%E6%8E%A5%E5%8F%97%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%E5%92%8C%E4%B8%80%E4%B8%AA%E5%80%BC%E4%BD%9C%E4%B8%BA%E5%85%B6%E4%B8%A4%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%8F%82%E6%95%B0%E4%B8%80%E4%B8%AD%E7%9A%84%E6%95%B0%E7%BB%84%E5%8C%85%E5%90%AB%E5%8F%82%E6%95%B0%E4%BA%8C%E4%B8%AD%E7%9A%84%E5%80%BC%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E%20true%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s2-62",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`#contains` 标签接受一个数组和一个值作为其两个参数，如果参数一中的数组包含参数二中的值，则返回 true。"
     },
     {
       "id": "s2-63",
       "sectionId": "s2",
-      "title": "#date",
-      "kind": "text",
-      "body": "`#date` 标签将日期格式化为可读的字符串。默认情况下，它使用 ISO8601 格式。"
-    },
-    {
-      "id": "s2-64",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "render(...%2C%20%5B%22now%22%3A%20Date()%5D)",
-      "encoded": true
-    },
-    {
-      "id": "s2-65",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "模板中使用"
-    },
-    {
-      "id": "s2-66",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "The time is #date(now)"
-    },
-    {
-      "id": "s2-67",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "你可以传自定义日期格式作为第二参数，详见 [Swift DateFormatter](https://developer.apple.com/documentation/foundation/dateformatter)。"
-    },
-    {
-      "id": "s2-68",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "The%20date%20is%20%23date(now%2C%20%22yyyy-MM-dd%22)",
+      "title": "%23date",
+      "body": "%60%23date%60%20%E6%A0%87%E7%AD%BE%E5%B0%86%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%BA%E5%8F%AF%E8%AF%BB%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%82%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E5%AE%83%E4%BD%BF%E7%94%A8%20ISO8601%20%E6%A0%BC%E5%BC%8F%E3%80%82%0A%0A%60%60%60swift%0Arender(...%2C%20%5B%22now%22%3A%20Date()%5D)%0A%60%60%60%0A%0A%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%0A%0A%60%60%60%0AThe%20time%20is%20%23date(now)%0A%60%60%60%0A%0A%E4%BD%A0%E5%8F%AF%E4%BB%A5%E4%BC%A0%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E6%9C%9F%E6%A0%BC%E5%BC%8F%E4%BD%9C%E4%B8%BA%E7%AC%AC%E4%BA%8C%E5%8F%82%E6%95%B0%EF%BC%8C%E8%AF%A6%E8%A7%81%20%5BSwift%20DateFormatter%5D(https%3A%2F%2Fdeveloper.apple.com%2Fdocumentation%2Ffoundation%2Fdateformatter)%E3%80%82%0A%0A%60%60%60%0AThe%20date%20is%20%23date(now%2C%20%22yyyy-MM-dd%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-69",
       "sectionId": "s2",
       "title": "#unsafeHTML",
-      "kind": "text",
-      "body": "标签就像一个变量标签 - 例如 `#(variable)`。"
-    },
-    {
-      "id": "s2-70",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "The time is #unsafeHTML(styledTitle)"
-    },
-    {
-      "id": "s2-71",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "它不会转义任何 `variable` 可能包含的 HTML 标签"
+      "body": "标签就像一个变量标签 - 例如 `#(variable)`。\n\n```\nThe time is #unsafeHTML(styledTitle)\n```\n\n它不会转义任何 `variable` 可能包含的 HTML 标签"
     },
     {
       "id": "s2-72",
       "sectionId": "s2",
       "title": "#dumpContext",
-      "kind": "text",
-      "body": "`#dumpContext` 标签将整个上下文渲染为可读的字符串。使用此标记来调试作为上下文提供给当前渲染的内容。"
-    },
-    {
-      "id": "s2-73",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "Hello, world!\n#dumpContext"
+      "body": "`#dumpContext` 标签将整个上下文渲染为可读的字符串。使用此标记来调试作为上下文提供给当前渲染的内容。\n\n```\nHello, world!\n#dumpContext\n```"
     },
     {
       "id": "s3-74",
       "sectionId": "s3",
       "title": "LeafTag",
-      "kind": "text",
-      "body": "创建一个名为 `NowTag` 的类并遵循 `LeafTag` 协议"
-    },
-    {
-      "id": "s3-75",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "struct NowTag: LeafTag {\n    func render(_ ctx: LeafContext) throws -> LeafData {\n        ...\n    }\n}"
-    },
-    {
-      "id": "s3-76",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "实现 `render(_:)` 方法。传递给该方法的 `LeafContext` 参数包含了我们需要的所有内容。"
-    },
-    {
-      "id": "s3-77",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "enum%20NowTagError%3A%20Error%20%7B%0A%20%20%20%20case%20invalidFormatParameter%0A%20%20%20%20case%20tooManyParameters%0A%7D%0A%0Astruct%20NowTag%3A%20LeafTag%20%7B%0A%20%20%20%20func%20render(_%20ctx%3A%20LeafContext)%20throws%20-%3E%20LeafData%20%7B%0A%20%20%20%20%20%20%20%20let%20formatter%20%3D%20DateFormatter()%0A%20%20%20%20%20%20%20%20switch%20ctx.parameters.count%20%7B%0A%20%20%20%20%20%20%20%20case%200%3A%20formatter.dateFormat%20%3D%20%22yyyy-MM-dd%20HH%3Amm%3Ass%22%0A%20%20%20%20%20%20%20%20case%201%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20guard%20let%20string%20%3D%20ctx.parameters%5B0%5D.string%20else%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20throw%20NowTagError.invalidFormatParameter%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20formatter.dateFormat%20%3D%20string%0A%20%20%20%20%20%20%20%20default%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20throw%20NowTagError.tooManyParameters%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20let%20dateAsString%20%3D%20formatter.string(from%3A%20Date())%0A%20%20%20%20%20%20%20%20return%20LeafData.string(dateAsString)%0A%20%20%20%20%7D%0A%7D",
+      "body": "%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20%60NowTag%60%20%E7%9A%84%E7%B1%BB%E5%B9%B6%E9%81%B5%E5%BE%AA%20%60LeafTag%60%20%E5%8D%8F%E8%AE%AE%0A%0A%60%60%60swift%0Astruct%20NowTag%3A%20LeafTag%20%7B%0A%20%20%20%20func%20render(_%20ctx%3A%20LeafContext)%20throws%20-%3E%20LeafData%20%7B%0A%20%20%20%20%20%20%20%20...%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E5%AE%9E%E7%8E%B0%20%60render(_%3A)%60%20%E6%96%B9%E6%B3%95%E3%80%82%E4%BC%A0%E9%80%92%E7%BB%99%E8%AF%A5%E6%96%B9%E6%B3%95%E7%9A%84%20%60LeafContext%60%20%E5%8F%82%E6%95%B0%E5%8C%85%E5%90%AB%E4%BA%86%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E7%9A%84%E6%89%80%E6%9C%89%E5%86%85%E5%AE%B9%E3%80%82%0A%0A%60%60%60swift%0Aenum%20NowTagError%3A%20Error%20%7B%0A%20%20%20%20case%20invalidFormatParameter%0A%20%20%20%20case%20tooManyParameters%0A%7D%0A%0Astruct%20NowTag%3A%20LeafTag%20%7B%0A%20%20%20%20func%20render(_%20ctx%3A%20LeafContext)%20throws%20-%3E%20LeafData%20%7B%0A%20%20%20%20%20%20%20%20let%20formatter%20%3D%20DateFormatter()%0A%20%20%20%20%20%20%20%20switch%20ctx.parameters.count%20%7B%0A%20%20%20%20%20%20%20%20case%200%3A%20formatter.dateFormat%20%3D%20%22yyyy-MM-dd%20HH%3Amm%3Ass%22%0A%20%20%20%20%20%20%20%20case%201%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20guard%20let%20string%20%3D%20ctx.parameters%5B0%5D.string%20else%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20throw%20NowTagError.invalidFormatParameter%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20formatter.dateFormat%20%3D%20string%0A%20%20%20%20%20%20%20%20default%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20throw%20NowTagError.tooManyParameters%0A%20%20%20%20%20%20%20%20%7D%0A%0A%20%20%20%20%20%20%20%20let%20dateAsString%20%3D%20formatter.string(from%3A%20Date())%0A%20%20%20%20%20%20%20%20return%20LeafData.string(dateAsString)%0A%20%20%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-78",
       "sectionId": "s3",
-      "title": "配置标签",
-      "kind": "text",
-      "body": "实现了 `NowTag`，告诉 `Leaf` 并设置标签名称为 `#now`"
-    },
-    {
-      "id": "s3-79",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "app.leaf.tags%5B%22now%22%5D%20%3D%20NowTag()",
+      "title": "%E9%85%8D%E7%BD%AE%E6%A0%87%E7%AD%BE",
+      "body": "%E5%AE%9E%E7%8E%B0%E4%BA%86%20%60NowTag%60%EF%BC%8C%E5%91%8A%E8%AF%89%20%60Leaf%60%20%E5%B9%B6%E8%AE%BE%E7%BD%AE%E6%A0%87%E7%AD%BE%E5%90%8D%E7%A7%B0%E4%B8%BA%20%60%23now%60%0A%0A%60%60%60swift%0Aapp.leaf.tags%5B%22now%22%5D%20%3D%20NowTag()%0A%60%60%60%0A%0A%E7%8E%B0%E5%9C%A8%E5%8F%AF%E4%BB%A5%E5%9C%A8%20Leaf%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%88%91%E4%BB%AC%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%20%60%23now%60%20%E4%BA%86%0A%0A%60%60%60html%0AThe%20time%20is%20%23now()%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s3-80",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "现在可以在 Leaf 中使用我们的自定义标签 `#now` 了"
-    },
-    {
-      "id": "s3-81",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "The time is #now()"
     },
     {
       "id": "s3-82",
       "sectionId": "s3",
       "title": "上下文属性 - `parameters`： 包含标签参数的数组",
-      "kind": "code",
-      "lang": "swift",
-      "code": "struct NowTag: LeafTag {\n  func render(\n    _ ctx: LeafContext\n  ) throws -> LeafData {\n      /// ctx.parameters\n  }\n}"
+      "body": "```swift\nstruct NowTag: LeafTag {\n  func render(\n    _ ctx: LeafContext\n  ) throws -> LeafData {\n      /// ctx.parameters\n  }\n}\n```"
     },
     {
       "id": "s3-83",
       "sectionId": "s3",
       "title": "%E4%BD%BF%E7%94%A8%20Data%EF%BC%8C%60render(_%3A_%3A)%60%20%E6%96%B9%E6%B3%95%E4%BD%9C%E4%B8%BA%E4%B8%8A%E4%B8%8B%E6%96%87%E8%A7%86%E5%9B%BE%E7%9A%84%E6%95%B0%E6%8D%AE",
-      "kind": "code",
-      "lang": "swift",
-      "code": "return%20try%20await%20req.view.render(%0A%20%20%22home%22%2C%20%5B%22name%22%3A%20%22John%22%5D%0A)",
+      "body": "%60%60%60swift%0Areturn%20try%20await%20req.view.render(%0A%20%20%22home%22%2C%20%5B%22name%22%3A%20%22John%22%5D%0A)%0A%60%60%60%0A%0A%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%E4%BD%BF%E7%94%A8%20%60Data%60%0A%0A%60%60%60swift%0Astruct%20NowTag%3A%20LeafTag%20%7B%0A%20%20func%20render(%0A%20%20%20%20_%20ctx%3A%20LeafContext%0A%20%20)%20throws%20-%3E%20LeafData%20%7B%0A%20%20%20%20%20%20let%20name%20%3D%20ctx.data%5B%22name%22%5D%3F.string%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60LeafContext%60%20%E5%8C%85%E5%90%AB%E4%B8%A4%E4%B8%AA%E9%87%8D%E8%A6%81%E7%9A%84%E5%B1%9E%E6%80%A7",
       "encoded": true
-    },
-    {
-      "id": "s3-84",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "自定义标签使用 `Data`"
-    },
-    {
-      "id": "s3-85",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "struct%20NowTag%3A%20LeafTag%20%7B%0A%20%20func%20render(%0A%20%20%20%20_%20ctx%3A%20LeafContext%0A%20%20)%20throws%20-%3E%20LeafData%20%7B%0A%20%20%20%20%20%20let%20name%20%3D%20ctx.data%5B%22name%22%5D%3F.string%0A%20%20%7D%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s3-86",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "`LeafContext` 包含两个重要的属性"
     },
     {
       "id": "s3-87",
       "sectionId": "s3",
       "title": "%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%E6%8B%BC%E6%8E%A5%E6%A0%87%E7%AD%BE",
-      "kind": "code",
-      "lang": "swift",
-      "code": "struct%20RelativePathTag%3A%20LeafTag%20%7B%0A%20%20%20%20func%20render(_%20ctx%3A%20LeafContext)%20throws%20-%3E%20LeafData%20%7B%0A%20%20%20%20%20%20%20%20guard%20ctx.parameters.count%20%3D%3D%201%2C%20let%20filename%20%3D%20ctx.parameters%5B0%5D.string%20else%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20throw%20%22Missing%20%23relative%20parameters%22%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20if%20let%20filepath%20%3D%20ctx.request%3F.url.path%2C%20filename.hasPrefix(%22%2F%22)%20%3D%3D%20false%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20.string(%22%5C(relativePrefix(for%3A%20filepath%2C%20targetFile%3A%20filename))%22)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20return%20.string(%22%5C(filename)%22)%0A%20%20%20%20%7D%0A%20%20%20%20private%20func%20relativePrefix(for%20pagePath%3A%20String%2C%20targetFile%3A%20String)%20-%3E%20String%20%7B%0A%20%20%20%20%20%20%20%20var%20components%20%3D%20pagePath%0A%20%20%20%20%20%20%20%20%20%20%20%20.trimmingCharacters(in%3A%20CharacterSet(charactersIn%3A%20%22%2F%22))%0A%20%20%20%20%20%20%20%20%20%20%20%20.split(separator%3A%20%22%2F%22)%0A%20%20%20%20%20%20%20%20if%20let%20last%20%3D%20components.last%2C%20last.contains(%22.%22)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20components%20%3D%20components.dropLast()%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20let%20cleanTarget%20%3D%20targetFile.hasPrefix(%22.%2F%22)%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%3F%20String(targetFile.dropFirst(2))%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%3A%20targetFile%0A%20%20%20%20%20%20%20%20return%20String(repeating%3A%20%22..%2F%22%2C%20count%3A%20components.count)%20%2B%20cleanTarget%0A%20%20%20%20%7D%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s3-88",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "配置标签"
-    },
-    {
-      "id": "s3-89",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "swift",
-      "code": "app.leaf.tags%5B%22relative%22%5D%20%3D%20RelativePathTag()",
-      "encoded": true
-    },
-    {
-      "id": "s3-90",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "现在可以在 Leaf 中使用我们的自定义标签了"
-    },
-    {
-      "id": "s3-91",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Clink%20rel%3D%22stylesheet%22%20href%3D%22%23relative(%22main.css%22)%22%20%2F%3E",
+      "body": "%60%60%60swift%0Astruct%20RelativePathTag%3A%20LeafTag%20%7B%0A%20%20%20%20func%20render(_%20ctx%3A%20LeafContext)%20throws%20-%3E%20LeafData%20%7B%0A%20%20%20%20%20%20%20%20guard%20ctx.parameters.count%20%3D%3D%201%2C%20let%20filename%20%3D%20ctx.parameters%5B0%5D.string%20else%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20throw%20%22Missing%20%23relative%20parameters%22%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20if%20let%20filepath%20%3D%20ctx.request%3F.url.path%2C%20filename.hasPrefix(%22%2F%22)%20%3D%3D%20false%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20.string(%22%5C(relativePrefix(for%3A%20filepath%2C%20targetFile%3A%20filename))%22)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20return%20.string(%22%5C(filename)%22)%0A%20%20%20%20%7D%0A%20%20%20%20private%20func%20relativePrefix(for%20pagePath%3A%20String%2C%20targetFile%3A%20String)%20-%3E%20String%20%7B%0A%20%20%20%20%20%20%20%20var%20components%20%3D%20pagePath%0A%20%20%20%20%20%20%20%20%20%20%20%20.trimmingCharacters(in%3A%20CharacterSet(charactersIn%3A%20%22%2F%22))%0A%20%20%20%20%20%20%20%20%20%20%20%20.split(separator%3A%20%22%2F%22)%0A%20%20%20%20%20%20%20%20if%20let%20last%20%3D%20components.last%2C%20last.contains(%22.%22)%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20components%20%3D%20components.dropLast()%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20let%20cleanTarget%20%3D%20targetFile.hasPrefix(%22.%2F%22)%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%3F%20String(targetFile.dropFirst(2))%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%3A%20targetFile%0A%20%20%20%20%20%20%20%20return%20String(repeating%3A%20%22..%2F%22%2C%20count%3A%20components.count)%20%2B%20cleanTarget%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E9%85%8D%E7%BD%AE%E6%A0%87%E7%AD%BE%0A%0A%60%60%60swift%0Aapp.leaf.tags%5B%22relative%22%5D%20%3D%20RelativePathTag()%0A%60%60%60%0A%0A%E7%8E%B0%E5%9C%A8%E5%8F%AF%E4%BB%A5%E5%9C%A8%20Leaf%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%88%91%E4%BB%AC%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%87%E7%AD%BE%E4%BA%86%0A%0A%60%60%60html%0A%3Clink%20rel%3D%22stylesheet%22%20href%3D%22%23relative(%22main.css%22)%22%20%2F%3E%0A%60%60%60",
       "encoded": true
     }
   ],

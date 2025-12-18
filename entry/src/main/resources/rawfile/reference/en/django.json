@@ -115,1655 +115,456 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "A Django cheat sheet."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Start a new Django Project",
-      "kind": "code",
-      "lang": "python",
-      "code": "# Create et access project folder\n~$  mkdir project_name\n~$  cd project_name\n\n# Create Python virtual env\n~$  python3 -m venv venv\n\n# Activate virtual env\n~$  source venv/bin/activate\n\n# If you want to deactivate virtual env\n~$  deactivate\n\n# Install django (~= same as 4.2.*)\n~$  pip install django~=4.2.0\n\n# New django project (from project_name folder)\n~$  django-admin startproject config\n\n# Create app (from project_name folder)\n~$  python manage.py startapp app_name"
+      "body": "```python\n# Create et access project folder\n~$  mkdir project_name\n~$  cd project_name\n\n# Create Python virtual env\n~$  python3 -m venv venv\n\n# Activate virtual env\n~$  source venv/bin/activate\n\n# If you want to deactivate virtual env\n~$  deactivate\n\n# Install django (~= same as 4.2.*)\n~$  pip install django~=4.2.0\n\n# New django project (from project_name folder)\n~$  django-admin startproject config\n\n# Create app (from project_name folder)\n~$  python manage.py startapp app_name\n```"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "Migration:",
-      "kind": "text",
-      "body": "<small>Django create a database table for each models present in your app using those commands:</small>"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Makemigrations: Create a file under app_name/migrations with the database structure to create"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$  python manage.py makemigrations"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Migrate: Will read the migrations files and create the actual database and tables"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$  python manage.py migrate"
+      "body": "<small>Django create a database table for each models present in your app using those commands:</small>\n\nMakemigrations: Create a file under app_name/migrations with the database structure to create\n\n```python\n~$  python manage.py makemigrations\n```\n\nMigrate: Will read the migrations files and create the actual database and tables\n\n```python\n~$  python manage.py migrate\n```"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "Create superuser for authenficiation/admin panel",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$  python manage.py createsuperuser"
+      "body": "```python\n~$  python manage.py createsuperuser\n```"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "Start server",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$  python manage.py runserver  => ex.  http://127.0.0.1:8000"
+      "body": "```python\n~$  python manage.py runserver  => ex.  http://127.0.0.1:8000\n```"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "Requirements",
-      "kind": "code",
-      "lang": "python",
-      "code": "# Create a requirements file that contain all your project dependencies\n~$  pip freeze > requirements.txt\n\n# Install your project requirements (if a requirements file exist)\n~$  pip install -r requirements.txt"
+      "body": "```python\n# Create a requirements file that contain all your project dependencies\n~$  pip freeze > requirements.txt\n\n# Install your project requirements (if a requirements file exist)\n~$  pip install -r requirements.txt\n```"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "Other commands",
-      "kind": "code",
-      "lang": "python",
-      "code": "# Django shell (Run project code directly)\n~$ python manage.py shell\n\n# example of code to run in the shell:\n >>> from app_name.models import User\n >>> user1 = User.objects.first()\n\n# Prepare static folders for production\n~$ python manage.py collectstatic\n\n# Take all data from app blog and export in json\n~$ python manage.py dumpdata blog > myapp.json\n\n# Take all data in json file and import in app data table\n~$ python manage.py loaddata myapp.json\n\n# To Create or Update a message file for Translation, run this command\n~$ django-admin makemessages -l de\n# Updating message files\n~$ django-admin compilemessages"
+      "body": "```python\n# Django shell (Run project code directly)\n~$ python manage.py shell\n\n# example of code to run in the shell:\n >>> from app_name.models import User\n >>> user1 = User.objects.first()\n\n# Prepare static folders for production\n~$ python manage.py collectstatic\n\n# Take all data from app blog and export in json\n~$ python manage.py dumpdata blog > myapp.json\n\n# Take all data in json file and import in app data table\n~$ python manage.py loaddata myapp.json\n\n# To Create or Update a message file for Translation, run this command\n~$ django-admin makemessages -l de\n# Updating message files\n~$ django-admin compilemessages\n```"
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
-      "title": "Configuration settings",
-      "kind": "text",
-      "body": "##### Project base templates directory and Apps templates directory:"
-    },
-    {
-      "id": "s2-12",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• create folder project/templates\n• create folder appfolder/templates/appname"
-    },
-    {
-      "id": "s2-13",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "##### Create Static folder in base root and separate for apps:"
-    },
-    {
-      "id": "s2-14",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• project_name\\static\\root\n• app_name\\static\\app_name"
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20Add%20app%20to%20settings.py%0AINSTALLED_APPS%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%20%E2%80%A6%20%2C%0A%20%20%20%20%20%20%20%20%20'app_name.apps.App_nameConfig'%2C%0A%20%5D%0A%0A%23%20template%20directory%20config%0AProject%20templates%20settings.py%3A%0A%20%20%20%20TEMPLATES%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%7B%20%E2%80%A6%0A%20%20%20%20%20%20%20%20%20%20%20'DIRS'%3A%20%5BBASE_DIR%20%2F%20'templates'%5D%2C%0A%20%20%20%20%20%20%20%20%E2%80%A6%20%7D%0A%0A%23%20Static%20folder%3A%0ASTATIC_URL%20%3D%20'%2Fstatic%2F'%0ASTATICFILES_DIRS%20%3D%20%5B%20BASE_DIR%20%2F%20'static'%20%5D%0ASTATIC_ROOT%20%3D%20'static_root'%0A%23%20Media%20folder%3A%0AMEDIA_URL%20%3D%20'%2Fmedia%2F'%0ASTATICFILES_DIRS%20%3D%20(%0A%20%20%20%20(BASE_DIR%20%2F%20'static')%2C%0A)%0AMEDIA_ROOT%20%3D%20BASE_DIR%20%2F%20'media'%0A%0A%23%20To%20use%20PostgresSQL%0A%23%20pip%20install%20psycopg2%0A%23%20settings.py%0ADATABASE%20%3D%20%7B%0A%20%20%20%20'default'%3A%20%7B%0A%20%20%20%20%20%20%20%20'ENGINE'%3A%20'django.db.backends.postgresql'%2C%0A%20%20%20%20%20%20%20%20'NAME'%3A%20'blog'%2C%0A%20%20%20%20%20%20%20%20'USER'%3A%20'admin'%2C%0A%20%20%20%20%20%20%20%20'PASSWORD'%3A%20'123456'%2C%0A%20%20%20%20%20%20%20%20'HOST'%3A%20'localhost'%2C%0A%20%20%20%20%20%20%20%20'PORT'%3A%20'5432'%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%0ATIME_INPUT_FORMATS%20%3D%20%5B%0A%20%20%20%20'%25H%3A%25M%3A%25S'%2C%20%20%20%20%20%23%20'14%3A30%3A59'%0A%20%20%20%20'%25H%3A%25M'%2C%20%20%20%20%20%20%20%20%23%20'14%3A30'%0A%5D%0A%0ADATE_FORMAT%20%3D%20%22Y%2FM%2Fd%22%0A%0A%23%20locale%20for%20Translations%0ALANGUAGES%20%3D%20%5B%0A%20%20%20%20('en'%2C%20'English')%2C%0A%20%20%20%20('de'%2C%20'German')%2C%0A%5D%0A%0ALOCALE_PATHS%20%3D%20(%0A%20%20%20%20BASE_DIR%20%2F%20'locale'%2C%0A)%0A%0A%23%20CK%20Editor%20Configuration%0ACKEDITOR_UPLOAD_PATH%20%3D%20'uploads%2F'%0ACKEDITOR_RESTRICT_BY_USER%20%3D%20True%0ACKEDITOR_BROWSE_SHOW_DIRS%20%3D%20True%0ACKEDITOR_ALLOW_NONIMGE_FILES%20%3D%20True%0ACKEDITOR_IMAGE_BACKEND%20%3D%20%22pillow%22%0ACKEDITOR_CONFIGS%20%3D%20%7B%0A%20%20%20%20'default'%3A%20%7B%0A%20%20%20%20%20%20%20%20'toolbar'%3A%20'full'%2C%0A%20%20%20%20%7D%7D%0A%0A%23%20SSL%0A%23%20If%20you%20have%20an%20SSL%20certificate%0ASECURE_SSL_REDIRECT%20%3D%20True%0A%23%20cookies%20will%20only%20be%20sent%20via%20HTTPS%20connections%0ASESSION_COOKIE_SECURE%20%3D%20True%0ACSRF_COOKIE_SECURE%20%3D%20True",
+      "title": "Configuration%20settings",
+      "body": "%23%23%23%23%23%20Project%20base%20templates%20directory%20and%20Apps%20templates%20directory%3A%0A%0A%E2%80%A2%20create%20folder%20project%2Ftemplates%0A%E2%80%A2%20create%20folder%20appfolder%2Ftemplates%2Fappname%0A%0A%23%23%23%23%23%20Create%20Static%20folder%20in%20base%20root%20and%20separate%20for%20apps%3A%0A%0A%E2%80%A2%20project_name%5Cstatic%5Croot%0A%E2%80%A2%20app_name%5Cstatic%5Capp_name%0A%0A%60%60%60python%0A%23%20Add%20app%20to%20settings.py%0AINSTALLED_APPS%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%20%E2%80%A6%20%2C%0A%20%20%20%20%20%20%20%20%20'app_name.apps.App_nameConfig'%2C%0A%20%5D%0A%0A%23%20template%20directory%20config%0AProject%20templates%20settings.py%3A%0A%20%20%20%20TEMPLATES%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%7B%20%E2%80%A6%0A%20%20%20%20%20%20%20%20%20%20%20'DIRS'%3A%20%5BBASE_DIR%20%2F%20'templates'%5D%2C%0A%20%20%20%20%20%20%20%20%E2%80%A6%20%7D%0A%0A%23%20Static%20folder%3A%0ASTATIC_URL%20%3D%20'%2Fstatic%2F'%0ASTATICFILES_DIRS%20%3D%20%5B%20BASE_DIR%20%2F%20'static'%20%5D%0ASTATIC_ROOT%20%3D%20'static_root'%0A%23%20Media%20folder%3A%0AMEDIA_URL%20%3D%20'%2Fmedia%2F'%0ASTATICFILES_DIRS%20%3D%20(%0A%20%20%20%20(BASE_DIR%20%2F%20'static')%2C%0A)%0AMEDIA_ROOT%20%3D%20BASE_DIR%20%2F%20'media'%0A%0A%23%20To%20use%20PostgresSQL%0A%23%20pip%20install%20psycopg2%0A%23%20settings.py%0ADATABASE%20%3D%20%7B%0A%20%20%20%20'default'%3A%20%7B%0A%20%20%20%20%20%20%20%20'ENGINE'%3A%20'django.db.backends.postgresql'%2C%0A%20%20%20%20%20%20%20%20'NAME'%3A%20'blog'%2C%0A%20%20%20%20%20%20%20%20'USER'%3A%20'admin'%2C%0A%20%20%20%20%20%20%20%20'PASSWORD'%3A%20'123456'%2C%0A%20%20%20%20%20%20%20%20'HOST'%3A%20'localhost'%2C%0A%20%20%20%20%20%20%20%20'PORT'%3A%20'5432'%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%0ATIME_INPUT_FORMATS%20%3D%20%5B%0A%20%20%20%20'%25H%3A%25M%3A%25S'%2C%20%20%20%20%20%23%20'14%3A30%3A59'%0A%20%20%20%20'%25H%3A%25M'%2C%20%20%20%20%20%20%20%20%23%20'14%3A30'%0A%5D%0A%0ADATE_FORMAT%20%3D%20%22Y%2FM%2Fd%22%0A%0A%23%20locale%20for%20Translations%0ALANGUAGES%20%3D%20%5B%0A%20%20%20%20('en'%2C%20'English')%2C%0A%20%20%20%20('de'%2C%20'German')%2C%0A%5D%0A%0ALOCALE_PATHS%20%3D%20(%0A%20%20%20%20BASE_DIR%20%2F%20'locale'%2C%0A)%0A%0A%23%20CK%20Editor%20Configuration%0ACKEDITOR_UPLOAD_PATH%20%3D%20'uploads%2F'%0ACKEDITOR_RESTRICT_BY_USER%20%3D%20True%0ACKEDITOR_BROWSE_SHOW_DIRS%20%3D%20True%0ACKEDITOR_ALLOW_NONIMGE_FILES%20%3D%20True%0ACKEDITOR_IMAGE_BACKEND%20%3D%20%22pillow%22%0ACKEDITOR_CONFIGS%20%3D%20%7B%0A%20%20%20%20'default'%3A%20%7B%0A%20%20%20%20%20%20%20%20'toolbar'%3A%20'full'%2C%0A%20%20%20%20%7D%7D%0A%0A%23%20SSL%0A%23%20If%20you%20have%20an%20SSL%20certificate%0ASECURE_SSL_REDIRECT%20%3D%20True%0A%23%20cookies%20will%20only%20be%20sent%20via%20HTTPS%20connections%0ASESSION_COOKIE_SECURE%20%3D%20True%0ACSRF_COOKIE_SECURE%20%3D%20True%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-16",
       "sectionId": "s3",
-      "title": "Create Data Model",
-      "kind": "text",
-      "body": "<small>Theses models can be created as database tables with the migrations commands</small>"
-    },
-    {
-      "id": "s3-17",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20models.py%0A%23%20The%20id%20fields%20is%20automaticly%20created%20by%20Django%0A%23%20for%20each%20model%20that%20why%20it's%20not%20show%20below%0Afrom%20django.db%20import%20models%0A%0Aclass%20Customer(models.Model)%0A%20%20%20%20name%20%3D%20models.Charfield('Customer'%2C%20max_length%3D120)%0A%20%20%20%20age%20%3D%20models.IntegerField()%0A%20%20%20%20note%20%3D%20models.TextField(blank%3DTrue%2C%20null%20%3D%20True)%0A%20%20%20%20email%20%3D%20models.EmailField(max_length%3D255%2C%20blank%3DTrue%2C%20null%3DTrue)%0A%20%20%20%20credit%20%3D%20models.FloatField(blank%3DTrue)%0A%20%20%20%20is_active%20%3D%20models.BooleanField(default%3DTrue)%0A%20%20%20%20created_at%20%3D%20models.DateTimeField(auto_now_add%3DTrue)%0A%20%20%20%20updated_at%20%3D%20models.DateTimeField(auto_now%3DTrue)%0A%20%20%20%20img%20%3D%20models.ImageField(upload_to%20%3D'uploads%2F')%0A%20%20%20%20%23%20Select%20Field%20(return%20value%2C%20display%20value)%0A%20%20%20%20TYPE_CHOICES%20%3D%20(%0A%20%20%20%20%20%20%20%20('Customer'%2C%20_('Customer'))%2C%0A%20%20%20%20%20%20%20%20('Supplier'%2C%20_('Supplier'))%2C%0A%20%20%20%20%20%20%20%20('Student'%2C%20_('Student'))%2C%0A%20%20%20%20)%0A%20%20%20%20type%20%3D%20models.CharField(choices%3DTYPE_CHOICES)%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20verbose_name%20%3D%20%22Customer%22%0A%20%20%20%20%20%20%20%20verbose_name_plural%20%3D%20%22Customers%22%0A%0A%20%20%20%20%23%20Model%20string%20representation%0A%20%20%20%20def%20__str__(self)%3A%0A%20%20%20%20%20%20%20%20return%20self.name%0A%0A%20%20%20%20%23%20the%20URL%20that%20points%20to%20a%20resource%20or%20page%20on%20your%20website%0A%20%20%20%20def%20get_absolute_url(self)%3A%0A%20%20%20%20%20%20%20%20return%20reverse(%22customer_detail%22%2C%20kwargs%3D%7B%22pk%22%3A%20self.pk%7D)",
+      "title": "Create%20Data%20Model",
+      "body": "%3Csmall%3ETheses%20models%20can%20be%20created%20as%20database%20tables%20with%20the%20migrations%20commands%3C%2Fsmall%3E%0A%0A%60%60%60python%0A%23%20models.py%0A%23%20The%20id%20fields%20is%20automaticly%20created%20by%20Django%0A%23%20for%20each%20model%20that%20why%20it's%20not%20show%20below%0Afrom%20django.db%20import%20models%0A%0Aclass%20Customer(models.Model)%0A%20%20%20%20name%20%3D%20models.Charfield('Customer'%2C%20max_length%3D120)%0A%20%20%20%20age%20%3D%20models.IntegerField()%0A%20%20%20%20note%20%3D%20models.TextField(blank%3DTrue%2C%20null%20%3D%20True)%0A%20%20%20%20email%20%3D%20models.EmailField(max_length%3D255%2C%20blank%3DTrue%2C%20null%3DTrue)%0A%20%20%20%20credit%20%3D%20models.FloatField(blank%3DTrue)%0A%20%20%20%20is_active%20%3D%20models.BooleanField(default%3DTrue)%0A%20%20%20%20created_at%20%3D%20models.DateTimeField(auto_now_add%3DTrue)%0A%20%20%20%20updated_at%20%3D%20models.DateTimeField(auto_now%3DTrue)%0A%20%20%20%20img%20%3D%20models.ImageField(upload_to%20%3D'uploads%2F')%0A%20%20%20%20%23%20Select%20Field%20(return%20value%2C%20display%20value)%0A%20%20%20%20TYPE_CHOICES%20%3D%20(%0A%20%20%20%20%20%20%20%20('Customer'%2C%20_('Customer'))%2C%0A%20%20%20%20%20%20%20%20('Supplier'%2C%20_('Supplier'))%2C%0A%20%20%20%20%20%20%20%20('Student'%2C%20_('Student'))%2C%0A%20%20%20%20)%0A%20%20%20%20type%20%3D%20models.CharField(choices%3DTYPE_CHOICES)%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20verbose_name%20%3D%20%22Customer%22%0A%20%20%20%20%20%20%20%20verbose_name_plural%20%3D%20%22Customers%22%0A%0A%20%20%20%20%23%20Model%20string%20representation%0A%20%20%20%20def%20__str__(self)%3A%0A%20%20%20%20%20%20%20%20return%20self.name%0A%0A%20%20%20%20%23%20the%20URL%20that%20points%20to%20a%20resource%20or%20page%20on%20your%20website%0A%20%20%20%20def%20get_absolute_url(self)%3A%0A%20%20%20%20%20%20%20%20return%20reverse(%22customer_detail%22%2C%20kwargs%3D%7B%22pk%22%3A%20self.pk%7D)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-18",
       "sectionId": "s3",
-      "title": "We can also use this method to define the ChoiceField value.",
-      "kind": "code",
-      "lang": "python",
-      "code": "  class Customer(models.Model)\n    class TypeList(models.IntegerChoices):\n        customer = (1, _('Customer'))\n        supplier = (2, _('Supplier'))\n        student = (3, _('Student'))\n    .\n    .\n    .\n    type = models.CharField(choices=TypeList.choices, default=1)"
+      "title": "We%20can%20also%20use%20this%20method%20to%20define%20the%20ChoiceField%20value.",
+      "body": "%60%60%60python%0A%20%20class%20Customer(models.Model)%0A%20%20%20%20class%20TypeList(models.IntegerChoices)%3A%0A%20%20%20%20%20%20%20%20customer%20%3D%20(1%2C%20_('Customer'))%0A%20%20%20%20%20%20%20%20supplier%20%3D%20(2%2C%20_('Supplier'))%0A%20%20%20%20%20%20%20%20student%20%3D%20(3%2C%20_('Student'))%0A%20%20%20%20.%0A%20%20%20%20.%0A%20%20%20%20.%0A%20%20%20%20type%20%3D%20models.CharField(choices%3DTypeList.choices%2C%20default%3D1)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-19",
       "sectionId": "s3",
       "title": "To%20access%20the%20ChoiceField%20value%20in%20the%20template%2C%20we%20need%20to%20do%20the%20following%20in%20the%20template%3A",
-      "kind": "text",
-      "body": "%E2%80%A2%20In%20Django%20templates%20you%20can%20use%20the%20%22%60get_FOO_display()%60%22%20method%2C%20that%20will%20return%20the%20readable%20alias%20for%20the%20field%2C",
+      "body": "%E2%80%A2%20In%20Django%20templates%20you%20can%20use%20the%20%22%60get_FOO_display()%60%22%20method%2C%20that%20will%20return%20the%20readable%20alias%20for%20the%20field%2C%0A%0Awhere%20%60'FOO'%60%20is%20the%20name%20of%20the%20field.%0A%0A%E2%80%A2%20If%20the%20choices%20are%20stored%20in%20the%20variable%20%60CHOICES%60%20and%20the%20model%20field%20storing%20the%20selected%20choice%20is%20%60'type'%60%20then%0A%0Ayou%20can%20directly%20use%0A%0A%60%60%60html%0A%3C!--%20Here%2C%20X%20is%20the%20model%20instance%20--%3E%0A%7B%7B%20X.get_type_display%20%7D%7D%0A%0A%3C!--%20You%20can%20even%20use%20this%20method%20to%20display%20its%20translation.%20--%3E%0A%7B%25%20trans%20X.get_type_display%20%25%7D%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s3-20",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "where `'FOO'` is the name of the field."
-    },
-    {
-      "id": "s3-21",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• If the choices are stored in the variable `CHOICES` and the model field storing the selected choice is `'type'` then"
-    },
-    {
-      "id": "s3-22",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "you can directly use"
-    },
-    {
-      "id": "s3-23",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<!-- Here, X is the model instance -->\n{{ X.get_type_display }}\n\n<!-- You can even use this method to display its translation. -->\n{% trans X.get_type_display %}"
     },
     {
       "id": "s3-24",
       "sectionId": "s3",
       "title": "Relationship%20between%20models",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20One-to-Many%3A%20(use%20double%20quotes%20if%20the%20entity%20is%20not%20yet%20declare)%20ex.%20%22Supplier%22%0Asupplier%20%3D%20models.ForeignKey(Supplier%2C%20blank%3DTrue%2C%20null%3DTrue%2C%20on_delete%3Dmodels.CASCADE%2Crelated_name%3D%22supplierother%22)%0A%0A%23%20on_delete%20can%20be%20set%20to%20models.CASCADE%2C%20models.ST_DEFAULT%20or%20models.SET_NULL%0A%23%20The%20related_name%20attribute%20specifies%20the%20name%20of%20the%20reverse%20relation%20from%20the%20supplier%20model%20back%20to%20your%20model%0A%0A%23%20Many-to-Many%3A%0Atags%20%3D%20models.ManyToManyField(Tag%2C%20blank%3DTrue)%0A%0A%23%20One%20to%20One%0AUser%20%3D%20models.OneToOneField(User%2C%20on_delete%3Dmodels.CASCADE)%0A%0A%23%20Overwrite%20save%20method%0Adef%20save(self%2C%20(*args%2C%20**kwargs)%3A%0A%20%20%20%20if%20not%20self.slug%3A%0A%20%20%20%20%20%20%20%20self.slug%20%3D%20slugify(self.title)%0A%20%20%20%20super().save(*args%2C%20**kwargs)",
+      "body": "%60%60%60python%0A%23%20One-to-Many%3A%20(use%20double%20quotes%20if%20the%20entity%20is%20not%20yet%20declare)%20ex.%20%22Supplier%22%0Asupplier%20%3D%20models.ForeignKey(Supplier%2C%20blank%3DTrue%2C%20null%3DTrue%2C%20on_delete%3Dmodels.CASCADE%2Crelated_name%3D%22supplierother%22)%0A%0A%23%20on_delete%20can%20be%20set%20to%20models.CASCADE%2C%20models.ST_DEFAULT%20or%20models.SET_NULL%0A%23%20The%20related_name%20attribute%20specifies%20the%20name%20of%20the%20reverse%20relation%20from%20the%20supplier%20model%20back%20to%20your%20model%0A%0A%23%20Many-to-Many%3A%0Atags%20%3D%20models.ManyToManyField(Tag%2C%20blank%3DTrue)%0A%0A%23%20One%20to%20One%0AUser%20%3D%20models.OneToOneField(User%2C%20on_delete%3Dmodels.CASCADE)%0A%0A%23%20Overwrite%20save%20method%0Adef%20save(self%2C%20(*args%2C%20**kwargs)%3A%0A%20%20%20%20if%20not%20self.slug%3A%0A%20%20%20%20%20%20%20%20self.slug%20%3D%20slugify(self.title)%0A%20%20%20%20super().save(*args%2C%20**kwargs)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-25",
       "sectionId": "s4",
-      "title": "Field Lookups",
-      "kind": "text",
-      "body": "In Django, the `field__lookuptype` syntax is used to perform lookups on fields in queries. The `field` represents the\nname of the field you want to perform the lookup on, and `lookuptype` represents the type of lookup you want to perform."
-    },
-    {
-      "id": "s4-26",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "For example, let's say you have a model called `Book` with a field called `title` . You can use the `field__lookuptype`\nsyntax to perform different types of lookups on the `title` field."
-    },
-    {
-      "id": "s4-27",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Here are a few examples:"
-    },
-    {
-      "id": "s4-28",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "\n# 1. Exact Match Lookup:\nBook.objects.filter(title__exact='Python Tricks')\n# 2. Case-insensitive Lookup:\nBook.objects.filter(title__iexact='python tricks')\n# 3. Contains Lookup:\nBook.objects.filter(title__contains='Python')\n# 4. Startswith Lookup:\nBook.objects.filter(title__startswith='Python')\n# 5. Endswith Lookup:\nBook.objects.filter(title__endswith='Tricks')"
+      "title": "Field%20Lookups",
+      "body": "In%20Django%2C%20the%20%60field__lookuptype%60%20syntax%20is%20used%20to%20perform%20lookups%20on%20fields%20in%20queries.%20The%20%60field%60%20represents%20the%0Aname%20of%20the%20field%20you%20want%20to%20perform%20the%20lookup%20on%2C%20and%20%60lookuptype%60%20represents%20the%20type%20of%20lookup%20you%20want%20to%20perform.%0A%0AFor%20example%2C%20let's%20say%20you%20have%20a%20model%20called%20%60Book%60%20with%20a%20field%20called%20%60title%60%20.%20You%20can%20use%20the%20%60field__lookuptype%60%0Asyntax%20to%20perform%20different%20types%20of%20lookups%20on%20the%20%60title%60%20field.%0A%0AHere%20are%20a%20few%20examples%3A%0A%0A%60%60%60python%0A%0A%23%201.%20Exact%20Match%20Lookup%3A%0ABook.objects.filter(title__exact%3D'Python%20Tricks')%0A%23%202.%20Case-insensitive%20Lookup%3A%0ABook.objects.filter(title__iexact%3D'python%20tricks')%0A%23%203.%20Contains%20Lookup%3A%0ABook.objects.filter(title__contains%3D'Python')%0A%23%204.%20Startswith%20Lookup%3A%0ABook.objects.filter(title__startswith%3D'Python')%0A%23%205.%20Endswith%20Lookup%3A%0ABook.objects.filter(title__endswith%3D'Tricks')%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-29",
       "sectionId": "s4",
       "title": "Field Lookups Reference",
-      "kind": "text",
       "body": "| Keyword        | Description                                      |\n| -------------- | :----------------------------------------------- |\n| `contains`     | Contains the phrase                              |\n| `icontains`    | Same as contains, but case-insensitive           |\n| `date`         | Matches a date                                   |\n| `day`          | Matches a date (day of month, 1-31) (for dates)  |\n| `endswith`     | Ends with                                        |\n| `iendswith`    | Same as endswidth, but case-insensitive          |\n| `exact`        | An exact match                                   |\n| `iexact`       | Same as exact, but case-insensitive              |\n| `in`           | Matches one of the values                        |\n| `isnull`       | Matches NULL values                              |\n| `gt`           | Greater than                                     |\n| `gte`          | Greater than, or equal to                        |\n| `hour`         | Matches an hour (for datetimes)                  |\n| `lt`           | Less than                                        |\n| `lte`          | Less than, or equal to                           |\n| `minute`       | Matches a minute (for datetimes)                 |\n| `month`        | Matches a month (for dates)                      |\n| `quarter`      | Matches a quarter of the year (1-4) (for dates)  |\n| `range`        | Match between                                    |\n| `regex`        | Matches a regular expression                     |\n| `iregex`       | Same as regex, but case-insensitive              |\n| `second`       | Matches a second (for datetimes)                 |\n| `startswith`   | Starts with                                      |\n| `istartswith`  | Same as startswith, but case-insensitive         |\n| `time`         | Matches a time (for datetimes)                   |\n| `week`         | Matches a week number (1-53) (for dates)         |\n| `week_day`     | Matches a day of week (1-7) 1 is Sunday          |\n| `iso_week_day` | Matches a ISO 8601 day of week (1-7) 1 is Monday |\n| `year`         | Matches a year (for dates)                       |\n| `iso_year`     | Matches an ISO 8601 year (for dates)             |"
     },
     {
       "id": "s4-30",
       "sectionId": "s4",
-      "title": "Admin Panel",
-      "kind": "text",
-      "body": "Every Django projects come with an Admin Panel that can be open at /admin url (ex: localhost:8000/admin)<br> To display\nthe model in the Admin panel register the model in the app_name/admin.py file<br> For each models you can specify the\nfields you want to use</small>"
-    },
-    {
-      "id": "s4-31",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20django.contrib%20import%20admin%0Afrom%20app_name.models%20import%20Blog%0A%0A%23%20Custom%20model%20Admin%20(admin.py)%3A%0A%40admin.register(Blog)%20%20%20%23%20Register%20app%0Aclass%20BlogAdmin(admin.ModelAdmin)%0A%20%20%20%20fields%20%3D%20(%22title%22%2C%20%22description%22)%20%23%20Fields%20to%20use%20for%20add%2Fedit%2Fshow%20page%0A%20%20%20%20list_display%20%3D%20(%22title%22%2C%20%22description%22)%20%23%20fields%20to%20display%20in%20search%20page%0A%20%20%20%20list_display_links%20%3D%20(%22title%22%2C)%20%23%20fields%20that%20will%20be%20a%20link%20in%20search%20page%0A%20%20%20%20ordering%20%3D%20(%22date_created%22%2C)%20%23%20Ordering%20allowed%20in%20the%20search%20page%0A%20%20%20%20search_fields%20%3D%20(%22title%22%2C%20%22description%22)%20%23%20Search%20fields%20allowed%20in%20the%20search%20page%0A%20%20%20%20list_filter%20%3D(%22title%22%2C)%20%23%20define%20list%20filters%20that%20appear%20in%20the%20right%20sidebar",
+      "title": "Admin%20Panel",
+      "body": "Every%20Django%20projects%20come%20with%20an%20Admin%20Panel%20that%20can%20be%20open%20at%20%2Fadmin%20url%20(ex%3A%20localhost%3A8000%2Fadmin)%3Cbr%3E%20To%20display%0Athe%20model%20in%20the%20Admin%20panel%20register%20the%20model%20in%20the%20app_name%2Fadmin.py%20file%3Cbr%3E%20For%20each%20models%20you%20can%20specify%20the%0Afields%20you%20want%20to%20use%3C%2Fsmall%3E%0A%0A%60%60%60python%0Afrom%20django.contrib%20import%20admin%0Afrom%20app_name.models%20import%20Blog%0A%0A%23%20Custom%20model%20Admin%20(admin.py)%3A%0A%40admin.register(Blog)%20%20%20%23%20Register%20app%0Aclass%20BlogAdmin(admin.ModelAdmin)%0A%20%20%20%20fields%20%3D%20(%22title%22%2C%20%22description%22)%20%23%20Fields%20to%20use%20for%20add%2Fedit%2Fshow%20page%0A%20%20%20%20list_display%20%3D%20(%22title%22%2C%20%22description%22)%20%23%20fields%20to%20display%20in%20search%20page%0A%20%20%20%20list_display_links%20%3D%20(%22title%22%2C)%20%23%20fields%20that%20will%20be%20a%20link%20in%20search%20page%0A%20%20%20%20ordering%20%3D%20(%22date_created%22%2C)%20%23%20Ordering%20allowed%20in%20the%20search%20page%0A%20%20%20%20search_fields%20%3D%20(%22title%22%2C%20%22description%22)%20%23%20Search%20fields%20allowed%20in%20the%20search%20page%0A%20%20%20%20list_filter%20%3D(%22title%22%2C)%20%23%20define%20list%20filters%20that%20appear%20in%20the%20right%20sidebar%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-32",
       "sectionId": "s4",
       "title": "Routing",
-      "kind": "text",
-      "body": "Django routing info is store in project_folder/urls.py file"
-    },
-    {
-      "id": "s4-33",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "from django.contrib import admin\nfrom django.urls import path, include\n\nurlpatterns = [\n    path('admin/', admin.site.urls), # pre-created admin urls routes\n    path('', include('app_name.urls')) # include your app urls\n]"
-    },
-    {
-      "id": "s4-34",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "The 'include()' method allow to link another urls.py file created in your app folder (app_name/urls.py)"
-    },
-    {
-      "id": "s4-35",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "from django.urls import path\nfrom app_name import views\n\nurlpatterns = [\n    path('posts', views.index, name='posts.index'),\n    path('posts/create/', views.create, name='posts.create',\n    path('posts/<int:id>/', views.show, name='posts.show'),\n    path('posts/<int:id>/edit/', views.edit, name='posts.edit'),\n    path('posts/<int:id>/delete/', views.delete, name='posts.delete'),\n    path('posts/<int:id>/<int:state>/', views.status, name='posts.status'), # two arguments\n]"
+      "body": "Django%20routing%20info%20is%20store%20in%20project_folder%2Furls.py%20file%0A%0A%60%60%60python%0Afrom%20django.contrib%20import%20admin%0Afrom%20django.urls%20import%20path%2C%20include%0A%0Aurlpatterns%20%3D%20%5B%0A%20%20%20%20path('admin%2F'%2C%20admin.site.urls)%2C%20%23%20pre-created%20admin%20urls%20routes%0A%20%20%20%20path(''%2C%20include('app_name.urls'))%20%23%20include%20your%20app%20urls%0A%5D%0A%60%60%60%0A%0AThe%20'include()'%20method%20allow%20to%20link%20another%20urls.py%20file%20created%20in%20your%20app%20folder%20(app_name%2Furls.py)%0A%0A%60%60%60python%0Afrom%20django.urls%20import%20path%0Afrom%20app_name%20import%20views%0A%0Aurlpatterns%20%3D%20%5B%0A%20%20%20%20path('posts'%2C%20views.index%2C%20name%3D'posts.index')%2C%0A%20%20%20%20path('posts%2Fcreate%2F'%2C%20views.create%2C%20name%3D'posts.create'%2C%0A%20%20%20%20path('posts%2F%3Cint%3Aid%3E%2F'%2C%20views.show%2C%20name%3D'posts.show')%2C%0A%20%20%20%20path('posts%2F%3Cint%3Aid%3E%2Fedit%2F'%2C%20views.edit%2C%20name%3D'posts.edit')%2C%0A%20%20%20%20path('posts%2F%3Cint%3Aid%3E%2Fdelete%2F'%2C%20views.delete%2C%20name%3D'posts.delete')%2C%0A%20%20%20%20path('posts%2F%3Cint%3Aid%3E%2F%3Cint%3Astate%3E%2F'%2C%20views.status%2C%20name%3D'posts.status')%2C%20%23%20two%20arguments%0A%5D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s5-36",
       "sectionId": "s5",
-      "title": "Customizing Admin Panel",
-      "kind": "text",
-      "body": "Header and Title admin panel & Custom `404`, `500`, and `503` Template"
-    },
-    {
-      "id": "s5-37",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "# add in project/urls.py\nfrom django.contrib import admin\nfrom django.conf import settings\nfrom django.conf.urls.static import static\n\nurlpatterns = [  ...  ]\n\nif settings.DEBUG == True:\n    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)\n    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\n\n# Customize Admin Panel Header & Title\nadmin.site.site_header = _('Administrator Control Panel')\nadmin.site.site_title = _('Administrator Control Panel')\nadmin.site.index_title = _('Wellcome to Control Panel')\n\n# Costomize 404 Template page\nhandler404 = 'app_name.views.handler404'\nhandler500 = 'app_name.views.handler500'\nhandler503 = 'app_name.views.handler503'"
+      "title": "Customizing%20Admin%20Panel",
+      "body": "Header%20and%20Title%20admin%20panel%20%26%20Custom%20%60404%60%2C%20%60500%60%2C%20and%20%60503%60%20Template%0A%0A%60%60%60python%0A%23%20add%20in%20project%2Furls.py%0Afrom%20django.contrib%20import%20admin%0Afrom%20django.conf%20import%20settings%0Afrom%20django.conf.urls.static%20import%20static%0A%0Aurlpatterns%20%3D%20%5B%20%20...%20%20%5D%0A%0Aif%20settings.DEBUG%20%3D%3D%20True%3A%0A%20%20%20%20urlpatterns%20%2B%3D%20static(settings.STATIC_URL%2C%20document_root%3Dsettings.STATIC_ROOT)%0A%20%20%20%20urlpatterns%20%2B%3D%20static(settings.MEDIA_URL%2C%20document_root%3Dsettings.MEDIA_ROOT)%0A%0A%23%20Customize%20Admin%20Panel%20Header%20%26%20Title%0Aadmin.site.site_header%20%3D%20_('Administrator%20Control%20Panel')%0Aadmin.site.site_title%20%3D%20_('Administrator%20Control%20Panel')%0Aadmin.site.index_title%20%3D%20_('Wellcome%20to%20Control%20Panel')%0A%0A%23%20Costomize%20404%20Template%20page%0Ahandler404%20%3D%20'app_name.views.handler404'%0Ahandler500%20%3D%20'app_name.views.handler500'%0Ahandler503%20%3D%20'app_name.views.handler503'%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-38",
       "sectionId": "s6",
-      "title": "Function Based Views",
-      "kind": "code",
-      "lang": "python",
-      "code": "# views.py\nfrom django.shortcuts import render, redirect\nfrom app_name.models import Post\nfrom app_name.forms import PostForm\n\ndef index(request):\n    # Get all Posts\n    posts = Post.objects.all()\n\n    # Render app template with context\n    return render(request, 'appfolder/index.html', {'posts': posts})\n\ndef show(request, id):\n    post = Post.objects.get(id=id)\n    return render(request, 'appfolder/show.html', {'post': post})\n\ndef create(request):\n    form = PostForm(request.POST or None, request.FILES or None)\n    # When the form contains an image or file field, we should use request.FILES\n    if form.is_valid():\n        # optionally we can access form data with form.cleaned_data['first_name']\n        post = form.save(commit=False)\n        post.user = request.user\n        post.save()\n        return redirect('/posts')\n\n    return render(request, 'appfolder/create.html', {'form': form)\n\ndef edit(request, id):\n    post = Post.objects.get(id=id)\n    form = PostForm(request.POST or None, request.FILES or None, instance=post)\n    if form.is_valid():\n        form.save()\n        return redirect('/posts')\n\n    return render(request, 'appfolder/edit.html', {'form': form)\n\ndef delete(request, id):\n    post = Post.objects.get(id=id)\n    post.delete()\n    return redirect('/posts')\n\ndef status(request, id, state):\n    post = Post.objects.get(id=id, state=state)\n    return redirect('appfolder/status.html', {'post': post})"
+      "title": "Function%20Based%20Views",
+      "body": "%60%60%60python%0A%23%20views.py%0Afrom%20django.shortcuts%20import%20render%2C%20redirect%0Afrom%20app_name.models%20import%20Post%0Afrom%20app_name.forms%20import%20PostForm%0A%0Adef%20index(request)%3A%0A%20%20%20%20%23%20Get%20all%20Posts%0A%20%20%20%20posts%20%3D%20Post.objects.all()%0A%0A%20%20%20%20%23%20Render%20app%20template%20with%20context%0A%20%20%20%20return%20render(request%2C%20'appfolder%2Findex.html'%2C%20%7B'posts'%3A%20posts%7D)%0A%0Adef%20show(request%2C%20id)%3A%0A%20%20%20%20post%20%3D%20Post.objects.get(id%3Did)%0A%20%20%20%20return%20render(request%2C%20'appfolder%2Fshow.html'%2C%20%7B'post'%3A%20post%7D)%0A%0Adef%20create(request)%3A%0A%20%20%20%20form%20%3D%20PostForm(request.POST%20or%20None%2C%20request.FILES%20or%20None)%0A%20%20%20%20%23%20When%20the%20form%20contains%20an%20image%20or%20file%20field%2C%20we%20should%20use%20request.FILES%0A%20%20%20%20if%20form.is_valid()%3A%0A%20%20%20%20%20%20%20%20%23%20optionally%20we%20can%20access%20form%20data%20with%20form.cleaned_data%5B'first_name'%5D%0A%20%20%20%20%20%20%20%20post%20%3D%20form.save(commit%3DFalse)%0A%20%20%20%20%20%20%20%20post.user%20%3D%20request.user%0A%20%20%20%20%20%20%20%20post.save()%0A%20%20%20%20%20%20%20%20return%20redirect('%2Fposts')%0A%0A%20%20%20%20return%20render(request%2C%20'appfolder%2Fcreate.html'%2C%20%7B'form'%3A%20form)%0A%0Adef%20edit(request%2C%20id)%3A%0A%20%20%20%20post%20%3D%20Post.objects.get(id%3Did)%0A%20%20%20%20form%20%3D%20PostForm(request.POST%20or%20None%2C%20request.FILES%20or%20None%2C%20instance%3Dpost)%0A%20%20%20%20if%20form.is_valid()%3A%0A%20%20%20%20%20%20%20%20form.save()%0A%20%20%20%20%20%20%20%20return%20redirect('%2Fposts')%0A%0A%20%20%20%20return%20render(request%2C%20'appfolder%2Fedit.html'%2C%20%7B'form'%3A%20form)%0A%0Adef%20delete(request%2C%20id)%3A%0A%20%20%20%20post%20%3D%20Post.objects.get(id%3Did)%0A%20%20%20%20post.delete()%0A%20%20%20%20return%20redirect('%2Fposts')%0A%0Adef%20status(request%2C%20id%2C%20state)%3A%0A%20%20%20%20post%20%3D%20Post.objects.get(id%3Did%2C%20state%3Dstate)%0A%20%20%20%20return%20redirect('appfolder%2Fstatus.html'%2C%20%7B'post'%3A%20post%7D)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-39",
       "sectionId": "s6",
       "title": "Class%20Based%20Views",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20django.views.generic%20import%20TemplateView%2C%20ListView%2C%20DetailView%2C%0A%20%20%20%20%20%20%20%20%20%20%20CreateView%2C%20UpdateView%2C%20DeleteView%0A%0Aclass%20LandingPageView(TemplateView)%3A%0A%20%20%20%20template_name%20%3D%20'landing.html'%0A%0A%20%20%20%20%23%20Optional%3A%20Change%20context%20data%20dict%0A%20%20%20%20def%20get_context_data(self%2C%20**kwargs)%3A%0A%20%20%20%20%20%20%20%20context%20%3D%20super().get_context_data(**kwargs)%0A%20%20%20%20%20%20%20%20context%5B'title'%5D%20%3D%20'Landing%20Page'%0A%20%20%20%20%20%20%20%20return%20context%0A%0A%0Aclass%20PostsListView(ListView)%3A%0A%20%20%20%20queryset%20%3D%20Post.objects.all()%0A%20%20%20%20%23%20Optional%0A%20%20%20%20%23%20context_object_name%20%3D%20%22posts%22%20(default%3A%20post_list)%0A%20%20%20%20%23%20template_name%20%3D%20'posts.html'%20(default%3A%20posts%2Fpost_list.html)%0A%0A%0Aclass%20PostsDetailView(DetailView)%3A%0A%20%20%20%20model%20%3D%20Post%20%23%20object%20var%20in%20template%0A%20%20%20%20%23%20Optional%0A%20%20%20%20%23%20template_name%20%3D%20'post.html'%20(default%3A%20posts%2Fpost_detail.html)%0A%0A%0Aclass%20PostsCreateView(CreateView)%3A%0A%20%20%20%20form_class%20%3D%20PostForm%0A%20%20%20%20template_name%20%3D%20'posts%2Fpost_create.html'%20%23%20no%20default%20value%0A%0A%20%20%20%20def%20get_success_url(self)%3A%0A%20%20%20%20%20%20%20%20return%20reverse('posts-list')%0A%0A%20%20%20%20%23%20Optional%3A%20Overwrite%20form%20data%20(before%20save)%0A%20%20%20%20def%20form_valid(self%2C%20form)%3A%0A%20%20%20%20%20%20%20%20if%20self.request.user.is_authenticated%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20from.instance.author%20%3D%20self.request.user%0A%20%20%20%20%20%20%20%20return%20super().form_valid(form)%0A%0A%0Aclass%20PostsUpdateView(UpdateView)%3A%0A%20%20%20%20model%20%3D%20Post%0A%20%20%20%20form_class%20%3D%20PostForm%0A%20%20%20%20template_name%20%3D%20'posts%2Fpost_update.html'%0A%0A%20%20%20%20def%20get_success_url(self)%3A%0A%20%20%20%20%20%20%20%20return%20reverse('post-list')%0A%0A%20%20%20%20%23%20Optional%3A%20Change%20context%20data%20dict%0A%20%20%20%20def%20get_context_data(self%2C%20**kwargs)%3A%0A%20%20%20%20%20%20%20%20context%20%3D%20super().get_context_data(**kwargs)%0A%20%20%20%20%20%20%20%20context%5B'submit_text'%5D%20%3D%20'Update'%0A%20%20%20%20%20%20%20%20return%20context%0A%0A%0Aclass%20PostsDeleteView(DeleteView)%3A%0A%20%20%20%20model%20%3D%20Post%0A%20%20%20%20template_name%20%3D%20'posts%2Fpost_delete.html'%0A%20%20%20%20success_url%20%3D%20reverse_lazy('posts-list')%0A%0A%23%20Urls.py%20route%20declaration%0Apath('%3Cint%3Apk%3E%2Fupdate%2F'%2C%20PostsUpdateView.as_view()%2C%20name%3D'post-update')",
+      "body": "%60%60%60python%0Afrom%20django.views.generic%20import%20TemplateView%2C%20ListView%2C%20DetailView%2C%0A%20%20%20%20%20%20%20%20%20%20%20CreateView%2C%20UpdateView%2C%20DeleteView%0A%0Aclass%20LandingPageView(TemplateView)%3A%0A%20%20%20%20template_name%20%3D%20'landing.html'%0A%0A%20%20%20%20%23%20Optional%3A%20Change%20context%20data%20dict%0A%20%20%20%20def%20get_context_data(self%2C%20**kwargs)%3A%0A%20%20%20%20%20%20%20%20context%20%3D%20super().get_context_data(**kwargs)%0A%20%20%20%20%20%20%20%20context%5B'title'%5D%20%3D%20'Landing%20Page'%0A%20%20%20%20%20%20%20%20return%20context%0A%0A%0Aclass%20PostsListView(ListView)%3A%0A%20%20%20%20queryset%20%3D%20Post.objects.all()%0A%20%20%20%20%23%20Optional%0A%20%20%20%20%23%20context_object_name%20%3D%20%22posts%22%20(default%3A%20post_list)%0A%20%20%20%20%23%20template_name%20%3D%20'posts.html'%20(default%3A%20posts%2Fpost_list.html)%0A%0A%0Aclass%20PostsDetailView(DetailView)%3A%0A%20%20%20%20model%20%3D%20Post%20%23%20object%20var%20in%20template%0A%20%20%20%20%23%20Optional%0A%20%20%20%20%23%20template_name%20%3D%20'post.html'%20(default%3A%20posts%2Fpost_detail.html)%0A%0A%0Aclass%20PostsCreateView(CreateView)%3A%0A%20%20%20%20form_class%20%3D%20PostForm%0A%20%20%20%20template_name%20%3D%20'posts%2Fpost_create.html'%20%23%20no%20default%20value%0A%0A%20%20%20%20def%20get_success_url(self)%3A%0A%20%20%20%20%20%20%20%20return%20reverse('posts-list')%0A%0A%20%20%20%20%23%20Optional%3A%20Overwrite%20form%20data%20(before%20save)%0A%20%20%20%20def%20form_valid(self%2C%20form)%3A%0A%20%20%20%20%20%20%20%20if%20self.request.user.is_authenticated%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20from.instance.author%20%3D%20self.request.user%0A%20%20%20%20%20%20%20%20return%20super().form_valid(form)%0A%0A%0Aclass%20PostsUpdateView(UpdateView)%3A%0A%20%20%20%20model%20%3D%20Post%0A%20%20%20%20form_class%20%3D%20PostForm%0A%20%20%20%20template_name%20%3D%20'posts%2Fpost_update.html'%0A%0A%20%20%20%20def%20get_success_url(self)%3A%0A%20%20%20%20%20%20%20%20return%20reverse('post-list')%0A%0A%20%20%20%20%23%20Optional%3A%20Change%20context%20data%20dict%0A%20%20%20%20def%20get_context_data(self%2C%20**kwargs)%3A%0A%20%20%20%20%20%20%20%20context%20%3D%20super().get_context_data(**kwargs)%0A%20%20%20%20%20%20%20%20context%5B'submit_text'%5D%20%3D%20'Update'%0A%20%20%20%20%20%20%20%20return%20context%0A%0A%0Aclass%20PostsDeleteView(DeleteView)%3A%0A%20%20%20%20model%20%3D%20Post%0A%20%20%20%20template_name%20%3D%20'posts%2Fpost_delete.html'%0A%20%20%20%20success_url%20%3D%20reverse_lazy('posts-list')%0A%0A%23%20Urls.py%20route%20declaration%0Apath('%3Cint%3Apk%3E%2Fupdate%2F'%2C%20PostsUpdateView.as_view()%2C%20name%3D'post-update')%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-40",
       "sectionId": "s7",
-      "title": "Basic Template",
-      "kind": "text",
-      "body": "Templates are store in `project_folder/templates` or in your <code>app_folder/templates/app_name/\\*.html</code>"
-    },
-    {
-      "id": "s7-41",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3C!--%20Extend%20from%20another%20template%20--%3E%0A%3C!--%20can%20use%20the%20same%20parts%20of%20your%20HTML%20for%20different%20template%20--%3E%0A%7B%25%20extends%20'base.html'%20%25%7D%0A%0A%3C!--%20A%20part%20of%20the%20parent%20template%20that%20is%20defined%20and%20is%20replaced%20by%20a%20part%20in%20the%20child%20template%20--%3E%0A%7B%25%20block%20contents%20%25%7D%20%7B%25%20endblock%20contents%20%25%7D%0A%0A%3C!--%20include%20template--%3E%0A%7B%25%20include%20'partials%2Fheader.html'%20%25%7D%0A%3C!--%20include%20template%20with%20One%20or%20More%20Parameters%20--%3E%0A%7B%25%20include%20'body.html'%20with%20key1%3Dvalue1%20key2%3Dvalue2%20%25%7D%0A%0A%3C!--%20If%20statement%20in%20template%20--%3E%0A%7B%25%20if%20user.username%20%3D%20'Mike'%20%25%7D%0A%3Cp%3EHello%20Admin%3C%2Fp%3E%0A%7B%25%20elif%20user.username%20%3D%20'john'%20%25%7D%0A%3Cp%3EHello%20John%20Doe%3C%2Fp%3E%0A%7B%25%20else%20%25%7D%0A%3Cp%3EHello%20User%3C%2Fp%3E%0A%7B%25%20endif%20%25%7D%0A%0A%3C!--%20for%20loop%20in%20template%20--%3E%0A%7B%25%20for%20product%20in%20products%20%25%7D%0A%3Cp%3Erow%3A%20%7B%7B%20forloop.counter%20%7D%7D%20%23%20starting%20index%201%20%7B%7B%20forloop.counter0%20%7D%7D%20%23%20starting%20index%200%3C%2Fp%3E%0A%3Cp%3EThe%20product%20name%20is%20%7B%7B%20product.name%20%7D%7D%3C%2Fp%3E%0A%3Cp%3E%3C%2Fp%3E%0A%3Cp%3EThe%20product%20name%20is%20%7B%7B%20product.price%20%7D%7D%3C%2Fp%3E%0A%3Cp%3E%0A%20%20%7B%25%20endfor%20%25%7D%0A%0A%20%20%3C!--%20Access%20to%20the%20variable%20in%20the%20template%20--%3E%0A%20%20%7B%7B%20var_name%20%7D%7D%0A%0A%20%20%3C!--%20Template%20variables%20formating%20%20--%3E%0A%20%20%7B%7B%20title%20%7C%20lower%20%7D%7D%20%7B%7B%20blog.post%20%7C%20truncatwords%3A50%20%7D%7D%20%7B%7B%20order.date%20%7C%20date%3A%22D%20M%20Y%22%20%7D%7D%20%7B%7B%20list_items%20%7C%20slice%3A%22%3A3%22%20%7D%7D%20%7B%7B%0A%20%20total%20%7C%20default%3A%22nil%22%20%7D%7D%0A%0A%20%20%3C!--%20Current%20path%20(ex.%20posts%2F1%2Fshow)%20--%3E%0A%20%20%7B%7B%20request.path%20%7D%7D%0A%0A%20%20%3C!--%20URL%20by%20name%20with%20param%20--%3E%0A%20%20%7B%25%20url%20'posts.delete'%20id%3Dpost.id%20%25%7D%0A%0A%20%20%3C!--%20Use%20static%20in%20template%3A%20--%3E%0A%20%20%7B%25%20load%20static%20%25%7D%20%7B%25%20static%20'css%2Fmain.css'%20%25%7D%0A%0A%20%20%3C!--%20Define%20the%20variable%20in%20the%20template%20--%3E%0A%20%20%7B%25%20with%20name%3D%22World%22%20%25%7D%0A%20%20%3Chtml%3E%0A%20%20%20%20%3Cdiv%3EHello%20%7B%7B%20name%20%7D%7D!%3C%2Fdiv%3E%0A%20%20%3C%2Fhtml%3E%0A%20%20%7B%25%20endwith%20%25%7D%0A%0A%20%20%3C!--%20Template%20translate%20text%20--%3E%0A%20%20%7B%25%20load%20i18n%20%25%7D%0A%20%20%3Ctitle%3E%7B%25%20trans%20%22This%20is%20the%20title.%22%20%25%7D%3C%2Ftitle%3E%0A%20%20%3C!--%20Use%20variable%20translate%20in%20the%20template%20--%3E%0A%20%20%3Ctitle%3E%7B%25%20trans%20object.title%20%25%7D%3C%2Ftitle%3E%0A%0A%20%20%3C!--%20Define%20the%20list%20in%20the%20template%20--%3E%0A%20%20%3Cinput%20type%3D%22number%22%20%7B%25%20if%20product.unit%20in%20'kg%2Cmilligram%2Cmilliliter'%20%25%7D%20step%3D%220.01%22%20%7B%25%20else%20%25%7D%20step%3D%221%22%20%7B%25%20endif%20%25%7D%3E%0A%0A%20%20%3C!--%20Safely%20Pass%20Data%20to%20JavaScript%20in%20a%20Django%20Template%3A%20--%3E%0A%20%20%3C!--%2B%20Use%20data%20attributes%20for%20simple%20values%20--%3E%0A%20%20%3Cscript%20data-username%3D%22%7B%7B%20username%20%7D%7D%22%3E%0A%20%20%20%20const%20data%20%3D%20document.currentScript.dataset%3B%0A%20%20%20%20const%20username%20%3D%20data.username%3B%0A%20%20%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%2B%20Separate%20script%20files%3A%20can%20use%20document.currentScript%20for%20separate%20script%20files%20--%3E%0A%20%20%3Cscript%20src%3D%22%7B%25%20static%20'index.js'%20%25%7D%22%20data-username%3D%22%7B%7B%20username%20%7D%7D%22%3E%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%2B%20Case%20conversion%20--%3E%0A%20%20%3Cscript%20src%3D%22%7B%25%20static%20'index.js'%20%25%7D%22%20data-full-name%3D%22%7B%7B%20full_name%20%7D%7D%22%3E%3C%2Fscript%3E%0A%20%20%3C!--%20%20Read%20it%20in%20JavaScript%20as%20fullName%3A%20--%3E%0A%20%20%3Cscript%3E%0A%20%20%20%20const%20data%20%3D%20document.currentScript.dataset%3B%0A%20%20%20%20const%20fullName%20%3D%20data.fullName%3B%0A%20%20%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%2B%20Non-string%20types%20--%3E%0A%20%20%3Cscript%20src%3D%22%7B%25%20static%20'index.js'%20%25%7D%22%20data-follower-count%3D%22%7B%7B%20follower_count%20%7D%7D%22%3E%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%20parseInt()%20to%20convert%20this%20value%20from%20a%20string%3A%20--%3E%0A%20%20%3Cscript%3E%0A%20%20%20%20const%20data%20%3D%20document.currentScript.dataset%3B%0A%20%20%20%20const%20followerCount%20%3D%20parseInt(data.followerCount%2C%2010)%3B%0A%20%20%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%2B%20There%E2%80%99s%20no%20limit%3A%20A%20%3Cscript%3E%20can%20have%20as%20many%20data%20attributes%20as%20you%20like%3A%20--%3E%0A%20%20%3Cscript%0A%20%20%20%20src%3D%22%7B%25%20static%20'index.js'%20%25%7D%22%0A%20%20%20%20defer%0A%20%20%20%20data-settings-url%3D%22%7B%25%20url%20'settings'%20%25%7D%22%0A%20%20%20%20data-configuration-url%3D%22%7B%25%20url%20'configuration'%20%25%7D%22%0A%20%20%20%20data-options-url%3D%22%7B%25%20url%20'options'%20%25%7D%22%0A%20%20%20%20data-preferences-url%3D%22%7B%25%20url%20'preferences'%20%25%7D%22%0A%20%20%20%20data-setup-url%3D%22%7B%25%20url%20'setup'%20%25%7D%22%0A%20%20%3E%3C%2Fscript%3E%0A%3C%2Fp%3E",
+      "title": "Basic%20Template",
+      "body": "Templates%20are%20store%20in%20%60project_folder%2Ftemplates%60%20or%20in%20your%20%3Ccode%3Eapp_folder%2Ftemplates%2Fapp_name%2F%5C*.html%3C%2Fcode%3E%0A%0A%60%60%60html%0A%3C!--%20Extend%20from%20another%20template%20--%3E%0A%3C!--%20can%20use%20the%20same%20parts%20of%20your%20HTML%20for%20different%20template%20--%3E%0A%7B%25%20extends%20'base.html'%20%25%7D%0A%0A%3C!--%20A%20part%20of%20the%20parent%20template%20that%20is%20defined%20and%20is%20replaced%20by%20a%20part%20in%20the%20child%20template%20--%3E%0A%7B%25%20block%20contents%20%25%7D%20%7B%25%20endblock%20contents%20%25%7D%0A%0A%3C!--%20include%20template--%3E%0A%7B%25%20include%20'partials%2Fheader.html'%20%25%7D%0A%3C!--%20include%20template%20with%20One%20or%20More%20Parameters%20--%3E%0A%7B%25%20include%20'body.html'%20with%20key1%3Dvalue1%20key2%3Dvalue2%20%25%7D%0A%0A%3C!--%20If%20statement%20in%20template%20--%3E%0A%7B%25%20if%20user.username%20%3D%20'Mike'%20%25%7D%0A%3Cp%3EHello%20Admin%3C%2Fp%3E%0A%7B%25%20elif%20user.username%20%3D%20'john'%20%25%7D%0A%3Cp%3EHello%20John%20Doe%3C%2Fp%3E%0A%7B%25%20else%20%25%7D%0A%3Cp%3EHello%20User%3C%2Fp%3E%0A%7B%25%20endif%20%25%7D%0A%0A%3C!--%20for%20loop%20in%20template%20--%3E%0A%7B%25%20for%20product%20in%20products%20%25%7D%0A%3Cp%3Erow%3A%20%7B%7B%20forloop.counter%20%7D%7D%20%23%20starting%20index%201%20%7B%7B%20forloop.counter0%20%7D%7D%20%23%20starting%20index%200%3C%2Fp%3E%0A%3Cp%3EThe%20product%20name%20is%20%7B%7B%20product.name%20%7D%7D%3C%2Fp%3E%0A%3Cp%3E%3C%2Fp%3E%0A%3Cp%3EThe%20product%20name%20is%20%7B%7B%20product.price%20%7D%7D%3C%2Fp%3E%0A%3Cp%3E%0A%20%20%7B%25%20endfor%20%25%7D%0A%0A%20%20%3C!--%20Access%20to%20the%20variable%20in%20the%20template%20--%3E%0A%20%20%7B%7B%20var_name%20%7D%7D%0A%0A%20%20%3C!--%20Template%20variables%20formating%20%20--%3E%0A%20%20%7B%7B%20title%20%7C%20lower%20%7D%7D%20%7B%7B%20blog.post%20%7C%20truncatwords%3A50%20%7D%7D%20%7B%7B%20order.date%20%7C%20date%3A%22D%20M%20Y%22%20%7D%7D%20%7B%7B%20list_items%20%7C%20slice%3A%22%3A3%22%20%7D%7D%20%7B%7B%0A%20%20total%20%7C%20default%3A%22nil%22%20%7D%7D%0A%0A%20%20%3C!--%20Current%20path%20(ex.%20posts%2F1%2Fshow)%20--%3E%0A%20%20%7B%7B%20request.path%20%7D%7D%0A%0A%20%20%3C!--%20URL%20by%20name%20with%20param%20--%3E%0A%20%20%7B%25%20url%20'posts.delete'%20id%3Dpost.id%20%25%7D%0A%0A%20%20%3C!--%20Use%20static%20in%20template%3A%20--%3E%0A%20%20%7B%25%20load%20static%20%25%7D%20%7B%25%20static%20'css%2Fmain.css'%20%25%7D%0A%0A%20%20%3C!--%20Define%20the%20variable%20in%20the%20template%20--%3E%0A%20%20%7B%25%20with%20name%3D%22World%22%20%25%7D%0A%20%20%3Chtml%3E%0A%20%20%20%20%3Cdiv%3EHello%20%7B%7B%20name%20%7D%7D!%3C%2Fdiv%3E%0A%20%20%3C%2Fhtml%3E%0A%20%20%7B%25%20endwith%20%25%7D%0A%0A%20%20%3C!--%20Template%20translate%20text%20--%3E%0A%20%20%7B%25%20load%20i18n%20%25%7D%0A%20%20%3Ctitle%3E%7B%25%20trans%20%22This%20is%20the%20title.%22%20%25%7D%3C%2Ftitle%3E%0A%20%20%3C!--%20Use%20variable%20translate%20in%20the%20template%20--%3E%0A%20%20%3Ctitle%3E%7B%25%20trans%20object.title%20%25%7D%3C%2Ftitle%3E%0A%0A%20%20%3C!--%20Define%20the%20list%20in%20the%20template%20--%3E%0A%20%20%3Cinput%20type%3D%22number%22%20%7B%25%20if%20product.unit%20in%20'kg%2Cmilligram%2Cmilliliter'%20%25%7D%20step%3D%220.01%22%20%7B%25%20else%20%25%7D%20step%3D%221%22%20%7B%25%20endif%20%25%7D%3E%0A%0A%20%20%3C!--%20Safely%20Pass%20Data%20to%20JavaScript%20in%20a%20Django%20Template%3A%20--%3E%0A%20%20%3C!--%2B%20Use%20data%20attributes%20for%20simple%20values%20--%3E%0A%20%20%3Cscript%20data-username%3D%22%7B%7B%20username%20%7D%7D%22%3E%0A%20%20%20%20const%20data%20%3D%20document.currentScript.dataset%3B%0A%20%20%20%20const%20username%20%3D%20data.username%3B%0A%20%20%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%2B%20Separate%20script%20files%3A%20can%20use%20document.currentScript%20for%20separate%20script%20files%20--%3E%0A%20%20%3Cscript%20src%3D%22%7B%25%20static%20'index.js'%20%25%7D%22%20data-username%3D%22%7B%7B%20username%20%7D%7D%22%3E%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%2B%20Case%20conversion%20--%3E%0A%20%20%3Cscript%20src%3D%22%7B%25%20static%20'index.js'%20%25%7D%22%20data-full-name%3D%22%7B%7B%20full_name%20%7D%7D%22%3E%3C%2Fscript%3E%0A%20%20%3C!--%20%20Read%20it%20in%20JavaScript%20as%20fullName%3A%20--%3E%0A%20%20%3Cscript%3E%0A%20%20%20%20const%20data%20%3D%20document.currentScript.dataset%3B%0A%20%20%20%20const%20fullName%20%3D%20data.fullName%3B%0A%20%20%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%2B%20Non-string%20types%20--%3E%0A%20%20%3Cscript%20src%3D%22%7B%25%20static%20'index.js'%20%25%7D%22%20data-follower-count%3D%22%7B%7B%20follower_count%20%7D%7D%22%3E%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%20parseInt()%20to%20convert%20this%20value%20from%20a%20string%3A%20--%3E%0A%20%20%3Cscript%3E%0A%20%20%20%20const%20data%20%3D%20document.currentScript.dataset%3B%0A%20%20%20%20const%20followerCount%20%3D%20parseInt(data.followerCount%2C%2010)%3B%0A%20%20%3C%2Fscript%3E%0A%0A%20%20%3C!--%20%2B%20There%E2%80%99s%20no%20limit%3A%20A%20%3Cscript%3E%20can%20have%20as%20many%20data%20attributes%20as%20you%20like%3A%20--%3E%0A%20%20%3Cscript%0A%20%20%20%20src%3D%22%7B%25%20static%20'index.js'%20%25%7D%22%0A%20%20%20%20defer%0A%20%20%20%20data-settings-url%3D%22%7B%25%20url%20'settings'%20%25%7D%22%0A%20%20%20%20data-configuration-url%3D%22%7B%25%20url%20'configuration'%20%25%7D%22%0A%20%20%20%20data-options-url%3D%22%7B%25%20url%20'options'%20%25%7D%22%0A%20%20%20%20data-preferences-url%3D%22%7B%25%20url%20'preferences'%20%25%7D%22%0A%20%20%20%20data-setup-url%3D%22%7B%25%20url%20'setup'%20%25%7D%22%0A%20%20%3E%3C%2Fscript%3E%0A%3C%2Fp%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-42",
       "sectionId": "s7",
       "title": "Custom Template Tags and Filters",
-      "kind": "text",
-      "body": "For example, if your custom tags/filters are in a file called `basetags.py`, your app layout might look like this:"
-    },
-    {
-      "id": "s7-43",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "app_name/\n└─── templatetags/\n     └─── basetags.py\n     __init__.py\n     models.py\n     views.py"
-    },
-    {
-      "id": "s7-44",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "• And in your template you would use the following:"
-    },
-    {
-      "id": "s7-45",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "{% load basetags %}"
-    },
-    {
-      "id": "s7-46",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "• the module must contain a module-level variable named register that is a template.Library instance, in which all the"
-    },
-    {
-      "id": "s7-47",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "tags and filters are registered. So, near the top of your module, put the following:"
+      "body": "For example, if your custom tags/filters are in a file called `basetags.py`, your app layout might look like this:\n\n```\napp_name/\n└─── templatetags/\n     └─── basetags.py\n     __init__.py\n     models.py\n     views.py\n```\n\n• And in your template you would use the following:\n\n```html\n{% load basetags %}\n```\n\n• the module must contain a module-level variable named register that is a template.Library instance, in which all the\n\ntags and filters are registered. So, near the top of your module, put the following:"
     },
     {
       "id": "s7-48",
       "sectionId": "s7",
       "title": "Writing%20custom%20template%20filters",
-      "kind": "text",
-      "body": "Custom%20filters%20are%20Python%20functions%20that%20take%20one%20or%20two%20arguments%3A%20The%20value%20of%20the%20variable%20(input)%20%E2%80%93%20not%20necessarily%0Aa%20string.%20The%20value%20of%20the%20argument%20%E2%80%93%20this%20can%20have%20a%20default%20value%2C%20or%20be%20left%20out%20altogether.%20For%20example%2C%20in%20the%0Afilter%20%60%7B%7B%20var%7Cfoo%3A%22bar%22%20%7D%7D%60%2C%20the%20filter%20foo%20would%20be%20passed%20the%20variable%20var%20and%20the%20argument%20%22bar%22.",
-      "encoded": true
-    },
-    {
-      "id": "s7-49",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "The Library.filter() method takes two arguments: The name of the filter – a string. The compilation function – a Python\nfunction (not the name of the function as a string). You can use register.filter() as a decorator instead:"
-    },
-    {
-      "id": "s7-50",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20basetags.py%0Afrom%20django%20import%20template%0A%0Aregister%20%3D%20template.Library()%0A%0A%40register.filter(name%3D%22cut%22)%0Adef%20cut(value%2C%20arg)%3A%0A%20%20%20%20%22%22%22Removes%20all%20values%20of%20arg%20from%20the%20given%20string%22%22%22%0A%20%20%20%20return%20value.replace(arg%2C%20%22%22)%0A%0A%23%20Most%20filters%20don%E2%80%99t%20take%20arguments.%20In%20this%20case%2C%20leave%20the%20argument%20out%20of%20your%20function%0A%40register.filter()%0Adef%20lower(value)%3A%20%23%20Only%20one%20argument.%0A%20%20%20%20%22%22%22Converts%20a%20string%20into%20all%20lowercase%22%22%22%0A%20%20%20%20return%20value.lower()%0A%0A%0A%40register.simple_tag%0Adef%20to_class_name(object)%3A%0A%20%20%20%20return%20str(object.__class__.__name__)%0A%0A%23%20Template%0A%23%20And%20here%E2%80%99s%20an%20example%20of%20how%20that%20filter%20would%20be%20used%20in%20Template%3A%0A%7B%7B%20somevariable%20%7C%20cut%3A%220%22%20%7D%7D%0A%0A%23%20Put%20the%20result%20of%20simple%20tag%20into%20a%20variable%0A%7B%25%20to_class_name%20object%20as%20objectmodel%20%25%7D%0A%3Cp%3EModel%20Class%20Name%3A%20%7B%7B%20objectmodel%20%7D%7D%3C%2Fp%3E",
+      "body": "Custom%20filters%20are%20Python%20functions%20that%20take%20one%20or%20two%20arguments%3A%20The%20value%20of%20the%20variable%20(input)%20%E2%80%93%20not%20necessarily%0Aa%20string.%20The%20value%20of%20the%20argument%20%E2%80%93%20this%20can%20have%20a%20default%20value%2C%20or%20be%20left%20out%20altogether.%20For%20example%2C%20in%20the%0Afilter%20%60%7B%7B%20var%7Cfoo%3A%22bar%22%20%7D%7D%60%2C%20the%20filter%20foo%20would%20be%20passed%20the%20variable%20var%20and%20the%20argument%20%22bar%22.%0A%0AThe%20Library.filter()%20method%20takes%20two%20arguments%3A%20The%20name%20of%20the%20filter%20%E2%80%93%20a%20string.%20The%20compilation%20function%20%E2%80%93%20a%20Python%0Afunction%20(not%20the%20name%20of%20the%20function%20as%20a%20string).%20You%20can%20use%20register.filter()%20as%20a%20decorator%20instead%3A%0A%0A%60%60%60python%0A%23%20basetags.py%0Afrom%20django%20import%20template%0A%0Aregister%20%3D%20template.Library()%0A%0A%40register.filter(name%3D%22cut%22)%0Adef%20cut(value%2C%20arg)%3A%0A%20%20%20%20%22%22%22Removes%20all%20values%20of%20arg%20from%20the%20given%20string%22%22%22%0A%20%20%20%20return%20value.replace(arg%2C%20%22%22)%0A%0A%23%20Most%20filters%20don%E2%80%99t%20take%20arguments.%20In%20this%20case%2C%20leave%20the%20argument%20out%20of%20your%20function%0A%40register.filter()%0Adef%20lower(value)%3A%20%23%20Only%20one%20argument.%0A%20%20%20%20%22%22%22Converts%20a%20string%20into%20all%20lowercase%22%22%22%0A%20%20%20%20return%20value.lower()%0A%0A%0A%40register.simple_tag%0Adef%20to_class_name(object)%3A%0A%20%20%20%20return%20str(object.__class__.__name__)%0A%0A%23%20Template%0A%23%20And%20here%E2%80%99s%20an%20example%20of%20how%20that%20filter%20would%20be%20used%20in%20Template%3A%0A%7B%7B%20somevariable%20%7C%20cut%3A%220%22%20%7D%7D%0A%0A%23%20Put%20the%20result%20of%20simple%20tag%20into%20a%20variable%0A%7B%25%20to_class_name%20object%20as%20objectmodel%20%25%7D%0A%3Cp%3EModel%20Class%20Name%3A%20%7B%7B%20objectmodel%20%7D%7D%3C%2Fp%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-51",
       "sectionId": "s8",
-      "title": "Creating custom Context Processor",
-      "kind": "text",
-      "body": "Anywhere, create a `context_processors.py` file"
-    },
-    {
-      "id": "s8-52",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "project_name\n└───app_name\n    ├───...\n    └───context_processors.pyy"
-    },
-    {
-      "id": "s8-53",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "Create a function in context_processors.py that accepts a HttpRequest object as an argument and returns a dictionary"
-    },
-    {
-      "id": "s8-54",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "A context processor is just a function that accepts an HttpRequest object as an argument and returns a dictionary. Like\nthis:"
-    },
-    {
-      "id": "s8-55",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "# app_name/context_processors.py\ndef site_email(request):\n    return { 'site_email' : 'example@gmail.com' }"
-    },
-    {
-      "id": "s8-56",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "• Add this to your context_processors setting in settings.py (at the bottom for security reasons)"
-    },
-    {
-      "id": "s8-57",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": " TEMPLATES = [\n    { …\n        'OPTIONS': {\n          'context_processors': [\n            …\n              'app_name.context_processors.site_email',\n              # New context processor here\n            …\n          ],\n    … },\n\n# Now be able to access the 'site_email' template variable on every single django template across your whole site."
+      "title": "Creating%20custom%20Context%20Processor",
+      "body": "Anywhere%2C%20create%20a%20%60context_processors.py%60%20file%0A%0A%60%60%60%0Aproject_name%0A%E2%94%94%E2%94%80%E2%94%80%E2%94%80app_name%0A%20%20%20%20%E2%94%9C%E2%94%80%E2%94%80%E2%94%80...%0A%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80context_processors.pyy%0A%60%60%60%0A%0ACreate%20a%20function%20in%20context_processors.py%20that%20accepts%20a%20HttpRequest%20object%20as%20an%20argument%20and%20returns%20a%20dictionary%0A%0AA%20context%20processor%20is%20just%20a%20function%20that%20accepts%20an%20HttpRequest%20object%20as%20an%20argument%20and%20returns%20a%20dictionary.%20Like%0Athis%3A%0A%0A%60%60%60python%0A%23%20app_name%2Fcontext_processors.py%0Adef%20site_email(request)%3A%0A%20%20%20%20return%20%7B%20'site_email'%20%3A%20'example%40gmail.com'%20%7D%0A%60%60%60%0A%0A%E2%80%A2%20Add%20this%20to%20your%20context_processors%20setting%20in%20settings.py%20(at%20the%20bottom%20for%20security%20reasons)%0A%0A%60%60%60python%0A%20TEMPLATES%20%3D%20%5B%0A%20%20%20%20%7B%20%E2%80%A6%0A%20%20%20%20%20%20%20%20'OPTIONS'%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20'context_processors'%3A%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%E2%80%A6%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20'app_name.context_processors.site_email'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20New%20context%20processor%20here%0A%20%20%20%20%20%20%20%20%20%20%20%20%E2%80%A6%0A%20%20%20%20%20%20%20%20%20%20%5D%2C%0A%20%20%20%20%E2%80%A6%20%7D%2C%0A%0A%23%20Now%20be%20able%20to%20access%20the%20'site_email'%20template%20variable%20on%20every%20single%20django%20template%20across%20your%20whole%20site.%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-58",
       "sectionId": "s9",
-      "title": "Model Manager",
-      "kind": "text",
-      "body": "Model manager allow model database reads and writes"
-    },
-    {
-      "id": "s9-59",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "# One line create and save\nArticle.objects.create(name='Item 1', price=19.95)\n\n# Read all\nArticle.objects.all()\n\n# Create\nuser = User.objects.first()\narticle = Article(user=user, name='Item 1', price=19.95)\n\n# Save\narticle.save()\n\n# Read one\nArticle.objects.get(id=1)\n\n# Select Related (to avoid n+1 query)\nposts = Post.objects.select_related('user', 'category').all()\n\n# Read or render a 404 not found page\nfrom django.shortcuts import get_object_or_404\narticle = get_object_or_404(Article, id=512)\n\n# Filter\nArticle.objects.filter(model='dyson', name__icontains='dyson') # __icontains\nArticle.objects.filter(year__gt=2016) # __gt = greater than\nArticle.objects.filter(year__lt=2001) # __lt = less than\n\n# Filter on relationship sub model field\nArticle.objects.get(user__username='mike')\n\n# Ordering\nArticle.objects.order_by('name')     # ascending\nArticle.objects.order_by('-name')   # descending\n\n# Slicing return first\nArticle.objects.all().order_by('name')[0]\n\n# Slicing return last\nArticle.objects.all().order_by('-name')[0]\n\n# Slicing limit/offset\nArticle.objects.all().order_by('name')[1..10]\n\n# Updating\narticle = Article.objects.first()\narticle.name = 'new name'\narticle.save()\n\n# One line update\nArticle.objects.filter(id=4).update(name='new name')\n\n# Deleting\narticle = Article.objects.first()\narticle.delete()\n\n# One line delete\narticle.objects.get(id=1).delete()\n\n# Delete all\nArticle.objects.all().delete()\n\n# Set ForeignKey field value\nmodel1 = Model(name='dyson')\narticle.model = model1\n\n# Get ForeignKey value\narticle1.model.name\nmodel1.article_set.all()\n\n# Add Many-to-Many\narticle1.tags.add(tag1)\narticle1.tags.all()\ntag1.articles_set.all()"
+      "title": "Model%20Manager",
+      "body": "Model%20manager%20allow%20model%20database%20reads%20and%20writes%0A%0A%60%60%60python%0A%23%20One%20line%20create%20and%20save%0AArticle.objects.create(name%3D'Item%201'%2C%20price%3D19.95)%0A%0A%23%20Read%20all%0AArticle.objects.all()%0A%0A%23%20Create%0Auser%20%3D%20User.objects.first()%0Aarticle%20%3D%20Article(user%3Duser%2C%20name%3D'Item%201'%2C%20price%3D19.95)%0A%0A%23%20Save%0Aarticle.save()%0A%0A%23%20Read%20one%0AArticle.objects.get(id%3D1)%0A%0A%23%20Select%20Related%20(to%20avoid%20n%2B1%20query)%0Aposts%20%3D%20Post.objects.select_related('user'%2C%20'category').all()%0A%0A%23%20Read%20or%20render%20a%20404%20not%20found%20page%0Afrom%20django.shortcuts%20import%20get_object_or_404%0Aarticle%20%3D%20get_object_or_404(Article%2C%20id%3D512)%0A%0A%23%20Filter%0AArticle.objects.filter(model%3D'dyson'%2C%20name__icontains%3D'dyson')%20%23%20__icontains%0AArticle.objects.filter(year__gt%3D2016)%20%23%20__gt%20%3D%20greater%20than%0AArticle.objects.filter(year__lt%3D2001)%20%23%20__lt%20%3D%20less%20than%0A%0A%23%20Filter%20on%20relationship%20sub%20model%20field%0AArticle.objects.get(user__username%3D'mike')%0A%0A%23%20Ordering%0AArticle.objects.order_by('name')%20%20%20%20%20%23%20ascending%0AArticle.objects.order_by('-name')%20%20%20%23%20descending%0A%0A%23%20Slicing%20return%20first%0AArticle.objects.all().order_by('name')%5B0%5D%0A%0A%23%20Slicing%20return%20last%0AArticle.objects.all().order_by('-name')%5B0%5D%0A%0A%23%20Slicing%20limit%2Foffset%0AArticle.objects.all().order_by('name')%5B1..10%5D%0A%0A%23%20Updating%0Aarticle%20%3D%20Article.objects.first()%0Aarticle.name%20%3D%20'new%20name'%0Aarticle.save()%0A%0A%23%20One%20line%20update%0AArticle.objects.filter(id%3D4).update(name%3D'new%20name')%0A%0A%23%20Deleting%0Aarticle%20%3D%20Article.objects.first()%0Aarticle.delete()%0A%0A%23%20One%20line%20delete%0Aarticle.objects.get(id%3D1).delete()%0A%0A%23%20Delete%20all%0AArticle.objects.all().delete()%0A%0A%23%20Set%20ForeignKey%20field%20value%0Amodel1%20%3D%20Model(name%3D'dyson')%0Aarticle.model%20%3D%20model1%0A%0A%23%20Get%20ForeignKey%20value%0Aarticle1.model.name%0Amodel1.article_set.all()%0A%0A%23%20Add%20Many-to-Many%0Aarticle1.tags.add(tag1)%0Aarticle1.tags.all()%0Atag1.articles_set.all()%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s10-60",
       "sectionId": "s10",
-      "title": "Form creation",
-      "kind": "text",
-      "body": "In HTML, a form is a collection of elements inside `<form>...</form>` that allow a visitor to do things like enter text,\nselect options, manipulate objects or controls, and so on, and then send that information back to the server."
-    },
-    {
-      "id": "s10-61",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20app_name%2Fforms.py%0Afrom%20django%20import%20forms%0Aclass%20ArticleForm(forms.Form)%3A%0A%20%20%20%20name%20%3D%20forms.Charfield(max_length%3D100)%0A%20%20%20%20description%20%3D%20forms.Charfield(blank%3DTrue%2C%20null%20%3D%20True)%0A%0A%0A%23%20Model%20Form%0Afrom%20django.forms%20import%20ModelForm%0Afrom%20app_name.models%20import%20Article%0Aclass%20ArticleForm(ModelForm)%3A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20Article%0A%20%20%20%20%20%20%20%20fields%20%3D%20%5B'name'%2C%20'description'%2C%20'price'%5D%20%23%20Use%20'__all__'%20for%20all%20fields%0A%20%20%20%20%20%20%20%20widgets%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'name'%3A%20forms.TextInput(attrs%3D%7B'class'%3A%20'form-control'%7D)%2C%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20labels%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'name'%3A%20'First%20Name'%2C%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20error_messages%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'name'%3A%20%7B'required'%3A%20'This%20field%20is%20required'%2C%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20help_texts%20%3D%20%7B%0A%20%20%20%20%20%20%20%20'name'%3A%20'Enter%20Your%20First%20Name'%2C%0A%20%20%20%20%20%20%20%20%7D%0A%0A%3C!--%20Render%20form%20in%20template%20--%3E%0A%3Cform%20method%3D%22%E2%80%9Cpost%E2%80%9D%22%20action%3D%22%E2%80%9C%E2%80%9D%22%20novalidate%3E%0A%20%20%7B%25%20csrf_token%20%25%7D%20%7B%7B%20form%20%7D%7D%0A%20%20%3Cbutton%20type%3D%22submit%22%3ESubmit%3C%2Fbutton%3E%0A%3C%2Fform%3E",
-      "encoded": true
-    },
-    {
-      "id": "s10-62",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "%E2%80%A2%20NOTE%3A%20If%20the%20form%20contains%20a%20file%20field%2C%20your%20form%20MUST%20contain%20%60enctype%3D%22multipart%2Fform-data%22%60%2C%20eg%3A",
-      "encoded": true
-    },
-    {
-      "id": "s10-63",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Cform%20action%3D%22%22%20method%3D%22post%22%20enctype%3D%22multipart%2Fform-data%22%3E%0A%20%20%7B%25%20csrf_token%20%25%7D%20%7B%7B%20form.as_p%20%7D%7D%0A%20%20%3Cbutton%20type%3D%22submit%22%3E%7B%25%20trans%20'Submit'%20%25%7D%3C%2Fbutton%3E%0A%3C%2Fform%3E",
-      "encoded": true
-    },
-    {
-      "id": "s10-64",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "##### A Tailwind CSS template pack for the wonderful django-crispy-forms."
-    },
-    {
-      "id": "s10-65",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "pip%20install%20crispy-tailwind%0A%0A%23%20settings.py%0AINSTALLED_APPS%20%3D%20(%0A%20%20%20%20...%0A%20%20%20%20%22crispy_forms%22%2C%0A%20%20%20%20%22crispy_tailwind%22%2C%0A%20%20%20%20...%0A)%0ACRISPY_ALLOWED_TEMPLATE_PACKS%20%3D%20'tailwind'%0ACRISPY_TEMPLATE_PACK%20%3D%20'tailwind'%0A%0A%3C!--%20template%20usage%20--%3E%0A%7B%25%20load%20tailwind_filters%20%25%7D%20%7B%7B%20form%7Ccrispy%20%7D%7D",
+      "title": "Form%20creation",
+      "body": "In%20HTML%2C%20a%20form%20is%20a%20collection%20of%20elements%20inside%20%60%3Cform%3E...%3C%2Fform%3E%60%20that%20allow%20a%20visitor%20to%20do%20things%20like%20enter%20text%2C%0Aselect%20options%2C%20manipulate%20objects%20or%20controls%2C%20and%20so%20on%2C%20and%20then%20send%20that%20information%20back%20to%20the%20server.%0A%0A%60%60%60python%0A%23%20app_name%2Fforms.py%0Afrom%20django%20import%20forms%0Aclass%20ArticleForm(forms.Form)%3A%0A%20%20%20%20name%20%3D%20forms.Charfield(max_length%3D100)%0A%20%20%20%20description%20%3D%20forms.Charfield(blank%3DTrue%2C%20null%20%3D%20True)%0A%0A%0A%23%20Model%20Form%0Afrom%20django.forms%20import%20ModelForm%0Afrom%20app_name.models%20import%20Article%0Aclass%20ArticleForm(ModelForm)%3A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20Article%0A%20%20%20%20%20%20%20%20fields%20%3D%20%5B'name'%2C%20'description'%2C%20'price'%5D%20%23%20Use%20'__all__'%20for%20all%20fields%0A%20%20%20%20%20%20%20%20widgets%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'name'%3A%20forms.TextInput(attrs%3D%7B'class'%3A%20'form-control'%7D)%2C%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20labels%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'name'%3A%20'First%20Name'%2C%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20error_messages%20%3D%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'name'%3A%20%7B'required'%3A%20'This%20field%20is%20required'%2C%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20help_texts%20%3D%20%7B%0A%20%20%20%20%20%20%20%20'name'%3A%20'Enter%20Your%20First%20Name'%2C%0A%20%20%20%20%20%20%20%20%7D%0A%60%60%60%0A%0A%60%60%60html%0A%3C!--%20Render%20form%20in%20template%20--%3E%0A%3Cform%20method%3D%22%E2%80%9Cpost%E2%80%9D%22%20action%3D%22%E2%80%9C%E2%80%9D%22%20novalidate%3E%0A%20%20%7B%25%20csrf_token%20%25%7D%20%7B%7B%20form%20%7D%7D%0A%20%20%3Cbutton%20type%3D%22submit%22%3ESubmit%3C%2Fbutton%3E%0A%3C%2Fform%3E%0A%60%60%60%0A%0A%E2%80%A2%20NOTE%3A%20If%20the%20form%20contains%20a%20file%20field%2C%20your%20form%20MUST%20contain%20%60enctype%3D%22multipart%2Fform-data%22%60%2C%20eg%3A%0A%0A%60%60%60html%0A%3Cform%20action%3D%22%22%20method%3D%22post%22%20enctype%3D%22multipart%2Fform-data%22%3E%0A%20%20%7B%25%20csrf_token%20%25%7D%20%7B%7B%20form.as_p%20%7D%7D%0A%20%20%3Cbutton%20type%3D%22submit%22%3E%7B%25%20trans%20'Submit'%20%25%7D%3C%2Fbutton%3E%0A%3C%2Fform%3E%0A%60%60%60%0A%0A%23%23%23%23%23%20A%20Tailwind%20CSS%20template%20pack%20for%20the%20wonderful%20django-crispy-forms.%0A%0A%60%60%60bash%0Apip%20install%20crispy-tailwind%0A%60%60%60%0A%0A%60%60%60python%0A%23%20settings.py%0AINSTALLED_APPS%20%3D%20(%0A%20%20%20%20...%0A%20%20%20%20%22crispy_forms%22%2C%0A%20%20%20%20%22crispy_tailwind%22%2C%0A%20%20%20%20...%0A)%0ACRISPY_ALLOWED_TEMPLATE_PACKS%20%3D%20'tailwind'%0ACRISPY_TEMPLATE_PACK%20%3D%20'tailwind'%0A%60%60%60%0A%0A%60%60%60html%0A%3C!--%20template%20usage%20--%3E%0A%7B%25%20load%20tailwind_filters%20%25%7D%20%7B%7B%20form%7Ccrispy%20%7D%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s10-66",
       "sectionId": "s10",
-      "title": "Form Validation",
-      "kind": "code",
-      "lang": "python",
-      "code": "# forms.py\nfrom django.core.exceptions import ValidationError\n\n# field validation\ndef clean_first_name(self):\n    data = self.cleaned_data['first_name']\n    if data = 'Mike':\n        raise ValidationError('Your name must not be Mike')\n    return data\n\n# form validation\ndef clean(self):\n    first_name = self.cleaned_data['first_name']\n    last_name = self.cleaned_data['last_name']\n    if first_name + last_name = 'MikeTaylor':\n        raise ValidationError('Your name must not be Mike Taylor')"
+      "title": "Form%20Validation",
+      "body": "%60%60%60python%0A%23%20forms.py%0Afrom%20django.core.exceptions%20import%20ValidationError%0A%0A%23%20field%20validation%0Adef%20clean_first_name(self)%3A%0A%20%20%20%20data%20%3D%20self.cleaned_data%5B'first_name'%5D%0A%20%20%20%20if%20data%20%3D%20'Mike'%3A%0A%20%20%20%20%20%20%20%20raise%20ValidationError('Your%20name%20must%20not%20be%20Mike')%0A%20%20%20%20return%20data%0A%0A%23%20form%20validation%0Adef%20clean(self)%3A%0A%20%20%20%20first_name%20%3D%20self.cleaned_data%5B'first_name'%5D%0A%20%20%20%20last_name%20%3D%20self.cleaned_data%5B'last_name'%5D%0A%20%20%20%20if%20first_name%20%2B%20last_name%20%3D%20'MikeTaylor'%3A%0A%20%20%20%20%20%20%20%20raise%20ValidationError('Your%20name%20must%20not%20be%20Mike%20Taylor')%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s11-67",
       "sectionId": "s11",
-      "title": "Displaying messages",
-      "kind": "code",
-      "lang": "python",
-      "code": "# Message tags\n# debug, info, success, warning and error\n\nmessages.success(request, 'Login successful')\nmessages.error(request, 'Login error')\n\n<!-- Display flash messages in template -->\n{% if messages %} {% for message in messages %} {% message %} {% message.tags %}\n{% endfor %} {% endif %}"
+      "title": "Displaying%20messages",
+      "body": "%60%60%60python%0A%23%20Message%20tags%0A%23%20debug%2C%20info%2C%20success%2C%20warning%20and%20error%0A%0Amessages.success(request%2C%20'Login%20successful')%0Amessages.error(request%2C%20'Login%20error')%0A%60%60%60%0A%0A%60%60%60html%0A%3C!--%20Display%20flash%20messages%20in%20template%20--%3E%0A%7B%25%20if%20messages%20%25%7D%20%7B%25%20for%20message%20in%20messages%20%25%7D%20%7B%25%20message%20%25%7D%20%7B%25%20message.tags%20%25%7D%0A%7B%25%20endfor%20%25%7D%20%7B%25%20endif%20%25%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s12-68",
       "sectionId": "s12",
       "title": "Pre-created",
-      "kind": "text",
-      "body": "User Model (pre-created)"
-    },
-    {
-      "id": "s12-69",
-      "sectionId": "s12",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "# Get a reference to Django pre-created User model\nfrom django.contrib.auth import get_user_model\n\nUser = get_user_model()\n\n# Or if you want to custom user model\nfrom django.contrib.auth.models import AbstractUser\n\nclass User(AbstractUser):\n    # add custom fields and methods\n\n# To make Django use that model go to settings.py and add: AUTH_USER_MODEL = 'app_name.User'"
+      "body": "User%20Model%20(pre-created)%0A%0A%60%60%60python%0A%23%20Get%20a%20reference%20to%20Django%20pre-created%20User%20model%0Afrom%20django.contrib.auth%20import%20get_user_model%0A%0AUser%20%3D%20get_user_model()%0A%0A%23%20Or%20if%20you%20want%20to%20custom%20user%20model%0Afrom%20django.contrib.auth.models%20import%20AbstractUser%0A%0Aclass%20User(AbstractUser)%3A%0A%20%20%20%20%23%20add%20custom%20fields%20and%20methods%0A%0A%23%20To%20make%20Django%20use%20that%20model%20go%20to%20settings.py%20and%20add%3A%20AUTH_USER_MODEL%20%3D%20'app_name.User'%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s13-70",
       "sectionId": "s13",
       "title": "Authentication%20%3A%20LoginView",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20LoginView%20is%20already%20pre-created%20by%20Django%0Afrom%20django.contrib.auth.views%20import%20LoginView%0A%0A%23%20Add%20a%20url%20to%20reach%20that%20view%0Apath('login%2F'%2C%20LoginView.as_view()%2C%20name%3D'login')%0A%0A%23%20By%20default%20the%20LoginView%20will%20try%20to%20open%20a%20template%20name%20'registration%2Flogin.html'%20and%20send%20a%20login%20form%20with%20it.%0A%0A%3C!--%20Create%20a%20template%20under%20registration%2Flogin.html%20--%3E%0A%7B%25%20extends%20%22base.html%22%20%25%7D%20%7B%25%20block%20content%20%25%7D%0A%3Cform%20method%3D%22post%22%3E%0A%20%20%7B%25%20csrf_token%20%25%7D%20%7B%7B%20form%20%7D%7D%0A%20%20%3Cbutton%20type%3D%22submit%22%3ELogin%3C%2Fbutton%3E%0A%3C%2Fform%3E%0A%7B%25%20endblock%20content%20%25%7D%0A%0A%3C!--%20When%20user%20click%20the%20Login%20button%2C%20the%20LoginView%20will%20try%20to%20authenticate%20the%20user%20with%20the%20form%20username%20ans%20password%20--%3E%0A%0A%3C!--%20If%20successful%20il%20will%20then%20login%20the%20user%20and%20redirect%20to%20LOGIN_REDIRECT_URL%20specified%20in%20your%20settings.py%20--%3E",
+      "body": "%60%60%60python%0A%23%20LoginView%20is%20already%20pre-created%20by%20Django%0Afrom%20django.contrib.auth.views%20import%20LoginView%0A%0A%23%20Add%20a%20url%20to%20reach%20that%20view%0Apath('login%2F'%2C%20LoginView.as_view()%2C%20name%3D'login')%0A%0A%23%20By%20default%20the%20LoginView%20will%20try%20to%20open%20a%20template%20name%20'registration%2Flogin.html'%20and%20send%20a%20login%20form%20with%20it.%0A%60%60%60%0A%0A%60%60%60html%0A%3C!--%20Create%20a%20template%20under%20registration%2Flogin.html%20--%3E%0A%7B%25%20extends%20%22base.html%22%20%25%7D%20%7B%25%20block%20content%20%25%7D%0A%3Cform%20method%3D%22post%22%3E%0A%20%20%7B%25%20csrf_token%20%25%7D%20%7B%7B%20form%20%7D%7D%0A%20%20%3Cbutton%20type%3D%22submit%22%3ELogin%3C%2Fbutton%3E%0A%3C%2Fform%3E%0A%7B%25%20endblock%20content%20%25%7D%0A%0A%3C!--%20When%20user%20click%20the%20Login%20button%2C%20the%20LoginView%20will%20try%20to%20authenticate%20the%20user%20with%20the%20form%20username%20ans%20password%20--%3E%0A%0A%3C!--%20If%20successful%20il%20will%20then%20login%20the%20user%20and%20redirect%20to%20LOGIN_REDIRECT_URL%20specified%20in%20your%20settings.py%20--%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s13-71",
       "sectionId": "s13",
       "title": "Authentication%20%3A%20LogoutView",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20LogoutView%20is%20already%20pre-created%20by%20Django%0Afrom%20django.contrib.auth.views%20import%20LogoutView%0A%0A%23%20Add%20a%20url%20to%20reach%20that%20view%0Apath('logout%2F'%2C%20LoginView.as_view()%2C%20name%3D'logout')%0A%0A%23%20Include%20a%20link%20in%20a%20template%0A%3Ca%3E%20href%3D%22%7B%25%20url%20'logout'%20%25%7D%22%3ELogout%3C%2Fa%3E%0A%0A%23%20After%20link%20is%20execute%2C%20the%20user%20will%20be%20logout%20and%20redirect%20to%20LOGOUT_REDIRECT_URL%20specified%20in%20your%20settings.py",
+      "body": "%60%60%60python%0A%23%20LogoutView%20is%20already%20pre-created%20by%20Django%0Afrom%20django.contrib.auth.views%20import%20LogoutView%0A%0A%23%20Add%20a%20url%20to%20reach%20that%20view%0Apath('logout%2F'%2C%20LoginView.as_view()%2C%20name%3D'logout')%0A%0A%23%20Include%20a%20link%20in%20a%20template%0A%3Ca%3E%20href%3D%22%7B%25%20url%20'logout'%20%25%7D%22%3ELogout%3C%2Fa%3E%0A%0A%23%20After%20link%20is%20execute%2C%20the%20user%20will%20be%20logout%20and%20redirect%20to%20LOGOUT_REDIRECT_URL%20specified%20in%20your%20settings.py%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s13-72",
       "sectionId": "s13",
       "title": "Authentication%20%3A%20SignupView",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20Create%20a%20SignupView%20(that%20view%20is%20not%20created%20by%20default)%0A%23%20import%20sinupview%20form%20pre-created%20by%20Django%0Afrom%20django.contrib.auth.forms%20import%20UserCreationForm%0Afrom%20django.views.generic%20import%20CreateView%0A%0Aclass%20SignupView(CreateView)%3A%0A%20%20%20%20template_name%20%3D%20'registration%2Fsignup.html'%0A%20%20%20%20form_class%20%3D%20UserCreationForm%0A%0A%20%20%20%20def%20get_success_url(self)%3A%0A%20%20%20%20%20%20%20%20return%20reverse(%22login%22)%0A%0A%3C!--%20Create%20template%3A%20registration%2Fsignup.html%20--%3E%0A%7B%25%20extends%20%22base.html%22%20%25%7D%20%7B%25%20block%20content%20%25%7D%0A%3Cform%20method%3D%22post%22%3E%0A%20%20%7B%25%20csrf_token%20%25%7D%20%7B%7B%20form%20%7D%7D%0A%20%20%3Cbutton%20type%3D%22submit%22%3ESignup%3C%2Fbutton%3E%0A%3C%2Fform%3E%0A%7B%25%20endblock%20content%20%25%7D%0A%0A%23%20Add%20a%20url%20to%20reach%20that%20view%0Afrom%20posts.views%20import%20SignupView%0A%0Apath('signup%2F'%2C%20SignupView.as_view()%2C%20name%3D'signup')%0A%0A%23%20Optional%3A%20Customize%20the%20UserCreationForm%0A%23%20(forms.py)%0Afrom%20django.contrib.auth%20import%20get_user_model%0Afrom%20django.contrib.auth.forms%20import%20UserCreationForm%0A%0AUser%20%3D%20get_user_model()%0Aclass%20CustomUserCreationForm(UserCreattionForm)%3A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20%5B'username'%5D%0A%20%20%20%20%20%20%20%20fields_classes%20%3D%20%7B'username'%3A%20UsernameField%7D",
+      "body": "%60%60%60python%0A%23%20Create%20a%20SignupView%20(that%20view%20is%20not%20created%20by%20default)%0A%23%20import%20sinupview%20form%20pre-created%20by%20Django%0Afrom%20django.contrib.auth.forms%20import%20UserCreationForm%0Afrom%20django.views.generic%20import%20CreateView%0A%0Aclass%20SignupView(CreateView)%3A%0A%20%20%20%20template_name%20%3D%20'registration%2Fsignup.html'%0A%20%20%20%20form_class%20%3D%20UserCreationForm%0A%0A%20%20%20%20def%20get_success_url(self)%3A%0A%20%20%20%20%20%20%20%20return%20reverse(%22login%22)%0A%60%60%60%0A%0A%60%60%60html%0A%3C!--%20Create%20template%3A%20registration%2Fsignup.html%20--%3E%0A%7B%25%20extends%20%22base.html%22%20%25%7D%20%7B%25%20block%20content%20%25%7D%0A%3Cform%20method%3D%22post%22%3E%0A%20%20%7B%25%20csrf_token%20%25%7D%20%7B%7B%20form%20%7D%7D%0A%20%20%3Cbutton%20type%3D%22submit%22%3ESignup%3C%2Fbutton%3E%0A%3C%2Fform%3E%0A%7B%25%20endblock%20content%20%25%7D%0A%60%60%60%0A%0A%60%60%60python%0A%23%20Add%20a%20url%20to%20reach%20that%20view%0Afrom%20posts.views%20import%20SignupView%0A%0Apath('signup%2F'%2C%20SignupView.as_view()%2C%20name%3D'signup')%0A%60%60%60%0A%0A%60%60%60python%0A%23%20Optional%3A%20Customize%20the%20UserCreationForm%0A%23%20(forms.py)%0Afrom%20django.contrib.auth%20import%20get_user_model%0Afrom%20django.contrib.auth.forms%20import%20UserCreationForm%0A%0AUser%20%3D%20get_user_model()%0Aclass%20CustomUserCreationForm(UserCreattionForm)%3A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20%5B'username'%5D%0A%20%20%20%20%20%20%20%20fields_classes%20%3D%20%7B'username'%3A%20UsernameField%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s13-73",
       "sectionId": "s13",
-      "title": "Optional pre-created Authentication routes",
-      "kind": "code",
-      "lang": "python",
-      "code": "# urls.py\nurlpatterns += path('', include('django.contrib.auth.urls'))\n# /login, /lougout, /signup, etc."
+      "title": "Optional%20pre-created%20Authentication%20routes",
+      "body": "%60%60%60python%0A%23%20urls.py%0Aurlpatterns%20%2B%3D%20path(''%2C%20include('django.contrib.auth.urls'))%0A%23%20%2Flogin%2C%20%2Flougout%2C%20%2Fsignup%2C%20etc.%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s13-74",
       "sectionId": "s13",
       "title": "Template%20Authentication%20helpers",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3C!--%20Authentication%20links%20--%3E%0A%3Ca%20href%3D%22%7B%25%20url%20'login'%20%25%7D%22%3ELogin%3C%2Fa%3E%0A%3Ca%20href%3D%22%7B%25%20url%20'signup'%20%25%7D%22%3ESignup%3C%2Fa%3E%0A%3Ca%20href%3D%22%7B%25%20url%20'logout'%20%25%7D%22%3ELogout%3C%2Fa%3E%0A%0A%3C!--%20Check%20if%20user%20login%20--%3E%0A%7B%25%20if%20request.user.is_authenticated%20%25%7D%20Logged%20in%20as%3A%20%7B%7B%20request.user.username%20%7D%7D%0A%7B%25%20endif%20%25%7D",
+      "body": "%60%60%60html%0A%3C!--%20Authentication%20links%20--%3E%0A%3Ca%20href%3D%22%7B%25%20url%20'login'%20%25%7D%22%3ELogin%3C%2Fa%3E%0A%3Ca%20href%3D%22%7B%25%20url%20'signup'%20%25%7D%22%3ESignup%3C%2Fa%3E%0A%3Ca%20href%3D%22%7B%25%20url%20'logout'%20%25%7D%22%3ELogout%3C%2Fa%3E%0A%0A%3C!--%20Check%20if%20user%20login%20--%3E%0A%7B%25%20if%20request.user.is_authenticated%20%25%7D%20Logged%20in%20as%3A%20%7B%7B%20request.user.username%20%7D%7D%0A%7B%25%20endif%20%25%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s13-75",
       "sectionId": "s13",
-      "title": "Authorization: LoginRequiredMixin and login_required",
-      "kind": "code",
-      "lang": "python",
-      "code": "from django.contrib.auth.mixins import LoginRequiredMixin\n\n# Restrict views to auth user only (views.py)\nclass PostsCreateView(LoginRequiredMixin, generic.CreateView):\n    ...\n    ...\n\n\nfrom django.contrib.auth.decorators import login_required\n\n@login_required(login_url='/login')\ndef search_page(request):\n    ...\n    ..."
+      "title": "Authorization%3A%20LoginRequiredMixin%20and%20login_required",
+      "body": "%60%60%60python%0Afrom%20django.contrib.auth.mixins%20import%20LoginRequiredMixin%0A%0A%23%20Restrict%20views%20to%20auth%20user%20only%20(views.py)%0Aclass%20PostsCreateView(LoginRequiredMixin%2C%20generic.CreateView)%3A%0A%20%20%20%20...%0A%20%20%20%20...%0A%0A%0Afrom%20django.contrib.auth.decorators%20import%20login_required%0A%0A%40login_required(login_url%3D'%2Flogin')%0Adef%20search_page(request)%3A%0A%20%20%20%20...%0A%20%20%20%20...%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s13-76",
       "sectionId": "s13",
       "title": "Manual%20Authentication%20%2C%20Login%20and%20Logout",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20django.contrib.auth%20import%20authenticate%2C%20login%0A%0Adef%20login_page(request)%3A%0A%20%20%20%20if%20request.method%20%3D%3D%20%22POST%22%3A%0A%20%20%20%20%20%20%20%20username%20%3D%20request.POST.get(%22username%22)%0A%20%20%20%20%20%20%20%20password%20%3D%20request.POST.get(%22password%22)%0A%20%20%20%20%20%20%20%20user%20%3D%20authenticate(request%2C%20username%3Dusername%2C%20password%3Dpassword)%0A%20%20%20%20%20%20%20%20if%20user%20is%20not%20None%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20login(request%2C%20user)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20redirect(%22index%22)%0A%0Areturn%20render(request%2C%20%22registration%2Flogin.html%22%2C%20%7B%7D)%0A%0A%0Adef%20logout_page(request)%3A%0A%20%20%20%20logout(request)%0A%20%20%20%20return%20redirect(%22index%22)",
+      "body": "%60%60%60python%0Afrom%20django.contrib.auth%20import%20authenticate%2C%20login%0A%0Adef%20login_page(request)%3A%0A%20%20%20%20if%20request.method%20%3D%3D%20%22POST%22%3A%0A%20%20%20%20%20%20%20%20username%20%3D%20request.POST.get(%22username%22)%0A%20%20%20%20%20%20%20%20password%20%3D%20request.POST.get(%22password%22)%0A%20%20%20%20%20%20%20%20user%20%3D%20authenticate(request%2C%20username%3Dusername%2C%20password%3Dpassword)%0A%20%20%20%20%20%20%20%20if%20user%20is%20not%20None%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20login(request%2C%20user)%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20redirect(%22index%22)%0A%0Areturn%20render(request%2C%20%22registration%2Flogin.html%22%2C%20%7B%7D)%0A%0A%0Adef%20logout_page(request)%3A%0A%20%20%20%20logout(request)%0A%20%20%20%20return%20redirect(%22index%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s13-77",
       "sectionId": "s13",
-      "title": "User Change password",
-      "kind": "code",
-      "lang": "python",
-      "code": "# set_password will hash the password\nuser.set_password('raw password')"
+      "title": "User%20Change%20password",
+      "body": "%60%60%60python%0A%23%20set_password%20will%20hash%20the%20password%0Auser.set_password('raw%20password')%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s14-78",
       "sectionId": "s14",
       "title": "Create%20Custom%20Accounts%20Model",
-      "kind": "code",
-      "lang": "python",
-      "code": "~%24%20python%20manage.py%20startapp%20accounts%0A%0A%23%20Add%20accounts%20app%20to%20settings.py%0AINSTALLED_APPS%20%3D%20%5B%20%E2%80%A6%20%2C%0A%20%20%20%20%20%20%20%20%20'accounts.apps.AccountsConfig'%2C%0A%20%20%20%20%20%20%20%20%20%20%5D%0A.%0A.%0A.%0AAUTH_USER_MODEL%20%3D%20'accounts.User'%0A%0A%23%20accounts%2Fmodels.py%0Afrom%20django.db%20import%20models%0Afrom%20django.contrib.auth.models%20import%20BaseUserManager%2C%20AbstractBaseUser%2C%20PermissionsMixin%0A%0Aclass%20UserManager(BaseUserManager)%3A%0A%20%20%20%20def%20create_user(self%2C%20username%2C%20email%2C%20password%3DNone%2C%20**extra_fields)%3A%0A%20%20%20%20%20%20%20%20if%20not%20username%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValueError('Users%20must%20have%20an%20username')%0A%20%20%20%20%20%20%20%20if%20not%20email%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValueError('Users%20must%20have%20an%20email')%0A%0A%20%20%20%20%20%20%20%20user%20%3D%20self.model(email%3Demail%2C%20**extra_fields)%0A%20%20%20%20%20%20%20%20user.set_password(password)%0A%20%20%20%20%20%20%20%20user.save(using%3Dself._db)%0A%20%20%20%20%20%20%20%20return%20user%0A%0A%20%20%20%20def%20create_superuser(self%2C%20username%2C%20%20email%2C%20password%3DNone%2C%20**extra_fields)%3A%0A%20%20%20%20%20%20%20%20extra_fields.setdefault('is_staff'%2C%20True)%0A%20%20%20%20%20%20%20%20extra_fields.setdefault('is_superuser'%2C%20True)%0A%20%20%20%20%20%20%20%20extra_fields.setdefault('is_active'%2C%20True)%0A%0A%20%20%20%20%20%20%20%20user%20%3D%20self.create_user(username%2C%20email%2C%20password%3Dpassword%2C%20**extra_fields)%0A%20%20%20%20%20%20%20%20user.save(using%3Dself._db)%0A%20%20%20%20%20%20%20%20return%20user%0A%0A%0Aclass%20User(AbstractBaseUser%2C%20PermissionsMixin)%3A%0A%20%20%20%20username%20%3D%20models.CharField(verbose_name%3D'Username'%2C%20max_length%3D255%2C%20unique%3DTrue)%0A%20%20%20%20email%20%3D%20models.EmailField(verbose_name%3D'email'%2C%20max_length%3D255%2C%20unique%3DTrue)%0A%20%20%20%20phone%20%3D%20models.BigIntegerField(verbose_name%3D'Phone%20Number'%2C%20unique%3DTrue%2C%20blank%3DTrue%2C%20null%3DTrue)%0A%20%20%20%20is_active%20%3D%20models.BooleanField(default%3DTrue%2C%20verbose_name%3D%22is_active%22)%0A%20%20%20%20is_staff%20%3D%20models.BooleanField(default%3DFalse%2C%20verbose_name%3D%22is_staff%22)%0A%20%20%20%20is_superuser%20%3D%20models.BooleanField(default%3DFalse%2C%20verbose_name%3D%22is_superuser%22)%0A%0A%20%20%20%20objects%20%3D%20UserManager()%0A%0A%20%20%20%20%23%20We%20can%20use%20any%20field%20for%20username%0A%20%20%20%20USERNAME_FIELD%20%3D%20'username'%20%20%23%20or%20'email'%20or%20'phone'%0A%20%20%20%20REQUIRED_FIELDS%20%3D%20%5B'username'%2C%20'email'%5D%0A%0A%20%20%20%20def%20__str__(self)%3A%0A%20%20%20%20%20%20%20%20return%20self.username%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20verbose_name%20%3D%20%22User%22%0A%20%20%20%20%20%20%20%20verbose_name_plural%20%3D%20%22Users%22%0A%0A%23%20accounts%2Fforms.py%0Afrom%20django%20import%20forms%0Afrom%20django.contrib.auth.forms%20import%20ReadOnlyPasswordHashField%0Afrom%20django.core.exceptions%20import%20ValidationError%0Afrom%20accounts.models%20import%20User%0Afrom%20django.utils.translation%20import%20gettext_lazy%20as%20_%0A%0A%0Aclass%20UserCreationForm(forms.ModelForm)%3A%0A%20%20%20%20password1%20%3D%20forms.CharField(label%3D'Password'%2C%20widget%3Dforms.PasswordInput)%0A%20%20%20%20password2%20%3D%20forms.CharField(label%3D'Password%20confirmation'%2C%20widget%3Dforms.PasswordInput)%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone'%2C%20'is_active'%2C%20'is_staff')%0A%0A%20%20%20%20def%20clean_password2(self)%3A%0A%20%20%20%20%20%20%20%20password1%20%3D%20self.cleaned_data.get(%22password1%22)%0A%20%20%20%20%20%20%20%20password2%20%3D%20self.cleaned_data.get(%22password2%22)%0A%20%20%20%20%20%20%20%20if%20password1%20and%20password2%20and%20password1%20!%3D%20password2%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValidationError(%22Passwords%20don't%20match%22)%0A%20%20%20%20%20%20%20%20return%20password2%0A%0A%20%20%20%20def%20save(self%2C%20commit%3DTrue)%3A%0A%20%20%20%20%20%20%20%20user%20%3D%20super().save(commit%3DFalse)%0A%20%20%20%20%20%20%20%20user.set_password(self.cleaned_data%5B%22password1%22%5D)%0A%20%20%20%20%20%20%20%20if%20commit%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20user.save()%0A%20%20%20%20%20%20%20%20return%20user%0A%0A%0Aclass%20UserChangeForm(forms.ModelForm)%3A%0A%20%20%20%20password%20%3D%20ReadOnlyPasswordHashField()%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone'%2C%20'is_active'%2C%20'is_staff')%0A%0A%20%20%20%20def%20clean_password(self)%3A%0A%20%20%20%20%20%20%20%20return%20self.initial%5B%22password%22%5D%0A%0A%0Aclass%20LoginForm(forms.Form)%3A%0A%20%20%20%20email%20%3D%20forms.CharField(%0A%20%20%20%20%20%20%20%20widget%3Dforms.TextInput(attrs%3D%7B'class'%3A%20'form-control'%2C%20'placeholder'%3A%20'Email'%7D)%2C%20label%3D'Email')%0A%20%20%20%20password%20%3D%20forms.CharField(%0A%20%20%20%20%20%20%20%20widget%3Dforms.PasswordInput(attrs%3D%7B'class'%3A%20'form-control'%2C%20'placeholder'%3A%20'Password'%7D)%2Clabel%3D'Password')%0A%0A%0Aclass%20RegisterForm(forms.ModelForm)%3A%0A%20%20%20%20password1%20%3D%20forms.CharField(label%3D'Password'%2C%20widget%3Dforms.PasswordInput(%0A%20%20%20%20%20%20%20%20attrs%3D%7B'class'%3A%20'form-control'%7D))%0A%20%20%20%20password2%20%3D%20forms.CharField(label%3D'Password%20confirmation'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20widget%3Dforms.PasswordInput(attrs%3D%7B'class'%3A%20'form-control'%7D))%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%0A%20%20%20%20%20%20%20%20widgets%20%3D%20%7B%20%20%23%20Optional%0A%20%20%20%20%20%20%20%20%20%20%20%20'username'%3A%20forms.TextInput(attrs%3D%7B'class'%3A%20'form-control'%7D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20'email'%3A%20forms.EmailInput(attrs%3D%7B'class'%3A%20'form-control'%7D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20'phone'%3A%20forms.NumberInput(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20attrs%3D%7B'class'%3A%20'form-control'%2C%20'type'%3A%20'tel'%2C%20'maxlength'%3A%20'11'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'minlength'%3A%20'11'%2C%20%20'onkeypress'%3A%20'return%20isNumber(event)'%2C%20'required'%3A%20'false'%7D)%7D%0A%0A%20%20%20%20def%20clean_password2(self)%3A%0A%20%20%20%20%20%20%20%20password1%20%3D%20self.cleaned_data.get(%22password1%22)%0A%20%20%20%20%20%20%20%20password2%20%3D%20self.cleaned_data.get(%22password2%22)%0A%20%20%20%20%20%20%20%20if%20password1%20and%20password2%20and%20password1%20!%3D%20password2%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValidationError(%22Passwords%20don't%20match%22)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20password2%0A%0A%20%20%20%20def%20save(self%2C%20commit%3DTrue)%3A%0A%20%20%20%20%20%20%20%20user%20%3D%20super().save(commit%3DFalse)%0A%20%20%20%20%20%20%20%20user.set_password(self.cleaned_data%5B%22password1%22%5D)%0A%20%20%20%20%20%20%20%20if%20commit%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20user.save()%0A%20%20%20%20%20%20%20%20return%20user%0A%0Aclass%20EditProfileForm(forms.ModelForm)%3A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%0A%0Aclass%20ChangePassword(forms.Form)%3A%0A%20%20%20%20password1%20%3D%20forms.CharField(label%3D_('Password')%2C%20widget%3Dforms.PasswordInput(%0A%20%20%20%20%20%20%20%20attrs%3D%7B'class'%3A%20'form-control'%2C%20'placeholder'%3A%20'Password'%7D))%0A%20%20%20%20password2%20%3D%20forms.CharField(label%3D_('Password%20confirmation')%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20widget%3Dforms.PasswordInput(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20attrs%3D%7B'class'%3A%20'form-control'%2C%20'placeholder'%3A%20'Re-Enter%20Password'%7D))%0A%0A%20%20%20%20def%20clean_password2(self)%3A%0A%20%20%20%20%20%20%20%20password1%20%3D%20self.cleaned_data.get(%22password1%22)%0A%20%20%20%20%20%20%20%20password2%20%3D%20self.cleaned_data.get(%22password2%22)%0A%20%20%20%20%20%20%20%20if%20password1%20and%20password2%20and%20password1%20!%3D%20password2%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValidationError(%22Passwords%20don't%20match%22)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20password2%0A%0A%23%20accounts%2Fadmin.py%0Afrom%20django%20import%20forms%0Afrom%20django.contrib%20import%20admin%0Afrom%20django.contrib.auth.admin%20import%20UserAdmin%20as%20BaseUserAdmin%0Afrom%20django.contrib.auth.forms%20import%20ReadOnlyPasswordHashField%0Afrom%20django.core.exceptions%20import%20ValidationError%0Afrom%20django.contrib.auth.models%20import%20Group%0Afrom%20accounts.models%20import%20User%0A%0A%0Aclass%20UserCreationForm(forms.ModelForm)%3A%0A%20%20%20%20password1%20%3D%20forms.CharField(label%3D'Password'%2C%20widget%3Dforms.PasswordInput)%0A%20%20%20%20password2%20%3D%20forms.CharField(label%3D'Password%20confirmation'%2C%20widget%3Dforms.PasswordInput)%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%0A%20%20%20%20def%20clean_password2(self)%3A%0A%20%20%20%20%20%20%20%20%23%20Check%20that%20the%20two%20password%20entries%20match%0A%20%20%20%20%20%20%20%20password1%20%3D%20self.cleaned_data.get(%22password1%22)%0A%20%20%20%20%20%20%20%20password2%20%3D%20self.cleaned_data.get(%22password2%22)%0A%20%20%20%20%20%20%20%20if%20password1%20and%20password2%20and%20password1%20!%3D%20password2%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValidationError(%22Passwords%20don't%20match%22)%0A%20%20%20%20%20%20%20%20return%20password2%0A%0A%20%20%20%20def%20save(self%2C%20commit%3DTrue)%3A%0A%20%20%20%20%20%20%20%20user%20%3D%20super().save(commit%3DFalse)%0A%20%20%20%20%20%20%20%20user.set_password(self.cleaned_data%5B%22password1%22%5D)%0A%20%20%20%20%20%20%20%20if%20commit%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20user.save()%0A%20%20%20%20%20%20%20%20return%20user%0A%0A%0Aclass%20UserChangeForm(forms.ModelForm)%3A%0A%20%20%20%20password%20%3D%20ReadOnlyPasswordHashField()%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone'%2C%20'password'%2C%20'is_active'%2C%20'is_staff')%0A%0A%0Aclass%20UserAdmin(BaseUserAdmin)%3A%0A%20%20%20%20form%20%3D%20UserChangeForm%0A%20%20%20%20add_form%20%3D%20UserCreationForm%0A%20%20%20%20list_display%20%3D%20('username'%2C%20'email'%2C%20'is_active'%2C%20'is_staff'%2C%20'is_superuser')%0A%20%20%20%20list_editable%20%3D%20('is_staff'%2C%20'is_active')%0A%20%20%20%20list_filter%20%3D%20('is_staff'%2C%20'groups')%0A%20%20%20%20fieldsets%20%3D%20(%0A%20%20%20%20%20%20%20%20(None%2C%20%7B'fields'%3A%20(%20'username'%2C%20'email'%2C%20'phone'%2C%20'password')%7D)%2C%0A%20%20%20%20%20%20%20%20('Permissions'%2C%20%7B'fields'%3A%20('is_staff'%2C)%7D)%2C%0A%20%20%20%20%20%20%20%20('Group%20Permissions'%2C%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'fields'%3A%20('is_active'%2C%20'is_superuser'%2C%20'groups'%2C%20'user_permissions')%2C%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20)%0A%20%20%20%20add_fieldsets%20%3D%20(%0A%20%20%20%20%20%20%20%20(None%2C%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'classes'%3A%20('wide'%2C)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20'fields'%3A%20('username'%2C%20'email'%2C%20'phone'%2C%20'password1'%2C%20'password2')%2C%0A%20%20%20%20%20%20%20%20%7D)%2C%0A%20%20%20%20%20%20%20%20('Group%20Permissions'%2C%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'fields'%3A%20('is_active'%2C%20'is_superuser'%2C%20'groups'%2C%20'user_permissions')%2C%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20)%0A%20%20%20%20search_fields%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%20%20%20%20ordering%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%20%20%20%20filter_horizontal%20%3D%20('groups'%2C%20'user_permissions'%2C)%0A%0A%0Aadmin.site.register(User%2C%20UserAdmin)%0A%23%20unregister%20the%20Group%20model%20from%20admin.%0A%23%20admin.site.unregister(Group)%0A%0A%23%20accounts%2Furls.py%0Afrom%20django.urls%20import%20path%0Afrom%20accounts%20import%20views%0A%0Aapp_name%20%3D%20'accounts'%0Aurlpatterns%20%3D%20%5B%0A%20%20%20%20path('login%2F'%2C%20views.userLogin%2C%20name%3D'login')%2C%0A%20%20%20%20path('register%2F'%2C%20views.userRegister%2C%20name%3D'register')%2C%0A%20%20%20%20path('logout%2F'%2C%20views.LogoutPage%2C%20name%3D'logout')%0A%5D%0A%0A%23%20accounts%2Fviews.py%0Afrom%20django.shortcuts%20import%20render%2C%20redirect%0Afrom%20django.contrib.auth%20import%20login%2C%20logout%2C%20authenticate%0Afrom%20django.contrib.auth.decorators%20import%20login_required%0Afrom%20django.utils.translation%20import%20gettext_lazy%20as%20_%0Afrom%20accounts.forms%20import%20LoginForm%2C%20RegisterForm%0Afrom%20django.contrib%20import%20messages%0Afrom%20accounts.models%20import%20User%0A%0A%0Adef%20userRegister(request)%3A%0A%20%20%20%20form%20%3D%20RegisterForm()%0A%20%20%20%20if%20request.method%20%3D%3D%20'POST'%3A%0A%20%20%20%20%20%20%20%20form%20%3D%20RegisterForm(request.POST)%0A%20%20%20%20%20%20%20%20if%20form.is_valid()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20cd%20%3D%20form.cleaned_data%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20not%20User.objects.filter(email%3Dcd%5B'username'%5D).exists()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20not%20User.objects.filter(email%3Dcd%5B'email'%5D).exists()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20user%20%3D%20User.objects.create_user(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20username%3Dcd%5B'username'%5D%2C%20phone%3Dcd%5B'phone'%5D%2C%20email%3Dcd%5B'email'%5D%2C%20password%3Dcd%5B'password1'%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20user.save()%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20login(request%2C%20user)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.success(request%2C%20_(%22You%20successfully%20registered%20a%20user%22)%2C%20extra_tags%3D%22success%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20redirect('app_name%3Ahome')%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22This%20Email%20is%20exists%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22This%20Username%20is%20exists%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20import%20json%0A%20%20%20%20%20%20%20%20%20%20%20%20er%20%3D%20json.loads(form.errors.as_json())%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20e%20in%20er%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20er%5Be%5D%5B0%5D%5B'message'%5D%2C%20'warning')%0A%20%20%20%20return%20render(request%2C%20'accounts%2Fregister.html'%2C%20%7B'form'%3A%20form%7D)%0A%0A%0Adef%20userLogin(request)%3A%0A%20%20%20%20if%20not%20request.user.is_active%3A%0A%20%20%20%20%20%20%20%20if%20request.method%20%3D%3D%20'POST'%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20form%20%3D%20LoginForm(request.POST)%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20form.is_valid()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20cd%20%3D%20form.cleaned_data%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20User.objects.filter(username%3Dcd%5B'username'%5D).exists()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20user%20%3D%20authenticate(request%2C%20username%3Dcd%5B'username'%5D%2C%20password%3Dcd%5B'password'%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20user%20is%20not%20None%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20login(request%2C%20user)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.success(request%2C%20_(%22logged%20in%20successfully%22)%2C%20extra_tags%3D%22success%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20redirect('app_name%3Ahome')%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22your%20username%20Or%20Password%20is%20wrong%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22No%20account%20created%20with%20this%20username%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20redirect('accounts%3Alogin')%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22Please%20enter%20your%20information%20correctly%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20form%20%3D%20LoginForm()%0A%20%20%20%20%20%20%20%20return%20render(request%2C%20'accounts%2Flogin.html'%2C%20%7B'form'%3A%20form%7D)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20return%20redirect('app_name%3Ahome')%0A%0A%0A%40login_required()%0Adef%20LogoutPage(request)%3A%0A%20%20%20%20logout(request)%0A%20%20%20%20messages.success(request%2C%20_(%22You%20Logged%20Out%20successfully%22)%2C%20extra_tags%3D%22success%22)%0A%20%20%20%20return%20redirect('app_name%3Ahome')",
+      "body": "%60%60%60python%0A~%24%20python%20manage.py%20startapp%20accounts%0A%60%60%60%0A%0A%60%60%60python%0A%23%20Add%20accounts%20app%20to%20settings.py%0AINSTALLED_APPS%20%3D%20%5B%20%E2%80%A6%20%2C%0A%20%20%20%20%20%20%20%20%20'accounts.apps.AccountsConfig'%2C%0A%20%20%20%20%20%20%20%20%20%20%5D%0A.%0A.%0A.%0AAUTH_USER_MODEL%20%3D%20'accounts.User'%0A%60%60%60%0A%0A%60%60%60python%0A%23%20accounts%2Fmodels.py%0Afrom%20django.db%20import%20models%0Afrom%20django.contrib.auth.models%20import%20BaseUserManager%2C%20AbstractBaseUser%2C%20PermissionsMixin%0A%0Aclass%20UserManager(BaseUserManager)%3A%0A%20%20%20%20def%20create_user(self%2C%20username%2C%20email%2C%20password%3DNone%2C%20**extra_fields)%3A%0A%20%20%20%20%20%20%20%20if%20not%20username%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValueError('Users%20must%20have%20an%20username')%0A%20%20%20%20%20%20%20%20if%20not%20email%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValueError('Users%20must%20have%20an%20email')%0A%0A%20%20%20%20%20%20%20%20user%20%3D%20self.model(email%3Demail%2C%20**extra_fields)%0A%20%20%20%20%20%20%20%20user.set_password(password)%0A%20%20%20%20%20%20%20%20user.save(using%3Dself._db)%0A%20%20%20%20%20%20%20%20return%20user%0A%0A%20%20%20%20def%20create_superuser(self%2C%20username%2C%20%20email%2C%20password%3DNone%2C%20**extra_fields)%3A%0A%20%20%20%20%20%20%20%20extra_fields.setdefault('is_staff'%2C%20True)%0A%20%20%20%20%20%20%20%20extra_fields.setdefault('is_superuser'%2C%20True)%0A%20%20%20%20%20%20%20%20extra_fields.setdefault('is_active'%2C%20True)%0A%0A%20%20%20%20%20%20%20%20user%20%3D%20self.create_user(username%2C%20email%2C%20password%3Dpassword%2C%20**extra_fields)%0A%20%20%20%20%20%20%20%20user.save(using%3Dself._db)%0A%20%20%20%20%20%20%20%20return%20user%0A%0A%0Aclass%20User(AbstractBaseUser%2C%20PermissionsMixin)%3A%0A%20%20%20%20username%20%3D%20models.CharField(verbose_name%3D'Username'%2C%20max_length%3D255%2C%20unique%3DTrue)%0A%20%20%20%20email%20%3D%20models.EmailField(verbose_name%3D'email'%2C%20max_length%3D255%2C%20unique%3DTrue)%0A%20%20%20%20phone%20%3D%20models.BigIntegerField(verbose_name%3D'Phone%20Number'%2C%20unique%3DTrue%2C%20blank%3DTrue%2C%20null%3DTrue)%0A%20%20%20%20is_active%20%3D%20models.BooleanField(default%3DTrue%2C%20verbose_name%3D%22is_active%22)%0A%20%20%20%20is_staff%20%3D%20models.BooleanField(default%3DFalse%2C%20verbose_name%3D%22is_staff%22)%0A%20%20%20%20is_superuser%20%3D%20models.BooleanField(default%3DFalse%2C%20verbose_name%3D%22is_superuser%22)%0A%0A%20%20%20%20objects%20%3D%20UserManager()%0A%0A%20%20%20%20%23%20We%20can%20use%20any%20field%20for%20username%0A%20%20%20%20USERNAME_FIELD%20%3D%20'username'%20%20%23%20or%20'email'%20or%20'phone'%0A%20%20%20%20REQUIRED_FIELDS%20%3D%20%5B'username'%2C%20'email'%5D%0A%0A%20%20%20%20def%20__str__(self)%3A%0A%20%20%20%20%20%20%20%20return%20self.username%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20verbose_name%20%3D%20%22User%22%0A%20%20%20%20%20%20%20%20verbose_name_plural%20%3D%20%22Users%22%0A%60%60%60%0A%0A%60%60%60python%0A%23%20accounts%2Fforms.py%0Afrom%20django%20import%20forms%0Afrom%20django.contrib.auth.forms%20import%20ReadOnlyPasswordHashField%0Afrom%20django.core.exceptions%20import%20ValidationError%0Afrom%20accounts.models%20import%20User%0Afrom%20django.utils.translation%20import%20gettext_lazy%20as%20_%0A%0A%0Aclass%20UserCreationForm(forms.ModelForm)%3A%0A%20%20%20%20password1%20%3D%20forms.CharField(label%3D'Password'%2C%20widget%3Dforms.PasswordInput)%0A%20%20%20%20password2%20%3D%20forms.CharField(label%3D'Password%20confirmation'%2C%20widget%3Dforms.PasswordInput)%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone'%2C%20'is_active'%2C%20'is_staff')%0A%0A%20%20%20%20def%20clean_password2(self)%3A%0A%20%20%20%20%20%20%20%20password1%20%3D%20self.cleaned_data.get(%22password1%22)%0A%20%20%20%20%20%20%20%20password2%20%3D%20self.cleaned_data.get(%22password2%22)%0A%20%20%20%20%20%20%20%20if%20password1%20and%20password2%20and%20password1%20!%3D%20password2%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValidationError(%22Passwords%20don't%20match%22)%0A%20%20%20%20%20%20%20%20return%20password2%0A%0A%20%20%20%20def%20save(self%2C%20commit%3DTrue)%3A%0A%20%20%20%20%20%20%20%20user%20%3D%20super().save(commit%3DFalse)%0A%20%20%20%20%20%20%20%20user.set_password(self.cleaned_data%5B%22password1%22%5D)%0A%20%20%20%20%20%20%20%20if%20commit%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20user.save()%0A%20%20%20%20%20%20%20%20return%20user%0A%0A%0Aclass%20UserChangeForm(forms.ModelForm)%3A%0A%20%20%20%20password%20%3D%20ReadOnlyPasswordHashField()%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone'%2C%20'is_active'%2C%20'is_staff')%0A%0A%20%20%20%20def%20clean_password(self)%3A%0A%20%20%20%20%20%20%20%20return%20self.initial%5B%22password%22%5D%0A%0A%0Aclass%20LoginForm(forms.Form)%3A%0A%20%20%20%20email%20%3D%20forms.CharField(%0A%20%20%20%20%20%20%20%20widget%3Dforms.TextInput(attrs%3D%7B'class'%3A%20'form-control'%2C%20'placeholder'%3A%20'Email'%7D)%2C%20label%3D'Email')%0A%20%20%20%20password%20%3D%20forms.CharField(%0A%20%20%20%20%20%20%20%20widget%3Dforms.PasswordInput(attrs%3D%7B'class'%3A%20'form-control'%2C%20'placeholder'%3A%20'Password'%7D)%2Clabel%3D'Password')%0A%0A%0Aclass%20RegisterForm(forms.ModelForm)%3A%0A%20%20%20%20password1%20%3D%20forms.CharField(label%3D'Password'%2C%20widget%3Dforms.PasswordInput(%0A%20%20%20%20%20%20%20%20attrs%3D%7B'class'%3A%20'form-control'%7D))%0A%20%20%20%20password2%20%3D%20forms.CharField(label%3D'Password%20confirmation'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20widget%3Dforms.PasswordInput(attrs%3D%7B'class'%3A%20'form-control'%7D))%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%0A%20%20%20%20%20%20%20%20widgets%20%3D%20%7B%20%20%23%20Optional%0A%20%20%20%20%20%20%20%20%20%20%20%20'username'%3A%20forms.TextInput(attrs%3D%7B'class'%3A%20'form-control'%7D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20'email'%3A%20forms.EmailInput(attrs%3D%7B'class'%3A%20'form-control'%7D)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20'phone'%3A%20forms.NumberInput(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20attrs%3D%7B'class'%3A%20'form-control'%2C%20'type'%3A%20'tel'%2C%20'maxlength'%3A%20'11'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'minlength'%3A%20'11'%2C%20%20'onkeypress'%3A%20'return%20isNumber(event)'%2C%20'required'%3A%20'false'%7D)%7D%0A%0A%20%20%20%20def%20clean_password2(self)%3A%0A%20%20%20%20%20%20%20%20password1%20%3D%20self.cleaned_data.get(%22password1%22)%0A%20%20%20%20%20%20%20%20password2%20%3D%20self.cleaned_data.get(%22password2%22)%0A%20%20%20%20%20%20%20%20if%20password1%20and%20password2%20and%20password1%20!%3D%20password2%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValidationError(%22Passwords%20don't%20match%22)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20password2%0A%0A%20%20%20%20def%20save(self%2C%20commit%3DTrue)%3A%0A%20%20%20%20%20%20%20%20user%20%3D%20super().save(commit%3DFalse)%0A%20%20%20%20%20%20%20%20user.set_password(self.cleaned_data%5B%22password1%22%5D)%0A%20%20%20%20%20%20%20%20if%20commit%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20user.save()%0A%20%20%20%20%20%20%20%20return%20user%0A%0Aclass%20EditProfileForm(forms.ModelForm)%3A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%0A%0Aclass%20ChangePassword(forms.Form)%3A%0A%20%20%20%20password1%20%3D%20forms.CharField(label%3D_('Password')%2C%20widget%3Dforms.PasswordInput(%0A%20%20%20%20%20%20%20%20attrs%3D%7B'class'%3A%20'form-control'%2C%20'placeholder'%3A%20'Password'%7D))%0A%20%20%20%20password2%20%3D%20forms.CharField(label%3D_('Password%20confirmation')%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20widget%3Dforms.PasswordInput(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20attrs%3D%7B'class'%3A%20'form-control'%2C%20'placeholder'%3A%20'Re-Enter%20Password'%7D))%0A%0A%20%20%20%20def%20clean_password2(self)%3A%0A%20%20%20%20%20%20%20%20password1%20%3D%20self.cleaned_data.get(%22password1%22)%0A%20%20%20%20%20%20%20%20password2%20%3D%20self.cleaned_data.get(%22password2%22)%0A%20%20%20%20%20%20%20%20if%20password1%20and%20password2%20and%20password1%20!%3D%20password2%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValidationError(%22Passwords%20don't%20match%22)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20password2%0A%60%60%60%0A%0A%60%60%60python%0A%23%20accounts%2Fadmin.py%0Afrom%20django%20import%20forms%0Afrom%20django.contrib%20import%20admin%0Afrom%20django.contrib.auth.admin%20import%20UserAdmin%20as%20BaseUserAdmin%0Afrom%20django.contrib.auth.forms%20import%20ReadOnlyPasswordHashField%0Afrom%20django.core.exceptions%20import%20ValidationError%0Afrom%20django.contrib.auth.models%20import%20Group%0Afrom%20accounts.models%20import%20User%0A%0A%0Aclass%20UserCreationForm(forms.ModelForm)%3A%0A%20%20%20%20password1%20%3D%20forms.CharField(label%3D'Password'%2C%20widget%3Dforms.PasswordInput)%0A%20%20%20%20password2%20%3D%20forms.CharField(label%3D'Password%20confirmation'%2C%20widget%3Dforms.PasswordInput)%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%0A%20%20%20%20def%20clean_password2(self)%3A%0A%20%20%20%20%20%20%20%20%23%20Check%20that%20the%20two%20password%20entries%20match%0A%20%20%20%20%20%20%20%20password1%20%3D%20self.cleaned_data.get(%22password1%22)%0A%20%20%20%20%20%20%20%20password2%20%3D%20self.cleaned_data.get(%22password2%22)%0A%20%20%20%20%20%20%20%20if%20password1%20and%20password2%20and%20password1%20!%3D%20password2%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20raise%20ValidationError(%22Passwords%20don't%20match%22)%0A%20%20%20%20%20%20%20%20return%20password2%0A%0A%20%20%20%20def%20save(self%2C%20commit%3DTrue)%3A%0A%20%20%20%20%20%20%20%20user%20%3D%20super().save(commit%3DFalse)%0A%20%20%20%20%20%20%20%20user.set_password(self.cleaned_data%5B%22password1%22%5D)%0A%20%20%20%20%20%20%20%20if%20commit%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20user.save()%0A%20%20%20%20%20%20%20%20return%20user%0A%0A%0Aclass%20UserChangeForm(forms.ModelForm)%3A%0A%20%20%20%20password%20%3D%20ReadOnlyPasswordHashField()%0A%0A%20%20%20%20class%20Meta%3A%0A%20%20%20%20%20%20%20%20model%20%3D%20User%0A%20%20%20%20%20%20%20%20fields%20%3D%20('username'%2C%20'email'%2C%20'phone'%2C%20'password'%2C%20'is_active'%2C%20'is_staff')%0A%0A%0Aclass%20UserAdmin(BaseUserAdmin)%3A%0A%20%20%20%20form%20%3D%20UserChangeForm%0A%20%20%20%20add_form%20%3D%20UserCreationForm%0A%20%20%20%20list_display%20%3D%20('username'%2C%20'email'%2C%20'is_active'%2C%20'is_staff'%2C%20'is_superuser')%0A%20%20%20%20list_editable%20%3D%20('is_staff'%2C%20'is_active')%0A%20%20%20%20list_filter%20%3D%20('is_staff'%2C%20'groups')%0A%20%20%20%20fieldsets%20%3D%20(%0A%20%20%20%20%20%20%20%20(None%2C%20%7B'fields'%3A%20(%20'username'%2C%20'email'%2C%20'phone'%2C%20'password')%7D)%2C%0A%20%20%20%20%20%20%20%20('Permissions'%2C%20%7B'fields'%3A%20('is_staff'%2C)%7D)%2C%0A%20%20%20%20%20%20%20%20('Group%20Permissions'%2C%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'fields'%3A%20('is_active'%2C%20'is_superuser'%2C%20'groups'%2C%20'user_permissions')%2C%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20)%0A%20%20%20%20add_fieldsets%20%3D%20(%0A%20%20%20%20%20%20%20%20(None%2C%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'classes'%3A%20('wide'%2C)%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20'fields'%3A%20('username'%2C%20'email'%2C%20'phone'%2C%20'password1'%2C%20'password2')%2C%0A%20%20%20%20%20%20%20%20%7D)%2C%0A%20%20%20%20%20%20%20%20('Group%20Permissions'%2C%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20'fields'%3A%20('is_active'%2C%20'is_superuser'%2C%20'groups'%2C%20'user_permissions')%2C%0A%20%20%20%20%20%20%20%20%7D)%0A%20%20%20%20)%0A%20%20%20%20search_fields%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%20%20%20%20ordering%20%3D%20('username'%2C%20'email'%2C%20'phone')%0A%20%20%20%20filter_horizontal%20%3D%20('groups'%2C%20'user_permissions'%2C)%0A%0A%0Aadmin.site.register(User%2C%20UserAdmin)%0A%23%20unregister%20the%20Group%20model%20from%20admin.%0A%23%20admin.site.unregister(Group)%0A%60%60%60%0A%0A%60%60%60python%0A%23%20accounts%2Furls.py%0Afrom%20django.urls%20import%20path%0Afrom%20accounts%20import%20views%0A%0Aapp_name%20%3D%20'accounts'%0Aurlpatterns%20%3D%20%5B%0A%20%20%20%20path('login%2F'%2C%20views.userLogin%2C%20name%3D'login')%2C%0A%20%20%20%20path('register%2F'%2C%20views.userRegister%2C%20name%3D'register')%2C%0A%20%20%20%20path('logout%2F'%2C%20views.LogoutPage%2C%20name%3D'logout')%0A%5D%0A%60%60%60%0A%0A%60%60%60python%0A%23%20accounts%2Fviews.py%0Afrom%20django.shortcuts%20import%20render%2C%20redirect%0Afrom%20django.contrib.auth%20import%20login%2C%20logout%2C%20authenticate%0Afrom%20django.contrib.auth.decorators%20import%20login_required%0Afrom%20django.utils.translation%20import%20gettext_lazy%20as%20_%0Afrom%20accounts.forms%20import%20LoginForm%2C%20RegisterForm%0Afrom%20django.contrib%20import%20messages%0Afrom%20accounts.models%20import%20User%0A%0A%0Adef%20userRegister(request)%3A%0A%20%20%20%20form%20%3D%20RegisterForm()%0A%20%20%20%20if%20request.method%20%3D%3D%20'POST'%3A%0A%20%20%20%20%20%20%20%20form%20%3D%20RegisterForm(request.POST)%0A%20%20%20%20%20%20%20%20if%20form.is_valid()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20cd%20%3D%20form.cleaned_data%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20not%20User.objects.filter(email%3Dcd%5B'username'%5D).exists()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20not%20User.objects.filter(email%3Dcd%5B'email'%5D).exists()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20user%20%3D%20User.objects.create_user(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20username%3Dcd%5B'username'%5D%2C%20phone%3Dcd%5B'phone'%5D%2C%20email%3Dcd%5B'email'%5D%2C%20password%3Dcd%5B'password1'%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20user.save()%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20login(request%2C%20user)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.success(request%2C%20_(%22You%20successfully%20registered%20a%20user%22)%2C%20extra_tags%3D%22success%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20redirect('app_name%3Ahome')%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22This%20Email%20is%20exists%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22This%20Username%20is%20exists%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20import%20json%0A%20%20%20%20%20%20%20%20%20%20%20%20er%20%3D%20json.loads(form.errors.as_json())%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20e%20in%20er%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20er%5Be%5D%5B0%5D%5B'message'%5D%2C%20'warning')%0A%20%20%20%20return%20render(request%2C%20'accounts%2Fregister.html'%2C%20%7B'form'%3A%20form%7D)%0A%0A%0Adef%20userLogin(request)%3A%0A%20%20%20%20if%20not%20request.user.is_active%3A%0A%20%20%20%20%20%20%20%20if%20request.method%20%3D%3D%20'POST'%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20form%20%3D%20LoginForm(request.POST)%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20form.is_valid()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20cd%20%3D%20form.cleaned_data%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20User.objects.filter(username%3Dcd%5B'username'%5D).exists()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20user%20%3D%20authenticate(request%2C%20username%3Dcd%5B'username'%5D%2C%20password%3Dcd%5B'password'%5D)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20user%20is%20not%20None%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20login(request%2C%20user)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.success(request%2C%20_(%22logged%20in%20successfully%22)%2C%20extra_tags%3D%22success%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20redirect('app_name%3Ahome')%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22your%20username%20Or%20Password%20is%20wrong%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22No%20account%20created%20with%20this%20username%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20redirect('accounts%3Alogin')%0A%20%20%20%20%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20messages.error(request%2C%20_(%22Please%20enter%20your%20information%20correctly%22)%2C%20extra_tags%3D%22warning%22)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20form%20%3D%20LoginForm()%0A%20%20%20%20%20%20%20%20return%20render(request%2C%20'accounts%2Flogin.html'%2C%20%7B'form'%3A%20form%7D)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20return%20redirect('app_name%3Ahome')%0A%0A%0A%40login_required()%0Adef%20LogoutPage(request)%3A%0A%20%20%20%20logout(request)%0A%20%20%20%20messages.success(request%2C%20_(%22You%20Logged%20Out%20successfully%22)%2C%20extra_tags%3D%22success%22)%0A%20%20%20%20return%20redirect('app_name%3Ahome')%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s15-79",
       "sectionId": "s15",
       "title": "Send%20Email",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20settings.py%0AEMAIL_BACKEND%20%3D%20%22django.core.mail.backends.console.EmailBackend%22%0A%0A%23%20Send%20email%20function%0Afrom%20django.core.email%20import%20send_mail%0A%0Asend_mail(%0A%20%20%20%20subject%20%3D%20%22A%20new%20post%20has%20been%20created%22%2C%0A%20%20%20%20message%20%3D%20%22Go%20to%20the%20web%20site%20to%20see%20the%20detail%22%2C%0A%20%20%20%20from_email%20%3D%20%22test%40test.com%22%2C%0A%20%20%20%20recipient_list%20%3D%20%5B%22test2%40text.com%22%5D%0A)",
+      "body": "%60%60%60python%0A%23%20settings.py%0AEMAIL_BACKEND%20%3D%20%22django.core.mail.backends.console.EmailBackend%22%0A%0A%23%20Send%20email%20function%0Afrom%20django.core.email%20import%20send_mail%0A%0Asend_mail(%0A%20%20%20%20subject%20%3D%20%22A%20new%20post%20has%20been%20created%22%2C%0A%20%20%20%20message%20%3D%20%22Go%20to%20the%20web%20site%20to%20see%20the%20detail%22%2C%0A%20%20%20%20from_email%20%3D%20%22test%40test.com%22%2C%0A%20%20%20%20recipient_list%20%3D%20%5B%22test2%40text.com%22%5D%0A)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s16-80",
       "sectionId": "s16",
       "title": "Signals",
-      "kind": "code",
-      "lang": "python",
-      "code": "# models.py\nfrom django.db.models.signals import post_save, pre_save\n\ndef post_user_created_signal(sender, instance, created, **kwargs):\n    if created:\n        UserProfile.objects.create(user=instance)\n\n# Launch the post_user_created_signal method if User model is save\npost_save.connect(post_user_created_signal, sender=User)"
+      "body": "```python\n# models.py\nfrom django.db.models.signals import post_save, pre_save\n\ndef post_user_created_signal(sender, instance, created, **kwargs):\n    if created:\n        UserProfile.objects.create(user=instance)\n\n# Launch the post_user_created_signal method if User model is save\npost_save.connect(post_user_created_signal, sender=User)\n```"
     },
     {
       "id": "s17-81",
       "sectionId": "s17",
       "title": "Seed",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20app_name.models%20import%20Product%2C%20Category%0Afrom%20django.shortcuts%20import%20HttpResponse%0Afrom%20faker%20import%20Faker%0A%0A%0Adef%20seed(request)%3A%0A%20%20%20%20Product.objects.all().delete()%0A%20%20%20%20Category.objects.all().delete()%0A%0A%20%20%20%20category%20%3D%20Category()%0A%20%20%20%20category.name%20%3D%20%22Sports%22%0A%20%20%20%20category.save()%0A%0A%20%20%20%20category%20%3D%20Category()%0A%20%20%20%20category.name%20%3D%20%22Home%22%0A%20%20%20%20category.save()%0A%0A%20%20%20%20fake%20%3D%20Faker()%0A%20%20%20%20for%20_%20in%20range(100)%3A%0A%20%20%20%20%20%20%20%20product%20%3D%20Product()%0A%20%20%20%20%20%20%20%20product.name%20%3D%20fake.unique.word()%0A%20%20%20%20%20%20%20%20product.short_description%20%3D%20fake.sentence()%0A%20%20%20%20%20%20%20%20product.main_picture%20%3D%20fake.image_url()%0A%20%20%20%20%20%20%20%20product.price%20%3D%20fake.random_digit()%20*%2010%0A%20%20%20%20%20%20%20%20product.category%20%3D%20%20Category.objects.order_by('%3F').first()%0A%20%20%20%20%20%20%20%20product.save()%0A%0A%20%20%20%20return%20HttpResponse('Seeded')",
+      "body": "%60%60%60python%0Afrom%20app_name.models%20import%20Product%2C%20Category%0Afrom%20django.shortcuts%20import%20HttpResponse%0Afrom%20faker%20import%20Faker%0A%0A%0Adef%20seed(request)%3A%0A%20%20%20%20Product.objects.all().delete()%0A%20%20%20%20Category.objects.all().delete()%0A%0A%20%20%20%20category%20%3D%20Category()%0A%20%20%20%20category.name%20%3D%20%22Sports%22%0A%20%20%20%20category.save()%0A%0A%20%20%20%20category%20%3D%20Category()%0A%20%20%20%20category.name%20%3D%20%22Home%22%0A%20%20%20%20category.save()%0A%0A%20%20%20%20fake%20%3D%20Faker()%0A%20%20%20%20for%20_%20in%20range(100)%3A%0A%20%20%20%20%20%20%20%20product%20%3D%20Product()%0A%20%20%20%20%20%20%20%20product.name%20%3D%20fake.unique.word()%0A%20%20%20%20%20%20%20%20product.short_description%20%3D%20fake.sentence()%0A%20%20%20%20%20%20%20%20product.main_picture%20%3D%20fake.image_url()%0A%20%20%20%20%20%20%20%20product.price%20%3D%20fake.random_digit()%20*%2010%0A%20%20%20%20%20%20%20%20product.category%20%3D%20%20Category.objects.order_by('%3F').first()%0A%20%20%20%20%20%20%20%20product.save()%0A%0A%20%20%20%20return%20HttpResponse('Seeded')%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s18-82",
       "sectionId": "s18",
-      "title": ".env key/value file",
-      "kind": "code",
-      "lang": "python",
-      "code": "$ pip install python-decouple"
-    },
-    {
-      "id": "s18-83",
-      "sectionId": "s18",
-      "title": "",
-      "kind": "text",
-      "body": "Create a file name '.env' in the root folder of your project"
-    },
-    {
-      "id": "s18-84",
-      "sectionId": "s18",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "SECRET_KEY = 'your secret key'\nALLOWED_HOST = 127.0.0.1"
-    },
-    {
-      "id": "s18-85",
-      "sectionId": "s18",
-      "title": "",
-      "kind": "text",
-      "body": "In settings.py change security related settings to point to the .env file"
-    },
-    {
-      "id": "s18-86",
-      "sectionId": "s18",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "from decouple import config\n\nSECRET_KEY = config('SECRET_KEY')\nALLOWED_HOST = config('ALLOWED_HOST')"
+      "title": ".env%20key%2Fvalue%20file",
+      "body": "%60%60%60python%0A%24%20pip%20install%20python-decouple%0A%60%60%60%0A%0ACreate%20a%20file%20name%20'.env'%20in%20the%20root%20folder%20of%20your%20project%0A%0A%60%60%60python%0ASECRET_KEY%20%3D%20'your%20secret%20key'%0AALLOWED_HOST%20%3D%20127.0.0.1%0A%60%60%60%0A%0AIn%20settings.py%20change%20security%20related%20settings%20to%20point%20to%20the%20.env%20file%0A%0A%60%60%60python%0Afrom%20decouple%20import%20config%0A%0ASECRET_KEY%20%3D%20config('SECRET_KEY')%0AALLOWED_HOST%20%3D%20config('ALLOWED_HOST')%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s19-87",
       "sectionId": "s19",
       "title": "Django Celery Redis",
-      "kind": "text",
       "body": "Celery is a distributed task queue that can collect, record, schedule, and perform tasks outside of your main program."
     },
     {
       "id": "s19-88",
       "sectionId": "s19",
       "title": "Step 1: Install Celery Using pip",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$ pip install celery       # pip install celery[redis]"
+      "body": "```python\n~$ pip install celery       # pip install celery[redis]\n```"
     },
     {
       "id": "s19-89",
       "sectionId": "s19",
-      "title": "Step 2. Add celery.py File in Your Project Module",
-      "kind": "code",
-      "lang": "python",
-      "code": "# your_project/celery.py\nimport os\nfrom celery import Celery\n\nos.environ.setdefault('DJANGO_SETTINGS_MODULE','your_project_name.settings')\napp = Celery('your_project_name')\napp.config_from_object('django.conf:settings', namespace='CELERY')\napp.autodiscover_tasks()\n\n@app.task(bind=True)\ndef debug_task(self):\n    print(f'Request: {self.request!r}')"
+      "title": "Step%202.%20Add%20celery.py%20File%20in%20Your%20Project%20Module",
+      "body": "%60%60%60python%0A%23%20your_project%2Fcelery.py%0Aimport%20os%0Afrom%20celery%20import%20Celery%0A%0Aos.environ.setdefault('DJANGO_SETTINGS_MODULE'%2C'your_project_name.settings')%0Aapp%20%3D%20Celery('your_project_name')%0Aapp.config_from_object('django.conf%3Asettings'%2C%20namespace%3D'CELERY')%0Aapp.autodiscover_tasks()%0A%0A%40app.task(bind%3DTrue)%0Adef%20debug_task(self)%3A%0A%20%20%20%20print(f'Request%3A%20%7Bself.request!r%7D')%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s19-90",
       "sectionId": "s19",
-      "title": "Step 3: Import the Celery App to Django",
-      "kind": "text",
-      "body": "<small>To ensure that the Celery app is loaded when Django starts, add the following code into the `__init__.py` file\nthat sits on the project module beside on settings.py file.</small>"
-    },
-    {
-      "id": "s19-91",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "# your_project/__init__.py\nfrom .celery import app as celery_app\n\n__all__ = ('celery_app',)"
+      "title": "Step%203%3A%20Import%20the%20Celery%20App%20to%20Django",
+      "body": "%3Csmall%3ETo%20ensure%20that%20the%20Celery%20app%20is%20loaded%20when%20Django%20starts%2C%20add%20the%20following%20code%20into%20the%20%60__init__.py%60%20file%0Athat%20sits%20on%20the%20project%20module%20beside%20on%20settings.py%20file.%3C%2Fsmall%3E%0A%0A%60%60%60python%0A%23%20your_project%2F__init__.py%0Afrom%20.celery%20import%20app%20as%20celery_app%0A%0A__all__%20%3D%20('celery_app'%2C)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s19-92",
       "sectionId": "s19",
       "title": "Step 4: Download and Run Redis as a Celery ‘broker’",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$ redis-server"
-    },
-    {
-      "id": "s19-93",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "<small>You can test that Redis is working properly by typing this into your terminal:</small>"
-    },
-    {
-      "id": "s19-94",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$ redis-cli ping"
-    },
-    {
-      "id": "s19-95",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "Redis should reply with PONG - try it!"
+      "body": "```python\n~$ redis-server\n```\n\n<small>You can test that Redis is working properly by typing this into your terminal:</small>\n\n```python\n~$ redis-cli ping\n```\n\nRedis should reply with PONG - try it!"
     },
     {
       "id": "s19-96",
       "sectionId": "s19",
       "title": "Step 5: Add Redis as a Dependency in the Django Project:",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$ pip install redis"
+      "body": "```python\n~$ pip install redis\n```"
     },
     {
       "id": "s19-97",
       "sectionId": "s19",
-      "title": "Step 6: Celery Stuff Configure to the Django Settings File",
-      "kind": "text",
-      "body": "Once Redis is up, add the following code to your settings.py file and use celery-result"
-    },
-    {
-      "id": "s19-98",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$ pip install django-celery-results"
-    },
-    {
-      "id": "s19-99",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "This extension enables you to store Celery task results using the Django ORM.<br> It defines a single model\n(`django_celery_results.models.TaskResult`) used to store task results, and you can query this database table like any\nother Django model."
-    },
-    {
-      "id": "s19-100",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "INSTALLED_APPS%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%80%A6%20%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'django_celery_results'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%0A%0ABROKER_URL%20%3D%20'redis%3A%2F%2Flocalhost%3A6379'%0ACELERY_RESULT_BACKEND%20%3D%20'redis%3A%2F%2Flocalhost%3A6379'%0ACELERY_ACCEPT_CONTENT%20%3D%20%5B'application%2Fjson'%5D%0ACELERY_TASK_SERIALIZER%20%3D%20'json'%0ACELERY_RESULT_SERIALIZER%20%3D%20'json'%0ACELERY_TIMEZONE%20%3D%20TIME_ZONE%0ACELERY_RESULT_BACKEND%20%3D%20'django-db'%0ACELERY_CACHE_BACKEND%20%3D%20'django-cache'%0A%0ACACHES%20%3D%20%7B%0A%20%20%20%20'default'%3A%20%7B%0A%20%20%20%20%20%20%20%20'BACKEND'%3A%20'django.core.cache.backends.db.DatabaseCache'%2C%0A%20%20%20%20%20%20%20%20'LOCATION'%3A%20'redis%3A%2F%2Flocalhost%3A6379%2F1'%2C%0A%20%20%20%20%20%20%20%20%22OPTIONS%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22CLIENT_CLASS%22%3A%20%22django_redis.client.DefaultClient%22%2C%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D",
+      "title": "Step%206%3A%20Celery%20Stuff%20Configure%20to%20the%20Django%20Settings%20File",
+      "body": "Once%20Redis%20is%20up%2C%20add%20the%20following%20code%20to%20your%20settings.py%20file%20and%20use%20celery-result%0A%0A%60%60%60python%0A~%24%20pip%20install%20django-celery-results%0A%60%60%60%0A%0AThis%20extension%20enables%20you%20to%20store%20Celery%20task%20results%20using%20the%20Django%20ORM.%3Cbr%3E%20It%20defines%20a%20single%20model%0A(%60django_celery_results.models.TaskResult%60)%20used%20to%20store%20task%20results%2C%20and%20you%20can%20query%20this%20database%20table%20like%20any%0Aother%20Django%20model.%0A%0A%60%60%60python%0AINSTALLED_APPS%20%3D%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%80%A6%20%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20'django_celery_results'%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5D%0A%0ABROKER_URL%20%3D%20'redis%3A%2F%2Flocalhost%3A6379'%0ACELERY_RESULT_BACKEND%20%3D%20'redis%3A%2F%2Flocalhost%3A6379'%0ACELERY_ACCEPT_CONTENT%20%3D%20%5B'application%2Fjson'%5D%0ACELERY_TASK_SERIALIZER%20%3D%20'json'%0ACELERY_RESULT_SERIALIZER%20%3D%20'json'%0ACELERY_TIMEZONE%20%3D%20TIME_ZONE%0ACELERY_RESULT_BACKEND%20%3D%20'django-db'%0ACELERY_CACHE_BACKEND%20%3D%20'django-cache'%0A%0ACACHES%20%3D%20%7B%0A%20%20%20%20'default'%3A%20%7B%0A%20%20%20%20%20%20%20%20'BACKEND'%3A%20'django.core.cache.backends.db.DatabaseCache'%2C%0A%20%20%20%20%20%20%20%20'LOCATION'%3A%20'redis%3A%2F%2Flocalhost%3A6379%2F1'%2C%0A%20%20%20%20%20%20%20%20%22OPTIONS%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22CLIENT_CLASS%22%3A%20%22django_redis.client.DefaultClient%22%2C%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s19-101",
       "sectionId": "s19",
-      "title": "That’s it! You should now be able to use Celery with Django",
-      "kind": "text",
-      "body": "Test that the Celery worker is ready to receive tasks:"
-    },
-    {
-      "id": "s19-102",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$ celery -A your_project_name worker -l info"
-    },
-    {
-      "id": "s19-103",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "The most important task is: Always run a worker is needed to execute the celery task if any error throws from Redis like\nthis:"
-    },
-    {
-      "id": "s19-104",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "AttributeError: 'str' object has no attribute 'items'"
-    },
-    {
-      "id": "s19-105",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "• the solution is: you have to use Redis old version"
+      "title": "That%E2%80%99s%20it!%20You%20should%20now%20be%20able%20to%20use%20Celery%20with%20Django",
+      "body": "Test%20that%20the%20Celery%20worker%20is%20ready%20to%20receive%20tasks%3A%0A%0A%60%60%60python%0A~%24%20celery%20-A%20your_project_name%20worker%20-l%20info%0A%60%60%60%0A%0AThe%20most%20important%20task%20is%3A%20Always%20run%20a%20worker%20is%20needed%20to%20execute%20the%20celery%20task%20if%20any%20error%20throws%20from%20Redis%20like%0Athis%3A%0A%0A%60%60%60python%0AAttributeError%3A%20'str'%20object%20has%20no%20attribute%20'items'%0A%60%60%60%0A%0A%E2%80%A2%20the%20solution%20is%3A%20you%20have%20to%20use%20Redis%20old%20version",
+      "encoded": true
     },
     {
       "id": "s19-106",
       "sectionId": "s19",
-      "title": "Add a New Task - Step 1: Add tasks.py File to Your Django App.",
-      "kind": "code",
-      "lang": "python",
-      "code": "# app_name/tasks.py\nfrom celery import shared_task\nfrom celery.decorators import task\nfrom time import sleep\n\n\n@task(name='my_first_task')\ndef my_first_task(duration):\n    sleep(duration)\n    return('first_task_done')\n\n@shared_task\ndef test_func():\n    for i in range(10):\n        print(i)\n    return 'End_OK'\n\n@shared_task\ndef adding(x, y):\n    time.sleep(10)\n    result = x + y\n    return result"
+      "title": "Add%20a%20New%20Task%20-%20Step%201%3A%20Add%20tasks.py%20File%20to%20Your%20Django%20App.",
+      "body": "%60%60%60python%0A%23%20app_name%2Ftasks.py%0Afrom%20celery%20import%20shared_task%0Afrom%20celery.decorators%20import%20task%0Afrom%20time%20import%20sleep%0A%0A%0A%40task(name%3D'my_first_task')%0Adef%20my_first_task(duration)%3A%0A%20%20%20%20sleep(duration)%0A%20%20%20%20return('first_task_done')%0A%0A%40shared_task%0Adef%20test_func()%3A%0A%20%20%20%20for%20i%20in%20range(10)%3A%0A%20%20%20%20%20%20%20%20print(i)%0A%20%20%20%20return%20'End_OK'%0A%0A%40shared_task%0Adef%20adding(x%2C%20y)%3A%0A%20%20%20%20time.sleep(10)%0A%20%20%20%20result%20%3D%20x%20%2B%20y%0A%20%20%20%20return%20result%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s19-107",
       "sectionId": "s19",
       "title": "Step 2: Assign Task to the Celery.",
-      "kind": "text",
-      "body": "You need to assign a task to the celery. To assign this task you need to call this function with something different.\ncelery gives us two methods `delay()` and `apply_async()` to call task."
-    },
-    {
-      "id": "s19-108",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# Normal function call in python\n~$ my_first_task()\n\n# add task to the celery with function call\n~$ my_first_task.delay()"
-    },
-    {
-      "id": "s19-109",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "You can send argument to the function using the delay method. <small>To check celery on the action open a separate tab\nof the terminal then go to the project directory (activate environment if you are using one) and run this command\nagain</small>"
-    },
-    {
-      "id": "s19-110",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "~$ celery -A your_project_name worker -l info"
+      "body": "You need to assign a task to the celery. To assign this task you need to call this function with something different.\ncelery gives us two methods `delay()` and `apply_async()` to call task.\n\n```bash\n# Normal function call in python\n~$ my_first_task()\n\n# add task to the celery with function call\n~$ my_first_task.delay()\n```\n\nYou can send argument to the function using the delay method. <small>To check celery on the action open a separate tab\nof the terminal then go to the project directory (activate environment if you are using one) and run this command\nagain</small>\n\n```bash\n~$ celery -A your_project_name worker -l info\n```"
     },
     {
       "id": "s19-111",
       "sectionId": "s19",
       "title": "Create%20a%20View%20in%20your%20App",
-      "kind": "code",
-      "lang": "python",
-      "code": "%23%20app_name%2Fviews.py%0Afrom%20django.http%20import%20HttpResponse%0Afrom%20app_name.tasks%20import%20my_first_task%2C%20test_func%2C%20adding%0A%0Adef%20index(request)%3A%0A%20%20%20%20my_first_task.delay(10)%0A%20%20%20%20result%20%3D%20adding.delay(x%3D4%2C%20y%3D5)%0A%20%20%20%20return%20HttpResponse(f'response%20done.%20%7Bresult%7D')%0A%0Adef%20test(request)%3A%0A%20%20%20%20test_func.delay()%0A%20%20%20%20return%20HttpResponse(%22Done%22)",
+      "body": "%60%60%60python%0A%23%20app_name%2Fviews.py%0Afrom%20django.http%20import%20HttpResponse%0Afrom%20app_name.tasks%20import%20my_first_task%2C%20test_func%2C%20adding%0A%0Adef%20index(request)%3A%0A%20%20%20%20my_first_task.delay(10)%0A%20%20%20%20result%20%3D%20adding.delay(x%3D4%2C%20y%3D5)%0A%20%20%20%20return%20HttpResponse(f'response%20done.%20%7Bresult%7D')%0A%0Adef%20test(request)%3A%0A%20%20%20%20test_func.delay()%0A%20%20%20%20return%20HttpResponse(%22Done%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s19-112",
       "sectionId": "s19",
-      "title": "Then call the view from your app URL",
-      "kind": "code",
-      "lang": "python",
-      "code": "# app_name/urls.py\nfrom django.urls import path\nfrom app_name.views import index, test\nurlpatterns = [\n    path('celery-index/', index, name='celery_index_url'),\n    path('celery-test/', test, name='celery_test_url'),\n]"
+      "title": "Then%20call%20the%20view%20from%20your%20app%20URL",
+      "body": "%60%60%60python%0A%23%20app_name%2Furls.py%0Afrom%20django.urls%20import%20path%0Afrom%20app_name.views%20import%20index%2C%20test%0Aurlpatterns%20%3D%20%5B%0A%20%20%20%20path('celery-index%2F'%2C%20index%2C%20name%3D'celery_index_url')%2C%0A%20%20%20%20path('celery-test%2F'%2C%20test%2C%20name%3D'celery_test_url')%2C%0A%5D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s19-113",
       "sectionId": "s19",
       "title": "Celery In Production Using Supervisor - Step 1: Install Supervisor on Ubuntu Server",
-      "kind": "code",
-      "lang": "bash",
-      "code": "~$ sudo apt-get install supervisor"
+      "body": "```bash\n~$ sudo apt-get install supervisor\n```"
     },
     {
       "id": "s19-114",
       "sectionId": "s19",
       "title": "Step 2: Add .conf File in Supervisor",
-      "kind": "code",
-      "lang": "bash",
-      "code": "~$ sudo nano /etc/supervisor/conf.d/app_name.conf"
-    },
-    {
-      "id": "s19-115",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "`app_name` can be anything you like, it should be similar to your project name."
+      "body": "```bash\n~$ sudo nano /etc/supervisor/conf.d/app_name.conf\n```\n\n`app_name` can be anything you like, it should be similar to your project name."
     },
     {
       "id": "s19-116",
       "sectionId": "s19",
       "title": "Step 3: Add some Configure in app_name.conf",
-      "kind": "code",
-      "lang": "bash",
-      "code": "[program:your_app_name]\ncommand=/path/to/env/bin/celery worker -A your_project_name --loglevel=INFO\ndirectory=/path/to/workflow/your_project_name/\nuser=www-data\nautostart=true\nautorestart=true\nstdout_logfile=/path/to/workflow/your_project_name/logs/celeryd.log\nredirect_stderr=true"
-    },
-    {
-      "id": "s19-117",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "Describe the configure file:"
-    },
-    {
-      "id": "s19-118",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "[program:your_app_name]\n#The name of your supervisord program\n\ncommand=/path/to/env/bin/celery worker -A your_project_name --loglevel=INFO\n#Set full path to celery program if using virtualenv\n\ndirectory=/path/to/workflow/your_project_name/\n#The directory to your Django project\n\nuser=www-data\n#The web server has to be run under a specific user. That user must exist.\n\nautostart=true\n#If true, this program will start automatically when supervisord is started\n\nautorestart=true\n#May be one of false, unexpected, or true. If false, the process will never be autorestarted. If unexpected, the process will be restart when the program exits with an exit code that is not one of the exit codes associated with this process’ configuration (see exitcodes). If true, the process will be unconditionally restarted when it exits, without regard to its exit code.\n\nstdout_logfile=/path/to/workflow/your_project_name/logs/celeryd.log\n#Put process stdout output in this file\n\nredirect_stderr=true\n#If true, cause the process’ stderr output to be sent back to supervisord on its stdout file descriptor (in UNIX shell terms, this is the equivalent of executing /the/program 2>&1)."
+      "body": "```bash\n[program:your_app_name]\ncommand=/path/to/env/bin/celery worker -A your_project_name --loglevel=INFO\ndirectory=/path/to/workflow/your_project_name/\nuser=www-data\nautostart=true\nautorestart=true\nstdout_logfile=/path/to/workflow/your_project_name/logs/celeryd.log\nredirect_stderr=true\n```\n\nDescribe the configure file:\n\n```bash\n[program:your_app_name]\n#The name of your supervisord program\n\ncommand=/path/to/env/bin/celery worker -A your_project_name --loglevel=INFO\n#Set full path to celery program if using virtualenv\n\ndirectory=/path/to/workflow/your_project_name/\n#The directory to your Django project\n\nuser=www-data\n#The web server has to be run under a specific user. That user must exist.\n\nautostart=true\n#If true, this program will start automatically when supervisord is started\n\nautorestart=true\n#May be one of false, unexpected, or true. If false, the process will never be autorestarted. If unexpected, the process will be restart when the program exits with an exit code that is not one of the exit codes associated with this process’ configuration (see exitcodes). If true, the process will be unconditionally restarted when it exits, without regard to its exit code.\n\nstdout_logfile=/path/to/workflow/your_project_name/logs/celeryd.log\n#Put process stdout output in this file\n\nredirect_stderr=true\n#If true, cause the process’ stderr output to be sent back to supervisord on its stdout file descriptor (in UNIX shell terms, this is the equivalent of executing /the/program 2>&1).\n```"
     },
     {
       "id": "s19-119",
       "sectionId": "s19",
       "title": "Step 4: Inform Configuration to the Server",
-      "kind": "text",
-      "body": "After adding a new program, we should run the following two commands, to inform the server to reread the configuration\nfiles and to apply any changes."
-    },
-    {
-      "id": "s19-120",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "~$ sudo supervisorctl reread\n~$ sudo supervisorctl update"
+      "body": "After adding a new program, we should run the following two commands, to inform the server to reread the configuration\nfiles and to apply any changes.\n\n```python\n~$ sudo supervisorctl reread\n~$ sudo supervisorctl update\n```"
     },
     {
       "id": "s19-121",
       "sectionId": "s19",
       "title": "Managing Supervisor App",
-      "kind": "code",
-      "lang": "bash",
-      "code": "~$ sudo supervisorctl"
-    },
-    {
-      "id": "s19-122",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "You will be greeted with a list of the registered processes. You will see a process called `your_app_name` with a\n`RUNNING` status."
-    },
-    {
-      "id": "s19-123",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "your_app_name                 RUNNING   pid 6853, uptime 0:22:30\nsupervisor>"
-    },
-    {
-      "id": "s19-124",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "Type `help` for a list of available commands."
-    },
-    {
-      "id": "s19-125",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "supervisor> help\ndefault commands (type help <topic>):\n=====================================\nadd    exit      open  reload  restart   start   tail\navail  fg        pid   remove  shutdown  status  update\nclear  maintail  quit  reread  signal    stop    version"
-    },
-    {
-      "id": "s19-126",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "text",
-      "body": "In a nutshell, we can `start`, `stop` and `restart` programs bypassing the program name as an argument to the respective\ncommand. We can also take a look at the program output with the `tail` command. Once you are finished, you can `quit`."
-    },
-    {
-      "id": "s19-127",
-      "sectionId": "s19",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "~$ supervisor> quit"
+      "body": "```bash\n~$ sudo supervisorctl\n```\n\nYou will be greeted with a list of the registered processes. You will see a process called `your_app_name` with a\n`RUNNING` status.\n\n```bash\nyour_app_name                 RUNNING   pid 6853, uptime 0:22:30\nsupervisor>\n```\n\nType `help` for a list of available commands.\n\n```bash\nsupervisor> help\ndefault commands (type help <topic>):\n=====================================\nadd    exit      open  reload  restart   start   tail\navail  fg        pid   remove  shutdown  status  update\nclear  maintail  quit  reread  signal    stop    version\n```\n\nIn a nutshell, we can `start`, `stop` and `restart` programs bypassing the program name as an argument to the respective\ncommand. We can also take a look at the program output with the `tail` command. Once you are finished, you can `quit`.\n\n```bash\n~$ supervisor> quit\n```"
     },
     {
       "id": "s20-128",
       "sectionId": "s20",
       "title": "Set Up Django with Postgres, Nginx, and Gunicorn on Ubuntu server - Step 1 — Installing the Packages from the Ubuntu Repositories",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo apt update\nsudo apt install python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl"
+      "body": "```bash\nsudo apt update\nsudo apt install python3-venv python3-dev libpq-dev postgresql postgresql-contrib nginx curl\n```"
     },
     {
       "id": "s20-129",
       "sectionId": "s20",
-      "title": "Step 2 — Creating the PostgreSQL Database and User",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo -u postgres psql"
-    },
-    {
-      "id": "s20-130",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• First, create a database for your project:"
-    },
-    {
-      "id": "s20-131",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "postgres=# CREATE DATABASE myproject;"
-    },
-    {
-      "id": "s20-132",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Next, create a database user for our project. Make sure to select a secure password:"
-    },
-    {
-      "id": "s20-133",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "postgres=# CREATE USER myprojectuser WITH PASSWORD 'password';"
-    },
-    {
-      "id": "s20-134",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Afterwards, you’ll modify a few of the connection parameters for the user that you just created"
-    },
-    {
-      "id": "s20-135",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "postgres=# ALTER ROLE myprojectuser SET client_encoding TO 'utf8';\npostgres=# ALTER ROLE myprojectuser SET default_transaction_isolation TO 'read committed';\npostgres=# ALTER ROLE myprojectuser SET timezone TO 'UTC';"
-    },
-    {
-      "id": "s20-136",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Now, you can give the new user access to administer the new database:"
-    },
-    {
-      "id": "s20-137",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "postgres=# GRANT ALL PRIVILEGES ON DATABASE myproject TO myprojectuser;"
-    },
-    {
-      "id": "s20-138",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• When you are finished, exit out of the PostgreSQL prompt by typing:"
-    },
-    {
-      "id": "s20-139",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "postgres=# \\q"
+      "title": "Step%202%20%E2%80%94%20Creating%20the%20PostgreSQL%20Database%20and%20User",
+      "body": "%60%60%60bash%0Asudo%20-u%20postgres%20psql%0A%60%60%60%0A%0A%E2%80%A2%20First%2C%20create%20a%20database%20for%20your%20project%3A%0A%0A%60%60%60bash%0Apostgres%3D%23%20CREATE%20DATABASE%20myproject%3B%0A%60%60%60%0A%0A%E2%80%A2%20Next%2C%20create%20a%20database%20user%20for%20our%20project.%20Make%20sure%20to%20select%20a%20secure%20password%3A%0A%0A%60%60%60bash%0Apostgres%3D%23%20CREATE%20USER%20myprojectuser%20WITH%20PASSWORD%20'password'%3B%0A%60%60%60%0A%0A%E2%80%A2%20Afterwards%2C%20you%E2%80%99ll%20modify%20a%20few%20of%20the%20connection%20parameters%20for%20the%20user%20that%20you%20just%20created%0A%0A%60%60%60bash%0Apostgres%3D%23%20ALTER%20ROLE%20myprojectuser%20SET%20client_encoding%20TO%20'utf8'%3B%0Apostgres%3D%23%20ALTER%20ROLE%20myprojectuser%20SET%20default_transaction_isolation%20TO%20'read%20committed'%3B%0Apostgres%3D%23%20ALTER%20ROLE%20myprojectuser%20SET%20timezone%20TO%20'UTC'%3B%0A%60%60%60%0A%0A%E2%80%A2%20Now%2C%20you%20can%20give%20the%20new%20user%20access%20to%20administer%20the%20new%20database%3A%0A%0A%60%60%60bash%0Apostgres%3D%23%20GRANT%20ALL%20PRIVILEGES%20ON%20DATABASE%20myproject%20TO%20myprojectuser%3B%0A%60%60%60%0A%0A%E2%80%A2%20When%20you%20are%20finished%2C%20exit%20out%20of%20the%20PostgreSQL%20prompt%20by%20typing%3A%0A%0A%60%60%60bash%0Apostgres%3D%23%20%5Cq%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s20-140",
       "sectionId": "s20",
       "title": "Step 3 — Creating a Python Virtual Environment for your Project",
-      "kind": "text",
-      "body": "• thin the project directory, create a Python virtual environment by typing:"
-    },
-    {
-      "id": "s20-141",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mkdir ~/myprojectdir\ncd ~/myprojectdir"
-    },
-    {
-      "id": "s20-142",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Within the project directory, create a Python virtual environment by typing:"
-    },
-    {
-      "id": "s20-143",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "python3 -m venv myprojectenv"
-    },
-    {
-      "id": "s20-144",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Before installing your project’s Python requirements, you will need to activate the virtual environment. You can do"
-    },
-    {
-      "id": "s20-145",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "that by typing:"
-    },
-    {
-      "id": "s20-146",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "source myprojectenv/bin/activate"
-    },
-    {
-      "id": "s20-147",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• With your virtual environment active, install Django, Gunicorn, and the psycopg2 PostgreSQL adaptor with the local"
-    },
-    {
-      "id": "s20-148",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "instance of pip"
-    },
-    {
-      "id": "s20-149",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "(myprojectenv)$ pip install django gunicorn psycopg2-binary"
+      "body": "• thin the project directory, create a Python virtual environment by typing:\n\n```bash\nmkdir ~/myprojectdir\ncd ~/myprojectdir\n```\n\n• Within the project directory, create a Python virtual environment by typing:\n\n```bash\npython3 -m venv myprojectenv\n```\n\n• Before installing your project’s Python requirements, you will need to activate the virtual environment. You can do\n\nthat by typing:\n\n```bash\nsource myprojectenv/bin/activate\n```\n\n• With your virtual environment active, install Django, Gunicorn, and the psycopg2 PostgreSQL adaptor with the local\n\ninstance of pip\n\n```bash\n(myprojectenv)$ pip install django gunicorn psycopg2-binary\n```"
     },
     {
       "id": "s20-150",
       "sectionId": "s20",
-      "title": "Step 4 — Creating and Configuring a New Django Project",
-      "kind": "text",
-      "body": "• With your Python components installed, you can now create the actual Django project files."
-    },
-    {
-      "id": "s20-151",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "(myprojectenv)$ django-admin startproject myproject ~/myprojectdir"
-    },
-    {
-      "id": "s20-152",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• The first thing you should do with your newly created project files is adjust the settings. Open the settings file in"
-    },
-    {
-      "id": "s20-153",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "your text editor:"
-    },
-    {
-      "id": "s20-154",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "(myprojectenv)$ nano ~/myprojectdir/myproject/settings.py"
-    },
-    {
-      "id": "s20-155",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Start by locating the ALLOWED_HOSTS directive."
-    },
-    {
-      "id": "s20-156",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": "# ~/myprojectdir/myproject/settings.py\nALLOWED_HOSTS = ['your_server_domain_or_IP', 'second_domain_or_IP', . . ., 'localhost']"
-    },
-    {
-      "id": "s20-157",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Next, find the section that configures database access. It will start with DATABASES. The configuration in the file is"
-    },
-    {
-      "id": "s20-158",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "for a SQLite database."
-    },
-    {
-      "id": "s20-159",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": ". . .\nDATABASES = {\n    'default': {\n        'ENGINE': 'django.db.backends.postgresql_psycopg2',\n        'NAME': 'myproject',\n        'USER': 'myprojectuser',\n        'PASSWORD': 'password',\n        'HOST': 'localhost',\n        'PORT': '',\n    }\n}\n. . ."
-    },
-    {
-      "id": "s20-160",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Next, move down to the bottom of the file and add a setting indicating where the static files should be placed."
-    },
-    {
-      "id": "s20-161",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "python",
-      "code": ". . .\nSTATIC_URL = 'static/'\n\n# Default primary key field type\n# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field\n\nDEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'\n\nimport os\nSTATIC_ROOT = os.path.join(BASE_DIR, 'static/')"
+      "title": "Step%204%20%E2%80%94%20Creating%20and%20Configuring%20a%20New%20Django%20Project",
+      "body": "%E2%80%A2%20With%20your%20Python%20components%20installed%2C%20you%20can%20now%20create%20the%20actual%20Django%20project%20files.%0A%0A%60%60%60bash%0A(myprojectenv)%24%20django-admin%20startproject%20myproject%20~%2Fmyprojectdir%0A%60%60%60%0A%0A%E2%80%A2%20The%20first%20thing%20you%20should%20do%20with%20your%20newly%20created%20project%20files%20is%20adjust%20the%20settings.%20Open%20the%20settings%20file%20in%0A%0Ayour%20text%20editor%3A%0A%0A%60%60%60bash%0A(myprojectenv)%24%20nano%20~%2Fmyprojectdir%2Fmyproject%2Fsettings.py%0A%60%60%60%0A%0A%E2%80%A2%20Start%20by%20locating%20the%20ALLOWED_HOSTS%20directive.%0A%0A%60%60%60python%0A%23%20~%2Fmyprojectdir%2Fmyproject%2Fsettings.py%0AALLOWED_HOSTS%20%3D%20%5B'your_server_domain_or_IP'%2C%20'second_domain_or_IP'%2C%20.%20.%20.%2C%20'localhost'%5D%0A%60%60%60%0A%0A%E2%80%A2%20Next%2C%20find%20the%20section%20that%20configures%20database%20access.%20It%20will%20start%20with%20DATABASES.%20The%20configuration%20in%20the%20file%20is%0A%0Afor%20a%20SQLite%20database.%0A%0A%60%60%60python%0A.%20.%20.%0ADATABASES%20%3D%20%7B%0A%20%20%20%20'default'%3A%20%7B%0A%20%20%20%20%20%20%20%20'ENGINE'%3A%20'django.db.backends.postgresql_psycopg2'%2C%0A%20%20%20%20%20%20%20%20'NAME'%3A%20'myproject'%2C%0A%20%20%20%20%20%20%20%20'USER'%3A%20'myprojectuser'%2C%0A%20%20%20%20%20%20%20%20'PASSWORD'%3A%20'password'%2C%0A%20%20%20%20%20%20%20%20'HOST'%3A%20'localhost'%2C%0A%20%20%20%20%20%20%20%20'PORT'%3A%20''%2C%0A%20%20%20%20%7D%0A%7D%0A.%20.%20.%0A%60%60%60%0A%0A%E2%80%A2%20Next%2C%20move%20down%20to%20the%20bottom%20of%20the%20file%20and%20add%20a%20setting%20indicating%20where%20the%20static%20files%20should%20be%20placed.%0A%0A%60%60%60python%0A.%20.%20.%0ASTATIC_URL%20%3D%20'static%2F'%0A%0A%23%20Default%20primary%20key%20field%20type%0A%23%20https%3A%2F%2Fdocs.djangoproject.com%2Fen%2F4.0%2Fref%2Fsettings%2F%23default-auto-field%0A%0ADEFAULT_AUTO_FIELD%20%3D%20'django.db.models.BigAutoField'%0A%0Aimport%20os%0ASTATIC_ROOT%20%3D%20os.path.join(BASE_DIR%2C%20'static%2F')%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s20-162",
       "sectionId": "s20",
       "title": "Step 5 — Completing Initial Project Setup",
-      "kind": "text",
-      "body": "• Now, you can migrate the initial database schema to our PostgreSQL database using the management script:"
-    },
-    {
-      "id": "s20-163",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "(myprojectenv)$ ~/myprojectdir/manage.py makemigrations\n(myprojectenv)$ ~/myprojectdir/manage.py migrate"
-    },
-    {
-      "id": "s20-164",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Create an administrative user for the project by typing:"
-    },
-    {
-      "id": "s20-165",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "(myprojectenv)$ ~/myprojectdir/manage.py createsuperuser"
-    },
-    {
-      "id": "s20-166",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• You can collect all of the static content into the directory location that you configured by typing:"
-    },
-    {
-      "id": "s20-167",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "(myprojectenv)$ ~/myprojectdir/manage.py collectstatic"
+      "body": "• Now, you can migrate the initial database schema to our PostgreSQL database using the management script:\n\n```bash\n(myprojectenv)$ ~/myprojectdir/manage.py makemigrations\n(myprojectenv)$ ~/myprojectdir/manage.py migrate\n```\n\n• Create an administrative user for the project by typing:\n\n```bash\n(myprojectenv)$ ~/myprojectdir/manage.py createsuperuser\n```\n\n• You can collect all of the static content into the directory location that you configured by typing:\n\n```bash\n(myprojectenv)$ ~/myprojectdir/manage.py collectstatic\n```"
     },
     {
       "id": "s20-168",
       "sectionId": "s20",
       "title": "Step 6 — Testing Gunicorn’s Ability to Serve the Project",
-      "kind": "code",
-      "lang": "bash",
-      "code": "(myprojectenv)$ cd ~/myprojectdir\n(myprojectenv)$ gunicorn --bind 0.0.0.0:8000 myproject.wsgi"
-    },
-    {
-      "id": "s20-169",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• You’re now finished configuring your Django application. You can back out of our virtual environment by typing:"
-    },
-    {
-      "id": "s20-170",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "(myprojectenv)$ deactivate"
+      "body": "```bash\n(myprojectenv)$ cd ~/myprojectdir\n(myprojectenv)$ gunicorn --bind 0.0.0.0:8000 myproject.wsgi\n```\n\n• You’re now finished configuring your Django application. You can back out of our virtual environment by typing:\n\n```bash\n(myprojectenv)$ deactivate\n```"
     },
     {
       "id": "s20-171",
       "sectionId": "s20",
       "title": "Step 7 — Creating systemd Socket and Service Files for Gunicorn You have tested tha",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo nano /etc/systemd/system/gunicorn.socket"
-    },
-    {
-      "id": "s20-172",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Inside, you will create a `[Unit]` section to describe the socket, a `[Socket]` section to define the socket location,"
-    },
-    {
-      "id": "s20-173",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "and an `[Install]` section to make sure the socket is created at the right time:"
-    },
-    {
-      "id": "s20-174",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "```bash /etc/systemd/system/gunicorn.socket\n[Unit]\nDescription=gunicorn socket"
-    },
-    {
-      "id": "s20-175",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "[Socket]\nListenStream=/run/gunicorn.sock"
-    },
-    {
-      "id": "s20-176",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "[Install]\nWantedBy=sockets.target"
-    },
-    {
-      "id": "s20-177",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "\n- Save and close the file when you are finished.\n- Next, create and open a systemd service file for Gunicorn with sudo privileges in your text editor. The service\n  filename should match the socket filename with the exception of the extension:\n\n```bash\nsudo nano /etc/systemd/system/gunicorn.service\n\n[Unit]\nDescription=gunicorn daemon\nRequires=gunicorn.socket\nAfter=network.target\n\n[Service]\nUser=sammy\nGroup=www-data\nWorkingDirectory=/home/sammy/myprojectdir\nExecStart=/home/sammy/myprojectdir/myprojectenv/bin/gunicorn \\\n          --access-logfile - \\\n          --workers 3 \\\n          --bind unix:/run/gunicorn.sock \\\n          myproject.wsgi:application\n\n[Install]\nWantedBy=multi-user.target"
-    },
-    {
-      "id": "s20-178",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• You can now start and enable the Gunicorn socket. This will create the socket file at /run/gunicorn.sock now and at"
-    },
-    {
-      "id": "s20-179",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "boot. When a connection is made to that socket, systemd will automatically start the gunicorn.service to handle it"
-    },
-    {
-      "id": "s20-180",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl start gunicorn.socket\nsudo systemctl enable gunicorn.socket"
+      "body": "```bash\nsudo nano /etc/systemd/system/gunicorn.socket\n```\n\n• Inside, you will create a `[Unit]` section to describe the socket, a `[Socket]` section to define the socket location,\n\nand an `[Install]` section to make sure the socket is created at the right time:\n\n```bash /etc/systemd/system/gunicorn.socket\n[Unit]\nDescription=gunicorn socket\n\n[Socket]\nListenStream=/run/gunicorn.sock\n\n[Install]\nWantedBy=sockets.target\n\n```\n\n- Save and close the file when you are finished.\n- Next, create and open a systemd service file for Gunicorn with sudo privileges in your text editor. The service\n  filename should match the socket filename with the exception of the extension:\n\n```bash\nsudo nano /etc/systemd/system/gunicorn.service\n```\n\n```bash\n[Unit]\nDescription=gunicorn daemon\nRequires=gunicorn.socket\nAfter=network.target\n\n[Service]\nUser=sammy\nGroup=www-data\nWorkingDirectory=/home/sammy/myprojectdir\nExecStart=/home/sammy/myprojectdir/myprojectenv/bin/gunicorn \\\n          --access-logfile - \\\n          --workers 3 \\\n          --bind unix:/run/gunicorn.sock \\\n          myproject.wsgi:application\n\n[Install]\nWantedBy=multi-user.target\n```\n\n• You can now start and enable the Gunicorn socket. This will create the socket file at /run/gunicorn.sock now and at\n\nboot. When a connection is made to that socket, systemd will automatically start the gunicorn.service to handle it\n\n```bash\nsudo systemctl start gunicorn.socket\nsudo systemctl enable gunicorn.socket\n```"
     },
     {
       "id": "s20-181",
       "sectionId": "s20",
       "title": "Step 8 — Checking for the Gunicorn Socket File",
-      "kind": "text",
-      "body": "• Check the status of the process to find out whether it was able to start:"
-    },
-    {
-      "id": "s20-182",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl status gunicorn.socket"
-    },
-    {
-      "id": "s20-183",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Next, check for the existence of the gunicorn.sock file within the /run directory:"
-    },
-    {
-      "id": "s20-184",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "file /run/gunicorn.sock"
+      "body": "• Check the status of the process to find out whether it was able to start:\n\n```bash\nsudo systemctl status gunicorn.socket\n```\n\n• Next, check for the existence of the gunicorn.sock file within the /run directory:\n\n```bash\nfile /run/gunicorn.sock\n```"
     },
     {
       "id": "s20-185",
       "sectionId": "s20",
       "title": "Step 9 — Testing Socket Activation",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl status gunicorn"
-    },
-    {
-      "id": "s20-186",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• To test the socket activation mechanism, you can send a connection to the socket through curl by typing:"
-    },
-    {
-      "id": "s20-187",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl --unix-socket /run/gunicorn.sock localhost"
-    },
-    {
-      "id": "s20-188",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• You should receive the HTML output from your application in the terminal. This indicates that Gunicorn was started and"
-    },
-    {
-      "id": "s20-189",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "was able to serve your Django application. You can verify that the Gunicorn service is running by typing:"
-    },
-    {
-      "id": "s20-190",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl status gunicorn"
-    },
-    {
-      "id": "s20-191",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Check your /etc/systemd/system/gunicorn.service file for problems. If you make changes to the"
-    },
-    {
-      "id": "s20-192",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "/etc/systemd/system/gunicorn.service file, reload the daemon to reread the service definition and restart the Gunicorn\nprocess by typing"
-    },
-    {
-      "id": "s20-193",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl daemon-reload\nsudo systemctl restart gunicorn"
+      "body": "```bash\nsudo systemctl status gunicorn\n```\n\n• To test the socket activation mechanism, you can send a connection to the socket through curl by typing:\n\n```bash\ncurl --unix-socket /run/gunicorn.sock localhost\n```\n\n• You should receive the HTML output from your application in the terminal. This indicates that Gunicorn was started and\n\nwas able to serve your Django application. You can verify that the Gunicorn service is running by typing:\n\n```bash\nsudo systemctl status gunicorn\n```\n\n• Check your /etc/systemd/system/gunicorn.service file for problems. If you make changes to the\n\n/etc/systemd/system/gunicorn.service file, reload the daemon to reread the service definition and restart the Gunicorn\nprocess by typing\n\n```bash\nsudo systemctl daemon-reload\nsudo systemctl restart gunicorn\n```"
     },
     {
       "id": "s20-194",
       "sectionId": "s20",
-      "title": "Step 10 — Configure Nginx to Proxy Pass to Gunicorn",
-      "kind": "text",
-      "body": "• Start by creating and opening a new server block in Nginx’s sites-available directory:"
-    },
-    {
-      "id": "s20-195",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo nano /etc/nginx/sites-available/myproject\n\nserver {\n    listen 80;\n    server_name server_domain_or_IP;\n\n    location = /favicon.ico { access_log off; log_not_found off; }\n    location /static/ {\n        alias /home/sammy/myprojectdir/staticfiles/;\n    }\n\n    location /media {\n        autoindex on;\n        alias /home/sammy/myprojectdir/media/;\n    }\n\n    location / {\n        include proxy_params;\n        proxy_pass http://unix:/run/gunicorn.sock;\n    }\n}"
-    },
-    {
-      "id": "s20-196",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Save and close the file when you are finished. Now, you can enable the file by linking it to the sites-enabled"
-    },
-    {
-      "id": "s20-197",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "directory:"
-    },
-    {
-      "id": "s20-198",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo ln -s /etc/nginx/sites-available/myproject /etc/nginx/sites-enabled"
-    },
-    {
-      "id": "s20-199",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Test your Nginx configuration for syntax errors by typing:"
-    },
-    {
-      "id": "s20-200",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo nginx -t"
-    },
-    {
-      "id": "s20-201",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• If no errors are reported, go ahead and restart Nginx by typing:"
-    },
-    {
-      "id": "s20-202",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl restart nginx"
-    },
-    {
-      "id": "s20-203",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• you need to open up your firewall to normal traffic on port 80"
-    },
-    {
-      "id": "s20-204",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo ufw allow 'Nginx Full'"
-    },
-    {
-      "id": "s20-205",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "You should now be able to go to your server’s domain or IP address to view your application."
+      "title": "Step%2010%20%E2%80%94%20Configure%20Nginx%20to%20Proxy%20Pass%20to%20Gunicorn",
+      "body": "%E2%80%A2%20Start%20by%20creating%20and%20opening%20a%20new%20server%20block%20in%20Nginx%E2%80%99s%20sites-available%20directory%3A%0A%0A%60%60%60bash%0Asudo%20nano%20%2Fetc%2Fnginx%2Fsites-available%2Fmyproject%0A%60%60%60%0A%0A%60%60%60bash%0Aserver%20%7B%0A%20%20%20%20listen%2080%3B%0A%20%20%20%20server_name%20server_domain_or_IP%3B%0A%0A%20%20%20%20location%20%3D%20%2Ffavicon.ico%20%7B%20access_log%20off%3B%20log_not_found%20off%3B%20%7D%0A%20%20%20%20location%20%2Fstatic%2F%20%7B%0A%20%20%20%20%20%20%20%20alias%20%2Fhome%2Fsammy%2Fmyprojectdir%2Fstaticfiles%2F%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20location%20%2Fmedia%20%7B%0A%20%20%20%20%20%20%20%20autoindex%20on%3B%0A%20%20%20%20%20%20%20%20alias%20%2Fhome%2Fsammy%2Fmyprojectdir%2Fmedia%2F%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20location%20%2F%20%7B%0A%20%20%20%20%20%20%20%20include%20proxy_params%3B%0A%20%20%20%20%20%20%20%20proxy_pass%20http%3A%2F%2Funix%3A%2Frun%2Fgunicorn.sock%3B%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E2%80%A2%20Save%20and%20close%20the%20file%20when%20you%20are%20finished.%20Now%2C%20you%20can%20enable%20the%20file%20by%20linking%20it%20to%20the%20sites-enabled%0A%0Adirectory%3A%0A%0A%60%60%60bash%0Asudo%20ln%20-s%20%2Fetc%2Fnginx%2Fsites-available%2Fmyproject%20%2Fetc%2Fnginx%2Fsites-enabled%0A%60%60%60%0A%0A%E2%80%A2%20Test%20your%20Nginx%20configuration%20for%20syntax%20errors%20by%20typing%3A%0A%0A%60%60%60bash%0Asudo%20nginx%20-t%0A%60%60%60%0A%0A%E2%80%A2%20If%20no%20errors%20are%20reported%2C%20go%20ahead%20and%20restart%20Nginx%20by%20typing%3A%0A%0A%60%60%60bash%0Asudo%20systemctl%20restart%20nginx%0A%60%60%60%0A%0A%E2%80%A2%20you%20need%20to%20open%20up%20your%20firewall%20to%20normal%20traffic%20on%20port%2080%0A%0A%60%60%60bash%0Asudo%20ufw%20allow%20'Nginx%20Full'%0A%60%60%60%0A%0AYou%20should%20now%20be%20able%20to%20go%20to%20your%20server%E2%80%99s%20domain%20or%20IP%20address%20to%20view%20your%20application.",
+      "encoded": true
     },
     {
       "id": "s20-206",
       "sectionId": "s20",
       "title": "Step 11 — Troubleshooting Nginx and Gunicorn",
-      "kind": "text",
-      "body": "• Nginx Is Showing the Default Page Instead of the Django Application"
-    },
-    {
-      "id": "s20-207",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo tail -F /var/log/nginx/error.log"
-    },
-    {
-      "id": "s20-208",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• Django Is Displaying: “could not connect to server: Connection refused”"
-    },
-    {
-      "id": "s20-209",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl status postgresql"
-    },
-    {
-      "id": "s20-210",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "• If it is not, you can start it and enable it to start automatically at boot (if it is not already configured to do so)"
-    },
-    {
-      "id": "s20-211",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "by typing:"
-    },
-    {
-      "id": "s20-212",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl start postgresql\nsudo systemctl enable postgresql"
-    },
-    {
-      "id": "s20-213",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "If you change Gunicorn socket or service files, reload the daemon and restart the process by typing:"
-    },
-    {
-      "id": "s20-214",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo systemctl daemon-reload\nsudo systemctl restart gunicorn.socket gunicorn.service"
-    },
-    {
-      "id": "s20-215",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "text",
-      "body": "If you change the Nginx server block configuration, test the configuration and then Nginx by typing:"
-    },
-    {
-      "id": "s20-216",
-      "sectionId": "s20",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "sudo nginx -t && sudo systemctl restart nginx"
+      "body": "• Nginx Is Showing the Default Page Instead of the Django Application\n\n```bash\nsudo tail -F /var/log/nginx/error.log\n```\n\n• Django Is Displaying: “could not connect to server: Connection refused”\n\n```bash\nsudo systemctl status postgresql\n```\n\n• If it is not, you can start it and enable it to start automatically at boot (if it is not already configured to do so)\n\nby typing:\n\n```bash\nsudo systemctl start postgresql\nsudo systemctl enable postgresql\n```\n\nIf you change Gunicorn socket or service files, reload the daemon and restart the process by typing:\n\n```bash\nsudo systemctl daemon-reload\nsudo systemctl restart gunicorn.socket gunicorn.service\n```\n\nIf you change the Nginx server block configuration, test the configuration and then Nginx by typing:\n\n```bash\nsudo nginx -t && sudo systemctl restart nginx\n```"
     }
   ],
   "source": {

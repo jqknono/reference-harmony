@@ -40,1378 +40,452 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "本备忘单总结了 [Github Actions](https://github.com/actions) 常用的配置说明，以供快速参考。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "介绍",
-      "kind": "text",
-      "body": "GitHub [Actions](https://github.com/actions) 的仓库中自动化、自定义和执行软件开发工作流程，有四个基本的概念，如下："
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`workflow` _(工作流程)_ | 持续集成一次运行的过程，就是一个 `workflow`\n`job` _(任务)_ | 一个 `workflow` 由一个或多个 `jobs` 构成，含义是一次持续集成的运行，可以完成多个任务\n`step` _(步骤)_ | 每个 `job` 由多个 `step` 构成，一步步完成\n`action` _(动作)_ | 每个 `step` 可以依次执行一个或多个命令(`action`)\n<!--rehype:className=style-list-arrow-->"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 采用 [YAML](./yaml.md) 格式定义配置文件\n• 存放在代码仓库的 `.github/workflows` 目录中\n• 后缀名统一为 `.yml`，比如 `ci.yml`\n• 一个库可以有多个 `workflow` 文件\n• 根据配置事件自动运行配置文件"
+      "body": "GitHub [Actions](https://github.com/actions) 的仓库中自动化、自定义和执行软件开发工作流程，有四个基本的概念，如下：\n\n:- | :-\n:- | :-\n`workflow` _(工作流程)_ | 持续集成一次运行的过程，就是一个 `workflow`\n`job` _(任务)_ | 一个 `workflow` 由一个或多个 `jobs` 构成，含义是一次持续集成的运行，可以完成多个任务\n`step` _(步骤)_ | 每个 `job` 由多个 `step` 构成，一步步完成\n`action` _(动作)_ | 每个 `step` 可以依次执行一个或多个命令(`action`)\n<!--rehype:className=style-list-arrow-->\n\n• 采用 [YAML](./yaml.md) 格式定义配置文件\n• 存放在代码仓库的 `.github/workflows` 目录中\n• 后缀名统一为 `.yml`，比如 `ci.yml`\n• 一个库可以有多个 `workflow` 文件\n• 根据配置事件自动运行配置文件"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "配置文件",
-      "kind": "text",
-      "body": "```yaml {3,5,10}\nname: GitHub Actions Demo\non:\npush:\nbranches:"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• main"
+      "body": "```yaml {3,5,10}\nname: GitHub Actions Demo\non:\npush:\nbranches:\n\n• main"
     },
     {
       "id": "s2-6",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "jobs:\nbuild:\nruns-on: ubuntu-latest\n# 步骤 根据步骤执行任务\nsteps:"
     },
     {
       "id": "s2-7",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "• uses: actions/checkout@v3\n• uses: actions/setup-node@v3"
     },
     {
       "id": "s2-8",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "with:\nnode-version: 16"
     },
     {
       "id": "s2-9",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "• run: npm install\n• run: npm run build"
     },
     {
       "id": "s2-10",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "code",
-      "lang": "",
-      "code": "\n存放到 `.github/workflows` 目录中，命名为 `ci.yml`，当 `push` 代码到仓库 `main` 分支中，该配置自动运行配置。\n\n### 指定触发\n<!--rehype:wrap-class=row-span-2-->\n\n`push` 事件触发 `workflow`\n\n```yaml\non: push"
+      "body": "```\n\n存放到 `.github/workflows` 目录中，命名为 `ci.yml`，当 `push` 代码到仓库 `main` 分支中，该配置自动运行配置。\n\n### 指定触发\n<!--rehype:wrap-class=row-span-2-->\n\n`push` 事件触发 `workflow`\n\n```yaml\non: push\n```"
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "`push` 事件或 `pull_request` 事件都可以触发 `workflow`"
     },
     {
       "id": "s2-12",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "on: [push, pull_request]"
+      "body": "```yaml\non: [push, pull_request]\n```"
     },
     {
       "id": "s2-13",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "只有在 `main` 分支 `push` 事件触发 `workflow`"
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "```yaml {2}\non:\npush:\nbranches:"
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "• main"
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
-      "title": "任务",
-      "kind": "code",
-      "lang": "",
-      "code": "\n`push` 事件触发 `workflow`，`docs` 目录下的更改 `push` 事件不触发 `workflow`\n\n```yaml {2,4}\non:\n  push:\n    paths-ignore:\n      - 'docs/**'"
+      "title": "%E4%BB%BB%E5%8A%A1",
+      "body": "%60%60%60%0A%0A%60push%60%20%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%20%60workflow%60%EF%BC%8C%60docs%60%20%E7%9B%AE%E5%BD%95%E4%B8%8B%E7%9A%84%E6%9B%B4%E6%94%B9%20%60push%60%20%E4%BA%8B%E4%BB%B6%E4%B8%8D%E8%A7%A6%E5%8F%91%20%60workflow%60%0A%0A%60%60%60yaml%20%7B2%2C4%7D%0Aon%3A%0A%20%20push%3A%0A%20%20%20%20paths-ignore%3A%0A%20%20%20%20%20%20-%20'docs%2F**'%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "push 事件触发 workflow，包括 sub-project 目录或其子目录中的文件触发 workflow，除非该文件在 sub-project/docs 目录中，不触发 workflow"
     },
     {
       "id": "s2-18",
       "sectionId": "s2",
-      "title": "任务",
-      "kind": "code",
-      "lang": "yaml",
-      "code": "on:\n  push:\n    paths:\n      - 'sub-project/**'\n      - '!sub-project/docs/**'"
+      "title": "%E4%BB%BB%E5%8A%A1",
+      "body": "%60%60%60yaml%0Aon%3A%0A%20%20push%3A%0A%20%20%20%20paths%3A%0A%20%20%20%20%20%20-%20'sub-project%2F**'%0A%20%20%20%20%20%20-%20'!sub-project%2Fdocs%2F**'%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-19",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "text",
       "body": "版本发布为 `published` 时运行工作流程。"
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "任务",
-      "kind": "code",
-      "lang": "yml",
-      "code": "on:\n  release:\n    types: [published]"
+      "body": "```yml\non:\n  release:\n    types: [published]\n```"
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "多项任务",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs:\n  my_first_job:  # 第一个任务\n    name: My first job\n\n  my_second_job: # 第二个任务\n    name: My second job"
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "通过 jobs `(jobs.<job_id>.name)`字段，配置一项或多项需要执行的任务"
+      "body": "```yml\njobs:\n  my_first_job:  # 第一个任务\n    name: My first job\n\n  my_second_job: # 第二个任务\n    name: My second job\n```\n\n通过 jobs `(jobs.<job_id>.name)`字段，配置一项或多项需要执行的任务"
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "多项任务依赖关系",
-      "kind": "text",
-      "body": "通过 needs `(jobs.<job_id>.needs)`字段，指定当前任务的依赖关系"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs:\n  job1:\n  job2:\n    needs: job1\n  job3:\n    needs: [job1, job2]"
-    },
-    {
-      "id": "s2-25",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "上面配置中，`job1` 必须先于 `job2` 完成，而 `job3` 等待 `job1` 和 `job2` 的完成才能运行。因此，这个 `workflow` 的运行顺序依次为：`job1`、`job2`、`job3`"
+      "body": "通过 needs `(jobs.<job_id>.needs)`字段，指定当前任务的依赖关系\n\n```yml\njobs:\n  job1:\n  job2:\n    needs: job1\n  job3:\n    needs: [job1, job2]\n```\n\n上面配置中，`job1` 必须先于 `job2` 完成，而 `job3` 等待 `job1` 和 `job2` 的完成才能运行。因此，这个 `workflow` 的运行顺序依次为：`job1`、`job2`、`job3`"
     },
     {
       "id": "s2-26",
       "sectionId": "s2",
-      "title": "多项任务传递参数",
-      "kind": "text",
-      "body": "```yml {2,5,9,11,15}\njobs:\njob1:\nruns-on: ubuntu-latest\n# 将步骤输出映射到作业输出\noutputs:\noutput1: ${{ steps.step1.outputs.test }}\noutput2: ${{ steps.step2.outputs.test }}\nsteps:"
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• id: step1"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "run%3A%20echo%20%22%3A%3Aset-output%20name%3Dtest%3A%3Ahello%22",
+      "title": "%E5%A4%9A%E9%A1%B9%E4%BB%BB%E5%8A%A1%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0",
+      "body": "%60%60%60yml%20%7B2%2C5%2C9%2C11%2C15%7D%0Ajobs%3A%0Ajob1%3A%0Aruns-on%3A%20ubuntu-latest%0A%23%20%E5%B0%86%E6%AD%A5%E9%AA%A4%E8%BE%93%E5%87%BA%E6%98%A0%E5%B0%84%E5%88%B0%E4%BD%9C%E4%B8%9A%E8%BE%93%E5%87%BA%0Aoutputs%3A%0Aoutput1%3A%20%24%7B%7B%20steps.step1.outputs.test%20%7D%7D%0Aoutput2%3A%20%24%7B%7B%20steps.step2.outputs.test%20%7D%7D%0Asteps%3A%0A%0A%E2%80%A2%20id%3A%20step1%0A%0Arun%3A%20echo%20%22%3A%3Aset-output%20name%3Dtest%3A%3Ahello%22%0A%0A%E2%80%A2%20id%3A%20step2%0A%0Arun%3A%20echo%20%22%3A%3Aset-output%20name%3Dtest%3A%3Aworld%22%0Ajob2%3A%0Aruns-on%3A%20ubuntu-latest%0Aneeds%3A%20job1%0Asteps%3A%0A%0A%E2%80%A2%20run%3A%20echo%20%24%7B%7Bneeds.job1.outputs.output1%7D%7D%20%24%7B%7Bneeds.job1.outputs.output2%7D%7D%0A%0A%60%60%60%0A%0A%23%23%23%20%E5%AE%9A%E6%97%B6%E8%A7%A6%E5%8F%91%0A%0A%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20cron%20%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%85%8D%E7%BD%AE%E5%91%A8%E6%9C%9F%E6%80%A7%E4%BB%BB%E5%8A%A1%EF%BC%8C%E5%AE%9A%E6%97%B6%E6%89%A7%E8%A1%8C%0A%0A%60%60%60yaml%0Aname%3A%20schedule%20task%0A%0A%23%20%E8%A6%81%E6%B3%A8%E6%84%8F%E6%97%B6%E5%B7%AE%EF%BC%8C%E6%9C%80%E5%A5%BD%E6%89%8B%E5%8A%A8%E6%8C%87%E5%AE%9A%E6%97%B6%E5%8C%BA%0Aenv%3A%0A%20%20TZ%3A%20Asia%2FShanghai%0A%0Aon%3A%0A%20%20%23%20push%20%E5%88%B0%20main%20%E5%88%86%E6%94%AF%E6%97%B6%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1%0A%20%20push%3A%0A%20%20%20%20branches%3A%0A%20%20%20%20%20%20-%20main%0A%20%20%23%20%E6%AF%8F%E9%9A%94%E4%B8%A4%E5%B0%8F%E6%97%B6%E8%87%AA%E5%8A%A8%E6%89%A7%E8%A1%8C%E4%BB%BB%E5%8A%A1%0A%20%20schedule%3A%0A%20%20%20-%20cron%3A%20'0%200%2F2%20*%20*%20*'%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s2-29",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• id: step2"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "run%3A%20echo%20%22%3A%3Aset-output%20name%3Dtest%3A%3Aworld%22%0Ajob2%3A%0Aruns-on%3A%20ubuntu-latest%0Aneeds%3A%20job1%0Asteps%3A",
-      "encoded": true
-    },
-    {
-      "id": "s2-31",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• run: echo ${{needs.job1.outputs.output1}} ${{needs.job1.outputs.output2}}"
-    },
-    {
-      "id": "s2-32",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 定时触发\n\n可以使用 cron 表达式配置周期性任务，定时执行\n\n```yaml\nname: schedule task\n\n# 要注意时差，最好手动指定时区\nenv:\n  TZ: Asia/Shanghai\n\non:\n  # push 到 main 分支时执行任务\n  push:\n    branches:\n      - main\n  # 每隔两小时自动执行任务\n  schedule:\n   - cron: '0 0/2 * * *'"
     },
     {
       "id": "s2-33",
       "sectionId": "s2",
       "title": "指定每项任务的虚拟机环境",
-      "kind": "code",
-      "lang": "yml",
-      "code": "runs-on: ubuntu-latest"
-    },
-    {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "指定运行所需要的虚拟机环境，⚠️ 它是必填字段"
-    },
-    {
-      "id": "s2-35",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```yml {3}\njobs:\nbuild: # 任务名称\nruns-on: ubuntu-latest # 虚拟机环境配置"
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n---\n\n- `Windows Server 2022` _(windows-latest)_ 或 _(windows-2022)_\n- `Ubuntu 20.04` _(ubuntu-latest)_ 或 _(ubuntu-20.04)_\n- `macOS Monterey 12` _(macos-12)_\n- `macOS Big Sur 11` _(macos-latest)_,_(macos-11)_\n<!--rehype:className=style-arrow-->\n\n另见: [选择 GitHub 托管的运行器](https://docs.github.com/cn/actions/using-workflows/workflow-syntax-for-github-actions#选择-github-托管的运行器)\n\n### 指定每项任务的步骤\n\n每个步骤都可以指定以下三个字段\n\n```shell\njobs.<job_id>.steps.name # 步骤名称\n# 该步骤运行的命令或者 action\njobs.<job_id>.steps.run\n# 该步骤所需的环境变量\njobs.<job_id>.steps.env"
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`steps` 字段指定每个 `Job` 的运行步骤，可以包含一个或多个步骤(`steps`)"
-    },
-    {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```yml {4}\njobs:\nbuild:\nruns-on: ubuntu-latest\nsteps:"
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• uses: actions/checkout@v3\n• uses: actions/setup-node@v3"
-    },
-    {
-      "id": "s2-40",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "with:\nnode-version: 16"
-    },
-    {
-      "id": "s2-41",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• run: npm install\n• run: npm run build"
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 环境变量\n\n```shell\njobs.<job_id>.environment"
-    },
-    {
-      "id": "s2-43",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用单一环境名称的示例"
-    },
-    {
-      "id": "s2-44",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "environment: staging_environment"
-    },
-    {
-      "id": "s2-45",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用环境名称和 URL 的示例"
-    },
-    {
-      "id": "s2-46",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "environment:\n  name: production_environment\n  url: https://github.com"
+      "body": "```yml\nruns-on: ubuntu-latest\n```\n\n指定运行所需要的虚拟机环境，⚠️ 它是必填字段\n\n```yml {3}\njobs:\nbuild: # 任务名称\nruns-on: ubuntu-latest # 虚拟机环境配置\n\n```\n\n---\n\n- `Windows Server 2022` _(windows-latest)_ 或 _(windows-2022)_\n- `Ubuntu 20.04` _(ubuntu-latest)_ 或 _(ubuntu-20.04)_\n- `macOS Monterey 12` _(macos-12)_\n- `macOS Big Sur 11` _(macos-latest)_,_(macos-11)_\n<!--rehype:className=style-arrow-->\n\n另见: [选择 GitHub 托管的运行器](https://docs.github.com/cn/actions/using-workflows/workflow-syntax-for-github-actions#选择-github-托管的运行器)\n\n### 指定每项任务的步骤\n\n每个步骤都可以指定以下三个字段\n\n```shell\njobs.<job_id>.steps.name # 步骤名称\n# 该步骤运行的命令或者 action\njobs.<job_id>.steps.run\n# 该步骤所需的环境变量\njobs.<job_id>.steps.env\n```\n\n`steps` 字段指定每个 `Job` 的运行步骤，可以包含一个或多个步骤(`steps`)\n\n```yml {4}\njobs:\nbuild:\nruns-on: ubuntu-latest\nsteps:\n\n• uses: actions/checkout@v3\n• uses: actions/setup-node@v3\n\nwith:\nnode-version: 16\n\n• run: npm install\n• run: npm run build\n\n```\n\n### 环境变量\n\n```shell\njobs.<job_id>.environment\n```\n\n使用单一环境名称的示例\n\n```yml\nenvironment: staging_environment\n```\n\n使用环境名称和 URL 的示例\n\n```yml\nenvironment:\n  name: production_environment\n  url: https://github.com\n```"
     },
     {
       "id": "s2-47",
       "sectionId": "s2",
       "title": "自定义环境变量",
-      "kind": "text",
-      "body": "`GitHub` 会保留 `GITHUB_` 环境变量前缀供 `GitHub` 内部使用。设置有 `GITHUB_` 前缀的环境变量或密码将导致错误。"
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: 测试 nodejs 获取环境变量\n  env:\n    API_TOKEN: ${{ secrets.API_TOKEN }}"
-    },
-    {
-      "id": "s2-49",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "在 `https://github.com/<用户名>/<项目名称>/settings/secrets` 中添加 `secrets` `API_TOKEN`，在工作流中设置环境变量 [`API_TOKEN`](https://github.com/jaywcjlove/github-actions/blob/799b232fca3d9df0272eaa12610f9ebfca51b288/.github/workflows/ci.yml#L46)"
+      "body": "`GitHub` 会保留 `GITHUB_` 环境变量前缀供 `GitHub` 内部使用。设置有 `GITHUB_` 前缀的环境变量或密码将导致错误。\n\n```yml\n- name: 测试 nodejs 获取环境变量\n  env:\n    API_TOKEN: ${{ secrets.API_TOKEN }}\n```\n\n在 `https://github.com/<用户名>/<项目名称>/settings/secrets` 中添加 `secrets` `API_TOKEN`，在工作流中设置环境变量 [`API_TOKEN`](https://github.com/jaywcjlove/github-actions/blob/799b232fca3d9df0272eaa12610f9ebfca51b288/.github/workflows/ci.yml#L46)"
     },
     {
       "id": "s2-50",
       "sectionId": "s2",
-      "title": "表达式",
-      "kind": "text",
-      "body": "在 `if` 条件下使用表达式时，可以省略表达式语法 (`${{ }}`)，因为 GitHub 会自动将 `if` 条件作为表达式求值"
-    },
-    {
-      "id": "s2-51",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```yml {3}\nsteps:"
-    },
-    {
-      "id": "s2-52",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• uses: actions/hello-world-action@v1.1"
-    },
-    {
-      "id": "s2-53",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "if: github.repository == 'uiw/uiw-repo'\n# if: ${{ <expression> }}"
-    },
-    {
-      "id": "s2-54",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n设置环境变量的示例\n\n```yml\nenv:\n  MY_ENV_VAR: ${{ <expression> }}"
+      "title": "%E8%A1%A8%E8%BE%BE%E5%BC%8F",
+      "body": "%E5%9C%A8%20%60if%60%20%E6%9D%A1%E4%BB%B6%E4%B8%8B%E4%BD%BF%E7%94%A8%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%97%B6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%81%E7%95%A5%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E6%B3%95%20(%60%24%7B%7B%20%7D%7D%60)%EF%BC%8C%E5%9B%A0%E4%B8%BA%20GitHub%20%E4%BC%9A%E8%87%AA%E5%8A%A8%E5%B0%86%20%60if%60%20%E6%9D%A1%E4%BB%B6%E4%BD%9C%E4%B8%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC%0A%0A%60%60%60yml%20%7B3%7D%0Asteps%3A%0A%0A%E2%80%A2%20uses%3A%20actions%2Fhello-world-action%40v1.1%0A%0Aif%3A%20github.repository%20%3D%3D%20'uiw%2Fuiw-repo'%0A%23%20if%3A%20%24%7B%7B%20%3Cexpression%3E%20%7D%7D%0A%0A%60%60%60%0A%0A%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E7%A4%BA%E4%BE%8B%0A%0A%60%60%60yml%0Aenv%3A%0A%20%20MY_ENV_VAR%3A%20%24%7B%7B%20%3Cexpression%3E%20%7D%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-55",
       "sectionId": "s2",
       "title": "操作符",
-      "kind": "text",
       "body": "• `( )` _(逻辑分组)_\n• `[ ]` _(索引)_\n• `.` _(属性解引用)_\n• `!` _(非)_\n• `<` _(小于)_\n• `<=` _(小于或等于)_\n• `>` _(大于)_\n• `>=` _(大于或等于)_\n• `==` _(相等)_\n• `!=` _(不等)_\n• `&&` _(和)_\n• `||` _(或)_"
     },
     {
       "id": "s2-56",
       "sectionId": "s2",
       "title": "Github 上下文",
-      "kind": "text",
-      "body": "属性名称 | 类型 | 描述\n---- | ---- | ----\n`github` _(object)_ | 工作流程中任何作业或步骤期间可用的顶层上下文。\n`github.event` _(object)_ | 完整事件 web 挂钩有效负载。 更多信息请参阅“触发工作流程的事件”。\n`github.event_path` _(string)_ | 运行器上完整事件 web 挂钩有效负载的路径。\n`github.workflow` _(string)_ | 工作流程的名称。 如果工作流程文件未指定 name，此属性的值将是仓库中工作流程文件的完整路径。\n`github.job` _(string)_ | 当前作业的 job_id。\n`github.run_id` _(string)_ | 仓库中每个运行的唯一编号。 如果您重新执行工作流程运行，此编号不变。\n`github.run_number` _(string)_ | 仓库中特定工作流程每个运行的唯一编号。 此编号从 1（对应于工作流程的第一个运行）开始，然后随着每个新的运行而递增。 如果您重新执行工作流程运行，此编号不变。\n`github.actor` _(string)_ | 发起工作流程运行的用户的登录名。\n`github.repository` _(string)_ | 所有者和仓库名称。 例如 Codertocat/Hello-World。\n`github.repository_owner` _(string)_ | 仓库所有者的名称。 例如 Codertocat。\n`github.event_name` _(string)_ | 触发工作流程运行的事件的名称。\n`github.sha` _(string)_ | 触发工作流程的提交 SHA。\n`github.ref` _(string)_ | 触发工作流程的分支或标记参考。\n`github.head_ref` _(string)_ | 工作流程运行中拉取请求的 head_ref 或来源分支。 此属性仅在触发工作流程运行的事件为 pull_request 时才可用。\n`github.base_ref` _(string)_ | 工作流程运行中拉取请求的 base_ref 或目标分支。 此属性仅在触发工作流程运行的事件为 pull_request 时才可用。\n`github.token` _(string)_ | 代表仓库上安装的 GitHub 应用程序进行身份验证的令牌。 这在功能上等同于 GITHUB_TOKEN 密码。 更多信息请参阅“使用 GITHUB_TOKEN 验证身份”。\n`github.workspace` _(string)_ | 使用 checkout 操作时步骤的默认工作目录和仓库的默认位置。\n`github.action` _(string)_ | 正在运行的操作的名称。 在当前步骤运行脚本时，GitHub 删除特殊字符或使用名称 run。 如果在同一作业中多次使用相同的操作，则名称将包括带有序列号的后缀。 例如，运行的第一个脚本名称为 run1，则第二个脚本将命名为 run2。 同样，actions/checkout 第二次调用时将变成 actionscheckout2。"
-    },
-    {
-      "id": "s2-57",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Github 上下文](https://help.github.com/cn/actions/reference/context-and-expression-syntax-for-github-actions)是访问有关工作流运行、运行器环境、作业和步骤的信息的一种方式"
+      "body": "属性名称 | 类型 | 描述\n---- | ---- | ----\n`github` _(object)_ | 工作流程中任何作业或步骤期间可用的顶层上下文。\n`github.event` _(object)_ | 完整事件 web 挂钩有效负载。 更多信息请参阅“触发工作流程的事件”。\n`github.event_path` _(string)_ | 运行器上完整事件 web 挂钩有效负载的路径。\n`github.workflow` _(string)_ | 工作流程的名称。 如果工作流程文件未指定 name，此属性的值将是仓库中工作流程文件的完整路径。\n`github.job` _(string)_ | 当前作业的 job_id。\n`github.run_id` _(string)_ | 仓库中每个运行的唯一编号。 如果您重新执行工作流程运行，此编号不变。\n`github.run_number` _(string)_ | 仓库中特定工作流程每个运行的唯一编号。 此编号从 1（对应于工作流程的第一个运行）开始，然后随着每个新的运行而递增。 如果您重新执行工作流程运行，此编号不变。\n`github.actor` _(string)_ | 发起工作流程运行的用户的登录名。\n`github.repository` _(string)_ | 所有者和仓库名称。 例如 Codertocat/Hello-World。\n`github.repository_owner` _(string)_ | 仓库所有者的名称。 例如 Codertocat。\n`github.event_name` _(string)_ | 触发工作流程运行的事件的名称。\n`github.sha` _(string)_ | 触发工作流程的提交 SHA。\n`github.ref` _(string)_ | 触发工作流程的分支或标记参考。\n`github.head_ref` _(string)_ | 工作流程运行中拉取请求的 head_ref 或来源分支。 此属性仅在触发工作流程运行的事件为 pull_request 时才可用。\n`github.base_ref` _(string)_ | 工作流程运行中拉取请求的 base_ref 或目标分支。 此属性仅在触发工作流程运行的事件为 pull_request 时才可用。\n`github.token` _(string)_ | 代表仓库上安装的 GitHub 应用程序进行身份验证的令牌。 这在功能上等同于 GITHUB_TOKEN 密码。 更多信息请参阅“使用 GITHUB_TOKEN 验证身份”。\n`github.workspace` _(string)_ | 使用 checkout 操作时步骤的默认工作目录和仓库的默认位置。\n`github.action` _(string)_ | 正在运行的操作的名称。 在当前步骤运行脚本时，GitHub 删除特殊字符或使用名称 run。 如果在同一作业中多次使用相同的操作，则名称将包括带有序列号的后缀。 例如，运行的第一个脚本名称为 run1，则第二个脚本将命名为 run2。 同样，actions/checkout 第二次调用时将变成 actionscheckout2。\n\n[Github 上下文](https://help.github.com/cn/actions/reference/context-and-expression-syntax-for-github-actions)是访问有关工作流运行、运行器环境、作业和步骤的信息的一种方式"
     },
     {
       "id": "s2-58",
       "sectionId": "s2",
-      "title": "直接常量",
-      "kind": "text",
-      "body": "作为表达式的一部分，可以使用 `boolean`, `null`, `number` 或 `string`数据类型"
-    },
-    {
-      "id": "s2-59",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "env:\n  myNull: ${{ null }}\n  myBoolean: ${{ false }}\n  myIntegerNumber: ${{ 711 }}\n  myFloatNumber: ${{ -9.2 }}\n  myHexNumber: ${{ 0xff }}\n  myExponentialNumber: ${{ -2.99e-2 }}\n  myString: Mona the Octocat\n  myStringInBraces: ${{ 'It''s source!' }}"
+      "title": "%E7%9B%B4%E6%8E%A5%E5%B8%B8%E9%87%8F",
+      "body": "%E4%BD%9C%E4%B8%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20%60boolean%60%2C%20%60null%60%2C%20%60number%60%20%E6%88%96%20%60string%60%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%0A%0A%60%60%60yml%0Aenv%3A%0A%20%20myNull%3A%20%24%7B%7B%20null%20%7D%7D%0A%20%20myBoolean%3A%20%24%7B%7B%20false%20%7D%7D%0A%20%20myIntegerNumber%3A%20%24%7B%7B%20711%20%7D%7D%0A%20%20myFloatNumber%3A%20%24%7B%7B%20-9.2%20%7D%7D%0A%20%20myHexNumber%3A%20%24%7B%7B%200xff%20%7D%7D%0A%20%20myExponentialNumber%3A%20%24%7B%7B%20-2.99e-2%20%7D%7D%0A%20%20myString%3A%20Mona%20the%20Octocat%0A%20%20myStringInBraces%3A%20%24%7B%7B%20'It''s%20source!'%20%7D%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-60",
       "sectionId": "s2",
-      "title": "函数 contains",
-      "kind": "text",
-      "body": "使用字符串的示例"
-    },
-    {
-      "id": "s2-61",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "contains('Hello world', 'llo') // 返回 true"
-    },
-    {
-      "id": "s2-62",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用对象过滤器的示例返回 true"
-    },
-    {
-      "id": "s2-63",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "contains(github.event.issue.labels.*.name, 'bug')"
-    },
-    {
-      "id": "s2-64",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "另见: [函数 contains](https://docs.github.com/cn/actions/learn-github-actions/expressions#contains)"
+      "title": "%E5%87%BD%E6%95%B0%20contains",
+      "body": "%E4%BD%BF%E7%94%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%A4%BA%E4%BE%8B%0A%0A%60%60%60js%0Acontains('Hello%20world'%2C%20'llo')%20%2F%2F%20%E8%BF%94%E5%9B%9E%20true%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%E5%AF%B9%E8%B1%A1%E8%BF%87%E6%BB%A4%E5%99%A8%E7%9A%84%E7%A4%BA%E4%BE%8B%E8%BF%94%E5%9B%9E%20true%0A%0A%60%60%60js%0Acontains(github.event.issue.labels.*.name%2C%20'bug')%0A%60%60%60%0A%0A%E5%8F%A6%E8%A7%81%3A%20%5B%E5%87%BD%E6%95%B0%20contains%5D(https%3A%2F%2Fdocs.github.com%2Fcn%2Factions%2Flearn-github-actions%2Fexpressions%23contains)",
+      "encoded": true
     },
     {
       "id": "s2-65",
       "sectionId": "s2",
-      "title": "函数 startsWith",
-      "kind": "code",
-      "lang": "js",
-      "code": "startsWith('Hello world', 'He') // 返回 true"
-    },
-    {
-      "id": "s2-66",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "另见: [函数 startsWith](https://docs.github.com/cn/actions/learn-github-actions/expressions#startswith)，此函数不区分大小写"
+      "title": "%E5%87%BD%E6%95%B0%20startsWith",
+      "body": "%60%60%60js%0AstartsWith('Hello%20world'%2C%20'He')%20%2F%2F%20%E8%BF%94%E5%9B%9E%20true%0A%60%60%60%0A%0A%E5%8F%A6%E8%A7%81%3A%20%5B%E5%87%BD%E6%95%B0%20startsWith%5D(https%3A%2F%2Fdocs.github.com%2Fcn%2Factions%2Flearn-github-actions%2Fexpressions%23startswith)%EF%BC%8C%E6%AD%A4%E5%87%BD%E6%95%B0%E4%B8%8D%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99",
+      "encoded": true
     },
     {
       "id": "s2-67",
       "sectionId": "s2",
       "title": "默认环境变量",
-      "kind": "text",
-      "body": "环境变量 | 描述\n---- | ----\n`CI` | 始终设置为 `true`\n`HOME` | 用于存储用户数据的 GitHub 主目录路径。 例如 `/github/home`\n`GITHUB_WORKFLOW` | 工作流程的名称。\n`GITHUB_RUN_ID` | 仓库中每个运行的唯一编号。 如果您重新执行工作流程运行，此编号不变。\n`GITHUB_RUN_NUMBER` | 仓库中特定工作流程每个运行的唯一编号。 此编号从 1（对应于工作流程的第一个运行）开始，然后随着每个新的运行而递增。 如果您重新执行工作流程运行，此编号不变。\n`GITHUB_ACTION` | 操作唯一的标识符 (id)。\n`GITHUB_ACTIONS` |  当 GitHub 操作 运行工作流程时，始终设置为 true。 您可以使用此变量来区分测试是在本地运行还是通过 GitHub 操作 运行。\n`GITHUB_ACTION_PATH` | GitHub 操作所在的路径\n`GITHUB_ACTOR` | 发起工作流程的个人或应用程序的名称。 例如 octocat\n`GITHUB_API_URL` | 返回 `API URL`。例如：`https://api.github.com`\n`GITHUB_REPOSITORY` | 所有者和仓库名称。 例如 octocat/Hello-World\n`GITHUB_EVENT_NAME` | 触发工作流程的 web 挂钩事件的名称\n`GITHUB_EVENT_PATH` | 具有完整 web 挂钩事件有效负载的文件路径。 例如 /github/workflow/event.json\n`GITHUB_WORKSPACE` | GitHub 工作空间目录路径。 如果您的工作流程使用 [actions/checkout](https://github.com/actions/checkout) 操作，工作空间目录将包含存储仓库副本的子目录。 如果不使用 [actions/checkout](https://github.com/actions/checkout) 操作，该目录将为空。 例如 /home |/runner/work/my-repo-name/my-repo-name\n`GITHUB_SHA` | 触发工作流程的提交 SHA。 例如 ffac537e6cbbf9\n`GITHUB_REF` | 触发工作流程的分支或标记参考。 例如 refs/heads/feature-branch-1。 如果分支或标记都不适用于事件类型，则变量不会存在\n`GITHUB_HEAD_REF` | 仅为复刻的仓库设置。头部仓库的分支\n`GITHUB_BASE_REF` | 仅为复刻的仓库设置。基础仓库的分支"
-    },
-    {
-      "id": "s2-68",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "另见: [默认环境变量](https://docs.github.com/cn/actions/learn-github-actions/environment-variables#default-environment-variables)"
+      "body": "环境变量 | 描述\n---- | ----\n`CI` | 始终设置为 `true`\n`HOME` | 用于存储用户数据的 GitHub 主目录路径。 例如 `/github/home`\n`GITHUB_WORKFLOW` | 工作流程的名称。\n`GITHUB_RUN_ID` | 仓库中每个运行的唯一编号。 如果您重新执行工作流程运行，此编号不变。\n`GITHUB_RUN_NUMBER` | 仓库中特定工作流程每个运行的唯一编号。 此编号从 1（对应于工作流程的第一个运行）开始，然后随着每个新的运行而递增。 如果您重新执行工作流程运行，此编号不变。\n`GITHUB_ACTION` | 操作唯一的标识符 (id)。\n`GITHUB_ACTIONS` |  当 GitHub 操作 运行工作流程时，始终设置为 true。 您可以使用此变量来区分测试是在本地运行还是通过 GitHub 操作 运行。\n`GITHUB_ACTION_PATH` | GitHub 操作所在的路径\n`GITHUB_ACTOR` | 发起工作流程的个人或应用程序的名称。 例如 octocat\n`GITHUB_API_URL` | 返回 `API URL`。例如：`https://api.github.com`\n`GITHUB_REPOSITORY` | 所有者和仓库名称。 例如 octocat/Hello-World\n`GITHUB_EVENT_NAME` | 触发工作流程的 web 挂钩事件的名称\n`GITHUB_EVENT_PATH` | 具有完整 web 挂钩事件有效负载的文件路径。 例如 /github/workflow/event.json\n`GITHUB_WORKSPACE` | GitHub 工作空间目录路径。 如果您的工作流程使用 [actions/checkout](https://github.com/actions/checkout) 操作，工作空间目录将包含存储仓库副本的子目录。 如果不使用 [actions/checkout](https://github.com/actions/checkout) 操作，该目录将为空。 例如 /home |/runner/work/my-repo-name/my-repo-name\n`GITHUB_SHA` | 触发工作流程的提交 SHA。 例如 ffac537e6cbbf9\n`GITHUB_REF` | 触发工作流程的分支或标记参考。 例如 refs/heads/feature-branch-1。 如果分支或标记都不适用于事件类型，则变量不会存在\n`GITHUB_HEAD_REF` | 仅为复刻的仓库设置。头部仓库的分支\n`GITHUB_BASE_REF` | 仅为复刻的仓库设置。基础仓库的分支\n\n另见: [默认环境变量](https://docs.github.com/cn/actions/learn-github-actions/environment-variables#default-environment-variables)"
     },
     {
       "id": "s2-69",
       "sectionId": "s2",
-      "title": "函数 format",
-      "kind": "code",
-      "lang": "js",
-      "code": "format('{{Hello {0} {1} {2}!}}', 'Mona', 'the', 'Octocat')\n// 返回 '{Hello Mona the Octocat!}'."
-    },
-    {
-      "id": "s2-70",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "另见: [函数 format](https://docs.github.com/cn/actions/learn-github-actions/expressions#format)"
+      "title": "%E5%87%BD%E6%95%B0%20format",
+      "body": "%60%60%60js%0Aformat('%7B%7BHello%20%7B0%7D%20%7B1%7D%20%7B2%7D!%7D%7D'%2C%20'Mona'%2C%20'the'%2C%20'Octocat')%0A%2F%2F%20%E8%BF%94%E5%9B%9E%20'%7BHello%20Mona%20the%20Octocat!%7D'.%0A%60%60%60%0A%0A%E5%8F%A6%E8%A7%81%3A%20%5B%E5%87%BD%E6%95%B0%20format%5D(https%3A%2F%2Fdocs.github.com%2Fcn%2Factions%2Flearn-github-actions%2Fexpressions%23format)",
+      "encoded": true
     },
     {
       "id": "s2-71",
       "sectionId": "s2",
-      "title": "函数 join",
-      "kind": "code",
-      "lang": "js",
-      "code": "join(github.event.issue.labels.*.name,', ')\n// 也许返回 'bug, help wanted'."
-    },
-    {
-      "id": "s2-72",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "另见: [函数 join](https://docs.github.com/cn/actions/learn-github-actions/expressions#join)"
+      "title": "%E5%87%BD%E6%95%B0%20join",
+      "body": "%60%60%60js%0Ajoin(github.event.issue.labels.*.name%2C'%2C%20')%0A%2F%2F%20%E4%B9%9F%E8%AE%B8%E8%BF%94%E5%9B%9E%20'bug%2C%20help%20wanted'.%0A%60%60%60%0A%0A%E5%8F%A6%E8%A7%81%3A%20%5B%E5%87%BD%E6%95%B0%20join%5D(https%3A%2F%2Fdocs.github.com%2Fcn%2Factions%2Flearn-github-actions%2Fexpressions%23join)",
+      "encoded": true
     },
     {
       "id": "s2-73",
       "sectionId": "s2",
       "title": "%E5%87%BD%E6%95%B0%20toJSON",
-      "kind": "code",
-      "lang": "js",
-      "code": "toJSON(job)%0A%2F%2F%20%E4%B9%9F%E8%AE%B8%E8%BF%94%E5%9B%9E%20%7B%20%22status%22%3A%20%22Success%22%20%7D.",
+      "body": "%60%60%60js%0AtoJSON(job)%0A%2F%2F%20%E4%B9%9F%E8%AE%B8%E8%BF%94%E5%9B%9E%20%7B%20%22status%22%3A%20%22Success%22%20%7D.%0A%60%60%60%0A%0A%E5%8F%A6%E8%A7%81%3A%20%5B%E5%87%BD%E6%95%B0%20toJSON%5D(https%3A%2F%2Fdocs.github.com%2Fcn%2Factions%2Flearn-github-actions%2Fexpressions%23tojson)",
       "encoded": true
-    },
-    {
-      "id": "s2-74",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "另见: [函数 toJSON](https://docs.github.com/cn/actions/learn-github-actions/expressions#tojson)"
     },
     {
       "id": "s2-75",
       "sectionId": "s2",
       "title": "函数",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`fromJSON` | 返回 JSON 对象或 JSON 数据类型的值 [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#fromjson)\n`hashFiles` | 返回与路径模式匹配的文件集的单个哈希 [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#hashfiles)\n`success` | 当前面的步骤都没失败或被取消时返回 true [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#success)\n`always` | 使步骤始终执行，返回 `true` 即使取消也是如此 [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#always)\n`cancelled` | 如果工作流被取消，则返回 true [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#cancelled)\n`failure` | 当作业的任何先前步骤失败时返回 true [#](https://docs.github.com/cn/actions/learn-github-actions/expressions#failure)"
     },
     {
       "id": "s2-76",
       "sectionId": "s2",
       "title": "函数 success()",
-      "kind": "code",
-      "lang": "yml",
-      "code": "steps:\n  ...\n  - name: 作业已成功\n    if: ${{ success() }}"
+      "body": "```yml\nsteps:\n  ...\n  - name: 作业已成功\n    if: ${{ success() }}\n```"
     },
     {
       "id": "s2-77",
       "sectionId": "s2",
       "title": "函数 failure()",
-      "kind": "code",
-      "lang": "yml",
-      "code": "steps:\n  ...\n  - name: 作业失败\n    if: ${{ failure() }}"
+      "body": "```yml\nsteps:\n  ...\n  - name: 作业失败\n    if: ${{ failure() }}\n```"
     },
     {
       "id": "s3-78",
       "sectionId": "s3",
       "title": "%E8%8E%B7%E5%8F%96%E7%89%88%E6%9C%AC%E4%BF%A1%E6%81%AF",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20Test%0A%20%20run%3A%20%7C%0A%20%20%20%20%23%20Strip%20git%20ref%20prefix%20from%20version%0A%20%20%20%20echo%20%22%24%7B%7B%20github.ref%20%7D%7D%22%0A%20%20%20%20%23%20VERSION%3D%24(echo%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%7C%20sed%20-e%20's%2C.*%2F%5C(.*%5C)%2C%5C1%2C')%0A%0A%20%20%20%20%23%20%23%20Strip%20%22v%22%20prefix%20from%20tag%20name%0A%20%20%20%20%23%20%5B%5B%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%3D%3D%20%22refs%2Ftags%2F%22*%20%5D%5D%20%26%26%20VERSION%3D%24(echo%20%24VERSION%20%7C%20sed%20-e%20's%2F%5Ev%2F%2F')%0A%20%20%20%20echo%20%22%24VERSION%22",
+      "body": "%60%60%60yml%0A-%20name%3A%20Test%0A%20%20run%3A%20%7C%0A%20%20%20%20%23%20Strip%20git%20ref%20prefix%20from%20version%0A%20%20%20%20echo%20%22%24%7B%7B%20github.ref%20%7D%7D%22%0A%20%20%20%20%23%20VERSION%3D%24(echo%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%7C%20sed%20-e%20's%2C.*%2F%5C(.*%5C)%2C%5C1%2C')%0A%0A%20%20%20%20%23%20%23%20Strip%20%22v%22%20prefix%20from%20tag%20name%0A%20%20%20%20%23%20%5B%5B%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%3D%3D%20%22refs%2Ftags%2F%22*%20%5D%5D%20%26%26%20VERSION%3D%24(echo%20%24VERSION%20%7C%20sed%20-e%20's%2F%5Ev%2F%2F')%0A%20%20%20%20echo%20%22%24VERSION%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-79",
       "sectionId": "s3",
       "title": "提交到 gh-pages 分支",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: Deploy\n  uses: peaceiris/actions-gh-pages@v3\n  with:\n    github_token: ${{secrets.GITHUB_TOKEN}}\n    publish_dir: ./build"
+      "body": "```yml\n- name: Deploy\n  uses: peaceiris/actions-gh-pages@v3\n  with:\n    github_token: ${{secrets.GITHUB_TOKEN}}\n    publish_dir: ./build\n```"
     },
     {
       "id": "s3-80",
       "sectionId": "s3",
       "title": "%E4%BF%AE%E6%94%B9%20package.json",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20Modify%20Version%0A%20%20shell%3A%20bash%0A%20%20run%3A%20%7C%0A%20%20%20%20node%20-e%20'var%20pkg%20%3D%20require(%22.%2Fpackage.json%22)%3B%20pkg.version%3D%20(new%20Date().getFullYear().toString().substr(2))%20%2B%20%22.%22%20%2B%20(new%20Date().getMonth()%20%2B%201)%20%2B%20%22.%22%20%2B%20(new%20Date().getDate())%3B%20require(%22fs%22).writeFileSync(%22.%2Fpackage.json%22%2C%20JSON.stringify(pkg%2C%20null%2C%202))'",
+      "body": "%60%60%60yml%0A-%20name%3A%20Modify%20Version%0A%20%20shell%3A%20bash%0A%20%20run%3A%20%7C%0A%20%20%20%20node%20-e%20'var%20pkg%20%3D%20require(%22.%2Fpackage.json%22)%3B%20pkg.version%3D%20(new%20Date().getFullYear().toString().substr(2))%20%2B%20%22.%22%20%2B%20(new%20Date().getMonth()%20%2B%201)%20%2B%20%22.%22%20%2B%20(new%20Date().getDate())%3B%20require(%22fs%22).writeFileSync(%22.%2Fpackage.json%22%2C%20JSON.stringify(pkg%2C%20null%2C%202))'%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20%5Bgithub-action-package%5D(https%3A%2F%2Fgithub.com%2Fjaywcjlove%2Fgithub-action-package)%20%E4%BF%AE%E6%94%B9%20%60name%60%20%E5%AD%97%E6%AE%B5%0A%0A%60%60%60yml%0A-%20name%3A%20package.json%20info%0A%20%20uses%3A%20jaywcjlove%2Fgithub-action-package%40main%0A%20%20with%3A%0A%20%20%20%20rename%3A%20'%40wcj%2Fgithub-package-test'%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s3-81",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "使用 [github-action-package](https://github.com/jaywcjlove/github-action-package) 修改 `name` 字段"
-    },
-    {
-      "id": "s3-82",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: package.json info\n  uses: jaywcjlove/github-action-package@main\n  with:\n    rename: '@wcj/github-package-test'"
     },
     {
       "id": "s3-83",
       "sectionId": "s3",
-      "title": "克隆带有 Submodule 的仓库",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: Checkout\n  uses: actions/checkout@v3\n  with:\n    path: main\n    submodules: true"
-    },
-    {
-      "id": "s3-84",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "`submodules`：`true` 检出子模块或 `recursive` 递归检出子模块"
-    },
-    {
-      "id": "s3-85",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20Clone%20sub%20repository%0A%20%20shell%3A%20bash%0A%20%20run%3A%20%7C%0A%20%20%20%20auth_header%3D%22%24(git%20config%20--local%20--get%20http.https%3A%2F%2Fgithub.com%2F.extraheader)%22%0A%20%20%20%20%23%20git%20submodule%20sync%20--recursive%0A%20%20%20%20%23%20git%20-c%20%22http.extraheader%3D%24auth_header%22%20-c%20protocol.version%3D2%20submodule%20update%20--init%20--remote%20--force%20--recursive%20--checkout%20ant.design",
+      "title": "%E5%85%8B%E9%9A%86%E5%B8%A6%E6%9C%89%20Submodule%20%E7%9A%84%E4%BB%93%E5%BA%93",
+      "body": "%60%60%60yml%0A-%20name%3A%20Checkout%0A%20%20uses%3A%20actions%2Fcheckout%40v3%0A%20%20with%3A%0A%20%20%20%20path%3A%20main%0A%20%20%20%20submodules%3A%20true%0A%60%60%60%0A%0A%60submodules%60%EF%BC%9A%60true%60%20%E6%A3%80%E5%87%BA%E5%AD%90%E6%A8%A1%E5%9D%97%E6%88%96%20%60recursive%60%20%E9%80%92%E5%BD%92%E6%A3%80%E5%87%BA%E5%AD%90%E6%A8%A1%E5%9D%97%0A%0A%60%60%60yml%0A-%20name%3A%20Clone%20sub%20repository%0A%20%20shell%3A%20bash%0A%20%20run%3A%20%7C%0A%20%20%20%20auth_header%3D%22%24(git%20config%20--local%20--get%20http.https%3A%2F%2Fgithub.com%2F.extraheader)%22%0A%20%20%20%20%23%20git%20submodule%20sync%20--recursive%0A%20%20%20%20%23%20git%20-c%20%22http.extraheader%3D%24auth_header%22%20-c%20protocol.version%3D2%20submodule%20update%20--init%20--remote%20--force%20--recursive%20--checkout%20ant.design%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-86",
       "sectionId": "s3",
       "title": "步骤依赖作业",
-      "kind": "text",
-      "body": "使用 `jobs.<job_id>.needs` 识别在此作业运行之前必须成功完成的任何作业。它可以是一个字符串，也可以是字符串数组。 如果某个作业失败，则所有需要它的作业都会被跳过，除非这些作业使用让该作业继续的条件表达式。"
-    },
-    {
-      "id": "s3-87",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs:\n  job1:\n  job2:\n    needs: job1\n  job3:\n    needs: [job1, job2]"
-    },
-    {
-      "id": "s3-88",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "在此示例中，`job1` 必须在 `job2` 开始之前成功完成，而 `job3` 要等待 `job1` 和 `job2` 完成。此示例中的作业按顺序运行："
-    },
-    {
-      "id": "s3-89",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "❶ job1\n❷ job2\n❸ job3"
-    },
-    {
-      "id": "s3-90",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "配置如下"
-    },
-    {
-      "id": "s3-91",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs:\n  job1:\n  job2:\n    needs: job1\n  job3:\n    if: ${{ always() }}\n    needs: [job1, job2]"
-    },
-    {
-      "id": "s3-92",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "在此示例中，`job3` 使用 `always()` 条件表达式，因此它始终在 `job1` 和 `job2` 完成后运行，不管它们是否成功。"
+      "body": "使用 `jobs.<job_id>.needs` 识别在此作业运行之前必须成功完成的任何作业。它可以是一个字符串，也可以是字符串数组。 如果某个作业失败，则所有需要它的作业都会被跳过，除非这些作业使用让该作业继续的条件表达式。\n\n```yml\njobs:\n  job1:\n  job2:\n    needs: job1\n  job3:\n    needs: [job1, job2]\n```\n\n在此示例中，`job1` 必须在 `job2` 开始之前成功完成，而 `job3` 要等待 `job1` 和 `job2` 完成。此示例中的作业按顺序运行：\n\n```\n❶ job1\n❷ job2\n❸ job3\n```\n\n配置如下\n\n```yml\njobs:\n  job1:\n  job2:\n    needs: job1\n  job3:\n    if: ${{ always() }}\n    needs: [job1, job2]\n```\n\n在此示例中，`job3` 使用 `always()` 条件表达式，因此它始终在 `job1` 和 `job2` 完成后运行，不管它们是否成功。"
     },
     {
       "id": "s3-93",
       "sectionId": "s3",
       "title": "%E5%90%8C%E6%AD%A5%20Gitee",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20Sync%20to%20Gitee%0A%20%20run%3A%20%7C%0A%20%20%20%20mirror()%20%7B%0A%20%20%20%20%20%20git%20clone%20%22https%3A%2F%2Fgithub.com%2F%241%2F%242%22%0A%20%20%20%20%20%20cd%20%22%242%22%0A%20%20%20%20%20%20git%20remote%20add%20gitee%20%22https%3A%2F%2Fjaywcjlove%3A%24%7B%7B%20secrets.GITEE_TOKEN%20%7D%7D%40gitee.com%2Fuiw%2F%242%22%0A%20%20%20%20%20%20git%20remote%20set-head%20origin%20-d%0A%20%20%20%20%20%20git%20push%20gitee%20--prune%20%2Brefs%2Fremotes%2Forigin%2F*%3Arefs%2Fheads%2F*%20%2Brefs%2Ftags%2F*%3Arefs%2Ftags%2F*%0A%20%20%20%20%20%20cd%20..%0A%20%20%20%20%7D%0A%20%20%20%20mirror%20uiwjs%20uiw",
+      "body": "%60%60%60yml%0A-%20name%3A%20Sync%20to%20Gitee%0A%20%20run%3A%20%7C%0A%20%20%20%20mirror()%20%7B%0A%20%20%20%20%20%20git%20clone%20%22https%3A%2F%2Fgithub.com%2F%241%2F%242%22%0A%20%20%20%20%20%20cd%20%22%242%22%0A%20%20%20%20%20%20git%20remote%20add%20gitee%20%22https%3A%2F%2Fjaywcjlove%3A%24%7B%7B%20secrets.GITEE_TOKEN%20%7D%7D%40gitee.com%2Fuiw%2F%242%22%0A%20%20%20%20%20%20git%20remote%20set-head%20origin%20-d%0A%20%20%20%20%20%20git%20push%20gitee%20--prune%20%2Brefs%2Fremotes%2Forigin%2F*%3Arefs%2Fheads%2F*%20%2Brefs%2Ftags%2F*%3Arefs%2Ftags%2F*%0A%20%20%20%20%20%20cd%20..%0A%20%20%20%20%7D%0A%20%20%20%20mirror%20uiwjs%20uiw%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-94",
       "sectionId": "s3",
       "title": "提交 NPM 包",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- run: npm publish --access public\n  continue-on-error: true\n  env:\n    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}"
-    },
-    {
-      "id": "s3-95",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "获取 `NPM_TOKEN`，可以通过 [npm](https://www.npmjs.com/settings/wcjiang/tokens) 账号创建 `token`"
-    },
-    {
-      "id": "s3-96",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "npm token list [--json|--parseable] # 查看\nnpm token create [--read-only] [--cidr=1.1.1.1/24,2.2.2.2/16] # 创建\nnpm token revoke <id|token> # 撤销"
-    },
-    {
-      "id": "s3-97",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "可以使用 [JS-DevTools/npm-publish](https://github.com/JS-DevTools/npm-publish) 提交"
-    },
-    {
-      "id": "s3-98",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name:  📦 @province-city-china/data\n  uses: JS-DevTools/npm-publish@v1\n  with:\n    token: ${{ secrets.NPM_TOKEN }}\n    package: packages/data/package.json"
-    },
-    {
-      "id": "s3-99",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "它有个好处，检测 `package.json` 中版本号是否发生变更，来决定是否提交版本，不会引发流程错误。"
+      "body": "```yml\n- run: npm publish --access public\n  continue-on-error: true\n  env:\n    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}\n```\n\n获取 `NPM_TOKEN`，可以通过 [npm](https://www.npmjs.com/settings/wcjiang/tokens) 账号创建 `token`\n\n```shell\nnpm token list [--json|--parseable] # 查看\nnpm token create [--read-only] [--cidr=1.1.1.1/24,2.2.2.2/16] # 创建\nnpm token revoke <id|token> # 撤销\n```\n\n可以使用 [JS-DevTools/npm-publish](https://github.com/JS-DevTools/npm-publish) 提交\n\n```yml\n- name:  📦 @province-city-china/data\n  uses: JS-DevTools/npm-publish@v1\n  with:\n    token: ${{ secrets.NPM_TOKEN }}\n    package: packages/data/package.json\n```\n\n它有个好处，检测 `package.json` 中版本号是否发生变更，来决定是否提交版本，不会引发流程错误。"
     },
     {
       "id": "s3-100",
       "sectionId": "s3",
       "title": "步骤作业文件共享",
-      "kind": "text",
-      "body": "Artifacts 是 GitHub Actions 为您提供持久文件并在运行完成后使用它们或在作业（文档）之间共享的一种方式。"
-    },
-    {
-      "id": "s3-101",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• 要创建工件并使用它，您将需要不同的操作：上传和下载"
-    },
-    {
-      "id": "s3-102",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "要上传文件或目录，您只需像这样使用它："
-    },
-    {
-      "id": "s3-103",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "steps:\n  - uses: actions/checkout@v2\n  - run: mkdir -p path/to/artifact\n  - run: echo hello > path/to/file/a.txt\n  - uses: actions/upload-artifact@v2\n    with:\n      name: my-artifact\n      path: path/to/artifact/a.txt"
-    },
-    {
-      "id": "s3-104",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "然后下载 `artifact` 以使用它："
-    },
-    {
-      "id": "s3-105",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "steps:\n  - uses: actions/checkout@v2\n  - uses: actions/download-artifact@v2\n    with:\n      name: my-artifact"
+      "body": "Artifacts 是 GitHub Actions 为您提供持久文件并在运行完成后使用它们或在作业（文档）之间共享的一种方式。\n\n• 要创建工件并使用它，您将需要不同的操作：上传和下载\n\n要上传文件或目录，您只需像这样使用它：\n\n```yml\nsteps:\n  - uses: actions/checkout@v2\n  - run: mkdir -p path/to/artifact\n  - run: echo hello > path/to/file/a.txt\n  - uses: actions/upload-artifact@v2\n    with:\n      name: my-artifact\n      path: path/to/artifact/a.txt\n```\n\n然后下载 `artifact` 以使用它：\n\n```yml\nsteps:\n  - uses: actions/checkout@v2\n  - uses: actions/download-artifact@v2\n    with:\n      name: my-artifact\n```"
     },
     {
       "id": "s3-106",
       "sectionId": "s3",
       "title": "Node.js",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: Setup Node\n  uses: actions/setup-node@v2\n  with:\n    node-version: 14"
-    },
-    {
-      "id": "s3-107",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "使用[矩阵策略](https://docs.github.com/cn/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategy) 在 nodejs 不同版本中运行"
-    },
-    {
-      "id": "s3-108",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "strategy:\n  matrix:\n    node-version: [10.x, 12.x, 14.x]\n\nsteps:\n  - uses: actions/checkout@v2\n  - name: 使用 Node ${{ matrix.node-version }}\n    uses: actions/setup-node@v1\n    with:\n      node-version: ${{ matrix.node-version }}\n  - run: npm ci\n  - run: npm run build --if-present\n  - run: npm test"
+      "body": "```yml\n- name: Setup Node\n  uses: actions/setup-node@v2\n  with:\n    node-version: 14\n```\n\n使用[矩阵策略](https://docs.github.com/cn/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstrategy) 在 nodejs 不同版本中运行\n\n```yml\nstrategy:\n  matrix:\n    node-version: [10.x, 12.x, 14.x]\n\nsteps:\n  - uses: actions/checkout@v2\n  - name: 使用 Node ${{ matrix.node-version }}\n    uses: actions/setup-node@v1\n    with:\n      node-version: ${{ matrix.node-version }}\n  - run: npm ci\n  - run: npm run build --if-present\n  - run: npm test\n```"
     },
     {
       "id": "s3-109",
       "sectionId": "s3",
       "title": "%E6%8F%90%E4%BA%A4%20docker%20%E9%95%9C%E5%83%8F",
-      "kind": "code",
-      "lang": "yml",
-      "code": "%23%20https%3A%2F%2Fwww.basefactor.com%2Fgithub-actions-docker%0A-%20name%3A%20Docker%20login%0A%20%20run%3A%20docker%20login%20-u%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%20-p%20%24%7B%7B%20secrets.DOCKER_PASSWORD%20%7D%7D%0A%0A-%20name%3A%20Build%20ant.design%20image%0A%20%20run%3A%20%7C%0A%20%20%20%20cd%20.%2Fant%5C.design%0A%20%20%20%20docker%20build%20-t%20ant.design%20.%0A-%20name%3A%20Tags%20%26%20Push%20docs%0A%20%20run%3A%20%7C%0A%20%20%20%20%23%20Strip%20git%20ref%20prefix%20from%20version%0A%20%20%20%20VERSION%3D%24(echo%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%7C%20sed%20-e%20's%2C.*%2F%5C(.*%5C)%2C%5C1%2C')%0A%0A%20%20%20%20%23%20Strip%20%22v%22%20prefix%20from%20tag%20name%0A%20%20%20%20%5B%5B%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%3D%3D%20%22refs%2Ftags%2F%22*%20%5D%5D%20%26%26%20VERSION%3D%24(echo%20%24VERSION%20%7C%20sed%20-e%20's%2F%5Ev%2F%2F')%0A%0A%20%20%20%20docker%20tag%20ant.design%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%2Fant.design%3A%24VERSION%0A%20%20%20%20docker%20tag%20ant.design%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%2Fant.design%3Alatest%0A%20%20%20%20docker%20push%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%2Fant.design%3A%24VERSION%0A%20%20%20%20docker%20push%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%2Fant.design%3Alatest",
+      "body": "%60%60%60yml%0A%23%20https%3A%2F%2Fwww.basefactor.com%2Fgithub-actions-docker%0A-%20name%3A%20Docker%20login%0A%20%20run%3A%20docker%20login%20-u%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%20-p%20%24%7B%7B%20secrets.DOCKER_PASSWORD%20%7D%7D%0A%0A-%20name%3A%20Build%20ant.design%20image%0A%20%20run%3A%20%7C%0A%20%20%20%20cd%20.%2Fant%5C.design%0A%20%20%20%20docker%20build%20-t%20ant.design%20.%0A-%20name%3A%20Tags%20%26%20Push%20docs%0A%20%20run%3A%20%7C%0A%20%20%20%20%23%20Strip%20git%20ref%20prefix%20from%20version%0A%20%20%20%20VERSION%3D%24(echo%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%7C%20sed%20-e%20's%2C.*%2F%5C(.*%5C)%2C%5C1%2C')%0A%0A%20%20%20%20%23%20Strip%20%22v%22%20prefix%20from%20tag%20name%0A%20%20%20%20%5B%5B%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%3D%3D%20%22refs%2Ftags%2F%22*%20%5D%5D%20%26%26%20VERSION%3D%24(echo%20%24VERSION%20%7C%20sed%20-e%20's%2F%5Ev%2F%2F')%0A%0A%20%20%20%20docker%20tag%20ant.design%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%2Fant.design%3A%24VERSION%0A%20%20%20%20docker%20tag%20ant.design%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%2Fant.design%3Alatest%0A%20%20%20%20docker%20push%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%2Fant.design%3A%24VERSION%0A%20%20%20%20docker%20push%20%24%7B%7B%20secrets.DOCKER_USER%20%7D%7D%2Fant.design%3Alatest%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-110",
       "sectionId": "s3",
       "title": "创建一个 tag",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: Create Tag\n  id: create_tag\n  uses: jaywcjlove/create-tag-action@main\n  with:\n    package-path: ./package.json"
-    },
-    {
-      "id": "s3-111",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "根据 `package-path` 指定的 `package.json` 检测 `version` 是否发生变化来创建 `tag`"
+      "body": "```yml\n- name: Create Tag\n  id: create_tag\n  uses: jaywcjlove/create-tag-action@main\n  with:\n    package-path: ./package.json\n```\n\n根据 `package-path` 指定的 `package.json` 检测 `version` 是否发生变化来创建 `tag`"
     },
     {
       "id": "s3-112",
       "sectionId": "s3",
       "title": "%E7%94%9F%E6%88%90%20git%20%E6%8F%90%E4%BA%A4%E6%97%A5%E5%BF%97",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20Generate%20Changelog%0A%20%20id%3A%20changelog%0A%20%20uses%3A%20jaywcjlove%2Fchangelog-generator%40main%0A%20%20with%3A%0A%20%20%20%20filter-author%3A%20(%E5%B0%8F%E5%BC%9F%E8%B0%83%E8%B0%83%E2%84%A2)%0A%0A-%20name%3A%20Get%20the%20changelog%0A%20%20run%3A%20echo%20%22%24%7B%7B%20steps.changelog.outputs.changelog%20%7D%7D%22",
+      "body": "%60%60%60yml%0A-%20name%3A%20Generate%20Changelog%0A%20%20id%3A%20changelog%0A%20%20uses%3A%20jaywcjlove%2Fchangelog-generator%40main%0A%20%20with%3A%0A%20%20%20%20filter-author%3A%20(%E5%B0%8F%E5%BC%9F%E8%B0%83%E8%B0%83%E2%84%A2)%0A%0A-%20name%3A%20Get%20the%20changelog%0A%20%20run%3A%20echo%20%22%24%7B%7B%20steps.changelog.outputs.changelog%20%7D%7D%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-113",
       "sectionId": "s3",
       "title": "%E6%8F%90%E4%BA%A4%E5%88%B0%20GitHub%20docker%20%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20'%E7%99%BB%E5%BD%95%E5%88%B0%20GitHub%20%E6%B3%A8%E5%86%8C%E8%A1%A8'%0A%20%20run%3A%20echo%20%24%7B%7B%20github.token%20%7D%7D%20%7C%20docker%20login%20ghcr.io%20-u%20%24%7B%7B%20github.actor%20%7D%7D%20--password-stdin%0A%0A-%20name%3A%20'%E7%BC%96%E8%AF%91%20docker%20image'%0A%20%20run%3A%20docker%20build%20-t%20ghcr.io%2Fjaywcjlove%2Freference%3Alatest%20.%0A%0A-%20name%3A%20'%E6%8E%A8%E9%80%81%E5%88%B0%20GitHub%20%E6%B3%A8%E5%86%8C%E8%A1%A8%E4%B8%AD'%0A%20%20run%3A%20docker%20push%20ghcr.io%2Fjaywcjlove%2Freference%3Alatest%0A%0A-%20name%3A%20'%E6%A0%87%E8%AE%B0%20docker%20%E9%95%9C%E5%83%8F%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%20GitHub%20%E6%B3%A8%E5%86%8C%E8%A1%A8'%0A%20%20if%3A%20steps.create_tag.outputs.successful%0A%20%20run%3A%20%7C%0A%20%20%20%20echo%20%22version%3A%20v%24%7B%7B%20steps.changelog.outputs.version%20%7D%7D%22%0A%20%20%20%20docker%20tag%20ghcr.io%2Fjaywcjlove%2Freference%3Alatest%20ghcr.io%2Fjaywcjlove%2Freference%3A%24%7B%7Bsteps.changelog.outputs.version%7D%7D%0A%20%20%20%20docker%20push%20ghcr.io%2Fjaywcjlove%2Freference%3A%24%7B%7Bsteps.changelog.outputs.version%7D%7D",
+      "body": "%60%60%60yml%0A-%20name%3A%20'%E7%99%BB%E5%BD%95%E5%88%B0%20GitHub%20%E6%B3%A8%E5%86%8C%E8%A1%A8'%0A%20%20run%3A%20echo%20%24%7B%7B%20github.token%20%7D%7D%20%7C%20docker%20login%20ghcr.io%20-u%20%24%7B%7B%20github.actor%20%7D%7D%20--password-stdin%0A%0A-%20name%3A%20'%E7%BC%96%E8%AF%91%20docker%20image'%0A%20%20run%3A%20docker%20build%20-t%20ghcr.io%2Fjaywcjlove%2Freference%3Alatest%20.%0A%0A-%20name%3A%20'%E6%8E%A8%E9%80%81%E5%88%B0%20GitHub%20%E6%B3%A8%E5%86%8C%E8%A1%A8%E4%B8%AD'%0A%20%20run%3A%20docker%20push%20ghcr.io%2Fjaywcjlove%2Freference%3Alatest%0A%0A-%20name%3A%20'%E6%A0%87%E8%AE%B0%20docker%20%E9%95%9C%E5%83%8F%E5%B9%B6%E5%8F%91%E5%B8%83%E5%88%B0%20GitHub%20%E6%B3%A8%E5%86%8C%E8%A1%A8'%0A%20%20if%3A%20steps.create_tag.outputs.successful%0A%20%20run%3A%20%7C%0A%20%20%20%20echo%20%22version%3A%20v%24%7B%7B%20steps.changelog.outputs.version%20%7D%7D%22%0A%20%20%20%20docker%20tag%20ghcr.io%2Fjaywcjlove%2Freference%3Alatest%20ghcr.io%2Fjaywcjlove%2Freference%3A%24%7B%7Bsteps.changelog.outputs.version%7D%7D%0A%20%20%20%20docker%20push%20ghcr.io%2Fjaywcjlove%2Freference%3A%24%7B%7Bsteps.changelog.outputs.version%7D%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-114",
       "sectionId": "s3",
       "title": "%E6%8F%90%E4%BA%A4%20commit%20%E5%88%B0%20master%20%E5%88%86%E6%94%AF",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%AE%83%E6%8F%90%E4%BA%A4%E5%88%B0%20master%20%E5%88%86%E6%94%AF%0A%20%20run%3A%20%7C%0A%20%20%20%20%23%20Strip%20git%20ref%20prefix%20from%20version%0A%20%20%20%20VERSION%3D%24(echo%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%7C%20sed%20-e%20's%2C.*%2F%5C(.*%5C)%2C%5C1%2C')%0A%20%20%20%20COMMIT%3Dreleased-%24%7BVERSION%7D%0A%20%20%20%20%23%20Strip%20%22v%22%20prefix%20from%20tag%20name%0A%20%20%20%20%5B%5B%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%3D%3D%20%22refs%2Ftags%2F%22*%20%5D%5D%20%26%26%20VERSION%3D%24(echo%20%24VERSION%20%7C%20sed%20-e%20's%2F%5Ev%2F%2F')%0A%20%20%20%20echo%20%22%E8%BE%93%E5%87%BA%E7%89%88%E6%9C%AC%E5%8F%B7%EF%BC%9A%24VERSION%22%0A%20%20%20%20%23%20%E5%B0%86%E7%89%88%E6%9C%AC%E8%BE%93%E5%87%BA%E5%88%B0%E5%BD%93%E5%89%8D%20VERSION%20%E6%96%87%E4%BB%B6%E4%B8%AD%0A%20%20%20%20echo%20%22%24VERSION%22%20%3E%20VERSION%0A%20%20%20%20echo%20%221.%20%E8%BE%93%E5%87%BACommit%EF%BC%9A%24commit%22%0A%20%20%20%20echo%20%222.%20Released%20%24VERSION%22%0A%20%20%20%20git%20fetch%0A%20%20%20%20git%20config%20--local%20user.email%20%22action%40github.com%22%0A%20%20%20%20git%20config%20--local%20user.name%20%22GitHub%20Action%22%0A%20%20%20%20git%20add%20.%0A%20%20%20%20git%20commit%20-am%20%24COMMIT%0A%20%20%20%20git%20branch%20-av%0A%20%20%20%20git%20pull%20origin%20master%0A%0A-%20name%3A%20%E5%B0%86%E4%B8%8A%E9%9D%A2%E7%9A%84%E6%8F%90%E4%BA%A4%20push%20%E5%88%B0%20master%20%E5%88%86%E6%94%AF%0A%20%20uses%3A%20ad-m%2Fgithub-push-action%40master%0A%20%20with%3A%0A%20%20%20%20github_token%3A%20%24%7B%7B%20secrets.GITHUB_TOKEN%20%7D%7D",
+      "body": "%60%60%60yml%0A-%20name%3A%20%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%AE%83%E6%8F%90%E4%BA%A4%E5%88%B0%20master%20%E5%88%86%E6%94%AF%0A%20%20run%3A%20%7C%0A%20%20%20%20%23%20Strip%20git%20ref%20prefix%20from%20version%0A%20%20%20%20VERSION%3D%24(echo%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%7C%20sed%20-e%20's%2C.*%2F%5C(.*%5C)%2C%5C1%2C')%0A%20%20%20%20COMMIT%3Dreleased-%24%7BVERSION%7D%0A%20%20%20%20%23%20Strip%20%22v%22%20prefix%20from%20tag%20name%0A%20%20%20%20%5B%5B%20%22%24%7B%7B%20github.ref%20%7D%7D%22%20%3D%3D%20%22refs%2Ftags%2F%22*%20%5D%5D%20%26%26%20VERSION%3D%24(echo%20%24VERSION%20%7C%20sed%20-e%20's%2F%5Ev%2F%2F')%0A%20%20%20%20echo%20%22%E8%BE%93%E5%87%BA%E7%89%88%E6%9C%AC%E5%8F%B7%EF%BC%9A%24VERSION%22%0A%20%20%20%20%23%20%E5%B0%86%E7%89%88%E6%9C%AC%E8%BE%93%E5%87%BA%E5%88%B0%E5%BD%93%E5%89%8D%20VERSION%20%E6%96%87%E4%BB%B6%E4%B8%AD%0A%20%20%20%20echo%20%22%24VERSION%22%20%3E%20VERSION%0A%20%20%20%20echo%20%221.%20%E8%BE%93%E5%87%BACommit%EF%BC%9A%24commit%22%0A%20%20%20%20echo%20%222.%20Released%20%24VERSION%22%0A%20%20%20%20git%20fetch%0A%20%20%20%20git%20config%20--local%20user.email%20%22action%40github.com%22%0A%20%20%20%20git%20config%20--local%20user.name%20%22GitHub%20Action%22%0A%20%20%20%20git%20add%20.%0A%20%20%20%20git%20commit%20-am%20%24COMMIT%0A%20%20%20%20git%20branch%20-av%0A%20%20%20%20git%20pull%20origin%20master%0A%0A-%20name%3A%20%E5%B0%86%E4%B8%8A%E9%9D%A2%E7%9A%84%E6%8F%90%E4%BA%A4%20push%20%E5%88%B0%20master%20%E5%88%86%E6%94%AF%0A%20%20uses%3A%20ad-m%2Fgithub-push-action%40master%0A%20%20with%3A%0A%20%20%20%20github_token%3A%20%24%7B%7B%20secrets.GITHUB_TOKEN%20%7D%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-115",
       "sectionId": "s3",
       "title": "作业之间共享数据",
-      "kind": "text",
-      "body": "创建一个文件，然后将其作为构件上传"
-    },
-    {
-      "id": "s3-116",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "```yml {11}\njobs:\nexample-job:\nname: Save output\nsteps:"
-    },
-    {
-      "id": "s3-117",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• shell: bash"
-    },
-    {
-      "id": "s3-118",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "run: |\nexpr 1 + 1 > output.log"
-    },
-    {
-      "id": "s3-119",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• name: Upload output file"
-    },
-    {
-      "id": "s3-120",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "uses: actions/upload-artifact@v3\nwith:\nname: output-log-file\npath: output.log"
-    },
-    {
-      "id": "s3-121",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n可以下载名为 `output-log-file` 的工件\n\n```yml {7}\njobs:\n  example-job:\n    steps:\n      - name: Download a single artifact\n        uses: actions/download-artifact@v3\n        with:\n          name: output-log-file"
+      "body": "创建一个文件，然后将其作为构件上传\n\n```yml {11}\njobs:\nexample-job:\nname: Save output\nsteps:\n\n• shell: bash\n\nrun: |\nexpr 1 + 1 > output.log\n\n• name: Upload output file\n\nuses: actions/upload-artifact@v3\nwith:\nname: output-log-file\npath: output.log\n\n```\n\n可以下载名为 `output-log-file` 的工件\n\n```yml {7}\njobs:\n  example-job:\n    steps:\n      - name: Download a single artifact\n        uses: actions/download-artifact@v3\n        with:\n          name: output-log-file\n```"
     },
     {
       "id": "s3-122",
       "sectionId": "s3",
       "title": "指定运行命令的工作目录",
-      "kind": "text",
-      "body": "```yml {3}"
-    },
-    {
-      "id": "s3-123",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• name: Clean temp directory"
-    },
-    {
-      "id": "s3-124",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "run: rm -rf *\nworking-directory: ./temp"
-    },
-    {
-      "id": "s3-125",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n使用 `working-directory` 关键字，您可以指定运行命令的工作目录(`./temp`)\n\n#### defaults.run\n\n```yml {4,5,7}\njobs:\n  job1:\n    runs-on: ubuntu-latest\n    defaults:\n      run:\n        shell: bash\n        working-directory: scripts"
-    },
-    {
-      "id": "s3-126",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "作业中的所有 `run` 步骤提供默认的 `shell` 和 `working-directory`"
+      "body": "```yml {3}\n\n• name: Clean temp directory\n\nrun: rm -rf *\nworking-directory: ./temp\n\n```\n\n使用 `working-directory` 关键字，您可以指定运行命令的工作目录(`./temp`)\n\n#### defaults.run\n\n```yml {4,5,7}\njobs:\n  job1:\n    runs-on: ubuntu-latest\n    defaults:\n      run:\n        shell: bash\n        working-directory: scripts\n```\n\n作业中的所有 `run` 步骤提供默认的 `shell` 和 `working-directory`"
     },
     {
       "id": "s3-127",
       "sectionId": "s3",
-      "title": "jobs.<job_id>.steps[*].shell",
-      "kind": "text",
-      "body": "使用 `bash` 运行脚本"
-    },
-    {
-      "id": "s3-128",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "```yml {4}\nsteps:"
-    },
-    {
-      "id": "s3-129",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• name: Display the path"
-    },
-    {
-      "id": "s3-130",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "run: echo $PATH\nshell: bash"
-    },
-    {
-      "id": "s3-131",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n运行 `python` 脚本\n\n```yml {6}\nsteps:\n  - name: Display the path\n    run: |\n      import os\n      print(os.environ['PATH'])\n    shell: python"
-    },
-    {
-      "id": "s3-132",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "您可以使用 `shell` 关键字覆盖运行器操作系统中的默认 `shell` 设置"
+      "title": "jobs.%3Cjob_id%3E.steps%5B*%5D.shell",
+      "body": "%E4%BD%BF%E7%94%A8%20%60bash%60%20%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC%0A%0A%60%60%60yml%20%7B4%7D%0Asteps%3A%0A%0A%E2%80%A2%20name%3A%20Display%20the%20path%0A%0Arun%3A%20echo%20%24PATH%0Ashell%3A%20bash%0A%0A%60%60%60%0A%0A%E8%BF%90%E8%A1%8C%20%60python%60%20%E8%84%9A%E6%9C%AC%0A%0A%60%60%60yml%20%7B6%7D%0Asteps%3A%0A%20%20-%20name%3A%20Display%20the%20path%0A%20%20%20%20run%3A%20%7C%0A%20%20%20%20%20%20import%20os%0A%20%20%20%20%20%20print(os.environ%5B'PATH'%5D)%0A%20%20%20%20shell%3A%20python%0A%60%60%60%0A%0A%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20%60shell%60%20%E5%85%B3%E9%94%AE%E5%AD%97%E8%A6%86%E7%9B%96%E8%BF%90%E8%A1%8C%E5%99%A8%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E9%BB%98%E8%AE%A4%20%60shell%60%20%E8%AE%BE%E7%BD%AE",
+      "encoded": true
     },
     {
       "id": "s3-133",
       "sectionId": "s3",
       "title": "一些 actions 推荐",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n[`create-tag-action`](https://github.com/jaywcjlove/create-tag-action) | 根据 package.json 创建 `Tag` / `Release`\n[`changelog-generator`](https://github.com/jaywcjlove/changelog-generator) | 生成 `changelog` 日志\n[`github-action-modify-file-content`](https://github.com/jaywcjlove/github-action-modify-file-content) | 修改仓库文件内容\n[`github-action-contributors`](https://github.com/jaywcjlove/github-action-contributors) | 生成贡献(contributors.svg)图片\n[`generated-badges`](https://github.com/jaywcjlove/generated-badges) | 生成徽章(Badges)图片\n[`coverage-badges-cli`](https://github.com/jaywcjlove/coverage-badges-cli) | 生成覆盖率徽章(Badges)图片\n[`action-ejs`](https://github.com/jaywcjlove/action-ejs) | 基于 ejs 生成 HTML\n[`github-action-package`](https://github.com/jaywcjlove/github-action-package) | 修改 JSON 文件内容\n[`github-action-read-file`](https://github.com/jaywcjlove/github-action-read-file) | 读取文件内容\n[`markdown-to-html-cli`](https://github.com/jaywcjlove/markdown-to-html-cli) | Markdown 转换成 HTML\n[`ncipollo/release-action`](https://github.com/ncipollo/release-action) | 创建 `Release`\n[`peaceiris/actions-gh-pages`](https://github.com/peaceiris/actions-gh-pages) | 将文件或文件夹内容提交到 `gh-pages` 分支\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s3-134",
       "sectionId": "s3",
       "title": "在 Github 中创建 Docker 镜像",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: Set up Docker Buildx\n  uses: docker/setup-buildx-action@v2\n- name: 登录 GitHub 容器注册表\n  uses: docker/login-action@v2\n  with:\n    registry: ghcr.io\n    username: ${{ github.actor }}\n    password: ${{ secrets.GITHUB_TOKEN }}\n\n- name: 构建并推送 image:latest\n  uses: docker/build-push-action@v3\n  with:\n    push: true\n    context: .\n    platforms: linux/amd64,linux/arm64\n    tags: ghcr.io/jaywcjlove/reference:latest\n\n- name: 构建并推送 image:tags\n  uses: docker/build-push-action@v3\n  if: steps.create_tag.outputs.successful\n  with:\n    push: true\n    context: .\n    platforms: linux/amd64,linux/arm64\n    tags: ghcr.io/jaywcjlove/reference:${{steps.changelog.outputs.version}}"
+      "body": "```yml\n- name: Set up Docker Buildx\n  uses: docker/setup-buildx-action@v2\n- name: 登录 GitHub 容器注册表\n  uses: docker/login-action@v2\n  with:\n    registry: ghcr.io\n    username: ${{ github.actor }}\n    password: ${{ secrets.GITHUB_TOKEN }}\n\n- name: 构建并推送 image:latest\n  uses: docker/build-push-action@v3\n  with:\n    push: true\n    context: .\n    platforms: linux/amd64,linux/arm64\n    tags: ghcr.io/jaywcjlove/reference:latest\n\n- name: 构建并推送 image:tags\n  uses: docker/build-push-action@v3\n  if: steps.create_tag.outputs.successful\n  with:\n    push: true\n    context: .\n    platforms: linux/amd64,linux/arm64\n    tags: ghcr.io/jaywcjlove/reference:${{steps.changelog.outputs.version}}\n```"
     },
     {
       "id": "s3-135",
       "sectionId": "s3",
       "title": "生成贡献者头像列表",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: Generate Contributors Images\n  uses: jaywcjlove/github-action-contributors@main\n  id: contributors\n  with:\n    output: dist/CONTRIBUTORS.svg\n    avatarSize: 42"
+      "body": "```yml\n- name: Generate Contributors Images\n  uses: jaywcjlove/github-action-contributors@main\n  id: contributors\n  with:\n    output: dist/CONTRIBUTORS.svg\n    avatarSize: 42\n```"
     },
     {
       "id": "s3-136",
       "sectionId": "s3",
       "title": "在 Docker Hub 中创建 Docker 镜像",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: Set up Docker Buildx\n  uses: docker/setup-buildx-action@v2\n- name: 登录到 Docker Hub\n  uses: docker/login-action@v2\n  with:\n    username: ${{ secrets.DOCKER_USER }}\n    password: ${{ secrets.DOCKER_PASSWORD }}\n\n- name: 构建并推送 image:latest\n  uses: docker/build-push-action@v3\n  with:\n    push: true\n    context: .\n    platforms: linux/amd64,linux/arm64\n    tags: ${{ secrets.DOCKER_USER }}/reference:latest\n\n- name: 构建并推送 image:tags\n  uses: docker/build-push-action@v3\n  if: steps.create_tag.outputs.successful\n  with:\n    push: true\n    context: .\n    platforms: linux/amd64,linux/arm64\n    tags: ${{ secrets.DOCKER_USER }}/reference:${{steps.changelog.outputs.version}}"
+      "body": "```yml\n- name: Set up Docker Buildx\n  uses: docker/setup-buildx-action@v2\n- name: 登录到 Docker Hub\n  uses: docker/login-action@v2\n  with:\n    username: ${{ secrets.DOCKER_USER }}\n    password: ${{ secrets.DOCKER_PASSWORD }}\n\n- name: 构建并推送 image:latest\n  uses: docker/build-push-action@v3\n  with:\n    push: true\n    context: .\n    platforms: linux/amd64,linux/arm64\n    tags: ${{ secrets.DOCKER_USER }}/reference:latest\n\n- name: 构建并推送 image:tags\n  uses: docker/build-push-action@v3\n  if: steps.create_tag.outputs.successful\n  with:\n    push: true\n    context: .\n    platforms: linux/amd64,linux/arm64\n    tags: ${{ secrets.DOCKER_USER }}/reference:${{steps.changelog.outputs.version}}\n```"
     },
     {
       "id": "s3-137",
       "sectionId": "s3",
       "title": "检查签出仓库并安装 nodejs",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- uses: actions/checkout@v3\n- uses: actions/setup-node@v3\n  with:\n    node-version: 16"
+      "body": "```yml\n- uses: actions/checkout@v3\n- uses: actions/setup-node@v3\n  with:\n    node-version: 16\n```"
     },
     {
       "id": "s3-138",
       "sectionId": "s3",
       "title": "忽略失败",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- run: npm publish\n  continue-on-error: true\n  env:\n    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}"
-    },
-    {
-      "id": "s3-139",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "当 `npm` 推送包失败不影响整个流程，可用于自动发包"
+      "body": "```yml\n- run: npm publish\n  continue-on-error: true\n  env:\n    NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}\n```\n\n当 `npm` 推送包失败不影响整个流程，可用于自动发包"
     },
     {
       "id": "s3-140",
       "sectionId": "s3",
       "title": "安装 yarn",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: Setup Yarn\n  uses: threeal/setup-yarn-action@v2.0.0\n  with:\n    cache: false\n    version: 1.22.21"
+      "body": "```yml\n- name: Setup Yarn\n  uses: threeal/setup-yarn-action@v2.0.0\n  with:\n    cache: false\n    version: 1.22.21\n```"
     },
     {
       "id": "s3-141",
       "sectionId": "s3",
-      "title": "传递环境变量",
-      "kind": "text",
-      "body": "在 `ci.yml` 上保存环境变量"
-    },
-    {
-      "id": "s3-142",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20Save%20commit%20message%20to%20environment%20variable%0A%20%20run%3A%20echo%20%22COMMIT_MESSAGE%3D%24%7B%7B%20github.event.head_commit.message%20%7D%7D%22%20%3E%3E%20%24GITHUB_ENV",
-      "encoded": true
-    },
-    {
-      "id": "s3-143",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "在 `tag.yml` 上获取环境变量"
-    },
-    {
-      "id": "s3-144",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20Read%20commit%20message%0A%20%20run%3A%20%7C%0A%20%20%20%20echo%20%22Commit%3A%20%24%7B%7B%20github.event.workflow_run.head_commit.message%20%7D%7D%22",
+      "title": "%E4%BC%A0%E9%80%92%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F",
+      "body": "%E5%9C%A8%20%60ci.yml%60%20%E4%B8%8A%E4%BF%9D%E5%AD%98%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%0A%0A%60%60%60yml%0A-%20name%3A%20Save%20commit%20message%20to%20environment%20variable%0A%20%20run%3A%20echo%20%22COMMIT_MESSAGE%3D%24%7B%7B%20github.event.head_commit.message%20%7D%7D%22%20%3E%3E%20%24GITHUB_ENV%0A%60%60%60%0A%0A%E5%9C%A8%20%60tag.yml%60%20%E4%B8%8A%E8%8E%B7%E5%8F%96%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%0A%0A%60%60%60yml%0A-%20name%3A%20Read%20commit%20message%0A%20%20run%3A%20%7C%0A%20%20%20%20echo%20%22Commit%3A%20%24%7B%7B%20github.event.workflow_run.head_commit.message%20%7D%7D%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-145",
       "sectionId": "s3",
-      "title": "触发下一个工作流",
-      "kind": "text",
-      "body": "在 `tag.yml` 上添加判断 `tag` 创建成功触发 `tag-creation-success` 的工作流"
-    },
-    {
-      "id": "s3-146",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "-%20name%3A%20Trigger%20next%20workflow%20if%20successful%0A%20%20if%3A%20steps.check_success.outputs.success%20%3D%3D%20'true'%0A%20%20run%3A%20%7C%0A%20%20%20%20curl%20-X%20POST%20%5C%0A%20%20%20%20%20%20-H%20%22Accept%3A%20application%2Fvnd.github.v3%2Bjson%22%20%5C%0A%20%20%20%20%20%20-H%20%22Authorization%3A%20token%20%24%7B%7B%20secrets.GITHUB_TOKEN%20%7D%7D%22%20%5C%0A%20%20%20%20%20%20-d%20'%7B%22event_type%22%3A%20%22tag-creation-success%22%7D'%20%5C%0A%20%20%20%20%20%20https%3A%2F%2Fapi.github.com%2Frepos%2F%24%7B%7B%20github.repository%20%7D%7D%2Fdispatches",
+      "title": "%E8%A7%A6%E5%8F%91%E4%B8%8B%E4%B8%80%E4%B8%AA%E5%B7%A5%E4%BD%9C%E6%B5%81",
+      "body": "%E5%9C%A8%20%60tag.yml%60%20%E4%B8%8A%E6%B7%BB%E5%8A%A0%E5%88%A4%E6%96%AD%20%60tag%60%20%E5%88%9B%E5%BB%BA%E6%88%90%E5%8A%9F%E8%A7%A6%E5%8F%91%20%60tag-creation-success%60%20%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%0A%0A%60%60%60yml%0A-%20name%3A%20Trigger%20next%20workflow%20if%20successful%0A%20%20if%3A%20steps.check_success.outputs.success%20%3D%3D%20'true'%0A%20%20run%3A%20%7C%0A%20%20%20%20curl%20-X%20POST%20%5C%0A%20%20%20%20%20%20-H%20%22Accept%3A%20application%2Fvnd.github.v3%2Bjson%22%20%5C%0A%20%20%20%20%20%20-H%20%22Authorization%3A%20token%20%24%7B%7B%20secrets.GITHUB_TOKEN%20%7D%7D%22%20%5C%0A%20%20%20%20%20%20-d%20'%7B%22event_type%22%3A%20%22tag-creation-success%22%7D'%20%5C%0A%20%20%20%20%20%20https%3A%2F%2Fapi.github.com%2Frepos%2F%24%7B%7B%20github.repository%20%7D%7D%2Fdispatches%0A%60%60%60%0A%0A%E5%9C%A8%20%60success.yml%60%20%E4%B8%8A%E7%9B%91%E5%90%AC%0A%0A%60%60%60yml%0Aon%3A%0A%20%20repository_dispatch%3A%0A%20%20%20%20types%3A%20%5Btag-creation-success%5D%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s3-147",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "在 `success.yml` 上监听"
-    },
-    {
-      "id": "s3-148",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "on:\n  repository_dispatch:\n    types: [tag-creation-success]"
     },
     {
       "id": "s4-149",
       "sectionId": "s4",
-      "title": "语法示例",
-      "kind": "text",
-      "body": "<yel>GitLab CI/CD</yel>"
-    },
-    {
-      "id": "s4-150",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "job1%3A%0A%20%20variables%3A%0A%20%20%20%20GIT_CHECKOUT%3A%20%22true%22%0A%20%20script%3A%0A%20%20%20%20-%20echo%20%22Run%20your%20script%20here%22",
-      "encoded": true
-    },
-    {
-      "id": "s4-151",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "GitHub Actions"
-    },
-    {
-      "id": "s4-152",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs%3A%0A%20%20job1%3A%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v3%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22Run%20your%20script%20here%22",
+      "title": "%E8%AF%AD%E6%B3%95%E7%A4%BA%E4%BE%8B",
+      "body": "%3Cyel%3EGitLab%20CI%2FCD%3C%2Fyel%3E%0A%0A%60%60%60yml%0Ajob1%3A%0A%20%20variables%3A%0A%20%20%20%20GIT_CHECKOUT%3A%20%22true%22%0A%20%20script%3A%0A%20%20%20%20-%20echo%20%22Run%20your%20script%20here%22%0A%60%60%60%0A%0AGitHub%20Actions%0A%0A%60%60%60yml%0Ajobs%3A%0A%20%20job1%3A%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20uses%3A%20actions%2Fcheckout%40v3%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22Run%20your%20script%20here%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-153",
       "sectionId": "s4",
-      "title": "运行程序",
-      "kind": "text",
-      "body": "<yel>GitLab CI/CD</yel>"
-    },
-    {
-      "id": "s4-154",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "windows_job%3A%0A%20%20tags%3A%0A%20%20%20%20-%20windows%0A%20%20script%3A%0A%20%20%20%20-%20echo%20Hello%2C%20%25USERNAME%25!%0A%0Alinux_job%3A%20tags%3A%0A%20%20%20%20-%20linux%20script%3A%0A%20%20%20%20-%20echo%20%22Hello%2C%20%24USER!%22",
+      "title": "%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F",
+      "body": "%3Cyel%3EGitLab%20CI%2FCD%3C%2Fyel%3E%0A%0A%60%60%60yml%0Awindows_job%3A%0A%20%20tags%3A%0A%20%20%20%20-%20windows%0A%20%20script%3A%0A%20%20%20%20-%20echo%20Hello%2C%20%25USERNAME%25!%0A%0Alinux_job%3A%20tags%3A%0A%20%20%20%20-%20linux%20script%3A%0A%20%20%20%20-%20echo%20%22Hello%2C%20%24USER!%22%0A%60%60%60%0A%0AGitHub%20Actions%0A%0A%60%60%60yml%0Awindows_job%3A%0A%20%20runs-on%3A%20windows-latest%0A%20%20steps%3A%0A%20%20%20%20-%20run%3A%20echo%20Hello%2C%20%25USERNAME%25!%0A%0Alinux_job%3A%0A%20%20runs-on%3A%20ubuntu-latest%0A%20%20steps%3A%0A%20%20%20%20-%20run%3A%20echo%20%22Hello%2C%20%24USER!%22%0A%60%60%60%0A%0A%E5%9C%A8%E4%B8%8D%E5%90%8C%E7%9A%84%E5%B9%B3%E5%8F%B0%E4%B8%8A%E8%BF%90%E8%A1%8C%E4%BD%9C%E4%B8%9A",
       "encoded": true
-    },
-    {
-      "id": "s4-155",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "GitHub Actions"
-    },
-    {
-      "id": "s4-156",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "windows_job%3A%0A%20%20runs-on%3A%20windows-latest%0A%20%20steps%3A%0A%20%20%20%20-%20run%3A%20echo%20Hello%2C%20%25USERNAME%25!%0A%0Alinux_job%3A%0A%20%20runs-on%3A%20ubuntu-latest%0A%20%20steps%3A%0A%20%20%20%20-%20run%3A%20echo%20%22Hello%2C%20%24USER!%22",
-      "encoded": true
-    },
-    {
-      "id": "s4-157",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "在不同的平台上运行作业"
     },
     {
       "id": "s4-158",
       "sectionId": "s4",
       "title": "Docker 映像",
-      "kind": "text",
-      "body": "<yel>GitLab CI/CD</yel>"
-    },
-    {
-      "id": "s4-159",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "my_job:\n  image: node:10.16-jessie"
-    },
-    {
-      "id": "s4-160",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "GitHub Actions"
-    },
-    {
-      "id": "s4-161",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs:\n  my_job:\n    container: node:10.16-jessie"
+      "body": "<yel>GitLab CI/CD</yel>\n\n```yml\nmy_job:\n  image: node:10.16-jessie\n```\n\nGitHub Actions\n\n```yml\njobs:\n  my_job:\n    container: node:10.16-jessie\n```"
     },
     {
       "id": "s4-162",
       "sectionId": "s4",
-      "title": "条件和表达式语法",
-      "kind": "text",
-      "body": "<yel>GitLab CI/CD</yel>"
-    },
-    {
-      "id": "s4-163",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "deploy_prod%3A%0A%20%20stage%3A%20deploy%0A%20%20script%3A%0A%20%20%20%20-%20echo%20%22%E9%83%A8%E7%BD%B2%E5%88%B0%E7%94%9F%E4%BA%A7%E6%9C%8D%E5%8A%A1%E5%99%A8%22%0A%20%20rules%3A%0A%20%20%20%20-%20if%3A%20'%24CI_COMMIT_BRANCH%20%3D%3D%20%22master%22'",
-      "encoded": true
-    },
-    {
-      "id": "s4-164",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "GitHub Actions"
-    },
-    {
-      "id": "s4-165",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs%3A%0A%20%20deploy_prod%3A%0A%20%20%20%20if%3A%20contains(%20github.ref%2C%20'master')%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E9%83%A8%E7%BD%B2%E5%88%B0%E7%94%9F%E4%BA%A7%E6%9C%8D%E5%8A%A1%E5%99%A8%22",
+      "title": "%E6%9D%A1%E4%BB%B6%E5%92%8C%E8%A1%A8%E8%BE%BE%E5%BC%8F%E8%AF%AD%E6%B3%95",
+      "body": "%3Cyel%3EGitLab%20CI%2FCD%3C%2Fyel%3E%0A%0A%60%60%60yml%0Adeploy_prod%3A%0A%20%20stage%3A%20deploy%0A%20%20script%3A%0A%20%20%20%20-%20echo%20%22%E9%83%A8%E7%BD%B2%E5%88%B0%E7%94%9F%E4%BA%A7%E6%9C%8D%E5%8A%A1%E5%99%A8%22%0A%20%20rules%3A%0A%20%20%20%20-%20if%3A%20'%24CI_COMMIT_BRANCH%20%3D%3D%20%22master%22'%0A%60%60%60%0A%0AGitHub%20Actions%0A%0A%60%60%60yml%0Ajobs%3A%0A%20%20deploy_prod%3A%0A%20%20%20%20if%3A%20contains(%20github.ref%2C%20'master')%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E9%83%A8%E7%BD%B2%E5%88%B0%E7%94%9F%E4%BA%A7%E6%9C%8D%E5%8A%A1%E5%99%A8%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-166",
       "sectionId": "s4",
       "title": "Artifacts",
-      "kind": "text",
-      "body": "<yel>GitLab CI/CD</yel>"
-    },
-    {
-      "id": "s4-167",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "script:\nartifacts:\n  paths:\n    - math-homework.txt"
-    },
-    {
-      "id": "s4-168",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "GitHub Actions"
-    },
-    {
-      "id": "s4-169",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "- name: Upload math result for job 1\n  uses: actions/upload-artifact@v3\n  with:\n    name: homework\n    path: math-homework.txt"
+      "body": "<yel>GitLab CI/CD</yel>\n\n```yml\nscript:\nartifacts:\n  paths:\n    - math-homework.txt\n```\n\nGitHub Actions\n\n```yml\n- name: Upload math result for job 1\n  uses: actions/upload-artifact@v3\n  with:\n    name: homework\n    path: math-homework.txt\n```"
     },
     {
       "id": "s4-170",
       "sectionId": "s4",
-      "title": "作业之间的依赖关系",
-      "kind": "text",
-      "body": "<yel>GitLab CI/CD</yel>"
-    },
-    {
-      "id": "s4-171",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "stages%3A%0A%20%20-%20build%0A%20%20-%20test%0A%20%20-%20deploy%0A%0Abuild_a%3A%20stage%3A%20build%20script%3A%0A%20%20%20%20-%20echo%20%22%E8%AF%A5%E4%BD%9C%E4%B8%9A%E5%B0%86%E9%A6%96%E5%85%88%E8%BF%90%E8%A1%8C%22%0A%0Abuild_b%3A%20stage%3A%20build%20script%3A%0A%20%20%20%20-%20echo%20%22%E8%AF%A5%E4%BD%9C%E4%B8%9A%E5%B0%86%E9%A6%96%E5%85%88%E8%BF%90%E8%A1%8C%EF%BC%8C%E4%B8%8E%20build_a%20%E5%B9%B6%E8%A1%8C%22%0A%0Atest_ab%3A%20stage%3A%20test%20script%3A%0A%20%20%20%20-%20echo%20%22%E6%AD%A4%E4%BD%9C%E4%B8%9A%E5%B0%86%E5%9C%A8%20build_a%20%E5%92%8C%20build_b%20%E5%AE%8C%E6%88%90%E5%90%8E%E8%BF%90%E8%A1%8C%22%0A%0Adeploy_ab%3A%20stage%3A%20deploy%20script%3A%0A%20%20%20%20-%20echo%20%22%E6%AD%A4%E4%BD%9C%E4%B8%9A%E5%B0%86%E5%9C%A8%20test_ab%20%E5%AE%8C%E6%88%90%E5%90%8E%E8%BF%90%E8%A1%8C%22",
-      "encoded": true
-    },
-    {
-      "id": "s4-172",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "GitHub Actions"
-    },
-    {
-      "id": "s4-173",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs%3A%0A%20%20build_a%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E8%AF%A5%E4%BD%9C%E4%B8%9A%E5%B0%86%E9%A6%96%E5%85%88%E8%BF%90%E8%A1%8C%22%0A%0A%20%20build_b%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E8%AF%A5%E4%BD%9C%E4%B8%9A%E5%B0%86%E9%A6%96%E5%85%88%E8%BF%90%E8%A1%8C%EF%BC%8C%E4%B8%8E%20build_a%20%E5%B9%B6%E8%A1%8C%22%0A%0A%20%20test_ab%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20needs%3A%20%5Bbuild_a%2Cbuild_b%5D%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E6%AD%A4%E4%BD%9C%E4%B8%9A%E5%B0%86%E5%9C%A8%20build_a%20%E5%92%8C%20build_b%20%E5%AE%8C%E6%88%90%E5%90%8E%E8%BF%90%E8%A1%8C%22%0A%0A%20%20deploy_ab%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20needs%3A%20%5Btest_ab%5D%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E6%AD%A4%E4%BD%9C%E4%B8%9A%E5%B0%86%E5%9C%A8%20test_ab%20%E5%AE%8C%E6%88%90%E5%90%8E%E8%BF%90%E8%A1%8C%22",
+      "title": "%E4%BD%9C%E4%B8%9A%E4%B9%8B%E9%97%B4%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB",
+      "body": "%3Cyel%3EGitLab%20CI%2FCD%3C%2Fyel%3E%0A%0A%60%60%60yml%0Astages%3A%0A%20%20-%20build%0A%20%20-%20test%0A%20%20-%20deploy%0A%0Abuild_a%3A%20stage%3A%20build%20script%3A%0A%20%20%20%20-%20echo%20%22%E8%AF%A5%E4%BD%9C%E4%B8%9A%E5%B0%86%E9%A6%96%E5%85%88%E8%BF%90%E8%A1%8C%22%0A%0Abuild_b%3A%20stage%3A%20build%20script%3A%0A%20%20%20%20-%20echo%20%22%E8%AF%A5%E4%BD%9C%E4%B8%9A%E5%B0%86%E9%A6%96%E5%85%88%E8%BF%90%E8%A1%8C%EF%BC%8C%E4%B8%8E%20build_a%20%E5%B9%B6%E8%A1%8C%22%0A%0Atest_ab%3A%20stage%3A%20test%20script%3A%0A%20%20%20%20-%20echo%20%22%E6%AD%A4%E4%BD%9C%E4%B8%9A%E5%B0%86%E5%9C%A8%20build_a%20%E5%92%8C%20build_b%20%E5%AE%8C%E6%88%90%E5%90%8E%E8%BF%90%E8%A1%8C%22%0A%0Adeploy_ab%3A%20stage%3A%20deploy%20script%3A%0A%20%20%20%20-%20echo%20%22%E6%AD%A4%E4%BD%9C%E4%B8%9A%E5%B0%86%E5%9C%A8%20test_ab%20%E5%AE%8C%E6%88%90%E5%90%8E%E8%BF%90%E8%A1%8C%22%0A%60%60%60%0A%0AGitHub%20Actions%0A%0A%60%60%60yml%0Ajobs%3A%0A%20%20build_a%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E8%AF%A5%E4%BD%9C%E4%B8%9A%E5%B0%86%E9%A6%96%E5%85%88%E8%BF%90%E8%A1%8C%22%0A%0A%20%20build_b%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E8%AF%A5%E4%BD%9C%E4%B8%9A%E5%B0%86%E9%A6%96%E5%85%88%E8%BF%90%E8%A1%8C%EF%BC%8C%E4%B8%8E%20build_a%20%E5%B9%B6%E8%A1%8C%22%0A%0A%20%20test_ab%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20needs%3A%20%5Bbuild_a%2Cbuild_b%5D%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E6%AD%A4%E4%BD%9C%E4%B8%9A%E5%B0%86%E5%9C%A8%20build_a%20%E5%92%8C%20build_b%20%E5%AE%8C%E6%88%90%E5%90%8E%E8%BF%90%E8%A1%8C%22%0A%0A%20%20deploy_ab%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20needs%3A%20%5Btest_ab%5D%0A%20%20%20%20steps%3A%0A%20%20%20%20%20%20-%20run%3A%20echo%20%22%E6%AD%A4%E4%BD%9C%E4%B8%9A%E5%B0%86%E5%9C%A8%20test_ab%20%E5%AE%8C%E6%88%90%E5%90%8E%E8%BF%90%E8%A1%8C%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-174",
       "sectionId": "s4",
-      "title": "缓存",
-      "kind": "text",
-      "body": "<yel>GitLab CI/CD</yel>"
-    },
-    {
-      "id": "s4-175",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "image: node:latest\n\ncache: key: $CI_COMMIT_REF_SLUG paths:\n    - .npm/\n\nbefore_script:\n  - npm ci --cache .npm --prefer-offline\n\ntest_async: script:\n    - node ./specs/start.js ./specs/async.spec.js"
-    },
-    {
-      "id": "s4-176",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "GitHub Actions"
-    },
-    {
-      "id": "s4-177",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs:\n  test_async:\n    runs-on: ubuntu-latest\n    steps:\n    - name: Cache node modules\n      uses: actions/cache@v3\n      with:\n        path: ~/.npm\n        key: v1-npm-deps-${{ hashFiles('**/package-lock.json') }}\n        restore-keys: v1-npm-deps-"
+      "title": "%E7%BC%93%E5%AD%98",
+      "body": "%3Cyel%3EGitLab%20CI%2FCD%3C%2Fyel%3E%0A%0A%60%60%60yml%0Aimage%3A%20node%3Alatest%0A%0Acache%3A%20key%3A%20%24CI_COMMIT_REF_SLUG%20paths%3A%0A%20%20%20%20-%20.npm%2F%0A%0Abefore_script%3A%0A%20%20-%20npm%20ci%20--cache%20.npm%20--prefer-offline%0A%0Atest_async%3A%20script%3A%0A%20%20%20%20-%20node%20.%2Fspecs%2Fstart.js%20.%2Fspecs%2Fasync.spec.js%0A%60%60%60%0A%0AGitHub%20Actions%0A%0A%60%60%60yml%0Ajobs%3A%0A%20%20test_async%3A%0A%20%20%20%20runs-on%3A%20ubuntu-latest%0A%20%20%20%20steps%3A%0A%20%20%20%20-%20name%3A%20Cache%20node%20modules%0A%20%20%20%20%20%20uses%3A%20actions%2Fcache%40v3%0A%20%20%20%20%20%20with%3A%0A%20%20%20%20%20%20%20%20path%3A%20~%2F.npm%0A%20%20%20%20%20%20%20%20key%3A%20v1-npm-deps-%24%7B%7B%20hashFiles('**%2Fpackage-lock.json')%20%7D%7D%0A%20%20%20%20%20%20%20%20restore-keys%3A%20v1-npm-deps-%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-178",
       "sectionId": "s4",
       "title": "数据库和服务容器",
-      "kind": "text",
-      "body": "<yel>GitLab CI/CD</yel>"
-    },
-    {
-      "id": "s4-179",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "container-job:\n  variables:\n    POSTGRES_PASSWORD: postgres\n    # PostgreSQL 服务容器通信的主机名\n    POSTGRES_HOST: postgres\n    # 默认的 PostgreSQL 端口\n    POSTGRES_PORT: 5432\n  image: node:10.18-jessie\n  services:\n    - postgres\n  script:\n    # 执行 package.json 文件中\n    # 所有依赖项的全新安装\n    - npm ci\n    # 运行创建 PostgreSQL 客户端的脚本，\n    # 用数据填充客户端，并检索数据\n    - node client.js\n  tags:\n    - docker"
-    },
-    {
-      "id": "s4-180",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "GitHub Actions"
-    },
-    {
-      "id": "s4-181",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "yml",
-      "code": "jobs:\n  container-job:\n    runs-on: ubuntu-latest\n    container: node:10.18-jessie\n\n    services:\n      postgres:\n        image: postgres\n        env:\n          POSTGRES_PASSWORD: postgres\n\n    steps:\n      - name: Check out repository code\n        uses: actions/checkout@v3\n\n      # 执行 package.json 文件中\n      # 所有依赖项的全新安装\n      - name: Install dependencies\n        run: npm ci\n\n      - name: Connect to PostgreSQL\n        # 运行创建 PostgreSQL 客户端的脚本，\n        # 用数据填充客户端，并检索数据\n        run: node client.js\n        env:\n          # PostgreSQL 服务容器通信的主机名\n          POSTGRES_HOST: postgres\n          # 默认的 PostgreSQL 端口\n          POSTGRES_PORT: 5432"
+      "body": "<yel>GitLab CI/CD</yel>\n\n```yml\ncontainer-job:\n  variables:\n    POSTGRES_PASSWORD: postgres\n    # PostgreSQL 服务容器通信的主机名\n    POSTGRES_HOST: postgres\n    # 默认的 PostgreSQL 端口\n    POSTGRES_PORT: 5432\n  image: node:10.18-jessie\n  services:\n    - postgres\n  script:\n    # 执行 package.json 文件中\n    # 所有依赖项的全新安装\n    - npm ci\n    # 运行创建 PostgreSQL 客户端的脚本，\n    # 用数据填充客户端，并检索数据\n    - node client.js\n  tags:\n    - docker\n```\n\nGitHub Actions\n\n```yml\njobs:\n  container-job:\n    runs-on: ubuntu-latest\n    container: node:10.18-jessie\n\n    services:\n      postgres:\n        image: postgres\n        env:\n          POSTGRES_PASSWORD: postgres\n\n    steps:\n      - name: Check out repository code\n        uses: actions/checkout@v3\n\n      # 执行 package.json 文件中\n      # 所有依赖项的全新安装\n      - name: Install dependencies\n        run: npm ci\n\n      - name: Connect to PostgreSQL\n        # 运行创建 PostgreSQL 客户端的脚本，\n        # 用数据填充客户端，并检索数据\n        run: node client.js\n        env:\n          # PostgreSQL 服务容器通信的主机名\n          POSTGRES_HOST: postgres\n          # 默认的 PostgreSQL 端口\n          POSTGRES_PORT: 5432\n```"
     },
     {
       "id": "s5-182",
       "sectionId": "s5",
       "title": "另见",
-      "kind": "text",
       "body": "• [Github Actions 学习笔记](https://jaywcjlove.github.io/github-actions) _(jaywcjlove.github.io)_\n• [了解 GitHub Actions](https://docs.github.com/cn/actions/learn-github-actions) _(docs.github.com)_\n• [从 GitLab CI/CD 迁移到 GitHub Actions](https://docs.github.com/cn/actions/migrating-to-github-actions/migrating-from-gitlab-cicd-to-github-actions) _(docs.github.com)_"
     }
   ],

@@ -40,524 +40,310 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "这是 [Elasticsearch](https://www.elastic.co/guide/index.html) 的官方文档。 你可以在这里找到 elasticsearch 的所有文档。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "入门",
-      "kind": "text",
       "body": "Elasticsearch 是一个基于 Lucene 库的搜索引擎。它提供了一个分布式、支持多租户的全文搜索引擎，具有HTTP Web接口和无模式JSON文档。"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "下载",
-      "kind": "text",
       "body": "注意： `${VERSION}` 需替换为指定版本，官方包有的功能只能试用，完整功能需要付费，请仔细阅读官网文档。"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "Windows",
-      "kind": "code",
-      "lang": "",
-      "code": "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-windows-x86_64.zip"
+      "body": "```\nhttps://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-windows-x86_64.zip\n```"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "linux",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-linux-x86_64.tar.gz\n\n$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-linux-x86_64.tar.gz.sha512\n\n$ shasum -a 512 -c elasticsearch-${VERSION}-linux-x86_64.tar.gz.sha512 \n\n$ tar -xzf elasticsearch-${VERSION}-linux-x86_64.tar.gz\n\n$ cd elasticsearch-${VERSION}/"
+      "body": "```shell\n$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-linux-x86_64.tar.gz\n\n$ wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-linux-x86_64.tar.gz.sha512\n\n$ shasum -a 512 -c elasticsearch-${VERSION}-linux-x86_64.tar.gz.sha512 \n\n$ tar -xzf elasticsearch-${VERSION}-linux-x86_64.tar.gz\n\n$ cd elasticsearch-${VERSION}/\n```"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "macos",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-darwin-x86_64.tar.gz\n\n$ curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-darwin-x86_64.tar.gz.sha512 | shasum -a 512 -c - \n\n$ tar -xzf elasticsearch-${VERSION}-darwin-x86_64.tar.gz\n\n$ cd elasticsearch-${VERSION}/"
+      "body": "```shell\n$ curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-darwin-x86_64.tar.gz\n\n$ curl https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${VERSION}-darwin-x86_64.tar.gz.sha512 | shasum -a 512 -c - \n\n$ tar -xzf elasticsearch-${VERSION}-darwin-x86_64.tar.gz\n\n$ cd elasticsearch-${VERSION}/ \n```"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
-      "title": "启动",
-      "kind": "text",
-      "body": "• 启动 Elasticsearch"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "    $ ./bin/elasticsearch"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 设置密码"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%20%20%20%20export%20ELASTIC_PASSWORD%3D%22your_password%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 测试是否启动成功"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "    curl --cacert $ES_HOME/config/certs/http_ca.crt -u elastic:$ELASTIC_PASSWORD https://localhost:9200"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 成功则返回样例如下:"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "json",
-      "code": "%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%22name%22%20%3A%20%22Cp8oag6%22%2C%0A%20%20%20%20%20%20%20%20%22cluster_name%22%20%3A%20%22elasticsearch%22%2C%0A%20%20%20%20%20%20%20%20%22cluster_uuid%22%20%3A%20%22AT69_T_DTp-1qgIJlatQqA%22%2C%0A%20%20%20%20%20%20%20%20%22version%22%20%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22number%22%20%3A%20%22%24%7BVERSION%7D%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_type%22%20%3A%20%22tar%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_hash%22%20%3A%20%22f27399d%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_flavor%22%20%3A%20%22default%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_date%22%20%3A%20%222016-03-30T09%3A51%3A41.449Z%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_snapshot%22%20%3A%20false%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22lucene_version%22%20%3A%20%229.10.0%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22minimum_wire_compatibility_version%22%20%3A%20%221.2.3%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22minimum_index_compatibility_version%22%20%3A%20%221.2.3%22%0A%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%22tagline%22%20%3A%20%22You%20Know%2C%20for%20Search%22%0A%20%20%20%20%7D",
+      "title": "%E5%90%AF%E5%8A%A8",
+      "body": "%E2%80%A2%20%E5%90%AF%E5%8A%A8%20Elasticsearch%0A%0A%20%20%20%20%60%60%60shell%0A%20%20%20%20%24%20.%2Fbin%2Felasticsearch%0A%20%20%20%20%60%60%60%0A%0A%E2%80%A2%20%E8%AE%BE%E7%BD%AE%E5%AF%86%E7%A0%81%0A%0A%20%20%20%20%60%60%60shell%0A%20%20%20%20export%20ELASTIC_PASSWORD%3D%22your_password%22%0A%20%20%20%20%60%60%60%0A%0A%E2%80%A2%20%E6%B5%8B%E8%AF%95%E6%98%AF%E5%90%A6%E5%90%AF%E5%8A%A8%E6%88%90%E5%8A%9F%0A%0A%20%20%20%20%60%60%60shell%0A%20%20%20%20curl%20--cacert%20%24ES_HOME%2Fconfig%2Fcerts%2Fhttp_ca.crt%20-u%20elastic%3A%24ELASTIC_PASSWORD%20https%3A%2F%2Flocalhost%3A9200%20%0A%20%20%20%20%60%60%60%0A%0A%E2%80%A2%20%E6%88%90%E5%8A%9F%E5%88%99%E8%BF%94%E5%9B%9E%E6%A0%B7%E4%BE%8B%E5%A6%82%E4%B8%8B%3A%0A%0A%20%20%20%20%60%60%60json%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%22name%22%20%3A%20%22Cp8oag6%22%2C%0A%20%20%20%20%20%20%20%20%22cluster_name%22%20%3A%20%22elasticsearch%22%2C%0A%20%20%20%20%20%20%20%20%22cluster_uuid%22%20%3A%20%22AT69_T_DTp-1qgIJlatQqA%22%2C%0A%20%20%20%20%20%20%20%20%22version%22%20%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22number%22%20%3A%20%22%24%7BVERSION%7D%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_type%22%20%3A%20%22tar%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_hash%22%20%3A%20%22f27399d%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_flavor%22%20%3A%20%22default%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_date%22%20%3A%20%222016-03-30T09%3A51%3A41.449Z%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22build_snapshot%22%20%3A%20false%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22lucene_version%22%20%3A%20%229.10.0%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22minimum_wire_compatibility_version%22%20%3A%20%221.2.3%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%22minimum_index_compatibility_version%22%20%3A%20%221.2.3%22%0A%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%22tagline%22%20%3A%20%22You%20Know%2C%20for%20Search%22%0A%20%20%20%20%7D%0A%20%20%20%20%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "Elasticsearch 和 RDMS 的对比",
-      "kind": "text",
       "body": "| RDMS                    | elasticsearch     |\n| ----------------------- | ----------------- |\n| 数据库(database)        | 索引(index)       |\n| 表(table)               | 类型(type)        |\n| 行(row)                 | 文档(document)    |\n| 列(column)              | 字段(field)       |\n| 表结构                  | 映射              |\n| 索引                    | 全文索引          |\n| SQL                     | 查询DSL           |\n| SELECT * FROM tablename | GET http://...    |\n| UPDATE table SET        | PUT http://...    |\n| DELETE                  | DELETE http://... |"
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
-      "title": "基础语法规则",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ curl -X<VERB> '<PROTOCOL>://<HOST>:<PORT>/<PATH>?<QUERY_STRING>' -d '<BODY>'"
-    },
-    {
-      "id": "s2-16",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• `VERB HTTP` 方法：GET, POST, PUT, HEAD, DELETE\n• `PROTOCOL`：http 或者 https 协议（只有在 Elasticsearch 前面有 https 代理的时候可用）\n• `HOST`：Elasticsearch 集群中的任何一个节点的主机名，如果是在本地的节点，那么就叫 localhost\n• `PORT`：Elasticsearch HTTP 服务所在的端口，默认为 9200\n• `PATH API 路径`（例如_count 将返回集群中文档的数量），PATH：可以包含多个组件，例如_cluster/stats 或者_nodes/stats/jvm\n• `QUERY_STRING`：一些可选的查询请求参数，例如?pretty 参数将使请求返回更加美观易读的 JSON 数据\n• `BODY`：一个 JSON 格式的请求主体（如果请求需要的话）"
+      "title": "%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E8%A7%84%E5%88%99",
+      "body": "%60%60%60shell%0A%24%20curl%20-X%3CVERB%3E%20'%3CPROTOCOL%3E%3A%2F%2F%3CHOST%3E%3A%3CPORT%3E%2F%3CPATH%3E%3F%3CQUERY_STRING%3E'%20-d%20'%3CBODY%3E'%0A%60%60%60%0A%0A%E2%80%A2%20%60VERB%20HTTP%60%20%E6%96%B9%E6%B3%95%EF%BC%9AGET%2C%20POST%2C%20PUT%2C%20HEAD%2C%20DELETE%0A%E2%80%A2%20%60PROTOCOL%60%EF%BC%9Ahttp%20%E6%88%96%E8%80%85%20https%20%E5%8D%8F%E8%AE%AE%EF%BC%88%E5%8F%AA%E6%9C%89%E5%9C%A8%20Elasticsearch%20%E5%89%8D%E9%9D%A2%E6%9C%89%20https%20%E4%BB%A3%E7%90%86%E7%9A%84%E6%97%B6%E5%80%99%E5%8F%AF%E7%94%A8%EF%BC%89%0A%E2%80%A2%20%60HOST%60%EF%BC%9AElasticsearch%20%E9%9B%86%E7%BE%A4%E4%B8%AD%E7%9A%84%E4%BB%BB%E4%BD%95%E4%B8%80%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E4%B8%BB%E6%9C%BA%E5%90%8D%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%98%AF%E5%9C%A8%E6%9C%AC%E5%9C%B0%E7%9A%84%E8%8A%82%E7%82%B9%EF%BC%8C%E9%82%A3%E4%B9%88%E5%B0%B1%E5%8F%AB%20localhost%0A%E2%80%A2%20%60PORT%60%EF%BC%9AElasticsearch%20HTTP%20%E6%9C%8D%E5%8A%A1%E6%89%80%E5%9C%A8%E7%9A%84%E7%AB%AF%E5%8F%A3%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B8%BA%209200%0A%E2%80%A2%20%60PATH%20API%20%E8%B7%AF%E5%BE%84%60%EF%BC%88%E4%BE%8B%E5%A6%82_count%20%E5%B0%86%E8%BF%94%E5%9B%9E%E9%9B%86%E7%BE%A4%E4%B8%AD%E6%96%87%E6%A1%A3%E7%9A%84%E6%95%B0%E9%87%8F%EF%BC%89%EF%BC%8CPATH%EF%BC%9A%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E5%A4%9A%E4%B8%AA%E7%BB%84%E4%BB%B6%EF%BC%8C%E4%BE%8B%E5%A6%82_cluster%2Fstats%20%E6%88%96%E8%80%85_nodes%2Fstats%2Fjvm%0A%E2%80%A2%20%60QUERY_STRING%60%EF%BC%9A%E4%B8%80%E4%BA%9B%E5%8F%AF%E9%80%89%E7%9A%84%E6%9F%A5%E8%AF%A2%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%EF%BC%8C%E4%BE%8B%E5%A6%82%3Fpretty%20%E5%8F%82%E6%95%B0%E5%B0%86%E4%BD%BF%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9E%E6%9B%B4%E5%8A%A0%E7%BE%8E%E8%A7%82%E6%98%93%E8%AF%BB%E7%9A%84%20JSON%20%E6%95%B0%E6%8D%AE%0A%E2%80%A2%20%60BODY%60%EF%BC%9A%E4%B8%80%E4%B8%AA%20JSON%20%E6%A0%BC%E5%BC%8F%E7%9A%84%E8%AF%B7%E6%B1%82%E4%B8%BB%E4%BD%93%EF%BC%88%E5%A6%82%E6%9E%9C%E8%AF%B7%E6%B1%82%E9%9C%80%E8%A6%81%E7%9A%84%E8%AF%9D%EF%BC%89",
+      "encoded": true
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "创建索引 - 统一请求 api 前缀",
-      "kind": "code",
-      "lang": "",
-      "code": "http://localhost:9200/"
+      "body": "```\nhttp://localhost:9200/\n```"
     },
     {
       "id": "s2-18",
       "sectionId": "s2",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "json",
-      "code": "PUT%20%2Fuser_info%0A%7B%0A%20%20%22settings%22%3A%20%7B%20%22number_of_replicas%22%3A%201%2C%20%22number_of_shards%22%3A%201%20%7D%2C%0A%20%20%22mappings%22%3A%20%7B%0A%20%20%20%20%22properties%22%3A%20%7B%0A%20%20%20%20%20%20%22id%22%3A%20%7B%20%22type%22%3A%20%22long%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22username%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22nickname%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22password%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20false%20%7D%2C%0A%20%20%20%20%20%20%22age%22%3A%20%7B%20%22type%22%3A%20%22integer%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22info%22%3A%20%7B%20%22type%22%3A%20%22text%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22remark%22%3A%20%7B%20%22type%22%3A%20%22text%22%2C%20%22index%22%3A%20true%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60json%0APUT%20%2Fuser_info%0A%7B%0A%20%20%22settings%22%3A%20%7B%20%22number_of_replicas%22%3A%201%2C%20%22number_of_shards%22%3A%201%20%7D%2C%0A%20%20%22mappings%22%3A%20%7B%0A%20%20%20%20%22properties%22%3A%20%7B%0A%20%20%20%20%20%20%22id%22%3A%20%7B%20%22type%22%3A%20%22long%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22username%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22nickname%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22password%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20false%20%7D%2C%0A%20%20%20%20%20%20%22age%22%3A%20%7B%20%22type%22%3A%20%22integer%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22info%22%3A%20%7B%20%22type%22%3A%20%22text%22%2C%20%22index%22%3A%20true%20%7D%2C%0A%20%20%20%20%20%20%22remark%22%3A%20%7B%20%22type%22%3A%20%22text%22%2C%20%22index%22%3A%20true%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-19",
       "sectionId": "s2",
       "title": "curl",
-      "kind": "code",
-      "lang": "shell",
-      "code": "curl%20-XPUT%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22settings%22%3A%20%7B%20%22number_of_replicas%22%3A%201%2C%20%22number_of_shards%22%3A%201%20%7D%2C%20%22mappings%22%3A%20%7B%20%22properties%22%3A%20%7B%20%22id%22%3A%20%7B%20%22type%22%3A%20%22long%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22username%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22nickname%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22password%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20false%20%7D%2C%20%22age%22%3A%20%7B%20%22type%22%3A%20%22integer%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22info%22%3A%20%7B%20%22type%22%3A%20%22text%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22remark%22%3A%20%7B%20%22type%22%3A%20%22text%22%2C%20%22index%22%3A%20true%20%7D%20%7D%20%7D%20%7D'",
+      "body": "%60%60%60shell%0Acurl%20-XPUT%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22settings%22%3A%20%7B%20%22number_of_replicas%22%3A%201%2C%20%22number_of_shards%22%3A%201%20%7D%2C%20%22mappings%22%3A%20%7B%20%22properties%22%3A%20%7B%20%22id%22%3A%20%7B%20%22type%22%3A%20%22long%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22username%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22nickname%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22password%22%3A%20%7B%20%22type%22%3A%20%22keyword%22%2C%20%22index%22%3A%20false%20%7D%2C%20%22age%22%3A%20%7B%20%22type%22%3A%20%22integer%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22info%22%3A%20%7B%20%22type%22%3A%20%22text%22%2C%20%22index%22%3A%20true%20%7D%2C%20%22remark%22%3A%20%7B%20%22type%22%3A%20%22text%22%2C%20%22index%22%3A%20true%20%7D%20%7D%20%7D%20%7D'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "参数说明",
-      "kind": "text",
-      "body": "• `settings`: 设置索引的信息\n• `number_of_shards`: 每个索引的主分片数，一旦索引创建后，无法修改此配置\n• `number_of_replicas`: 每个主分片的副本数，此配置可随时修改\n• `mappings`: 索引映射定义\n• `properties`: 字段定义。使用 JSON 配置，键为字段名称（自定义），值为嵌套 JSON，其中 `type` 指定字段的类型"
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "其他参数很多，请参考官网资料"
+      "body": "• `settings`: 设置索引的信息\n• `number_of_shards`: 每个索引的主分片数，一旦索引创建后，无法修改此配置\n• `number_of_replicas`: 每个主分片的副本数，此配置可随时修改\n• `mappings`: 索引映射定义\n• `properties`: 字段定义。使用 JSON 配置，键为字段名称（自定义），值为嵌套 JSON，其中 `type` 指定字段的类型\n\n其他参数很多，请参考官网资料"
     },
     {
       "id": "s2-22",
       "sectionId": "s2",
       "title": "删除索引 - DSL语法",
-      "kind": "code",
-      "lang": "http",
-      "code": "DELETE /user_info"
+      "body": "```http\nDELETE /user_info\n```"
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "curl",
-      "kind": "code",
-      "lang": "shell",
-      "code": "curl%20-XDELETE%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%22",
+      "body": "%60%60%60shell%0Acurl%20-XDELETE%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-24",
       "sectionId": "s2",
       "title": "判断索引是否存在 - DSL语法",
-      "kind": "code",
-      "lang": "http",
-      "code": "# 查看索引是否存在\nHEAD /user_info"
+      "body": "```http\n# 查看索引是否存在\nHEAD /user_info\n```"
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "curl",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%23%20%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%0Acurl%20-XHEAD%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%22",
+      "body": "%60%60%60shell%0A%23%20%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%0Acurl%20-XHEAD%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-26",
       "sectionId": "s2",
-      "title": "开启/关闭索引 - 开启DSL语法",
-      "kind": "code",
-      "lang": "shell",
-      "code": "POST /user_info/_open"
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`curl`"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "curl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_open%22",
+      "title": "%E5%BC%80%E5%90%AF%2F%E5%85%B3%E9%97%AD%E7%B4%A2%E5%BC%95%20-%20%E5%BC%80%E5%90%AFDSL%E8%AF%AD%E6%B3%95",
+      "body": "%60%60%60shell%0APOST%20%2Fuser_info%2F_open%0A%60%60%60%0A%0A%60curl%60%0A%0A%60%60%60shell%0Acurl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_open%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
-      "title": "关闭 DSL 语法",
-      "kind": "code",
-      "lang": "shell",
-      "code": "POST /user_info/_close"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`curl`"
-    },
-    {
-      "id": "s2-31",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "curl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_close%22",
+      "title": "%E5%85%B3%E9%97%AD%20DSL%20%E8%AF%AD%E6%B3%95",
+      "body": "%60%60%60shell%0APOST%20%2Fuser_info%2F_close%0A%60%60%60%0A%0A%60curl%60%0A%0A%60%60%60shell%0Acurl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_close%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-32",
       "sectionId": "s2",
-      "title": "索引的别名",
-      "kind": "text",
-      "body": "• 添加别名 DSL 语法"
-    },
-    {
-      "id": "s2-33",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "POST%20%2Fuser_info%2F_alias%2Fuser1%0A%0Acurl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_alias%2Fuser1%22",
-      "encoded": true
-    },
-    {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• 删除别名DSL语法"
-    },
-    {
-      "id": "s2-35",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "DELETE%20%2Fuser_info%2F_alias%2Fuser1%0A%0Acurl%20-XDELETE%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_alias%2Fuser1%22",
-      "encoded": true
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• 查看别名DSL语法"
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "GET%20%2F_alias%2Fuser1%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2F_alias%2Fuseraa%22",
+      "title": "%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%AB%E5%90%8D",
+      "body": "%E2%80%A2%20%E6%B7%BB%E5%8A%A0%E5%88%AB%E5%90%8D%20DSL%20%E8%AF%AD%E6%B3%95%0A%0A%60%60%60shell%0APOST%20%2Fuser_info%2F_alias%2Fuser1%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_alias%2Fuser1%22%0A%60%60%60%0A%0A%E2%80%A2%20%E5%88%A0%E9%99%A4%E5%88%AB%E5%90%8DDSL%E8%AF%AD%E6%B3%95%0A%0A%60%60%60shell%0ADELETE%20%2Fuser_info%2F_alias%2Fuser1%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XDELETE%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_alias%2Fuser1%22%0A%60%60%60%0A%0A%E2%80%A2%20%E6%9F%A5%E7%9C%8B%E5%88%AB%E5%90%8DDSL%E8%AF%AD%E6%B3%95%0A%0A%60%60%60shell%0AGET%20%2F_alias%2Fuser1%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2F_alias%2Fuseraa%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-38",
       "sectionId": "s3",
       "title": "Mapping 操作",
-      "kind": "text",
       "body": "类似修改数据库中列的操作"
     },
     {
       "id": "s3-39",
       "sectionId": "s3",
       "title": "%E6%9F%A5%E7%9C%8B%20mapping%20-%20DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "shell",
-      "code": "GET%20%2Fuser_info%2F_mapping%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_mapping%22",
+      "body": "%60%60%60shell%0AGET%20%2Fuser_info%2F_mapping%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_mapping%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-40",
       "sectionId": "s3",
       "title": "%E6%96%B0%E5%A2%9E%20mapping%20-%20DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "shell",
-      "code": "PUT%20%2Fuser_info%2F_mapping%0A%7B%0A%20%20%20%20%22properties%22%3A%7B%0A%20%20%20%20%20%20%20%20%22sex%22%3A%7B%20%22type%22%3A%22keyword%22%20%7D%0A%20%20%20%20%7D%0A%7D%0A%0Acurl%20-XPUT%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_mapping%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22properties%22%3A%7B%20%22sex%22%3A%7B%20%22type%22%3A%22keyword%22%20%7D%20%7D%20%7D'",
+      "body": "%60%60%60shell%0APUT%20%2Fuser_info%2F_mapping%0A%7B%0A%20%20%20%20%22properties%22%3A%7B%0A%20%20%20%20%20%20%20%20%22sex%22%3A%7B%20%22type%22%3A%22keyword%22%20%7D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XPUT%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_mapping%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22properties%22%3A%7B%20%22sex%22%3A%7B%20%22type%22%3A%22keyword%22%20%7D%20%7D%20%7D'%0A%60%60%60%0A%0A%60%E6%B3%A8%E6%84%8F%60%3A%20%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%E5%AD%97%E6%AE%B5%E6%98%A0%E5%B0%84%E5%8F%AA%E8%83%BD%E5%A2%9E%E5%8A%A0%EF%BC%8C%E4%B8%8D%E8%83%BD%E6%9B%B4%E6%94%B9%E5%88%A0%E9%99%A4",
       "encoded": true
-    },
-    {
-      "id": "s3-41",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "`注意`: 需要注意的是字段映射只能增加，不能更改删除"
     },
     {
       "id": "s4-42",
       "sectionId": "s4",
       "title": "%E6%B7%BB%E5%8A%A0%E6%96%87%E6%A1%A3%20-%20%E6%96%B0%E5%A2%9E%E4%B8%80%E6%9D%A1%E6%95%B0%E6%8D%AE%20-%20DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "shell",
-      "code": "POST%20%2Fuser_info%2F_doc%2F1%0A%7B%0A%20%20%20%20%22id%22%3A1%2C%0A%20%20%20%20%22username%22%3A%22username%22%2C%0A%20%20%20%20%22password%22%3A%22123456%22%2C%0A%20%20%20%20%22nickname%22%3A%22nickname%22%2C%0A%20%20%20%20%22age%22%3A18%2C%0A%20%20%20%20%22info%22%3A%22%E4%B8%80%E4%BA%9B%E4%B8%AA%E4%BA%BA%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BB%8B%E7%BB%8D%22%2C%0A%20%20%20%20%22remark%22%3A%22%E5%A4%87%E6%B3%A8%E4%BF%A1%E6%81%AF%22%2C%0A%20%20%20%20%22sex%22%3A%22%E7%94%B7%22%0A%7D%0A%0Acurl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_doc%2F1%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22id%22%3A1%2C%20%22username%22%3A%22username%22%2C%20%22password%22%3A%22123456%22%2C%20%22nickname%22%3A%22nickname%22%2C%20%22age%22%3A18%2C%20%22info%22%3A%22%E4%B8%80%E4%BA%9B%E4%B8%AA%E4%BA%BA%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BB%8B%E7%BB%8D%22%2C%20%22remark%22%3A%22%E5%A4%87%E6%B3%A8%E4%BF%A1%E6%81%AF%22%2C%20%22sex%22%3A%22%E7%94%B7%22%20%7D'",
+      "body": "%60%60%60shell%0APOST%20%2Fuser_info%2F_doc%2F1%0A%7B%0A%20%20%20%20%22id%22%3A1%2C%0A%20%20%20%20%22username%22%3A%22username%22%2C%0A%20%20%20%20%22password%22%3A%22123456%22%2C%0A%20%20%20%20%22nickname%22%3A%22nickname%22%2C%0A%20%20%20%20%22age%22%3A18%2C%0A%20%20%20%20%22info%22%3A%22%E4%B8%80%E4%BA%9B%E4%B8%AA%E4%BA%BA%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BB%8B%E7%BB%8D%22%2C%0A%20%20%20%20%22remark%22%3A%22%E5%A4%87%E6%B3%A8%E4%BF%A1%E6%81%AF%22%2C%0A%20%20%20%20%22sex%22%3A%22%E7%94%B7%22%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_doc%2F1%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22id%22%3A1%2C%20%22username%22%3A%22username%22%2C%20%22password%22%3A%22123456%22%2C%20%22nickname%22%3A%22nickname%22%2C%20%22age%22%3A18%2C%20%22info%22%3A%22%E4%B8%80%E4%BA%9B%E4%B8%AA%E4%BA%BA%E7%9B%B8%E5%85%B3%E7%9A%84%E4%BB%8B%E7%BB%8D%22%2C%20%22remark%22%3A%22%E5%A4%87%E6%B3%A8%E4%BF%A1%E6%81%AF%22%2C%20%22sex%22%3A%22%E7%94%B7%22%20%7D'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-43",
       "sectionId": "s4",
       "title": "查询指定索引的所有文档",
-      "kind": "text",
       "body": "类似数据库中的 `select * from user_info;`"
     },
     {
       "id": "s4-44",
       "sectionId": "s4",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "json",
-      "code": "GET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22match_all%22%3A%20%7B%7D%0A%20%20%20%20%7D%0A%7D%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22match_all%22%3A%20%7B%7D%20%7D%20%7D'",
+      "body": "%60%60%60json%0AGET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22match_all%22%3A%20%7B%7D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22match_all%22%3A%20%7B%7D%20%7D%20%7D'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-45",
       "sectionId": "s4",
       "title": "通过 id 查询文档",
-      "kind": "text",
       "body": "类似数据库中的 `select * from user_info where id = 1;`"
     },
     {
       "id": "s4-46",
       "sectionId": "s4",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "shell",
-      "code": "GET%20%2Fuser_info%2F_doc%2F1%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_doc%2F1%22",
+      "body": "%60%60%60shell%0AGET%20%2Fuser_info%2F_doc%2F1%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_doc%2F1%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-47",
       "sectionId": "s4",
-      "title": "模糊查找",
-      "kind": "text",
-      "body": "类似数据库中的模糊查询 `select * from user_info where info like '%人%';`"
+      "title": "%E6%A8%A1%E7%B3%8A%E6%9F%A5%E6%89%BE",
+      "body": "%E7%B1%BB%E4%BC%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2%20%60select%20*%20from%20user_info%20where%20info%20like%20'%25%E4%BA%BA%25'%3B%60",
+      "encoded": true
     },
     {
       "id": "s4-48",
       "sectionId": "s4",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "json",
-      "code": "GET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%20%22match%22%3A%20%7B%20%22info%22%3A%20%22%E4%BA%BA%22%20%7D%20%7D%0A%7D",
+      "body": "%60%60%60json%0AGET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%20%22match%22%3A%20%7B%20%22info%22%3A%20%22%E4%BA%BA%22%20%7D%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-49",
       "sectionId": "s4",
-      "title": "通过条件查询文档",
-      "kind": "text",
-      "body": "类似数据库中的 `select * from user_info where username = 'username';`"
+      "title": "%E9%80%9A%E8%BF%87%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3",
+      "body": "%E7%B1%BB%E4%BC%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%20%60select%20*%20from%20user_info%20where%20username%20%3D%20'username'%3B%60",
+      "encoded": true
     },
     {
       "id": "s4-50",
       "sectionId": "s4",
       "title": "%E9%80%9A%E8%BF%87%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%20-%20DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "json",
-      "code": "GET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22bool%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22must%22%3A%20%5B%20%7B%20%22term%22%3A%20%7B%20%22username%22%3A%20%22username%22%20%7D%20%7D%20%5D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22bool%22%3A%20%7B%20%22must%22%3A%20%5B%20%7B%20%22term%22%3A%20%7B%20%22username%22%3A%20%22username%22%20%7D%20%7D%20%5D%20%7D%20%7D%20%7D'",
+      "body": "%60%60%60json%0AGET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22bool%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22must%22%3A%20%5B%20%7B%20%22term%22%3A%20%7B%20%22username%22%3A%20%22username%22%20%7D%20%7D%20%5D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22bool%22%3A%20%7B%20%22must%22%3A%20%5B%20%7B%20%22term%22%3A%20%7B%20%22username%22%3A%20%22username%22%20%7D%20%7D%20%5D%20%7D%20%7D%20%7D'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-51",
       "sectionId": "s4",
       "title": "范围查找",
-      "kind": "text",
       "body": "类似数据库中的范围查询 `select * from user_info where age between 18 and 30;`"
     },
     {
       "id": "s4-52",
       "sectionId": "s4",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "json",
-      "code": "GET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22range%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22age%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22gt%22%3A%2018%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22lt%22%3A%2030%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%2C%20%22lt%22%3A%2030%20%7D%20%7D%20%7D%20%7D'",
+      "body": "%60%60%60json%0AGET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22range%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%22age%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22gt%22%3A%2018%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22lt%22%3A%2030%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%2C%20%22lt%22%3A%2030%20%7D%20%7D%20%7D%20%7D'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-53",
       "sectionId": "s4",
-      "title": "and 查询",
-      "kind": "text",
-      "body": "类似数据库中的 and 查询 `select * from user_info where age > 18 and sex = '男';`"
+      "title": "and%20%E6%9F%A5%E8%AF%A2",
+      "body": "%E7%B1%BB%E4%BC%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%20and%20%E6%9F%A5%E8%AF%A2%20%60select%20*%20from%20user_info%20where%20age%20%3E%2018%20and%20sex%20%3D%20'%E7%94%B7'%3B%60",
+      "encoded": true
     },
     {
       "id": "s4-54",
       "sectionId": "s4",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "json",
-      "code": "GET%20%2Fuser_info%2F_search%20%20%0A%7B%20%20%0A%20%20%22query%22%3A%20%7B%0A%20%20%20%20%22bool%22%3A%20%7B%0A%20%20%20%20%20%20%22must%22%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%20%7D%20%7D%20%7D%2C%0A%20%20%20%20%20%20%20%20%7B%20%22term%22%3A%20%7B%20%22sex%22%3A%20%22%E7%94%B7%22%20%7D%20%7D%0A%20%20%20%20%20%20%5D%20%20%20%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22bool%22%3A%20%7B%20%22must%22%3A%20%5B%20%7B%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2017%20%7D%20%7D%20%7D%2C%20%7B%20%22term%22%3A%20%7B%20%22sex%22%3A%20%22%E7%94%B7%22%20%7D%20%7D%20%5D%20%7D%20%7D%20%7D'",
+      "body": "%60%60%60json%0AGET%20%2Fuser_info%2F_search%20%20%0A%7B%20%20%0A%20%20%22query%22%3A%20%7B%0A%20%20%20%20%22bool%22%3A%20%7B%0A%20%20%20%20%20%20%22must%22%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%20%7D%20%7D%20%7D%2C%0A%20%20%20%20%20%20%20%20%7B%20%22term%22%3A%20%7B%20%22sex%22%3A%20%22%E7%94%B7%22%20%7D%20%7D%0A%20%20%20%20%20%20%5D%20%20%20%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22bool%22%3A%20%7B%20%22must%22%3A%20%5B%20%7B%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2017%20%7D%20%7D%20%7D%2C%20%7B%20%22term%22%3A%20%7B%20%22sex%22%3A%20%22%E7%94%B7%22%20%7D%20%7D%20%5D%20%7D%20%7D%20%7D'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-55",
       "sectionId": "s4",
       "title": "limit 查找",
-      "kind": "text",
       "body": "类似数据库中的 limit 查询 `select * from user_info limit 10;`"
     },
     {
       "id": "s4-56",
       "sectionId": "s4",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "json",
-      "code": "GET%20%2Fuser_info%2F_search%20%20%0A%7B%20%20%0A%20%20%20%20%22size%22%3A%2010%2C%20%20%0A%20%20%20%20%22query%22%3A%20%7B%20%20%0A%20%20%20%20%20%20%20%20%22match_all%22%3A%20%7B%7D%20%20%20%20%20%0A%20%20%20%20%7D%0A%7D%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22size%22%3A%201%2C%20%22query%22%3A%20%7B%20%22match_all%22%3A%20%7B%7D%20%7D%20%7D'",
+      "body": "%60%60%60json%0AGET%20%2Fuser_info%2F_search%20%20%0A%7B%20%20%0A%20%20%20%20%22size%22%3A%2010%2C%20%20%0A%20%20%20%20%22query%22%3A%20%7B%20%20%0A%20%20%20%20%20%20%20%20%22match_all%22%3A%20%7B%7D%20%20%20%20%20%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22size%22%3A%201%2C%20%22query%22%3A%20%7B%20%22match_all%22%3A%20%7B%7D%20%7D%20%7D'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-57",
       "sectionId": "s4",
       "title": "limit offset 查找",
-      "kind": "text",
       "body": "类似数据库中的 limit 查询 `select * from user_info limit 0,10;`"
     },
     {
       "id": "s4-58",
       "sectionId": "s4",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "http",
-      "code": "GET%20%2Fuser_info%2F_search%20%20%0A%7B%20%20%0A%20%20%20%20%22size%22%3A%202%2C%20%20%0A%20%20%20%20%22from%22%3A%201%2C%20%20%0A%20%20%20%20%22query%22%3A%20%7B%20%20%0A%20%20%20%20%20%20%20%20%22match_all%22%3A%20%7B%7D%20%20%0A%20%20%20%20%7D%20%20%0A%7D%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22size%22%3A%202%2C%20%22from%22%3A%201%2C%20%22query%22%3A%20%7B%20%22match_all%22%3A%20%7B%7D%20%7D%20%7D'",
+      "body": "%60%60%60http%0AGET%20%2Fuser_info%2F_search%20%20%0A%7B%20%20%0A%20%20%20%20%22size%22%3A%202%2C%20%20%0A%20%20%20%20%22from%22%3A%201%2C%20%20%0A%20%20%20%20%22query%22%3A%20%7B%20%20%0A%20%20%20%20%20%20%20%20%22match_all%22%3A%20%7B%7D%20%20%0A%20%20%20%20%7D%20%20%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22size%22%3A%202%2C%20%22from%22%3A%201%2C%20%22query%22%3A%20%7B%20%22match_all%22%3A%20%7B%7D%20%7D%20%7D'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-59",
       "sectionId": "s4",
       "title": "%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E",
-      "kind": "text",
       "body": "%E2%80%A2%20%60size%60%3A%2010%20%E8%A1%A8%E7%A4%BA%E6%88%91%E4%BB%AC%E6%83%B3%E8%A6%81%E8%BF%94%E5%9B%9E%E7%9A%84%E7%BB%93%E6%9E%9C%E6%95%B0%E9%87%8F%E6%98%AF10%E6%9D%A1%0A%E2%80%A2%20%60from%60%3A%2020%20%E8%A1%A8%E7%A4%BA%E6%88%91%E4%BB%AC%E6%83%B3%E8%A6%81%E4%BB%8E%E7%BB%93%E6%9E%9C%E9%9B%86%E4%B8%AD%E7%9A%84%E7%AC%AC21%E6%9D%A1%E8%AE%B0%E5%BD%95%E5%BC%80%E5%A7%8B%E8%BF%94%E5%9B%9E%EF%BC%88%E5%9B%A0%E4%B8%BA%E5%81%8F%E7%A7%BB%E6%98%AF%E4%BB%8E0%E5%BC%80%E5%A7%8B%E7%9A%84%EF%BC%89%0A%E2%80%A2%20%60query%60%3A%20%60%7B%22match_all%22%3A%20%7B%7D%7D%60%20%E6%98%AF%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E6%89%80%E6%9C%89%E6%96%87%E6%A1%A3%E7%9A%84%E6%9F%A5%E8%AF%A2%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%88%91%E4%BB%AC%E6%B2%A1%E6%9C%89%E7%89%B9%E5%AE%9A%E7%9A%84%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%EF%BC%8C%E5%8F%AA%E6%98%AF%E6%83%B3%E8%A6%81%E5%88%86%E9%A1%B5%E7%BB%93%E6%9E%9C",
       "encoded": true
     },
     {
       "id": "s4-60",
       "sectionId": "s4",
-      "title": "or 查询",
-      "kind": "text",
-      "body": "类似数据库中的 or 查询 `select * from user_info where age > 18 or sex = '男';`"
+      "title": "or%20%E6%9F%A5%E8%AF%A2",
+      "body": "%E7%B1%BB%E4%BC%BC%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%20or%20%E6%9F%A5%E8%AF%A2%20%60select%20*%20from%20user_info%20where%20age%20%3E%2018%20or%20sex%20%3D%20'%E7%94%B7'%3B%60",
+      "encoded": true
     },
     {
       "id": "s4-61",
       "sectionId": "s4",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "json",
-      "code": "GET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22bool%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22should%22%3A%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22range%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22term%22%3A%20%7B%20%22sex%22%3A%20%22%E7%94%B7%22%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22bool%22%3A%20%7B%20%22should%22%3A%20%5B%20%7B%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%20%7D%20%7D%20%7D%2C%20%7B%20%22term%22%3A%20%7B%20%22sex%22%3A%20%22%E7%94%B7%22%20%7D%20%7D%20%5D%20%7D%20%7D%20%7D'",
+      "body": "%60%60%60json%0AGET%20%2Fuser_info%2F_search%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22bool%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22should%22%3A%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22range%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22term%22%3A%20%7B%20%22sex%22%3A%20%22%E7%94%B7%22%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XGET%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_search%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%20%22query%22%3A%20%7B%20%22bool%22%3A%20%7B%20%22should%22%3A%20%5B%20%7B%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%20%7D%20%7D%20%7D%2C%20%7B%20%22term%22%3A%20%7B%20%22sex%22%3A%20%22%E7%94%B7%22%20%7D%20%7D%20%5D%20%7D%20%7D%20%7D'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-62",
       "sectionId": "s5",
       "title": "删除指定 id",
-      "kind": "text",
       "body": "类似数据库中的 delete 查询 `delete from user_info where id = 3;`"
     },
     {
       "id": "s5-63",
       "sectionId": "s5",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%23%20%E5%88%A0%E9%99%A4%E6%96%87%E6%A1%A3%0ADELETE%20%2Fuser_info%2F_doc%2F3%0A%0A%23%20%E5%88%A0%E9%99%A4%E6%96%87%E6%A1%A3%0Acurl%20-XDELETE%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_doc%2F3%22",
+      "body": "%60%60%60shell%0A%23%20%E5%88%A0%E9%99%A4%E6%96%87%E6%A1%A3%0ADELETE%20%2Fuser_info%2F_doc%2F3%0A%60%60%60%0A%0A%60%60%60shell%0A%23%20%E5%88%A0%E9%99%A4%E6%96%87%E6%A1%A3%0Acurl%20-XDELETE%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_doc%2F3%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-64",
       "sectionId": "s5",
       "title": "删除指定条件",
-      "kind": "text",
       "body": "类似数据库中的 delete 查询 `delete from user_info where age > 18;`"
     },
     {
       "id": "s5-65",
       "sectionId": "s5",
       "title": "DSL%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "json",
-      "code": "POST%20%2Fuser_info%2F_delete_by_query%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%20%7D%20%7D%0A%20%20%20%20%7D%0A%7D%0A%0Acurl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_delete_by_query%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%22query%22%3A%7B%22range%22%3A%7B%22age%22%3A%7B%22gt%22%3A18%7D%7D%7D%7D'",
+      "body": "%60%60%60json%0APOST%20%2Fuser_info%2F_delete_by_query%0A%7B%0A%20%20%20%20%22query%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22range%22%3A%20%7B%20%22age%22%3A%20%7B%20%22gt%22%3A%2018%20%7D%20%7D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60%60%60shell%0Acurl%20-XPOST%20%22http%3A%2F%2Flocalhost%3A9200%2Fuser_info%2F_delete_by_query%22%20-H%20'Content-Type%3A%20application%2Fjson'%20-d'%7B%22query%22%3A%7B%22range%22%3A%7B%22age%22%3A%7B%22gt%22%3A18%7D%7D%7D%7D'%0A%60%60%60",
       "encoded": true
     }
   ],

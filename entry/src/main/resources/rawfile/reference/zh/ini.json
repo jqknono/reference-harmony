@@ -25,229 +25,66 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "这是理解和编写 INI 格式配置文件的快速参考备忘单，此清单包含配置的内容，结构和语法等内容。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
-      "title": "介绍",
-      "kind": "text",
-      "body": "INI 是一种固定标准格式的配置文件，INI 配置方法来自 MS-DOS 操作系统"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "%3B%20%E8%BF%99%E9%87%8C%E6%98%AF%E6%B3%A8%E9%87%8A%0A%5Bowner%5D%0Aname%3DJohn%20Doe%0Aorganization%3DAcme%20Products%0A%0A%5Bdatabase%5D%0A%3B%20%E8%BF%99%E9%87%8C%E6%98%AF%E6%B3%A8%E9%87%8A%0Aserver%3D192.0.2.42%0Aport%3D143%0Afile%3D%22acme%20payroll.dat%22",
+      "title": "%E4%BB%8B%E7%BB%8D",
+      "body": "INI%20%E6%98%AF%E4%B8%80%E7%A7%8D%E5%9B%BA%E5%AE%9A%E6%A0%87%E5%87%86%E6%A0%BC%E5%BC%8F%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%8CINI%20%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95%E6%9D%A5%E8%87%AA%20MS-DOS%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%0A%0A%60%60%60ini%0A%3B%20%E8%BF%99%E9%87%8C%E6%98%AF%E6%B3%A8%E9%87%8A%0A%5Bowner%5D%0Aname%3DJohn%20Doe%0Aorganization%3DAcme%20Products%0A%0A%5Bdatabase%5D%0A%3B%20%E8%BF%99%E9%87%8C%E6%98%AF%E6%B3%A8%E9%87%8A%0Aserver%3D192.0.2.42%0Aport%3D143%0Afile%3D%22acme%20payroll.dat%22%0A%60%60%60%0A%0A%E7%8E%B0%E5%9C%A8%E5%B7%B2%E6%88%90%E4%B8%BA%E8%AE%B8%E5%A4%9A%E9%85%8D%E7%BD%AE%E7%9A%84%E9%9D%9E%E6%AD%A3%E5%BC%8F%E6%A0%87%E5%87%86%EF%BC%8C%E5%85%B6%E5%AE%83%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8F%AF%E8%83%BD%E4%BD%BF%E7%94%A8%20%60.conf%60%20%E6%88%96%20%60.cfg%60%20%E4%BD%9C%E4%B8%BA%E5%90%8E%E7%BC%80",
       "encoded": true
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "现在已成为许多配置的非正式标准，其它操作系统可能使用 `.conf` 或 `.cfg` 作为后缀"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
-      "title": "稳定的特性",
-      "kind": "text",
-      "body": "• 基本元素是键或属性\n• 每个键由`名称`和`值`构成，等号 (=) 分隔\n• `键名称`显示在等号的`左侧`\n• `等号`和`分号`是`保留`字符"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "name = value"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "与下面👇 `JSON` 大致相同"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22name%22%3A%20%22value%22%0A%7D",
+      "title": "%E7%A8%B3%E5%AE%9A%E7%9A%84%E7%89%B9%E6%80%A7",
+      "body": "%E2%80%A2%20%E5%9F%BA%E6%9C%AC%E5%85%83%E7%B4%A0%E6%98%AF%E9%94%AE%E6%88%96%E5%B1%9E%E6%80%A7%0A%E2%80%A2%20%E6%AF%8F%E4%B8%AA%E9%94%AE%E7%94%B1%60%E5%90%8D%E7%A7%B0%60%E5%92%8C%60%E5%80%BC%60%E6%9E%84%E6%88%90%EF%BC%8C%E7%AD%89%E5%8F%B7%20(%3D)%20%E5%88%86%E9%9A%94%0A%E2%80%A2%20%60%E9%94%AE%E5%90%8D%E7%A7%B0%60%E6%98%BE%E7%A4%BA%E5%9C%A8%E7%AD%89%E5%8F%B7%E7%9A%84%60%E5%B7%A6%E4%BE%A7%60%0A%E2%80%A2%20%60%E7%AD%89%E5%8F%B7%60%E5%92%8C%60%E5%88%86%E5%8F%B7%60%E6%98%AF%60%E4%BF%9D%E7%95%99%60%E5%AD%97%E7%AC%A6%0A%0A%60%60%60ini%0Aname%20%3D%20value%0A%60%60%60%0A%0A%E4%B8%8E%E4%B8%8B%E9%9D%A2%F0%9F%91%87%20%60JSON%60%20%E5%A4%A7%E8%87%B4%E7%9B%B8%E5%90%8C%0A%0A%60%60%60js%0A%7B%0A%20%20%22name%22%3A%20%22value%22%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "注释",
-      "kind": "text",
-      "body": "注释 (`;`)"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "; 这里是注释文本，将被忽略"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "注释 (`#`)"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "# 这里是注释文本，⚠️ 部分编译器支持"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "一行之后的注释 (`;`,`#`) _(不标准)_"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "var = a       ; 这是一个内联注释\nfoo = bar     # 这是另一个内联注释"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在某些情况下注释必须单独出现在行上"
+      "body": "注释 (`;`)\n\n```ini\n; 这里是注释文本，将被忽略\n```\n\n注释 (`#`)\n\n```ini\n# 这里是注释文本，⚠️ 部分编译器支持\n```\n\n一行之后的注释 (`;`,`#`) _(不标准)_\n\n```ini\nvar = a       ; 这是一个内联注释\nfoo = bar     # 这是另一个内联注释\n```\n\n在某些情况下注释必须单独出现在行上"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "部分(Sections)",
-      "kind": "text",
-      "body": "• 名称单独出现在一行中\n• 名称在方括号 `[` 和 `]` 中\n• 没有明确的 `section 结束` 分隔符\n• 在下一个 `section` 声明处或文件末尾处结束\n• 部分和属性名称不区分大小写"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[section]\nkey1 = a\nkey2 = b"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "与下面👇 `JSON` 大致相同"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "json",
-      "code": "%7B%0A%20%20%22section%22%3A%20%7B%0A%20%20%20%20%22key1%22%3A%20%22a%22%2C%0A%20%20%20%20%22key2%22%3A%20%22b%22%0A%20%20%7D%0A%7D",
+      "title": "%E9%83%A8%E5%88%86(Sections)",
+      "body": "%E2%80%A2%20%E5%90%8D%E7%A7%B0%E5%8D%95%E7%8B%AC%E5%87%BA%E7%8E%B0%E5%9C%A8%E4%B8%80%E8%A1%8C%E4%B8%AD%0A%E2%80%A2%20%E5%90%8D%E7%A7%B0%E5%9C%A8%E6%96%B9%E6%8B%AC%E5%8F%B7%20%60%5B%60%20%E5%92%8C%20%60%5D%60%20%E4%B8%AD%0A%E2%80%A2%20%E6%B2%A1%E6%9C%89%E6%98%8E%E7%A1%AE%E7%9A%84%20%60section%20%E7%BB%93%E6%9D%9F%60%20%E5%88%86%E9%9A%94%E7%AC%A6%0A%E2%80%A2%20%E5%9C%A8%E4%B8%8B%E4%B8%80%E4%B8%AA%20%60section%60%20%E5%A3%B0%E6%98%8E%E5%A4%84%E6%88%96%E6%96%87%E4%BB%B6%E6%9C%AB%E5%B0%BE%E5%A4%84%E7%BB%93%E6%9D%9F%0A%E2%80%A2%20%E9%83%A8%E5%88%86%E5%92%8C%E5%B1%9E%E6%80%A7%E5%90%8D%E7%A7%B0%E4%B8%8D%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%0A%0A%60%60%60ini%0A%5Bsection%5D%0Akey1%20%3D%20a%0Akey2%20%3D%20b%0A%60%60%60%0A%0A%E4%B8%8E%E4%B8%8B%E9%9D%A2%F0%9F%91%87%20%60JSON%60%20%E5%A4%A7%E8%87%B4%E7%9B%B8%E5%90%8C%0A%0A%60%60%60json%0A%7B%0A%20%20%22section%22%3A%20%7B%0A%20%20%20%20%22key1%22%3A%20%22a%22%2C%0A%20%20%20%20%22key2%22%3A%20%22b%22%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-19",
       "sectionId": "s1",
-      "title": "嵌套(部分解析器支持)",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[section]\ndomain = jaywcjlove.github.io\n\n[section.subsection]\nfoo = bar"
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "与下面👇 `JSON` 大致相同"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22section%22%3A%20%7B%0A%20%20%20%20%22domain%22%3A%20%22jaywcjlove.github.io%22%0A%20%20%20%20%22subsection%22%3A%20%7B%0A%20%20%20%20%20%20%22foo%22%3A%20%22bar%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "title": "%E5%B5%8C%E5%A5%97(%E9%83%A8%E5%88%86%E8%A7%A3%E6%9E%90%E5%99%A8%E6%94%AF%E6%8C%81)",
+      "body": "%60%60%60ini%0A%5Bsection%5D%0Adomain%20%3D%20jaywcjlove.github.io%0A%0A%5Bsection.subsection%5D%0Afoo%20%3D%20bar%0A%60%60%60%0A%0A%E4%B8%8E%E4%B8%8B%E9%9D%A2%F0%9F%91%87%20%60JSON%60%20%E5%A4%A7%E8%87%B4%E7%9B%B8%E5%90%8C%0A%0A%60%60%60js%0A%7B%0A%20%20%22section%22%3A%20%7B%0A%20%20%20%20%22domain%22%3A%20%22jaywcjlove.github.io%22%0A%20%20%20%20%22subsection%22%3A%20%7B%0A%20%20%20%20%20%20%22foo%22%3A%20%22bar%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E5%B5%8C%E5%A5%97%E5%88%B0%E4%B8%8A%E4%B8%80%E8%8A%82(%E7%AE%80%E5%86%99)%0A%0A%60%60%60ini%0A%5Bsection%5D%0Adomain%20%3D%20jaywcjlove.github.io%0A%5B.subsection%5D%0Afoo%20%3D%20bar%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "嵌套到上一节(简写)"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[section]\ndomain = jaywcjlove.github.io\n[.subsection]\nfoo = bar"
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
       "title": "%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6",
-      "kind": "text",
       "body": "%E5%BA%8F%E5%88%97%20%7C%20%E6%84%8F%E6%80%9D%0A%3A-%20%7C%20%3A-%0A%60%5C%5C%60%20%7C%20%5C%20(%E5%8D%95%E4%B8%AA%E5%8F%8D%E6%96%9C%E6%9D%A0%EF%BC%8C%E8%BD%AC%E4%B9%89%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6)%0A%60%5C'%60%20%7C%20%E6%92%87%E5%8F%B7%0A%60%5C%22%60%20%7C%20%E5%8F%8C%E5%BC%95%E5%8F%B7%0A%60%5C0%60%20%7C%20%E7%A9%BA%E5%AD%97%E7%AC%A6%0A%60%5Ca%60%20%7C%20%E9%93%83%E5%A3%B0%2F%E8%AD%A6%E6%8A%A5%2F%E5%A3%B0%E9%9F%B3%0A%60%5Cb%60%20%7C%20%E9%80%80%E6%A0%BC%E9%94%AE%EF%BC%8C%E6%9F%90%E4%BA%9B%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%5B%E8%B4%9D%E5%B0%94%E5%AD%97%E7%AC%A6%5D(https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FBell_character)%0A%60%5Ct%60%20%7C%20%E5%88%B6%E8%A1%A8%E7%AC%A6%0A%60%5Cr%60%20%7C%20%E5%9B%9E%E8%BD%A6%0A%60%5Cn%60%20%7C%20%E6%8D%A2%E8%A1%8C%0A%60%5C%3B%60%20%7C%20%E5%88%86%E5%8F%B7%0A%60%5C%23%60%20%7C%20%E6%95%B0%E5%AD%97%E7%AC%A6%E5%8F%B7%0A%60%5C%3D%60%20%7C%20%E7%AD%89%E5%8F%B7%0A%60%5C%3A%60%20%7C%20%E5%86%92%E5%8F%B7%0A%60%5Cx%3F%3F%3F%3F%60%20%7C%20%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E4%BB%A3%E7%A0%81%E7%82%B9%E7%9A%84%20Unicode%20%E5%AD%97%E7%AC%A6%E5%AF%B9%E5%BA%94%E4%BA%8E%20%3F%3F%3F%3F",
       "encoded": true
     },
     {
       "id": "s1-25",
       "sectionId": "s1",
-      "title": "数组",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[section]\ndomain = jaywcjlove.github.io\narray[]=first value\narray[]=second value"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "与下面👇 `JSON` 大致相同"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22section%22%3A%20%7B%0A%20%20%20%20%22domain%22%3A%20%22jaywcjlove.github.io%22%2C%0A%20%20%20%20%22array%22%3A%20%5B%0A%20%20%20%20%20%20%22first%20value%22%2C%20%22second%20value%22%0A%20%20%20%20%5D%0A%20%20%7D%0A%7D",
+      "title": "%E6%95%B0%E7%BB%84",
+      "body": "%60%60%60ini%0A%5Bsection%5D%0Adomain%20%3D%20jaywcjlove.github.io%0Aarray%5B%5D%3Dfirst%20value%0Aarray%5B%5D%3Dsecond%20value%0A%60%60%60%0A%0A%E4%B8%8E%E4%B8%8B%E9%9D%A2%F0%9F%91%87%20%60JSON%60%20%E5%A4%A7%E8%87%B4%E7%9B%B8%E5%90%8C%0A%0A%60%60%60js%0A%7B%0A%20%20%22section%22%3A%20%7B%0A%20%20%20%20%22domain%22%3A%20%22jaywcjlove.github.io%22%2C%0A%20%20%20%20%22array%22%3A%20%5B%0A%20%20%20%20%20%20%22first%20value%22%2C%20%22second%20value%22%0A%20%20%20%20%5D%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-28",
       "sectionId": "s1",
       "title": "解释器",
-      "kind": "text",
       "body": "• [@go-ini/ini](https://github.com/go-ini/ini) _(golang)_\n• [@npm/ini](https://www.npmjs.com/package/ini) _(nodejs)_\n• [@zonyitoo/rust-ini](https://github.com/zonyitoo/rust-inii) _(rust)_\n• [@rxi/ini](https://www.npmjs.com/package/ini) _(c)_\n• [@pulzed/mINI](https://github.com/pulzed/mINI) _(c++)_\n• [@rickyah/ini-parser](https://github.com/rickyah/ini-parser) _(c#)_\n• [@Enichan/Ini](https://github.com/Enichan/Ini) _(c#)_"
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
       "title": "另见",
-      "kind": "text",
       "body": "• [INI 文件配置](https://en.wikipedia.org/wiki/INI_file) _(wikipedia.org)_\n• [YAML 格式配置文件备忘清单](./yaml.md) _(jaywcjlove.github.io)_\n• [TOML 格式配置文件备忘清单](./toml.md) _(jaywcjlove.github.io)_"
     }
   ],

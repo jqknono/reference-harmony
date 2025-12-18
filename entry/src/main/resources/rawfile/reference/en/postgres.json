@@ -40,58 +40,18 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "The [PostgreSQL](https://www.postgresql.org/docs/current/) cheat sheet provides you with the common PostgreSQL commands and statements."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Getting started",
-      "kind": "text",
-      "body": "Switch and connect"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n$ sudo -u postgres psql"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nList all databases\n\n```shell script\npostgres=# \\l"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Connect to the database named postgres"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\npostgres=# \\c postgres"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDisconnect\n\n```shell script\npostgres=# \\q\npostgres=# \\!"
+      "body": "Switch and connect\n\n```shell script\n$ sudo -u postgres psql\n\n```\n\nList all databases\n\n```shell script\npostgres=# \\l\n```\n\nConnect to the database named postgres\n\n```shell script\npostgres=# \\c postgres\n\n```\n\nDisconnect\n\n```shell script\npostgres=# \\q\npostgres=# \\!\n```"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "psql%20commands",
-      "kind": "text",
       "body": "%7C%20Option%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Example%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-------------------%20%7C%20--------------------------------------------%20%7C%20%3A-----------------------------%20%7C%0A%7C%20%60%5B-d%5D%20%3Cdatabase%3E%60%20%20%20%7C%20psql%20-d%20mydb%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Connecting%20to%20database%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60-U%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-U%20john%20mydb%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Connecting%20as%20a%20specific%20user%20%20%7C%0A%7C%20%60-h%60%20%60-p%60%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-h%20localhost%20-p%205432%20mydb%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Connecting%20to%20a%20host%2Fport%20%20%20%20%20%20%7C%0A%7C%20%60-U%60%20%60-h%60%20%60-p%60%20%60-d%60%20%7C%20psql%20-U%20admin%20-h%20192.168.1.5%20-p%202506%20-d%20mydb%20%7C%20Connect%20remote%20PostgreSQL%20%20%20%20%20%20%7C%0A%7C%20%60-W%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-W%20mydb%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Force%20password%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60-c%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-c%20'%5Cc%20postgres'%20-c%20'%5Cdt'%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Execute%20a%20SQL%20query%20or%20command%20%7C%0A%7C%20%60-H%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-c%20%22%5Cl%2B%22%20-H%20postgres%20%3E%20database.html%20%20%20%20%7C%20Generate%20HTML%20report%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60-l%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-l%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20List%20all%20databases%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60-f%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20mydb%20-f%20file.sql%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Execute%20commands%20from%20a%20file%20%20%20%7C%0A%7C%20%60-V%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-V%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Print%20the%20psql%20version%20%20%20%20%20%20%20%20%20%7C",
       "encoded": true
     },
@@ -99,823 +59,112 @@
       "id": "s1-8",
       "sectionId": "s1",
       "title": "Getting help",
-      "kind": "text",
-      "body": "| -           | -                              |\n| ----------- | :----------------------------- |\n| `\\h`        | Help on syntax of SQL commands |\n| `\\h` DELETE | DELETE SQL statement syntax    |\n| `\\?`        | List of PostgreSQL command     |"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Run in PostgreSQL console"
+      "body": "| -           | -                              |\n| ----------- | :----------------------------- |\n| `\\h`        | Help on syntax of SQL commands |\n| `\\h` DELETE | DELETE SQL statement syntax    |\n| `\\?`        | List of PostgreSQL command     |\n\nRun in PostgreSQL console"
     },
     {
       "id": "s2-10",
       "sectionId": "s2",
       "title": "Recon",
-      "kind": "text",
-      "body": "Show version"
-    },
-    {
-      "id": "s2-11",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "SHOW SERVER_VERSION;"
-    },
-    {
-      "id": "s2-12",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Show system status"
-    },
-    {
-      "id": "s2-13",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\n\\conninfo"
-    },
-    {
-      "id": "s2-14",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nShow environmental variables\n\n```sql {.wrap}\nSHOW ALL;"
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "List users"
-    },
-    {
-      "id": "s2-16",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nSELECT rolname FROM pg_roles;"
-    },
-    {
-      "id": "s2-17",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nShow current user\n\n```sql {.wrap}\nSELECT current_user;"
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Show current user's permissions"
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\\du"
-    },
-    {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Show current database"
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nSELECT current_database();"
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nShow all tables in database\n\n```sql {.wrap}\n\\dt"
-    },
-    {
-      "id": "s2-23",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "List functions"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\n\\df <schema>"
-    },
-    {
-      "id": "s2-25",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Databases\n\nList databases\n\n```sql {.wrap}\n\\l"
-    },
-    {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Connect to database"
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\n\\c <database_name>"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nShow current database\n\n```sql {.wrap}\nSELECT current_database();"
-    },
-    {
-      "id": "s2-29",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Create database](http://www.postgresql.org/docs/current/static/sql-createdatabase.html)"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nCREATE DATABASE <database_name> WITH OWNER <username>;"
-    },
-    {
-      "id": "s2-31",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n[Drop database](http://www.postgresql.org/docs/current/static/sql-dropdatabase.html)\n\n```sql {.wrap}\nDROP DATABASE IF EXISTS <database_name>;"
-    },
-    {
-      "id": "s2-32",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Rename database](http://www.postgresql.org/docs/current/static/sql-alterdatabase.html)"
-    },
-    {
-      "id": "s2-33",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nALTER DATABASE <old_name> RENAME TO <new_name>;"
-    },
-    {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Tables\n\nList tables, in current db\n\n```sql {.wrap}\n\\dt\n\nSELECT table_schema,table_name FROM information_schema.tables ORDER BY table_schema,table_name;"
-    },
-    {
-      "id": "s2-35",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "List tables, globally"
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\n\\dt *.*."
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "SELECT * FROM pg_catalog.pg_tables"
-    },
-    {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nList table schema\n\n```sql {.wrap}\n\\d <table_name>\n\\d+ <table_name>\n\nSELECT column_name, data_type, character_maximum_length\nFROM INFORMATION_SCHEMA.COLUMNS\nWHERE table_name = '<table_name>';"
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Create table](http://www.postgresql.org/docs/current/static/sql-createtable.html)"
-    },
-    {
-      "id": "s2-40",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nCREATE TABLE <table_name>(\n<column_name> <column_type>,\n<column_name> <column_type>\n);"
-    },
-    {
-      "id": "s2-41",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCreate table, with an auto-incrementing primary key\n\n```sql {.wrap}\nCREATE TABLE <table_name> (\n  <column_name> SERIAL PRIMARY KEY\n);"
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Delete table](http://www.postgresql.org/docs/current/static/sql-droptable.html)"
-    },
-    {
-      "id": "s2-43",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nDROP TABLE IF EXISTS <table_name> CASCADE;"
-    },
-    {
-      "id": "s2-44",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Permissions\n\nBecome the postgres user, if you have permission errors\n\n```shell\nsudo su - postgres\npsql"
-    },
-    {
-      "id": "s2-45",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Grant](http://www.postgresql.org/docs/current/static/sql-grant.html) all permissions on database"
-    },
-    {
-      "id": "s2-46",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nGRANT ALL PRIVILEGES ON DATABASE <db_name> TO <user_name>;"
-    },
-    {
-      "id": "s2-47",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nGrant connection permissions on database\n\n```sql {.wrap}\nGRANT CONNECT ON DATABASE <db_name> TO <user_name>;"
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Grant permissions on schema"
-    },
-    {
-      "id": "s2-49",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nGRANT USAGE ON SCHEMA public TO <user_name>;"
-    },
-    {
-      "id": "s2-50",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nGrant permissions to functions\n\n```sql {.wrap}\nGRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO <user_name>;"
-    },
-    {
-      "id": "s2-51",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Grant permissions to select, update, insert, delete, on a all tables"
-    },
-    {
-      "id": "s2-52",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nGRANT SELECT, UPDATE, INSERT ON ALL TABLES IN SCHEMA public TO <user_name>;"
-    },
-    {
-      "id": "s2-53",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nGrant permissions, on a table\n\n```sql {.wrap}\nGRANT SELECT, UPDATE, INSERT ON <table_name> TO <user_name>;"
-    },
-    {
-      "id": "s2-54",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Grant permissions, to select, on a table"
-    },
-    {
-      "id": "s2-55",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nGRANT SELECT ON ALL TABLES IN SCHEMA public TO <user_name>;"
-    },
-    {
-      "id": "s2-56",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Columns\n\n[Add column](http://www.postgresql.org/docs/current/static/sql-altertable.html)\n\n```sql {.wrap}\nALTER TABLE <table_name> IF EXISTS\nADD <column_name> <data_type> [<constraints>];"
-    },
-    {
-      "id": "s2-57",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Update column"
-    },
-    {
-      "id": "s2-58",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nALTER TABLE <table_name> IF EXISTS\nALTER <column_name> TYPE <data_type> [<constraints>];"
-    },
-    {
-      "id": "s2-59",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nDelete column\n\n```sql {.wrap}\nALTER TABLE <table_name> IF EXISTS\nDROP <column_name>;"
-    },
-    {
-      "id": "s2-60",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Update column to be an auto-incrementing primary key"
-    },
-    {
-      "id": "s2-61",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nALTER TABLE <table_name>\nADD COLUMN <column_name> SERIAL PRIMARY KEY;"
-    },
-    {
-      "id": "s2-62",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nInsert into a table, with an auto-incrementing primary key\n\n```sql {.wrap}\nINSERT INTO <table_name>\nVALUES (DEFAULT, <value1>);\n\n\nINSERT INTO <table_name> (<column1_name>,<column2_name>)\nVALUES ( <value1>,<value2> );"
+      "body": "Show%20version%0A%0A%60%60%60%0ASHOW%20SERVER_VERSION%3B%0A%60%60%60%0A%0AShow%20system%20status%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cconninfo%0A%0A%60%60%60%0A%0AShow%20environmental%20variables%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASHOW%20ALL%3B%0A%60%60%60%0A%0AList%20users%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20rolname%20FROM%20pg_roles%3B%0A%0A%60%60%60%0A%0AShow%20current%20user%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20current_user%3B%0A%60%60%60%0A%0AShow%20current%20user's%20permissions%0A%0A%60%60%60%0A%5Cdu%0A%60%60%60%0A%0AShow%20current%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20current_database()%3B%0A%0A%60%60%60%0A%0AShow%20all%20tables%20in%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdt%0A%60%60%60%0A%0AList%20functions%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdf%20%3Cschema%3E%0A%0A%60%60%60%0A%0A%23%23%23%20Databases%0A%0AList%20databases%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cl%0A%60%60%60%0A%0AConnect%20to%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cc%20%3Cdatabase_name%3E%0A%0A%60%60%60%0A%0AShow%20current%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20current_database()%3B%0A%60%60%60%0A%0A%5BCreate%20database%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createdatabase.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20DATABASE%20%3Cdatabase_name%3E%20WITH%20OWNER%20%3Cusername%3E%3B%0A%0A%60%60%60%0A%0A%5BDrop%20database%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-dropdatabase.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20DATABASE%20IF%20EXISTS%20%3Cdatabase_name%3E%3B%0A%60%60%60%0A%0A%5BRename%20database%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-alterdatabase.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20DATABASE%20%3Cold_name%3E%20RENAME%20TO%20%3Cnew_name%3E%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Tables%0A%0AList%20tables%2C%20in%20current%20db%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdt%0A%0ASELECT%20table_schema%2Ctable_name%20FROM%20information_schema.tables%20ORDER%20BY%20table_schema%2Ctable_name%3B%0A%60%60%60%0A%0AList%20tables%2C%20globally%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdt%20*.*.%0A%0ASELECT%20*%20FROM%20pg_catalog.pg_tables%0A%0A%60%60%60%0A%0AList%20table%20schema%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cd%20%3Ctable_name%3E%0A%5Cd%2B%20%3Ctable_name%3E%0A%0ASELECT%20column_name%2C%20data_type%2C%20character_maximum_length%0AFROM%20INFORMATION_SCHEMA.COLUMNS%0AWHERE%20table_name%20%3D%20'%3Ctable_name%3E'%3B%0A%60%60%60%0A%0A%5BCreate%20table%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createtable.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20TABLE%20%3Ctable_name%3E(%0A%3Ccolumn_name%3E%20%3Ccolumn_type%3E%2C%0A%3Ccolumn_name%3E%20%3Ccolumn_type%3E%0A)%3B%0A%0A%60%60%60%0A%0ACreate%20table%2C%20with%20an%20auto-incrementing%20primary%20key%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20TABLE%20%3Ctable_name%3E%20(%0A%20%20%3Ccolumn_name%3E%20SERIAL%20PRIMARY%20KEY%0A)%3B%0A%60%60%60%0A%0A%5BDelete%20table%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-droptable.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20TABLE%20IF%20EXISTS%20%3Ctable_name%3E%20CASCADE%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Permissions%0A%0ABecome%20the%20postgres%20user%2C%20if%20you%20have%20permission%20errors%0A%0A%60%60%60shell%0Asudo%20su%20-%20postgres%0Apsql%0A%60%60%60%0A%0A%5BGrant%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-grant.html)%20all%20permissions%20on%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20ALL%20PRIVILEGES%20ON%20DATABASE%20%3Cdb_name%3E%20TO%20%3Cuser_name%3E%3B%0A%0A%60%60%60%0A%0AGrant%20connection%20permissions%20on%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20CONNECT%20ON%20DATABASE%20%3Cdb_name%3E%20TO%20%3Cuser_name%3E%3B%0A%60%60%60%0A%0AGrant%20permissions%20on%20schema%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20USAGE%20ON%20SCHEMA%20public%20TO%20%3Cuser_name%3E%3B%0A%0A%60%60%60%0A%0AGrant%20permissions%20to%20functions%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20EXECUTE%20ON%20ALL%20FUNCTIONS%20IN%20SCHEMA%20public%20TO%20%3Cuser_name%3E%3B%0A%60%60%60%0A%0AGrant%20permissions%20to%20select%2C%20update%2C%20insert%2C%20delete%2C%20on%20a%20all%20tables%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20SELECT%2C%20UPDATE%2C%20INSERT%20ON%20ALL%20TABLES%20IN%20SCHEMA%20public%20TO%20%3Cuser_name%3E%3B%0A%0A%60%60%60%0A%0AGrant%20permissions%2C%20on%20a%20table%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20SELECT%2C%20UPDATE%2C%20INSERT%20ON%20%3Ctable_name%3E%20TO%20%3Cuser_name%3E%3B%0A%60%60%60%0A%0AGrant%20permissions%2C%20to%20select%2C%20on%20a%20table%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20SELECT%20ON%20ALL%20TABLES%20IN%20SCHEMA%20public%20TO%20%3Cuser_name%3E%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Columns%0A%0A%5BAdd%20column%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-altertable.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20TABLE%20%3Ctable_name%3E%20IF%20EXISTS%0AADD%20%3Ccolumn_name%3E%20%3Cdata_type%3E%20%5B%3Cconstraints%3E%5D%3B%0A%60%60%60%0A%0AUpdate%20column%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20TABLE%20%3Ctable_name%3E%20IF%20EXISTS%0AALTER%20%3Ccolumn_name%3E%20TYPE%20%3Cdata_type%3E%20%5B%3Cconstraints%3E%5D%3B%0A%0A%60%60%60%0A%0ADelete%20column%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20TABLE%20%3Ctable_name%3E%20IF%20EXISTS%0ADROP%20%3Ccolumn_name%3E%3B%0A%60%60%60%0A%0AUpdate%20column%20to%20be%20an%20auto-incrementing%20primary%20key%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20TABLE%20%3Ctable_name%3E%0AADD%20COLUMN%20%3Ccolumn_name%3E%20SERIAL%20PRIMARY%20KEY%3B%0A%0A%60%60%60%0A%0AInsert%20into%20a%20table%2C%20with%20an%20auto-incrementing%20primary%20key%0A%0A%60%60%60sql%20%7B.wrap%7D%0AINSERT%20INTO%20%3Ctable_name%3E%0AVALUES%20(DEFAULT%2C%20%3Cvalue1%3E)%3B%0A%0A%0AINSERT%20INTO%20%3Ctable_name%3E%20(%3Ccolumn1_name%3E%2C%3Ccolumn2_name%3E)%0AVALUES%20(%20%3Cvalue1%3E%2C%3Cvalue2%3E%20)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-63",
       "sectionId": "s2",
       "title": "Data",
-      "kind": "text",
-      "body": "[Select](http://www.postgresql.org/docs/current/static/sql-select.html) all data"
-    },
-    {
-      "id": "s2-64",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nSELECT * FROM <table_name>;"
-    },
-    {
-      "id": "s2-65",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nRead one row of data\n\n```sql {.wrap}\nSELECT * FROM <table_name> LIMIT 1;"
-    },
-    {
-      "id": "s2-66",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Search for data"
-    },
-    {
-      "id": "s2-67",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nSELECT * FROM <table_name> WHERE <column_name> = <value>;"
-    },
-    {
-      "id": "s2-68",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n[Insert](http://www.postgresql.org/docs/current/static/sql-insert.html) data\n\n```sql {.wrap}\nINSERT INTO <table_name> VALUES( <value_1>, <value_2> );"
-    },
-    {
-      "id": "s2-69",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Update](http://www.postgresql.org/docs/current/static/sql-update.html) data"
-    },
-    {
-      "id": "s2-70",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nUPDATE <table_name>\nSET <column_1> = <value_1>, <column_2> = <value_2>\nWHERE <column_1> = <value>;"
-    },
-    {
-      "id": "s2-71",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n[Delete](http://www.postgresql.org/docs/current/static/sql-delete.html) all data\n\n```sql {.wrap}\nDELETE FROM <table_name>;"
-    },
-    {
-      "id": "s2-72",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Delete specific data"
-    },
-    {
-      "id": "s2-73",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nDELETE FROM <table_name>\nWHERE <column_name> = <value>;"
-    },
-    {
-      "id": "s2-74",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Users\n\nList roles\n\n```sql {.wrap}\nSELECT rolname FROM pg_roles;"
-    },
-    {
-      "id": "s2-75",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Create user](http://www.postgresql.org/docs/current/static/sql-createuser.html)"
-    },
-    {
-      "id": "s2-76",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nCREATE USER <user_name> WITH PASSWORD '<password>';"
-    },
-    {
-      "id": "s2-77",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n[Drop user](http://www.postgresql.org/docs/current/static/sql-dropuser.html)\n\n```sql {.wrap}\nDROP USER IF EXISTS <user_name>;"
-    },
-    {
-      "id": "s2-78",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Alter](http://www.postgresql.org/docs/current/static/sql-alterrole.html) user password"
-    },
-    {
-      "id": "s2-79",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nALTER ROLE <user_name> WITH PASSWORD '<password>';"
-    },
-    {
-      "id": "s2-80",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### Schema\n\nList schemas\n\n```sql {.wrap}\n\\dn\n\nSELECT schema_name FROM information_schema.schemata;\n\nSELECT nspname FROM pg_catalog.pg_namespace;"
-    },
-    {
-      "id": "s2-81",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[Create schema](http://www.postgresql.org/docs/current/static/sql-createschema.html)"
-    },
-    {
-      "id": "s2-82",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nCREATE SCHEMA IF NOT EXISTS <schema_name>;"
-    },
-    {
-      "id": "s2-83",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n[Drop schema](http://www.postgresql.org/docs/current/static/sql-dropschema.html)\n\n```sql {.wrap}\nDROP SCHEMA IF EXISTS <schema_name> CASCADE;"
+      "body": "%5BSelect%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-select.html)%20all%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20*%20FROM%20%3Ctable_name%3E%3B%0A%0A%60%60%60%0A%0ARead%20one%20row%20of%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20*%20FROM%20%3Ctable_name%3E%20LIMIT%201%3B%0A%60%60%60%0A%0ASearch%20for%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20*%20FROM%20%3Ctable_name%3E%20WHERE%20%3Ccolumn_name%3E%20%3D%20%3Cvalue%3E%3B%0A%0A%60%60%60%0A%0A%5BInsert%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-insert.html)%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0AINSERT%20INTO%20%3Ctable_name%3E%20VALUES(%20%3Cvalue_1%3E%2C%20%3Cvalue_2%3E%20)%3B%0A%60%60%60%0A%0A%5BUpdate%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-update.html)%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0AUPDATE%20%3Ctable_name%3E%0ASET%20%3Ccolumn_1%3E%20%3D%20%3Cvalue_1%3E%2C%20%3Ccolumn_2%3E%20%3D%20%3Cvalue_2%3E%0AWHERE%20%3Ccolumn_1%3E%20%3D%20%3Cvalue%3E%3B%0A%0A%60%60%60%0A%0A%5BDelete%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-delete.html)%20all%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADELETE%20FROM%20%3Ctable_name%3E%3B%0A%60%60%60%0A%0ADelete%20specific%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADELETE%20FROM%20%3Ctable_name%3E%0AWHERE%20%3Ccolumn_name%3E%20%3D%20%3Cvalue%3E%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Users%0A%0AList%20roles%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20rolname%20FROM%20pg_roles%3B%0A%60%60%60%0A%0A%5BCreate%20user%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createuser.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20USER%20%3Cuser_name%3E%20WITH%20PASSWORD%20'%3Cpassword%3E'%3B%0A%0A%60%60%60%0A%0A%5BDrop%20user%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-dropuser.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20USER%20IF%20EXISTS%20%3Cuser_name%3E%3B%0A%60%60%60%0A%0A%5BAlter%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-alterrole.html)%20user%20password%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20ROLE%20%3Cuser_name%3E%20WITH%20PASSWORD%20'%3Cpassword%3E'%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Schema%0A%0AList%20schemas%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdn%0A%0ASELECT%20schema_name%20FROM%20information_schema.schemata%3B%0A%0ASELECT%20nspname%20FROM%20pg_catalog.pg_namespace%3B%0A%60%60%60%0A%0A%5BCreate%20schema%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createschema.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20SCHEMA%20IF%20NOT%20EXISTS%20%3Cschema_name%3E%3B%0A%0A%60%60%60%0A%0A%5BDrop%20schema%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-dropschema.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20SCHEMA%20IF%20EXISTS%20%3Cschema_name%3E%20CASCADE%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-84",
       "sectionId": "s2",
       "title": "Dates",
-      "kind": "text",
-      "body": "Show [current date](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) YYYY-MM-DD"
-    },
-    {
-      "id": "s2-85",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nSELECT current_date;"
-    },
-    {
-      "id": "s2-86",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nCalculate\n[age](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=age%20(%20timestamp%2C%20timestamp%20)%20%E2%86%92%20interval>)\nbetween two dates\n\n```sql {.wrap}\nSELECT age(timestamp, timestamp);"
-    },
-    {
-      "id": "s2-87",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Show [current time](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) with time\nzone"
-    },
-    {
-      "id": "s2-88",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "```sql {.wrap}\nSELECT current_time;"
-    },
-    {
-      "id": "s2-89",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n[Make](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=make_date%20(%20year%20int%2C%20month%20int%2C%20day%20int%20)%20%E2%86%92%20date>)\ndates using integers\n\n```sql {.wrap}\nSELECT make_date(2021,03,25);"
+      "body": "Show [current date](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) YYYY-MM-DD\n\n```sql {.wrap}\nSELECT current_date;\n\n```\n\nCalculate\n[age](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=age%20(%20timestamp%2C%20timestamp%20)%20%E2%86%92%20interval>)\nbetween two dates\n\n```sql {.wrap}\nSELECT age(timestamp, timestamp);\n```\n\nShow [current time](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) with time\nzone\n\n```sql {.wrap}\nSELECT current_time;\n\n```\n\n[Make](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=make_date%20(%20year%20int%2C%20month%20int%2C%20day%20int%20)%20%E2%86%92%20date>)\ndates using integers\n\n```sql {.wrap}\nSELECT make_date(2021,03,25);\n```"
     },
     {
       "id": "s3-90",
       "sectionId": "s3",
       "title": "Tables",
-      "kind": "text",
       "body": "| -                | -                               |\n| ---------------- | :------------------------------ |\n| `\\d <table>`     | Describe table                  |\n| `\\d+ <table>`    | Describe table with details     |\n| `\\dt`            | List tables from current schema |\n| `\\dt *.*`        | List tables from all schemas    |\n| `\\dt <schema>.*` | List tables for a schema        |\n| `\\dp`            | List table access privileges    |\n| `\\det[+]`        | List foreign tables             |"
     },
     {
       "id": "s3-91",
       "sectionId": "s3",
       "title": "Query buffer",
-      "kind": "text",
       "body": "| -            | -                                  |\n| ------------ | :--------------------------------- |\n| `\\e [FILE]`  | Edit the query buffer (or file)    |\n| `\\ef [FUNC]` | Edit function definition           |\n| `\\p`         | Show the contents                  |\n| `\\r`         | Reset (clear) the query buffer     |\n| `\\s [FILE]`  | Display history or save it to file |\n| `\\w FILE`    | Write query buffer to file         |"
     },
     {
       "id": "s3-92",
       "sectionId": "s3",
       "title": "Informational",
-      "kind": "text",
-      "body": "| -               | -                               |\n| --------------- | :------------------------------ |\n| `\\l[+]`         | List all databases              |\n| `\\dn[S+]`       | List schemas                    |\n| `\\di[S+]`       | List indexes                    |\n| `\\du[+]`        | List roles                      |\n| `\\ds[S+]`       | List sequences                  |\n| `\\df[antw][S+]` | List functions                  |\n| `\\deu[+]`       | List user mappings              |\n| `\\dv[S+]`       | List views                      |\n| `\\dl`           | List large objects              |\n| `\\dT[S+]`       | List data types                 |\n| `\\da[S]`        | List aggregates                 |\n| `\\db[+]`        | List tablespaces                |\n| `\\dc[S+]`       | List conversions                |\n| `\\dC[+]`        | List casts                      |\n| `\\ddp`          | List default privileges         |\n| `\\dd[S]`        | Show object descriptions        |\n| `\\dD[S+]`       | List domains                    |\n| `\\des[+]`       | List foreign servers            |\n| `\\dew[+]`       | List foreign-data wrappers      |\n| `\\dF[+]`        | List text search configurations |\n| `\\dFd[+]`       | List text search dictionaries   |\n| `\\dFp[+]`       | List text search parsers        |\n| `\\dFt[+]`       | List text search templates      |\n| `\\dL[S+]`       | List procedural languages       |\n| `\\do[S]`        | List operators                  |\n| `\\dO[S+]`       | List collations                 |\n| `\\drds`         | List per-database role settings |\n| `\\dx[+]`        | List extensions                 |"
-    },
-    {
-      "id": "s3-93",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "`S`: show system objects, `+`: additional detail"
+      "body": "| -               | -                               |\n| --------------- | :------------------------------ |\n| `\\l[+]`         | List all databases              |\n| `\\dn[S+]`       | List schemas                    |\n| `\\di[S+]`       | List indexes                    |\n| `\\du[+]`        | List roles                      |\n| `\\ds[S+]`       | List sequences                  |\n| `\\df[antw][S+]` | List functions                  |\n| `\\deu[+]`       | List user mappings              |\n| `\\dv[S+]`       | List views                      |\n| `\\dl`           | List large objects              |\n| `\\dT[S+]`       | List data types                 |\n| `\\da[S]`        | List aggregates                 |\n| `\\db[+]`        | List tablespaces                |\n| `\\dc[S+]`       | List conversions                |\n| `\\dC[+]`        | List casts                      |\n| `\\ddp`          | List default privileges         |\n| `\\dd[S]`        | Show object descriptions        |\n| `\\dD[S+]`       | List domains                    |\n| `\\des[+]`       | List foreign servers            |\n| `\\dew[+]`       | List foreign-data wrappers      |\n| `\\dF[+]`        | List text search configurations |\n| `\\dFd[+]`       | List text search dictionaries   |\n| `\\dFp[+]`       | List text search parsers        |\n| `\\dFt[+]`       | List text search templates      |\n| `\\dL[S+]`       | List procedural languages       |\n| `\\do[S]`        | List operators                  |\n| `\\dO[S+]`       | List collations                 |\n| `\\drds`         | List per-database role settings |\n| `\\dx[+]`        | List extensions                 |\n\n`S`: show system objects, `+`: additional detail"
     },
     {
       "id": "s3-94",
       "sectionId": "s3",
       "title": "Connection",
-      "kind": "text",
       "body": "| -                      | -                           |\n| ---------------------- | :-------------------------- |\n| `\\c [DBNAME]`          | Connect to new database     |\n| `\\encoding [ENCODING]` | Show or set client encoding |\n| `\\password [USER]`     | Change the password         |\n| `\\conninfo`            | Display information         |"
     },
     {
       "id": "s3-95",
       "sectionId": "s3",
       "title": "Formatting",
-      "kind": "text",
       "body": "| -                         | -                                          |\n| ------------------------- | :----------------------------------------- |\n| `\\a`                      | Toggle between unaligned and aligned       |\n| `\\C [STRING]`             | Set table title, or unset if none          |\n| `\\f [STRING]`             | Show or set field separator for unaligned  |\n| `\\H`                      | Toggle HTML output mode                    |\n| <code>\\t [on\\|off]</code> | Show only rows                             |\n| `\\T [STRING]`             | Set or unset HTML \\<table\\> tag attributes |\n| <code>\\x [on\\|off]</code> | Toggle expanded output                     |"
     },
     {
       "id": "s3-96",
       "sectionId": "s3",
       "title": "Input/Output",
-      "kind": "text",
       "body": "| -                 | -                                                              |\n| ----------------- | :------------------------------------------------------------- |\n| `\\copy ...`       | Import/export table<br> _See also:_ [copy](#import-export-csv) |\n| `\\echo [STRING]`  | Print string                                                   |\n| `\\i FILE`         | Execute file                                                   |\n| `\\o [FILE]`       | Export all results to file                                     |\n| `\\qecho [STRING]` | String to output stream                                        |"
     },
     {
       "id": "s3-97",
       "sectionId": "s3",
       "title": "Variables",
-      "kind": "text",
       "body": "| -                     | -                                             |\n| --------------------- | :-------------------------------------------- |\n| `\\prompt [TEXT] NAME` | Set variable                                  |\n| `\\set [NAME [VALUE]]` | Set variable _(or list all if no parameters)_ |\n| `\\unset NAME`         | Delete variable                               |"
     },
     {
       "id": "s3-98",
       "sectionId": "s3",
       "title": "Misc",
-      "kind": "text",
       "body": "| -                              | -                    |\n| ------------------------------ | :------------------- |\n| `\\cd [DIR]`                    | Change the directory |\n| <code>\\timing [on\\|off]</code> | Toggle timing        |\n| `\\! [COMMAND]`                 | Execute in shell     |\n| `\\! ls -l`                     | List all in shell    |"
     },
     {
       "id": "s3-99",
       "sectionId": "s3",
       "title": "Large Objects",
-      "kind": "text",
       "body": "• `\\lo_export LOBOID FILE`\n• `\\lo_import FILE [COMMENT]`\n• `\\lo_list`\n• `\\lo_unlink LOBOID`"
     },
     {
       "id": "s4-100",
       "sectionId": "s4",
       "title": "Backup",
-      "kind": "text",
-      "body": "Use pg_dumpall to backup all databases"
-    },
-    {
-      "id": "s4-101",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n$ pg_dumpall -U postgres > all.sql"
-    },
-    {
-      "id": "s4-102",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nUse pg_dump to backup a database\n\n```shell script\n$ pg_dump -d mydb -f mydb_backup.sql"
-    },
-    {
-      "id": "s4-103",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "| -    | -                                              |\n| ---- | :--------------------------------------------- |\n| `-a` | Dump only the data, not the schema             |\n| `-s` | Dump only the schema, no data                  |\n| `-c` | Drop database before recreating                |\n| `-C` | Create database before restoring               |\n| `-t` | Dump the named table(s) only                   |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar) |"
-    },
-    {
-      "id": "s4-104",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Use `pg_dump -?` to get the full list of options"
+      "body": "Use pg_dumpall to backup all databases\n\n```shell script\n$ pg_dumpall -U postgres > all.sql\n\n```\n\nUse pg_dump to backup a database\n\n```shell script\n$ pg_dump -d mydb -f mydb_backup.sql\n```\n\n| -    | -                                              |\n| ---- | :--------------------------------------------- |\n| `-a` | Dump only the data, not the schema             |\n| `-s` | Dump only the schema, no data                  |\n| `-c` | Drop database before recreating                |\n| `-C` | Create database before restoring               |\n| `-t` | Dump the named table(s) only                   |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar) |\n\nUse `pg_dump -?` to get the full list of options"
     },
     {
       "id": "s4-105",
       "sectionId": "s4",
       "title": "Restore",
-      "kind": "text",
-      "body": "Restore a database with psql"
-    },
-    {
-      "id": "s4-106",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n$ psql -U user mydb < mydb_backup.sql"
-    },
-    {
-      "id": "s4-107",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nRestore a database with pg_restore\n\n```shell script\n$ pg_restore -d mydb mydb_backup.sql -c"
-    },
-    {
-      "id": "s4-108",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "| -    | -                                                                            |\n| ---- | :--------------------------------------------------------------------------- |\n| `-U` | Specify a database user                                                      |\n| `-c` | Drop database before recreating                                              |\n| `-C` | Create database before restoring                                             |\n| `-e` | Exit if an error has encountered                                             |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar, `p`: plain text sql(default)) |"
-    },
-    {
-      "id": "s4-109",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Use `pg_restore -?` to get the full list of options"
+      "body": "Restore a database with psql\n\n```shell script\n$ psql -U user mydb < mydb_backup.sql\n\n```\n\nRestore a database with pg_restore\n\n```shell script\n$ pg_restore -d mydb mydb_backup.sql -c\n```\n\n| -    | -                                                                            |\n| ---- | :--------------------------------------------------------------------------- |\n| `-U` | Specify a database user                                                      |\n| `-c` | Drop database before recreating                                              |\n| `-C` | Create database before restoring                                             |\n| `-e` | Exit if an error has encountered                                             |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar, `p`: plain text sql(default)) |\n\nUse `pg_restore -?` to get the full list of options"
     },
     {
       "id": "s4-110",
       "sectionId": "s4",
-      "title": "Remote access",
-      "kind": "text",
-      "body": "Get location of postgresql.conf"
-    },
-    {
-      "id": "s4-111",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n$ psql -U postgres -c 'SHOW config_file'"
-    },
-    {
-      "id": "s4-112",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nAppend to postgresql.conf\n\n```shell script\nlisten_addresses = '*'"
-    },
-    {
-      "id": "s4-113",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Append to pg_hba.conf (Same location as postgresql.conf)"
-    },
-    {
-      "id": "s4-114",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\nhost  all  all  0.0.0.0/0  md5\nhost  all  all  ::/0       md5"
-    },
-    {
-      "id": "s4-115",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nRestart PostgreSQL server\n\n```shell script\n$ sudo systemctl restart postgresql"
+      "title": "Remote%20access",
+      "body": "Get%20location%20of%20postgresql.conf%0A%0A%60%60%60shell%20script%0A%24%20psql%20-U%20postgres%20-c%20'SHOW%20config_file'%0A%0A%60%60%60%0A%0AAppend%20to%20postgresql.conf%0A%0A%60%60%60shell%20script%0Alisten_addresses%20%3D%20'*'%0A%60%60%60%0A%0AAppend%20to%20pg_hba.conf%20(Same%20location%20as%20postgresql.conf)%0A%0A%60%60%60shell%20script%0Ahost%20%20all%20%20all%20%200.0.0.0%2F0%20%20md5%0Ahost%20%20all%20%20all%20%20%3A%3A%2F0%20%20%20%20%20%20%20md5%0A%0A%60%60%60%0A%0ARestart%20PostgreSQL%20server%0A%0A%60%60%60shell%20script%0A%24%20sudo%20systemctl%20restart%20postgresql%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-116",
       "sectionId": "s4",
-      "title": "Import/Export CSV",
-      "kind": "text",
-      "body": "Export table into CSV file"
-    },
-    {
-      "id": "s4-117",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "```shell script\n\\copy table TO '<path>' CSV\n\\copy table(col1,col1) TO '<path>' CSV\n\\copy (SELECT...) TO '<path>' CSV"
-    },
-    {
-      "id": "s4-118",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\nImport CSV file into table\n\n```shell script\n\\copy table FROM '<path>' CSV\n\\copy table(col1,col1) FROM '<path>' CSV"
-    },
-    {
-      "id": "s4-119",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "See also: [Copy](https://www.postgresql.org/docs/current/sql-copy.html)"
+      "title": "Import%2FExport%20CSV",
+      "body": "Export%20table%20into%20CSV%20file%0A%0A%60%60%60shell%20script%0A%5Ccopy%20table%20TO%20'%3Cpath%3E'%20CSV%0A%5Ccopy%20table(col1%2Ccol1)%20TO%20'%3Cpath%3E'%20CSV%0A%5Ccopy%20(SELECT...)%20TO%20'%3Cpath%3E'%20CSV%0A%0A%60%60%60%0A%0AImport%20CSV%20file%20into%20table%0A%0A%60%60%60shell%20script%0A%5Ccopy%20table%20FROM%20'%3Cpath%3E'%20CSV%0A%5Ccopy%20table(col1%2Ccol1)%20FROM%20'%3Cpath%3E'%20CSV%0A%60%60%60%0A%0ASee%20also%3A%20%5BCopy%5D(https%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fsql-copy.html)",
+      "encoded": true
     },
     {
       "id": "s5-120",
       "sectionId": "s5",
       "title": "Also see",
-      "kind": "text",
       "body": "• [Posgres-cheatsheet](https://gist.github.com/apolloclark/ea5466d5929e63043dcf#posgres-cheatsheet) _(gist.github.com)_"
     }
   ],

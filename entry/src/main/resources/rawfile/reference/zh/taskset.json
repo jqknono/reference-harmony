@@ -30,379 +30,124 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "`Taskset` 命令用于设置或检索给定pid的运行进程的CPU相关性，或启动具有给定CPU相关性的新命令"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "使用",
-      "kind": "text",
-      "body": "默认行为是使用给定的关联掩码运行新命令"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset [mask] [command] [arguments]"
+      "body": "默认行为是使用给定的关联掩码运行新命令\n\n```shell\n$ taskset [mask] [command] [arguments]\n```"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "使用 #2",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset -p [pid]\n\n$ taskset -p [mask] [pid]"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "您还可以检索现有任务的CPU相关性"
+      "body": "```shell\n$ taskset -p [pid]\n```\n\n```shell\n$ taskset -p [mask] [pid]\n```\n\n您还可以检索现有任务的CPU相关性"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "常用选项",
-      "kind": "text",
       "body": "命令 | 候补 | 含义\n---|---|---\n`-a`    | --all-tasks  | 设置或检索给定PID的所有任务（线程）的CPU相关性\n`-c`    | --cpu-list   | 将掩码解释为处理器的数字列表，而不是位掩码</br>数字用逗号分隔，可能包括范围。例如：`0,5,8-11`\n`-p`    | --pid        | 对现有PID进行操作，不要启动新任务\n`-h`    | --help       | 显示帮助文本并退出\n`-v`    | --version    | 打印版本并退出"
     },
     {
       "id": "s2-6",
       "sectionId": "s2",
-      "title": "查看CPU相关性",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset -cp 29523\npid 29523's current affinity list: 0-15"
-    },
-    {
-      "id": "s2-7",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "这意味着 PID `29523` 的进程在 CPU 范围 `[0,1,...,15]` 上处于活动状态，这意味着总共 `16`。"
-    },
-    {
-      "id": "s2-8",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "**PID**：进程标识符 - 是赋予每个正在运行的进程的唯一数字标识符，您可以在 `top` 或 `htop` 工具中查看进程的PID"
-    },
-    {
-      "id": "s2-9",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "_如果您运行上述命令但收到消息 `错误使用`，请尝试使用 PID = 1_"
-    },
-    {
-      "id": "s2-10",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset -cp 1"
+      "title": "%E6%9F%A5%E7%9C%8BCPU%E7%9B%B8%E5%85%B3%E6%80%A7",
+      "body": "%60%60%60shell%0A%24%20taskset%20-cp%2029523%0Apid%2029523's%20current%20affinity%20list%3A%200-15%0A%60%60%60%0A%0A%E8%BF%99%E6%84%8F%E5%91%B3%E7%9D%80%20PID%20%6029523%60%20%E7%9A%84%E8%BF%9B%E7%A8%8B%E5%9C%A8%20CPU%20%E8%8C%83%E5%9B%B4%20%60%5B0%2C1%2C...%2C15%5D%60%20%E4%B8%8A%E5%A4%84%E4%BA%8E%E6%B4%BB%E5%8A%A8%E7%8A%B6%E6%80%81%EF%BC%8C%E8%BF%99%E6%84%8F%E5%91%B3%E7%9D%80%E6%80%BB%E5%85%B1%20%6016%60%E3%80%82%0A%0A**PID**%EF%BC%9A%E8%BF%9B%E7%A8%8B%E6%A0%87%E8%AF%86%E7%AC%A6%20-%20%E6%98%AF%E8%B5%8B%E4%BA%88%E6%AF%8F%E4%B8%AA%E6%AD%A3%E5%9C%A8%E8%BF%90%E8%A1%8C%E7%9A%84%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%94%AF%E4%B8%80%E6%95%B0%E5%AD%97%E6%A0%87%E8%AF%86%E7%AC%A6%EF%BC%8C%E6%82%A8%E5%8F%AF%E4%BB%A5%E5%9C%A8%20%60top%60%20%E6%88%96%20%60htop%60%20%E5%B7%A5%E5%85%B7%E4%B8%AD%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B%E7%9A%84PID%0A%0A_%E5%A6%82%E6%9E%9C%E6%82%A8%E8%BF%90%E8%A1%8C%E4%B8%8A%E8%BF%B0%E5%91%BD%E4%BB%A4%E4%BD%86%E6%94%B6%E5%88%B0%E6%B6%88%E6%81%AF%20%60%E9%94%99%E8%AF%AF%E4%BD%BF%E7%94%A8%60%EF%BC%8C%E8%AF%B7%E5%B0%9D%E8%AF%95%E4%BD%BF%E7%94%A8%20PID%20%3D%201_%0A%0A%60%60%60shell%0A%24%20taskset%20-cp%201%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
-      "title": "设置 CPU 相关性",
-      "kind": "text",
-      "body": "现在让我们尝试将进程设置到指定的CPU。 例如，我们有一个进程 PID = 14846"
-    },
-    {
-      "id": "s2-12",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "我们先看一下该进程的CPU相关性列表："
-    },
-    {
-      "id": "s2-13",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset -cp 14846\npid 14846's current affinity list: 0-15"
+      "title": "%E8%AE%BE%E7%BD%AE%20CPU%20%E7%9B%B8%E5%85%B3%E6%80%A7",
+      "body": "%E7%8E%B0%E5%9C%A8%E8%AE%A9%E6%88%91%E4%BB%AC%E5%B0%9D%E8%AF%95%E5%B0%86%E8%BF%9B%E7%A8%8B%E8%AE%BE%E7%BD%AE%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84CPU%E3%80%82%20%E4%BE%8B%E5%A6%82%EF%BC%8C%E6%88%91%E4%BB%AC%E6%9C%89%E4%B8%80%E4%B8%AA%E8%BF%9B%E7%A8%8B%20PID%20%3D%2014846%0A%0A%E6%88%91%E4%BB%AC%E5%85%88%E7%9C%8B%E4%B8%80%E4%B8%8B%E8%AF%A5%E8%BF%9B%E7%A8%8B%E7%9A%84CPU%E7%9B%B8%E5%85%B3%E6%80%A7%E5%88%97%E8%A1%A8%EF%BC%9A%0A%0A%60%60%60shell%0A%24%20taskset%20-cp%2014846%0Apid%2014846's%20current%20affinity%20list%3A%200-15%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
-      "title": "将 CPU 关联性更改为 1",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset -cp 1 14846\npid 14846's current affinity list: 0-15\npid 14846's new affinity list: 1"
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "正如我们所看到的，CPU 相关性发生了变化"
+      "title": "%E5%B0%86%20CPU%20%E5%85%B3%E8%81%94%E6%80%A7%E6%9B%B4%E6%94%B9%E4%B8%BA%201",
+      "body": "%60%60%60shell%0A%24%20taskset%20-cp%201%2014846%0Apid%2014846's%20current%20affinity%20list%3A%200-15%0Apid%2014846's%20new%20affinity%20list%3A%201%0A%60%60%60%0A%0A%E6%AD%A3%E5%A6%82%E6%88%91%E4%BB%AC%E6%89%80%E7%9C%8B%E5%88%B0%E7%9A%84%EF%BC%8CCPU%20%E7%9B%B8%E5%85%B3%E6%80%A7%E5%8F%91%E7%94%9F%E4%BA%86%E5%8F%98%E5%8C%96",
+      "encoded": true
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
-      "title": "设置多个值的CPU 相关性",
-      "kind": "text",
-      "body": "这意味着新的CPU关联列表是`[0,1,2,3]`"
-    },
-    {
-      "id": "s2-17",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset -cp 0-3 14846\npid 14846's current affinity list: 1\npid 14846's new affinity list: 0-3"
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "您可以使用以下命令设置单个CPU："
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset -cp 5,8,12 14846\npid 14846's current affinity list: 0-3\npid 14846's new affinity list: 5,8,12"
-    },
-    {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "这意味着新的CPU关联列表是`[5,8,12]`"
+      "title": "%E8%AE%BE%E7%BD%AE%E5%A4%9A%E4%B8%AA%E5%80%BC%E7%9A%84CPU%20%E7%9B%B8%E5%85%B3%E6%80%A7",
+      "body": "%E8%BF%99%E6%84%8F%E5%91%B3%E7%9D%80%E6%96%B0%E7%9A%84CPU%E5%85%B3%E8%81%94%E5%88%97%E8%A1%A8%E6%98%AF%60%5B0%2C1%2C2%2C3%5D%60%0A%0A%60%60%60shell%0A%24%20taskset%20-cp%200-3%2014846%0Apid%2014846's%20current%20affinity%20list%3A%201%0Apid%2014846's%20new%20affinity%20list%3A%200-3%0A%60%60%60%0A%0A%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E8%AE%BE%E7%BD%AE%E5%8D%95%E4%B8%AACPU%EF%BC%9A%0A%0A%60%60%60shell%0A%24%20taskset%20-cp%205%2C8%2C12%2014846%0Apid%2014846's%20current%20affinity%20list%3A%200-3%0Apid%2014846's%20new%20affinity%20list%3A%205%2C8%2C12%0A%60%60%60%0A%0A%E8%BF%99%E6%84%8F%E5%91%B3%E7%9D%80%E6%96%B0%E7%9A%84CPU%E5%85%B3%E8%81%94%E5%88%97%E8%A1%A8%E6%98%AF%60%5B5%2C8%2C12%5D%60",
+      "encoded": true
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "将进程的CPU亲和性设置为特定的CPU核心",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset -p <cpu_mask> <pid>"
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如：`taskset -p 0x00000001 12345` 将进程ID为12345的进程的CPU亲和性设置为CPU核心 0。"
+      "body": "```bash\n$ taskset -p <cpu_mask> <pid>\n```\n\n例如：`taskset -p 0x00000001 12345` 将进程ID为12345的进程的CPU亲和性设置为CPU核心 0。"
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "获取进程的CPU亲和性",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset -p <pid>"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如：`taskset -p 12345` 将显示进程ID为12345的进程的CPU亲和性。"
+      "body": "```bash\n$ taskset -p <pid>\n```\n\n例如：`taskset -p 12345` 将显示进程ID为12345的进程的CPU亲和性。"
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "启动一个新进程，并将其CPU亲和性设置为特定的CPU核心",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset <cpu_mask> <command>"
-    },
-    {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如：`taskset 0x00000001 ./my_program` 将以CPU核心 0 的亲和性运行 ./my_program。"
+      "body": "```bash\n$ taskset <cpu_mask> <command>\n```\n\n例如：`taskset 0x00000001 ./my_program` 将以CPU核心 0 的亲和性运行 ./my_program。"
     },
     {
       "id": "s2-27",
       "sectionId": "s2",
       "title": "将已运行进程的CPU亲和性移动到特定的CPU核心",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset -p -c <cpu_list> <pid>"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如：`taskset -p -c 0,1 12345` 将进程ID为12345的进程的CPU亲和性移动到CPU核心 0 和 1。"
+      "body": "```bash\n$ taskset -p -c <cpu_list> <pid>\n```\n\n例如：`taskset -p -c 0,1 12345` 将进程ID为12345的进程的CPU亲和性移动到CPU核心 0 和 1。"
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
       "title": "指定进程只能在指定的CPU核心上运行（排他性）",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset -p --exclusive <cpu_mask> <pid>"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如：`taskset -p --exclusive 0x00000001 12345` 将进程ID为12345的进程限制在CPU核心 0 上运行。"
+      "body": "```bash\n$ taskset -p --exclusive <cpu_mask> <pid>\n```\n\n例如：`taskset -p --exclusive 0x00000001 12345` 将进程ID为12345的进程限制在CPU核心 0 上运行。"
     },
     {
       "id": "s2-31",
       "sectionId": "s2",
       "title": "将所有已运行进程的CPU亲和性设置为特定的CPU核心",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset -a -p <cpu_mask>"
-    },
-    {
-      "id": "s2-32",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如：`taskset -a -p 0x00000001` 将所有进程的CPU亲和性设置为CPU核心 0。"
+      "body": "```bash\n$ taskset -a -p <cpu_mask>\n```\n\n例如：`taskset -a -p 0x00000001` 将所有进程的CPU亲和性设置为CPU核心 0。"
     },
     {
       "id": "s2-33",
       "sectionId": "s2",
       "title": "在启动新进程时设置CPU亲和性，并指定优先级",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset -c <cpu_mask> nice -n <priority> <command>"
-    },
-    {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如：`taskset -c 0x00000001 nice -n 10 ./my_program` 将以 CPU 核心 `0` 的亲和性和优先级 `10` 运行 `./my_program`。"
+      "body": "```bash\n$ taskset -c <cpu_mask> nice -n <priority> <command>\n```\n\n例如：`taskset -c 0x00000001 nice -n 10 ./my_program` 将以 CPU 核心 `0` 的亲和性和优先级 `10` 运行 `./my_program`。"
     },
     {
       "id": "s2-35",
       "sectionId": "s2",
       "title": "切换已运行进程的CPU亲和性到其他CPU核心",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset -p <cpu_mask> -P <pid>"
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如：`taskset -p 0x00000001 -P 12345` 将进程ID为12345的进程的CPU亲和性切换到CPU核心 0。"
+      "body": "```bash\n$ taskset -p <cpu_mask> -P <pid>\n```\n\n例如：`taskset -p 0x00000001 -P 12345` 将进程ID为12345的进程的CPU亲和性切换到CPU核心 0。"
     },
     {
       "id": "s2-37",
       "sectionId": "s2",
       "title": "将已运行进程的CPU亲和性移动到随机选取的可用CPU核心",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset -p --cpu-list - <pid>"
-    },
-    {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如："
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset -p --cpu-list - 12345"
-    },
-    {
-      "id": "s2-40",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将进程ID为12345的进程的CPU亲和性移动到一个可用的CPU核心。"
+      "body": "```bash\n$ taskset -p --cpu-list - <pid>\n```\n\n例如：\n\n```bash\n$ taskset -p --cpu-list - 12345\n```\n\n将进程ID为12345的进程的CPU亲和性移动到一个可用的CPU核心。"
     },
     {
       "id": "s2-41",
       "sectionId": "s2",
       "title": "使用CPU亲和性运行命令，并显示其CPU使用情况",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset <cpu_mask> <command> &\ntop -p <pid>"
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如："
-    },
-    {
-      "id": "s2-43",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ taskset 0x00000001 ./my_program &\ntop -p $(pgrep my_program)"
-    },
-    {
-      "id": "s2-44",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将以CPU核心 `0` 的亲和性运行 `./my_program`，并显示该进程的CPU使用情况。"
+      "body": "```bash\n$ taskset <cpu_mask> <command> &\ntop -p <pid>\n```\n\n例如：\n\n```bash\n$ taskset 0x00000001 ./my_program &\ntop -p $(pgrep my_program)\n```\n\n将以CPU核心 `0` 的亲和性运行 `./my_program`，并显示该进程的CPU使用情况。"
     },
     {
       "id": "s2-45",
       "sectionId": "s2",
       "title": "其他",
-      "kind": "text",
-      "body": "您可以通过范围设置与其他类似指定CPU的相关性"
-    },
-    {
-      "id": "s2-46",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset -cp 1-3,12 14846"
-    },
-    {
-      "id": "s2-47",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "或"
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ taskset -cp 1-6:2 14846"
-    },
-    {
-      "id": "s2-49",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "后缀 `:N` 指定范围内的步幅，例如 `0-10:3` 被解释为 `0,3,6,9` 列表。"
+      "body": "您可以通过范围设置与其他类似指定CPU的相关性\n\n```shell\n$ taskset -cp 1-3,12 14846\n```\n\n或\n\n```shell\n$ taskset -cp 1-6:2 14846\n```\n\n后缀 `:N` 指定范围内的步幅，例如 `0-10:3` 被解释为 `0,3,6,9` 列表。"
     },
     {
       "id": "s3-50",
       "sectionId": "s3",
       "title": "另见",
-      "kind": "text",
       "body": "[taskset — Linux manual page](https://man7.org/linux/man-pages/man1/taskset.1.html) _(man7.org)_"
     }
   ],

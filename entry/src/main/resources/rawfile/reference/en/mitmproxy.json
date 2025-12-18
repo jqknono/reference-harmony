@@ -35,281 +35,99 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "[mitmproxy](https://mitmproxy.org/) is a free and open source interactive HTTPS proxy. This is a quick reference cheat sheet to the mitmproxy."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Usage",
-      "kind": "text",
       "body": "| Option | Example                                            | Description                               |\n| ------ | -------------------------------------------------- | ----------------------------------------- |\n| `-p`   | mitmproxy -p 8001                                  | Start proxy on port 8001                  |\n| `-m`   | mitmproxy -p 8001 -m reverse:http://127.0.0.1:4000 | Reverse proxy on port 8001 to port 4000   |\n| `-w`   | mitmproxy -p 8001 -w traffic.mitm                  | Stream flows to file as they arrive       |\n| `-r`   | mitmproxy -r traffic.mitm                          | Read flows from file                      |\n| `-C`   | mitmproxy -C traffic.mitm                          | Replay client requests from a saved file  |\n| `-S`   | mitmproxy -S traffic.mitm                          | Replay server responses from a saved file |\n| `-s`   | mitmproxy -s myScript.py                           | Execute a script                          |\n| `-h`   | mitmproxy -h                                       | mitmproxy quick help                      |"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "Movement",
-      "kind": "code",
-      "lang": "",
-      "code": "        k                 Ctrl b\n        ▲                   ▲▲\n        │                   ││\nh ◀ ─── + ─── ▶ l           ││ page\n        │                   ││\n        ▼                   ▼▼\n        j             Ctrl f / Space"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "| -                    | -                     |\n| -------------------- | --------------------- |\n| `h`, `j`, `k` ,`l`   | Left, Down, Up, Right |\n| `Ctrl` `b`           | Page up               |\n| `Space` / `Ctrl` `f` | Page down             |\n| `g` / `G`            | Go to beginning / end |\n| `Arrows`             | Up, Down, Left, Right |"
+      "body": "```\n        k                 Ctrl b\n        ▲                   ▲▲\n        │                   ││\nh ◀ ─── + ─── ▶ l           ││ page\n        │                   ││\n        ▼                   ▼▼\n        j             Ctrl f / Space\n```\n\n| -                    | -                     |\n| -------------------- | --------------------- |\n| `h`, `j`, `k` ,`l`   | Left, Down, Up, Right |\n| `Ctrl` `b`           | Page up               |\n| `Space` / `Ctrl` `f` | Page down             |\n| `g` / `G`            | Go to beginning / end |\n| `Arrows`             | Up, Down, Left, Right |"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "Copy to Clipboard",
-      "kind": "text",
-      "body": "Command Syntax:"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": ":export.clip format flow"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Example:"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "| Description                    | Command Example                    |\n| ------------------------------ | ---------------------------------- |\n| 1. Copy as a curl command      | `:export.clip curl @focus`         |\n| 2. Copy as a httpie            | `:export.clip httpie @focus`       |\n| 2. Copy as a raw               | `:export.clip raw @focus`          |\n| 2. Copy as a raw HTTP request  | `:export.clip raw_request @focus`  |\n| 2. Copy as a raw HTTP response | `:export.clip raw_response @focus` |"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Export a flow to the system clipboard."
+      "body": "Command Syntax:\n\n```\n:export.clip format flow\n```\n\nExample:\n\n| Description                    | Command Example                    |\n| ------------------------------ | ---------------------------------- |\n| 1. Copy as a curl command      | `:export.clip curl @focus`         |\n| 2. Copy as a httpie            | `:export.clip httpie @focus`       |\n| 2. Copy as a raw               | `:export.clip raw @focus`          |\n| 2. Copy as a raw HTTP request  | `:export.clip raw_request @focus`  |\n| 2. Copy as a raw HTTP response | `:export.clip raw_response @focus` |\n\nExport a flow to the system clipboard."
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "Save to File",
-      "kind": "text",
-      "body": "Command Syntax:"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": ":export.file format flow path"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Example:"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "| Description                  | Command Example                                    |\n| ---------------------------- | -------------------------------------------------- |\n| 1. Export to /tmp/a.curl     | `:export.file curl @focus /tmp/a.curl`             |\n| 2. Export to /tmp/a.httpie   | `:export.file httpie @focus /tmp/a.httpie`         |\n| 2. Export to /tmp/a.raw      | `:export.file raw @focus  /tmp/a.raw`              |\n| 2. Export to /tmp/a.request  | `:export.file raw_request @focus /tmp/a.request`   |\n| 2. Export to /tmp/a.response | `:export.file raw_response @focus /tmp/a.response` |"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Export a flow to the system clipboard."
+      "body": "Command Syntax:\n\n```\n:export.file format flow path\n```\n\nExample:\n\n| Description                  | Command Example                                    |\n| ---------------------------- | -------------------------------------------------- |\n| 1. Export to /tmp/a.curl     | `:export.file curl @focus /tmp/a.curl`             |\n| 2. Export to /tmp/a.httpie   | `:export.file httpie @focus /tmp/a.httpie`         |\n| 2. Export to /tmp/a.raw      | `:export.file raw @focus  /tmp/a.raw`              |\n| 2. Export to /tmp/a.request  | `:export.file raw_request @focus /tmp/a.request`   |\n| 2. Export to /tmp/a.response | `:export.file raw_response @focus /tmp/a.response` |\n\nExport a flow to the system clipboard."
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "Common Keybindings",
-      "kind": "text",
       "body": "| -       | -                |\n| ------- | ---------------- |\n| `q`     | Back / Exit      |\n| `z`     | Clear flow list  |\n| `:`     | Command prompt   |\n| `E`     | View event log   |\n| `O`     | View options     |\n| `r`     | Replay this flow |\n| `Tab`   | Next             |\n| `Enter` | Select           |"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
       "title": "Global Keybindings",
-      "kind": "text",
       "body": "| -              | -                         |\n| -------------- | ------------------------- |\n| `-`            | Cycle to next layout      |\n| `?`            | View help                 |\n| `B`            | Start an attached browser |\n| `C`            | View commands             |\n| `I`            | Toggle intercept          |\n| `K`            | View key bindings         |\n| `P`            | View flow details         |\n| `Q`            | Exit immediately          |\n| `W`            | Stream to file            |\n| `i`            | Set intercept             |\n| `Ctrl` `right` | Focus next layout pane    |\n| `Shift` `tab`  | Focus next layout pane    |"
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
       "title": "Flow (View)",
-      "kind": "text",
       "body": "| -               | -                            |\n| --------------- | ---------------------------- |\n| `A`             | Resume all intercepted flows |\n| `D`             | Duplicate flow               |\n| `F`             | Set focus follow             |\n| `L`             | Load flows from file         |\n| `M`             | Toggle viewing marked flows  |\n| `S`             | Start server replay          |\n| `U`             | Un-set all marks             |\n| `V`             | Revert changes to this flow  |\n| `X`             | Kill this flow               |\n| `Z`             | Purge all flows not showing  |\n| `a`             | Resume this intercepted flow |\n| `b`             | Save response body to file   |\n| `d`             | Delete flow from view        |\n| `e`             | Export this flow to file     |\n| `f`             | Set view filter              |\n| `m`             | Toggle mark on this flow     |\n| `n`             | Create a new flow            |\n| `o`             | Set flow list order          |\n| `r`             | Replay this flow             |\n| `v`             | Reverse flow list order      |\n| `w`             | Save listed flows to file    |\n| <code>\\|</code> | Run a script on this flow    |\n| `Ctrl` `l`      | Send cuts to clipboard       |"
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "Filter",
-      "kind": "text",
-      "body": "| -   | -                                     |\n| --- | ------------------------------------- |\n| `f` | Set view filter _(on flow view page)_ |"
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• [RegEX cheatsheet](/regex) _(cheatsheets.zip)_"
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "The regex are Python-style, it can be specified as quoted strings"
+      "body": "| -   | -                                     |\n| --- | ------------------------------------- |\n| `f` | Set view filter _(on flow view page)_ |\n\n• [RegEX cheatsheet](/regex) _(cheatsheets.zip)_\n\nThe regex are Python-style, it can be specified as quoted strings"
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "Operators",
-      "kind": "text",
       "body": "| -       | -         |\n| ------- | --------- | --- |\n| `!`     | unary not |\n| `&`     | and       |\n| `       | `         | or  |\n| `(...)` | grouping  |"
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "Expressions",
-      "kind": "text",
       "body": "| -              | -                                                          |\n| -------------- | ---------------------------------------------------------- |\n| `~a`           | Match asset in response: CSS, Javascript, Flash, images.   |\n| `~b` `regex`   | Body                                                       |\n| `~bq` `regex`  | Request body                                               |\n| `~bs` `regex`  | Response body                                              |\n| `~c` `int`     | HTTP response code                                         |\n| `~d` `regex`   | Domain                                                     |\n| `~dst` `regex` | Match destination address                                  |\n| `~e`           | Match error                                                |\n| `~h` `regex`   | Header                                                     |\n| `~hq` `regex`  | Request header                                             |\n| `~hs` `regex`  | Response header                                            |\n| `~http`        | Match HTTP flows                                           |\n| `~m` `regex`   | Method                                                     |\n| `~marked`      | Match marked flows                                         |\n| `~q`           | Match request with no response                             |\n| `~s`           | Match response                                             |\n| `~src` `regex` | Match source address                                       |\n| `~t` `regex`   | Content-type header                                        |\n| `~tcp`         | Match TCP flows                                            |\n| `~tq` `regex`  | Request Content-Type header                                |\n| `~ts` `regex`  | Response Content-Type header                               |\n| `~u` `regex`   | URL                                                        |\n| `~websocket`   | Match WebSocket flows (and HTTP-WebSocket handshake flows) |"
     },
     {
       "id": "s2-22",
       "sectionId": "s2",
       "title": "Flow selectors",
-      "kind": "text",
-      "body": "Expressions"
-    },
-    {
-      "id": "s2-23",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "| -           | -                          |\n| ----------- | -------------------------- |\n| `@all     ` | All flows                  |\n| `@focus   ` | The currently focused flow |\n| `@shown   ` | All flows currently shown  |\n| `@hidden  ` | All flows currently hidden |\n| `@marked  ` | All marked flows           |\n| `@unmarked` | All unmarked flows         |"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "mitmproxy has a set of convenient flow selectors that operate on the current view"
+      "body": "Expressions\n\n| -           | -                          |\n| ----------- | -------------------------- |\n| `@all     ` | All flows                  |\n| `@focus   ` | The currently focused flow |\n| `@shown   ` | All flows currently shown  |\n| `@hidden  ` | All flows currently hidden |\n| `@marked  ` | All marked flows           |\n| `@unmarked` | All unmarked flows         |\n\nmitmproxy has a set of convenient flow selectors that operate on the current view"
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "Examples",
-      "kind": "text",
-      "body": "URL%20containing%20%22google.com%22",
-      "encoded": true
-    },
-    {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "google\\.com"
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Requests%20whose%20body%20contains%20the%20string%20%22test%22",
-      "encoded": true
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "~q ~b test"
-    },
-    {
-      "id": "s2-29",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Anything but requests with a text/html content type:"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "!(~q%20%26%20~t%20%22text%2Fhtml%22)",
-      "encoded": true
-    },
-    {
-      "id": "s2-31",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Replace entire GET string in a request (quotes required to make it work):"
-    },
-    {
-      "id": "s2-32",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "%22%3A~q%20~m%20GET%3A.*%3A%2Freplacement.html%22",
+      "body": "URL%20containing%20%22google.com%22%0A%0A%60%60%60%0Agoogle%5C.com%0A%60%60%60%0A%0ARequests%20whose%20body%20contains%20the%20string%20%22test%22%0A%0A%60%60%60%0A~q%20~b%20test%0A%60%60%60%0A%0AAnything%20but%20requests%20with%20a%20text%2Fhtml%20content%20type%3A%0A%0A%60%60%60%0A!(~q%20%26%20~t%20%22text%2Fhtml%22)%0A%60%60%60%0A%0AReplace%20entire%20GET%20string%20in%20a%20request%20(quotes%20required%20to%20make%20it%20work)%3A%0A%0A%60%60%60%0A%22%3A~q%20~m%20GET%3A.*%3A%2Freplacement.html%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-33",
       "sectionId": "s3",
       "title": "Custom%20response",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20mitmproxy%20import%20http%0A%0A%0Adef%20request(flow%3A%20http.HTTPFlow)%20-%3E%20None%3A%0A%20%20%20%20if%20flow.request.pretty_url%20%3D%3D%20%22http%3A%2F%2Fexample.com%2Fpath%22%3A%0A%20%20%20%20%20%20%20%20flow.response%20%3D%20http.HTTPResponse.make(%0A%20%20%20%20%20%20%20%20%20%20%20%20200%2C%20%20%23%20(optional)%20status%20code%0A%20%20%20%20%20%20%20%20%20%20%20%20b%22Hello%20World%22%2C%20%20%23%20(optional)%20content%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%22Content-Type%22%3A%20%22text%2Fhtml%22%7D%20%20%23%20(optional)%20headers%0A%20%20%20%20%20%20%20%20)",
+      "body": "%60%60%60python%0Afrom%20mitmproxy%20import%20http%0A%0A%0Adef%20request(flow%3A%20http.HTTPFlow)%20-%3E%20None%3A%0A%20%20%20%20if%20flow.request.pretty_url%20%3D%3D%20%22http%3A%2F%2Fexample.com%2Fpath%22%3A%0A%20%20%20%20%20%20%20%20flow.response%20%3D%20http.HTTPResponse.make(%0A%20%20%20%20%20%20%20%20%20%20%20%20200%2C%20%20%23%20(optional)%20status%20code%0A%20%20%20%20%20%20%20%20%20%20%20%20b%22Hello%20World%22%2C%20%20%23%20(optional)%20content%0A%20%20%20%20%20%20%20%20%20%20%20%20%7B%22Content-Type%22%3A%20%22text%2Fhtml%22%7D%20%20%23%20(optional)%20headers%0A%20%20%20%20%20%20%20%20)%0A%60%60%60%0A%0ASend%20a%20reply%20from%20the%20proxy%20without%20sending%20any%20data%20to%20the%20remote%20server",
       "encoded": true
-    },
-    {
-      "id": "s3-34",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Send a reply from the proxy without sending any data to the remote server"
     },
     {
       "id": "s3-35",
       "sectionId": "s3",
       "title": "Add%20header",
-      "kind": "code",
-      "lang": "python",
-      "code": "class%20AddHeader%3A%0A%20%20%20%20def%20__init__(self)%3A%0A%20%20%20%20%20%20%20%20self.num%20%3D%200%0A%0A%20%20%20%20def%20response(self%2C%20flow)%3A%0A%20%20%20%20%20%20%20%20self.num%20%3D%20self.num%20%2B%201%0A%20%20%20%20%20%20%20%20flow.response.headers%5B%22count%22%5D%20%3D%20str(self.num)%0A%0A%0Aaddons%20%3D%20%5B%0A%20%20%20%20AddHeader()%0A%5D",
+      "body": "%60%60%60python%0Aclass%20AddHeader%3A%0A%20%20%20%20def%20__init__(self)%3A%0A%20%20%20%20%20%20%20%20self.num%20%3D%200%0A%0A%20%20%20%20def%20response(self%2C%20flow)%3A%0A%20%20%20%20%20%20%20%20self.num%20%3D%20self.num%20%2B%201%0A%20%20%20%20%20%20%20%20flow.response.headers%5B%22count%22%5D%20%3D%20str(self.num)%0A%0A%0Aaddons%20%3D%20%5B%0A%20%20%20%20AddHeader()%0A%5D%0A%60%60%60%0A%0AAdd%20an%20HTTP%20header%20to%20each%20response",
       "encoded": true
-    },
-    {
-      "id": "s3-36",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Add an HTTP header to each response"
     },
     {
       "id": "s4-37",
       "sectionId": "s4",
       "title": "Also see",
-      "kind": "text",
       "body": "• [mitmproxy addons](https://github.com/mitmproxy/mitmproxy/tree/master/examples/addons) _(github.com)_\n• [mitmproxy docs](https://docs.mitmproxy.org/) _(mitmproxy.org)_"
     }
   ],

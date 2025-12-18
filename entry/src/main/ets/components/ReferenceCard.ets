@@ -9,13 +9,17 @@ export struct ReferenceCard {
   @Prop lang: ReferenceLang;
   @Prop theme: AppThemeTokens;
 
+  private isEncoded(): boolean {
+    return this.card.encoded === true;
+  }
+
   @Builder
   private Body(): void {
     if (this.card.kind === 'qa') {
       Column({ space: 8 }) {
-        if (decodeIfEncoded(this.card.front, this.card.encoded).trim()) {
+        if (decodeIfEncoded(this.card.front, this.isEncoded()).trim()) {
           MarkdownView({
-            markdown: decodeIfEncoded(this.card.front, this.card.encoded),
+            markdown: decodeIfEncoded(this.card.front, this.isEncoded()),
             inlineOnly: true,
             fontSize: 15,
             fontColor: this.theme.qaFrontTextColor,
@@ -23,9 +27,9 @@ export struct ReferenceCard {
             theme: this.theme,
           });
         }
-        if (decodeIfEncoded(this.card.back, this.card.encoded).trim()) {
+        if (decodeIfEncoded(this.card.back, this.isEncoded()).trim()) {
           MarkdownView({
-            markdown: decodeIfEncoded(this.card.back, this.card.encoded),
+            markdown: decodeIfEncoded(this.card.back, this.isEncoded()),
             fontSize: 15,
             fontColor: this.theme.qaBackTextColor,
             theme: this.theme,
@@ -33,7 +37,7 @@ export struct ReferenceCard {
         }
       }
     } else if (this.card.kind === 'code') {
-      Text(decodeIfEncoded(this.card.code, this.card.encoded))
+      Text(decodeIfEncoded(this.card.code, this.isEncoded()))
         .fontFamily('monospace')
         .fontSize(13)
         .fontColor(this.theme.markdown.codeTextColor)
@@ -41,7 +45,7 @@ export struct ReferenceCard {
         .textOverflow({ overflow: TextOverflow.Clip });
     } else {
       MarkdownView({
-        markdown: decodeIfEncoded(this.card.body, this.card.encoded),
+        markdown: decodeIfEncoded(this.card.body, this.isEncoded()),
         fontSize: 15,
         fontColor: this.theme.textColor,
         theme: this.theme,
@@ -53,7 +57,7 @@ export struct ReferenceCard {
     Column({ space: 8 }) {
       Row() {
         MarkdownView({
-          markdown: decodeIfEncoded(this.card.title, this.card.encoded),
+          markdown: decodeIfEncoded(this.card.title, this.isEncoded()),
           inlineOnly: true,
           fontSize: 16,
           fontColor: this.theme.titleColor,

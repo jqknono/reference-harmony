@@ -85,1655 +85,534 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "[Laravel](https://laravel.com/docs/8.x/) is an expressive and progressive web application framework for PHP. \nThis cheat sheet provides a reference for common commands and features for Laravel 8."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Requirements",
-      "kind": "text",
-      "body": "• PHP version >= 7.3\n• BCMath PHP Extension\n• Ctype PHP Extension\n• Fileinfo PHP Extension\n• JSON PHP Extension\n• Mbstring PHP Extension\n• OpenSSL PHP Extension\n• PDO PHP Extension\n• Tokenizer PHP Extension\n• XML PHP Extension"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Ensure your web server directs all requests to your application's `public/index.php` file, See:\n[Deployment](#deployment)"
+      "body": "%E2%80%A2%20PHP%20version%20%3E%3D%207.3%0A%E2%80%A2%20BCMath%20PHP%20Extension%0A%E2%80%A2%20Ctype%20PHP%20Extension%0A%E2%80%A2%20Fileinfo%20PHP%20Extension%0A%E2%80%A2%20JSON%20PHP%20Extension%0A%E2%80%A2%20Mbstring%20PHP%20Extension%0A%E2%80%A2%20OpenSSL%20PHP%20Extension%0A%E2%80%A2%20PDO%20PHP%20Extension%0A%E2%80%A2%20Tokenizer%20PHP%20Extension%0A%E2%80%A2%20XML%20PHP%20Extension%0A%0AEnsure%20your%20web%20server%20directs%20all%20requests%20to%20your%20application's%20%60public%2Findex.php%60%20file%2C%20See%3A%0A%5BDeployment%5D(%23deployment)",
+      "encoded": true
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "Windows",
-      "kind": "text",
-      "body": "• #### Install [Docker Desktop](https://www.docker.com/products/docker-desktop)\n• #### Install & enable [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install)\n• #### Ensure that Docker Desktop is [configured to use WSL2](https://docs.docker.com/desktop/windows/wsl/)\n• #### In WSL2 terminal:"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "      $ curl -s https://laravel.build/example-app | bash\n      $ cd example-app\n      $ ./vendor/bin/sail up"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Access application via `http://localhost`"
+      "body": "• #### Install [Docker Desktop](https://www.docker.com/products/docker-desktop)\n• #### Install & enable [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install)\n• #### Ensure that Docker Desktop is [configured to use WSL2](https://docs.docker.com/desktop/windows/wsl/)\n• #### In WSL2 terminal:\n\n      ```shell\n      $ curl -s https://laravel.build/example-app | bash\n      $ cd example-app\n      $ ./vendor/bin/sail up\n      ```\n\nAccess application via `http://localhost`"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "Mac",
-      "kind": "text",
-      "body": "• #### Install [Docker Desktop](https://www.docker.com/products/docker-desktop)\n• #### In terminal:"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "      $ curl -s https://laravel.build/example-app | bash\n      $ cd example-app\n      $ ./vendor/bin/sail up"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Access application via `http://localhost`"
+      "body": "• #### Install [Docker Desktop](https://www.docker.com/products/docker-desktop)\n• #### In terminal:\n\n      ```shell\n      $ curl -s https://laravel.build/example-app | bash\n      $ cd example-app\n      $ ./vendor/bin/sail up\n      ```\n\nAccess application via `http://localhost`"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "Linux",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ curl -s https://laravel.build/example-app | bash\n$ cd example-app\n$ ./vendor/bin/sail up"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Installation via [Composer](https://getcomposer.org)"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ composer create-project laravel/laravel example-app\n$ cd example-app\n$ php artisan serve"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Access application via `http://localhost`"
+      "body": "```shell\n$ curl -s https://laravel.build/example-app | bash\n$ cd example-app\n$ ./vendor/bin/sail up\n```\n\nInstallation via [Composer](https://getcomposer.org)\n\n```bash\n$ composer create-project laravel/laravel example-app\n$ cd example-app\n$ php artisan serve\n```\n\nAccess application via `http://localhost`"
     },
     {
       "id": "s2-13",
       "sectionId": "s2",
       "title": ".env",
-      "kind": "text",
-      "body": "Retrieve values from `.env` file"
-    },
-    {
-      "id": "s2-14",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "env('APP_DEBUG');\n\n// with default value\nenv('APP_DEBUG', false);"
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Determine current environment"
-    },
-    {
-      "id": "s2-16",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "use Illuminate\\Support\\Facades\\App;\n\n$environment = App::environment();"
-    },
-    {
-      "id": "s2-17",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Accessing%20configuration%20values%20using%20%22dot%22%20syntax",
+      "body": "Retrieve%20values%20from%20%60.env%60%20file%0A%0A%60%60%60php%0Aenv('APP_DEBUG')%3B%0A%0A%2F%2F%20with%20default%20value%0Aenv('APP_DEBUG'%2C%20false)%3B%0A%60%60%60%0A%0ADetermine%20current%20environment%0A%0A%60%60%60php%0Ause%20Illuminate%5CSupport%5CFacades%5CApp%3B%0A%0A%24environment%20%3D%20App%3A%3Aenvironment()%3B%0A%60%60%60%0A%0AAccessing%20configuration%20values%20using%20%22dot%22%20syntax%0A%0A%60%60%60php%0A%2F%2F%20config%2Fapp.php%20--%3E%20%5B'timezone'%20%3D%3E%20''%5D%0A%24value%20%3D%20config('app.timezone')%3B%0A%0A%2F%2F%20Retrieve%20a%20default%20value%20if%20the%20configuration%20value%20does%20not%20exist...%0A%24value%20%3D%20config('app.timezone'%2C%20'Asia%2FSeoul')%3B%0A%60%60%60%0A%0ASet%20configuration%20values%20at%20runtime%3A%0A%0A%60%60%60php%0Aconfig(%5B'app.timezone'%20%3D%3E%20'America%2FChicago'%5D)%3B%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// config/app.php --> ['timezone' => '']\n$value = config('app.timezone');\n\n// Retrieve a default value if the configuration value does not exist...\n$value = config('app.timezone', 'Asia/Seoul');"
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Set configuration values at runtime:"
-    },
-    {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "config(['app.timezone' => 'America/Chicago']);"
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "Debug Mode",
-      "kind": "text",
-      "body": "Turn on (local dev):"
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// .env file\nAPP_ENV=local\nAPP_DEBUG=true\n// ..."
-    },
-    {
-      "id": "s2-23",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Turn off (production):"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// .env file\nAPP_ENV=production\nAPP_DEBUG=false\n// ..."
+      "body": "Turn on (local dev):\n\n```php\n// .env file\nAPP_ENV=local\nAPP_DEBUG=true\n// ...\n```\n\nTurn off (production):\n\n```php\n// .env file\nAPP_ENV=production\nAPP_DEBUG=false\n// ...\n```"
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "Maintenance Mode",
-      "kind": "text",
-      "body": "Temporarily disable application (503 status code)"
-    },
-    {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "php artisan down"
+      "body": "Temporarily disable application (503 status code)\n\n```bash\nphp artisan down\n```"
     },
     {
       "id": "s2-27",
       "sectionId": "s2",
       "title": "Disable maintenance mode",
-      "kind": "code",
-      "lang": "bash",
-      "code": "php artisan up"
+      "body": "```bash\nphp artisan up\n```"
     },
     {
       "id": "s2-28",
       "sectionId": "s2",
       "title": "Bypass%20Maintenance%20Mode",
-      "kind": "code",
-      "lang": "bash",
-      "code": "php%20artisan%20down%20--secret%3D%221630542a-246b-4b66-afa1-dd72a4c43515%22",
+      "body": "%60%60%60bash%0Aphp%20artisan%20down%20--secret%3D%221630542a-246b-4b66-afa1-dd72a4c43515%22%0A%60%60%60%0A%0AVisit%20your%20application%20URL%20%60https%3A%2F%2Fexample.com%2F1630542a-246b-4b66-afa1-dd72a4c43515%60%20to%20set%20a%20cookie%20and%20bypass%20the%0Amaintenance%20screen",
       "encoded": true
-    },
-    {
-      "id": "s2-29",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Visit your application URL `https://example.com/1630542a-246b-4b66-afa1-dd72a4c43515` to set a cookie and bypass the\nmaintenance screen"
     },
     {
       "id": "s3-30",
       "sectionId": "s3",
-      "title": "Router HTTP Methods",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::get($uri, $callback);\nRoute::post($uri, $callback);\nRoute::put($uri, $callback);\nRoute::patch($uri, $callback);\nRoute::delete($uri, $callback);\nRoute::options($uri, $callback);"
-    },
-    {
-      "id": "s3-31",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Multiple HTTP methods"
-    },
-    {
-      "id": "s3-32",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::match(['get', 'post'], '/', function () {\n    //\n});\n\nRoute::any('/', function () {\n    //\n});"
+      "title": "Router%20HTTP%20Methods",
+      "body": "%60%60%60php%0ARoute%3A%3Aget(%24uri%2C%20%24callback)%3B%0ARoute%3A%3Apost(%24uri%2C%20%24callback)%3B%0ARoute%3A%3Aput(%24uri%2C%20%24callback)%3B%0ARoute%3A%3Apatch(%24uri%2C%20%24callback)%3B%0ARoute%3A%3Adelete(%24uri%2C%20%24callback)%3B%0ARoute%3A%3Aoptions(%24uri%2C%20%24callback)%3B%0A%60%60%60%0A%0AMultiple%20HTTP%20methods%0A%0A%60%60%60php%0ARoute%3A%3Amatch(%5B'get'%2C%20'post'%5D%2C%20'%2F'%2C%20function%20()%20%7B%0A%20%20%20%20%2F%2F%0A%7D)%3B%0A%0ARoute%3A%3Aany('%2F'%2C%20function%20()%20%7B%0A%20%20%20%20%2F%2F%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-33",
       "sectionId": "s3",
-      "title": "Basic Definition",
-      "kind": "code",
-      "lang": "php",
-      "code": "use Illuminate\\Support\\Facades\\Route;\n\n// closure\nRoute::get('/greeting', function () {\n    return 'Hello World';\n});\n\n// controller action\nRoute::get(\n    '/user/profile',\n    [UserProfileController::class, 'show']\n);"
+      "title": "Basic%20Definition",
+      "body": "%60%60%60php%0Ause%20Illuminate%5CSupport%5CFacades%5CRoute%3B%0A%0A%2F%2F%20closure%0ARoute%3A%3Aget('%2Fgreeting'%2C%20function%20()%20%7B%0A%20%20%20%20return%20'Hello%20World'%3B%0A%7D)%3B%0A%0A%2F%2F%20controller%20action%0ARoute%3A%3Aget(%0A%20%20%20%20'%2Fuser%2Fprofile'%2C%0A%20%20%20%20%5BUserProfileController%3A%3Aclass%2C%20'show'%5D%0A)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-34",
       "sectionId": "s3",
-      "title": "Dependency Injection",
-      "kind": "code",
-      "lang": "php",
-      "code": "use Illuminate\\Http\\Request;\n\nRoute::get('/users', function (Request $request) {\n    // ...\n});"
-    },
-    {
-      "id": "s3-35",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Type hint concrete dependencies for auto-injection"
+      "title": "Dependency%20Injection",
+      "body": "%60%60%60php%0Ause%20Illuminate%5CHttp%5CRequest%3B%0A%0ARoute%3A%3Aget('%2Fusers'%2C%20function%20(Request%20%24request)%20%7B%0A%20%20%20%20%2F%2F%20...%0A%7D)%3B%0A%60%60%60%0A%0AType%20hint%20concrete%20dependencies%20for%20auto-injection",
+      "encoded": true
     },
     {
       "id": "s3-36",
       "sectionId": "s3",
-      "title": "View Routes",
-      "kind": "code",
-      "lang": "php",
-      "code": "// Argument 1: URI, Argument 2: view name\nRoute::view('/welcome', 'welcome');\n\n// with data\nRoute::view('/welcome', 'welcome', ['name' => 'Taylor']);"
-    },
-    {
-      "id": "s3-37",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Route only needs to return a view."
+      "title": "View%20Routes",
+      "body": "%60%60%60php%0A%2F%2F%20Argument%201%3A%20URI%2C%20Argument%202%3A%20view%20name%0ARoute%3A%3Aview('%2Fwelcome'%2C%20'welcome')%3B%0A%0A%2F%2F%20with%20data%0ARoute%3A%3Aview('%2Fwelcome'%2C%20'welcome'%2C%20%5B'name'%20%3D%3E%20'Taylor'%5D)%3B%0A%60%60%60%0A%0ARoute%20only%20needs%20to%20return%20a%20view.",
+      "encoded": true
     },
     {
       "id": "s3-38",
       "sectionId": "s3",
-      "title": "Route Model Binding - Implicit binding",
-      "kind": "text",
-      "body": "With closure"
-    },
-    {
-      "id": "s3-39",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "use App\\Models\\User;\n\nRoute::get('/users/{user}', function (User $user) {\n    return $user->email;\n});\n\n// /user/1 --> User::where('id', '=', 1);"
-    },
-    {
-      "id": "s3-40",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "With controller action"
-    },
-    {
-      "id": "s3-41",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "use App\\Http\\Controllers\\UserController;\nuse App\\Models\\User;\n\n// Route definition...\nRoute::get('/users/{user}', [UserController::class, 'show']);\n\n// Controller method definition...\npublic function show(User $user)\n{\n    return view('user.profile', ['user' => $user]);\n}"
-    },
-    {
-      "id": "s3-42",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "With custom resolution column"
-    },
-    {
-      "id": "s3-43",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "use App\\Models\\Post;\n\nRoute::get('/posts/{post:slug}', function (Post $post) {\n    return $post;\n});\n\n// /posts/my-post --> Post::where('slug', '=', 'my-post');"
-    },
-    {
-      "id": "s3-44",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Always use a different column to resolve"
-    },
-    {
-      "id": "s3-45",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// in App\\Models\\Post\npublic function getRouteKeyName()\n{\n    return 'slug';\n}"
-    },
-    {
-      "id": "s3-46",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Multiple models - second is child of first"
-    },
-    {
-      "id": "s3-47",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "use App\\Models\\Post;\nuse App\\Models\\User;\n\nRoute::get('/users/{user}/posts/{post:slug}', function (User $user, Post $post) {\n    return $post;\n});"
-    },
-    {
-      "id": "s3-48",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Convenient way to automatically inject the model instances directly into your routes"
+      "title": "Route%20Model%20Binding%20-%20Implicit%20binding",
+      "body": "With%20closure%0A%0A%60%60%60php%0Ause%20App%5CModels%5CUser%3B%0A%0ARoute%3A%3Aget('%2Fusers%2F%7Buser%7D'%2C%20function%20(User%20%24user)%20%7B%0A%20%20%20%20return%20%24user-%3Eemail%3B%0A%7D)%3B%0A%0A%2F%2F%20%2Fuser%2F1%20--%3E%20User%3A%3Awhere('id'%2C%20'%3D'%2C%201)%3B%0A%60%60%60%0A%0AWith%20controller%20action%0A%0A%60%60%60php%0Ause%20App%5CHttp%5CControllers%5CUserController%3B%0Ause%20App%5CModels%5CUser%3B%0A%0A%2F%2F%20Route%20definition...%0ARoute%3A%3Aget('%2Fusers%2F%7Buser%7D'%2C%20%5BUserController%3A%3Aclass%2C%20'show'%5D)%3B%0A%0A%2F%2F%20Controller%20method%20definition...%0Apublic%20function%20show(User%20%24user)%0A%7B%0A%20%20%20%20return%20view('user.profile'%2C%20%5B'user'%20%3D%3E%20%24user%5D)%3B%0A%7D%0A%60%60%60%0A%0AWith%20custom%20resolution%20column%0A%0A%60%60%60php%0Ause%20App%5CModels%5CPost%3B%0A%0ARoute%3A%3Aget('%2Fposts%2F%7Bpost%3Aslug%7D'%2C%20function%20(Post%20%24post)%20%7B%0A%20%20%20%20return%20%24post%3B%0A%7D)%3B%0A%0A%2F%2F%20%2Fposts%2Fmy-post%20--%3E%20Post%3A%3Awhere('slug'%2C%20'%3D'%2C%20'my-post')%3B%0A%60%60%60%0A%0AAlways%20use%20a%20different%20column%20to%20resolve%0A%0A%60%60%60php%0A%2F%2F%20in%20App%5CModels%5CPost%0Apublic%20function%20getRouteKeyName()%0A%7B%0A%20%20%20%20return%20'slug'%3B%0A%7D%0A%60%60%60%0A%0AMultiple%20models%20-%20second%20is%20child%20of%20first%0A%0A%60%60%60php%0Ause%20App%5CModels%5CPost%3B%0Ause%20App%5CModels%5CUser%3B%0A%0ARoute%3A%3Aget('%2Fusers%2F%7Buser%7D%2Fposts%2F%7Bpost%3Aslug%7D'%2C%20function%20(User%20%24user%2C%20Post%20%24post)%20%7B%0A%20%20%20%20return%20%24post%3B%0A%7D)%3B%0A%60%60%60%0A%0AConvenient%20way%20to%20automatically%20inject%20the%20model%20instances%20directly%20into%20your%20routes",
+      "encoded": true
     },
     {
       "id": "s3-49",
       "sectionId": "s3",
       "title": "Route Parameters",
-      "kind": "text",
       "body": "Capture segments of the URI within your route"
     },
     {
       "id": "s3-50",
       "sectionId": "s3",
-      "title": "Required parameters",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::get('/user/{id}', function ($id) {\n    return 'User '.$id;\n});"
-    },
-    {
-      "id": "s3-51",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "With dependency injection"
-    },
-    {
-      "id": "s3-52",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "use Illuminate\\Http\\Request;\n\nRoute::get('/user/{id}', function (Request $request, $id) {\n    return 'User '.$id;\n});"
+      "title": "Required%20parameters",
+      "body": "%60%60%60php%0ARoute%3A%3Aget('%2Fuser%2F%7Bid%7D'%2C%20function%20(%24id)%20%7B%0A%20%20%20%20return%20'User%20'.%24id%3B%0A%7D)%3B%0A%60%60%60%0A%0AWith%20dependency%20injection%0A%0A%60%60%60php%0Ause%20Illuminate%5CHttp%5CRequest%3B%0A%0ARoute%3A%3Aget('%2Fuser%2F%7Bid%7D'%2C%20function%20(Request%20%24request%2C%20%24id)%20%7B%0A%20%20%20%20return%20'User%20'.%24id%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-53",
       "sectionId": "s3",
-      "title": "Optional Parameters",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::get('/user/{name?}', function ($name = null) {\n    return $name;\n});\n\nRoute::get('/user/{name?}', function ($name = 'John') {\n    return $name;\n});"
+      "title": "Optional%20Parameters",
+      "body": "%60%60%60php%0ARoute%3A%3Aget('%2Fuser%2F%7Bname%3F%7D'%2C%20function%20(%24name%20%3D%20null)%20%7B%0A%20%20%20%20return%20%24name%3B%0A%7D)%3B%0A%0ARoute%3A%3Aget('%2Fuser%2F%7Bname%3F%7D'%2C%20function%20(%24name%20%3D%20'John')%20%7B%0A%20%20%20%20return%20%24name%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-54",
       "sectionId": "s3",
-      "title": "Redirect Routes",
-      "kind": "text",
-      "body": "HTTP `302` status"
-    },
-    {
-      "id": "s3-55",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::redirect('/here', '/there');"
-    },
-    {
-      "id": "s3-56",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Set the status code"
-    },
-    {
-      "id": "s3-57",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::redirect('/here', '/there', 301);"
-    },
-    {
-      "id": "s3-58",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Permanent `301` redirect"
-    },
-    {
-      "id": "s3-59",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::permanentRedirect('/here', '/there');"
+      "title": "Redirect%20Routes",
+      "body": "HTTP%20%60302%60%20status%0A%0A%60%60%60php%0ARoute%3A%3Aredirect('%2Fhere'%2C%20'%2Fthere')%3B%0A%60%60%60%0A%0ASet%20the%20status%20code%0A%0A%60%60%60php%0ARoute%3A%3Aredirect('%2Fhere'%2C%20'%2Fthere'%2C%20301)%3B%0A%60%60%60%0A%0APermanent%20%60301%60%20redirect%0A%0A%60%60%60php%0ARoute%3A%3ApermanentRedirect('%2Fhere'%2C%20'%2Fthere')%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-60",
       "sectionId": "s3",
-      "title": "Regular Expression Constraints",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::get('/user/{name}', function ($name) {\n    //\n})->where('name', '[A-Za-z]+');\n\nRoute::get('/user/{id}', function ($id) {\n    //\n})->where('id', '[0-9]+');\n\nRoute::get('/user/{id}/{name}', function ($id, $name) {\n    //\n})->where(['id' => '[0-9]+', 'name' => '[a-z]+']);"
-    },
-    {
-      "id": "s3-61",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "See also: [Regex Cheatsheet](/regex)"
+      "title": "Regular%20Expression%20Constraints",
+      "body": "%60%60%60php%0ARoute%3A%3Aget('%2Fuser%2F%7Bname%7D'%2C%20function%20(%24name)%20%7B%0A%20%20%20%20%2F%2F%0A%7D)-%3Ewhere('name'%2C%20'%5BA-Za-z%5D%2B')%3B%0A%0ARoute%3A%3Aget('%2Fuser%2F%7Bid%7D'%2C%20function%20(%24id)%20%7B%0A%20%20%20%20%2F%2F%0A%7D)-%3Ewhere('id'%2C%20'%5B0-9%5D%2B')%3B%0A%0ARoute%3A%3Aget('%2Fuser%2F%7Bid%7D%2F%7Bname%7D'%2C%20function%20(%24id%2C%20%24name)%20%7B%0A%20%20%20%20%2F%2F%0A%7D)-%3Ewhere(%5B'id'%20%3D%3E%20'%5B0-9%5D%2B'%2C%20'name'%20%3D%3E%20'%5Ba-z%5D%2B'%5D)%3B%0A%60%60%60%0A%0ASee%20also%3A%20%5BRegex%20Cheatsheet%5D(%2Fregex)",
+      "encoded": true
     },
     {
       "id": "s3-62",
       "sectionId": "s3",
-      "title": "Named Routes",
-      "kind": "text",
-      "body": "Route names should always be unique"
-    },
-    {
-      "id": "s3-63",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::get('/user/profile', function () {\n    //\n})->name('profile');"
-    },
-    {
-      "id": "s3-64",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Helpers](#helpers-cols-3)"
+      "title": "Named%20Routes",
+      "body": "Route%20names%20should%20always%20be%20unique%0A%0A%60%60%60php%0ARoute%3A%3Aget('%2Fuser%2Fprofile'%2C%20function%20()%20%7B%0A%20%20%20%20%2F%2F%0A%7D)-%3Ename('profile')%3B%0A%60%60%60%0A%0ASee%3A%20%5BHelpers%5D(%23helpers-cols-3)",
+      "encoded": true
     },
     {
       "id": "s3-65",
       "sectionId": "s3",
       "title": "Fallback Routes",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::fallback(function () {\n    //\n});"
-    },
-    {
-      "id": "s3-66",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Executed when no other routes match"
+      "body": "```php\nRoute::fallback(function () {\n    //\n});\n```\n\nExecuted when no other routes match"
     },
     {
       "id": "s3-67",
       "sectionId": "s3",
-      "title": "Route Groups - Middleware",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::middleware(['first', 'second'])->group(function () {\n    Route::get('/', function () {\n        // Uses first & second middleware...\n    });\n\n    Route::get('/user/profile', function () {\n        // Uses first & second middleware...\n    });\n});"
+      "title": "Route%20Groups%20-%20Middleware",
+      "body": "%60%60%60php%0ARoute%3A%3Amiddleware(%5B'first'%2C%20'second'%5D)-%3Egroup(function%20()%20%7B%0A%20%20%20%20Route%3A%3Aget('%2F'%2C%20function%20()%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Uses%20first%20%26%20second%20middleware...%0A%20%20%20%20%7D)%3B%0A%0A%20%20%20%20Route%3A%3Aget('%2Fuser%2Fprofile'%2C%20function%20()%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Uses%20first%20%26%20second%20middleware...%0A%20%20%20%20%7D)%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-68",
       "sectionId": "s3",
       "title": "URI%20Prefixes",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route%3A%3Aprefix('admin')-%3Egroup(function%20()%20%7B%0A%20%20%20%20Route%3A%3Aget('%2Fusers'%2C%20function%20()%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Matches%20The%20%22%2Fadmin%2Fusers%22%20URL%0A%20%20%20%20%7D)%3B%0A%7D)%3B",
+      "body": "%60%60%60php%0ARoute%3A%3Aprefix('admin')-%3Egroup(function%20()%20%7B%0A%20%20%20%20Route%3A%3Aget('%2Fusers'%2C%20function%20()%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Matches%20The%20%22%2Fadmin%2Fusers%22%20URL%0A%20%20%20%20%7D)%3B%0A%7D)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-69",
       "sectionId": "s3",
       "title": "Name%20Prefix",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route%3A%3Aname('admin.')-%3Egroup(function%20()%20%7B%0A%20%20%20%20Route%3A%3Aget('%2Fusers'%2C%20function%20()%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Route%20assigned%20name%20%22admin.users%22...%0A%20%20%20%20%7D)-%3Ename('users')%3B%0A%7D)%3B",
+      "body": "%60%60%60php%0ARoute%3A%3Aname('admin.')-%3Egroup(function%20()%20%7B%0A%20%20%20%20Route%3A%3Aget('%2Fusers'%2C%20function%20()%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20Route%20assigned%20name%20%22admin.users%22...%0A%20%20%20%20%7D)-%3Ename('users')%3B%0A%7D)%3B%0A%60%60%60%0A%0AShare%20attributes%20across%20routes",
       "encoded": true
-    },
-    {
-      "id": "s3-70",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Share attributes across routes"
     },
     {
       "id": "s3-71",
       "sectionId": "s3",
       "title": "Accessing current route",
-      "kind": "code",
-      "lang": "php",
-      "code": "use Illuminate\\Support\\Facades\\Route;\n\n// Illuminate\\Routing\\Route\n$route = Route::current();\n\n// string\n$name = Route::currentRouteName();\n\n// string\n$action = Route::currentRouteAction();"
+      "body": "```php\nuse Illuminate\\Support\\Facades\\Route;\n\n// Illuminate\\Routing\\Route\n$route = Route::current();\n\n// string\n$name = Route::currentRouteName();\n\n// string\n$action = Route::currentRouteAction();\n```"
     },
     {
       "id": "s4-72",
       "sectionId": "s4",
-      "title": "routes - Named route",
-      "kind": "code",
-      "lang": "php",
-      "code": "$url = route('profile');"
-    },
-    {
-      "id": "s4-73",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "With parameters"
-    },
-    {
-      "id": "s4-74",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// Route::get('/user/{id}/profile', /*...*/ )->name('profile);\n\n$url = route('profile', ['id' => 1]);\n\n// /user/1/profile/"
-    },
-    {
-      "id": "s4-75",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "With query string"
-    },
-    {
-      "id": "s4-76",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// Route::get('/user/{id}/profile', /*...*/ )->name('profile);\n\n$url = route('profile', ['id' => 1, 'photos'=>'yes']);\n\n// /user/1/profile?photos=yes"
+      "title": "routes%20-%20Named%20route",
+      "body": "%60%60%60php%0A%24url%20%3D%20route('profile')%3B%0A%60%60%60%0A%0AWith%20parameters%0A%0A%60%60%60php%0A%2F%2F%20Route%3A%3Aget('%2Fuser%2F%7Bid%7D%2Fprofile'%2C%20%2F*...*%2F%20)-%3Ename('profile)%3B%0A%0A%24url%20%3D%20route('profile'%2C%20%5B'id'%20%3D%3E%201%5D)%3B%0A%0A%2F%2F%20%2Fuser%2F1%2Fprofile%2F%0A%60%60%60%0A%0AWith%20query%20string%0A%0A%60%60%60php%0A%2F%2F%20Route%3A%3Aget('%2Fuser%2F%7Bid%7D%2Fprofile'%2C%20%2F*...*%2F%20)-%3Ename('profile)%3B%0A%0A%24url%20%3D%20route('profile'%2C%20%5B'id'%20%3D%3E%201%2C%20'photos'%3D%3E'yes'%5D)%3B%0A%0A%2F%2F%20%2Fuser%2F1%2Fprofile%3Fphotos%3Dyes%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-77",
       "sectionId": "s4",
       "title": "Redirects",
-      "kind": "code",
-      "lang": "php",
-      "code": "// Generating Redirects...\nreturn redirect()->route('profile');"
+      "body": "%60%60%60php%0A%2F%2F%20Generating%20Redirects...%0Areturn%20redirect()-%3Eroute('profile')%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-78",
       "sectionId": "s4",
-      "title": "Eloquent Models",
-      "kind": "code",
-      "lang": "php",
-      "code": "echo route('post.show', ['post' => $post]);"
-    },
-    {
-      "id": "s4-79",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "The route helper will automatically extract the model's route key. See [Routing](#routing-cols-4)"
+      "title": "Eloquent%20Models",
+      "body": "%60%60%60php%0Aecho%20route('post.show'%2C%20%5B'post'%20%3D%3E%20%24post%5D)%3B%0A%60%60%60%0A%0AThe%20route%20helper%20will%20automatically%20extract%20the%20model's%20route%20key.%20See%20%5BRouting%5D(%23routing-cols-4)",
+      "encoded": true
     },
     {
       "id": "s4-80",
       "sectionId": "s4",
-      "title": "URL Generation",
-      "kind": "text",
-      "body": "Generate arbitrary URLs for your application that will automatically use the scheme (HTTP or HTTPS) and host from the\ncurrent request"
-    },
-    {
-      "id": "s4-81",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "%24post%20%3D%20App%5CModels%5CPost%3A%3Afind(1)%3B%0A%0Aecho%20url(%22%2Fposts%2F%7B%24post-%3Eid%7D%22)%3B%0A%0A%2F%2F%20http%3A%2F%2Fexample.com%2Fposts%2F1",
+      "title": "URL%20Generation",
+      "body": "Generate%20arbitrary%20URLs%20for%20your%20application%20that%20will%20automatically%20use%20the%20scheme%20(HTTP%20or%20HTTPS)%20and%20host%20from%20the%0Acurrent%20request%0A%0A%60%60%60php%0A%24post%20%3D%20App%5CModels%5CPost%3A%3Afind(1)%3B%0A%0Aecho%20url(%22%2Fposts%2F%7B%24post-%3Eid%7D%22)%3B%0A%0A%2F%2F%20http%3A%2F%2Fexample.com%2Fposts%2F1%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-82",
       "sectionId": "s4",
       "title": "Current URL",
-      "kind": "code",
-      "lang": "php",
-      "code": "// Get the current URL without the query string...\necho url()->current();\n\n// Get the current URL including the query string...\necho url()->full();\n\n// Get the full URL for the previous request...\necho url()->previous();"
+      "body": "```php\n// Get the current URL without the query string...\necho url()->current();\n\n// Get the current URL including the query string...\necho url()->full();\n\n// Get the full URL for the previous request...\necho url()->previous();\n```"
     },
     {
       "id": "s4-83",
       "sectionId": "s4",
-      "title": "Named Route URL",
-      "kind": "code",
-      "lang": "php",
-      "code": "$url = route('profile');"
-    },
-    {
-      "id": "s4-84",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "See [Named Route](#named-route)"
+      "title": "Named%20Route%20URL",
+      "body": "%60%60%60php%0A%24url%20%3D%20route('profile')%3B%0A%60%60%60%0A%0ASee%20%5BNamed%20Route%5D(%23named-route)",
+      "encoded": true
     },
     {
       "id": "s4-85",
       "sectionId": "s4",
       "title": "Error Handling",
-      "kind": "code",
-      "lang": "php",
-      "code": "public function isValid($value)\n{\n    try {\n        // Validate the value...\n    } catch (Throwable $e) {\n        report($e);\n\n        return false;\n    }\n}"
-    },
-    {
-      "id": "s4-86",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Report an exception but continue handling the current request"
+      "body": "```php\npublic function isValid($value)\n{\n    try {\n        // Validate the value...\n    } catch (Throwable $e) {\n        report($e);\n\n        return false;\n    }\n}\n```\n\nReport an exception but continue handling the current request"
     },
     {
       "id": "s4-87",
       "sectionId": "s4",
       "title": "HTTP Exceptions",
-      "kind": "code",
-      "lang": "php",
-      "code": "// page not found\nabort(404);\n\n// Unauthorized\nabort(401);\n\n// Forbidden\nabort(403);\n\n// Server Error\nabort(500);"
-    },
-    {
-      "id": "s4-88",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Generate an HTTP exception response using status code"
+      "body": "```php\n// page not found\nabort(404);\n\n// Unauthorized\nabort(401);\n\n// Forbidden\nabort(403);\n\n// Server Error\nabort(500);\n```\n\nGenerate an HTTP exception response using status code"
     },
     {
       "id": "s5-89",
       "sectionId": "s5",
       "title": "Basic",
-      "kind": "code",
-      "lang": "php",
-      "code": "namespace App\\Http\\Controllers;\n\nuse App\\Http\\Controllers\\Controller;\nuse App\\Models\\User;\n\nclass UserController extends Controller\n{\n    public function show($id)\n    {\n        return view('user.profile', [\n            'user' => User::findOrFail($id)\n        ]);\n    }\n}"
-    },
-    {
-      "id": "s5-90",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "Define a route for this controller method:"
-    },
-    {
-      "id": "s5-91",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "use App\\Http\\Controllers\\UserController;\n\nRoute::get('/user/{id}', [UserController::class, 'show']);"
+      "body": "%60%60%60php%0Anamespace%20App%5CHttp%5CControllers%3B%0A%0Ause%20App%5CHttp%5CControllers%5CController%3B%0Ause%20App%5CModels%5CUser%3B%0A%0Aclass%20UserController%20extends%20Controller%0A%7B%0A%20%20%20%20public%20function%20show(%24id)%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20return%20view('user.profile'%2C%20%5B%0A%20%20%20%20%20%20%20%20%20%20%20%20'user'%20%3D%3E%20User%3A%3AfindOrFail(%24id)%0A%20%20%20%20%20%20%20%20%5D)%3B%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0ADefine%20a%20route%20for%20this%20controller%20method%3A%0A%0A%60%60%60php%0Ause%20App%5CHttp%5CControllers%5CUserController%3B%0A%0ARoute%3A%3Aget('%2Fuser%2F%7Bid%7D'%2C%20%5BUserController%3A%3Aclass%2C%20'show'%5D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-92",
       "sectionId": "s6",
       "title": "CSRF%20Protection",
-      "kind": "text",
-      "body": "Laravel%20automatically%20generates%20a%20CSRF%20%22token%22%20for%20each%20active%20user%20session.%0AThis%20token%20is%20used%20to%20verify%20that%20the%20authenticated%20user%20is%20the%20person%20actually%20making%20the%20requests.",
+      "body": "Laravel%20automatically%20generates%20a%20CSRF%20%22token%22%20for%20each%20active%20user%20session.%0AThis%20token%20is%20used%20to%20verify%20that%20the%20authenticated%20user%20is%20the%20person%20actually%20making%20the%20requests.%0A%0AGet%20current%20session's%20token%3A%0A%0A%60%60%60php%0ARoute%3A%3Aget('%2Ftoken'%2C%20function%20(Request%20%24request)%20%7B%0A%20%20%20%20%24token%20%3D%20%24request-%3Esession()-%3Etoken()%3B%0A%0A%20%20%20%20%24token%20%3D%20csrf_token()%3B%0A%0A%20%20%20%20%2F%2F%20...%0A%7D)%3B%0A%60%60%60%0A%0A%60POST%60%2C%20%60PUT%60%2C%20%60PATCH%60%2C%20or%20%60DELETE%60%20forms%20should%20include%20a%20hidden%20CSRF%20%60_token%60%20field%20in%20the%20form%20to%20validate%20the%0Arequest.%0A%0A%60%60%60html%0A%3Cform%20method%3D%22POST%22%20action%3D%22%2Fprofile%22%3E%0A%20%20%40csrf%0A%0A%20%20%3C!--%20Equivalent%20to...%20--%3E%0A%20%20%3Cinput%20type%3D%22hidden%22%20name%3D%22_token%22%20value%3D%22%7B%7B%20csrf_token()%20%7D%7D%22%20%2F%3E%0A%3C%2Fform%3E%0A%60%60%60%0A%0ASee%20%5BForms%5D(%23forms-cols-3)",
       "encoded": true
-    },
-    {
-      "id": "s6-93",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Get current session's token:"
-    },
-    {
-      "id": "s6-94",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::get('/token', function (Request $request) {\n    $token = $request->session()->token();\n\n    $token = csrf_token();\n\n    // ...\n});"
-    },
-    {
-      "id": "s6-95",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "`POST`, `PUT`, `PATCH`, or `DELETE` forms should include a hidden CSRF `_token` field in the form to validate the\nrequest."
-    },
-    {
-      "id": "s6-96",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Cform%20method%3D%22POST%22%20action%3D%22%2Fprofile%22%3E%0A%20%20%40csrf%0A%0A%20%20%3C!--%20Equivalent%20to...%20--%3E%0A%20%20%3Cinput%20type%3D%22hidden%22%20name%3D%22_token%22%20value%3D%22%7B%7B%20csrf_token()%20%7D%7D%22%20%2F%3E%0A%3C%2Fform%3E",
-      "encoded": true
-    },
-    {
-      "id": "s6-97",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "See [Forms](#forms-cols-3)"
     },
     {
       "id": "s6-98",
       "sectionId": "s6",
-      "title": "Accessing Request",
-      "kind": "text",
-      "body": "Get an instance of the current request by type-hinting the controller action or route closure"
-    },
-    {
-      "id": "s6-99",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// controller action\nclass UserController extends Controller\n{\n    public function store(Request $request)\n    {\n        $name = $request->input('name');\n    }\n}\n\n// closure\nRoute::get('/', function (Request $request) {\n    //\n});"
-    },
-    {
-      "id": "s6-100",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "[See Routing](#routing)"
+      "title": "Accessing%20Request",
+      "body": "Get%20an%20instance%20of%20the%20current%20request%20by%20type-hinting%20the%20controller%20action%20or%20route%20closure%0A%0A%60%60%60php%0A%2F%2F%20controller%20action%0Aclass%20UserController%20extends%20Controller%0A%7B%0A%20%20%20%20public%20function%20store(Request%20%24request)%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%24name%20%3D%20%24request-%3Einput('name')%3B%0A%20%20%20%20%7D%0A%7D%0A%0A%2F%2F%20closure%0ARoute%3A%3Aget('%2F'%2C%20function%20(Request%20%24request)%20%7B%0A%20%20%20%20%2F%2F%0A%7D)%3B%0A%60%60%60%0A%0A%5BSee%20Routing%5D(%23routing)",
+      "encoded": true
     },
     {
       "id": "s6-101",
       "sectionId": "s6",
       "title": "Path",
-      "kind": "text",
-      "body": "The request's path information"
-    },
-    {
-      "id": "s6-102",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$uri = $request->path();\n\n// https://example.com/foo/bar --> foo/bar"
+      "body": "The%20request's%20path%20information%0A%0A%60%60%60php%0A%24uri%20%3D%20%24request-%3Epath()%3B%0A%0A%2F%2F%20https%3A%2F%2Fexample.com%2Ffoo%2Fbar%20--%3E%20foo%2Fbar%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-103",
       "sectionId": "s6",
-      "title": "Match path to pattern",
-      "kind": "text",
-      "body": "Verify that the incoming request path matches a given pattern"
-    },
-    {
-      "id": "s6-104",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// * is wildcard\nif ($request->is('admin/*')) {\n    //\n}"
-    },
-    {
-      "id": "s6-105",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Determine if the incoming request matches a named route"
-    },
-    {
-      "id": "s6-106",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "if ($request->routeIs('admin.*')) {\n    //\n}"
+      "title": "Match%20path%20to%20pattern",
+      "body": "Verify%20that%20the%20incoming%20request%20path%20matches%20a%20given%20pattern%0A%0A%60%60%60php%0A%2F%2F%20*%20is%20wildcard%0Aif%20(%24request-%3Eis('admin%2F*'))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%60%60%60%0A%0ADetermine%20if%20the%20incoming%20request%20matches%20a%20named%20route%0A%0A%60%60%60php%0Aif%20(%24request-%3ErouteIs('admin.*'))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-107",
       "sectionId": "s6",
       "title": "URL",
-      "kind": "text",
-      "body": "Full URL for the incoming request"
-    },
-    {
-      "id": "s6-108",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// URL without the query string\n$url = $request->url();\n\n// URL including query string\n$urlWithQueryString = $request->fullUrl();\n\n// append data to query string\n$request->fullUrlWithQuery(['type' => 'phone']);"
+      "body": "Full%20URL%20for%20the%20incoming%20request%0A%0A%60%60%60php%0A%2F%2F%20URL%20without%20the%20query%20string%0A%24url%20%3D%20%24request-%3Eurl()%3B%0A%0A%2F%2F%20URL%20including%20query%20string%0A%24urlWithQueryString%20%3D%20%24request-%3EfullUrl()%3B%0A%0A%2F%2F%20append%20data%20to%20query%20string%0A%24request-%3EfullUrlWithQuery(%5B'type'%20%3D%3E%20'phone'%5D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-109",
       "sectionId": "s6",
-      "title": "Request Method",
-      "kind": "code",
-      "lang": "php",
-      "code": "$method = $request->method();\n\n// verify that the HTTP verb matches a given string\nif ($request->isMethod('post')) {\n    //\n}"
+      "title": "Request%20Method",
+      "body": "%60%60%60php%0A%24method%20%3D%20%24request-%3Emethod()%3B%0A%0A%2F%2F%20verify%20that%20the%20HTTP%20verb%20matches%20a%20given%20string%0Aif%20(%24request-%3EisMethod('post'))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-110",
       "sectionId": "s6",
       "title": "Client IP",
-      "kind": "code",
-      "lang": "php",
-      "code": "$ipAddress = $request->ip();"
+      "body": "```php\n$ipAddress = $request->ip();\n```"
     },
     {
       "id": "s6-111",
       "sectionId": "s6",
       "title": "Headers",
-      "kind": "code",
-      "lang": "php",
-      "code": "$value = $request->header('X-Header-Name');\n\n$value = $request->header('X-Header-Name', 'default value');\n\n// determine if the request contains a given header\nif ($request->hasHeader('X-Header-Name')) {\n    //\n}\n\n// retrieve a bearer token from the Authorization header\n$token = $request->bearerToken();"
+      "body": "%60%60%60php%0A%24value%20%3D%20%24request-%3Eheader('X-Header-Name')%3B%0A%0A%24value%20%3D%20%24request-%3Eheader('X-Header-Name'%2C%20'default%20value')%3B%0A%0A%2F%2F%20determine%20if%20the%20request%20contains%20a%20given%20header%0Aif%20(%24request-%3EhasHeader('X-Header-Name'))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%0A%2F%2F%20retrieve%20a%20bearer%20token%20from%20the%20Authorization%20header%0A%24token%20%3D%20%24request-%3EbearerToken()%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-112",
       "sectionId": "s6",
-      "title": "Content Type",
-      "kind": "text",
-      "body": "Return an array containing all the content types accepted by the request"
-    },
-    {
-      "id": "s6-113",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$contentTypes = $request->getAcceptableContentTypes();"
-    },
-    {
-      "id": "s6-114",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Boolean check for content types are accepted by the request"
-    },
-    {
-      "id": "s6-115",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "if ($request->accepts(['text/html', 'application/json'])) {\n    // ...\n}"
+      "title": "Content%20Type",
+      "body": "Return%20an%20array%20containing%20all%20the%20content%20types%20accepted%20by%20the%20request%0A%0A%60%60%60php%0A%24contentTypes%20%3D%20%24request-%3EgetAcceptableContentTypes()%3B%0A%60%60%60%0A%0ABoolean%20check%20for%20content%20types%20are%20accepted%20by%20the%20request%0A%0A%60%60%60php%0Aif%20(%24request-%3Eaccepts(%5B'text%2Fhtml'%2C%20'application%2Fjson'%5D))%20%7B%0A%20%20%20%20%2F%2F%20...%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-116",
       "sectionId": "s6",
       "title": "Input",
-      "kind": "text",
-      "body": "Retrieve all the incoming request's input data as an array"
-    },
-    {
-      "id": "s6-117",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$input = $request->all();"
-    },
-    {
-      "id": "s6-118",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Retrieve all the incoming request's input data as a collection"
-    },
-    {
-      "id": "s6-119",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$input = $request->collect();\n\n// retrieve subset as collection\n$request->collect('users')->each(function ($user) {\n    // ...\n});"
-    },
-    {
-      "id": "s6-120",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "See [Helpers](#helpers-cols-3)"
-    },
-    {
-      "id": "s6-121",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Retrieve user input (also gets values from query string)"
-    },
-    {
-      "id": "s6-122",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$name = $request->input('name');\n\n// with default value if none present\n$name = $request->input('name', 'Sally');"
-    },
-    {
-      "id": "s6-123",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Access array inputs"
-    },
-    {
-      "id": "s6-124",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$name = $request->input('products.0.name');\n\n$names = $request->input('products.*.name');"
-    },
-    {
-      "id": "s6-125",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Retrieve all the input values as an associative array:"
-    },
-    {
-      "id": "s6-126",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$input = $request->input();"
-    },
-    {
-      "id": "s6-127",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Only retrieve values from the query string:"
-    },
-    {
-      "id": "s6-128",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$name = $request->query('name');\n\n// with default value\n$name = $request->query('name', 'Helen');"
-    },
-    {
-      "id": "s6-129",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Retrieve all the query string values as an associative array:"
-    },
-    {
-      "id": "s6-130",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$query = $request->query();"
+      "body": "Retrieve%20all%20the%20incoming%20request's%20input%20data%20as%20an%20array%0A%0A%60%60%60php%0A%24input%20%3D%20%24request-%3Eall()%3B%0A%60%60%60%0A%0ARetrieve%20all%20the%20incoming%20request's%20input%20data%20as%20a%20collection%0A%0A%60%60%60php%0A%24input%20%3D%20%24request-%3Ecollect()%3B%0A%0A%2F%2F%20retrieve%20subset%20as%20collection%0A%24request-%3Ecollect('users')-%3Eeach(function%20(%24user)%20%7B%0A%20%20%20%20%2F%2F%20...%0A%7D)%3B%0A%60%60%60%0A%0ASee%20%5BHelpers%5D(%23helpers-cols-3)%0A%0ARetrieve%20user%20input%20(also%20gets%20values%20from%20query%20string)%0A%0A%60%60%60php%0A%24name%20%3D%20%24request-%3Einput('name')%3B%0A%0A%2F%2F%20with%20default%20value%20if%20none%20present%0A%24name%20%3D%20%24request-%3Einput('name'%2C%20'Sally')%3B%0A%60%60%60%0A%0AAccess%20array%20inputs%0A%0A%60%60%60php%0A%24name%20%3D%20%24request-%3Einput('products.0.name')%3B%0A%0A%24names%20%3D%20%24request-%3Einput('products.*.name')%3B%0A%60%60%60%0A%0ARetrieve%20all%20the%20input%20values%20as%20an%20associative%20array%3A%0A%0A%60%60%60php%0A%24input%20%3D%20%24request-%3Einput()%3B%0A%60%60%60%0A%0AOnly%20retrieve%20values%20from%20the%20query%20string%3A%0A%0A%60%60%60php%0A%24name%20%3D%20%24request-%3Equery('name')%3B%0A%0A%2F%2F%20with%20default%20value%0A%24name%20%3D%20%24request-%3Equery('name'%2C%20'Helen')%3B%0A%60%60%60%0A%0ARetrieve%20all%20the%20query%20string%20values%20as%20an%20associative%20array%3A%0A%0A%60%60%60php%0A%24query%20%3D%20%24request-%3Equery()%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-131",
       "sectionId": "s6",
       "title": "Boolean%20Input%20Values",
-      "kind": "text",
-      "body": "Helpful%20for%20checkbox%20inputs%20or%20other%20booleans.%20Return%20%60true%60%20for%20%601%60%2C%20%60%221%22%60%2C%20%60true%60%2C%20%60%22true%22%60%2C%20%60%22on%22%60%2C%20and%20%60%22yes%22%60.%0AAll%20other%20values%20will%20return%20%60false%60",
+      "body": "Helpful%20for%20checkbox%20inputs%20or%20other%20booleans.%20Return%20%60true%60%20for%20%601%60%2C%20%60%221%22%60%2C%20%60true%60%2C%20%60%22true%22%60%2C%20%60%22on%22%60%2C%20and%20%60%22yes%22%60.%0AAll%20other%20values%20will%20return%20%60false%60%0A%0A%60%60%60php%0A%24archived%20%3D%20%24request-%3Eboolean('archived')%3B%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s6-132",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$archived = $request->boolean('archived');"
     },
     {
       "id": "s6-133",
       "sectionId": "s6",
       "title": "Dynamic Properties",
-      "kind": "text",
-      "body": "Access inputs via properties.\nIf not found as an input, the route parameters will be checked."
-    },
-    {
-      "id": "s6-134",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$name = $request->name;"
+      "body": "Access inputs via properties.\nIf not found as an input, the route parameters will be checked.\n\n```php\n$name = $request->name;\n```"
     },
     {
       "id": "s6-135",
       "sectionId": "s6",
-      "title": "Retrieve Partial Input",
-      "kind": "code",
-      "lang": "php",
-      "code": "$input = $request->only(['username', 'password']);\n\n$input = $request->only('username', 'password');\n\n$input = $request->except(['credit_card']);\n\n$input = $request->except('credit_card');"
+      "title": "Retrieve%20Partial%20Input",
+      "body": "%60%60%60php%0A%24input%20%3D%20%24request-%3Eonly(%5B'username'%2C%20'password'%5D)%3B%0A%0A%24input%20%3D%20%24request-%3Eonly('username'%2C%20'password')%3B%0A%0A%24input%20%3D%20%24request-%3Eexcept(%5B'credit_card'%5D)%3B%0A%0A%24input%20%3D%20%24request-%3Eexcept('credit_card')%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-136",
       "sectionId": "s6",
-      "title": "Check Existence",
-      "kind": "text",
-      "body": "Determine if value(s) present"
-    },
-    {
-      "id": "s6-137",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "if ($request->has('name')) {\n    //\n}\n\n// check if ALL values are present\nif ($request->has(['name', 'email'])) {\n    //\n}\n\n// if any values are present\nif ($request->hasAny(['name', 'email'])) {\n    //\n}\n\n// if a file is present on request\nif ($request->hasFile('image')) {\n    //\n}"
+      "title": "Check%20Existence",
+      "body": "Determine%20if%20value(s)%20present%0A%0A%60%60%60php%0Aif%20(%24request-%3Ehas('name'))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%0A%2F%2F%20check%20if%20ALL%20values%20are%20present%0Aif%20(%24request-%3Ehas(%5B'name'%2C%20'email'%5D))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%0A%2F%2F%20if%20any%20values%20are%20present%0Aif%20(%24request-%3EhasAny(%5B'name'%2C%20'email'%5D))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%0A%2F%2F%20if%20a%20file%20is%20present%20on%20request%0Aif%20(%24request-%3EhasFile('image'))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-138",
       "sectionId": "s6",
-      "title": "Old Input",
-      "kind": "text",
-      "body": "Retrieve input from the previous request"
-    },
-    {
-      "id": "s6-139",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$username = $request->old('username');"
-    },
-    {
-      "id": "s6-140",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Or use the `old()` helper"
-    },
-    {
-      "id": "s6-141",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "%3Cinput%20type%3D%22text%22%20name%3D%22username%22%20value%3D%22%7B%7B%20old('username')%20%7D%7D%22%3E",
+      "title": "Old%20Input",
+      "body": "Retrieve%20input%20from%20the%20previous%20request%0A%0A%60%60%60php%0A%24username%20%3D%20%24request-%3Eold('username')%3B%0A%60%60%60%0A%0AOr%20use%20the%20%60old()%60%20helper%0A%0A%60%60%60php%0A%3Cinput%20type%3D%22text%22%20name%3D%22username%22%20value%3D%22%7B%7B%20old('username')%20%7D%7D%22%3E%0A%60%60%60%0A%0ASee%3A%20%5BHelpers%5D(%23helpers-cols-3)%0ASee%3A%20%5BForms%5D(%23forms-cols-3)",
       "encoded": true
-    },
-    {
-      "id": "s6-142",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Helpers](#helpers-cols-3)\nSee: [Forms](#forms-cols-3)"
     },
     {
       "id": "s6-143",
       "sectionId": "s6",
-      "title": "Uploaded Files",
-      "kind": "text",
-      "body": "Retrieve uploaded file from request"
-    },
-    {
-      "id": "s6-144",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$file = $request->file('photo');\n\n$file = $request->photo;"
-    },
-    {
-      "id": "s6-145",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Get file path or extension"
-    },
-    {
-      "id": "s6-146",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$path = $request->photo->path();\n\n$extension = $request->photo->extension();"
-    },
-    {
-      "id": "s6-147",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Store uploaded file with a randomly generated filename"
-    },
-    {
-      "id": "s6-148",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// path where the file should be stored relative to\n// the filesystem's configured root directory\n$path = $request->photo->store('images');\n\n// optional 2nd param to specify the filesystem disk\n$path = $request->photo->store('images', 's3');"
-    },
-    {
-      "id": "s6-149",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Store uploaded file and specify the name"
-    },
-    {
-      "id": "s6-150",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$path = $request->photo->storeAs('images', 'filename.jpg');\n\n$path = $request->photo->storeAs('images', 'filename.jpg', 's3');"
-    },
-    {
-      "id": "s6-151",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "See More: [Laravel File Storage](https://laravel.com/docs/8.x/filesystem)"
+      "title": "Uploaded%20Files",
+      "body": "Retrieve%20uploaded%20file%20from%20request%0A%0A%60%60%60php%0A%24file%20%3D%20%24request-%3Efile('photo')%3B%0A%0A%24file%20%3D%20%24request-%3Ephoto%3B%0A%60%60%60%0A%0AGet%20file%20path%20or%20extension%0A%0A%60%60%60php%0A%24path%20%3D%20%24request-%3Ephoto-%3Epath()%3B%0A%0A%24extension%20%3D%20%24request-%3Ephoto-%3Eextension()%3B%0A%60%60%60%0A%0AStore%20uploaded%20file%20with%20a%20randomly%20generated%20filename%0A%0A%60%60%60php%0A%2F%2F%20path%20where%20the%20file%20should%20be%20stored%20relative%20to%0A%2F%2F%20the%20filesystem's%20configured%20root%20directory%0A%24path%20%3D%20%24request-%3Ephoto-%3Estore('images')%3B%0A%0A%2F%2F%20optional%202nd%20param%20to%20specify%20the%20filesystem%20disk%0A%24path%20%3D%20%24request-%3Ephoto-%3Estore('images'%2C%20's3')%3B%0A%60%60%60%0A%0AStore%20uploaded%20file%20and%20specify%20the%20name%0A%0A%60%60%60php%0A%24path%20%3D%20%24request-%3Ephoto-%3EstoreAs('images'%2C%20'filename.jpg')%3B%0A%0A%24path%20%3D%20%24request-%3Ephoto-%3EstoreAs('images'%2C%20'filename.jpg'%2C%20's3')%3B%0A%60%60%60%0A%0ASee%20More%3A%20%5BLaravel%20File%20Storage%5D(https%3A%2F%2Flaravel.com%2Fdocs%2F8.x%2Ffilesystem)",
+      "encoded": true
     },
     {
       "id": "s7-152",
       "sectionId": "s7",
       "title": "Intro",
-      "kind": "text",
-      "body": "• [Laravel Docs - Views](https://laravel.com/docs/8.x/views)"
-    },
-    {
-      "id": "s7-153",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<!-- View stored in resources/views/greeting.blade.php -->\n\n<html>\n  <body>\n    <h1>Hello, <?php echo $name; ?></h1>\n  </body>\n</html>"
-    },
-    {
-      "id": "s7-154",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "Create a view by placing a file with the `.blade.php` extension in the `resources/views` directory."
+      "body": "• [Laravel Docs - Views](https://laravel.com/docs/8.x/views)\n\n```html\n<!-- View stored in resources/views/greeting.blade.php -->\n\n<html>\n  <body>\n    <h1>Hello, <?php echo $name; ?></h1>\n  </body>\n</html>\n```\n\nCreate a view by placing a file with the `.blade.php` extension in the `resources/views` directory."
     },
     {
       "id": "s7-155",
       "sectionId": "s7",
-      "title": "Pass Data to Views - As an array",
-      "kind": "code",
-      "lang": "php",
-      "code": "return view('greetings', ['name' => 'Victoria']);"
+      "title": "Pass%20Data%20to%20Views%20-%20As%20an%20array",
+      "body": "%60%60%60php%0Areturn%20view('greetings'%2C%20%5B'name'%20%3D%3E%20'Victoria'%5D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s7-156",
       "sectionId": "s7",
-      "title": "Using with()",
-      "kind": "code",
-      "lang": "php",
-      "code": "return view('greeting')\n            ->with('name', 'Victoria')\n            ->with('occupation', 'Astronaut');"
-    },
-    {
-      "id": "s7-157",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "Access each value using the data's keys"
-    },
-    {
-      "id": "s7-158",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<html>\n  <body>\n    <h1>Hello, {{ $name }}</h1>\n    <!-- Or -->\n    <h1>Hello, <?php echo $name; ?></h1>\n  </body>\n</html>"
+      "title": "Using%20with()",
+      "body": "%60%60%60php%0Areturn%20view('greeting')%0A%20%20%20%20%20%20%20%20%20%20%20%20-%3Ewith('name'%2C%20'Victoria')%0A%20%20%20%20%20%20%20%20%20%20%20%20-%3Ewith('occupation'%2C%20'Astronaut')%3B%0A%60%60%60%0A%0AAccess%20each%20value%20using%20the%20data's%20keys%0A%0A%60%60%60html%0A%3Chtml%3E%0A%20%20%3Cbody%3E%0A%20%20%20%20%3Ch1%3EHello%2C%20%7B%7B%20%24name%20%7D%7D%3C%2Fh1%3E%0A%20%20%20%20%3C!--%20Or%20--%3E%0A%20%20%20%20%3Ch1%3EHello%2C%20%3C%3Fphp%20echo%20%24name%3B%20%3F%3E%3C%2Fh1%3E%0A%20%20%3C%2Fbody%3E%0A%3C%2Fhtml%3E%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s7-159",
       "sectionId": "s7",
-      "title": "view helper",
-      "kind": "text",
-      "body": "Return a view from a route with the `view()` helper"
-    },
-    {
-      "id": "s7-160",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::get('/', function () {\n    return view('greeting', ['name' => 'James']);\n});"
-    },
-    {
-      "id": "s7-161",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "See: [View Routes](#view-routes) and [Helpers](#helpers)"
+      "title": "view%20helper",
+      "body": "Return%20a%20view%20from%20a%20route%20with%20the%20%60view()%60%20helper%0A%0A%60%60%60php%0ARoute%3A%3Aget('%2F'%2C%20function%20()%20%7B%0A%20%20%20%20return%20view('greeting'%2C%20%5B'name'%20%3D%3E%20'James'%5D)%3B%0A%7D)%3B%0A%60%60%60%0A%0ASee%3A%20%5BView%20Routes%5D(%23view-routes)%20and%20%5BHelpers%5D(%23helpers)",
+      "encoded": true
     },
     {
       "id": "s7-162",
       "sectionId": "s7",
       "title": "Subdirectories",
-      "kind": "code",
-      "lang": "php",
-      "code": "// resources/views/admin.profile.blade.php\nreturn view('admin.profile');"
+      "body": "%60%60%60php%0A%2F%2F%20resources%2Fviews%2Fadmin.profile.blade.php%0Areturn%20view('admin.profile')%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-163",
       "sectionId": "s8",
       "title": "Intro",
-      "kind": "text",
-      "body": "• [Laravel Docs - Blade Templates](https://laravel.com/docs/8.x/blade)"
-    },
-    {
-      "id": "s8-164",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "Blade is the templating engine included in Laravel that also allows you to use plain PHP."
+      "body": "• [Laravel Docs - Blade Templates](https://laravel.com/docs/8.x/blade)\n\nBlade is the templating engine included in Laravel that also allows you to use plain PHP."
     },
     {
       "id": "s8-165",
       "sectionId": "s8",
       "title": "Views",
-      "kind": "text",
-      "body": "Blade views are returned using the `view()` helper"
-    },
-    {
-      "id": "s8-166",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::get('/', function () {\n    return view('welcome', ['name' => 'Samantha']);\n});"
-    },
-    {
-      "id": "s8-167",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Views](#view-helper)"
+      "body": "Blade%20views%20are%20returned%20using%20the%20%60view()%60%20helper%0A%0A%60%60%60php%0ARoute%3A%3Aget('%2F'%2C%20function%20()%20%7B%0A%20%20%20%20return%20view('welcome'%2C%20%5B'name'%20%3D%3E%20'Samantha'%5D)%3B%0A%7D)%3B%0A%60%60%60%0A%0ASee%3A%20%5BViews%5D(%23view-helper)",
+      "encoded": true
     },
     {
       "id": "s8-168",
       "sectionId": "s8",
       "title": "Comments",
-      "kind": "code",
-      "lang": "html",
-      "code": "{{-- This comment will not be present in the rendered HTML --}}"
+      "body": "```html\n{{-- This comment will not be present in the rendered HTML --}}\n```"
     },
     {
       "id": "s8-169",
       "sectionId": "s8",
-      "title": "Directives - if Statements",
-      "kind": "code",
-      "lang": "php",
-      "code": "@if (count($records) === 1)\n    I have one record!\n@elseif (count($records) > 1)\n    I have multiple records!\n@else\n    I don't have any records!\n@endif"
+      "title": "Directives%20-%20if%20Statements",
+      "body": "%60%60%60php%0A%40if%20(count(%24records)%20%3D%3D%3D%201)%0A%20%20%20%20I%20have%20one%20record!%0A%40elseif%20(count(%24records)%20%3E%201)%0A%20%20%20%20I%20have%20multiple%20records!%0A%40else%0A%20%20%20%20I%20don't%20have%20any%20records!%0A%40endif%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-170",
       "sectionId": "s8",
       "title": "isset%20%26%20empty",
-      "kind": "code",
-      "lang": "php",
-      "code": "%40isset(%24records)%0A%20%20%20%20%2F%2F%20%24records%20is%20defined%20and%20is%20not%20null...%0A%40endisset%0A%0A%40empty(%24records)%0A%20%20%20%20%2F%2F%20%24records%20is%20%22empty%22...%0A%40endempty",
+      "body": "%60%60%60php%0A%40isset(%24records)%0A%20%20%20%20%2F%2F%20%24records%20is%20defined%20and%20is%20not%20null...%0A%40endisset%0A%0A%40empty(%24records)%0A%20%20%20%20%2F%2F%20%24records%20is%20%22empty%22...%0A%40endempty%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-171",
       "sectionId": "s8",
       "title": "Authentication",
-      "kind": "code",
-      "lang": "php",
-      "code": "@auth\n    // The user is authenticated...\n@endauth\n\n@guest\n    // The user is not authenticated...\n@endguest"
+      "body": "```php\n@auth\n    // The user is authenticated...\n@endauth\n\n@guest\n    // The user is not authenticated...\n@endguest\n```"
     },
     {
       "id": "s8-172",
       "sectionId": "s8",
       "title": "Loops",
-      "kind": "code",
-      "lang": "html",
-      "code": "@for ($i = 0; $i < 10; $i++)\n    The current value is {{ $i }}\n@endfor\n\n@foreach ($users as $user)\n    <p>This is user {{ $user->id }}</p>\n@endforeach\n\n@forelse ($users as $user)\n    <li>{{ $user->name }}</li>\n@empty\n    <p>No users</p>\n@endforelse\n\n@while (true)\n    <p>I'm looping forever.</p>\n@endwhile"
-    },
-    {
-      "id": "s8-173",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "Loop Iteration:"
-    },
-    {
-      "id": "s8-174",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "@foreach ($users as $user)\n    @if ($loop->first)\n        This is the first iteration.\n    @endif\n\n    @if ($loop->last)\n        This is the last iteration.\n    @endif\n\n    <p>This is user {{ $user->id }}</p>\n@endforeach"
-    },
-    {
-      "id": "s8-175",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "See more: [Laravel Loop Variable](https://laravel.com/docs/8.x/blade#the-loop-variable)"
+      "body": "%60%60%60html%0A%40for%20(%24i%20%3D%200%3B%20%24i%20%3C%2010%3B%20%24i%2B%2B)%0A%20%20%20%20The%20current%20value%20is%20%7B%7B%20%24i%20%7D%7D%0A%40endfor%0A%0A%40foreach%20(%24users%20as%20%24user)%0A%20%20%20%20%3Cp%3EThis%20is%20user%20%7B%7B%20%24user-%3Eid%20%7D%7D%3C%2Fp%3E%0A%40endforeach%0A%0A%40forelse%20(%24users%20as%20%24user)%0A%20%20%20%20%3Cli%3E%7B%7B%20%24user-%3Ename%20%7D%7D%3C%2Fli%3E%0A%40empty%0A%20%20%20%20%3Cp%3ENo%20users%3C%2Fp%3E%0A%40endforelse%0A%0A%40while%20(true)%0A%20%20%20%20%3Cp%3EI'm%20looping%20forever.%3C%2Fp%3E%0A%40endwhile%0A%60%60%60%0A%0ALoop%20Iteration%3A%0A%0A%60%60%60php%0A%40foreach%20(%24users%20as%20%24user)%0A%20%20%20%20%40if%20(%24loop-%3Efirst)%0A%20%20%20%20%20%20%20%20This%20is%20the%20first%20iteration.%0A%20%20%20%20%40endif%0A%0A%20%20%20%20%40if%20(%24loop-%3Elast)%0A%20%20%20%20%20%20%20%20This%20is%20the%20last%20iteration.%0A%20%20%20%20%40endif%0A%0A%20%20%20%20%3Cp%3EThis%20is%20user%20%7B%7B%20%24user-%3Eid%20%7D%7D%3C%2Fp%3E%0A%40endforeach%0A%60%60%60%0A%0ASee%20more%3A%20%5BLaravel%20Loop%20Variable%5D(https%3A%2F%2Flaravel.com%2Fdocs%2F8.x%2Fblade%23the-loop-variable)",
+      "encoded": true
     },
     {
       "id": "s8-176",
       "sectionId": "s8",
-      "title": "Displaying Data",
-      "kind": "text",
-      "body": "Blade's echo statements `{{ }}` are automatically sent through PHP's `htmlspecialchars` function to prevent XSS attacks."
-    },
-    {
-      "id": "s8-177",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "Display the contents of the name variable:"
-    },
-    {
-      "id": "s8-178",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "Hello, {{ $name }}."
-    },
-    {
-      "id": "s8-179",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "Display results of a PHP function:"
-    },
-    {
-      "id": "s8-180",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "The current UNIX timestamp is {{ time() }}."
-    },
-    {
-      "id": "s8-181",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "Display data without escaping with `htmlspecialchars`"
-    },
-    {
-      "id": "s8-182",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "Hello, {!! $name !!}."
+      "title": "Displaying%20Data",
+      "body": "Blade's%20echo%20statements%20%60%7B%7B%20%7D%7D%60%20are%20automatically%20sent%20through%20PHP's%20%60htmlspecialchars%60%20function%20to%20prevent%20XSS%20attacks.%0A%0ADisplay%20the%20contents%20of%20the%20name%20variable%3A%0A%0A%60%60%60html%0AHello%2C%20%7B%7B%20%24name%20%7D%7D.%0A%60%60%60%0A%0ADisplay%20results%20of%20a%20PHP%20function%3A%0A%0A%60%60%60html%0AThe%20current%20UNIX%20timestamp%20is%20%7B%7B%20time()%20%7D%7D.%0A%60%60%60%0A%0ADisplay%20data%20without%20escaping%20with%20%60htmlspecialchars%60%0A%0A%60%60%60html%0AHello%2C%20%7B!!%20%24name%20!!%7D.%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-183",
       "sectionId": "s8",
-      "title": "Including Subviews",
-      "kind": "text",
-      "body": "Include a Blade view from within another view.\nAll variables that are available to the parent view are also available to the included view"
-    },
-    {
-      "id": "s8-184",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<div>\n  <!-- resources/views/shared/errors/blade.php -->\n  @include('shared.errors')\n\n  <form>\n    <!-- Form Contents -->\n  </form>\n</div>"
+      "title": "Including%20Subviews",
+      "body": "Include%20a%20Blade%20view%20from%20within%20another%20view.%0AAll%20variables%20that%20are%20available%20to%20the%20parent%20view%20are%20also%20available%20to%20the%20included%20view%0A%0A%60%60%60html%0A%3Cdiv%3E%0A%20%20%3C!--%20resources%2Fviews%2Fshared%2Ferrors%2Fblade.php%20--%3E%0A%20%20%40include('shared.errors')%0A%0A%20%20%3Cform%3E%0A%20%20%20%20%3C!--%20Form%20Contents%20--%3E%0A%20%20%3C%2Fform%3E%0A%3C%2Fdiv%3E%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-185",
       "sectionId": "s8",
       "title": "Raw PHP",
-      "kind": "text",
-      "body": "Execute a block of plain PHP"
-    },
-    {
-      "id": "s8-186",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "@php\n    $counter = 1;\n@endphp"
+      "body": "Execute a block of plain PHP\n\n```php\n@php\n    $counter = 1;\n@endphp\n```"
     },
     {
       "id": "s8-187",
       "sectionId": "s8",
       "title": "Stacks",
-      "kind": "text",
-      "body": "Blade allows you to push to named stacks which can be rendered in another view or layout.\nUseful for javascript libraries required by child views"
-    },
-    {
-      "id": "s8-188",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3C!--%20Add%20to%20the%20stack%20--%3E%0A%40push('scripts')%0A%3Cscript%20src%3D%22%2Fexample.js%22%3E%3C%2Fscript%3E%0A%40endpush",
+      "body": "Blade%20allows%20you%20to%20push%20to%20named%20stacks%20which%20can%20be%20rendered%20in%20another%20view%20or%20layout.%0AUseful%20for%20javascript%20libraries%20required%20by%20child%20views%0A%0A%60%60%60html%0A%3C!--%20Add%20to%20the%20stack%20--%3E%0A%40push('scripts')%0A%3Cscript%20src%3D%22%2Fexample.js%22%3E%3C%2Fscript%3E%0A%40endpush%0A%60%60%60%0A%0ARender%20the%20stack%0A%0A%60%60%60html%0A%3Chead%3E%0A%20%20%3C!--%20Head%20Contents%20--%3E%0A%0A%20%20%40stack('scripts')%0A%3C%2Fhead%3E%0A%60%60%60%0A%0APrepend%20to%20the%20beginning%20of%20a%20stack%0A%0A%60%60%60php%0A%40push('scripts')%0A%20%20%20%20This%20will%20be%20second...%0A%40endpush%0A%0A%2F%2F%20Later...%0A%0A%40prepend('scripts')%0A%20%20%20%20This%20will%20be%20first...%0A%40endprepend%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s8-189",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "Render the stack"
-    },
-    {
-      "id": "s8-190",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<head>\n  <!-- Head Contents -->\n\n  @stack('scripts')\n</head>"
-    },
-    {
-      "id": "s8-191",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "Prepend to the beginning of a stack"
-    },
-    {
-      "id": "s8-192",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "@push('scripts')\n    This will be second...\n@endpush\n\n// Later...\n\n@prepend('scripts')\n    This will be first...\n@endprepend"
     },
     {
       "id": "s9-193",
       "sectionId": "s9",
       "title": "Intro",
-      "kind": "text",
       "body": "• [Laravel Docs - Forms](https://laravel.com/docs/8.x/blade#forms)"
     },
     {
       "id": "s9-194",
       "sectionId": "s9",
-      "title": "CSRF Field",
-      "kind": "text",
-      "body": "Include a hidden CSRF token field to validate the request"
-    },
-    {
-      "id": "s9-195",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Cform%20method%3D%22POST%22%20action%3D%22%2Fprofile%22%3E%0A%20%20%40csrf%0A%0A%20%20...%0A%3C%2Fform%3E",
+      "title": "CSRF%20Field",
+      "body": "Include%20a%20hidden%20CSRF%20token%20field%20to%20validate%20the%20request%0A%0A%60%60%60html%0A%3Cform%20method%3D%22POST%22%20action%3D%22%2Fprofile%22%3E%0A%20%20%40csrf%0A%0A%20%20...%0A%3C%2Fform%3E%0A%60%60%60%0A%0ASee%3A%20%5BCSRF%20Protection%5D(%23csrf-protection)",
       "encoded": true
-    },
-    {
-      "id": "s9-196",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "See: [CSRF Protection](#csrf-protection)"
     },
     {
       "id": "s9-197",
       "sectionId": "s9",
-      "title": "Method Field",
-      "kind": "text",
-      "body": "Since HTML forms can't make `PUT`, `PATCH`, or `DELETE` requests, you will need to add a hidden `_method` field to spoof\nthese HTTP verbs:"
-    },
-    {
-      "id": "s9-198",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Cform%20action%3D%22%2Fpost%2Fmy-post%22%20method%3D%22POST%22%3E%0A%20%20%40method('PUT')%0A%0A%20%20...%0A%3C%2Fform%3E",
+      "title": "Method%20Field",
+      "body": "Since%20HTML%20forms%20can't%20make%20%60PUT%60%2C%20%60PATCH%60%2C%20or%20%60DELETE%60%20requests%2C%20you%20will%20need%20to%20add%20a%20hidden%20%60_method%60%20field%20to%20spoof%0Athese%20HTTP%20verbs%3A%0A%0A%60%60%60html%0A%3Cform%20action%3D%22%2Fpost%2Fmy-post%22%20method%3D%22POST%22%3E%0A%20%20%40method('PUT')%0A%0A%20%20...%0A%3C%2Fform%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-199",
       "sectionId": "s9",
       "title": "Validation%20Errors",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3C!--%20%2Fresources%2Fviews%2Fpost%2Fcreate.blade.php%20--%3E%0A%0A%3Clabel%20for%3D%22title%22%3EPost%20Title%3C%2Flabel%3E%0A%0A%3Cinput%20id%3D%22title%22%20type%3D%22text%22%20class%3D%22%40error('title')%20is-invalid%20%40enderror%22%20%2F%3E%0A%0A%40error('title')%0A%20%20%3Cdiv%20class%3D%22alert%20alert-danger%22%3E%7B%7B%20%24message%20%7D%7D%3C%2Fdiv%3E%0A%40enderror",
+      "body": "%60%60%60html%0A%3C!--%20%2Fresources%2Fviews%2Fpost%2Fcreate.blade.php%20--%3E%0A%0A%3Clabel%20for%3D%22title%22%3EPost%20Title%3C%2Flabel%3E%0A%0A%3Cinput%20id%3D%22title%22%20type%3D%22text%22%20class%3D%22%40error('title')%20is-invalid%20%40enderror%22%20%2F%3E%0A%0A%40error('title')%0A%20%20%3Cdiv%20class%3D%22alert%20alert-danger%22%3E%7B%7B%20%24message%20%7D%7D%3C%2Fdiv%3E%0A%40enderror%0A%60%60%60%0A%0ASee%3A%20%5BValidation%5D(%23validation-cols-3)",
       "encoded": true
-    },
-    {
-      "id": "s9-200",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Validation](#validation-cols-3)"
     },
     {
       "id": "s9-201",
       "sectionId": "s9",
-      "title": "Repopulating Forms",
-      "kind": "text",
-      "body": "When redirecting due to a validation error, request input is flashed to the session.\nRetrieve the input from the previous request with the `old` method"
-    },
-    {
-      "id": "s9-202",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$title = $request->old('title');"
-    },
-    {
-      "id": "s9-203",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "Or the `old()` helper"
-    },
-    {
-      "id": "s9-204",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Cinput%20type%3D%22text%22%20name%3D%22title%22%20value%3D%22%7B%7B%20old('title')%20%7D%7D%22%20%2F%3E",
+      "title": "Repopulating%20Forms",
+      "body": "When%20redirecting%20due%20to%20a%20validation%20error%2C%20request%20input%20is%20flashed%20to%20the%20session.%0ARetrieve%20the%20input%20from%20the%20previous%20request%20with%20the%20%60old%60%20method%0A%0A%60%60%60php%0A%24title%20%3D%20%24request-%3Eold('title')%3B%0A%60%60%60%0A%0AOr%20the%20%60old()%60%20helper%0A%0A%60%60%60html%0A%3Cinput%20type%3D%22text%22%20name%3D%22title%22%20value%3D%22%7B%7B%20old('title')%20%7D%7D%22%20%2F%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s10-205",
       "sectionId": "s10",
       "title": "Intro",
-      "kind": "text",
-      "body": "• [Laravel Docs - Validation](https://laravel.com/docs/8.x/validation)"
-    },
-    {
-      "id": "s10-206",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "If validation fails, a redirect response to the previous URL will be generated.\nIf the incoming request is an XHR request, a JSON response with the validation error messages will be returned."
+      "body": "• [Laravel Docs - Validation](https://laravel.com/docs/8.x/validation)\n\nIf validation fails, a redirect response to the previous URL will be generated.\nIf the incoming request is an XHR request, a JSON response with the validation error messages will be returned."
     },
     {
       "id": "s10-207",
       "sectionId": "s10",
       "title": "Logic",
-      "kind": "code",
-      "lang": "php",
-      "code": "// in routes/web.php\nRoute::get('/post/create', [App\\Http\\Controllers\\PostController::class, 'create']);\nRoute::post('/post', [App\\Http\\Controllers\\PostController::class, 'store']);\n\n// in app/Http/Controllers/PostController...\npublic function store(Request $request)\n{\n    $validated = $request->validate([\n        // input name => validation rules\n        'title' => 'required|unique:posts|max:255',\n        'body' => 'required',\n    ]);\n\n    // The blog post is valid...\n}"
+      "body": "%60%60%60php%0A%2F%2F%20in%20routes%2Fweb.php%0ARoute%3A%3Aget('%2Fpost%2Fcreate'%2C%20%5BApp%5CHttp%5CControllers%5CPostController%3A%3Aclass%2C%20'create'%5D)%3B%0ARoute%3A%3Apost('%2Fpost'%2C%20%5BApp%5CHttp%5CControllers%5CPostController%3A%3Aclass%2C%20'store'%5D)%3B%0A%0A%2F%2F%20in%20app%2FHttp%2FControllers%2FPostController...%0Apublic%20function%20store(Request%20%24request)%0A%7B%0A%20%20%20%20%24validated%20%3D%20%24request-%3Evalidate(%5B%0A%20%20%20%20%20%20%20%20%2F%2F%20input%20name%20%3D%3E%20validation%20rules%0A%20%20%20%20%20%20%20%20'title'%20%3D%3E%20'required%7Cunique%3Aposts%7Cmax%3A255'%2C%0A%20%20%20%20%20%20%20%20'body'%20%3D%3E%20'required'%2C%0A%20%20%20%20%5D)%3B%0A%0A%20%20%20%20%2F%2F%20The%20blog%20post%20is%20valid...%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s10-208",
       "sectionId": "s10",
       "title": "Rules",
-      "kind": "text",
-      "body": "Can also be passed as an array"
-    },
-    {
-      "id": "s10-209",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$validatedData = $request->validate([\n    'title' => ['required', 'unique:posts', 'max:255'],\n    'body' => ['required'],\n]);"
+      "body": "Can%20also%20be%20passed%20as%20an%20array%0A%0A%60%60%60php%0A%24validatedData%20%3D%20%24request-%3Evalidate(%5B%0A%20%20%20%20'title'%20%3D%3E%20%5B'required'%2C%20'unique%3Aposts'%2C%20'max%3A255'%5D%2C%0A%20%20%20%20'body'%20%3D%3E%20%5B'required'%5D%2C%0A%5D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s10-210",
       "sectionId": "s10",
-      "title": "after:date",
-      "kind": "text",
-      "body": "Field must be a value after a given date."
-    },
-    {
-      "id": "s10-211",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "'start_date' => 'required|date|after:tomorrow'"
-    },
-    {
-      "id": "s10-212",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "Instead of a date string, you may specify another field to compare against the date"
-    },
-    {
-      "id": "s10-213",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "'finish_date' => 'required|date|after:start_date'"
-    },
-    {
-      "id": "s10-214",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "See [before:date](#beforedate)"
+      "title": "after%3Adate",
+      "body": "Field%20must%20be%20a%20value%20after%20a%20given%20date.%0A%0A%60%60%60php%0A'start_date'%20%3D%3E%20'required%7Cdate%7Cafter%3Atomorrow'%0A%60%60%60%0A%0AInstead%20of%20a%20date%20string%2C%20you%20may%20specify%20another%20field%20to%20compare%20against%20the%20date%0A%0A%60%60%60php%0A'finish_date'%20%3D%3E%20'required%7Cdate%7Cafter%3Astart_date'%0A%60%60%60%0A%0ASee%20%5Bbefore%3Adate%5D(%23beforedate)",
+      "encoded": true
     },
     {
       "id": "s10-215",
       "sectionId": "s10",
       "title": "after_or_equal:date",
-      "kind": "text",
       "body": "Field must be a value after or equal to the given date.\nSee [after:date](#afterdate)"
     },
     {
       "id": "s10-216",
       "sectionId": "s10",
       "title": "before:date",
-      "kind": "text",
       "body": "Field must be a value preceding the given date.\nThe name of another field may be supplied as the value of `date`.\nSee [after:date](#afterdate)"
     },
     {
       "id": "s10-217",
       "sectionId": "s10",
       "title": "alpha_num",
-      "kind": "text",
       "body": "Field must be entirely alpha-numeric characters"
     },
     {
       "id": "s10-218",
       "sectionId": "s10",
       "title": "boolean",
-      "kind": "text",
       "body": "Field%20must%20be%20able%20to%20be%20cast%20as%20a%20%60boolean%60.%0AAccepted%20input%20are%20%60true%60%2C%20%60false%60%2C%20%601%60%2C%20%600%60%2C%20%60%221%22%60%2C%20and%20%60%220%22%60",
       "encoded": true
     },
@@ -1741,629 +620,289 @@
       "id": "s10-219",
       "sectionId": "s10",
       "title": "confirmed",
-      "kind": "text",
       "body": "Field must have a matching field of `{field}_confirmation`.\nFor example, if the field is password, a matching `password_confirmation` field must be present"
     },
     {
       "id": "s10-220",
       "sectionId": "s10",
       "title": "current_password",
-      "kind": "text",
-      "body": "Field must match the authenticated user's password."
+      "body": "Field%20must%20match%20the%20authenticated%20user's%20password.",
+      "encoded": true
     },
     {
       "id": "s10-221",
       "sectionId": "s10",
       "title": "date",
-      "kind": "text",
       "body": "Field must be a valid, non-relative date according to the `strtotime` PHP function."
     },
     {
       "id": "s10-222",
       "sectionId": "s10",
       "title": "email",
-      "kind": "text",
       "body": "Field must be formatted as an email address."
     },
     {
       "id": "s10-223",
       "sectionId": "s10",
       "title": "file",
-      "kind": "text",
       "body": "Field must be a successfully uploaded file.\nSee: [Uploaded Files](#uploaded-files)"
     },
     {
       "id": "s10-224",
       "sectionId": "s10",
       "title": "max:value",
-      "kind": "text",
       "body": "Field must be less than or equal to a maximum value.\nStrings, numerics, arrays, and files are evaluated like the [size](#sizevalue) rule."
     },
     {
       "id": "s10-225",
       "sectionId": "s10",
       "title": "min:value",
-      "kind": "text",
       "body": "Field must have a minimum value.\nStrings, numerics, arrays, and files are evaluated like the [size](#sizevalue) rule."
     },
     {
       "id": "s10-226",
       "sectionId": "s10",
-      "title": "mimetypes:text/plain,...",
-      "kind": "text",
-      "body": "File must match one of the given MIME types:"
-    },
-    {
-      "id": "s10-227",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "'video' => 'mimetypes:video/avi,video/mpeg,video/quicktime'"
-    },
-    {
-      "id": "s10-228",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "File's contents will be read and the framework will attempt to guess the MIME type, regardless of the client's provided\nMIME type."
+      "title": "mimetypes%3Atext%2Fplain%2C...",
+      "body": "File%20must%20match%20one%20of%20the%20given%20MIME%20types%3A%0A%0A%60%60%60php%0A'video'%20%3D%3E%20'mimetypes%3Avideo%2Favi%2Cvideo%2Fmpeg%2Cvideo%2Fquicktime'%0A%60%60%60%0A%0AFile's%20contents%20will%20be%20read%20and%20the%20framework%20will%20attempt%20to%20guess%20the%20MIME%20type%2C%20regardless%20of%20the%20client's%20provided%0AMIME%20type.",
+      "encoded": true
     },
     {
       "id": "s10-229",
       "sectionId": "s10",
-      "title": "mimes:foo,bar,...",
-      "kind": "text",
-      "body": "Field must have a MIME type corresponding to one of the listed extensions."
-    },
-    {
-      "id": "s10-230",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "'photo' => 'mimes:jpg,bmp,png'"
-    },
-    {
-      "id": "s10-231",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "File's contents will be read and the framework will attempt to guess the MIME type, regardless of the client's provided\nMIME type."
-    },
-    {
-      "id": "s10-232",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "[Full listing of MIME types & extensions](https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types)"
+      "title": "mimes%3Afoo%2Cbar%2C...",
+      "body": "Field%20must%20have%20a%20MIME%20type%20corresponding%20to%20one%20of%20the%20listed%20extensions.%0A%0A%60%60%60php%0A'photo'%20%3D%3E%20'mimes%3Ajpg%2Cbmp%2Cpng'%0A%60%60%60%0A%0AFile's%20contents%20will%20be%20read%20and%20the%20framework%20will%20attempt%20to%20guess%20the%20MIME%20type%2C%20regardless%20of%20the%20client's%20provided%0AMIME%20type.%0A%0A%5BFull%20listing%20of%20MIME%20types%20%26%20extensions%5D(https%3A%2F%2Fsvn.apache.org%2Frepos%2Fasf%2Fhttpd%2Fhttpd%2Ftrunk%2Fdocs%2Fconf%2Fmime.types)",
+      "encoded": true
     },
     {
       "id": "s10-233",
       "sectionId": "s10",
       "title": "nullable",
-      "kind": "text",
       "body": "Field may be null."
     },
     {
       "id": "s10-234",
       "sectionId": "s10",
       "title": "numeric",
-      "kind": "text",
       "body": "Field must be numeric."
     },
     {
       "id": "s10-235",
       "sectionId": "s10",
       "title": "password",
-      "kind": "text",
-      "body": "Field must match the authenticated user's password."
+      "body": "Field%20must%20match%20the%20authenticated%20user's%20password.",
+      "encoded": true
     },
     {
       "id": "s10-236",
       "sectionId": "s10",
       "title": "prohibited",
-      "kind": "text",
       "body": "Field must be empty or not present."
     },
     {
       "id": "s10-237",
       "sectionId": "s10",
       "title": "prohibited_if:anotherfield,value,...",
-      "kind": "text",
       "body": "Field must be empty or not present if the _anotherfield_ field is equal to any value."
     },
     {
       "id": "s10-238",
       "sectionId": "s10",
       "title": "prohibited_unless:anotherfield,value,...",
-      "kind": "text",
       "body": "Field must be empty or not present unless the _anotherfield_ field is equal to any value."
     },
     {
       "id": "s10-239",
       "sectionId": "s10",
       "title": "required",
-      "kind": "text",
-      "body": "Field%20must%20be%20present%20in%20the%20input%20data%20and%20not%20empty.%0AA%20field%20is%20considered%20%22empty%22%20if%20one%20of%20the%20following%20conditions%20are%20true%3A",
+      "body": "Field%20must%20be%20present%20in%20the%20input%20data%20and%20not%20empty.%0AA%20field%20is%20considered%20%22empty%22%20if%20one%20of%20the%20following%20conditions%20are%20true%3A%0A%0A%E2%80%A2%20The%20value%20is%20%60null%60.%0A%E2%80%A2%20The%20value%20is%20an%20empty%20string.%0A%E2%80%A2%20The%20value%20is%20an%20empty%20array%20or%20empty%20%60Countable%60%20object.%0A%E2%80%A2%20The%20value%20is%20an%20uploaded%20file%20with%20no%20path.",
       "encoded": true
-    },
-    {
-      "id": "s10-240",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "• The value is `null`.\n• The value is an empty string.\n• The value is an empty array or empty `Countable` object.\n• The value is an uploaded file with no path."
     },
     {
       "id": "s10-241",
       "sectionId": "s10",
       "title": "required_with:foo,bar,...",
-      "kind": "text",
       "body": "Field must be present and not empty, only if any of the other specified fields are present and not empty"
     },
     {
       "id": "s10-242",
       "sectionId": "s10",
-      "title": "size:value",
-      "kind": "text",
-      "body": "Field must have a size matching the given value."
-    },
-    {
-      "id": "s10-243",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "• For strings: number of characters\n• For numeric data: integer value (must also have the `numeric` or `integer` rule).\n• For arrays: count of the array\n• For files: file size in kilobytes"
-    },
-    {
-      "id": "s10-244",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// Validate that a string is exactly 12 characters long...\n'title' => 'size:12';\n// Validate that a provided integer equals 10...\n'seats' => 'integer|size:10';\n// Validate that an array has exactly 5 elements...\n'tags' => 'array|size:5';\n// Validate that an uploaded file is exactly 512 kilobytes...\n'image' => 'file|size:512';"
+      "title": "size%3Avalue",
+      "body": "Field%20must%20have%20a%20size%20matching%20the%20given%20value.%0A%0A%E2%80%A2%20For%20strings%3A%20number%20of%20characters%0A%E2%80%A2%20For%20numeric%20data%3A%20integer%20value%20(must%20also%20have%20the%20%60numeric%60%20or%20%60integer%60%20rule).%0A%E2%80%A2%20For%20arrays%3A%20count%20of%20the%20array%0A%E2%80%A2%20For%20files%3A%20file%20size%20in%20kilobytes%0A%0A%60%60%60php%0A%2F%2F%20Validate%20that%20a%20string%20is%20exactly%2012%20characters%20long...%0A'title'%20%3D%3E%20'size%3A12'%3B%0A%2F%2F%20Validate%20that%20a%20provided%20integer%20equals%2010...%0A'seats'%20%3D%3E%20'integer%7Csize%3A10'%3B%0A%2F%2F%20Validate%20that%20an%20array%20has%20exactly%205%20elements...%0A'tags'%20%3D%3E%20'array%7Csize%3A5'%3B%0A%2F%2F%20Validate%20that%20an%20uploaded%20file%20is%20exactly%20512%20kilobytes...%0A'image'%20%3D%3E%20'file%7Csize%3A512'%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s10-245",
       "sectionId": "s10",
       "title": "unique:table,column",
-      "kind": "text",
       "body": "Field must not exist within the given database table"
     },
     {
       "id": "s10-246",
       "sectionId": "s10",
       "title": "url",
-      "kind": "text",
-      "body": "Field must be a valid URL"
-    },
-    {
-      "id": "s10-247",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "[See all available rules](https://laravel.com/docs/8.x/validation#available-validation-rules)"
+      "body": "Field must be a valid URL\n\n[See all available rules](https://laravel.com/docs/8.x/validation#available-validation-rules)"
     },
     {
       "id": "s10-248",
       "sectionId": "s10",
-      "title": "Validate Passwords",
-      "kind": "text",
-      "body": "Ensure passwords have an adequate level of complexity"
-    },
-    {
-      "id": "s10-249",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$validatedData = $request->validate([\n    'password' => ['required', 'confirmed', Password::min(8)],\n]);"
-    },
-    {
-      "id": "s10-250",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "`Password` rule object allows you to easily customize the password complexity requirements"
-    },
-    {
-      "id": "s10-251",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// Require at least 8 characters...\nPassword::min(8)\n\n// Require at least one letter...\nPassword::min(8)->letters()\n\n// Require at least one uppercase and one lowercase letter...\nPassword::min(8)->mixedCase()\n\n// Require at least one number...\nPassword::min(8)->numbers()\n\n// Require at least one symbol...\nPassword::min(8)->symbols()"
-    },
-    {
-      "id": "s10-252",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "Ensure a password has not been compromised in a public password data breach leak"
-    },
-    {
-      "id": "s10-253",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Password::min(8)->uncompromised()"
-    },
-    {
-      "id": "s10-254",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "> _Uses the [k-Anonymity](https://en.wikipedia.org/wiki/K-anonymity) model via the\n> [haveibeenpwned.com](https://haveibeenpwned.com) service without sacrificing the user's privacy or security_"
-    },
-    {
-      "id": "s10-255",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "Methods can be chained"
-    },
-    {
-      "id": "s10-256",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "Password::min(8)\n    ->letters()\n    ->mixedCase()\n    ->numbers()\n    ->symbols()\n    ->uncompromised()"
+      "title": "Validate%20Passwords",
+      "body": "Ensure%20passwords%20have%20an%20adequate%20level%20of%20complexity%0A%0A%60%60%60php%0A%24validatedData%20%3D%20%24request-%3Evalidate(%5B%0A%20%20%20%20'password'%20%3D%3E%20%5B'required'%2C%20'confirmed'%2C%20Password%3A%3Amin(8)%5D%2C%0A%5D)%3B%0A%60%60%60%0A%0A%60Password%60%20rule%20object%20allows%20you%20to%20easily%20customize%20the%20password%20complexity%20requirements%0A%0A%60%60%60php%0A%2F%2F%20Require%20at%20least%208%20characters...%0APassword%3A%3Amin(8)%0A%0A%2F%2F%20Require%20at%20least%20one%20letter...%0APassword%3A%3Amin(8)-%3Eletters()%0A%0A%2F%2F%20Require%20at%20least%20one%20uppercase%20and%20one%20lowercase%20letter...%0APassword%3A%3Amin(8)-%3EmixedCase()%0A%0A%2F%2F%20Require%20at%20least%20one%20number...%0APassword%3A%3Amin(8)-%3Enumbers()%0A%0A%2F%2F%20Require%20at%20least%20one%20symbol...%0APassword%3A%3Amin(8)-%3Esymbols()%0A%60%60%60%0A%0AEnsure%20a%20password%20has%20not%20been%20compromised%20in%20a%20public%20password%20data%20breach%20leak%0A%0A%60%60%60php%0APassword%3A%3Amin(8)-%3Euncompromised()%0A%60%60%60%0A%0A%3E%20_Uses%20the%20%5Bk-Anonymity%5D(https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FK-anonymity)%20model%20via%20the%0A%3E%20%5Bhaveibeenpwned.com%5D(https%3A%2F%2Fhaveibeenpwned.com)%20service%20without%20sacrificing%20the%20user's%20privacy%20or%20security_%0A%0AMethods%20can%20be%20chained%0A%0A%60%60%60php%0APassword%3A%3Amin(8)%0A%20%20%20%20-%3Eletters()%0A%20%20%20%20-%3EmixedCase()%0A%20%20%20%20-%3Enumbers()%0A%20%20%20%20-%3Esymbols()%0A%20%20%20%20-%3Euncompromised()%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s10-257",
       "sectionId": "s10",
       "title": "Display%20Validation%20Errors",
-      "kind": "code",
-      "lang": "php",
-      "code": "%3C!--%20%2Fresources%2Fviews%2Fpost%2Fcreate.blade.php%20--%3E%0A%0A%3Ch1%3ECreate%20Post%3C%2Fh1%3E%0A%0A%40if%20(%24errors-%3Eany())%0A%20%20%20%20%3Cdiv%20class%3D%22alert%20alert-danger%22%3E%0A%20%20%20%20%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40foreach%20(%24errors-%3Eall()%20as%20%24error)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%7B%7B%20%24error%20%7D%7D%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40endforeach%0A%20%20%20%20%20%20%20%20%3C%2Ful%3E%0A%20%20%20%20%3C%2Fdiv%3E%0A%40endif%0A%0A%3C!--%20Create%20Post%20Form%20--%3E",
+      "body": "%60%60%60php%0A%3C!--%20%2Fresources%2Fviews%2Fpost%2Fcreate.blade.php%20--%3E%0A%0A%3Ch1%3ECreate%20Post%3C%2Fh1%3E%0A%0A%40if%20(%24errors-%3Eany())%0A%20%20%20%20%3Cdiv%20class%3D%22alert%20alert-danger%22%3E%0A%20%20%20%20%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40foreach%20(%24errors-%3Eall()%20as%20%24error)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cli%3E%7B%7B%20%24error%20%7D%7D%3C%2Fli%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%40endforeach%0A%20%20%20%20%20%20%20%20%3C%2Ful%3E%0A%20%20%20%20%3C%2Fdiv%3E%0A%40endif%0A%0A%3C!--%20Create%20Post%20Form%20--%3E%0A%60%60%60%0A%0ASee%3A%20%5BValidation%20Errors%5D(%23validation-errors)",
       "encoded": true
-    },
-    {
-      "id": "s10-258",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Validation Errors](#validation-errors)"
     },
     {
       "id": "s10-259",
       "sectionId": "s10",
       "title": "Optional%20Fields",
-      "kind": "text",
-      "body": "You%20will%20often%20need%20to%20mark%20your%20%22optional%22%20request%20fields%20as%20%60nullable%60%20if%20you%20do%20not%20want%20the%20validator%20to%20consider%0A%60null%60%20values%20as%20invalid",
+      "body": "You%20will%20often%20need%20to%20mark%20your%20%22optional%22%20request%20fields%20as%20%60nullable%60%20if%20you%20do%20not%20want%20the%20validator%20to%20consider%0A%60null%60%20values%20as%20invalid%0A%0A%60%60%60php%0A%2F%2F%20publish_at%20field%20may%20be%20either%20null%20or%20a%20valid%20date%20representation%0A%24request-%3Evalidate(%5B%0A%20%20%20%20'title'%20%3D%3E%20'required%7Cunique%3Aposts%7Cmax%3A255'%2C%0A%20%20%20%20'body'%20%3D%3E%20'required'%2C%0A%20%20%20%20'publish_at'%20%3D%3E%20'nullable%7Cdate'%2C%0A%5D)%3B%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s10-260",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// publish_at field may be either null or a valid date representation\n$request->validate([\n    'title' => 'required|unique:posts|max:255',\n    'body' => 'required',\n    'publish_at' => 'nullable|date',\n]);"
     },
     {
       "id": "s10-261",
       "sectionId": "s10",
-      "title": "Validated Input",
-      "kind": "text",
-      "body": "Retrieve the request data that underwent validation"
-    },
-    {
-      "id": "s10-262",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$validated = $request->validated();"
-    },
-    {
-      "id": "s10-263",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "Or with `safe()`, which returns an instance of `Illuminate\\Support\\ValidatedInput`"
-    },
-    {
-      "id": "s10-264",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$validated = $request->safe()->only(['name', 'email']);\n\n$validated = $request->safe()->except(['name', 'email']);\n\n$validated = $request->safe()->all();"
+      "title": "Validated%20Input",
+      "body": "Retrieve%20the%20request%20data%20that%20underwent%20validation%0A%0A%60%60%60php%0A%24validated%20%3D%20%24request-%3Evalidated()%3B%0A%60%60%60%0A%0AOr%20with%20%60safe()%60%2C%20which%20returns%20an%20instance%20of%20%60Illuminate%5CSupport%5CValidatedInput%60%0A%0A%60%60%60php%0A%24validated%20%3D%20%24request-%3Esafe()-%3Eonly(%5B'name'%2C%20'email'%5D)%3B%0A%0A%24validated%20%3D%20%24request-%3Esafe()-%3Eexcept(%5B'name'%2C%20'email'%5D)%3B%0A%0A%24validated%20%3D%20%24request-%3Esafe()-%3Eall()%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s10-265",
       "sectionId": "s10",
       "title": "Iterate",
-      "kind": "code",
-      "lang": "php",
-      "code": "foreach ($request->safe() as $key => $value) {\n    //\n}"
+      "body": "```php\nforeach ($request->safe() as $key => $value) {\n    //\n}\n```"
     },
     {
       "id": "s10-266",
       "sectionId": "s10",
-      "title": "Access as an array",
-      "kind": "code",
-      "lang": "php",
-      "code": "$validated = $request->safe();\n\n$email = $validated['email'];"
+      "title": "Access%20as%20an%20array",
+      "body": "%60%60%60php%0A%24validated%20%3D%20%24request-%3Esafe()%3B%0A%0A%24email%20%3D%20%24validated%5B'email'%5D%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s11-267",
       "sectionId": "s11",
       "title": "Intro",
-      "kind": "text",
-      "body": "• [Laravel Docs - Session](https://laravel.com/docs/8.x/session)"
-    },
-    {
-      "id": "s11-268",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "text",
-      "body": "Laravel ships with a variety of session backends that are accessed through a unified API. Memcached, Redis, and database\nsupport is included."
+      "body": "• [Laravel Docs - Session](https://laravel.com/docs/8.x/session)\n\nLaravel ships with a variety of session backends that are accessed through a unified API. Memcached, Redis, and database\nsupport is included."
     },
     {
       "id": "s11-269",
       "sectionId": "s11",
       "title": "Configuration",
-      "kind": "text",
       "body": "Session configuration is in `config/session.php`.\nBy default, Laravel is configured to use the file session driver"
     },
     {
       "id": "s11-270",
       "sectionId": "s11",
-      "title": "Check Isset / Exists",
-      "kind": "text",
-      "body": "Returns `true` if the item is present and is not `null`:"
-    },
-    {
-      "id": "s11-271",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "if ($request->session()->has('users')) {\n    //\n}"
-    },
-    {
-      "id": "s11-272",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "text",
-      "body": "Returns `true` if present, even if it's `null`:"
-    },
-    {
-      "id": "s11-273",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "if ($request->session()->exists('users')) {\n    //\n}"
-    },
-    {
-      "id": "s11-274",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "text",
-      "body": "Returns `true` if the item is `null` or is not present:"
-    },
-    {
-      "id": "s11-275",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "if ($request->session()->missing('users')) {\n    //\n}"
+      "title": "Check%20Isset%20%2F%20Exists",
+      "body": "Returns%20%60true%60%20if%20the%20item%20is%20present%20and%20is%20not%20%60null%60%3A%0A%0A%60%60%60php%0Aif%20(%24request-%3Esession()-%3Ehas('users'))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%60%60%60%0A%0AReturns%20%60true%60%20if%20present%2C%20even%20if%20it's%20%60null%60%3A%0A%0A%60%60%60php%0Aif%20(%24request-%3Esession()-%3Eexists('users'))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%60%60%60%0A%0AReturns%20%60true%60%20if%20the%20item%20is%20%60null%60%20or%20is%20not%20present%3A%0A%0A%60%60%60php%0Aif%20(%24request-%3Esession()-%3Emissing('users'))%20%7B%0A%20%20%20%20%2F%2F%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s11-276",
       "sectionId": "s11",
-      "title": "Retrieving Data - Via Request",
-      "kind": "code",
-      "lang": "php",
-      "code": "// ...\nclass UserController extends Controller\n{\n    public function show(Request $request, $id)\n    {\n        $value = $request->session()->get('key');\n\n        //\n    }\n}"
-    },
-    {
-      "id": "s11-277",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "text",
-      "body": "Pass a default value as the second argument to use if the key does not exist"
-    },
-    {
-      "id": "s11-278",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$value = $request->session()->get('key', 'default');\n\n// closure can be passed and executed as a default\n$value = $request->session()->get('key', function () {\n    return 'default';\n});"
+      "title": "Retrieving%20Data%20-%20Via%20Request",
+      "body": "%60%60%60php%0A%2F%2F%20...%0Aclass%20UserController%20extends%20Controller%0A%7B%0A%20%20%20%20public%20function%20show(Request%20%24request%2C%20%24id)%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%24value%20%3D%20%24request-%3Esession()-%3Eget('key')%3B%0A%0A%20%20%20%20%20%20%20%20%2F%2F%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0APass%20a%20default%20value%20as%20the%20second%20argument%20to%20use%20if%20the%20key%20does%20not%20exist%0A%0A%60%60%60php%0A%24value%20%3D%20%24request-%3Esession()-%3Eget('key'%2C%20'default')%3B%0A%0A%2F%2F%20closure%20can%20be%20passed%20and%20executed%20as%20a%20default%0A%24value%20%3D%20%24request-%3Esession()-%3Eget('key'%2C%20function%20()%20%7B%0A%20%20%20%20return%20'default'%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s11-279",
       "sectionId": "s11",
-      "title": "Via session helper",
-      "kind": "code",
-      "lang": "php",
-      "code": "Route::get('/home', function () {\n    // Retrieve a piece of data from the session...\n    $value = session('key');\n\n    // Specifying a default value...\n    $value = session('key', 'default');\n\n    // Store a piece of data in the session...\n    session(['key' => 'value']);\n});"
-    },
-    {
-      "id": "s11-280",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "text",
-      "body": "See: [Session Helper]()"
+      "title": "Via%20session%20helper",
+      "body": "%60%60%60php%0ARoute%3A%3Aget('%2Fhome'%2C%20function%20()%20%7B%0A%20%20%20%20%2F%2F%20Retrieve%20a%20piece%20of%20data%20from%20the%20session...%0A%20%20%20%20%24value%20%3D%20session('key')%3B%0A%0A%20%20%20%20%2F%2F%20Specifying%20a%20default%20value...%0A%20%20%20%20%24value%20%3D%20session('key'%2C%20'default')%3B%0A%0A%20%20%20%20%2F%2F%20Store%20a%20piece%20of%20data%20in%20the%20session...%0A%20%20%20%20session(%5B'key'%20%3D%3E%20'value'%5D)%3B%0A%7D)%3B%0A%60%60%60%0A%0ASee%3A%20%5BSession%20Helper%5D()",
+      "encoded": true
     },
     {
       "id": "s11-281",
       "sectionId": "s11",
       "title": "All Session Data",
-      "kind": "code",
-      "lang": "php",
-      "code": "$data = $request->session()->all();"
+      "body": "```php\n$data = $request->session()->all();\n```"
     },
     {
       "id": "s11-282",
       "sectionId": "s11",
-      "title": "Retrieve and Delete",
-      "kind": "text",
-      "body": "Retrieve and delete an item from the session"
-    },
-    {
-      "id": "s11-283",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$value = $request->session()->pull('key', 'default');"
+      "title": "Retrieve%20and%20Delete",
+      "body": "Retrieve%20and%20delete%20an%20item%20from%20the%20session%0A%0A%60%60%60php%0A%24value%20%3D%20%24request-%3Esession()-%3Epull('key'%2C%20'default')%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s11-284",
       "sectionId": "s11",
-      "title": "Store Data",
-      "kind": "text",
-      "body": "Via a request instance"
-    },
-    {
-      "id": "s11-285",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "$request->session()->put('key', 'value');"
-    },
-    {
-      "id": "s11-286",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "text",
-      "body": "Via%20the%20global%20%22session%22%20helper",
+      "title": "Store%20Data",
+      "body": "Via%20a%20request%20instance%0A%0A%60%60%60php%0A%24request-%3Esession()-%3Eput('key'%2C%20'value')%3B%0A%60%60%60%0A%0AVia%20the%20global%20%22session%22%20helper%0A%0A%60%60%60php%0Asession(%5B'key'%20%3D%3E%20'value'%5D)%3B%0A%60%60%60%0A%0APush%20a%20new%20value%20onto%20a%20session%20value%20that%20is%20an%20array%0A%0A%60%60%60php%0A%2F%2F%20array%20of%20team%20names%0A%24request-%3Esession()-%3Epush('user.teams'%2C%20'developers')%3B%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s11-287",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "session(['key' => 'value']);"
-    },
-    {
-      "id": "s11-288",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "text",
-      "body": "Push a new value onto a session value that is an array"
-    },
-    {
-      "id": "s11-289",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "php",
-      "code": "// array of team names\n$request->session()->push('user.teams', 'developers');"
     },
     {
       "id": "s12-290",
       "sectionId": "s12",
       "title": "Configuration",
-      "kind": "text",
       "body": "Configuration options for logging behavior is in `config/logging.php`.\nBy default, Laravel will use the stack channel when logging messages, which aggregates multiple log channels into a\nsingle channel."
     },
     {
       "id": "s12-291",
       "sectionId": "s12",
       "title": "Levels",
-      "kind": "text",
-      "body": "All the log levels defined in the [RFC 5424 specification](https://tools.ietf.org/html/rfc5424) are available:"
-    },
-    {
-      "id": "s12-292",
-      "sectionId": "s12",
-      "title": "",
-      "kind": "text",
-      "body": "• emergency\n• alert\n• critical\n• error\n• warning\n• notice\n• info\n• debug"
+      "body": "All the log levels defined in the [RFC 5424 specification](https://tools.ietf.org/html/rfc5424) are available:\n\n• emergency\n• alert\n• critical\n• error\n• warning\n• notice\n• info\n• debug"
     },
     {
       "id": "s12-293",
       "sectionId": "s12",
       "title": "Log Facade",
-      "kind": "code",
-      "lang": "php",
-      "code": "use Illuminate\\Support\\Facades\\Log;\n\nLog::emergency($message);\nLog::alert($message);\nLog::critical($message);\nLog::error($message);\nLog::warning($message);\nLog::notice($message);\nLog::info($message);\nLog::debug($message);"
+      "body": "```php\nuse Illuminate\\Support\\Facades\\Log;\n\nLog::emergency($message);\nLog::alert($message);\nLog::critical($message);\nLog::error($message);\nLog::warning($message);\nLog::notice($message);\nLog::info($message);\nLog::debug($message);\n```"
     },
     {
       "id": "s12-294",
       "sectionId": "s12",
-      "title": "Contextual Info",
-      "kind": "code",
-      "lang": "php",
-      "code": "use Illuminate\\Support\\Facades\\Log;\n\nLog::info('User failed to login.', ['id' => $user->id]);"
+      "title": "Contextual%20Info",
+      "body": "%60%60%60php%0Ause%20Illuminate%5CSupport%5CFacades%5CLog%3B%0A%0ALog%3A%3Ainfo('User%20failed%20to%20login.'%2C%20%5B'id'%20%3D%3E%20%24user-%3Eid%5D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s13-295",
       "sectionId": "s13",
       "title": "Intro",
-      "kind": "text",
-      "body": "• [Laravel Docs - Deployment](https://laravel.com/docs/8.x/deployment)"
-    },
-    {
-      "id": "s13-296",
-      "sectionId": "s13",
-      "title": "",
-      "kind": "text",
-      "body": "Ensure your web server directs all requests to your application's `public/index.php` file"
+      "body": "%E2%80%A2%20%5BLaravel%20Docs%20-%20Deployment%5D(https%3A%2F%2Flaravel.com%2Fdocs%2F8.x%2Fdeployment)%0A%0AEnsure%20your%20web%20server%20directs%20all%20requests%20to%20your%20application's%20%60public%2Findex.php%60%20file",
+      "encoded": true
     },
     {
       "id": "s13-297",
       "sectionId": "s13",
-      "title": "Optimization - Composer's autoloader map",
-      "kind": "code",
-      "lang": "bash",
-      "code": "composer install --optimize-autoloader --no-dev"
+      "title": "Optimization%20-%20Composer's%20autoloader%20map",
+      "body": "%60%60%60bash%0Acomposer%20install%20--optimize-autoloader%20--no-dev%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s13-298",
       "sectionId": "s13",
       "title": "Configuration Loading",
-      "kind": "text",
-      "body": "Be sure that you are only calling the `env` function from within your configuration files.\nOnce the configuration has been cached, the `.env` file will not be loaded and all calls to the `env` function for\n`.env` variables will return `null`"
-    },
-    {
-      "id": "s13-299",
-      "sectionId": "s13",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "php artisan config:cache"
+      "body": "Be sure that you are only calling the `env` function from within your configuration files.\nOnce the configuration has been cached, the `.env` file will not be loaded and all calls to the `env` function for\n`.env` variables will return `null`\n\n```bash\nphp artisan config:cache\n```"
     },
     {
       "id": "s13-300",
       "sectionId": "s13",
       "title": "Route Loading",
-      "kind": "code",
-      "lang": "bash",
-      "code": "php artisan route:cache"
+      "body": "```bash\nphp artisan route:cache\n```"
     },
     {
       "id": "s13-301",
       "sectionId": "s13",
       "title": "View Loading",
-      "kind": "code",
-      "lang": "bash",
-      "code": "php artisan view:cache"
+      "body": "```bash\nphp artisan view:cache\n```"
     },
     {
       "id": "s13-302",
       "sectionId": "s13",
       "title": "Debug Mode",
-      "kind": "text",
       "body": "The debug option in your `config/app.php` determines how much information about an error is actually displayed to the\nuser.\nBy default, this option is set to the value of the `APP_DEBUG` environment variable in your `.env` file. In your\nproduction environment, this value should always be `false`.\nIf the `APP_DEBUG` variable is set to `true` in production, you risk exposing sensitive configuration values to end\nusers."
     },
     {
       "id": "s14-303",
       "sectionId": "s14",
       "title": "Also see",
-      "kind": "text",
       "body": "• [Laravel Docs](https://laravel.com/docs/8.x)\n• [Laracasts](https://laracasts.com/)\n• [Laravel API](https://laravel.com/api/8.x/)"
     }
   ],

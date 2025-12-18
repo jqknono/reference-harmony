@@ -25,868 +25,121 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "该备忘单提供了使用 [Sysdig](https://sysdig.com/) 的常用命令参数和使用案例清单"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "命令安装",
-      "kind": "code",
-      "lang": "shell",
-      "code": "sudo rpm --import https://download.sysdig.com/DRAIOS-GPG-KEY.public  \nsudo curl -s -o /etc/yum.repos.d/draios.repo https://download.sysdig.com/stable/rpm/draios.repo\nsudo yum -y install sysdig"
+      "body": "```shell\nsudo rpm --import https://download.sysdig.com/DRAIOS-GPG-KEY.public  \nsudo curl -s -o /etc/yum.repos.d/draios.repo https://download.sysdig.com/stable/rpm/draios.repo\nsudo yum -y install sysdig\n```"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "常用参数",
-      "kind": "text",
       "body": "参数 | 说明\n:--|:---\n`-C 5` | 每个文件不超过5M\n`-W 10` | 保留不超过10个文件\n`-G 60` | 每个文件只保留一分钟内的系统活动\n`-w  dump.pcap` | 保存到文件\n`-e 1000` | 每个文件只有1000个事件\n`-z` | 参数对保存的内容进行压缩\n`-A --print-ascii` |  把buffer中数据按照ASCII格式打印，方便阅读\n`-x --print-hex`  |  把buffer中数据按照十六进制打印\n`-X --printhex-ascii` | 把buffer中数据同时按照ASCII格式和十六进制打印\n`-s 1024` | 捕获buffer的数据大小，默认为80，设置过大，文件会很大\n`-N` | 不用把端口号转成可读名字\n`-r` | 从文件读取\n<!--rehype:className=show-header-->"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "输出含义",
-      "kind": "text",
       "body": "事件 | 说明\n:--|:---\n`evt.num` | 递增的事件号\n`evt.time` | 事件发生的时间\n`evt.cpu` | 事件被捕获时所在cpu\n`proc.name` | 生成事件的进程名字\n`thread.tid` | 线程id，单线程则为进程id\n`evt.dir` | 事件方向(direction), > 代表进入事件， < 代表退出事件\n`evt.type` | 事件的名称，比如open、stat等，一般为系统调用\n`evt.args` | 事件的参数。如果为系统调用，则对应系统调用的参数\n<!--rehype:className=show-header-->"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "chisels常用工具",
-      "kind": "text",
       "body": "事件 | 说明\n:--|:---\n`httplog`  |  输出所有的http请求\n`topprocs_cpu` |  输出按照cpu使用率排序\n`topprocs_net` |  按照网络使用情况对进程排序\n`fdcount_by` |  按照建立连接书对进程排序\n`echo_fds`  |     输出进程读写数据\n`netsata`   |    列出网络连接情况\n`spy_file`  |   输出文件的读写数据，可以提供某个文件名作为参数\n`spy_ip`    |   抓取给定ip的数据交换\n`spy_port`  |   抓取给定端口的数据交换\n<!--rehype:className=show-header-->"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "命令帮助",
-      "kind": "code",
-      "lang": "shell",
-      "code": "sysdig -l   #事件类型\nsysdig -cl  #chisels工具类型"
+      "body": "```shell\nsysdig -l   #事件类型\nsysdig -cl  #chisels工具类型\n```"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "捕获每个系统事件并将其写入标准输出",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig"
+      "body": "```shell\n$ sysdig\n```"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BE%93%E5%87%BA",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-p%22user%3A%25user.name%20dir%3A%25evt.arg.path%22%20evt.type%3Dchdir%0Auser%3Aubuntu%20dir%3A%2Froot%0Auser%3Aubuntu%20dir%3A%2Froot%2Ftmp%0Auser%3Aubuntu%20dir%3A%2Froot%2FDownload",
-      "encoded": true
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "字段必须用 `%` 作为前缀，所有 `sysdig -l` 列出来的字段都可以使用\n如果某个字段在时间中不存在，默认这个事件会过滤掉，在这个字符串最前面加上 `*` 符号，会打印所有事件，不存在的字段会变成 `<NA>`"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-p%22*%25evt.type%20%25evt.dir%20%25evt.arg.name%22%20evt.type%3Dopen%0Aopen%20%3E%20%3CNA%3E%0Aopen%20%3C%20%2Fproc%2F1285%2Ftask%2F1399%2Fstat%0Aopen%20%3E%20%3CNA%3E%0Aopen%20%3C%20%2Fproc%2F1285%2Ftask%2F1400%2Fio%0Aopen%20%3E%20%3CNA%3E%0Aopen%20%3C%20%2Fproc%2F1285%2Ftask%2F1400%2Fstatm%0Aopen%20%3E%20%3CNA%3E",
+      "body": "%60%60%60shell%0A%24%20sysdig%20-p%22user%3A%25user.name%20dir%3A%25evt.arg.path%22%20evt.type%3Dchdir%0Auser%3Aubuntu%20dir%3A%2Froot%0Auser%3Aubuntu%20dir%3A%2Froot%2Ftmp%0Auser%3Aubuntu%20dir%3A%2Froot%2FDownload%0A%60%60%60%0A%0A%E5%AD%97%E6%AE%B5%E5%BF%85%E9%A1%BB%E7%94%A8%20%60%25%60%20%E4%BD%9C%E4%B8%BA%E5%89%8D%E7%BC%80%EF%BC%8C%E6%89%80%E6%9C%89%20%60sysdig%20-l%60%20%E5%88%97%E5%87%BA%E6%9D%A5%E7%9A%84%E5%AD%97%E6%AE%B5%E9%83%BD%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%0A%E5%A6%82%E6%9E%9C%E6%9F%90%E4%B8%AA%E5%AD%97%E6%AE%B5%E5%9C%A8%E6%97%B6%E9%97%B4%E4%B8%AD%E4%B8%8D%E5%AD%98%E5%9C%A8%EF%BC%8C%E9%BB%98%E8%AE%A4%E8%BF%99%E4%B8%AA%E4%BA%8B%E4%BB%B6%E4%BC%9A%E8%BF%87%E6%BB%A4%E6%8E%89%EF%BC%8C%E5%9C%A8%E8%BF%99%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9C%80%E5%89%8D%E9%9D%A2%E5%8A%A0%E4%B8%8A%20%60*%60%20%E7%AC%A6%E5%8F%B7%EF%BC%8C%E4%BC%9A%E6%89%93%E5%8D%B0%E6%89%80%E6%9C%89%E4%BA%8B%E4%BB%B6%EF%BC%8C%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E5%AD%97%E6%AE%B5%E4%BC%9A%E5%8F%98%E6%88%90%20%60%3CNA%3E%60%0A%0A%60%60%60shell%0A%24%20sysdig%20-p%22*%25evt.type%20%25evt.dir%20%25evt.arg.name%22%20evt.type%3Dopen%0Aopen%20%3E%20%3CNA%3E%0Aopen%20%3C%20%2Fproc%2F1285%2Ftask%2F1399%2Fstat%0Aopen%20%3E%20%3CNA%3E%0Aopen%20%3C%20%2Fproc%2F1285%2Ftask%2F1400%2Fio%0Aopen%20%3E%20%3CNA%3E%0Aopen%20%3C%20%2Fproc%2F1285%2Ftask%2F1400%2Fstatm%0Aopen%20%3E%20%3CNA%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "%E6%8A%93%E5%8F%96%20%60kubernetes%20pod%60%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20%60ip%60%20%E7%9A%84%20%60udp%60%20%E8%AF%B7%E6%B1%82",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%23%20%E5%88%97%E5%87%BA%E5%AE%B9%E5%99%A8%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3%0A%24%20sudo%20sysdig%20-pc%20-A%20-c%20netstat%20container.name%3Daaa%0A%0A%23%20%E6%8A%93%E5%8F%96kubernetes%20pod%20%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AFip%E4%B8%BA172.119.100.16%EF%BC%8C3000%E7%AB%AF%E5%8F%A3%E7%9A%84%E7%9A%84%E8%AF%B7%E6%B1%82%E5%86%85%E5%AE%B9%0A%24%20sudo%20sysdig%20-A%20-c%20echo_fds%20%20k8s.pod.name%20contains%20datacenter-web-dev%20%20and%20fd.port%3D3000%20and%20evt.type%3Dread%20and%20fd.cip%3D172.119.100.16%20fd.proto%3DUDP%0A%0A%23%20%E6%8C%89%E7%85%A7%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5%E6%95%B0%E9%87%8F%E5%AF%B9%E8%BF%9B%E7%A8%8B%E6%8E%92%E5%BA%8F%20%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0sysdig.pcap%E6%96%87%E4%BB%B6%E4%B8%AD%0A%24%20sysdig%20%20-c%20fdcount_by%20fd.sport%20%22evt.type%3Daccept%22%20%20-w%20sysdig.pcap",
+      "body": "%60%60%60shell%0A%23%20%E5%88%97%E5%87%BA%E5%AE%B9%E5%99%A8%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3%0A%24%20sudo%20sysdig%20-pc%20-A%20-c%20netstat%20container.name%3Daaa%0A%0A%23%20%E6%8A%93%E5%8F%96kubernetes%20pod%20%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AFip%E4%B8%BA172.119.100.16%EF%BC%8C3000%E7%AB%AF%E5%8F%A3%E7%9A%84%E7%9A%84%E8%AF%B7%E6%B1%82%E5%86%85%E5%AE%B9%0A%24%20sudo%20sysdig%20-A%20-c%20echo_fds%20%20k8s.pod.name%20contains%20datacenter-web-dev%20%20and%20fd.port%3D3000%20and%20evt.type%3Dread%20and%20fd.cip%3D172.119.100.16%20fd.proto%3DUDP%0A%0A%23%20%E6%8C%89%E7%85%A7%E5%BB%BA%E7%AB%8B%E8%BF%9E%E6%8E%A5%E6%95%B0%E9%87%8F%E5%AF%B9%E8%BF%9B%E7%A8%8B%E6%8E%92%E5%BA%8F%20%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0sysdig.pcap%E6%96%87%E4%BB%B6%E4%B8%AD%0A%24%20sysdig%20%20-c%20fdcount_by%20fd.sport%20%22evt.type%3Daccept%22%20%20-w%20sysdig.pcap%0A%60%60%60%0A%0A%E6%8A%93%E5%8F%96%20%60kubernetes%20pod%60%20%E5%AE%A2%E6%88%B7%E7%AB%AF%20%60ip%60%20%E4%B8%BA%20%60172.119.100.16%60%20%E7%9A%84%20%60udp%60%20%E8%AF%B7%E6%B1%82",
       "encoded": true
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "抓取 `kubernetes pod` 客户端 `ip` 为 `172.119.100.16` 的 `udp` 请求"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
-      "title": "io案例",
-      "kind": "text",
-      "body": "查看 io 错误最多的进程"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topprocs_errors"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看io错误最多的文件"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topfiles_errors"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看磁盘io失败的调用"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig fd.type=file and evt.failed=true"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看httpd打开失败的文件"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20%22proc.name%3Dhttpd%20and%20evt.type%3Dopen%20and%20evt.failed%3Dtrue%22",
+      "title": "io%E6%A1%88%E4%BE%8B",
+      "body": "%E6%9F%A5%E7%9C%8B%20io%20%E9%94%99%E8%AF%AF%E6%9C%80%E5%A4%9A%E7%9A%84%E8%BF%9B%E7%A8%8B%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topprocs_errors%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8Bio%E9%94%99%E8%AF%AF%E6%9C%80%E5%A4%9A%E7%9A%84%E6%96%87%E4%BB%B6%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topfiles_errors%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98io%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%B0%83%E7%94%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20fd.type%3Dfile%20and%20evt.failed%3Dtrue%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8Bhttpd%E6%89%93%E5%BC%80%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%87%E4%BB%B6%0A%0A%60%60%60shell%0A%24%20sysdig%20%22proc.name%3Dhttpd%20and%20evt.type%3Dopen%20and%20evt.failed%3Dtrue%22%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E6%9C%80%E8%8A%B1%E8%B4%B9%E6%97%B6%E9%97%B4%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topscalls_time%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%A4%B1%E8%B4%A5%E8%BF%94%E5%9B%9E%E6%9C%80%E5%A4%9A%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topscalls%20%22evt.failed%3Dtrue%22%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%A4%B1%E8%B4%A5%0A%0A%60%60%60shell%0A%24%20sysdig%20-p%20%22%2512user.name%20%256proc.pid%20%2512proc.name%20%253fd.num%20%25fd.typechar%20%25fd.name%22%20evt.type%3Dopen%20and%20evt.failed%3Dtrue%0A%60%60%60%0A%0A%E6%89%93%E5%8D%B0%E5%BB%B6%E8%BF%9F%E5%A4%A7%E4%BA%8E1ms%E7%9A%84%E6%96%87%E4%BB%B6I%2FO%E8%B0%83%E7%94%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20fileslower%201%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E4%BD%BF%E7%94%A8%E7%A1%AC%E7%9B%98%E5%B8%A6%E5%AE%BD%E6%9C%80%E5%A4%9A%E7%9A%84%E8%BF%9B%E7%A8%8B%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topprocs_file%0A%60%60%60%0A%0A%E5%88%97%E5%87%BA%E5%A4%A7%E9%87%8F%E4%BD%BF%E7%94%A8%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6%E7%9A%84%E8%BF%9B%E7%A8%8B%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20fdcount_by%20proc.name%20%22fd.type%3Dfile%22%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E8%AF%BB%E5%86%99bytes%E6%9C%80%E5%A4%9A%E7%9A%84%E6%96%87%E4%BB%B6%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topfiles_bytes%0A%60%60%60%0A%0A%E6%89%93%E5%8D%B0httpd%E8%BF%9B%E7%A8%8B%E5%B7%B2%E7%BB%8F%E8%AF%BB%E5%8F%96%E4%B8%AD%E5%92%8C%E5%86%99%E5%85%A5%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topfiles_bytes%20proc.name%3Dhttpd%0A%60%60%60%0A%0A%E5%9F%BA%E6%9C%AC%20opensnoop%3Asnoop%20%E6%96%87%E4%BB%B6%E5%9C%A8%E5%8F%91%E7%94%9F%E6%97%B6%E6%89%93%E5%BC%80%0A%0A%60%60%60shell%0A%24%20sysdig%20-p%20%22%2512user.name%20%256proc.pid%20%2512proc.name%20%253fd.num%20%25fd.typechar%20%25fd.name%22%20evt.type%3Dopen%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E6%B4%BB%E8%B7%83%E4%B8%AD%E7%9A%84%E8%AF%BB%E5%92%8C%E5%86%99%E6%9C%80%E5%A4%9A%E7%9A%84%E7%9B%AE%E5%BD%95%0A%0A%60%60%60shell%0Asysdig%20-c%20fdbytes_by%20fd.directory%20%22fd.type%3Dfile%22%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%BD%95%2Ftmp%E6%B4%BB%E8%B7%83%E4%B8%AD%E7%9A%84%E8%AF%BB%E5%86%99%E6%9C%80%E5%A4%9A%E7%9A%84%E6%96%87%E4%BB%B6%0A%0A%60%60%60shell%0Asysdig%20-c%20fdbytes_by%20fd.filename%20%22fd.directory%3D%2Ftmp%2F%22%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%BApasswd%E7%9A%84i%2FO%E6%B4%BB%E5%8A%A8%0A%0A%60%60%60shell%0Asysdig%20-A%20-c%20echo_fds%20%22fd.filename%3Dpasswd%22%0A%60%60%60%0A%0A%E5%B1%95%E7%A4%BAFD%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%B4%BB%E8%B7%83I%2FO%0A%0A%60%60%60shell%0Asysdig%20-c%20fdbytes_by%20fd.type%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看最花费时间的系统调用"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topscalls_time"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看系统调用失败返回最多的系统调用"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-c%20topscalls%20%22evt.failed%3Dtrue%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看打开文件失败"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-p%20%22%2512user.name%20%256proc.pid%20%2512proc.name%20%253fd.num%20%25fd.typechar%20%25fd.name%22%20evt.type%3Dopen%20and%20evt.failed%3Dtrue",
-      "encoded": true
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "打印延迟大于1ms的文件I/O调用"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c fileslower 1"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看使用硬盘带宽最多的进程"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topprocs_file"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "列出大量使用文件描述符的进程"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-c%20fdcount_by%20proc.name%20%22fd.type%3Dfile%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看读写bytes最多的文件"
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topfiles_bytes"
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "打印httpd进程已经读取中和写入中的文件"
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topfiles_bytes proc.name=httpd"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "基本 opensnoop:snoop 文件在发生时打开"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-p%20%22%2512user.name%20%256proc.pid%20%2512proc.name%20%253fd.num%20%25fd.typechar%20%25fd.name%22%20evt.type%3Dopen",
-      "encoded": true
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看活跃中的读和写最多的目录"
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "sysdig%20-c%20fdbytes_by%20fd.directory%20%22fd.type%3Dfile%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看目录/tmp活跃中的读写最多的文件"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "sysdig%20-c%20fdbytes_by%20fd.filename%20%22fd.directory%3D%2Ftmp%2F%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看所有文件名为passwd的i/O活动"
-    },
-    {
-      "id": "s1-43",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "sysdig%20-A%20-c%20echo_fds%20%22fd.filename%3Dpasswd%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-44",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "展示FD类型的活跃I/O"
-    },
-    {
-      "id": "s1-45",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "sysdig -c fdbytes_by fd.type"
     },
     {
       "id": "s1-46",
       "sectionId": "s1",
-      "title": "网络",
-      "kind": "text",
-      "body": "抓取 `kubernetes pod` 的客户端 `ip` 为 `172.119.100.17`，`3000` 端口的的请求内容"
-    },
-    {
-      "id": "s1-47",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sudo sysdig -A -c echo_fds  k8s.pod.name contains datacenter-web-dev  and fd.port=3000 and evt.type=read and fd.cip=172.119.100.17 fd.proto=UDP"
-    },
-    {
-      "id": "s1-48",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看占用网络带宽最多的进程"
-    },
-    {
-      "id": "s1-49",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topprocs_net\n#显示主机192.168.0.1的网络传输数据\n#作为二进制：\n$ sysdig -s2000 -X -c echo_fds fd.cip=192.168.0.1\n#作为 ASCII：\n$ sysdig -s2000 -A -c echo_fds fd.cip=192.168.0.1"
-    },
-    {
-      "id": "s1-50",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看连接最多的服务器端口"
-    },
-    {
-      "id": "s1-51",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%23%E5%9C%A8%E5%B7%B2%E5%BB%BA%E7%AB%8B%E7%9A%84%E8%BF%9E%E6%8E%A5%E6%96%B9%E9%9D%A2%EF%BC%9A%0A%24%20sysdig%20-c%20fdcount_by%20fd.sport%20%22evt.type%3Daccept%22%0A%23%E5%B0%B1%E6%80%BB%E5%AD%97%E8%8A%82%E6%95%B0%E8%80%8C%E8%A8%80%EF%BC%9A%0A%24%20sysdig%20-c%20fdbytes_by%20fd.sport",
-      "encoded": true
-    },
-    {
-      "id": "s1-52",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看客户端连接最多的ip"
-    },
-    {
-      "id": "s1-53",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%23%E5%9C%A8%E5%B7%B2%E5%BB%BA%E7%AB%8B%E7%9A%84%E8%81%94%E7%B3%BB%E6%96%B9%E9%9D%A2%0A%24%20sysdig%20-c%20fdcount_by%20fd.cip%20%22evt.type%3Daccept%22%0A%23%E5%B0%B1%E6%80%BB%E5%AD%97%E8%8A%82%E6%95%B0%E8%80%8C%E8%A8%80%0A%24%20sysdig%20-c%20fdbytes_by%20fd.cip",
-      "encoded": true
-    },
-    {
-      "id": "s1-54",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "列出所有不是访问apache服务的访问连接"
-    },
-    {
-      "id": "s1-55",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-p%22%25proc.name%20%25fd.name%22%20%22evt.type%3Daccept%20and%20proc.name!%3Dhttpd%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-56",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "显示 wordpress1 容器在端口 80 上发送和接收的数据："
-    },
-    {
-      "id": "s1-57",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -A -cecho_fds container.name=wordpress1 and fd.port=80"
-    },
-    {
-      "id": "s1-58",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "实时打印 `mysql` 容器接收的所有新连接"
-    },
-    {
-      "id": "s1-59",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-p%22%25fd.name%22%20container.name%3Dmysql%20and%20evt.type%3Daccept",
+      "title": "%E7%BD%91%E7%BB%9C",
+      "body": "%E6%8A%93%E5%8F%96%20%60kubernetes%20pod%60%20%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%20%60ip%60%20%E4%B8%BA%20%60172.119.100.17%60%EF%BC%8C%603000%60%20%E7%AB%AF%E5%8F%A3%E7%9A%84%E7%9A%84%E8%AF%B7%E6%B1%82%E5%86%85%E5%AE%B9%0A%0A%60%60%60shell%0A%24%20sudo%20sysdig%20-A%20-c%20echo_fds%20%20k8s.pod.name%20contains%20datacenter-web-dev%20%20and%20fd.port%3D3000%20and%20evt.type%3Dread%20and%20fd.cip%3D172.119.100.17%20fd.proto%3DUDP%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E5%8D%A0%E7%94%A8%E7%BD%91%E7%BB%9C%E5%B8%A6%E5%AE%BD%E6%9C%80%E5%A4%9A%E7%9A%84%E8%BF%9B%E7%A8%8B%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topprocs_net%0A%23%E6%98%BE%E7%A4%BA%E4%B8%BB%E6%9C%BA192.168.0.1%E7%9A%84%E7%BD%91%E7%BB%9C%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%0A%23%E4%BD%9C%E4%B8%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%EF%BC%9A%0A%24%20sysdig%20-s2000%20-X%20-c%20echo_fds%20fd.cip%3D192.168.0.1%0A%23%E4%BD%9C%E4%B8%BA%20ASCII%EF%BC%9A%0A%24%20sysdig%20-s2000%20-A%20-c%20echo_fds%20fd.cip%3D192.168.0.1%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E8%BF%9E%E6%8E%A5%E6%9C%80%E5%A4%9A%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%8F%A3%0A%0A%60%60%60shell%0A%23%E5%9C%A8%E5%B7%B2%E5%BB%BA%E7%AB%8B%E7%9A%84%E8%BF%9E%E6%8E%A5%E6%96%B9%E9%9D%A2%EF%BC%9A%0A%24%20sysdig%20-c%20fdcount_by%20fd.sport%20%22evt.type%3Daccept%22%0A%23%E5%B0%B1%E6%80%BB%E5%AD%97%E8%8A%82%E6%95%B0%E8%80%8C%E8%A8%80%EF%BC%9A%0A%24%20sysdig%20-c%20fdbytes_by%20fd.sport%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BF%9E%E6%8E%A5%E6%9C%80%E5%A4%9A%E7%9A%84ip%0A%0A%60%60%60shell%0A%23%E5%9C%A8%E5%B7%B2%E5%BB%BA%E7%AB%8B%E7%9A%84%E8%81%94%E7%B3%BB%E6%96%B9%E9%9D%A2%0A%24%20sysdig%20-c%20fdcount_by%20fd.cip%20%22evt.type%3Daccept%22%0A%23%E5%B0%B1%E6%80%BB%E5%AD%97%E8%8A%82%E6%95%B0%E8%80%8C%E8%A8%80%0A%24%20sysdig%20-c%20fdbytes_by%20fd.cip%0A%60%60%60%0A%0A%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E4%B8%8D%E6%98%AF%E8%AE%BF%E9%97%AEapache%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%AE%BF%E9%97%AE%E8%BF%9E%E6%8E%A5%0A%0A%60%60%60shell%0A%24%20sysdig%20-p%22%25proc.name%20%25fd.name%22%20%22evt.type%3Daccept%20and%20proc.name!%3Dhttpd%22%0A%60%60%60%0A%0A%E6%98%BE%E7%A4%BA%20wordpress1%20%E5%AE%B9%E5%99%A8%E5%9C%A8%E7%AB%AF%E5%8F%A3%2080%20%E4%B8%8A%E5%8F%91%E9%80%81%E5%92%8C%E6%8E%A5%E6%94%B6%E7%9A%84%E6%95%B0%E6%8D%AE%EF%BC%9A%0A%0A%60%60%60shell%0A%24%20sysdig%20-A%20-cecho_fds%20container.name%3Dwordpress1%20and%20fd.port%3D80%0A%60%60%60%0A%0A%E5%AE%9E%E6%97%B6%E6%89%93%E5%8D%B0%20%60mysql%60%20%E5%AE%B9%E5%99%A8%E6%8E%A5%E6%94%B6%E7%9A%84%E6%89%80%E6%9C%89%E6%96%B0%E8%BF%9E%E6%8E%A5%0A%0A%60%60%60shell%0A%24%20sysdig%20-p%22%25fd.name%22%20container.name%3Dmysql%20and%20evt.type%3Daccept%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-60",
       "sectionId": "s1",
-      "title": "进程",
-      "kind": "text",
-      "body": "查看哪些文件花费时间做多"
-    },
-    {
-      "id": "s1-61",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topfiles_time"
-    },
-    {
-      "id": "s1-62",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看httpd进程哪些文件花费最多时间"
-    },
-    {
-      "id": "s1-63",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topfiles_time proc.name=httpd"
-    },
-    {
-      "id": "s1-64",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看io错误最多的进程"
-    },
-    {
-      "id": "s1-65",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topprocs_errors"
-    },
-    {
-      "id": "s1-66",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看io错误最多的文件"
-    },
-    {
-      "id": "s1-67",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topfiles_errors"
-    },
-    {
-      "id": "s1-68",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看磁盘io失败的调用"
-    },
-    {
-      "id": "s1-69",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig fd.type=file and evt.failed=true"
-    },
-    {
-      "id": "s1-70",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看httpd打开失败的文件"
-    },
-    {
-      "id": "s1-71",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20%22proc.name%3Dhttpd%20and%20evt.type%3Dopen%20and%20evt.failed%3Dtrue%22",
+      "title": "%E8%BF%9B%E7%A8%8B",
+      "body": "%E6%9F%A5%E7%9C%8B%E5%93%AA%E4%BA%9B%E6%96%87%E4%BB%B6%E8%8A%B1%E8%B4%B9%E6%97%B6%E9%97%B4%E5%81%9A%E5%A4%9A%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topfiles_time%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8Bhttpd%E8%BF%9B%E7%A8%8B%E5%93%AA%E4%BA%9B%E6%96%87%E4%BB%B6%E8%8A%B1%E8%B4%B9%E6%9C%80%E5%A4%9A%E6%97%B6%E9%97%B4%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topfiles_time%20proc.name%3Dhttpd%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8Bio%E9%94%99%E8%AF%AF%E6%9C%80%E5%A4%9A%E7%9A%84%E8%BF%9B%E7%A8%8B%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topprocs_errors%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8Bio%E9%94%99%E8%AF%AF%E6%9C%80%E5%A4%9A%E7%9A%84%E6%96%87%E4%BB%B6%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topfiles_errors%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98io%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%B0%83%E7%94%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20fd.type%3Dfile%20and%20evt.failed%3Dtrue%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8Bhttpd%E6%89%93%E5%BC%80%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%96%87%E4%BB%B6%0A%0A%60%60%60shell%0A%24%20sysdig%20%22proc.name%3Dhttpd%20and%20evt.type%3Dopen%20and%20evt.failed%3Dtrue%22%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E6%9C%80%E8%8A%B1%E8%B4%B9%E6%97%B6%E9%97%B4%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topscalls_time%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E5%A4%B1%E8%B4%A5%E8%BF%94%E5%9B%9E%E6%9C%80%E5%A4%9A%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20topscalls%20%22evt.failed%3Dtrue%22%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%A4%B1%E8%B4%A5%0A%0A%60%60%60shell%0A%24%20sysdig%20-p%20%22%2512user.name%20%256proc.pid%20%2512proc.name%20%253fd.num%20%25fd.typechar%20%25fd.name%22%20evt.type%3Dopen%20and%20evt.failed%3Dtrue%0A%60%60%60%0A%0A%E6%89%93%E5%8D%B0%E5%BB%B6%E8%BF%9F%E5%A4%A7%E4%BA%8E1ms%E7%9A%84%E6%96%87%E4%BB%B6I%2FO%E8%B0%83%E7%94%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20fileslower%201%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-72",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看最花费时间的系统调用"
-    },
-    {
-      "id": "s1-73",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topscalls_time"
-    },
-    {
-      "id": "s1-74",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看系统调用失败返回最多的系统调用"
-    },
-    {
-      "id": "s1-75",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-c%20topscalls%20%22evt.failed%3Dtrue%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-76",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看打开文件失败"
-    },
-    {
-      "id": "s1-77",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-p%20%22%2512user.name%20%256proc.pid%20%2512proc.name%20%253fd.num%20%25fd.typechar%20%25fd.name%22%20evt.type%3Dopen%20and%20evt.failed%3Dtrue",
-      "encoded": true
-    },
-    {
-      "id": "s1-78",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "打印延迟大于1ms的文件I/O调用"
-    },
-    {
-      "id": "s1-79",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c fileslower 1"
     },
     {
       "id": "s1-80",
       "sectionId": "s1",
       "title": "基本用法",
-      "kind": "text",
-      "body": "将事件捕获到跟踪文件以供以后分析"
-    },
-    {
-      "id": "s1-81",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig –w myfile.scap"
-    },
-    {
-      "id": "s1-82",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "从跟踪文件中读取事件"
-    },
-    {
-      "id": "s1-83",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig –r myfile.scap"
-    },
-    {
-      "id": "s1-84",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "根据特定字段过滤事件"
-    },
-    {
-      "id": "s1-85",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig proc.name=httpd and evt.type!=open"
-    },
-    {
-      "id": "s1-86",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "运行凿子以获得高级功能"
-    },
-    {
-      "id": "s1-87",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c topprocs_cpu"
-    },
-    {
-      "id": "s1-88",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "列出所有可用字段"
-    },
-    {
-      "id": "s1-89",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -l"
-    },
-    {
-      "id": "s1-90",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "列出所有可用的凿子"
-    },
-    {
-      "id": "s1-91",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -cl"
+      "body": "将事件捕获到跟踪文件以供以后分析\n\n```shell\n$ sysdig –w myfile.scap\n```\n\n从跟踪文件中读取事件\n\n```shell\n$ sysdig –r myfile.scap\n```\n\n根据特定字段过滤事件\n\n```shell\n$ sysdig proc.name=httpd and evt.type!=open\n```\n\n运行凿子以获得高级功能\n\n```shell\n$ sysdig -c topprocs_cpu\n```\n\n列出所有可用字段\n\n```shell\n$ sysdig -l\n```\n\n列出所有可用的凿子\n\n```shell\n$ sysdig -cl\n```"
     },
     {
       "id": "s1-92",
       "sectionId": "s1",
       "title": "容器",
-      "kind": "text",
-      "body": "查看具有容器上下文的进程列表"
-    },
-    {
-      "id": "s1-93",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -pc"
-    },
-    {
-      "id": "s1-94",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看 `wordpress1` 容器中运行的进程的CPU使用率"
-    },
-    {
-      "id": "s1-95",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -pc -c topprocs_cpu container.name=wordpress1"
-    },
-    {
-      "id": "s1-96",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看对基于 `Kubernetes` 的 `mySQL` 服务发出的热门 `HTTP` 请求"
-    },
-    {
-      "id": "s1-97",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -k http://127.0.0.1:8080 -c httptop k8s.svc.name=mysql"
+      "body": "查看具有容器上下文的进程列表\n\n```shell\n$ sysdig -pc\n```\n\n查看 `wordpress1` 容器中运行的进程的CPU使用率\n\n```shell\n$ sysdig -pc -c topprocs_cpu container.name=wordpress1\n```\n\n查看对基于 `Kubernetes` 的 `mySQL` 服务发出的热门 `HTTP` 请求\n\n```shell\n$ sysdig -k http://127.0.0.1:8080 -c httptop k8s.svc.name=mysql\n```"
     },
     {
       "id": "s1-98",
       "sectionId": "s1",
-      "title": "文件系统",
-      "kind": "text",
-      "body": "列出使用最多文件数的进程"
-    },
-    {
-      "id": "s1-99",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-c%20fdcount_by%20proc.name%20%22fd.type%3Dfile%22",
-      "encoded": true
-    },
-    {
-      "id": "s1-100",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "观察名为“passwd”的所有文件的 I/O 活动"
-    },
-    {
-      "id": "s1-101",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-A%20-c%20echo_fds%20%22fd.filename%3Dpasswd%22",
+      "title": "%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F",
+      "body": "%E5%88%97%E5%87%BA%E4%BD%BF%E7%94%A8%E6%9C%80%E5%A4%9A%E6%96%87%E4%BB%B6%E6%95%B0%E7%9A%84%E8%BF%9B%E7%A8%8B%0A%0A%60%60%60shell%0A%24%20sysdig%20-c%20fdcount_by%20proc.name%20%22fd.type%3Dfile%22%0A%60%60%60%0A%0A%E8%A7%82%E5%AF%9F%E5%90%8D%E4%B8%BA%E2%80%9Cpasswd%E2%80%9D%E7%9A%84%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E7%9A%84%20I%2FO%20%E6%B4%BB%E5%8A%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20-A%20-c%20echo_fds%20%22fd.filename%3Dpasswd%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-102",
       "sectionId": "s1",
-      "title": "安全",
-      "kind": "text",
-      "body": "显示 `root` 访问的目录"
-    },
-    {
-      "id": "s1-103",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20sysdig%20-p%20%22%25evt.arg.path%22%20%22evt.type%3Dchdir%20and%20user.name%3Droot%22",
+      "title": "%E5%AE%89%E5%85%A8",
+      "body": "%E6%98%BE%E7%A4%BA%20%60root%60%20%E8%AE%BF%E9%97%AE%E7%9A%84%E7%9B%AE%E5%BD%95%0A%0A%60%60%60shell%0A%24%20sysdig%20-p%20%22%25evt.arg.path%22%20%22evt.type%3Dchdir%20and%20user.name%3Droot%22%0A%60%60%60%0A%0A%E8%A7%82%E5%AF%9F%20%60ssh%60%20%E6%B4%BB%E5%8A%A8%0A%0A%60%60%60shell%0A%24%20sysdig%20-A%20-c%20echo_fds%20fd.name%3D%2Fdev%2Fptmx%20and%20proc.name%3Dsshd%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-104",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "观察 `ssh` 活动"
-    },
-    {
-      "id": "s1-105",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -A -c echo_fds fd.name=/dev/ptmx and proc.name=sshd"
     },
     {
       "id": "s1-106",
       "sectionId": "s1",
       "title": "日志",
-      "kind": "text",
-      "body": "显示来自 python 的所有系统日志消息"
-    },
-    {
-      "id": "s1-107",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c spy_syslog proc.name=python"
-    },
-    {
-      "id": "s1-108",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "超尾系统中的所有日志文件"
-    },
-    {
-      "id": "s1-109",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ sysdig -c spy_logs"
+      "body": "显示来自 python 的所有系统日志消息\n\n```shell\n$ sysdig -c spy_syslog proc.name=python\n```\n\n超尾系统中的所有日志文件\n\n```shell\n$ sysdig -c spy_logs\n```"
     },
     {
       "id": "s1-110",
       "sectionId": "s1",
       "title": "CSysdig",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ csysdig -m http://127.0.0.1:8080"
-    },
-    {
-      "id": "s1-111",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 Mesos 元数据运行 Csysdig，Sysdig 基于 curses 的 UI"
+      "body": "```shell\n$ csysdig -m http://127.0.0.1:8080\n```\n\n使用 Mesos 元数据运行 Csysdig，Sysdig 基于 curses 的 UI"
     },
     {
       "id": "s2-112",
       "sectionId": "s2",
       "title": "另见",
-      "kind": "text",
       "body": "• [sysdig wiki](https://github.com/draios/sysdig/wiki) _(github.com)_\n• [sysdig 官网](https://sysdig.com/) _(sysdig.com)_\n• [Linux 故障排除速查表：strace、htop、lsof、tcpdump、iftop 和 sysdig](https://sysdig.com/blog/linux-troubleshooting-cheatsheet/) _(sysdig.com)_"
     }
   ],

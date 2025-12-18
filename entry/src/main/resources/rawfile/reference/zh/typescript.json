@@ -75,2035 +75,802 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "[![NPM version](https://img.shields.io/npm/v/typescript.svg?style=flat)](https://www.npmjs.com/package/typescript)\n[![Downloads](https://img.shields.io/npm/dm/typescript.svg?style=flat)](https://www.npmjs.com/package/typescript)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/Microsoft/TypeScript)](https://github.com/Microsoft/TypeScript/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/Microsoft/TypeScript)"
     },
     {
       "id": "intro-1",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "包含最重要基础、泛型、方法、class 等 TypeScript 强类型编程语言语法的快速参考备忘单。初学者的完整快速参考\n<!--rehype:style=padding-top: 12px;-->"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "介绍",
-      "kind": "text",
-      "body": "TypeScript 是具有类型语法的 JavaScript。Interface 是为了匹配它们的运行时行为而构建的。"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• [JavaScript 备忘清单](./javascript.md) _(jaywcjlove.github.io)_\n• [TypeScript 官网](https://www.typescriptlang.org/)  _(typescriptlang.org)_"
+      "body": "TypeScript 是具有类型语法的 JavaScript。Interface 是为了匹配它们的运行时行为而构建的。\n\n• [JavaScript 备忘清单](./javascript.md) _(jaywcjlove.github.io)_\n• [TypeScript 官网](https://www.typescriptlang.org/)  _(typescriptlang.org)_"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "内置类型基元",
-      "kind": "code",
-      "lang": "ts",
-      "code": "any, void,\nboolean, string, number,\nundefined, null,\nunknown, never,\nbigint, symbol"
+      "body": "```ts\nany, void,\nboolean, string, number,\nundefined, null,\nunknown, never,\nbigint, symbol\n```"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "常见的内置 JS 对象",
-      "kind": "code",
-      "lang": "ts",
-      "code": "Date, Error,\nArray, Map, Set,\nRegexp, Promise"
+      "body": "```ts\nDate, Error,\nArray, Map, Set,\nRegexp, Promise\n```"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "内置 - 类型字面量",
-      "kind": "text",
-      "body": "Object:"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "{ field: string }"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Function:"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "(arg: number) => string"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Arrays:"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "string[] or Array<string>"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Tuple:"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "[string, number]"
+      "body": "Object:\n\n```ts\n{ field: string }\n```\n\nFunction:\n\n```ts\n(arg: number) => string\n```\n\nArrays:\n\n```ts\nstring[] or Array<string>\n```\n\nTuple:\n\n```ts\n[string, number]\n```"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "避免",
-      "kind": "code",
-      "lang": "",
-      "code": "Object, String, Number, Boolean"
+      "body": "```\nObject, String, Number, Boolean\n```"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
       "title": "通用语法",
-      "kind": "code",
-      "lang": "ts",
-      "code": "/** 可选择从现有接口或类型(Response, HTTPAble)中获取属性 */\ninterface JSONResponse extends Response, HTTPAble {\n  version: number;\n  // 👇  附加在编辑器中显示的 JSDoc 注释\n  /** In bytes */\n  payloadSize: number;\n  // 👇  此属性可能不在对象上\n  outOfStock?: boolean;\n  // 👇  这是描述作为函数的属性的两种方法\n  update: (retryTimes: number) => void;\n  update(retryTimes: number): void;\n  // 👇  你可以通过 () 调用这个对象 -（JS中的函数是可以调用的对象）\n  (): JSONResponse\n  // 👇  您可以在此 Interface 描述的对象上使用 new\n  new(s: string): JSONResponse;\n  // 👇  任何未描述的属性都假定存在，并且所有属性必须是数字\n  [key: string]: number;\n  // 👇  告诉 TypeScript 一个属性不能被改变\n  readonly body: string;\n}"
+      "body": "```ts\n/** 可选择从现有接口或类型(Response, HTTPAble)中获取属性 */\ninterface JSONResponse extends Response, HTTPAble {\n  version: number;\n  // 👇  附加在编辑器中显示的 JSDoc 注释\n  /** In bytes */\n  payloadSize: number;\n  // 👇  此属性可能不在对象上\n  outOfStock?: boolean;\n  // 👇  这是描述作为函数的属性的两种方法\n  update: (retryTimes: number) => void;\n  update(retryTimes: number): void;\n  // 👇  你可以通过 () 调用这个对象 -（JS中的函数是可以调用的对象）\n  (): JSONResponse\n  // 👇  您可以在此 Interface 描述的对象上使用 new\n  new(s: string): JSONResponse;\n  // 👇  任何未描述的属性都假定存在，并且所有属性必须是数字\n  [key: string]: number;\n  // 👇  告诉 TypeScript 一个属性不能被改变\n  readonly body: string;\n}\n```"
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
       "title": "泛型",
-      "kind": "text",
-      "body": "声明一个可以在你的 Interface 中改变的类型"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface APICall<Response> {\n  data: Response\n}"
+      "body": "声明一个可以在你的 Interface 中改变的类型\n\n```ts\ninterface APICall<Response> {\n  data: Response\n}\n```"
     },
     {
       "id": "s1-18",
       "sectionId": "s1",
       "title": "用法",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const api: APICall<ArtworkCall> = ...\n\napi.data  // Artwork"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "您可以通过 `extends` 关键字限制泛型参数接受的类型。"
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface APICall<Response extends { status: number }> {\n  data: Response\n}\n\nconst api: APICall<ArtworkCall> = ...\n\napi.data.status"
+      "body": "```ts\nconst api: APICall<ArtworkCall> = ...\n\napi.data  // Artwork\n```\n\n您可以通过 `extends` 关键字限制泛型参数接受的类型。\n\n```ts\ninterface APICall<Response extends { status: number }> {\n  data: Response\n}\n\nconst api: APICall<ArtworkCall> = ...\n\napi.data.status\n```"
     },
     {
       "id": "s1-21",
       "sectionId": "s1",
       "title": "重载",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface Expect {\n  (matcher: boolean): string\n  (matcher: string): boolean;\n}"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "一个可调用 Interface 可以对不同的参数集有多个定义。"
+      "body": "```ts\ninterface Expect {\n  (matcher: boolean): string\n  (matcher: string): boolean;\n}\n```\n\n一个可调用 Interface 可以对不同的参数集有多个定义。"
     },
     {
       "id": "s1-23",
       "sectionId": "s1",
       "title": "类一致性",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface Syncable {\n  sync(): void\n}\nclass Account implements Syncable { ... }"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "您可以通过实现确保类 class 符合 Interface。"
+      "body": "```ts\ninterface Syncable {\n  sync(): void\n}\nclass Account implements Syncable { ... }\n```\n\n您可以通过实现确保类 class 符合 Interface。"
     },
     {
       "id": "s1-25",
       "sectionId": "s1",
-      "title": "Get & Set",
-      "kind": "text",
-      "body": "对象可以有自定义的 `getter` 或 `setter`。"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface Ruler {\n  get size(): number\n  set size(value: number | string);\n}"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "用法"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20r%3A%20Ruler%20%3D%20...%0Ar.size%20%3D%2012%0Ar.size%20%3D%20%2236%22",
+      "title": "Get%20%26%20Set",
+      "body": "%E5%AF%B9%E8%B1%A1%E5%8F%AF%E4%BB%A5%E6%9C%89%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%20%60getter%60%20%E6%88%96%20%60setter%60%E3%80%82%0A%0A%60%60%60ts%0Ainterface%20Ruler%20%7B%0A%20%20get%20size()%3A%20number%0A%20%20set%20size(value%3A%20number%20%7C%20string)%3B%0A%7D%0A%60%60%60%0A%0A%E7%94%A8%E6%B3%95%0A%0A%60%60%60ts%0Aconst%20r%3A%20Ruler%20%3D%20...%0Ar.size%20%3D%2012%0Ar.size%20%3D%20%2236%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-29",
       "sectionId": "s1",
       "title": "通过合并扩展",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface APICall {\n  data: Response\n}\n\ninterface APICall {\n  error?: Error\n}"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Interface 被合并，多个声明将向类型定义添加新字段。"
+      "body": "```ts\ninterface APICall {\n  data: Response\n}\n\ninterface APICall {\n  error?: Error\n}\n```\n\nInterface 被合并，多个声明将向类型定义添加新字段。"
     },
     {
       "id": "s2-31",
       "sectionId": "s2",
       "title": "Type vs Interface",
-      "kind": "text",
       "body": "• Interface 只能描述对象形状\n• Interface 可以通过多次声明来扩展\n• 在性能关键 Type 中，Interface 比较检查可以更快。"
     },
     {
       "id": "s2-32",
       "sectionId": "s2",
       "title": "把类型想象成变量",
-      "kind": "text",
       "body": "就像您如何在不同范围内创建具有相同名称的变量一样，type 具有相似的语义。"
     },
     {
       "id": "s2-33",
       "sectionId": "s2",
       "title": "使用实用程序类型构建",
-      "kind": "text",
       "body": "TypeScript 包含许多全局类型，它们将帮助您在类型系统中完成常见任务。检查他们的网站。"
     },
     {
       "id": "s2-34",
       "sectionId": "s2",
       "title": "原始类型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type SanitizedInput = string;\ntype MissingNo = 404;"
-    },
-    {
-      "id": "s2-35",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "主要用于文档"
+      "body": "```ts\ntype SanitizedInput = string;\ntype MissingNo = 404;\n```\n\n主要用于文档"
     },
     {
       "id": "s2-36",
       "sectionId": "s2",
       "title": "对象字面类型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type Location = {\n  x: number;\n  y: number;\n};"
+      "body": "```ts\ntype Location = {\n  x: number;\n  y: number;\n};\n```"
     },
     {
       "id": "s2-37",
       "sectionId": "s2",
       "title": "%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20Size%20%3D%20%22small%22%20%7C%20%22medium%22%20%7C%20%22large%22",
+      "body": "%60%60%60ts%0Atype%20Size%20%3D%20%22small%22%20%7C%20%22medium%22%20%7C%20%22large%22%0A%60%60%60%0A%0A%E6%8F%8F%E8%BF%B0%E8%AE%B8%E5%A4%9A%E9%80%89%E9%A1%B9%E4%B8%AD%E7%9A%84%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%9E%8B%EF%BC%8C%E4%BE%8B%E5%A6%82%E5%B7%B2%E7%9F%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%88%97%E8%A1%A8%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "描述许多选项中的一个类型，例如已知字符串的列表。"
     },
     {
       "id": "s2-39",
       "sectionId": "s2",
       "title": "交叉口类型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type Location = { x: number }\n              & { y: number }\n// { x: number, y: number }"
-    },
-    {
-      "id": "s2-40",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "一种合并/扩展类型的方法"
+      "body": "```ts\ntype Location = { x: number }\n              & { y: number }\n// { x: number, y: number }\n```\n\n一种合并/扩展类型的方法"
     },
     {
       "id": "s2-41",
       "sectionId": "s2",
       "title": "从值类型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const data = { ... }\ntype Data = typeof data"
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "通过 typeof 运算符重用来自现有 JavaScript 运行时值的类型。"
+      "body": "```ts\nconst data = { ... }\ntype Data = typeof data\n```\n\n通过 typeof 运算符重用来自现有 JavaScript 运行时值的类型。"
     },
     {
       "id": "s2-43",
       "sectionId": "s2",
       "title": "从函数返回类型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const createFixtures = () => { ... }\ntype Fixtures = ReturnType<typeof createFixtures>\nfunction test(fixture: Fixtures) {}"
-    },
-    {
-      "id": "s2-44",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将函数的返回值重新用作类型。"
+      "body": "```ts\nconst createFixtures = () => { ... }\ntype Fixtures = ReturnType<typeof createFixtures>\nfunction test(fixture: Fixtures) {}\n```\n\n将函数的返回值重新用作类型。"
     },
     {
       "id": "s2-45",
       "sectionId": "s2",
       "title": "%E4%BB%8E%E6%A8%A1%E5%9D%97%E7%B1%BB%E5%9E%8B",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20data%3A%20import(%22.%2Fdata%22).data",
+      "body": "%60%60%60ts%0Aconst%20data%3A%20import(%22.%2Fdata%22).data%0A%60%60%60%0A%0A%E8%BF%99%E4%BA%9B%E5%8A%9F%E8%83%BD%E9%9D%9E%E5%B8%B8%E9%80%82%E5%90%88%E6%9E%84%E5%BB%BA%E5%BA%93%E3%80%81%E6%8F%8F%E8%BF%B0%E7%8E%B0%E6%9C%89%E7%9A%84%20JavaScript%20%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%82%A8%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%8F%91%E7%8E%B0%E5%9C%A8%E5%A4%A7%E5%A4%9A%E6%95%B0%20TypeScript%20%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%BE%88%E5%B0%91%E4%BD%BF%E7%94%A8%E5%AE%83%E4%BB%AC%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s2-46",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "这些功能非常适合构建库、描述现有的 JavaScript 代码，您可能会发现在大多数 TypeScript 应用程序中很少使用它们。"
     },
     {
       "id": "s2-47",
       "sectionId": "s2",
       "title": "对象字面量语法",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type JSONResponse = {\n  version: number;                        // 字段\n  /** In bytes */                         // 附加文档\n  payloadSize: number;\n  outOfStock?: boolean;                   // 可选的\n  update: (retryTimes: number) => void;   // 箭头函数字段\n  update(retryTimes: number): void;       // 函数\n  (): JSONResponse                        // 类型是可调用的\n  [key: string]: number;                  // 接受任何索引\n  new (s: string): JSONResponse;          // new 对象\n  readonly body: string;                  // 只读属性\n}"
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "用于节省空间的 Terser，请参阅 Interface 备忘清单了解更多信息，除了“static”匹配之外的所有内容。"
+      "body": "```ts\ntype JSONResponse = {\n  version: number;                        // 字段\n  /** In bytes */                         // 附加文档\n  payloadSize: number;\n  outOfStock?: boolean;                   // 可选的\n  update: (retryTimes: number) => void;   // 箭头函数字段\n  update(retryTimes: number): void;       // 函数\n  (): JSONResponse                        // 类型是可调用的\n  [key: string]: number;                  // 接受任何索引\n  new (s: string): JSONResponse;          // new 对象\n  readonly body: string;                  // 只读属性\n}\n```\n\n用于节省空间的 Terser，请参阅 Interface 备忘清单了解更多信息，除了“static”匹配之外的所有内容。"
     },
     {
       "id": "s2-49",
       "sectionId": "s2",
       "title": "映射类型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type Artist = {\n  name: string, bio: string\n}\n\ntype Subscriber<Type> = {\n  [Property in keyof Type]: \n      (newValue: Type[Property]) => void\n}\ntype ArtistSub = Subscriber<Artist>\n// { name: (nv: string) => \n//    void, bio: (nv: string) => void }"
-    },
-    {
-      "id": "s2-50",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "类似于类型系统的映射语句，允许输入类型更改新类型的结构。"
+      "body": "```ts\ntype Artist = {\n  name: string, bio: string\n}\n\ntype Subscriber<Type> = {\n  [Property in keyof Type]: \n      (newValue: Type[Property]) => void\n}\ntype ArtistSub = Subscriber<Artist>\n// { name: (nv: string) => \n//    void, bio: (nv: string) => void }\n```\n\n类似于类型系统的映射语句，允许输入类型更改新类型的结构。"
     },
     {
       "id": "s2-51",
       "sectionId": "s2",
       "title": "%E6%A8%A1%E6%9D%BF%E8%81%94%E5%90%88%E7%B1%BB%E5%9E%8B",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20SupportedLangs%20%3D%20%20%22en%22%20%7C%20%22pt%22%20%7C%20%22zh%22%3B%0Atype%20FooterLocaleIDs%20%3D%20%22header%22%20%7C%20%22footer%22%3B%0Atype%20AllLocaleIDs%20%3D%20%60%24%7BSupportedLangs%7D_%24%7BFooterLocaleIDs%7D_id%60%3B%0A%0A%2F%2F%20%22en_header_id%22%20%7C%20%22en_footer_id%22%0A%2F%2F%20%20%20%20%20%20%20%20%20%7C%20%22pt_header_id%22%20%7C%20%22pt_footer_id%22%0A%2F%2F%20%20%20%20%20%20%20%20%20%7C%20%22zh_header_id%22%20%7C%20%22zh_footer_id%22",
+      "body": "%60%60%60ts%0Atype%20SupportedLangs%20%3D%20%20%22en%22%20%7C%20%22pt%22%20%7C%20%22zh%22%3B%0Atype%20FooterLocaleIDs%20%3D%20%22header%22%20%7C%20%22footer%22%3B%0Atype%20AllLocaleIDs%20%3D%20%60%24%7BSupportedLangs%7D_%24%7BFooterLocaleIDs%7D_id%60%3B%0A%0A%2F%2F%20%22en_header_id%22%20%7C%20%22en_footer_id%22%0A%2F%2F%20%20%20%20%20%20%20%20%20%7C%20%22pt_header_id%22%20%7C%20%22pt_footer_id%22%0A%2F%2F%20%20%20%20%20%20%20%20%20%7C%20%22zh_header_id%22%20%7C%20%22zh_footer_id%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-52",
       "sectionId": "s2",
       "title": "条件类型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type HasFourLegs<Animal> = Animal extends { legs: 4 } ? Animal : never\ntype Animals = Bird | Dog | Ant | Wolf;\ntype FourLegs = HasFourLegs<Animals>\n// Dog | Wolf"
-    },
-    {
-      "id": "s2-53",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "在类型系统中充当“if 语句”。 通过泛型创建，然后通常用于减少类型联合中的选项数量。"
+      "body": "```ts\ntype HasFourLegs<Animal> = Animal extends { legs: 4 } ? Animal : never\ntype Animals = Bird | Dog | Ant | Wolf;\ntype FourLegs = HasFourLegs<Animals>\n// Dog | Wolf\n```\n\n在类型系统中充当“if 语句”。 通过泛型创建，然后通常用于减少类型联合中的选项数量。"
     },
     {
       "id": "s3-54",
       "sectionId": "s3",
-      "title": "If 声明 - typeof（用于原语）",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const input = getUserInput()\ninput // string | number\n\nif (typeof input === 'string') {\n input // string\n}"
+      "title": "If%20%E5%A3%B0%E6%98%8E%20-%20typeof%EF%BC%88%E7%94%A8%E4%BA%8E%E5%8E%9F%E8%AF%AD%EF%BC%89",
+      "body": "%60%60%60ts%0Aconst%20input%20%3D%20getUserInput()%0Ainput%20%2F%2F%20string%20%7C%20number%0A%0Aif%20(typeof%20input%20%3D%3D%3D%20'string')%20%7B%0A%20input%20%2F%2F%20string%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-55",
       "sectionId": "s3",
-      "title": "对象中的“property”（对于对象）",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const input = getUserInput()\ninput  // string | { error: ... }\n\nif ('error' in input) {\n  input // { error: ... }\n}"
+      "title": "%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84%E2%80%9Cproperty%E2%80%9D%EF%BC%88%E5%AF%B9%E4%BA%8E%E5%AF%B9%E8%B1%A1%EF%BC%89",
+      "body": "%60%60%60ts%0Aconst%20input%20%3D%20getUserInput()%0Ainput%20%20%2F%2F%20string%20%7C%20%7B%20error%3A%20...%20%7D%0A%0Aif%20('error'%20in%20input)%20%7B%0A%20%20input%20%2F%2F%20%7B%20error%3A%20...%20%7D%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-56",
       "sectionId": "s3",
       "title": "instanceof（用于类）",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const input = getUserInput()\n  input // number | number[]\n\nif (input instanceof Array) {\n  input // number[]\n}"
+      "body": "```ts\nconst input = getUserInput()\n  input // number | number[]\n\nif (input instanceof Array) {\n  input // number[]\n}\n```"
     },
     {
       "id": "s3-57",
       "sectionId": "s3",
       "title": "类型保护功能（适用于任何东西）",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const input = getUserInput()\n   input // number | number[]\n\nif (Array.isArray(input)) {\n  input // number[]\n}"
+      "body": "```ts\nconst input = getUserInput()\n   input // number | number[]\n\nif (Array.isArray(input)) {\n  input // number[]\n}\n```"
     },
     {
       "id": "s3-58",
       "sectionId": "s3",
       "title": "%E4%BB%BB%E5%8A%A1",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20data1%20%3D%20%7B%0A%20%20name%3A%20%22Zagreus%22%0A%7D%0A%2F%2F%20typeof%20data1%20%3D%20%7B%0A%2F%2F%20%20%20name%3A%20string%0A%2F%2F%20%7D",
-      "encoded": true
-    },
-    {
-      "id": "s3-59",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "👇 使用 `as const` 缩小类型 👇"
-    },
-    {
-      "id": "s3-60",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20data2%20%3D%20%7B%0A%20%20name%3A%20%22Zagreus%22%0A%7D%20as%20const%0A%2F%2F%20typeof%20data1%20%3D%20%7B%0A%2F%2F%20%20%20name%3A%20'Zagreus'%0A%2F%2F%20%7D",
-      "encoded": true
-    },
-    {
-      "id": "s3-61",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "跟踪相关变量"
-    },
-    {
-      "id": "s3-62",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const response = getResponse()\nconst isSuccessResponse = \n    res instanceof SuccessResponse\n\nif (isSuccessResponse) {\n  res.data // SuccessResponse\n}"
-    },
-    {
-      "id": "s3-63",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "重新分配更新类型"
-    },
-    {
-      "id": "s3-64",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "let%20data%3A%20string%20%7C%20number%20%3D%20...%0Adata%20%2F%2F%20string%20%7C%20number%0Adata%20%3D%20%22Hello%22%0Adata%20%2F%2F%20string",
+      "body": "%60%60%60ts%0Aconst%20data1%20%3D%20%7B%0A%20%20name%3A%20%22Zagreus%22%0A%7D%0A%2F%2F%20typeof%20data1%20%3D%20%7B%0A%2F%2F%20%20%20name%3A%20string%0A%2F%2F%20%7D%0A%60%60%60%0A%0A%F0%9F%91%87%20%E4%BD%BF%E7%94%A8%20%60as%20const%60%20%E7%BC%A9%E5%B0%8F%E7%B1%BB%E5%9E%8B%20%F0%9F%91%87%0A%0A%60%60%60ts%0Aconst%20data2%20%3D%20%7B%0A%20%20name%3A%20%22Zagreus%22%0A%7D%20as%20const%0A%2F%2F%20typeof%20data1%20%3D%20%7B%0A%2F%2F%20%20%20name%3A%20'Zagreus'%0A%2F%2F%20%7D%0A%60%60%60%0A%0A%E8%B7%9F%E8%B8%AA%E7%9B%B8%E5%85%B3%E5%8F%98%E9%87%8F%0A%0A%60%60%60ts%0Aconst%20response%20%3D%20getResponse()%0Aconst%20isSuccessResponse%20%3D%20%0A%20%20%20%20res%20instanceof%20SuccessResponse%0A%0Aif%20(isSuccessResponse)%20%7B%0A%20%20res.data%20%2F%2F%20SuccessResponse%0A%7D%0A%60%60%60%0A%0A%E9%87%8D%E6%96%B0%E5%88%86%E9%85%8D%E6%9B%B4%E6%96%B0%E7%B1%BB%E5%9E%8B%0A%0A%60%60%60ts%0Alet%20data%3A%20string%20%7C%20number%20%3D%20...%0Adata%20%2F%2F%20string%20%7C%20number%0Adata%20%3D%20%22Hello%22%0Adata%20%2F%2F%20string%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-65",
       "sectionId": "s3",
       "title": "关键点",
-      "kind": "text",
-      "body": "CFA 几乎总是采用联合，并根据代码中的逻辑减少联合内的类型数量。"
-    },
-    {
-      "id": "s3-66",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "大多数时候 CFA 在自然 JavaScript 布尔逻辑中工作，但是有一些方法可以定义您自己的函数，这些函数会影响 TypeScript 如何缩小类型。"
+      "body": "CFA 几乎总是采用联合，并根据代码中的逻辑减少联合内的类型数量。\n\n大多数时候 CFA 在自然 JavaScript 布尔逻辑中工作，但是有一些方法可以定义您自己的函数，这些函数会影响 TypeScript 如何缩小类型。"
     },
     {
       "id": "s3-67",
       "sectionId": "s3",
       "title": "%E8%A1%A8%E8%BE%BE%E5%BC%8F",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20input%20%3D%20getUserInput()%0Ainput%20%2F%2F%20string%20%7C%20number%0Aconst%20inputLength%20%3D%0A%20%20(typeof%20input%20%3D%3D%3D%20%22string%22%20%26%26%20input.length)%0A%20%20%7C%7C%20input%0A%20%20%20%2F%2F%20input%3A%20string",
+      "body": "%60%60%60ts%0Aconst%20input%20%3D%20getUserInput()%0Ainput%20%2F%2F%20string%20%7C%20number%0Aconst%20inputLength%20%3D%0A%20%20(typeof%20input%20%3D%3D%3D%20%22string%22%20%26%26%20input.length)%0A%20%20%7C%7C%20input%0A%20%20%20%2F%2F%20input%3A%20string%0A%60%60%60%0A%0A%E5%9C%A8%E8%BF%9B%E8%A1%8C%E5%B8%83%E5%B0%94%E8%BF%90%E7%AE%97%E6%97%B6%EF%BC%8C%E7%BC%A9%E7%AA%84%E4%B9%9F%E5%8F%91%E7%94%9F%E5%9C%A8%E4%B8%8E%E4%BB%A3%E7%A0%81%E7%9B%B8%E5%90%8C%E7%9A%84%E8%A1%8C%E4%B8%8A",
       "encoded": true
-    },
-    {
-      "id": "s3-68",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "在进行布尔运算时，缩窄也发生在与代码相同的行上"
     },
     {
       "id": "s3-69",
       "sectionId": "s3",
       "title": "可识别联合",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type Responses =\n  | { status: 200, data: any }\n  | { status: 301, to: string }\n  | { status: 400, error: Error }"
+      "body": "```ts\ntype Responses =\n  | { status: 200, data: any }\n  | { status: 301, to: string }\n  | { status: 400, error: Error }\n```"
     },
     {
       "id": "s3-70",
       "sectionId": "s3",
       "title": "用法",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const response = getResponse()\nresponse // Responses\nswitch(response.status) {\n  case 200: return response.data\n  case 301: return redirect(response.to)\n  case 400: return response.error\n}"
+      "body": "```ts\nconst response = getResponse()\nresponse // Responses\nswitch(response.status) {\n  case 200: return response.data\n  case 301: return redirect(response.to)\n  case 400: return response.error\n}\n```"
     },
     {
       "id": "s3-71",
       "sectionId": "s3",
-      "title": "断言函数",
-      "kind": "text",
-      "body": "描述影响当前范围的 CFA 更改的函数，因为它抛出而不是返回 false。"
-    },
-    {
-      "id": "s3-72",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "function assertResponse(obj: any): asserts obj is SuccessResponse {\n  if (!(obj instanceof SuccessResponse)) {\n    throw new Error('Not a success!')\n  }\n}"
+      "title": "%E6%96%AD%E8%A8%80%E5%87%BD%E6%95%B0",
+      "body": "%E6%8F%8F%E8%BF%B0%E5%BD%B1%E5%93%8D%E5%BD%93%E5%89%8D%E8%8C%83%E5%9B%B4%E7%9A%84%20CFA%20%E6%9B%B4%E6%94%B9%E7%9A%84%E5%87%BD%E6%95%B0%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%AE%83%E6%8A%9B%E5%87%BA%E8%80%8C%E4%B8%8D%E6%98%AF%E8%BF%94%E5%9B%9E%20false%E3%80%82%0A%0A%60%60%60ts%0Afunction%20assertResponse(obj%3A%20any)%3A%20asserts%20obj%20is%20SuccessResponse%20%7B%0A%20%20if%20(!(obj%20instanceof%20SuccessResponse))%20%7B%0A%20%20%20%20throw%20new%20Error('Not%20a%20success!')%0A%20%20%7D%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-73",
       "sectionId": "s3",
       "title": "用法",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const res = getResponse():\nres // SuccessResponse | ErrorResponse\n\n// 断言函数改变当前作用域或抛出\nassertResponse(res)\n\nres // SuccessResponse"
+      "body": "```ts\nconst res = getResponse():\nres // SuccessResponse | ErrorResponse\n\n// 断言函数改变当前作用域或抛出\nassertResponse(res)\n\nres // SuccessResponse\n```"
     },
     {
       "id": "s3-74",
       "sectionId": "s3",
-      "title": "in 操作符",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface A {\n  x: number;\n}\ninterface B {\n  y: string;\n}\n\nfunction doStuff(q: A | B) {\n  if ('x' in q) {\n    // q: A\n  } else {\n    // q: B\n  }\n}"
-    },
-    {
-      "id": "s3-75",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "操作符可以安全的检查一个对象上是否存在一个属性，它通常也被作为类型保护使用"
+      "title": "in%20%E6%93%8D%E4%BD%9C%E7%AC%A6",
+      "body": "%60%60%60ts%0Ainterface%20A%20%7B%0A%20%20x%3A%20number%3B%0A%7D%0Ainterface%20B%20%7B%0A%20%20y%3A%20string%3B%0A%7D%0A%0Afunction%20doStuff(q%3A%20A%20%7C%20B)%20%7B%0A%20%20if%20('x'%20in%20q)%20%7B%0A%20%20%20%20%2F%2F%20q%3A%20A%0A%20%20%7D%20else%20%7B%0A%20%20%20%20%2F%2F%20q%3A%20B%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E6%93%8D%E4%BD%9C%E7%AC%A6%E5%8F%AF%E4%BB%A5%E5%AE%89%E5%85%A8%E7%9A%84%E6%A3%80%E6%9F%A5%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E4%B8%8A%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7%EF%BC%8C%E5%AE%83%E9%80%9A%E5%B8%B8%E4%B9%9F%E8%A2%AB%E4%BD%9C%E4%B8%BA%E7%B1%BB%E5%9E%8B%E4%BF%9D%E6%8A%A4%E4%BD%BF%E7%94%A8",
+      "encoded": true
     },
     {
       "id": "s4-76",
       "sectionId": "s4",
       "title": "创建类实例",
-      "kind": "code",
-      "lang": "ts",
-      "code": "class ABC { ... }\nconst abc = new ABC()"
-    },
-    {
-      "id": "s4-77",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "新 ABC 的参数来自构造函数。"
+      "body": "```ts\nclass ABC { ... }\nconst abc = new ABC()\n```\n\n新 ABC 的参数来自构造函数。"
     },
     {
       "id": "s4-78",
       "sectionId": "s4",
       "title": "private x 与 #private",
-      "kind": "text",
-      "body": "前缀 private 是一个仅类型的添加，在运行时没有任何影响。 在以下情况下，类之外的代码可以进入项目："
-    },
-    {
-      "id": "s4-79",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "class Bag {\n  private item: any\n}"
-    },
-    {
-      "id": "s4-80",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Vs #private 是运行时私有的，并且在 JavaScript 引擎内部强制执行，它只能在类内部访问："
-    },
-    {
-      "id": "s4-81",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "class Bag { #item: any }"
+      "body": "前缀 private 是一个仅类型的添加，在运行时没有任何影响。 在以下情况下，类之外的代码可以进入项目：\n\n```ts\nclass Bag {\n  private item: any\n}\n```\n\nVs #private 是运行时私有的，并且在 JavaScript 引擎内部强制执行，它只能在类内部访问：\n\n```ts\nclass Bag { #item: any }\n```"
     },
     {
       "id": "s4-82",
       "sectionId": "s4",
       "title": "Class 上的 “this”",
-      "kind": "text",
-      "body": "函数内部‘this’的值取决于函数的调用方式。 不能保证始终是您可能在其他语言中使用的类实例。"
-    },
-    {
-      "id": "s4-83",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "您可以使用“此参数”、使用绑定功能或箭头功能来解决问题。"
+      "body": "函数内部‘this’的值取决于函数的调用方式。 不能保证始终是您可能在其他语言中使用的类实例。\n\n您可以使用“此参数”、使用绑定功能或箭头功能来解决问题。"
     },
     {
       "id": "s4-84",
       "sectionId": "s4",
       "title": "类型和值",
-      "kind": "text",
-      "body": "一个类既可以用作类型也可以用作值。"
-    },
-    {
-      "id": "s4-85",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const a:Bag = new Bag()"
-    },
-    {
-      "id": "s4-86",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "所以，小心不要这样做："
-    },
-    {
-      "id": "s4-87",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "class C implements Bag {}"
+      "body": "一个类既可以用作类型也可以用作值。\n\n```ts\nconst a:Bag = new Bag()\n```\n\n所以，小心不要这样做：\n\n```ts\nclass C implements Bag {}\n```"
     },
     {
       "id": "s4-88",
       "sectionId": "s4",
       "title": "%E9%80%9A%E7%94%A8%E8%AF%AD%E6%B3%95",
-      "kind": "code",
-      "lang": "ts",
-      "code": "%2F%2F%20%E7%A1%AE%E4%BF%9D%E7%B1%BB%E7%AC%A6%E5%90%88%E4%B8%80%E7%BB%84%E6%8E%A5%E5%8F%A3%E6%88%96%E7%B1%BB%E5%9E%8B%20%20%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%96%B6%E2%94%88%E2%94%88%E2%95%AE%0A%2F%2F%20%E5%AD%90%E7%B1%BB%E8%BF%99%E4%B8%AA%E7%B1%BB%20%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%86%98%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%B4%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%0Aclass%20User%20extends%20Account%20implements%20Updatable%2C%20Serializable%20%7B%0A%20%20id%3A%20string%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E4%B8%80%E4%B8%AA%E5%AD%97%E6%AE%B5%0A%20%20displayName%3F%3A%20boolean%3B%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%8F%AF%E9%80%89%E5%AD%97%E6%AE%B5%0A%20%20name!%3A%20string%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20'%E7%9B%B8%E4%BF%A1%E6%88%91%EF%BC%8C%E5%AE%83%E5%9C%A8%E5%93%AA%E9%87%8C'%E5%AD%97%E6%AE%B5%0A%20%20%23attributes%3A%20Map%3Cany%2C%20any%3E%3B%20%20%20%20%20%2F%2F%20%E7%A7%81%E4%BA%BA%E5%AD%97%E6%AE%B5%0A%20%20roles%20%3D%20%5B%22user%22%5D%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%85%B7%E6%9C%89%E9%BB%98%E8%AE%A4%E5%80%BC%E7%9A%84%E5%AD%97%E6%AE%B5%0A%20%20readonly%20createdAt%20%3D%20new%20Date()%20%2F%2F%20%E5%85%B7%E6%9C%89%E9%BB%98%E8%AE%A4%E5%80%BC%E7%9A%84%E5%8F%AA%E8%AF%BB%E5%AD%97%E6%AE%B5%0A%20%20%2F%2F%20%F0%9F%91%87%20%E4%BB%A3%E7%A0%81%E8%B0%83%E7%94%A8%E2%80%9Cnew%E2%80%9D%0A%20%20constructor(id%3A%20string%2C%20email%3A%20string)%20%7B%0A%20%20%20%20super(id)%3B%0A%20%20%20%20%2F%2F%20%F0%9F%91%87%20%E5%9C%A8%20%60strict%3A%20true%60%20%E4%B8%AD%EF%BC%8C%E4%BC%9A%E6%A0%B9%E6%8D%AE%E5%AD%97%E6%AE%B5%E6%A3%80%E6%9F%A5%E6%AD%A4%E4%BB%A3%E7%A0%81%E4%BB%A5%E7%A1%AE%E4%BF%9D%E5%85%B6%E8%AE%BE%E7%BD%AE%E6%AD%A3%E7%A1%AE%0A%20%20%20%20this.email%20%3D%20email%3B%0A%20%20%20%20%2F%2F%20....%0A%20%20%7D%3B%0A%20%20%2F%2F%20%F0%9F%91%87%20%E6%8F%8F%E8%BF%B0%E7%B1%BB%E6%96%B9%E6%B3%95%EF%BC%88%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E5%AD%97%E6%AE%B5%EF%BC%89%E7%9A%84%E6%96%B9%E5%BC%8F%0A%20%20setName(name%3A%20string)%20%7B%20this.name%20%3D%20name%20%7D%0A%20%20verifyName%20%3D%20(name%3A%20string)%20%3D%3E%20%7B%20%2F*%20...%20*%2F%20%7D%0A%0A%20%20%2F%2F%20%F0%9F%91%87%20%E5%85%B7%E6%9C%89%202%20%E4%B8%AA%E9%87%8D%E8%BD%BD%E5%AE%9A%E4%B9%89%E7%9A%84%E5%87%BD%E6%95%B0%0A%20%20sync()%3A%20Promise%3C%7B%20...%20%7D%3E%0A%20%20sync(cb%3A%20((result%3A%20string)%20%3D%3E%20void))%3A%20void%0A%20%20sync(cb%3F%3A%20((result%3A%20string)%20%3D%3E%20void))%3A%20void%20%7C%20Promise%3C%7B%20...%20%7D%3E%20%7B%7D%0A%20%20%2F%2F%20%F0%9F%91%87%20Getters%20%E5%92%8C%20setters%0A%20%20get%20accountID()%20%7B%20%7D%0A%20%20set%20accountID(value%3A%20string)%20%7B%20%7D%0A%20%20%2F%2F%20%F0%9F%91%87%20%E7%A7%81%E6%9C%89%E8%AE%BF%E9%97%AE%E5%8F%AA%E6%98%AF%E5%AF%B9%E8%BF%99%E4%B8%AA%E7%B1%BB%EF%BC%8C%E5%8F%97%E4%BF%9D%E6%8A%A4%E7%9A%84%E5%85%81%E8%AE%B8%E5%AD%90%E7%B1%BB%E3%80%82%20%E4%BB%85%E7%94%A8%E4%BA%8E%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%EF%BC%8Cpublic%20%E6%98%AF%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%82%0A%20%20private%20makeRequest()%20%7B%20...%20%7D%0A%20%20protected%20handleRequest()%20%7B%20...%20%7D%0A%20%20%2F%2F%20%F0%9F%91%87%20%E9%9D%99%E6%80%81%E5%AD%97%E6%AE%B5%2F%E6%96%B9%E6%B3%95%0A%20%20static%20%23userCount%20%3D%200%3B%0A%20%20static%20registerUser(user%3A%20User)%20%7B%20...%20%7D%0A%20%20%2F%2F%20%F0%9F%91%87%20%E7%94%A8%E4%BA%8E%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E9%9D%99%E6%80%81%E5%9D%97%E3%80%82%20%E2%80%98this%E2%80%99%E6%8C%87%E7%9A%84%E6%98%AF%E9%9D%99%E6%80%81%E7%B1%BB%0A%20%20static%20%7B%20this.%23userCount%20%3D%20-1%20%7D%0A%7D",
+      "body": "%60%60%60ts%0A%2F%2F%20%E7%A1%AE%E4%BF%9D%E7%B1%BB%E7%AC%A6%E5%90%88%E4%B8%80%E7%BB%84%E6%8E%A5%E5%8F%A3%E6%88%96%E7%B1%BB%E5%9E%8B%20%20%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%96%B6%E2%94%88%E2%94%88%E2%95%AE%0A%2F%2F%20%E5%AD%90%E7%B1%BB%E8%BF%99%E4%B8%AA%E7%B1%BB%20%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%86%98%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%B4%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%E2%94%88%0Aclass%20User%20extends%20Account%20implements%20Updatable%2C%20Serializable%20%7B%0A%20%20id%3A%20string%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E4%B8%80%E4%B8%AA%E5%AD%97%E6%AE%B5%0A%20%20displayName%3F%3A%20boolean%3B%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%8F%AF%E9%80%89%E5%AD%97%E6%AE%B5%0A%20%20name!%3A%20string%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20'%E7%9B%B8%E4%BF%A1%E6%88%91%EF%BC%8C%E5%AE%83%E5%9C%A8%E5%93%AA%E9%87%8C'%E5%AD%97%E6%AE%B5%0A%20%20%23attributes%3A%20Map%3Cany%2C%20any%3E%3B%20%20%20%20%20%2F%2F%20%E7%A7%81%E4%BA%BA%E5%AD%97%E6%AE%B5%0A%20%20roles%20%3D%20%5B%22user%22%5D%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%85%B7%E6%9C%89%E9%BB%98%E8%AE%A4%E5%80%BC%E7%9A%84%E5%AD%97%E6%AE%B5%0A%20%20readonly%20createdAt%20%3D%20new%20Date()%20%2F%2F%20%E5%85%B7%E6%9C%89%E9%BB%98%E8%AE%A4%E5%80%BC%E7%9A%84%E5%8F%AA%E8%AF%BB%E5%AD%97%E6%AE%B5%0A%20%20%2F%2F%20%F0%9F%91%87%20%E4%BB%A3%E7%A0%81%E8%B0%83%E7%94%A8%E2%80%9Cnew%E2%80%9D%0A%20%20constructor(id%3A%20string%2C%20email%3A%20string)%20%7B%0A%20%20%20%20super(id)%3B%0A%20%20%20%20%2F%2F%20%F0%9F%91%87%20%E5%9C%A8%20%60strict%3A%20true%60%20%E4%B8%AD%EF%BC%8C%E4%BC%9A%E6%A0%B9%E6%8D%AE%E5%AD%97%E6%AE%B5%E6%A3%80%E6%9F%A5%E6%AD%A4%E4%BB%A3%E7%A0%81%E4%BB%A5%E7%A1%AE%E4%BF%9D%E5%85%B6%E8%AE%BE%E7%BD%AE%E6%AD%A3%E7%A1%AE%0A%20%20%20%20this.email%20%3D%20email%3B%0A%20%20%20%20%2F%2F%20....%0A%20%20%7D%3B%0A%20%20%2F%2F%20%F0%9F%91%87%20%E6%8F%8F%E8%BF%B0%E7%B1%BB%E6%96%B9%E6%B3%95%EF%BC%88%E5%92%8C%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E5%AD%97%E6%AE%B5%EF%BC%89%E7%9A%84%E6%96%B9%E5%BC%8F%0A%20%20setName(name%3A%20string)%20%7B%20this.name%20%3D%20name%20%7D%0A%20%20verifyName%20%3D%20(name%3A%20string)%20%3D%3E%20%7B%20%2F*%20...%20*%2F%20%7D%0A%0A%20%20%2F%2F%20%F0%9F%91%87%20%E5%85%B7%E6%9C%89%202%20%E4%B8%AA%E9%87%8D%E8%BD%BD%E5%AE%9A%E4%B9%89%E7%9A%84%E5%87%BD%E6%95%B0%0A%20%20sync()%3A%20Promise%3C%7B%20...%20%7D%3E%0A%20%20sync(cb%3A%20((result%3A%20string)%20%3D%3E%20void))%3A%20void%0A%20%20sync(cb%3F%3A%20((result%3A%20string)%20%3D%3E%20void))%3A%20void%20%7C%20Promise%3C%7B%20...%20%7D%3E%20%7B%7D%0A%20%20%2F%2F%20%F0%9F%91%87%20Getters%20%E5%92%8C%20setters%0A%20%20get%20accountID()%20%7B%20%7D%0A%20%20set%20accountID(value%3A%20string)%20%7B%20%7D%0A%20%20%2F%2F%20%F0%9F%91%87%20%E7%A7%81%E6%9C%89%E8%AE%BF%E9%97%AE%E5%8F%AA%E6%98%AF%E5%AF%B9%E8%BF%99%E4%B8%AA%E7%B1%BB%EF%BC%8C%E5%8F%97%E4%BF%9D%E6%8A%A4%E7%9A%84%E5%85%81%E8%AE%B8%E5%AD%90%E7%B1%BB%E3%80%82%20%E4%BB%85%E7%94%A8%E4%BA%8E%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%EF%BC%8Cpublic%20%E6%98%AF%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%82%0A%20%20private%20makeRequest()%20%7B%20...%20%7D%0A%20%20protected%20handleRequest()%20%7B%20...%20%7D%0A%20%20%2F%2F%20%F0%9F%91%87%20%E9%9D%99%E6%80%81%E5%AD%97%E6%AE%B5%2F%E6%96%B9%E6%B3%95%0A%20%20static%20%23userCount%20%3D%200%3B%0A%20%20static%20registerUser(user%3A%20User)%20%7B%20...%20%7D%0A%20%20%2F%2F%20%F0%9F%91%87%20%E7%94%A8%E4%BA%8E%E8%AE%BE%E7%BD%AE%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F%E7%9A%84%E9%9D%99%E6%80%81%E5%9D%97%E3%80%82%20%E2%80%98this%E2%80%99%E6%8C%87%E7%9A%84%E6%98%AF%E9%9D%99%E6%80%81%E7%B1%BB%0A%20%20static%20%7B%20this.%23userCount%20%3D%20-1%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-89",
       "sectionId": "s4",
-      "title": "泛型",
-      "kind": "text",
-      "body": "声明一个可以在你的类方法中改变的类型。"
-    },
-    {
-      "id": "s4-90",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "class%20Box%3CType%3E%20%7B%0A%20%20contents%3A%20Type%0A%20%20constructor(value%3A%20Type)%20%7B%0A%20%20%20%20this.contents%20%3D%20value%3B%0A%20%20%7D%0A%7D%0Aconst%20stringBox%20%3D%20new%20Box(%22a%20package%22)",
+      "title": "%E6%B3%9B%E5%9E%8B",
+      "body": "%E5%A3%B0%E6%98%8E%E4%B8%80%E4%B8%AA%E5%8F%AF%E4%BB%A5%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%B1%BB%E6%96%B9%E6%B3%95%E4%B8%AD%E6%94%B9%E5%8F%98%E7%9A%84%E7%B1%BB%E5%9E%8B%E3%80%82%0A%0A%60%60%60ts%0Aclass%20Box%3CType%3E%20%7B%0A%20%20contents%3A%20Type%0A%20%20constructor(value%3A%20Type)%20%7B%0A%20%20%20%20this.contents%20%3D%20value%3B%0A%20%20%7D%0A%7D%0Aconst%20stringBox%20%3D%20new%20Box(%22a%20package%22)%0A%60%60%60%0A%0A%E8%BF%99%E4%BA%9B%E5%8A%9F%E8%83%BD%E6%98%AF%20TypeScript%20%E7%89%B9%E5%AE%9A%E7%9A%84%E8%AF%AD%E8%A8%80%E6%89%A9%E5%B1%95%EF%BC%8C%E5%8F%AF%E8%83%BD%E6%B0%B8%E8%BF%9C%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8%E5%BD%93%E5%89%8D%E8%AF%AD%E6%B3%95%E8%BF%9B%E5%85%A5%20JavaScript%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s4-91",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "这些功能是 TypeScript 特定的语言扩展，可能永远无法使用当前语法进入 JavaScript。"
     },
     {
       "id": "s4-92",
       "sectionId": "s4",
       "title": "参数属性",
-      "kind": "code",
-      "lang": "ts",
-      "code": "class Location {\n  constructor(\n    public x: number,\n    public y: number\n  ) {}\n}\nconst loc = new Location(20, 40);\n\nloc.x // 20\nloc.y // 40"
-    },
-    {
-      "id": "s4-93",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "TypeScript 特定于类的扩展，可自动将实例字段设置为输入参数。"
+      "body": "```ts\nclass Location {\n  constructor(\n    public x: number,\n    public y: number\n  ) {}\n}\nconst loc = new Location(20, 40);\n\nloc.x // 20\nloc.y // 40\n```\n\nTypeScript 特定于类的扩展，可自动将实例字段设置为输入参数。"
     },
     {
       "id": "s4-94",
       "sectionId": "s4",
       "title": "%E6%8A%BD%E8%B1%A1%E7%B1%BB",
-      "kind": "code",
-      "lang": "ts",
-      "code": "abstract%20class%20Animal%20%7B%0A%20%20abstract%20getName()%3A%20string%3B%0A%20%20printName()%20%7B%0A%20%20%20console.log(%22Hello%2C%20%22%20%2B%20this.getName())%3B%0A%20%20%7D%0A%7D%0Aclass%20Dog%20extends%20Animal%20%7B%0A%20%20getName()%3A%20%7B%20...%20%7D%0A%7D",
+      "body": "%60%60%60ts%0Aabstract%20class%20Animal%20%7B%0A%20%20abstract%20getName()%3A%20string%3B%0A%20%20printName()%20%7B%0A%20%20%20console.log(%22Hello%2C%20%22%20%2B%20this.getName())%3B%0A%20%20%7D%0A%7D%0Aclass%20Dog%20extends%20Animal%20%7B%0A%20%20getName()%3A%20%7B%20...%20%7D%0A%7D%0A%60%60%60%0A%0A%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%8F%AF%E4%BB%A5%E8%A2%AB%E5%A3%B0%E6%98%8E%E4%B8%BA%E4%B8%8D%E5%8F%AF%E5%AE%9E%E7%8E%B0%EF%BC%8C%E4%BD%86%E5%8F%AF%E4%BB%A5%E5%9C%A8%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F%E4%B8%AD%E8%A2%AB%E5%AD%90%E7%B1%BB%E5%8C%96%E3%80%82%20class%20%E6%88%90%E5%91%98%E4%B9%9F%E5%8F%AF%E4%BB%A5%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s4-95",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "一个类可以被声明为不可实现，但可以在类型系统中被子类化。 class 成员也可以。"
     },
     {
       "id": "s4-96",
       "sectionId": "s4",
       "title": "%E8%A3%85%E9%A5%B0%E5%99%A8%E5%92%8C%E5%B1%9E%E6%80%A7",
-      "kind": "code",
-      "lang": "ts",
-      "code": "import%20%7B%0A%20%20Syncable%2C%20triggersSync%2C%20preferCache%2C%0A%20%20required%0A%7D%20from%20%22mylib%22%0A%0A%40Syncable%0Aclass%20User%20%7B%0A%20%20%40triggersSync()%0A%20%20save()%20%7B%20...%20%7D%0A%20%20%40preferCache(false)%0A%20%20get%20displayName()%20%7B%20...%20%7D%0A%20%20update(%40required%20info%3A%20Partial%3CUser%3E)%20%7B%0A%20%20%20%20%2F%2F...%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60ts%0Aimport%20%7B%0A%20%20Syncable%2C%20triggersSync%2C%20preferCache%2C%0A%20%20required%0A%7D%20from%20%22mylib%22%0A%0A%40Syncable%0Aclass%20User%20%7B%0A%20%20%40triggersSync()%0A%20%20save()%20%7B%20...%20%7D%0A%20%20%40preferCache(false)%0A%20%20get%20displayName()%20%7B%20...%20%7D%0A%20%20update(%40required%20info%3A%20Partial%3CUser%3E)%20%7B%0A%20%20%20%20%2F%2F...%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E6%82%A8%E5%8F%AF%E4%BB%A5%E5%9C%A8%E7%B1%BB%E3%80%81%E7%B1%BB%E6%96%B9%E6%B3%95%E3%80%81%E8%AE%BF%E9%97%AE%E5%99%A8%E3%80%81%E5%B1%9E%E6%80%A7%E5%92%8C%E6%96%B9%E6%B3%95%E5%8F%82%E6%95%B0%E4%B8%8A%E4%BD%BF%E7%94%A8%E8%A3%85%E9%A5%B0%E5%99%A8%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s4-97",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "您可以在类、类方法、访问器、属性和方法参数上使用装饰器。"
     },
     {
       "id": "s4-98",
       "sectionId": "s4",
       "title": "索引签名",
-      "kind": "code",
-      "lang": "ts",
-      "code": "class MyClass {\n  // 最好将索引数据存储在另一个地方\n  // 而不是类实例本身。\n  [s: string]:\n    boolean | ((s: string) => boolean);\n\n  check(s: string) {\n    return this[s] as boolean;\n  }\n}"
-    },
-    {
-      "id": "s4-99",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "类可以声明索引签名，与其他对象类型的索引签名相同。"
+      "body": "```ts\nclass MyClass {\n  // 最好将索引数据存储在另一个地方\n  // 而不是类实例本身。\n  [s: string]:\n    boolean | ((s: string) => boolean);\n\n  check(s: string) {\n    return this[s] as boolean;\n  }\n}\n```\n\n类可以声明索引签名，与其他对象类型的索引签名相同。"
     },
     {
       "id": "s4-100",
       "sectionId": "s4",
       "title": "在 forwardRef 上面声明泛型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "export const Wrapper = forwardRef(\n  <T extends object>\n(\n  props: RootNodeProps<T>,\n  ref: React.LegacyRef<HTMLDivElement>\n) => {\n  return (\n    <div ref={ref}></div>\n  );\n}"
+      "body": "```ts\nexport const Wrapper = forwardRef(\n  <T extends object>\n(\n  props: RootNodeProps<T>,\n  ref: React.LegacyRef<HTMLDivElement>\n) => {\n  return (\n    <div ref={ref}></div>\n  );\n}\n```"
     },
     {
       "id": "s5-101",
       "sectionId": "s5",
       "title": "Awaited\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type A = Awaited<Promise<string>>;\n// type A = string\n\ntype B = Awaited<Promise<Promise<number>>>;\n// type B = number\n\ntype C = Awaited<boolean|Promise<number>>;\n// type C = number | boolean"
-    },
-    {
-      "id": "s5-102",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "这种类型旨在模拟异步函数中的 await 或 Promises 上的 .then() 方法等操作 - 特别是它们递归解包 Promises 的方式。"
+      "body": "```ts\ntype A = Awaited<Promise<string>>;\n// type A = string\n\ntype B = Awaited<Promise<Promise<number>>>;\n// type B = number\n\ntype C = Awaited<boolean|Promise<number>>;\n// type C = number | boolean\n```\n\n这种类型旨在模拟异步函数中的 await 或 Promises 上的 .then() 方法等操作 - 特别是它们递归解包 Promises 的方式。"
     },
     {
       "id": "s5-103",
       "sectionId": "s5",
-      "title": "Required\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface Props {\n  a?: number;\n  b?: string;\n}\n\nconst obj: Props = { a: 5 }; \nconst obj2: Required<Props> = { a: 5 };\n// ❌ 类型“{ a: number;”中缺少属性“b” }' \n// 但在 'Required<Props>' 类型中是必需的。"
-    },
-    {
-      "id": "s5-104",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "使 Type 中的所有属性成为必需"
+      "title": "Required%5C%3CType%3E",
+      "body": "%60%60%60ts%0Ainterface%20Props%20%7B%0A%20%20a%3F%3A%20number%3B%0A%20%20b%3F%3A%20string%3B%0A%7D%0A%0Aconst%20obj%3A%20Props%20%3D%20%7B%20a%3A%205%20%7D%3B%20%0Aconst%20obj2%3A%20Required%3CProps%3E%20%3D%20%7B%20a%3A%205%20%7D%3B%0A%2F%2F%20%E2%9D%8C%20%E7%B1%BB%E5%9E%8B%E2%80%9C%7B%20a%3A%20number%3B%E2%80%9D%E4%B8%AD%E7%BC%BA%E5%B0%91%E5%B1%9E%E6%80%A7%E2%80%9Cb%E2%80%9D%20%7D'%20%0A%2F%2F%20%E4%BD%86%E5%9C%A8%20'Required%3CProps%3E'%20%E7%B1%BB%E5%9E%8B%E4%B8%AD%E6%98%AF%E5%BF%85%E9%9C%80%E7%9A%84%E3%80%82%0A%60%60%60%0A%0A%E4%BD%BF%20Type%20%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%B1%9E%E6%80%A7%E6%88%90%E4%B8%BA%E5%BF%85%E9%9C%80",
+      "encoded": true
     },
     {
       "id": "s5-105",
       "sectionId": "s5",
       "title": "Readonly%5C%3CType%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface%20Todo%20%7B%0A%20%20title%3A%20string%3B%0A%7D%0Aconst%20todo%3A%20Readonly%3CTodo%3E%20%3D%20%7B%0A%20%20title%3A%20%22Delete%20inactive%20users%22%2C%0A%7D%3B%0Atodo.title%20%3D%20%22Hello%22%3B%0A%2F%2F%20%E2%9D%8C%20%E6%97%A0%E6%B3%95%E5%88%86%E9%85%8D%E7%BB%99%E2%80%9Ctitle%E2%80%9D%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%AE%83%E6%98%AF%E5%8F%AA%E8%AF%BB%E5%B1%9E%E6%80%A7%E3%80%82%0A%0Afunction%20freeze%3CType%3E(obj%3A%20Type)%0A%20%20%20%20%20%20%20%20%20%20%20%20%3A%20Readonly%3CType%3E%3B",
+      "body": "%60%60%60ts%0Ainterface%20Todo%20%7B%0A%20%20title%3A%20string%3B%0A%7D%0Aconst%20todo%3A%20Readonly%3CTodo%3E%20%3D%20%7B%0A%20%20title%3A%20%22Delete%20inactive%20users%22%2C%0A%7D%3B%0Atodo.title%20%3D%20%22Hello%22%3B%0A%2F%2F%20%E2%9D%8C%20%E6%97%A0%E6%B3%95%E5%88%86%E9%85%8D%E7%BB%99%E2%80%9Ctitle%E2%80%9D%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%AE%83%E6%98%AF%E5%8F%AA%E8%AF%BB%E5%B1%9E%E6%80%A7%E3%80%82%0A%0Afunction%20freeze%3CType%3E(obj%3A%20Type)%0A%20%20%20%20%20%20%20%20%20%20%20%20%3A%20Readonly%3CType%3E%3B%0A%60%60%60%0A%0A%E5%B0%86%20Type%20%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%B1%9E%E6%80%A7%E8%AE%BE%E4%B8%BA**%E5%8F%AA%E8%AF%BB**",
       "encoded": true
-    },
-    {
-      "id": "s5-106",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "将 Type 中的所有属性设为**只读**"
     },
     {
       "id": "s5-107",
       "sectionId": "s5",
       "title": "Partial%5C%3CType%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface%20Todo%20%7B%0A%20%20title%3A%20string%3B%0A%20%20description%3A%20string%3B%0A%7D%0Afunction%20updateTodo(%0A%20%20todo%3A%20Todo%2C%0A%20%20fieldsToUpdate%3A%20Partial%3CTodo%3E%0A)%20%7B%0A%20%20return%20%7B%20...todo%2C%20...fieldsToUpdate%20%7D%3B%0A%7D%0Aconst%20todo1%20%3D%20%7B%0A%20%20title%3A%20%22organize%20desk%22%2C%0A%20%20description%3A%20%22clear%20clutter%22%2C%0A%7D%3B%0Aconst%20todo2%20%3D%20updateTodo(todo1%2C%20%7B%0A%20%20description%3A%20%22throw%20out%20trash%22%2C%0A%7D)%3B",
+      "body": "%60%60%60ts%0Ainterface%20Todo%20%7B%0A%20%20title%3A%20string%3B%0A%20%20description%3A%20string%3B%0A%7D%0Afunction%20updateTodo(%0A%20%20todo%3A%20Todo%2C%0A%20%20fieldsToUpdate%3A%20Partial%3CTodo%3E%0A)%20%7B%0A%20%20return%20%7B%20...todo%2C%20...fieldsToUpdate%20%7D%3B%0A%7D%0Aconst%20todo1%20%3D%20%7B%0A%20%20title%3A%20%22organize%20desk%22%2C%0A%20%20description%3A%20%22clear%20clutter%22%2C%0A%7D%3B%0Aconst%20todo2%20%3D%20updateTodo(todo1%2C%20%7B%0A%20%20description%3A%20%22throw%20out%20trash%22%2C%0A%7D)%3B%0A%60%60%60%0A%0A%E5%B0%86%20%60Type%60%20%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%B1%9E%E6%80%A7%E8%AE%BE%E4%B8%BA%E5%8F%AF%E9%80%89",
       "encoded": true
-    },
-    {
-      "id": "s5-108",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "将 `Type` 中的所有属性设为可选"
     },
     {
       "id": "s5-109",
       "sectionId": "s5",
       "title": "Record%5C%3CKeys%2C%20Type%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface%20CatInfo%20%7B%0A%20%20age%3A%20number%3B%0A%20%20breed%3A%20string%3B%0A%7D%0A%0Atype%20CatName%20%3D%20%22miffy%22%20%7C%20%22boris%22%3B%0Aconst%20cats%3A%20Record%3CCatName%2C%20CatInfo%3E%20%3D%20%7B%0A%20%20miffy%3A%20%7Bage%3A10%2C%20breed%3A%20%22Persian%22%20%7D%2C%0A%20%20boris%3A%20%7Bage%3A5%2C%20breed%3A%20%22Maine%20Coon%22%20%7D%2C%0A%7D%3B%0A%0Acats.boris%3B%20%0A%2F%2F%20%F0%9F%91%89%20const%20cats%3A%20Record%3CCatName%2C%20CatInfo%3E",
+      "body": "%60%60%60ts%0Ainterface%20CatInfo%20%7B%0A%20%20age%3A%20number%3B%0A%20%20breed%3A%20string%3B%0A%7D%0A%0Atype%20CatName%20%3D%20%22miffy%22%20%7C%20%22boris%22%3B%0Aconst%20cats%3A%20Record%3CCatName%2C%20CatInfo%3E%20%3D%20%7B%0A%20%20miffy%3A%20%7Bage%3A10%2C%20breed%3A%20%22Persian%22%20%7D%2C%0A%20%20boris%3A%20%7Bage%3A5%2C%20breed%3A%20%22Maine%20Coon%22%20%7D%2C%0A%7D%3B%0A%0Acats.boris%3B%20%0A%2F%2F%20%F0%9F%91%89%20const%20cats%3A%20Record%3CCatName%2C%20CatInfo%3E%0A%60%60%60%0A%0A%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AA%E5%85%B7%E6%9C%89%E4%B8%80%E7%BB%84%20Keys%20%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%B1%9E%E6%80%A7%20Type%20%E7%9A%84%E7%B1%BB%E5%9E%8B",
       "encoded": true
-    },
-    {
-      "id": "s5-110",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "构造一个具有一组 Keys 类型的属性 Type 的类型"
     },
     {
       "id": "s5-111",
       "sectionId": "s5",
       "title": "Pick%5C%3CType%2C%20Keys%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface%20Todo%20%7B%0A%20%20name%3A%20string%3B%0A%20%20description%3A%20string%3B%0A%20%20completed%3A%20boolean%3B%0A%7D%0Atype%20TodoPreview%20%3D%20Pick%3C%0A%20%20Todo%2C%20%22name%22%20%7C%20%22load%22%0A%3E%3B%0Aconst%20todo%3A%20TodoPreview%20%3D%20%7B%0A%20%20name%3A%20%22Clean%20room%22%2C%0A%20%20load%3A%20false%2C%0A%7D%3B%0A%0Atodo%3B%0A%20%2F%2F%20%F0%9F%91%89%20const%20todo%3A%20TodoPreview",
+      "body": "%60%60%60ts%0Ainterface%20Todo%20%7B%0A%20%20name%3A%20string%3B%0A%20%20description%3A%20string%3B%0A%20%20completed%3A%20boolean%3B%0A%7D%0Atype%20TodoPreview%20%3D%20Pick%3C%0A%20%20Todo%2C%20%22name%22%20%7C%20%22load%22%0A%3E%3B%0Aconst%20todo%3A%20TodoPreview%20%3D%20%7B%0A%20%20name%3A%20%22Clean%20room%22%2C%0A%20%20load%3A%20false%2C%0A%7D%3B%0A%0Atodo%3B%0A%20%2F%2F%20%F0%9F%91%89%20const%20todo%3A%20TodoPreview%0A%60%60%60%0A%0A%E4%BB%8E%20Type%20%E4%B8%AD**%E9%80%89%E6%8B%A9**%E4%B8%80%E7%BB%84%E5%85%B6%E9%94%AE%E5%9C%A8%E5%B9%B6%E9%9B%86%20Keys%20%E4%B8%AD%E7%9A%84%E5%B1%9E%E6%80%A7",
       "encoded": true
-    },
-    {
-      "id": "s5-112",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "从 Type 中**选择**一组其键在并集 Keys 中的属性"
     },
     {
       "id": "s5-113",
       "sectionId": "s5",
       "title": "Exclude%5C%3CUnionType%2C%20ExcludedMembers%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20T0%20%3D%20Exclude%3C%22a%22%20%7C%20%22b%22%20%7C%20%22c%22%2C%20%22a%22%3E%3B%0A%2F%2F%20%F0%9F%91%89%20type%20T0%20%3D%20%22b%22%20%7C%20%22c%22%0A%0Atype%20T1%20%3D%20Exclude%3C%22a%22%7C%22b%22%7C%22c%22%2C%20%22a%22%20%7C%20%22b%22%3E%3B%0A%2F%2F%20%F0%9F%91%89%20type%20T1%20%3D%20%22c%22%0A%0Atype%20T2%20%3D%20Exclude%3Cstring%20%7C%20number%20%7C%0A%20%20%20%20(()%20%3D%3E%20void)%2C%20Function%3E%3B%0A%2F%2F%20%F0%9F%91%89%20type%20T2%20%3D%20string%20%7C%20number",
+      "body": "%60%60%60ts%0Atype%20T0%20%3D%20Exclude%3C%22a%22%20%7C%20%22b%22%20%7C%20%22c%22%2C%20%22a%22%3E%3B%0A%2F%2F%20%F0%9F%91%89%20type%20T0%20%3D%20%22b%22%20%7C%20%22c%22%0A%0Atype%20T1%20%3D%20Exclude%3C%22a%22%7C%22b%22%7C%22c%22%2C%20%22a%22%20%7C%20%22b%22%3E%3B%0A%2F%2F%20%F0%9F%91%89%20type%20T1%20%3D%20%22c%22%0A%0Atype%20T2%20%3D%20Exclude%3Cstring%20%7C%20number%20%7C%0A%20%20%20%20(()%20%3D%3E%20void)%2C%20Function%3E%3B%0A%2F%2F%20%F0%9F%91%89%20type%20T2%20%3D%20string%20%7C%20number%0A%60%60%60%0A%0A%E4%BB%8E%20%60UnionType%60%20%E4%B8%AD**%E6%8E%92%E9%99%A4**%E9%82%A3%E4%BA%9B%E5%8F%AF%E5%88%86%E9%85%8D%E7%BB%99%20%60ExcludedMembers%60%20%E7%9A%84%E7%B1%BB%E5%9E%8B",
       "encoded": true
-    },
-    {
-      "id": "s5-114",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "从 `UnionType` 中**排除**那些可分配给 `ExcludedMembers` 的类型"
     },
     {
       "id": "s5-115",
       "sectionId": "s5",
       "title": "Extract%5C%3CType%2C%20Union%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20T0%20%3D%20Extract%3C%0A%20%20%22a%22%20%7C%20%22b%22%20%7C%20%22c%22%2C%20%22a%22%20%7C%20%22f%22%0A%3E%3B%0A%2F%2F%20type%20T0%20%3D%20%22a%22%0Atype%20T1%20%3D%20Extract%3C%0A%20%20string%20%7C%20number%20%7C%20(()%20%3D%3E%20void)%2C%0A%20%20Function%0A%3E%3B%0A%2F%2F%20type%20T1%20%3D%20()%20%3D%3E%20void",
+      "body": "%60%60%60ts%0Atype%20T0%20%3D%20Extract%3C%0A%20%20%22a%22%20%7C%20%22b%22%20%7C%20%22c%22%2C%20%22a%22%20%7C%20%22f%22%0A%3E%3B%0A%2F%2F%20type%20T0%20%3D%20%22a%22%0Atype%20T1%20%3D%20Extract%3C%0A%20%20string%20%7C%20number%20%7C%20(()%20%3D%3E%20void)%2C%0A%20%20Function%0A%3E%3B%0A%2F%2F%20type%20T1%20%3D%20()%20%3D%3E%20void%0A%60%60%60%0A%0A%E9%80%9A%E8%BF%87%E4%BB%8E%20Type%20%E4%B8%AD**%E6%8F%90%E5%8F%96**%E6%89%80%E6%9C%89%E5%8F%AF%E5%88%86%E9%85%8D%E7%BB%99%20Union%20%E7%9A%84%E8%81%94%E5%90%88%E6%88%90%E5%91%98%E6%9D%A5%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%9E%8B%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s5-116",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "通过从 Type 中**提取**所有可分配给 Union 的联合成员来构造一个类型。"
     },
     {
       "id": "s5-117",
       "sectionId": "s5",
       "title": "NonNullable\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type T0 = NonNullable<\n  string | number | undefined\n>;\n// type T0 = string | number\n\ntype T1 = NonNullable<\n  string[] | null | undefined\n>;\n// type T1 = string[]"
-    },
-    {
-      "id": "s5-118",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "通过从 Type 中**排除** null 和 undefined 来构造一个类型。"
+      "body": "```ts\ntype T0 = NonNullable<\n  string | number | undefined\n>;\n// type T0 = string | number\n\ntype T1 = NonNullable<\n  string[] | null | undefined\n>;\n// type T1 = string[]\n```\n\n通过从 Type 中**排除** null 和 undefined 来构造一个类型。"
     },
     {
       "id": "s5-119",
       "sectionId": "s5",
       "title": "Omit%5C%3CType%2C%20Keys%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface%20Todo%20%7B%0A%20%20name%3A%20string%3B%0A%20%20completed%3A%20boolean%3B%0A%20%20createdAt%3A%20number%3B%0A%7D%0A%20%0Atype%20TodoPreview%20%3D%20Omit%3CTodo%2C%20%22name%22%3E%3B%0A%0Aconst%20todo%3A%20TodoPreview%20%3D%20%7B%0A%20%20completed%3A%20false%2C%0A%20%20createdAt%3A%201615544252770%2C%0A%7D%3B%0A%20%0Atodo%3B%0A%20%2F%2F%20%F0%9F%91%89%20const%20todo%3A%20TodoPreview",
+      "body": "%60%60%60ts%0Ainterface%20Todo%20%7B%0A%20%20name%3A%20string%3B%0A%20%20completed%3A%20boolean%3B%0A%20%20createdAt%3A%20number%3B%0A%7D%0A%20%0Atype%20TodoPreview%20%3D%20Omit%3CTodo%2C%20%22name%22%3E%3B%0A%0Aconst%20todo%3A%20TodoPreview%20%3D%20%7B%0A%20%20completed%3A%20false%2C%0A%20%20createdAt%3A%201615544252770%2C%0A%7D%3B%0A%20%0Atodo%3B%0A%20%2F%2F%20%F0%9F%91%89%20const%20todo%3A%20TodoPreview%0A%60%60%60%0A%0A%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AA%E5%85%B7%E6%9C%89%20Type%20%E5%B1%9E%E6%80%A7%E7%9A%84%E7%B1%BB%E5%9E%8B%EF%BC%8C%E4%BD%86%E7%B1%BB%E5%9E%8B%20Keys%20%E4%B8%AD%E7%9A%84%E5%B1%9E%E6%80%A7**%E9%99%A4%E5%A4%96**%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s5-120",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "构造一个具有 Type 属性的类型，但类型 Keys 中的属性**除外**。"
     },
     {
       "id": "s5-121",
       "sectionId": "s5",
       "title": "Parameters\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "declare function f1(\n  arg: { a: number; b: string }\n): void;\n\ntype T0 = Parameters<() => string>;\n// type T0 = []\ntype T1 = Parameters<(s: string) => void>;\n// type T1 = [s: string]\ntype T2 = Parameters<<T>(arg: T) => T>;\n// type T2 = [arg: unknown]\ntype T3 = Parameters<typeof f1>;\n// type T3 = [arg: {\n//     a: number;\n//     b: string;\n// }]\ntype T4 = Parameters<any>;\n// type T4 = unknown[]\ntype T5 = Parameters<never>;\n// type T5 = never"
-    },
-    {
-      "id": "s5-122",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "从函数类型 Type 的**参数中**使用的类型构造元组类型。"
+      "body": "```ts\ndeclare function f1(\n  arg: { a: number; b: string }\n): void;\n\ntype T0 = Parameters<() => string>;\n// type T0 = []\ntype T1 = Parameters<(s: string) => void>;\n// type T1 = [s: string]\ntype T2 = Parameters<<T>(arg: T) => T>;\n// type T2 = [arg: unknown]\ntype T3 = Parameters<typeof f1>;\n// type T3 = [arg: {\n//     a: number;\n//     b: string;\n// }]\ntype T4 = Parameters<any>;\n// type T4 = unknown[]\ntype T5 = Parameters<never>;\n// type T5 = never\n```\n\n从函数类型 Type 的**参数中**使用的类型构造元组类型。"
     },
     {
       "id": "s5-123",
       "sectionId": "s5",
       "title": "ConstructorParameters\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type T0 = ConstructorParameters<\n  ErrorConstructor\n>;\n// type T0 = [message?: string]\ntype T1 = ConstructorParameters<\n  FunctionConstructor\n>;\n// type T1 = string[]\ntype T2 = ConstructorParameters<\n  RegExpConstructor\n>;\n// type T2 = [\n//    pattern: string | RegExp,\n//    flags?: string\n// ]\ntype T3 = ConstructorParameters<any>;\n// type T3 = unknown[]"
-    },
-    {
-      "id": "s5-124",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "从构造函数类型的类型构造元组或数组类型。它产生一个包含所有参数类型的元组类型（如果 Type 不是函数，则类型 never ）。"
+      "body": "```ts\ntype T0 = ConstructorParameters<\n  ErrorConstructor\n>;\n// type T0 = [message?: string]\ntype T1 = ConstructorParameters<\n  FunctionConstructor\n>;\n// type T1 = string[]\ntype T2 = ConstructorParameters<\n  RegExpConstructor\n>;\n// type T2 = [\n//    pattern: string | RegExp,\n//    flags?: string\n// ]\ntype T3 = ConstructorParameters<any>;\n// type T3 = unknown[]\n```\n\n从构造函数类型的类型构造元组或数组类型。它产生一个包含所有参数类型的元组类型（如果 Type 不是函数，则类型 never ）。"
     },
     {
       "id": "s5-125",
       "sectionId": "s5",
       "title": "%E5%86%85%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E7%B1%BB%E5%9E%8B%20-%20Uppercase%5C%3CStringType%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20Greeting%20%3D%20%22Hello%2C%20world%22%0Atype%20ShoutyGreeting%20%3D%20Uppercase%3CGreeting%3E%0A%2F%2F%20type%20ShoutyGreeting%20%3D%20%22HELLO%2C%20WORLD%22%0A%0Atype%20ASCIICacheKey%3CStr%20extends%20string%3E%20%3D%20%60ID-%24%7BUppercase%3CStr%3E%7D%60%0Atype%20MainID%20%3D%20ASCIICacheKey%3C%22my_app%22%3E%0A%2F%2F%20type%20MainID%20%3D%20%22ID-MY_APP%22",
+      "body": "%60%60%60ts%0Atype%20Greeting%20%3D%20%22Hello%2C%20world%22%0Atype%20ShoutyGreeting%20%3D%20Uppercase%3CGreeting%3E%0A%2F%2F%20type%20ShoutyGreeting%20%3D%20%22HELLO%2C%20WORLD%22%0A%0Atype%20ASCIICacheKey%3CStr%20extends%20string%3E%20%3D%20%60ID-%24%7BUppercase%3CStr%3E%7D%60%0Atype%20MainID%20%3D%20ASCIICacheKey%3C%22my_app%22%3E%0A%2F%2F%20type%20MainID%20%3D%20%22ID-MY_APP%22%0A%60%60%60%0A%0A%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%AF%8F%E4%B8%AA%E5%AD%97%E7%AC%A6**%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%A4%A7%E5%86%99**%E7%89%88%E6%9C%AC%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s5-126",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "将字符串中的每个字符**转换为大写**版本。"
     },
     {
       "id": "s5-127",
       "sectionId": "s5",
       "title": "Lowercase%5C%3CStringType%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20Greeting%20%3D%20%22Hello%2C%20world%22%0Atype%20QuietGreeting%20%3D%20Lowercase%3CGreeting%3E%0A%2F%2F%20type%20QuietGreeting%20%3D%20%22hello%2C%20world%22%0A%0Atype%20ASCIICacheKey%3CStr%20extends%20string%3E%20%3D%20%60id-%24%7BLowercase%3CStr%3E%7D%60%0Atype%20MainID%20%3D%20ASCIICacheKey%3C%22MY_APP%22%3E%0A%2F%2F%20type%20MainID%20%3D%20%22id-my_app%22",
+      "body": "%60%60%60ts%0Atype%20Greeting%20%3D%20%22Hello%2C%20world%22%0Atype%20QuietGreeting%20%3D%20Lowercase%3CGreeting%3E%0A%2F%2F%20type%20QuietGreeting%20%3D%20%22hello%2C%20world%22%0A%0Atype%20ASCIICacheKey%3CStr%20extends%20string%3E%20%3D%20%60id-%24%7BLowercase%3CStr%3E%7D%60%0Atype%20MainID%20%3D%20ASCIICacheKey%3C%22MY_APP%22%3E%0A%2F%2F%20type%20MainID%20%3D%20%22id-my_app%22%0A%60%60%60%0A%0A%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%AF%8F%E4%B8%AA%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E4%B8%BA%E7%AD%89%E6%95%88%E7%9A%84**%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D**%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s5-128",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "将字符串中的每个字符转换为等效的**小写字母**。"
     },
     {
       "id": "s5-129",
       "sectionId": "s5",
       "title": "Capitalize%5C%3CStringType%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20LowercaseGreeting%20%3D%20%22hello%2C%20world%22%3B%0Atype%20Greeting%20%3D%20Capitalize%3CLowercaseGreeting%3E%3B%0A%2F%2F%20type%20Greeting%20%3D%20%22Hello%2C%20world%22",
+      "body": "%60%60%60ts%0Atype%20LowercaseGreeting%20%3D%20%22hello%2C%20world%22%3B%0Atype%20Greeting%20%3D%20Capitalize%3CLowercaseGreeting%3E%3B%0A%2F%2F%20type%20Greeting%20%3D%20%22Hello%2C%20world%22%0A%60%60%60%0A%0A%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E4%B8%BA%E7%AD%89%E6%95%88%E7%9A%84**%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D**%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s5-130",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "将字符串中的第一个字符转换为等效的**大写字母**。"
     },
     {
       "id": "s5-131",
       "sectionId": "s5",
       "title": "Uncapitalize%5C%3CStringType%3E",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20UppercaseGreeting%20%3D%20%22HELLO%20WORLD%22%3B%0Atype%20UncomfortableGreeting%20%3D%20Uncapitalize%3CUppercaseGreeting%3E%3B%0A%2F%2F%20type%20UncomfortableGreeting%20%3D%20%22hELLO%20WORLD%22",
+      "body": "%60%60%60ts%0Atype%20UppercaseGreeting%20%3D%20%22HELLO%20WORLD%22%3B%0Atype%20UncomfortableGreeting%20%3D%20Uncapitalize%3CUppercaseGreeting%3E%3B%0A%2F%2F%20type%20UncomfortableGreeting%20%3D%20%22hELLO%20WORLD%22%0A%60%60%60%0A%0A%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E4%B8%BA%E7%AD%89%E6%95%88%E7%9A%84**%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D**%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s5-132",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "将字符串中的第一个字符转换为等效的**小写字母**。"
     },
     {
       "id": "s5-133",
       "sectionId": "s5",
       "title": "ReturnType\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "declare function f1(): {\n  a: number; b: string\n};\n\ntype T0 = ReturnType<() => string>;\n// type T0 = string\n\ntype T1 = ReturnType<(s: string) => void>;\n// type T1 = void\n\ntype T2 = ReturnType<<T>() => T>;\n// type T2 = unknown\n\ntype T3 = ReturnType<<\n  T extends U, U extends number[]\n>() => T>;\n// type T3 = number[]\n\ntype T4 = ReturnType<typeof f1>;\n// type T4 = {\n//     a: number;\n//     b: string;\n// }\n\ntype T5 = ReturnType<any>;\n// type T5 = any\n\ntype T6 = ReturnType<never>;\n// type T6 = never"
-    },
-    {
-      "id": "s5-134",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "构造一个由函数 Type 的**返回类型**组成的类型。"
+      "body": "```ts\ndeclare function f1(): {\n  a: number; b: string\n};\n\ntype T0 = ReturnType<() => string>;\n// type T0 = string\n\ntype T1 = ReturnType<(s: string) => void>;\n// type T1 = void\n\ntype T2 = ReturnType<<T>() => T>;\n// type T2 = unknown\n\ntype T3 = ReturnType<<\n  T extends U, U extends number[]\n>() => T>;\n// type T3 = number[]\n\ntype T4 = ReturnType<typeof f1>;\n// type T4 = {\n//     a: number;\n//     b: string;\n// }\n\ntype T5 = ReturnType<any>;\n// type T5 = any\n\ntype T6 = ReturnType<never>;\n// type T6 = never\n```\n\n构造一个由函数 Type 的**返回类型**组成的类型。"
     },
     {
       "id": "s5-135",
       "sectionId": "s5",
       "title": "ThisType\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type ObjectDescriptor<D, M> = {\n  data?: D;\n  // 方法中“this”的类型是 D & M\n  methods?: M & ThisType<D & M>;\n};\n \nfunction makeObject<D, M>(\n  desc: ObjectDescriptor<D, M>\n): D & M {\n  let data: object = desc.data || {};\n  let methods: object = desc.methods || {};\n  return { ...data, ...methods } as D & M;\n}\n \nlet obj = makeObject({\n  data: { x: 0, y: 0 },\n  methods: {\n    moveBy(dx: number, dy: number) {\n      this.x += dx; // Strongly typed this\n      this.y += dy; // Strongly typed this\n    },\n  },\n});\n \nobj.x = 10;\nobj.y = 20;\nobj.moveBy(5, 5);"
-    },
-    {
-      "id": "s5-136",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "此实用程序不返回转换后的类型。 相反，它用作上下文 this 类型的标记。 请注意，必须启用 [noImplicitThis](https://www.typescriptlang.org/tsconfig#noImplicitThis) 标志才能使用此实用程序。"
+      "body": "```ts\ntype ObjectDescriptor<D, M> = {\n  data?: D;\n  // 方法中“this”的类型是 D & M\n  methods?: M & ThisType<D & M>;\n};\n \nfunction makeObject<D, M>(\n  desc: ObjectDescriptor<D, M>\n): D & M {\n  let data: object = desc.data || {};\n  let methods: object = desc.methods || {};\n  return { ...data, ...methods } as D & M;\n}\n \nlet obj = makeObject({\n  data: { x: 0, y: 0 },\n  methods: {\n    moveBy(dx: number, dy: number) {\n      this.x += dx; // Strongly typed this\n      this.y += dy; // Strongly typed this\n    },\n  },\n});\n \nobj.x = 10;\nobj.y = 20;\nobj.moveBy(5, 5);\n```\n\n此实用程序不返回转换后的类型。 相反，它用作上下文 this 类型的标记。 请注意，必须启用 [noImplicitThis](https://www.typescriptlang.org/tsconfig#noImplicitThis) 标志才能使用此实用程序。"
     },
     {
       "id": "s5-137",
       "sectionId": "s5",
       "title": "InstanceType\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "class C {\n  x = 0;\n  y = 0;\n}\ntype T0 = InstanceType<typeof C>;\n// type T0 = C\ntype T1 = InstanceType<any>;\n// type T1 = any\ntype T2 = InstanceType<never>;\n// type T2 = never"
-    },
-    {
-      "id": "s5-138",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "构造一个由 Type 中构造函数的实例类型组成的类型。"
+      "body": "```ts\nclass C {\n  x = 0;\n  y = 0;\n}\ntype T0 = InstanceType<typeof C>;\n// type T0 = C\ntype T1 = InstanceType<any>;\n// type T1 = any\ntype T2 = InstanceType<never>;\n// type T2 = never\n```\n\n构造一个由 Type 中构造函数的实例类型组成的类型。"
     },
     {
       "id": "s5-139",
       "sectionId": "s5",
       "title": "ThisParameterType\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "function toHex(this: Number) {\n  return this.toString(16);\n}\n \nfunction numberToString(\n  n: ThisParameterType<typeof toHex>\n) {\n  return toHex.apply(n);\n}"
-    },
-    {
-      "id": "s5-140",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "提取函数类型的 `this` 参数的类型，如果函数类型没有 `this` 参数，则为未知。"
+      "body": "```ts\nfunction toHex(this: Number) {\n  return this.toString(16);\n}\n \nfunction numberToString(\n  n: ThisParameterType<typeof toHex>\n) {\n  return toHex.apply(n);\n}\n```\n\n提取函数类型的 `this` 参数的类型，如果函数类型没有 `this` 参数，则为未知。"
     },
     {
       "id": "s5-141",
       "sectionId": "s5",
       "title": "OmitThisParameter\\<Type>",
-      "kind": "code",
-      "lang": "ts",
-      "code": "function toHex(this: Number) {\n  return this.toString(16);\n}\nconst fiveToHex\n  : OmitThisParameter<typeof toHex>\n  = toHex.bind(5);\n\nconsole.log(fiveToHex());"
-    },
-    {
-      "id": "s5-142",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "从 Type 中移除 this 参数。 如果 Type 没有显式声明此参数，则结果只是 Type。 否则，从 Type 创建一个不带此参数的新函数类型。 泛型被删除，只有最后一个重载签名被传播到新的函数类型中。"
+      "body": "```ts\nfunction toHex(this: Number) {\n  return this.toString(16);\n}\nconst fiveToHex\n  : OmitThisParameter<typeof toHex>\n  = toHex.bind(5);\n\nconsole.log(fiveToHex());\n```\n\n从 Type 中移除 this 参数。 如果 Type 没有显式声明此参数，则结果只是 Type。 否则，从 Type 创建一个不带此参数的新函数类型。 泛型被删除，只有最后一个重载签名被传播到新的函数类型中。"
     },
     {
       "id": "s6-143",
       "sectionId": "s6",
       "title": "JSX 介绍",
-      "kind": "text",
-      "body": "JSX 规范是对 ECMAScript 的类似 XML 的语法扩展。"
-    },
-    {
-      "id": "s6-144",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "• 使用 `.tsx` 扩展名命名您的文件\n• 启用 `jsx` 选项\n• 不允许在 `.tsx` 文件中使用尖括号类型断言。\n• [JSX 规范](https://facebook.github.io/jsx/)"
+      "body": "JSX 规范是对 ECMAScript 的类似 XML 的语法扩展。\n\n• 使用 `.tsx` 扩展名命名您的文件\n• 启用 `jsx` 选项\n• 不允许在 `.tsx` 文件中使用尖括号类型断言。\n• [JSX 规范](https://facebook.github.io/jsx/)"
     },
     {
       "id": "s6-145",
       "sectionId": "s6",
       "title": "as 运算符",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const foo = <foo>bar;\n// ❌ 不允许在 .tsx 👆 文件中使用尖括号类型断言。\n\nconst foo = bar as foo;"
-    },
-    {
-      "id": "s6-146",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "`as` 运算符在 `.ts` 和 `.tsx` 文件中都可用，并且在行为上与**尖括号**类型断言样式相同。"
+      "body": "```ts\nconst foo = <foo>bar;\n// ❌ 不允许在 .tsx 👆 文件中使用尖括号类型断言。\n\nconst foo = bar as foo;\n```\n\n`as` 运算符在 `.ts` 和 `.tsx` 文件中都可用，并且在行为上与**尖括号**类型断言样式相同。"
     },
     {
       "id": "s6-147",
       "sectionId": "s6",
       "title": "%E5%9F%BA%E4%BA%8E%E5%80%BC%E7%9A%84%E5%85%83%E7%B4%A0",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "import%20MyComponent%20from%20%22.%2FmyComponent%22%3B%0A%0A%3CMyComponent%20%2F%3E%3B%20%2F%2F%20ok%0A%3CSomeOtherComponent%20%2F%3E%3B%20%2F%2F%20%E2%9D%8C%20error",
+      "body": "%60%60%60tsx%0Aimport%20MyComponent%20from%20%22.%2FmyComponent%22%3B%0A%0A%3CMyComponent%20%2F%3E%3B%20%2F%2F%20ok%0A%3CSomeOtherComponent%20%2F%3E%3B%20%2F%2F%20%E2%9D%8C%20error%0A%60%60%60%0A%0A%E5%9F%BA%E4%BA%8E%E5%80%BC%E7%9A%84%E5%85%83%E7%B4%A0%E5%8F%AA%E6%98%AF%E7%94%B1%E8%8C%83%E5%9B%B4%E5%86%85%E7%9A%84%E6%A0%87%E8%AF%86%E7%AC%A6%E6%9F%A5%E6%89%BE%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s6-148",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "基于值的元素只是由范围内的标识符查找。"
     },
     {
       "id": "s6-149",
       "sectionId": "s6",
       "title": "内在的元素",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "declare namespace JSX {\n  interface IntrinsicElements {\n    foo: any;\n  }\n}\n<foo />; // ok\n<bar />; // error"
-    },
-    {
-      "id": "s6-150",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "\\<bar /> 没有在 JSX.IntrinsicElements 上指定。"
-    },
-    {
-      "id": "s6-151",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "declare namespace JSX {\n  interface IntrinsicElements {\n    [elemName: string]: any;\n  }\n}"
+      "body": "```tsx\ndeclare namespace JSX {\n  interface IntrinsicElements {\n    foo: any;\n  }\n}\n<foo />; // ok\n<bar />; // error\n```\n\n\\<bar /> 没有在 JSX.IntrinsicElements 上指定。\n\n```tsx\ndeclare namespace JSX {\n  interface IntrinsicElements {\n    [elemName: string]: any;\n  }\n}\n```"
     },
     {
       "id": "s6-152",
       "sectionId": "s6",
       "title": "函数组件",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "interface FooProp {\n  name: string;\n  X: number;\n  Y: number;\n}\ndeclare function AnotherComponent(prop: { name: string });\nfunction ComponentFoo(prop: FooProp) {\n  return <AnotherComponent name={prop.name} />;\n}\n\nconst Button = (prop: { value: string }, context: { color: string }) => (\n  <button />\n);"
-    },
-    {
-      "id": "s6-153",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "该组件被定义为一个 JavaScript 函数，其第一个参数是一个 props 对象。 TS 强制它的返回类型必须可分配给 JSX.Element。"
+      "body": "```tsx\ninterface FooProp {\n  name: string;\n  X: number;\n  Y: number;\n}\ndeclare function AnotherComponent(prop: { name: string });\nfunction ComponentFoo(prop: FooProp) {\n  return <AnotherComponent name={prop.name} />;\n}\n\nconst Button = (prop: { value: string }, context: { color: string }) => (\n  <button />\n);\n```\n\n该组件被定义为一个 JavaScript 函数，其第一个参数是一个 props 对象。 TS 强制它的返回类型必须可分配给 JSX.Element。"
     },
     {
       "id": "s6-154",
       "sectionId": "s6",
       "title": "函数组件重载",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "interface CeProps {\n  children: JSX.Element[] | JSX.Element;\n}\n \ninterface HomeProps extends CeProps {\n  home: JSX.Element;\n}\n \ninterface SideProps extends CeProps {\n  side: JSX.Element | string;\n}\n \nfunction Dog(prop:HomeProps): JSX.Element;\nfunction Dog(prop:SideProps): JSX.Element;\nfunction Dog(prop:CeProps): JSX.Element {\n  // ...\n}"
+      "body": "```tsx\ninterface CeProps {\n  children: JSX.Element[] | JSX.Element;\n}\n \ninterface HomeProps extends CeProps {\n  home: JSX.Element;\n}\n \ninterface SideProps extends CeProps {\n  side: JSX.Element | string;\n}\n \nfunction Dog(prop:HomeProps): JSX.Element;\nfunction Dog(prop:SideProps): JSX.Element;\nfunction Dog(prop:CeProps): JSX.Element {\n  // ...\n}\n```"
     },
     {
       "id": "s6-155",
       "sectionId": "s6",
       "title": "函数子组件",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "interface MenuProps extends React.LiHTMLAttributes<HTMLUListElement> { ... };\nconst InternalMenu = React.forwardRef<HTMLUListElement, MenuProps>((props, ref) => (\n  <ul {...props} ref={ref} />\n));\n\ntype MenuComponent = typeof InternalMenu & {\n  Item: typeof MenuItem;    // MenuItem 函数组件\n  SubMenu: typeof SubMenu;  // SubMenu 函数组件\n};\n\nconst Menu: MenuComponent = InternalMenu as unknown as MenuComponent;\n\nMenu.Item = MenuItem;\nMenu.SubMenu = SubMenu;\n\n<Menu.Item />     // ✅ ok\n<Menu.SubMenu />  // ✅ ok"
+      "body": "```tsx\ninterface MenuProps extends React.LiHTMLAttributes<HTMLUListElement> { ... };\nconst InternalMenu = React.forwardRef<HTMLUListElement, MenuProps>((props, ref) => (\n  <ul {...props} ref={ref} />\n));\n\ntype MenuComponent = typeof InternalMenu & {\n  Item: typeof MenuItem;    // MenuItem 函数组件\n  SubMenu: typeof SubMenu;  // SubMenu 函数组件\n};\n\nconst Menu: MenuComponent = InternalMenu as unknown as MenuComponent;\n\nMenu.Item = MenuItem;\nMenu.SubMenu = SubMenu;\n\n<Menu.Item />     // ✅ ok\n<Menu.SubMenu />  // ✅ ok\n```"
     },
     {
       "id": "s6-156",
       "sectionId": "s6",
       "title": "有效组件",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "declare namespace JSX {\n  interface ElementClass {\n    render: any;\n  }\n}\nclass MyComponent {\n  render() {}\n}\nfunction MyFactoryFunction() {\n  return { render: () => {} };\n}\n<MyComponent />;       // ✅ 有效类组件\n<MyFactoryFunction />; // ✅ 有效函数组件"
-    },
-    {
-      "id": "s6-157",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "元素实例类型必须可以分配给 `JSX.ElementClass`，否则将导致错误。"
-    },
-    {
-      "id": "s6-158",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "class NotAValidComponent {}\nfunction NotAValidFactoryFunction() {\n  return {};\n}\n<NotAValidComponent />; // ❌ error\n<NotAValidFactoryFunction />; // ❌ error"
-    },
-    {
-      "id": "s6-159",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "默认情况下，`JSX.ElementClass` 是 {}，但可以对其进行扩展，以将 `JSX` 的使用限制为仅限于符合适当接口的类型。"
+      "body": "```tsx\ndeclare namespace JSX {\n  interface ElementClass {\n    render: any;\n  }\n}\nclass MyComponent {\n  render() {}\n}\nfunction MyFactoryFunction() {\n  return { render: () => {} };\n}\n<MyComponent />;       // ✅ 有效类组件\n<MyFactoryFunction />; // ✅ 有效函数组件\n```\n\n元素实例类型必须可以分配给 `JSX.ElementClass`，否则将导致错误。\n\n```tsx\nclass NotAValidComponent {}\nfunction NotAValidFactoryFunction() {\n  return {};\n}\n<NotAValidComponent />; // ❌ error\n<NotAValidFactoryFunction />; // ❌ error\n```\n\n默认情况下，`JSX.ElementClass` 是 {}，但可以对其进行扩展，以将 `JSX` 的使用限制为仅限于符合适当接口的类型。"
     },
     {
       "id": "s6-160",
       "sectionId": "s6",
       "title": "类组件",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type Props = {\n  header: React.ReactNode;\n  body: React.ReactNode;\n};\n\nclass MyComponent extends React.Component<Props, {}> {\n  render() {\n    return (\n      <div>\n        {this.props.header}\n        {this.props.body}\n      </div>\n    );\n  }\n}\n\n<MyComponent header={<h1>Header</h1>} body={<i>body</i>} />"
+      "body": "```ts\ntype Props = {\n  header: React.ReactNode;\n  body: React.ReactNode;\n};\n\nclass MyComponent extends React.Component<Props, {}> {\n  render() {\n    return (\n      <div>\n        {this.props.header}\n        {this.props.body}\n      </div>\n    );\n  }\n}\n\n<MyComponent header={<h1>Header</h1>} body={<i>body</i>} />\n```"
     },
     {
       "id": "s6-161",
       "sectionId": "s6",
-      "title": "泛型组件",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "// 一个泛型组件\ntype SelectProps<T> = { items: T[] };\nclass Select<T> extends React.Component<SelectProps<T>, any> {}\n\n// 使用\nconst Form = () => <Select<string> items={['a', 'b']} />;"
+      "title": "%E6%B3%9B%E5%9E%8B%E7%BB%84%E4%BB%B6",
+      "body": "%60%60%60tsx%0A%2F%2F%20%E4%B8%80%E4%B8%AA%E6%B3%9B%E5%9E%8B%E7%BB%84%E4%BB%B6%0Atype%20SelectProps%3CT%3E%20%3D%20%7B%20items%3A%20T%5B%5D%20%7D%3B%0Aclass%20Select%3CT%3E%20extends%20React.Component%3CSelectProps%3CT%3E%2C%20any%3E%20%7B%7D%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8%0Aconst%20Form%20%3D%20()%20%3D%3E%20%3CSelect%3Cstring%3E%20items%3D%7B%5B'a'%2C%20'b'%5D%7D%20%2F%3E%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-162",
       "sectionId": "s6",
       "title": "%E5%87%BD%E6%95%B0%E7%BB%84%E4%BB%B6%20ref",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "import%20%7B%20FC%2C%20ForwardedRef%2C%20forwardRef%2C%20PropsWithRef%20%7D%20from%20%22react%22%3B%0A%0Afunction%20InternalProgress(props%3A%20ProgressProps%2C%20ref%3F%3A%20ForwardedRef%3CHTMLDivElement%3E)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cdiv%20%7B...props%7D%20ref%3D%7Bref%7D%3E%0A%20%20%20%20%20%20%7Bprops.children%7D%0A%20%20%20%20%3C%2Fdiv%3E%0A%20%20)%0A%7D%0A%0Aexport%20interface%20ProgressProps%20extends%20React.DetailedHTMLProps%3CReact.HTMLAttributes%3CHTMLDivElement%3E%2C%20HTMLDivElement%3E%20%7B%7D%0Aexport%20const%20Progress%3A%20FC%3CPropsWithRef%3CProgressProps%3E%3E%20%3D%20forwardRef%3CHTMLDivElement%3E(InternalProgress)",
+      "body": "%60%60%60tsx%0Aimport%20%7B%20FC%2C%20ForwardedRef%2C%20forwardRef%2C%20PropsWithRef%20%7D%20from%20%22react%22%3B%0A%0Afunction%20InternalProgress(props%3A%20ProgressProps%2C%20ref%3F%3A%20ForwardedRef%3CHTMLDivElement%3E)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cdiv%20%7B...props%7D%20ref%3D%7Bref%7D%3E%0A%20%20%20%20%20%20%7Bprops.children%7D%0A%20%20%20%20%3C%2Fdiv%3E%0A%20%20)%0A%7D%0A%0Aexport%20interface%20ProgressProps%20extends%20React.DetailedHTMLProps%3CReact.HTMLAttributes%3CHTMLDivElement%3E%2C%20HTMLDivElement%3E%20%7B%7D%0Aexport%20const%20Progress%3A%20FC%3CPropsWithRef%3CProgressProps%3E%3E%20%3D%20forwardRef%3CHTMLDivElement%3E(InternalProgress)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-163",
       "sectionId": "s6",
       "title": "%E7%BB%84%E4%BB%B6%20'as'%20%E5%B1%9E%E6%80%A7",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "import%20React%2C%20%7B%20ElementType%2C%20ComponentPropsWithoutRef%20%7D%20from%20%22react%22%3B%0A%0Aexport%20const%20Link%20%3D%20%3CT%20extends%20ElementType%3Cany%3E%20%3D%20%22a%22%3E(%0A%20%20props%3A%20%7B%20as%3F%3A%20T%3B%20%7D%20%26%20ComponentPropsWithoutRef%3CT%3E%0A)%20%3D%3E%20%7B%0A%20%20const%20Comp%20%3D%20props.as%20%7C%7C%20%22a%22%3B%0A%20%20return%20%3CComp%20%7B...props%7D%3E%3C%2FComp%3E%3B%0A%7D%3B%0A%0A%0A%3CLink%20as%3D%22div%22%3E%E6%96%87%E6%9C%AC%3C%2FLink%3E%3B",
+      "body": "%60%60%60tsx%0Aimport%20React%2C%20%7B%20ElementType%2C%20ComponentPropsWithoutRef%20%7D%20from%20%22react%22%3B%0A%0Aexport%20const%20Link%20%3D%20%3CT%20extends%20ElementType%3Cany%3E%20%3D%20%22a%22%3E(%0A%20%20props%3A%20%7B%20as%3F%3A%20T%3B%20%7D%20%26%20ComponentPropsWithoutRef%3CT%3E%0A)%20%3D%3E%20%7B%0A%20%20const%20Comp%20%3D%20props.as%20%7C%7C%20%22a%22%3B%0A%20%20return%20%3CComp%20%7B...props%7D%3E%3C%2FComp%3E%3B%0A%7D%3B%0A%0A%0A%3CLink%20as%3D%22div%22%3E%E6%96%87%E6%9C%AC%3C%2FLink%3E%3B%0A%60%60%60%0A%0A%E5%85%81%E8%AE%B8%E4%BC%A0%E5%85%A5%E8%87%AA%E5%AE%9A%E4%B9%89%20%60React%60%20%E7%BB%84%E4%BB%B6%EF%BC%8C%E6%88%96%20%60div%60%2C%20%60a%60%20%E6%A0%87%E7%AD%BE",
       "encoded": true
-    },
-    {
-      "id": "s6-164",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "允许传入自定义 `React` 组件，或 `div`, `a` 标签"
     },
     {
       "id": "s6-165",
       "sectionId": "s6",
       "title": "%E7%BB%84%E4%BB%B6%E4%BD%9C%E4%B8%BA%20Props%20%E4%BC%A0%E9%80%92",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "type%20RowProps%20%3D%20%7B%0A%20%20element%3A%20React.ElementType%3C%7B%0A%20%20%20%20className%3F%3A%20string%3B%0A%20%20%7D%3E%3B%0A%7D%0Aconst%20Row%20%3D%20(props%3A%20RowProps)%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cprops.element%20className%3D%22h-8%20w-8%22%20%2F%3E%0A%20%20)%3B%0A%7D%3B%0A%20%0A%3CRow%20element%3D%7B%22div%22%7D%20%2F%3E%3B%0A%3CRow%20element%3D%7BUserIcon%7D%20%2F%3E%3B",
+      "body": "%60%60%60tsx%0Atype%20RowProps%20%3D%20%7B%0A%20%20element%3A%20React.ElementType%3C%7B%0A%20%20%20%20className%3F%3A%20string%3B%0A%20%20%7D%3E%3B%0A%7D%0Aconst%20Row%20%3D%20(props%3A%20RowProps)%20%3D%3E%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cprops.element%20className%3D%22h-8%20w-8%22%20%2F%3E%0A%20%20)%3B%0A%7D%3B%0A%20%0A%3CRow%20element%3D%7B%22div%22%7D%20%2F%3E%3B%0A%3CRow%20element%3D%7BUserIcon%7D%20%2F%3E%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-166",
       "sectionId": "s7",
       "title": "%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC%EF%BC%88infer%EF%BC%89",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20Capitalize%3CT%20extends%20string%3E%20%3D%20T%20extends%20%60%24%7Binfer%20U%7D%24%7Binfer%20V%7D%60%0A%20%20%3F%20%60%24%7BUppercase%3CU%3E%7D%24%7BV%7D%60%0A%20%20%3A%20T%0Atype%20capitalized%20%3D%20Capitalize%3C%22hello%20world%22%3E%20%2F%2F%20Hello%20world",
-      "encoded": true
-    },
-    {
-      "id": "s7-167",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "也可以在 infer 中使用条件约束（`extends`）"
-    },
-    {
-      "id": "s7-168",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20SomeBigInt%20%3D%20%22100%22%20extends%20%60%24%7Binfer%20U%20extends%20bigint%7D%60%20%3F%20U%20%3A%20never%3B%0A%2F%2F%20100n",
+      "body": "%60%60%60ts%0Atype%20Capitalize%3CT%20extends%20string%3E%20%3D%20T%20extends%20%60%24%7Binfer%20U%7D%24%7Binfer%20V%7D%60%0A%20%20%3F%20%60%24%7BUppercase%3CU%3E%7D%24%7BV%7D%60%0A%20%20%3A%20T%0Atype%20capitalized%20%3D%20Capitalize%3C%22hello%20world%22%3E%20%2F%2F%20Hello%20world%0A%60%60%60%0A%0A%E4%B9%9F%E5%8F%AF%E4%BB%A5%E5%9C%A8%20infer%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%9D%A1%E4%BB%B6%E7%BA%A6%E6%9D%9F%EF%BC%88%60extends%60%EF%BC%89%0A%0A%60%60%60ts%0Atype%20SomeBigInt%20%3D%20%22100%22%20extends%20%60%24%7Binfer%20U%20extends%20bigint%7D%60%20%3F%20U%20%3A%20never%3B%0A%2F%2F%20100n%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-169",
       "sectionId": "s7",
       "title": "keyof%20%E5%8F%96%20interface%20%E7%9A%84%E9%94%AE",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface%20Point%20%7B%20x%3A%20number%3B%20y%3A%20number%3B%20%7D%0A%20%0A%2F%2F%20type%20keys%20%3D%20%22x%22%20%7C%20%22y%22%0Atype%20keys%20%3D%20keyof%20Point%3B%0A%0Atype%20Arrayish%20%3D%20%7B%0A%20%20%20%20%5Bn%3A%20number%5D%3A%20unknown%3B%0A%7D%3B%0Atype%20A%20%3D%20keyof%20Arrayish%3B%20%0A%2F%2F%20type%20A%20%3D%20number",
+      "body": "%60%60%60ts%0Ainterface%20Point%20%7B%20x%3A%20number%3B%20y%3A%20number%3B%20%7D%0A%20%0A%2F%2F%20type%20keys%20%3D%20%22x%22%20%7C%20%22y%22%0Atype%20keys%20%3D%20keyof%20Point%3B%0A%0Atype%20Arrayish%20%3D%20%7B%0A%20%20%20%20%5Bn%3A%20number%5D%3A%20unknown%3B%0A%7D%3B%0Atype%20A%20%3D%20keyof%20Arrayish%3B%20%0A%2F%2F%20type%20A%20%3D%20number%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-170",
       "sectionId": "s7",
       "title": "%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E5%90%88%E5%B9%B6%E6%88%90%E4%B8%80%E4%B8%AA%E6%96%B0%E7%B1%BB%E5%9E%8B",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20named%20%3D%20%5B%22aqua%22%2C%20%22aquamarine%22%2C%20%22azure%22%5D%20as%20const%3B%0Aconst%20hex%20%3D%20%5B%22%2300FFFF%22%2C%20%22%237FFFD4%22%2C%20%22%23F0FFFF%22%5D%20as%20const%3B%0A%0Atype%20Colors%20%3D%20%7B%0A%20%20%5Bkey%20in%20(typeof%20named)%5Bnumber%5D%5D%3A%20(typeof%20hex)%5Bnumber%5D%3B%0A%7D%3B%0A%2F%2F%20Colors%20%3D%20%7B%0A%2F%2F%20%20%20aqua%3A%20%22%2300FFFF%22%20%7C%20%22%237FFFD4%22%20%7C%20%22%23F0FFFF%22%3B%20%0A%2F%2F%20%20%20....%20%0A%2F%2F%20%7D",
+      "body": "%60%60%60ts%0Aconst%20named%20%3D%20%5B%22aqua%22%2C%20%22aquamarine%22%2C%20%22azure%22%5D%20as%20const%3B%0Aconst%20hex%20%3D%20%5B%22%2300FFFF%22%2C%20%22%237FFFD4%22%2C%20%22%23F0FFFF%22%5D%20as%20const%3B%0A%0Atype%20Colors%20%3D%20%7B%0A%20%20%5Bkey%20in%20(typeof%20named)%5Bnumber%5D%5D%3A%20(typeof%20hex)%5Bnumber%5D%3B%0A%7D%3B%0A%2F%2F%20Colors%20%3D%20%7B%0A%2F%2F%20%20%20aqua%3A%20%22%2300FFFF%22%20%7C%20%22%237FFFD4%22%20%7C%20%22%23F0FFFF%22%3B%20%0A%2F%2F%20%20%20....%20%0A%2F%2F%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-171",
       "sectionId": "s7",
       "title": "索引签名",
-      "kind": "code",
-      "lang": "ts",
-      "code": "interface NumberOrString {\n  [index: string]: string | number;\n  length: number;\n  name: string;\n}"
+      "body": "```ts\ninterface NumberOrString {\n  [index: string]: string | number;\n  length: number;\n  name: string;\n}\n```"
     },
     {
       "id": "s7-172",
       "sectionId": "s7",
-      "title": "只读元组类型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const point = [3, 4] as const\n// type 'readonly [3, 4]'"
+      "title": "%E5%8F%AA%E8%AF%BB%E5%85%83%E7%BB%84%E7%B1%BB%E5%9E%8B",
+      "body": "%60%60%60ts%0Aconst%20point%20%3D%20%5B3%2C%204%5D%20as%20const%0A%2F%2F%20type%20'readonly%20%5B3%2C%204%5D'%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s7-173",
       "sectionId": "s7",
       "title": "从数组中提取类型",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type Point = { x: number; y: number; }\ntype Data = Point[];\n// Data 是个数组，提取里面的元素类型\ntype PointDetail = Data[number];\n// type PointDetail = { x: number; y: number; }"
+      "body": "```ts\ntype Point = { x: number; y: number; }\ntype Data = Point[];\n// Data 是个数组，提取里面的元素类型\ntype PointDetail = Data[number];\n// type PointDetail = { x: number; y: number; }\n```"
     },
     {
       "id": "s7-174",
       "sectionId": "s7",
       "title": "satisfies",
-      "kind": "text",
-      "body": "`satisfies` 允许将验证表达式的类型与某种类型匹配，而无需更改该表达式的结果类型。"
-    },
-    {
-      "id": "s7-175",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type Colors = 'red' | 'green' | 'blue';\ntype RGB = [\n  red: number,\n  green: number,\n  blue: number\n];\ntype Palette = Record<Colors, string | RGB>\n\nconst palette: Palette = {\n  red: [255, 0, 0],\n  green: '#00ff00',\n  blue: [0, 0, 255],\n};\n\n// 通常的方式会推导出 redComponent 为\n// => string | number | undefined\nconst redComponent = palette.red.at(0);"
+      "body": "%60satisfies%60%20%E5%85%81%E8%AE%B8%E5%B0%86%E9%AA%8C%E8%AF%81%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%B1%BB%E5%9E%8B%E4%B8%8E%E6%9F%90%E7%A7%8D%E7%B1%BB%E5%9E%8B%E5%8C%B9%E9%85%8D%EF%BC%8C%E8%80%8C%E6%97%A0%E9%9C%80%E6%9B%B4%E6%94%B9%E8%AF%A5%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%BB%93%E6%9E%9C%E7%B1%BB%E5%9E%8B%E3%80%82%0A%0A%60%60%60ts%0Atype%20Colors%20%3D%20'red'%20%7C%20'green'%20%7C%20'blue'%3B%0Atype%20RGB%20%3D%20%5B%0A%20%20red%3A%20number%2C%0A%20%20green%3A%20number%2C%0A%20%20blue%3A%20number%0A%5D%3B%0Atype%20Palette%20%3D%20Record%3CColors%2C%20string%20%7C%20RGB%3E%0A%0Aconst%20palette%3A%20Palette%20%3D%20%7B%0A%20%20red%3A%20%5B255%2C%200%2C%200%5D%2C%0A%20%20green%3A%20'%2300ff00'%2C%0A%20%20blue%3A%20%5B0%2C%200%2C%20255%5D%2C%0A%7D%3B%0A%0A%2F%2F%20%E9%80%9A%E5%B8%B8%E7%9A%84%E6%96%B9%E5%BC%8F%E4%BC%9A%E6%8E%A8%E5%AF%BC%E5%87%BA%20redComponent%20%E4%B8%BA%0A%2F%2F%20%3D%3E%20string%20%7C%20number%20%7C%20undefined%0Aconst%20redComponent%20%3D%20palette.red.at(0)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s7-176",
       "sectionId": "s7",
-      "title": "使用 satisfies",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const palette = {\n  red: [255, 0, 0],\n  green: '#00ff00',\n  blue: [0, 0, 255],\n} satisfies Record<Colors, string | RGB>\n\n// undefined | number\nconst redComponent = palette.red.at(0)"
+      "title": "%E4%BD%BF%E7%94%A8%20satisfies",
+      "body": "%60%60%60ts%0Aconst%20palette%20%3D%20%7B%0A%20%20red%3A%20%5B255%2C%200%2C%200%5D%2C%0A%20%20green%3A%20'%2300ff00'%2C%0A%20%20blue%3A%20%5B0%2C%200%2C%20255%5D%2C%0A%7D%20satisfies%20Record%3CColors%2C%20string%20%7C%20RGB%3E%0A%0A%2F%2F%20undefined%20%7C%20number%0Aconst%20redComponent%20%3D%20palette.red.at(0)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s7-177",
       "sectionId": "s7",
       "title": "范型实例化表达式",
-      "kind": "text",
-      "body": "不使用的情况下："
-    },
-    {
-      "id": "s7-178",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const errorMap: Map<string, Error> \n        = new Map()\n// 或者使用 type 定义别名\ntype ErrorMapType = Map<string, Error>"
-    },
-    {
-      "id": "s7-179",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "使用泛型实例化表达式："
-    },
-    {
-      "id": "s7-180",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const ErrorMap = Map<string, Error>\nconst errorMap = new ErrorMap()"
+      "body": "不使用的情况下：\n\n```ts\nconst errorMap: Map<string, Error> \n        = new Map()\n// 或者使用 type 定义别名\ntype ErrorMapType = Map<string, Error>\n```\n\n使用泛型实例化表达式：\n\n```ts\nconst ErrorMap = Map<string, Error>\nconst errorMap = new ErrorMap()\n```"
     },
     {
       "id": "s7-181",
       "sectionId": "s7",
       "title": "泛型实例化函数",
-      "kind": "code",
-      "lang": "ts",
-      "code": "function makeBox<T>(value: T) {\n    return { value };\n}"
-    },
-    {
-      "id": "s7-182",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "不使用："
-    },
-    {
-      "id": "s7-183",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "function makeHammerBox(hammer: Hammer) {\n  return makeBox(hammer);\n}\n// or...\nconst makeWrenchBox: (wrench: Wrench) \n    => Box<Wrench> = makeBox;"
-    },
-    {
-      "id": "s7-184",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "使用："
-    },
-    {
-      "id": "s7-185",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const makeStringBox = makeBox<string>;\nmakeStringBox(42);"
+      "body": "```ts\nfunction makeBox<T>(value: T) {\n    return { value };\n}\n```\n\n不使用：\n\n```ts\nfunction makeHammerBox(hammer: Hammer) {\n  return makeBox(hammer);\n}\n// or...\nconst makeWrenchBox: (wrench: Wrench) \n    => Box<Wrench> = makeBox;\n```\n\n使用：\n\n```ts\nconst makeStringBox = makeBox<string>;\nmakeStringBox(42);\n```"
     },
     {
       "id": "s7-186",
       "sectionId": "s7",
       "title": "识别全局修改模块",
-      "kind": "code",
-      "lang": "ts",
-      "code": "declare global {\n  interface String {\n    fancyFormat(opts: FancyOption): string;\n  }\n}\nexport interface FancyOption {\n  fancinessLevel: number;\n}"
+      "body": "```ts\ndeclare global {\n  interface String {\n    fancyFormat(opts: FancyOption): string;\n  }\n}\nexport interface FancyOption {\n  fancinessLevel: number;\n}\n```"
     },
     {
       "id": "s7-187",
       "sectionId": "s7",
       "title": "%E8%8E%B7%E5%8F%96%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E7%9A%84%E7%B1%BB%E5%9E%8B",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20MyArray%20%3D%20%5B%0A%20%20%7B%20name%3A%20%22Alice%22%2C%20age%3A%2015%20%7D%2C%0A%20%20%7B%20name%3A%20%22Bob%22%2C%20age%3A%2023%20%7D%2C%0A%20%20%7B%20name%3A%20%22Eve%22%2C%20age%3A%2038%20%7D%2C%0A%5D%3B%0A%20%0Atype%20Person%20%3D%20typeof%20MyArray%5Bnumber%5D%3B%0A%2F%2F%20type%20Person%20%3D%20%7B%0A%2F%2F%20%20%20name%3A%20string%3B%0A%2F%2F%20%20%20age%3A%20number%3B%0A%2F%2F%20%7D%0A%0Atype%20Age%20%3D%20typeof%20MyArray%5Bnumber%5D%5B%22age%22%5D%3B%0A%2F%2F%20type%20Age%20%3D%20number%0A%0Atype%20Age2%20%3D%20Person%5B%22age%22%5D%3B%0A%2F%2F%20type%20Age2%20%3D%20number",
+      "body": "%60%60%60ts%0Aconst%20MyArray%20%3D%20%5B%0A%20%20%7B%20name%3A%20%22Alice%22%2C%20age%3A%2015%20%7D%2C%0A%20%20%7B%20name%3A%20%22Bob%22%2C%20age%3A%2023%20%7D%2C%0A%20%20%7B%20name%3A%20%22Eve%22%2C%20age%3A%2038%20%7D%2C%0A%5D%3B%0A%20%0Atype%20Person%20%3D%20typeof%20MyArray%5Bnumber%5D%3B%0A%2F%2F%20type%20Person%20%3D%20%7B%0A%2F%2F%20%20%20name%3A%20string%3B%0A%2F%2F%20%20%20age%3A%20number%3B%0A%2F%2F%20%7D%0A%0Atype%20Age%20%3D%20typeof%20MyArray%5Bnumber%5D%5B%22age%22%5D%3B%0A%2F%2F%20type%20Age%20%3D%20number%0A%0Atype%20Age2%20%3D%20Person%5B%22age%22%5D%3B%0A%2F%2F%20type%20Age2%20%3D%20number%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-188",
       "sectionId": "s7",
       "title": "%E8%8C%83%E5%9E%8B%E6%8E%A8%E5%AF%BC%E5%87%BA%E5%88%97%E8%A1%A8%E5%AD%97%E9%9D%A2%E9%87%8F",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20a%20%3D%20%3CT%20extends%20string%3E(t%3A%20T)%20%3D%3E%20t%3B%0Aconst%20b%20%3D%20%3CT%20extends%20number%3E(t%3A%20T)%20%3D%3E%20t%3B%0Aconst%20c%20%3D%20%3CT%20extends%20boolean%3E(t%3A%20T)%20%3D%3E%20t%3B%0Aconst%20d%20%3D%20a(%22a%22)%3B%20%20%2F%2F%20const%20d%3A%20'a'%0Aconst%20e%20%3D%20b(1)%3B%20%20%20%20%2F%2F%20const%20d%3A%201%0Aconst%20f%20%3D%20c(true)%3B%20%2F%2F%20const%20d%3A%20true",
-      "encoded": true
-    },
-    {
-      "id": "s7-189",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "这里t的类型用了一个展开运算"
-    },
-    {
-      "id": "s7-190",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const g = \n      <T extends string[]>(t: [...T]) => t;"
-    },
-    {
-      "id": "s7-191",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "%E7%B1%BB%E5%9E%8B%E5%8F%98%E6%88%90%5B%22111%22%2C%20%22222%22%5D%E4%BA%86",
-      "encoded": true
-    },
-    {
-      "id": "s7-192",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20h%20%3D%20g(%5B%22111%22%2C%20%22222%22%5D)%3B",
+      "body": "%60%60%60ts%0Aconst%20a%20%3D%20%3CT%20extends%20string%3E(t%3A%20T)%20%3D%3E%20t%3B%0Aconst%20b%20%3D%20%3CT%20extends%20number%3E(t%3A%20T)%20%3D%3E%20t%3B%0Aconst%20c%20%3D%20%3CT%20extends%20boolean%3E(t%3A%20T)%20%3D%3E%20t%3B%0Aconst%20d%20%3D%20a(%22a%22)%3B%20%20%2F%2F%20const%20d%3A%20'a'%0Aconst%20e%20%3D%20b(1)%3B%20%20%20%20%2F%2F%20const%20d%3A%201%0Aconst%20f%20%3D%20c(true)%3B%20%2F%2F%20const%20d%3A%20true%0A%60%60%60%0A%0A%E8%BF%99%E9%87%8Ct%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%94%A8%E4%BA%86%E4%B8%80%E4%B8%AA%E5%B1%95%E5%BC%80%E8%BF%90%E7%AE%97%0A%0A%60%60%60ts%0Aconst%20g%20%3D%20%0A%20%20%20%20%20%20%3CT%20extends%20string%5B%5D%3E(t%3A%20%5B...T%5D)%20%3D%3E%20t%3B%0A%60%60%60%0A%0A%E7%B1%BB%E5%9E%8B%E5%8F%98%E6%88%90%5B%22111%22%2C%20%22222%22%5D%E4%BA%86%0A%0A%60%60%60ts%0Aconst%20h%20%3D%20g(%5B%22111%22%2C%20%22222%22%5D)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-193",
       "sectionId": "s7",
       "title": "Object.keys 类型声明",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const keys = Object.keys(options) as (keyof typeof options)[];\n\nkeys.forEach(key => {\n  if (options[key] == null) {\n    throw new Error(`Missing option ${key}`);\n  }\n});"
+      "body": "```ts\nconst keys = Object.keys(options) as (keyof typeof options)[];\n\nkeys.forEach(key => {\n  if (options[key] == null) {\n    throw new Error(`Missing option ${key}`);\n  }\n});\n```"
     },
     {
       "id": "s7-194",
       "sectionId": "s7",
       "title": "%E4%BF%9D%E7%95%99%E4%B8%80%E6%AE%B5%E6%97%B6%E9%97%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E7%B1%BB%E5%9E%8B",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20Color%20%3D%20%22primary%22%20%7C%20%22secondary%22%20%7C%20string%3B",
-      "encoded": true
-    },
-    {
-      "id": "s7-195",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "修改成下面代码，有代码下拉提示"
-    },
-    {
-      "id": "s7-196",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "type%20Color%20%3D%20%22primary%22%20%7C%20%22secondary%22%20%7C%20(string%20%26%20%7B%7D)%3B",
+      "body": "%60%60%60ts%0Atype%20Color%20%3D%20%22primary%22%20%7C%20%22secondary%22%20%7C%20string%3B%0A%60%60%60%0A%0A%E4%BF%AE%E6%94%B9%E6%88%90%E4%B8%8B%E9%9D%A2%E4%BB%A3%E7%A0%81%EF%BC%8C%E6%9C%89%E4%BB%A3%E7%A0%81%E4%B8%8B%E6%8B%89%E6%8F%90%E7%A4%BA%0A%0A%60%60%60ts%0Atype%20Color%20%3D%20%22primary%22%20%7C%20%22secondary%22%20%7C%20(string%20%26%20%7B%7D)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-197",
       "sectionId": "s8",
-      "title": "Module: Plugin",
-      "kind": "text",
-      "body": "例如，当您想使用扩展另一个库的 JavaScript 代码时"
-    },
-    {
-      "id": "s8-198",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "import%20%7B%20greeter%20%7D%20from%20%22super-greeter%22%3B%0A%2F%2F%20%E6%99%AE%E9%80%9A%E6%AC%A2%E8%BF%8E%20API%0Agreeter(2)%3B%0Agreeter(%22Hello%20world%22)%3B%0A%2F%2F%20%E7%8E%B0%E5%9C%A8%E6%88%91%E4%BB%AC%E5%9C%A8%E8%BF%90%E8%A1%8C%E6%97%B6%E7%94%A8%E4%B8%80%E4%B8%AA%E6%96%B0%E5%87%BD%E6%95%B0%E6%89%A9%E5%B1%95%E5%AF%B9%E8%B1%A1%0Aimport%20%22hyper-super-greeter%22%3B%0Agreeter.hyperGreet()%3B",
-      "encoded": true
-    },
-    {
-      "id": "s8-199",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "%22%60super-greeter%60%22%20%E7%9A%84%E5%AE%9A%E4%B9%89%EF%BC%9A",
-      "encoded": true
-    },
-    {
-      "id": "s8-200",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "/* 此示例说明如何为您的函数设置多个重载 */\nexport interface GreeterFunction {\n  (name: string): void\n  (time: number): void\n}\n/* 此示例显示如何导出接口指定的函数 */\nexport const greeter: GreeterFunction;"
-    },
-    {
-      "id": "s8-201",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "我们可以像下面这样扩展现有模块："
-    },
-    {
-      "id": "s8-202",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "%2F*%20%E5%AF%BC%E5%85%A5%E8%BF%99%E4%B8%AA%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A0%E5%88%B0%E7%9A%84%E6%A8%A1%E5%9D%97%20*%2F%0Aimport%20%7B%20greeter%20%7D%20from%20%22super-greeter%22%3B%0A%2F*%20%E5%A3%B0%E6%98%8E%E4%B8%8E%E4%B8%8A%E9%9D%A2%E5%AF%BC%E5%85%A5%E7%9A%84%E6%A8%A1%E5%9D%97%E7%9B%B8%E5%90%8C%E7%9A%84%E6%A8%A1%E5%9D%97%EF%BC%8C%E7%84%B6%E5%90%8E%E6%88%91%E4%BB%AC%E6%89%A9%E5%B1%95%20greeter%20%E5%87%BD%E6%95%B0%E7%9A%84%E7%8E%B0%E6%9C%89%E5%A3%B0%E6%98%8E%20*%2F%0Aexport%20module%20%22super-greeter%22%20%7B%0A%20%20export%20interface%20GreeterFunction%20%7B%0A%20%20%20%20%2F**%20Greets%20even%20better!%20*%2F%0A%20%20%20%20hyperGreet()%3A%20void%3B%0A%20%20%7D%0A%7D",
+      "title": "Module%3A%20Plugin",
+      "body": "%E4%BE%8B%E5%A6%82%EF%BC%8C%E5%BD%93%E6%82%A8%E6%83%B3%E4%BD%BF%E7%94%A8%E6%89%A9%E5%B1%95%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%BA%93%E7%9A%84%20JavaScript%20%E4%BB%A3%E7%A0%81%E6%97%B6%0A%0A%60%60%60ts%0Aimport%20%7B%20greeter%20%7D%20from%20%22super-greeter%22%3B%0A%2F%2F%20%E6%99%AE%E9%80%9A%E6%AC%A2%E8%BF%8E%20API%0Agreeter(2)%3B%0Agreeter(%22Hello%20world%22)%3B%0A%2F%2F%20%E7%8E%B0%E5%9C%A8%E6%88%91%E4%BB%AC%E5%9C%A8%E8%BF%90%E8%A1%8C%E6%97%B6%E7%94%A8%E4%B8%80%E4%B8%AA%E6%96%B0%E5%87%BD%E6%95%B0%E6%89%A9%E5%B1%95%E5%AF%B9%E8%B1%A1%0Aimport%20%22hyper-super-greeter%22%3B%0Agreeter.hyperGreet()%3B%0A%60%60%60%0A%0A%22%60super-greeter%60%22%20%E7%9A%84%E5%AE%9A%E4%B9%89%EF%BC%9A%0A%0A%60%60%60ts%0A%2F*%20%E6%AD%A4%E7%A4%BA%E4%BE%8B%E8%AF%B4%E6%98%8E%E5%A6%82%E4%BD%95%E4%B8%BA%E6%82%A8%E7%9A%84%E5%87%BD%E6%95%B0%E8%AE%BE%E7%BD%AE%E5%A4%9A%E4%B8%AA%E9%87%8D%E8%BD%BD%20*%2F%0Aexport%20interface%20GreeterFunction%20%7B%0A%20%20(name%3A%20string)%3A%20void%0A%20%20(time%3A%20number)%3A%20void%0A%7D%0A%2F*%20%E6%AD%A4%E7%A4%BA%E4%BE%8B%E6%98%BE%E7%A4%BA%E5%A6%82%E4%BD%95%E5%AF%BC%E5%87%BA%E6%8E%A5%E5%8F%A3%E6%8C%87%E5%AE%9A%E7%9A%84%E5%87%BD%E6%95%B0%20*%2F%0Aexport%20const%20greeter%3A%20GreeterFunction%3B%0A%60%60%60%0A%0A%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%83%8F%E4%B8%8B%E9%9D%A2%E8%BF%99%E6%A0%B7%E6%89%A9%E5%B1%95%E7%8E%B0%E6%9C%89%E6%A8%A1%E5%9D%97%EF%BC%9A%0A%0A%60%60%60ts%0A%2F*%20%E5%AF%BC%E5%85%A5%E8%BF%99%E4%B8%AA%E6%A8%A1%E5%9D%97%E6%B7%BB%E5%8A%A0%E5%88%B0%E7%9A%84%E6%A8%A1%E5%9D%97%20*%2F%0Aimport%20%7B%20greeter%20%7D%20from%20%22super-greeter%22%3B%0A%2F*%20%E5%A3%B0%E6%98%8E%E4%B8%8E%E4%B8%8A%E9%9D%A2%E5%AF%BC%E5%85%A5%E7%9A%84%E6%A8%A1%E5%9D%97%E7%9B%B8%E5%90%8C%E7%9A%84%E6%A8%A1%E5%9D%97%EF%BC%8C%E7%84%B6%E5%90%8E%E6%88%91%E4%BB%AC%E6%89%A9%E5%B1%95%20greeter%20%E5%87%BD%E6%95%B0%E7%9A%84%E7%8E%B0%E6%9C%89%E5%A3%B0%E6%98%8E%20*%2F%0Aexport%20module%20%22super-greeter%22%20%7B%0A%20%20export%20interface%20GreeterFunction%20%7B%0A%20%20%20%20%2F**%20Greets%20even%20better!%20*%2F%0A%20%20%20%20hyperGreet()%3A%20void%3B%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-203",
       "sectionId": "s8",
-      "title": "全局库模板 Global .d.ts",
-      "kind": "text",
-      "body": "全局库可能如下所示："
-    },
-    {
-      "id": "s8-204",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "function%20createGreeting(s)%20%7B%0A%20%20return%20%22Hello%2C%20%22%20%2B%20s%3B%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s8-205",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "或者像这样："
-    },
-    {
-      "id": "s8-206",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "window.createGreeting%20%3D%20function%20(s)%20%7B%0A%20%20return%20%22Hello%2C%20%22%20%2B%20s%3B%0A%7D%3B",
-      "encoded": true
-    },
-    {
-      "id": "s8-207",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "<pur>类型声明示例</pur>"
-    },
-    {
-      "id": "s8-208",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "%2F*%20%E5%8F%AF%E4%BB%A5%E4%BD%9C%E4%B8%BA%20myLib(3)%20%E6%AD%A4%E5%A4%84%E5%8C%85%E5%90%AB%E8%BF%99%E4%BA%9B%E8%B0%83%E7%94%A8%E7%AD%BE%E5%90%8D%20*%2F%0Adeclare%20function%20myLib(a%3A%20string)%3A%20string%3B%0Adeclare%20function%20myLib(a%3A%20number)%3A%20number%3B%0A%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%A0%E5%B8%8C%E6%9C%9B%E8%BF%99%E4%B8%AA%E5%BA%93%E7%9A%84%E5%90%8D%E7%A7%B0%E6%98%AF%E4%B8%80%E4%B8%AA%E6%9C%89%E6%95%88%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%90%8D%E7%A7%B0%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%9C%A8%E8%BF%99%E9%87%8C%E8%BF%99%E6%A0%B7%E5%81%9A%E4%BE%8B%E5%A6%82%EF%BC%8C%E8%BF%99%E5%85%81%E8%AE%B8%E6%88%91%E4%BB%AC%E5%86%99%20'var%20x%3A%20myLib'%3B%20%E7%A1%AE%E4%BF%9D%E8%BF%99%E7%A1%AE%E5%AE%9E%E6%9C%89%E6%84%8F%E4%B9%89%EF%BC%81%20%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%9C%89%EF%BC%8C%E5%8F%AA%E9%9C%80%E5%88%A0%E9%99%A4%E6%AD%A4%E5%A3%B0%E6%98%8E%E5%B9%B6%E5%9C%A8%E4%B8%8B%E9%9D%A2%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%86%85%E6%B7%BB%E5%8A%A0%E7%B1%BB%E5%9E%8B%20*%2F%0Ainterface%20myLib%20%7B%0A%20%20name%3A%20string%3B%0A%20%20length%3A%20number%3B%0A%20%20extras%3F%3A%20string%5B%5D%3B%0A%7D%0A%2F*%20%E5%A6%82%E6%9E%9C%E6%82%A8%E7%9A%84%E5%BA%93%E5%9C%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%B8%8A%E5%85%AC%E5%BC%80%E4%BA%86%E5%B1%9E%E6%80%A7%EF%BC%8C%E8%AF%B7%E5%B0%86%E5%AE%83%E4%BB%AC%E6%94%BE%E5%9C%A8%E6%AD%A4%E5%A4%84%E3%80%82%20%E6%82%A8%E8%BF%98%E5%BA%94%E8%AF%A5%E5%9C%A8%E6%AD%A4%E5%A4%84%E6%94%BE%E7%BD%AE%E7%B1%BB%E5%9E%8B%EF%BC%88%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%EF%BC%89%20*%2F%0Adeclare%20namespace%20myLib%20%7B%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%86%99%20'myLib.timeout%20%3D%2050%3B'%0A%20%20let%20timeout%3A%20number%3B%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E8%AE%BF%E9%97%AE%20'myLib.version'%EF%BC%8C%E4%BD%86%E4%B8%8D%E8%83%BD%E6%9B%B4%E6%94%B9%E5%AE%83%0A%20%20const%20version%3A%20string%3B%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%20'let%20c%20%3D%20new%20myLib.Cat(42)'%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%BA%9B%E7%B1%BB%E6%88%96%E5%8F%82%E8%80%83%E4%BE%8B%E5%A6%82%20'%E5%87%BD%E6%95%B0%20f(c%3A%20myLib.Cat)%20%7B%20...%20%7D%0A%20%20class%20Cat%20%7B%0A%20%20%20%20constructor(n%3A%20number)%3B%0A%20%20%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BB%8E%20'Cat'%20%E5%AE%9E%E4%BE%8B%E4%B8%AD%E8%AF%BB%E5%8F%96%20'c.age'%20%0A%20%20%20%20readonly%20age%3A%20number%3B%0A%20%20%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BB%8E%20'Cat'%20%E5%AE%9E%E4%BE%8B%E8%B0%83%E7%94%A8%20'c.purr()'%20%0A%20%20%20%20purr()%3A%20void%3B%0A%20%20%7D%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%B0%86%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E%E4%B8%BA%0A%20%20%2F%2F%20%20%20%20'var%20s%3A%20myLib.CatSettings%20%3D%20%7B%20weight%3A%205%2C%20name%3A%20%22Maru%22%20%7D%3B'%0A%20%20interface%20CatSettings%20%7B%0A%20%20%20%20weight%3A%20number%3B%0A%20%20%20%20name%3A%20string%3B%0A%20%20%20%20tailLength%3F%3A%20number%3B%0A%20%20%7D%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%86%99%20'const%20v%3A%20myLib.VetID%20%3D%2042%3B'%0A%20%20%2F%2F%20%20%20%E6%88%96%20'const%20v%3A%20myLib.VetID%20%3D%20%22bob%22%3B'%0A%20%20type%20VetID%20%3D%20string%20%7C%20number%3B%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E8%B0%83%E7%94%A8%20'myLib.checkCat(c)'%20%E6%88%96%20'myLib.checkCat(c%2C%20v)%3B'%0A%20%20function%20checkCat(c%3A%20Cat%2C%20s%3F%3A%20VetID)%3B%0A%7D",
+      "title": "%E5%85%A8%E5%B1%80%E5%BA%93%E6%A8%A1%E6%9D%BF%20Global%20.d.ts",
+      "body": "%E5%85%A8%E5%B1%80%E5%BA%93%E5%8F%AF%E8%83%BD%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A%0A%0A%60%60%60ts%0Afunction%20createGreeting(s)%20%7B%0A%20%20return%20%22Hello%2C%20%22%20%2B%20s%3B%0A%7D%0A%60%60%60%0A%0A%E6%88%96%E8%80%85%E5%83%8F%E8%BF%99%E6%A0%B7%EF%BC%9A%0A%0A%60%60%60ts%0Awindow.createGreeting%20%3D%20function%20(s)%20%7B%0A%20%20return%20%22Hello%2C%20%22%20%2B%20s%3B%0A%7D%3B%0A%60%60%60%0A%0A%3Cpur%3E%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E%E7%A4%BA%E4%BE%8B%3C%2Fpur%3E%0A%0A%60%60%60ts%0A%2F*%20%E5%8F%AF%E4%BB%A5%E4%BD%9C%E4%B8%BA%20myLib(3)%20%E6%AD%A4%E5%A4%84%E5%8C%85%E5%90%AB%E8%BF%99%E4%BA%9B%E8%B0%83%E7%94%A8%E7%AD%BE%E5%90%8D%20*%2F%0Adeclare%20function%20myLib(a%3A%20string)%3A%20string%3B%0Adeclare%20function%20myLib(a%3A%20number)%3A%20number%3B%0A%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%A0%E5%B8%8C%E6%9C%9B%E8%BF%99%E4%B8%AA%E5%BA%93%E7%9A%84%E5%90%8D%E7%A7%B0%E6%98%AF%E4%B8%80%E4%B8%AA%E6%9C%89%E6%95%88%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%90%8D%E7%A7%B0%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%9C%A8%E8%BF%99%E9%87%8C%E8%BF%99%E6%A0%B7%E5%81%9A%E4%BE%8B%E5%A6%82%EF%BC%8C%E8%BF%99%E5%85%81%E8%AE%B8%E6%88%91%E4%BB%AC%E5%86%99%20'var%20x%3A%20myLib'%3B%20%E7%A1%AE%E4%BF%9D%E8%BF%99%E7%A1%AE%E5%AE%9E%E6%9C%89%E6%84%8F%E4%B9%89%EF%BC%81%20%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%9C%89%EF%BC%8C%E5%8F%AA%E9%9C%80%E5%88%A0%E9%99%A4%E6%AD%A4%E5%A3%B0%E6%98%8E%E5%B9%B6%E5%9C%A8%E4%B8%8B%E9%9D%A2%E7%9A%84%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%86%85%E6%B7%BB%E5%8A%A0%E7%B1%BB%E5%9E%8B%20*%2F%0Ainterface%20myLib%20%7B%0A%20%20name%3A%20string%3B%0A%20%20length%3A%20number%3B%0A%20%20extras%3F%3A%20string%5B%5D%3B%0A%7D%0A%2F*%20%E5%A6%82%E6%9E%9C%E6%82%A8%E7%9A%84%E5%BA%93%E5%9C%A8%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E4%B8%8A%E5%85%AC%E5%BC%80%E4%BA%86%E5%B1%9E%E6%80%A7%EF%BC%8C%E8%AF%B7%E5%B0%86%E5%AE%83%E4%BB%AC%E6%94%BE%E5%9C%A8%E6%AD%A4%E5%A4%84%E3%80%82%20%E6%82%A8%E8%BF%98%E5%BA%94%E8%AF%A5%E5%9C%A8%E6%AD%A4%E5%A4%84%E6%94%BE%E7%BD%AE%E7%B1%BB%E5%9E%8B%EF%BC%88%E6%8E%A5%E5%8F%A3%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%EF%BC%89%20*%2F%0Adeclare%20namespace%20myLib%20%7B%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%86%99%20'myLib.timeout%20%3D%2050%3B'%0A%20%20let%20timeout%3A%20number%3B%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E8%AE%BF%E9%97%AE%20'myLib.version'%EF%BC%8C%E4%BD%86%E4%B8%8D%E8%83%BD%E6%9B%B4%E6%94%B9%E5%AE%83%0A%20%20const%20version%3A%20string%3B%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%20'let%20c%20%3D%20new%20myLib.Cat(42)'%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%BA%9B%E7%B1%BB%E6%88%96%E5%8F%82%E8%80%83%E4%BE%8B%E5%A6%82%20'%E5%87%BD%E6%95%B0%20f(c%3A%20myLib.Cat)%20%7B%20...%20%7D%0A%20%20class%20Cat%20%7B%0A%20%20%20%20constructor(n%3A%20number)%3B%0A%20%20%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BB%8E%20'Cat'%20%E5%AE%9E%E4%BE%8B%E4%B8%AD%E8%AF%BB%E5%8F%96%20'c.age'%20%0A%20%20%20%20readonly%20age%3A%20number%3B%0A%20%20%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BB%8E%20'Cat'%20%E5%AE%9E%E4%BE%8B%E8%B0%83%E7%94%A8%20'c.purr()'%20%0A%20%20%20%20purr()%3A%20void%3B%0A%20%20%7D%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%B0%86%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E%E4%B8%BA%0A%20%20%2F%2F%20%20%20%20'var%20s%3A%20myLib.CatSettings%20%3D%20%7B%20weight%3A%205%2C%20name%3A%20%22Maru%22%20%7D%3B'%0A%20%20interface%20CatSettings%20%7B%0A%20%20%20%20weight%3A%20number%3B%0A%20%20%20%20name%3A%20string%3B%0A%20%20%20%20tailLength%3F%3A%20number%3B%0A%20%20%7D%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E5%86%99%20'const%20v%3A%20myLib.VetID%20%3D%2042%3B'%0A%20%20%2F%2F%20%20%20%E6%88%96%20'const%20v%3A%20myLib.VetID%20%3D%20%22bob%22%3B'%0A%20%20type%20VetID%20%3D%20string%20%7C%20number%3B%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E8%B0%83%E7%94%A8%20'myLib.checkCat(c)'%20%E6%88%96%20'myLib.checkCat(c%2C%20v)%3B'%0A%20%20function%20checkCat(c%3A%20Cat%2C%20s%3F%3A%20VetID)%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-209",
       "sectionId": "s8",
       "title": "Module%3A%20Function",
-      "kind": "code",
-      "lang": "ts",
-      "code": "import%20greeter%20from%20%22super-greeter%22%3B%0Agreeter(2)%3B%0Agreeter(%22Hello%20world%22)%3B",
+      "body": "%60%60%60ts%0Aimport%20greeter%20from%20%22super-greeter%22%3B%0Agreeter(2)%3B%0Agreeter(%22Hello%20world%22)%3B%0A%60%60%60%0A%0A%E8%A6%81%E5%A4%84%E7%90%86%E9%80%9A%E8%BF%87%20%60UMD%60%20%E5%92%8C%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5%EF%BC%9A%0A%0A%60%60%60ts%0A%2F*%20%E5%A6%82%E6%9E%9C%E6%AD%A4%E6%A8%A1%E5%9D%97%E6%98%AF%E4%B8%80%E4%B8%AA%20UMD%20%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%9C%A8%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%8E%AF%E5%A2%83%E4%B9%8B%E5%A4%96%E5%8A%A0%E8%BD%BD%E6%97%B6%E5%85%AC%E5%BC%80%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E2%80%9CmyFuncLib%E2%80%9D%EF%BC%8C%E8%AF%B7%E5%9C%A8%E6%AD%A4%E5%A4%84%E5%A3%B0%E6%98%8E%E8%AF%A5%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E3%80%82%20%E5%90%A6%E5%88%99%EF%BC%8C%E5%88%A0%E9%99%A4%E6%AD%A4%E5%A3%B0%E6%98%8E%20*%2F%0Aexport%20as%20namespace%20myFuncLib%3B%0A%2F*%20%E6%AD%A4%E5%A3%B0%E6%98%8E%E6%8C%87%E5%AE%9A%E8%AF%A5%E5%87%BD%E6%95%B0%E6%98%AF%E4%BB%8E%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AF%BC%E5%87%BA%E7%9A%84%E5%AF%B9%E8%B1%A1%20*%2F%0Aexport%20%3D%20Greeter%3B%0A%2F*%20%E6%AD%A4%E7%A4%BA%E4%BE%8B%E8%AF%B4%E6%98%8E%E5%A6%82%E4%BD%95%E4%B8%BA%E6%82%A8%E7%9A%84%E5%87%BD%E6%95%B0%E8%AE%BE%E7%BD%AE%E5%A4%9A%E4%B8%AA%E9%87%8D%E8%BD%BD%20*%2F%0Adeclare%20function%20Greeter(name%3A%20string)%3A%20Greeter.NamedReturnType%3B%0Adeclare%20function%20Greeter(length%3A%20number)%3A%20Greeter.LengthReturnType%3B%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E4%BD%A0%E4%B9%9F%E6%83%B3%E4%BB%8E%E4%BD%A0%E7%9A%84%E6%A8%A1%E5%9D%97%E4%B8%AD%E5%85%AC%E5%BC%80%E7%B1%BB%E5%9E%8B%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E6%8A%8A%E5%AE%83%E4%BB%AC%E6%94%BE%E5%9C%A8%E8%BF%99%E4%B8%AA%E5%9D%97%E4%B8%AD%E3%80%82%20%E9%80%9A%E5%B8%B8%E4%BD%A0%E4%BC%9A%E6%83%B3%E8%A6%81%E6%8F%8F%E8%BF%B0%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%BD%A2%E7%8A%B6%EF%BC%9B%20%E5%A6%82%E6%9C%AC%E4%BE%8B%E6%89%80%E7%A4%BA%EF%BC%8C%E5%BA%94%E5%9C%A8%E6%AD%A4%E5%A4%84%E5%A3%B0%E6%98%8E%E8%AF%A5%E7%B1%BB%E5%9E%8B%EF%BC%8C%E8%AF%B7%E6%B3%A8%E6%84%8F%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%82%A8%E5%86%B3%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%EF%BC%8C%E5%88%99%E6%A8%A1%E5%9D%97%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%A2%AB%E9%94%99%E8%AF%AF%E5%9C%B0%E5%AF%BC%E5%85%A5%E4%B8%BA%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%AF%B9%E8%B1%A1%EF%BC%8C%E9%99%A4%E9%9D%9E%20%60--esModuleInterop%60%20%E5%B7%B2%E6%89%93%E5%BC%80%EF%BC%9A%20%60import%20*%20as%20x%20from%20'%5B~THE%20MODULE~%5D'%3B%60%20%E9%94%99%E8%AF%AF%E7%9A%84%EF%BC%81%E4%B8%8D%E8%A6%81%E8%BF%99%E6%A0%B7%E5%81%9A!%0A%0A%60%60%60ts%0Adeclare%20namespace%20Greeter%20%7B%0A%20%20export%20interface%20LengthReturnType%20%7B%0A%20%20%20%20width%3A%20number%3B%0A%20%20%20%20height%3A%20number%3B%0A%20%20%7D%0A%20%20export%20interface%20NamedReturnType%20%7B%0A%20%20%20%20firstName%3A%20string%3B%0A%20%20%20%20lastName%3A%20string%3B%0A%20%20%7D%0A%20%20%2F**%0A%20%20%20*%20%E5%A6%82%E6%9E%9C%E6%A8%A1%E5%9D%97%E4%B9%9F%E6%9C%89%E5%B1%9E%E6%80%A7%EF%BC%8C%E5%9C%A8%E8%BF%99%E9%87%8C%E5%A3%B0%E6%98%8E%E5%AE%83%E4%BB%AC%E3%80%82%20%E4%BE%8B%E5%A6%82%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%A3%B0%E6%98%8E%E8%AF%B4%E8%BF%99%E4%B8%AA%E4%BB%A3%E7%A0%81%E6%98%AF%E5%90%88%E6%B3%95%E7%9A%84%EF%BC%9A%0A%20%20%20*%20%20import%20f%20%3D%20require('super-greeter')%3B%0A%20%20%20*%20%20console.log(f.defaultName)%3B%0A%20%20%20*%2F%0A%20%20export%20const%20defaultName%3A%20string%3B%0A%20%20export%20let%20defaultLength%3A%20number%3B%0A%7D%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s8-210",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "要处理通过 `UMD` 和模块导入："
-    },
-    {
-      "id": "s8-211",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "/* 如果此模块是一个 UMD 模块，在模块加载器环境之外加载时公开全局变量“myFuncLib”，请在此处声明该全局变量。 否则，删除此声明 */\nexport as namespace myFuncLib;\n/* 此声明指定该函数是从文件中导出的对象 */\nexport = Greeter;\n/* 此示例说明如何为您的函数设置多个重载 */\ndeclare function Greeter(name: string): Greeter.NamedReturnType;\ndeclare function Greeter(length: number): Greeter.LengthReturnType;"
-    },
-    {
-      "id": "s8-212",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "如果你也想从你的模块中公开类型，你可以把它们放在这个块中。 通常你会想要描述函数返回类型的形状； 如本例所示，应在此处声明该类型，请注意，如果您决定包含此命名空间，则模块可能会被错误地导入为命名空间对象，除非 `--esModuleInterop` 已打开： `import * as x from '[~THE MODULE~]';` 错误的！不要这样做!"
-    },
-    {
-      "id": "s8-213",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "declare namespace Greeter {\n  export interface LengthReturnType {\n    width: number;\n    height: number;\n  }\n  export interface NamedReturnType {\n    firstName: string;\n    lastName: string;\n  }\n  /**\n   * 如果模块也有属性，在这里声明它们。 例如，这个声明说这个代码是合法的：\n   *  import f = require('super-greeter');\n   *  console.log(f.defaultName);\n   */\n  export const defaultName: string;\n  export let defaultLength: number;\n}"
     },
     {
       "id": "s8-214",
       "sectionId": "s8",
-      "title": "Module: Class",
-      "kind": "text",
-      "body": "例如，当您想要使用如下所示的 `JavaScript` 代码时："
-    },
-    {
-      "id": "s8-215",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "const%20Greeter%20%3D%20require(%22super-greeter%22)%3B%0Aconst%20greeter%20%3D%20new%20Greeter()%3B%0Agreeter.greet()%3B",
+      "title": "Module%3A%20Class",
+      "body": "%E4%BE%8B%E5%A6%82%EF%BC%8C%E5%BD%93%E6%82%A8%E6%83%B3%E8%A6%81%E4%BD%BF%E7%94%A8%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%E7%9A%84%20%60JavaScript%60%20%E4%BB%A3%E7%A0%81%E6%97%B6%EF%BC%9A%0A%0A%60%60%60ts%0Aconst%20Greeter%20%3D%20require(%22super-greeter%22)%3B%0Aconst%20greeter%20%3D%20new%20Greeter()%3B%0Agreeter.greet()%3B%0A%60%60%60%0A%0A%E8%A6%81%E5%A4%84%E7%90%86%E9%80%9A%E8%BF%87%20%60UMD%60%20%E5%92%8C%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5%EF%BC%9A%0A%0A%60%60%60ts%0Aexport%20as%20namespace%20%22super-greeter%22%3B%0A%2F*%20%E6%AD%A4%E5%A3%B0%E6%98%8E%E6%8C%87%E5%AE%9A%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%98%AF%E4%BB%8E%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AF%BC%E5%87%BA%E7%9A%84%E5%AF%B9%E8%B1%A1%20*%2F%0Aexport%20%3D%20Greeter%3B%0A%2F*%20%E5%9C%A8%E6%AD%A4%E7%B1%BB%E4%B8%AD%E7%BC%96%E5%86%99%E6%A8%A1%E5%9D%97%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E5%B1%9E%E6%80%A7%20*%2F%0Adeclare%20class%20Greeter%20%7B%0A%20%20constructor(customGreeting%3F%3A%20string)%3B%0A%20%20greet%3A%20void%3B%0A%20%20myMethod(opts%3A%20MyClass.MyClassMethodOptions)%3A%20number%3B%0A%7D%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E4%BD%A0%E4%B9%9F%E6%83%B3%E4%BB%8E%E4%BD%A0%E7%9A%84%E6%A8%A1%E5%9D%97%E4%B8%AD%E5%85%AC%E5%BC%80%E7%B1%BB%E5%9E%8B%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E6%8A%8A%E5%AE%83%E4%BB%AC%E6%94%BE%E5%9C%A8%E8%BF%99%E4%B8%AA%E5%9D%97%E4%B8%AD%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%82%A8%E5%86%B3%E5%AE%9A%E5%8C%85%E5%90%AB%E6%AD%A4%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%EF%BC%8C%E5%88%99%E6%A8%A1%E5%9D%97%E5%8F%AF%E8%83%BD%E4%BC%9A%E8%A2%AB%E9%94%99%E8%AF%AF%E5%9C%B0%E5%AF%BC%E5%85%A5%E4%B8%BA%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%AF%B9%E8%B1%A1%EF%BC%8C%E9%99%A4%E9%9D%9E%20--esModuleInterop%20%E5%B7%B2%E6%89%93%E5%BC%80%EF%BC%9A%0A%60import%20*%20as%20x%20from%20'%5B~THE%20MODULE~%5D'%3B%60%20%E9%94%99%E8%AF%AF%E7%9A%84%EF%BC%81%20%E4%B8%8D%E8%A6%81%E8%BF%99%E6%A0%B7%E5%81%9A%EF%BC%81%0A%0A%60%60%60ts%0Adeclare%20namespace%20MyClass%20%7B%0A%20%20export%20interface%20MyClassMethodOptions%20%7B%0A%20%20%20%20width%3F%3A%20number%3B%0A%20%20%20%20height%3F%3A%20number%3B%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s8-216",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "要处理通过 `UMD` 和模块导入："
-    },
-    {
-      "id": "s8-217",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "export%20as%20namespace%20%22super-greeter%22%3B%0A%2F*%20%E6%AD%A4%E5%A3%B0%E6%98%8E%E6%8C%87%E5%AE%9A%E7%B1%BB%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E6%98%AF%E4%BB%8E%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AF%BC%E5%87%BA%E7%9A%84%E5%AF%B9%E8%B1%A1%20*%2F%0Aexport%20%3D%20Greeter%3B%0A%2F*%20%E5%9C%A8%E6%AD%A4%E7%B1%BB%E4%B8%AD%E7%BC%96%E5%86%99%E6%A8%A1%E5%9D%97%E7%9A%84%E6%96%B9%E6%B3%95%E5%92%8C%E5%B1%9E%E6%80%A7%20*%2F%0Adeclare%20class%20Greeter%20%7B%0A%20%20constructor(customGreeting%3F%3A%20string)%3B%0A%20%20greet%3A%20void%3B%0A%20%20myMethod(opts%3A%20MyClass.MyClassMethodOptions)%3A%20number%3B%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s8-218",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "如果你也想从你的模块中公开类型，你可以把它们放在这个块中，如果您决定包含此命名空间，则模块可能会被错误地导入为命名空间对象，除非 --esModuleInterop 已打开：\n`import * as x from '[~THE MODULE~]';` 错误的！ 不要这样做！"
-    },
-    {
-      "id": "s8-219",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "ts",
-      "code": "declare namespace MyClass {\n  export interface MyClassMethodOptions {\n    width?: number;\n    height?: number;\n  }\n}"
     },
     {
       "id": "s9-220",
       "sectionId": "s9",
       "title": "%40type",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "%2F**%20%40type%20%7Bstring%7D%20*%2F%0Avar%20s%3B%0A%2F**%20%40type%20%7BWindow%7D%20*%2F%0Avar%20win%3B%0A%2F**%20%40type%20%7BPromiseLike%3Cstring%3E%7D%20*%2F%0Avar%20promisedString%3B%0A%2F%2F%20%E6%82%A8%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E5%85%B7%E6%9C%89%20DOM%20%E5%B1%9E%E6%80%A7%E7%9A%84%20HTML%20%E5%85%83%E7%B4%A0%0A%2F**%20%40type%20%7BHTMLElement%7D%20*%2F%0Avar%20elm%20%3D%20document.querySelector(selector)%3B%0Aelm.dataset.myData%20%3D%20%22%22%3B%0A%2F**%20%40type%20%7Bnumber%5B%5D%7D%20*%2F%0Avar%20ns%3B%0A%2F**%20%40type%20%7BArray.%3Cnumber%3E%7D%20*%2F%0Avar%20jsdoc%3B%0A%2F**%20%40type%20%7BArray%3Cnumber%3E%7D%20*%2F%0Avar%20nas%3B%0A%2F**%20%40type%20%7Bstring%20%7C%20boolean%7D%20*%2F%0Avar%20sb%3B%0A%2F**%20%40type%20%7B%7B%20a%3A%20string%2C%20b%3A%20number%20%7D%7D%20*%2F%0Avar%20var9%3B%0A%2F**%0A%20*%20%E5%B0%86%E4%BB%BB%E6%84%8F%E2%80%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E2%80%9D%E5%B1%9E%E6%80%A7%E6%98%A0%E5%B0%84%E5%88%B0%E2%80%9C%E6%95%B0%E5%AD%97%E2%80%9D%E7%9A%84%E7%B1%BB%E5%9C%B0%E5%9B%BE%E5%AF%B9%E8%B1%A1%0A%20*%20%40type%20%7BObject.%3Cstring%2C%20number%3E%7D%0A%20*%2F%0Avar%20stringToNumber%3B%0A%2F**%20%40type%20%7BObject.%3Cnumber%2C%20object%3E%7D%20*%2F%0Avar%20arrayLike%3B%0A%2F**%20%40type%20%7Bfunction(string%2C%20boolean)%3A%20number%7D%20Closure%20syntax%20*%2F%0Avar%20sbn%3B%0A%2F**%20%40type%20%7B(s%3A%20string%2C%20b%3A%20boolean)%20%3D%3E%20number%7D%20TypeScript%20syntax%20*%2F%0Avar%20sbn2%3B%0A%2F**%20%40type%20%7BFunction%7D%20*%2F%0Avar%20fn7%3B%0A%2F**%20%40type%20%7Bfunction%7D%20*%2F%0Avar%20fn6%3B%0A%2F**%0A%20*%20%40type%20%7B*%7D%20-%20can%20be%20'any'%20type%0A%20*%2F%0Avar%20star%3B%0A%2F**%0A%20*%20%40type%20%7B%3F%7D%20-%20unknown%20type%20(same%20as%20'any')%0A%20*%2F%0Avar%20question%3B%0A%2F**%20%40type%20%7Bnumber%20%7C%20string%7D%20*%2F%0Avar%20numberOrString%20%3D%20Math.random()%20%3C%200.5%20%3F%20%22hello%22%20%3A%20100%3B%0Avar%20typeAssertedNumber%20%3D%20%2F**%20%40type%20%7Bnumber%7D%20*%2F%20(numberOrString)%3B%0Alet%20one%20%3D%20%2F**%20%40type%20%7Bconst%7D%20*%2F(1)%3B",
+      "body": "%60%60%60javascript%0A%2F**%20%40type%20%7Bstring%7D%20*%2F%0Avar%20s%3B%0A%2F**%20%40type%20%7BWindow%7D%20*%2F%0Avar%20win%3B%0A%2F**%20%40type%20%7BPromiseLike%3Cstring%3E%7D%20*%2F%0Avar%20promisedString%3B%0A%2F%2F%20%E6%82%A8%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E5%85%B7%E6%9C%89%20DOM%20%E5%B1%9E%E6%80%A7%E7%9A%84%20HTML%20%E5%85%83%E7%B4%A0%0A%2F**%20%40type%20%7BHTMLElement%7D%20*%2F%0Avar%20elm%20%3D%20document.querySelector(selector)%3B%0Aelm.dataset.myData%20%3D%20%22%22%3B%0A%2F**%20%40type%20%7Bnumber%5B%5D%7D%20*%2F%0Avar%20ns%3B%0A%2F**%20%40type%20%7BArray.%3Cnumber%3E%7D%20*%2F%0Avar%20jsdoc%3B%0A%2F**%20%40type%20%7BArray%3Cnumber%3E%7D%20*%2F%0Avar%20nas%3B%0A%2F**%20%40type%20%7Bstring%20%7C%20boolean%7D%20*%2F%0Avar%20sb%3B%0A%2F**%20%40type%20%7B%7B%20a%3A%20string%2C%20b%3A%20number%20%7D%7D%20*%2F%0Avar%20var9%3B%0A%2F**%0A%20*%20%E5%B0%86%E4%BB%BB%E6%84%8F%E2%80%9C%E5%AD%97%E7%AC%A6%E4%B8%B2%E2%80%9D%E5%B1%9E%E6%80%A7%E6%98%A0%E5%B0%84%E5%88%B0%E2%80%9C%E6%95%B0%E5%AD%97%E2%80%9D%E7%9A%84%E7%B1%BB%E5%9C%B0%E5%9B%BE%E5%AF%B9%E8%B1%A1%0A%20*%20%40type%20%7BObject.%3Cstring%2C%20number%3E%7D%0A%20*%2F%0Avar%20stringToNumber%3B%0A%2F**%20%40type%20%7BObject.%3Cnumber%2C%20object%3E%7D%20*%2F%0Avar%20arrayLike%3B%0A%2F**%20%40type%20%7Bfunction(string%2C%20boolean)%3A%20number%7D%20Closure%20syntax%20*%2F%0Avar%20sbn%3B%0A%2F**%20%40type%20%7B(s%3A%20string%2C%20b%3A%20boolean)%20%3D%3E%20number%7D%20TypeScript%20syntax%20*%2F%0Avar%20sbn2%3B%0A%2F**%20%40type%20%7BFunction%7D%20*%2F%0Avar%20fn7%3B%0A%2F**%20%40type%20%7Bfunction%7D%20*%2F%0Avar%20fn6%3B%0A%2F**%0A%20*%20%40type%20%7B*%7D%20-%20can%20be%20'any'%20type%0A%20*%2F%0Avar%20star%3B%0A%2F**%0A%20*%20%40type%20%7B%3F%7D%20-%20unknown%20type%20(same%20as%20'any')%0A%20*%2F%0Avar%20question%3B%0A%2F**%20%40type%20%7Bnumber%20%7C%20string%7D%20*%2F%0Avar%20numberOrString%20%3D%20Math.random()%20%3C%200.5%20%3F%20%22hello%22%20%3A%20100%3B%0Avar%20typeAssertedNumber%20%3D%20%2F**%20%40type%20%7Bnumber%7D%20*%2F%20(numberOrString)%3B%0Alet%20one%20%3D%20%2F**%20%40type%20%7Bconst%7D%20*%2F(1)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-221",
       "sectionId": "s9",
       "title": "%E5%AF%BC%E5%85%A5%E7%B1%BB%E5%9E%8B",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "%2F%2F%20%40filename%3A%20types.d.ts%0Aexport%20type%20Pet%20%3D%20%7B%0A%20%20name%3A%20string%2C%0A%7D%3B%0A%2F%2F%20%40filename%3A%20main.js%0A%2F**%20%40param%20%7B%20import(%22.%2Ftypes%22).Pet%20%7D%20p%20*%2F%0Afunction%20walk(p)%20%7B%0A%20%20console.log(%60Walking%20%24%7Bp.name%7D...%60)%3B%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s9-222",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "导入类型可以在类型别名声明中使用"
-    },
-    {
-      "id": "s9-223",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "%2F**%0A%20*%20%40typedef%20%7Bimport(%22.%2Ftypes%22).Pet%7D%20Pet%0A%20*%2F%0A%2F**%20%40type%20%7BPet%7D%20*%2F%0Avar%20myPet%3B%0AmyPet.name%3B",
-      "encoded": true
-    },
-    {
-      "id": "s9-224",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "如果您不知道类型，或者如果它有一个很烦人的大类型，`import types` 可以用来从模块中获取值的类型："
-    },
-    {
-      "id": "s9-225",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "%2F**%0A%20*%20%40type%20%7Btypeof%20import(%22.%2Faccounts%22).userAccount%7D%0A%20*%2F%0Avar%20x%20%3D%20require(%22.%2Faccounts%22).userAccount%3B",
+      "body": "%60%60%60javascript%0A%2F%2F%20%40filename%3A%20types.d.ts%0Aexport%20type%20Pet%20%3D%20%7B%0A%20%20name%3A%20string%2C%0A%7D%3B%0A%2F%2F%20%40filename%3A%20main.js%0A%2F**%20%40param%20%7B%20import(%22.%2Ftypes%22).Pet%20%7D%20p%20*%2F%0Afunction%20walk(p)%20%7B%0A%20%20console.log(%60Walking%20%24%7Bp.name%7D...%60)%3B%0A%7D%0A%60%60%60%0A%0A%E5%AF%BC%E5%85%A5%E7%B1%BB%E5%9E%8B%E5%8F%AF%E4%BB%A5%E5%9C%A8%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D%E5%A3%B0%E6%98%8E%E4%B8%AD%E4%BD%BF%E7%94%A8%0A%0A%60%60%60javascript%0A%2F**%0A%20*%20%40typedef%20%7Bimport(%22.%2Ftypes%22).Pet%7D%20Pet%0A%20*%2F%0A%2F**%20%40type%20%7BPet%7D%20*%2F%0Avar%20myPet%3B%0AmyPet.name%3B%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E6%82%A8%E4%B8%8D%E7%9F%A5%E9%81%93%E7%B1%BB%E5%9E%8B%EF%BC%8C%E6%88%96%E8%80%85%E5%A6%82%E6%9E%9C%E5%AE%83%E6%9C%89%E4%B8%80%E4%B8%AA%E5%BE%88%E7%83%A6%E4%BA%BA%E7%9A%84%E5%A4%A7%E7%B1%BB%E5%9E%8B%EF%BC%8C%60import%20types%60%20%E5%8F%AF%E4%BB%A5%E7%94%A8%E6%9D%A5%E4%BB%8E%E6%A8%A1%E5%9D%97%E4%B8%AD%E8%8E%B7%E5%8F%96%E5%80%BC%E7%9A%84%E7%B1%BB%E5%9E%8B%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F**%0A%20*%20%40type%20%7Btypeof%20import(%22.%2Faccounts%22).userAccount%7D%0A%20*%2F%0Avar%20x%20%3D%20require(%22.%2Faccounts%22).userAccount%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-226",
       "sectionId": "s9",
       "title": "%40param%20%E5%92%8C%20%40returns",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "%2F**%0A%20*%20%40param%20%7Bstring%7D%20%20p1%20-%20%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%82%E6%95%B0%0A%20*%20%40param%20%7Bstring%3D%7D%20p2%20-%20%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0%EF%BC%88Google%20Closure%20%E8%AF%AD%E6%B3%95%EF%BC%89%0A%20*%20%40param%20%7Bstring%7D%20%5Bp3%5D%20-%20%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0%EF%BC%88JSDoc%20%E8%AF%AD%E6%B3%95%EF%BC%89%0A%20*%20%40param%20%7Bstring%7D%20%5Bp4%3D%22test%22%5D%20-%20%E5%85%B7%E6%9C%89%E9%BB%98%E8%AE%A4%E5%80%BC%E7%9A%84%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0%0A%20*%20%40returns%20%7Bstring%7D%20%E8%BF%99%E6%98%AF%E7%BB%93%E6%9E%9C%0A%20*%2F%0Afunction%20stringsStrings(p1%2C%20p2%2C%20p3%2C%20p4)%20%7B%0A%20%20%2F%2F%20TODO%0A%7D",
+      "body": "%60%60%60javascript%0A%2F**%0A%20*%20%40param%20%7Bstring%7D%20%20p1%20-%20%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%82%E6%95%B0%0A%20*%20%40param%20%7Bstring%3D%7D%20p2%20-%20%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0%EF%BC%88Google%20Closure%20%E8%AF%AD%E6%B3%95%EF%BC%89%0A%20*%20%40param%20%7Bstring%7D%20%5Bp3%5D%20-%20%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0%EF%BC%88JSDoc%20%E8%AF%AD%E6%B3%95%EF%BC%89%0A%20*%20%40param%20%7Bstring%7D%20%5Bp4%3D%22test%22%5D%20-%20%E5%85%B7%E6%9C%89%E9%BB%98%E8%AE%A4%E5%80%BC%E7%9A%84%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0%0A%20*%20%40returns%20%7Bstring%7D%20%E8%BF%99%E6%98%AF%E7%BB%93%E6%9E%9C%0A%20*%2F%0Afunction%20stringsStrings(p1%2C%20p2%2C%20p3%2C%20p4)%20%7B%0A%20%20%2F%2F%20TODO%0A%7D%0A%60%60%60%0A%0A%E5%90%8C%E6%A0%B7%EF%BC%8C%E5%AF%B9%E4%BA%8E%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F**%0A%20*%20%40return%20%7BPromiseLike%3Cstring%3E%7D%0A%20*%2F%0Afunction%20ps()%20%7B%7D%0A%20%0A%2F**%0A%20*%20%40returns%20%7B%7B%20a%3A%20string%2C%20b%3A%20number%20%7D%7D%20-%20%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E2%80%9C%40returns%E2%80%9D%E5%92%8C%E2%80%9C%40return%E2%80%9D%0A%20*%2F%0Afunction%20ab()%20%7B%7D%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s9-227",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "同样，对于函数的返回类型："
-    },
-    {
-      "id": "s9-228",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "/**\n * @return {PromiseLike<string>}\n */\nfunction ps() {}\n \n/**\n * @returns {{ a: string, b: number }} - 可以使用“@returns”和“@return”\n */\nfunction ab() {}"
     },
     {
       "id": "s9-229",
       "sectionId": "s9",
       "title": "@typedef, @callback, 和 @param",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "/**\n * @typedef {Object} SpecialType - 创建一个名为“SpecialType”的新类型\n * @property {string} prop1 - SpecialType 的字符串属性\n * @property {number} prop2 - SpecialType 的数字属性\n * @property {number=} prop3 - SpecialType 的可选数字属性\n * @prop {number} [prop4] - SpecialType 的可选数字属性\n * @prop {number} [prop5=42] - 具有默认值的 SpecialType 的可选数字属性\n */\n \n/** @type {SpecialType} */\nvar specialTypeObject;\nspecialTypeObject.prop3;"
-    },
-    {
-      "id": "s9-230",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "您可以在第一行使用 object 或 Object"
-    },
-    {
-      "id": "s9-231",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "/**\n * @typedef {object} SpecialType1 - 创建一个名为“SpecialType”的新类型\n * @property {string} prop1 - SpecialType 的字符串属性\n * @property {number} prop2 - SpecialType 的数字属性\n * @property {number=} prop3 - SpecialType 的可选数字属性\n */\n \n/** @type {SpecialType1} */\nvar specialTypeObject1;"
-    },
-    {
-      "id": "s9-232",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "**@param** 允许对一次性类型规范使用类似的语法。 请注意，嵌套的属性名称必须以参数名称为前缀："
-    },
-    {
-      "id": "s9-233",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "/**\n * @param {Object} options - 形状和上面的SpecialType一样\n * @param {string} options.prop1\n * @param {number} options.prop2\n * @param {number=} options.prop3\n * @param {number} [options.prop4]\n * @param {number} [options.prop5=42]\n */\nfunction special(options) {\n  return (options.prop4 || 1001) + options.prop5;\n}"
-    },
-    {
-      "id": "s9-234",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "**@callback** 类似于 **@typedef**，但它指定的是函数类型而不是对象类型："
-    },
-    {
-      "id": "s9-235",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "/**\n * @callback Predicate\n * @param {string} data\n * @param {number} [index]\n * @returns {boolean}\n */\n \n/** @type {Predicate} */\nconst ok = (s) => !(s.length % 2);"
-    },
-    {
-      "id": "s9-236",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "当然，这些类型中的任何一种都可以在单行 **@typedef** 中使用 TypeScript 语法声明："
-    },
-    {
-      "id": "s9-237",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "/** @typedef {{ prop1: string, prop2: string, prop3?: number }} SpecialType */\n/** @typedef {(data: string, index?: number) => boolean} Predicate */"
+      "body": "```javascript\n/**\n * @typedef {Object} SpecialType - 创建一个名为“SpecialType”的新类型\n * @property {string} prop1 - SpecialType 的字符串属性\n * @property {number} prop2 - SpecialType 的数字属性\n * @property {number=} prop3 - SpecialType 的可选数字属性\n * @prop {number} [prop4] - SpecialType 的可选数字属性\n * @prop {number} [prop5=42] - 具有默认值的 SpecialType 的可选数字属性\n */\n \n/** @type {SpecialType} */\nvar specialTypeObject;\nspecialTypeObject.prop3;\n```\n\n您可以在第一行使用 object 或 Object\n\n```javascript\n/**\n * @typedef {object} SpecialType1 - 创建一个名为“SpecialType”的新类型\n * @property {string} prop1 - SpecialType 的字符串属性\n * @property {number} prop2 - SpecialType 的数字属性\n * @property {number=} prop3 - SpecialType 的可选数字属性\n */\n \n/** @type {SpecialType1} */\nvar specialTypeObject1;\n```\n\n**@param** 允许对一次性类型规范使用类似的语法。 请注意，嵌套的属性名称必须以参数名称为前缀：\n\n```javascript\n/**\n * @param {Object} options - 形状和上面的SpecialType一样\n * @param {string} options.prop1\n * @param {number} options.prop2\n * @param {number=} options.prop3\n * @param {number} [options.prop4]\n * @param {number} [options.prop5=42]\n */\nfunction special(options) {\n  return (options.prop4 || 1001) + options.prop5;\n}\n```\n\n**@callback** 类似于 **@typedef**，但它指定的是函数类型而不是对象类型：\n\n```javascript\n/**\n * @callback Predicate\n * @param {string} data\n * @param {number} [index]\n * @returns {boolean}\n */\n \n/** @type {Predicate} */\nconst ok = (s) => !(s.length % 2);\n```\n\n当然，这些类型中的任何一种都可以在单行 **@typedef** 中使用 TypeScript 语法声明：\n\n```javascript\n/** @typedef {{ prop1: string, prop2: string, prop3?: number }} SpecialType */\n/** @typedef {(data: string, index?: number) => boolean} Predicate */\n```"
     },
     {
       "id": "s9-238",
       "sectionId": "s9",
-      "title": "@template",
-      "kind": "text",
-      "body": "您可以使用 **@template** 标记声明类型参数。 这使您可以创建通用的函数、类或类型："
-    },
-    {
-      "id": "s9-239",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "%2F**%0A%20*%20%40template%20T%0A%20*%20%40param%20%7BT%7D%20x%20-%20%E6%B5%81%E5%90%91%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%80%9A%E7%94%A8%E5%8F%82%E6%95%B0%0A%20*%20%40returns%20%7BT%7D%0A%20*%2F%0Afunction%20id(x)%20%7B%0A%20%20return%20x%3B%0A%7D%0A%20%0Aconst%20a%20%3D%20id(%22string%22)%3B%0Aconst%20b%20%3D%20id(123)%3B%0Aconst%20c%20%3D%20id(%7B%7D)%3B",
+      "title": "%40template",
+      "body": "%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20**%40template**%20%E6%A0%87%E8%AE%B0%E5%A3%B0%E6%98%8E%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%E3%80%82%20%E8%BF%99%E4%BD%BF%E6%82%A8%E5%8F%AF%E4%BB%A5%E5%88%9B%E5%BB%BA%E9%80%9A%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0%E3%80%81%E7%B1%BB%E6%88%96%E7%B1%BB%E5%9E%8B%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F**%0A%20*%20%40template%20T%0A%20*%20%40param%20%7BT%7D%20x%20-%20%E6%B5%81%E5%90%91%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%E7%9A%84%E9%80%9A%E7%94%A8%E5%8F%82%E6%95%B0%0A%20*%20%40returns%20%7BT%7D%0A%20*%2F%0Afunction%20id(x)%20%7B%0A%20%20return%20x%3B%0A%7D%0A%20%0Aconst%20a%20%3D%20id(%22string%22)%3B%0Aconst%20b%20%3D%20id(123)%3B%0Aconst%20c%20%3D%20id(%7B%7D)%3B%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%E9%80%97%E5%8F%B7%E6%88%96%E5%A4%9A%E4%B8%AA%E6%A0%87%E7%AD%BE%E6%9D%A5%E5%A3%B0%E6%98%8E%E5%A4%9A%E4%B8%AA%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F**%0A%20*%20%40template%20T%2CU%2CV%0A%20*%20%40template%20W%2CX%0A%20*%2F%0A%60%60%60%0A%0A%E6%82%A8%E8%BF%98%E5%8F%AF%E4%BB%A5%E5%9C%A8%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%E5%90%8D%E7%A7%B0%E4%B9%8B%E5%89%8D%E6%8C%87%E5%AE%9A%E7%B1%BB%E5%9E%8B%E7%BA%A6%E6%9D%9F%E3%80%82%20%E5%8F%AA%E6%9C%89%E5%88%97%E8%A1%A8%E4%B8%AD%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%E5%8F%97%E5%88%B0%E7%BA%A6%E6%9D%9F%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F**%0A%20*%20%40template%20%7Bstring%7D%20K%20-%20K%20%E5%BF%85%E9%A1%BB%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%87%E5%AD%97%0A%20*%20%40template%20%7B%7B%20serious()%3A%20string%20%7D%7D%20Seriousalizable%20-%20%E4%B8%80%E5%AE%9A%E8%A6%81%E6%9C%89%20serious%20%E7%9A%84%E6%96%B9%E6%B3%95%0A%20*%20%40param%20%7BK%7D%20key%0A%20*%20%40param%20%7BSeriousalizable%7D%20object%0A%20*%2F%0Afunction%20seriousalize(key%2C%20object)%20%7B%0A%20%20%2F%2F%20%3F%3F%3F%3F%0A%7D%0A%60%60%60%0A%0A%E6%9C%80%E5%90%8E%EF%BC%8C%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%E6%8C%87%E5%AE%9A%E9%BB%98%E8%AE%A4%E5%80%BC%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F**%20%40template%20%5BT%3Dobject%5D%20*%2F%0Aclass%20Cache%20%7B%0A%20%20%2F**%20%40param%20%7BT%7D%20initial%20*%2F%0A%20%20constructor(T)%20%7B%0A%20%20%7D%0A%7D%0Alet%20c%20%3D%20new%20Cache()%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s9-240",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "使用逗号或多个标签来声明多个类型参数："
-    },
-    {
-      "id": "s9-241",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "/**\n * @template T,U,V\n * @template W,X\n */"
-    },
-    {
-      "id": "s9-242",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "您还可以在类型参数名称之前指定类型约束。 只有列表中的第一个类型参数受到约束："
-    },
-    {
-      "id": "s9-243",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "/**\n * @template {string} K - K 必须是字符串或字符串文字\n * @template {{ serious(): string }} Seriousalizable - 一定要有 serious 的方法\n * @param {K} key\n * @param {Seriousalizable} object\n */\nfunction seriousalize(key, object) {\n  // ????\n}"
-    },
-    {
-      "id": "s9-244",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "最后，您可以为类型参数指定默认值："
-    },
-    {
-      "id": "s9-245",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "/** @template [T=object] */\nclass Cache {\n  /** @param {T} initial */\n  constructor(T) {\n  }\n}\nlet c = new Cache()"
     },
     {
       "id": "s10-246",
       "sectionId": "s10",
       "title": "使用 CLI",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 基于向后查看 tsconfig.json 的 fs 运行编译\n$ tsc\n# 使用编译器默认值仅为 index.ts 发射 JS\n$ tsc index.ts\n# 使用默认设置为文件夹 src 中的任何 .ts 文件发出 JS\n$ tsc src/*.ts\n# 使用 tsconfig.production.json 中的编译器设置发出引用的文件\n$ tsc --project tsconfig.production.json\n# 为 js 文件发出 d.ts 文件，显示布尔值的编译器选项\n$ tsc index.js --declaration --emitDeclarationOnly\n# 通过采用字符串参数的编译器选项从两个文件发出单个 .js 文件\n$ tsc app.ts util.ts --target esnext --outfile index.js"
+      "body": "```bash\n# 基于向后查看 tsconfig.json 的 fs 运行编译\n$ tsc\n# 使用编译器默认值仅为 index.ts 发射 JS\n$ tsc index.ts\n# 使用默认设置为文件夹 src 中的任何 .ts 文件发出 JS\n$ tsc src/*.ts\n# 使用 tsconfig.production.json 中的编译器设置发出引用的文件\n$ tsc --project tsconfig.production.json\n# 为 js 文件发出 d.ts 文件，显示布尔值的编译器选项\n$ tsc index.js --declaration --emitDeclarationOnly\n# 通过采用字符串参数的编译器选项从两个文件发出单个 .js 文件\n$ tsc app.ts util.ts --target esnext --outfile index.js\n```"
     },
     {
       "id": "s10-247",
       "sectionId": "s10",
-      "title": "编译器选项",
-      "kind": "text",
-      "body": ":- | --\n:- | --\n`--all` _boolean_ | 显示所有编译器选项\n`--generateTrace` _string_ | 生成事件跟踪和类型列表\n`--help` _boolean_ | 提供有关 CLI 帮助的本地信息\n`--init` _boolean_ | 初始化 TypeScript 项目并创建 tsconfig.json 文件\n`--listFilesOnly` _boolean_ | 打印作为编译一部分的文件名，然后停止处理\n`--locale` _string_ | 设置来自 TypeScript 的消息传递语言。 这不影响发射\n`--project` _string_ | 编译项目给定其配置文件的路径，或带有 'tsconfig.json' 的文件夹\n`--showConfig` _boolean_ | 打印最终配置而不是构建\n`--version` _boolean_ | 打印编译器的版本\n<!--rehype:className=left-align-->"
+      "title": "%E7%BC%96%E8%AF%91%E5%99%A8%E9%80%89%E9%A1%B9",
+      "body": "%3A-%20%7C%20--%0A%3A-%20%7C%20--%0A%60--all%60%20_boolean_%20%7C%20%E6%98%BE%E7%A4%BA%E6%89%80%E6%9C%89%E7%BC%96%E8%AF%91%E5%99%A8%E9%80%89%E9%A1%B9%0A%60--generateTrace%60%20_string_%20%7C%20%E7%94%9F%E6%88%90%E4%BA%8B%E4%BB%B6%E8%B7%9F%E8%B8%AA%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%88%97%E8%A1%A8%0A%60--help%60%20_boolean_%20%7C%20%E6%8F%90%E4%BE%9B%E6%9C%89%E5%85%B3%20CLI%20%E5%B8%AE%E5%8A%A9%E7%9A%84%E6%9C%AC%E5%9C%B0%E4%BF%A1%E6%81%AF%0A%60--init%60%20_boolean_%20%7C%20%E5%88%9D%E5%A7%8B%E5%8C%96%20TypeScript%20%E9%A1%B9%E7%9B%AE%E5%B9%B6%E5%88%9B%E5%BB%BA%20tsconfig.json%20%E6%96%87%E4%BB%B6%0A%60--listFilesOnly%60%20_boolean_%20%7C%20%E6%89%93%E5%8D%B0%E4%BD%9C%E4%B8%BA%E7%BC%96%E8%AF%91%E4%B8%80%E9%83%A8%E5%88%86%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%EF%BC%8C%E7%84%B6%E5%90%8E%E5%81%9C%E6%AD%A2%E5%A4%84%E7%90%86%0A%60--locale%60%20_string_%20%7C%20%E8%AE%BE%E7%BD%AE%E6%9D%A5%E8%87%AA%20TypeScript%20%E7%9A%84%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E8%AF%AD%E8%A8%80%E3%80%82%20%E8%BF%99%E4%B8%8D%E5%BD%B1%E5%93%8D%E5%8F%91%E5%B0%84%0A%60--project%60%20_string_%20%7C%20%E7%BC%96%E8%AF%91%E9%A1%B9%E7%9B%AE%E7%BB%99%E5%AE%9A%E5%85%B6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BC%8C%E6%88%96%E5%B8%A6%E6%9C%89%20'tsconfig.json'%20%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%0A%60--showConfig%60%20_boolean_%20%7C%20%E6%89%93%E5%8D%B0%E6%9C%80%E7%BB%88%E9%85%8D%E7%BD%AE%E8%80%8C%E4%B8%8D%E6%98%AF%E6%9E%84%E5%BB%BA%0A%60--version%60%20_boolean_%20%7C%20%E6%89%93%E5%8D%B0%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%89%88%E6%9C%AC%0A%3C!--rehype%3AclassName%3Dleft-align--%3E",
+      "encoded": true
     },
     {
       "id": "s10-248",
       "sectionId": "s10",
       "title": "构建选项",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`--build` _boolean_ | 构建一个或多个项目及其依赖项（如果已过期）\n`--clean` _boolean_ | 删除所有项目的输出\n`--dry` _boolean_ | 显示将构建的内容（或删除，如果使用“--clean”指定）\n`--force` _boolean_ | 构建所有项目，包括那些看起来是最新的项目\n`--verbose` _boolean_ | 启用详细日志记录\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s10-249",
       "sectionId": "s10",
       "title": "监听选项",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`--excludeDirectories` _list_ | 从监视进程中删除目录列表\n`--excludeFiles` _list_ | 从监视模式的处理中删除文件列表\n`--fallbackPolling` _fixedinterval_, _priorityinterval_, _dynamicpriority_, _fixedchunksize_ | 指定当系统用完本机文件观察器时观察器应使用的方法\n`--synchronousWatchDirectory` _boolean_ | 在本机不支持递归监视的平台上同步调用回调并更新目录监视程序的状态\n`--watch` _boolean_ | 观看输入文件\n`--watchDirectory` _usefsevents_, _fixedpollinginterval_, _dynamicprioritypolling_, _fixedchunksizepolling | 指定在缺少递归文件监视功能的系统上如何监视目录\n`--watchFile` _fixedpollinginterval_, _prioritypollinginterval_, _dynamicprioritypolling_, _fixedchunksizepolling_, _usefsevents_, _usefseventsonparentdirectory_ | 指定 TypeScript 监视模式的工作方式\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s11-250",
       "sectionId": "s11",
       "title": "%E5%8F%AF%E5%AE%8C%E6%88%90%2090%25%20%E7%9A%84%E4%BB%BB%E5%8A%A1",
-      "kind": "code",
-      "lang": "js",
-      "code": "%22compilerOptions%22%3A%20%7B%0A%20%20%2F*%20%E5%9F%BA%E6%9C%AC%E9%80%89%E9%A1%B9%3A%20*%2F%0A%20%20%22esModuleInterop%22%3A%20true%2C%0A%20%20%22skipLibCheck%22%3A%20true%2C%0A%20%20%22target%22%3A%20%22es2022%22%2C%0A%20%20%22verbatimModuleSyntax%22%3A%20true%2C%0A%20%20%22allowJs%22%3A%20true%2C%0A%20%20%22resolveJsonModule%22%3A%20true%2C%0A%20%20%22moduleDetection%22%3A%20%22force%22%2C%0A%20%20%2F*%20%E4%B8%A5%E6%A0%BC%20*%2F%0A%20%20%22strict%22%3A%20true%2C%0A%20%20%22noUncheckedIndexedAccess%22%3A%20true%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%BF%E7%94%A8%20TypeScript%20%E8%BF%9B%E8%A1%8C%E8%BD%AC%E8%AF%91%EF%BC%9A%20*%2F%0A%20%20%22moduleResolution%22%3A%20%22NodeNext%22%2C%0A%20%20%22module%22%3A%20%22NodeNext%22%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%B8%8D%E4%BD%BF%E7%94%A8%20TypeScript%20%E8%BF%9B%E8%A1%8C%E8%BD%AC%E8%AF%91%3A%20*%2F%0A%20%20%22moduleResolution%22%3A%20%22Bundler%22%2C%0A%20%20%22module%22%3A%20%22ESNext%22%2C%0A%20%20%22noEmit%22%3A%20true%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9C%A8%20DOM%20%E4%B8%AD%E8%BF%90%E8%A1%8C%3A%20*%2F%0A%20%20%22lib%22%3A%20%5B%22es2022%22%2C%20%22dom%22%2C%20%22dom.iterable%22%5D%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8D%E5%9C%A8%20DOM%20%E4%B8%AD%E8%BF%90%E8%A1%8C%3A%20*%2F%0A%20%20%22lib%22%3A%20%5B%22es2022%22%5D%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%AD%A3%E5%9C%A8%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%BA%93%3A%20*%2F%0A%20%20%22declaration%22%3A%20true%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E6%82%A8%E6%AD%A3%E5%9C%A8%20monorepo%20%E4%B8%AD%E6%9E%84%E5%BB%BA%E5%BA%93%3A%20*%2F%0A%20%20%22composite%22%3A%20true%2C%0A%20%20%22sourceMap%22%3A%20true%2C%0A%20%20%22declarationMap%22%3A%20true%0A%7D",
+      "body": "%60%60%60js%0A%22compilerOptions%22%3A%20%7B%0A%20%20%2F*%20%E5%9F%BA%E6%9C%AC%E9%80%89%E9%A1%B9%3A%20*%2F%0A%20%20%22esModuleInterop%22%3A%20true%2C%0A%20%20%22skipLibCheck%22%3A%20true%2C%0A%20%20%22target%22%3A%20%22es2022%22%2C%0A%20%20%22verbatimModuleSyntax%22%3A%20true%2C%0A%20%20%22allowJs%22%3A%20true%2C%0A%20%20%22resolveJsonModule%22%3A%20true%2C%0A%20%20%22moduleDetection%22%3A%20%22force%22%2C%0A%20%20%2F*%20%E4%B8%A5%E6%A0%BC%20*%2F%0A%20%20%22strict%22%3A%20true%2C%0A%20%20%22noUncheckedIndexedAccess%22%3A%20true%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%BF%E7%94%A8%20TypeScript%20%E8%BF%9B%E8%A1%8C%E8%BD%AC%E8%AF%91%EF%BC%9A%20*%2F%0A%20%20%22moduleResolution%22%3A%20%22NodeNext%22%2C%0A%20%20%22module%22%3A%20%22NodeNext%22%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%B8%8D%E4%BD%BF%E7%94%A8%20TypeScript%20%E8%BF%9B%E8%A1%8C%E8%BD%AC%E8%AF%91%3A%20*%2F%0A%20%20%22moduleResolution%22%3A%20%22Bundler%22%2C%0A%20%20%22module%22%3A%20%22ESNext%22%2C%0A%20%20%22noEmit%22%3A%20true%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9C%A8%20DOM%20%E4%B8%AD%E8%BF%90%E8%A1%8C%3A%20*%2F%0A%20%20%22lib%22%3A%20%5B%22es2022%22%2C%20%22dom%22%2C%20%22dom.iterable%22%5D%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%8D%E5%9C%A8%20DOM%20%E4%B8%AD%E8%BF%90%E8%A1%8C%3A%20*%2F%0A%20%20%22lib%22%3A%20%5B%22es2022%22%5D%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%AD%A3%E5%9C%A8%E6%9E%84%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%BA%93%3A%20*%2F%0A%20%20%22declaration%22%3A%20true%2C%0A%20%20%2F*%20%E5%A6%82%E6%9E%9C%E6%82%A8%E6%AD%A3%E5%9C%A8%20monorepo%20%E4%B8%AD%E6%9E%84%E5%BB%BA%E5%BA%93%3A%20*%2F%0A%20%20%22composite%22%3A%20true%2C%0A%20%20%22sourceMap%22%3A%20true%2C%0A%20%20%22declarationMap%22%3A%20true%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s11-251",
       "sectionId": "s11",
-      "title": "顶层配置",
-      "kind": "text",
-      "body": ":- | --\n:- | --\n`files` [#](https://www.typescriptlang.org/zh/tsconfig#files) | 指定要`包含`在程序中的文件的允许列表\n`extends` [#](https://www.typescriptlang.org/zh/tsconfig#extends) | 包含要`继承`的另一个配置文件的路径\n`include` [#](https://www.typescriptlang.org/zh/tsconfig#include) | 指定要`包含`在程序中的文件名或模式数组\n`exclude` [#](https://www.typescriptlang.org/zh/tsconfig#exclude) | 指定解析包含时应`跳过`的文件名或模式数组\n`references` [#](https://www.typescriptlang.org/zh/tsconfig#references) | 项目引用是一种将 TypeScript 程序构造成更小部分的方法\n<!--rehype:className=style-list-arrow-->"
-    },
-    {
-      "id": "s11-252",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22extends%22%3A%20%22.%2Ftsconfig%22%2C%0A%20%20%22compilerOptions%22%3A%20%7B%0A%20%20%20%20%22strictNullChecks%22%3A%20false%0A%20%20%7D%0A%7D",
+      "title": "%E9%A1%B6%E5%B1%82%E9%85%8D%E7%BD%AE",
+      "body": "%3A-%20%7C%20--%0A%3A-%20%7C%20--%0A%60files%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23files)%20%7C%20%E6%8C%87%E5%AE%9A%E8%A6%81%60%E5%8C%85%E5%90%AB%60%E5%9C%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%81%E8%AE%B8%E5%88%97%E8%A1%A8%0A%60extends%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23extends)%20%7C%20%E5%8C%85%E5%90%AB%E8%A6%81%60%E7%BB%A7%E6%89%BF%60%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%9A%84%E8%B7%AF%E5%BE%84%0A%60include%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23include)%20%7C%20%E6%8C%87%E5%AE%9A%E8%A6%81%60%E5%8C%85%E5%90%AB%60%E5%9C%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E6%88%96%E6%A8%A1%E5%BC%8F%E6%95%B0%E7%BB%84%0A%60exclude%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23exclude)%20%7C%20%E6%8C%87%E5%AE%9A%E8%A7%A3%E6%9E%90%E5%8C%85%E5%90%AB%E6%97%B6%E5%BA%94%60%E8%B7%B3%E8%BF%87%60%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E6%88%96%E6%A8%A1%E5%BC%8F%E6%95%B0%E7%BB%84%0A%60references%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23references)%20%7C%20%E9%A1%B9%E7%9B%AE%E5%BC%95%E7%94%A8%E6%98%AF%E4%B8%80%E7%A7%8D%E5%B0%86%20TypeScript%20%E7%A8%8B%E5%BA%8F%E6%9E%84%E9%80%A0%E6%88%90%E6%9B%B4%E5%B0%8F%E9%83%A8%E5%88%86%E7%9A%84%E6%96%B9%E6%B3%95%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow--%3E%0A%0A%60%60%60js%0A%7B%0A%20%20%22extends%22%3A%20%22.%2Ftsconfig%22%2C%0A%20%20%22compilerOptions%22%3A%20%7B%0A%20%20%20%20%22strictNullChecks%22%3A%20false%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s11-253",
       "sectionId": "s11",
       "title": "类型检查(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`allowUnreachableCode` [#](https://www.typescriptlang.org/zh/tsconfig#allowUnreachableCode) | 允许无法访问的代码\n`allowUnusedLabels` [#](https://www.typescriptlang.org/zh/tsconfig#allowUnusedLabels) | 允许未使用的标签\n`alwaysStrict` [#](https://www.typescriptlang.org/zh/tsconfig#alwaysStrict) | 始终严格\n`exactOptionalPropertyTypes` [#](https://www.typescriptlang.org/zh/tsconfig#exactOptionalPropertyTypes) | 启用后，TypeScript 应用更严格的规则来处理它如何处理类型或具有 ? 字首\n`noFallthroughCasesInSwitch` [#](https://www.typescriptlang.org/zh/tsconfig#noFallthroughCasesInSwitch) | 在 switch 语句中报告失败案例的错误\n`noImplicitAny` [#](https://www.typescriptlang.org/zh/tsconfig#noImplicitAny) | 在某些不存在类型注释的情况下，TypeScript 将在无法推断类型时回退到变量的任何类型\n`noImplicitOverride` [#](https://www.typescriptlang.org/zh/tsconfig#noImplicitOverride) | 当处理使用继承的类时，子类可能与在基类中重命名时重载的函数“不同步”\n`noImplicitReturns` [#](https://www.typescriptlang.org/zh/tsconfig#noImplicitReturns) | 没有隐式返回\n`noImplicitThis` [#](https://www.typescriptlang.org/zh/tsconfig#noImplicitThis) | 使用隐含的“any”类型在“this”表达式上引发错误\n`noPropertyAccessFromIndexSignature` [#](https://www.typescriptlang.org/zh/tsconfig#noPropertyAccessFromIndexSignature) | 此设置确保通过“点”（obj.key）语法访问字段和“索引”（obj[“key”]）以及在类型中声明属性的方式之间的一致性\n`noUncheckedIndexedAccess` [#](https://www.typescriptlang.org/zh/tsconfig#noUncheckedIndexedAccess) | TypeScript 有一种方法可以通过索引签名来描述对象上具有未知键但已知值的对象\n`noUnusedLocals` [#](https://www.typescriptlang.org/zh/tsconfig#noUnusedLocals) | 报告未使用的局部变量的错误\n`noUnusedParameters` [#](https://www.typescriptlang.org/zh/tsconfig#noUnusedParameters) | 报告函数中未使用参数的错误\n`strict` [#](https://www.typescriptlang.org/zh/tsconfig#strict) | 严格标志启用了范围广泛的类型检查行为，从而更有效地保证了程序的正确性\n`strictBindCallApply` [#](https://www.typescriptlang.org/zh/tsconfig#strictBindCallApply) | TypeScript 将检查函数调用、绑定和应用的内置方法是否使用底层函数的正确参数调用\n`strictFunctionTypes` [#](https://www.typescriptlang.org/zh/tsconfig#strictFunctionTypes) | 此标志会导致更正确地检查函数参数\n`strictNullChecks` [#](https://www.typescriptlang.org/zh/tsconfig#strictNullChecks) | 严格的空检查\n`strictPropertyInitialization` [#](https://www.typescriptlang.org/zh/tsconfig#strictPropertyInitialization) | 严格的属性初始化\n`useUnknownInCatchVariables` [#](https://www.typescriptlang.org/zh/tsconfig#useUnknownInCatchVariables) | 在 TypeScript 4.0 中，添加了支持以允许将 catch 子句中的变量类型从 any 更改为 unknown\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s11-254",
       "sectionId": "s11",
-      "title": "模块(compilerOptions)",
-      "kind": "text",
-      "body": ":- | --\n:- | --\n`allowUmdGlobalAccess` [#](https://www.typescriptlang.org/zh/tsconfig#allowUmdGlobalAccess) | 为 true 时，将允许你在模块文件中以全局变量的形式访问 UMD 的导出\n`baseUrl` [#](https://www.typescriptlang.org/zh/tsconfig#baseUrl) | 可以让您设置解析非绝对路径模块名时的基准目录\n`module` [#](https://www.typescriptlang.org/zh/tsconfig#module) | 设置程序的模块系统\n`moduleResolution` [#](https://www.typescriptlang.org/zh/tsconfig#moduleResolution) | 指定模块解析策略：'node'（Node.js）或 'classic'\n`moduleSuffixes` [#](https://www.typescriptlang.org/zh/tsconfig#moduleSuffixes) | 提供一种在解析模块时覆盖要搜索的默认文件名后缀列表的方法\n`noResolve` [#](https://www.typescriptlang.org/zh/tsconfig#noResolve) | 默认情况下，TypeScript 将检查导入和 `<reference` 指令的初始文件集，并将这些解析的文件添加到您的程序中\n`paths` [#](https://www.typescriptlang.org/zh/tsconfig#paths) | 一些将模块导入重新映射到相对于 baseUrl 路径的配置\n`resolveJsonModule` [#](https://www.typescriptlang.org/zh/tsconfig#resolveJsonModule) | 允许导入带有“.json”扩展名的模块，这是 node 项目中的常见做法\n`rootDir` [#](https://www.typescriptlang.org/zh/tsconfig#rootDir) | 默认: 所有输入的非声明文件中的最长公共路径\n`rootDirs` [#](https://www.typescriptlang.org/zh/tsconfig#rootDirs) | 通过 rootDirs，你可以告诉编译器有许多“虚拟”的目录作为一个根目录\n`typeRoots` [#](https://www.typescriptlang.org/zh/tsconfig#typeRoots) | 默认情况下，所有 可见 的 ”@types” 包都将包含在你的编译过程中\n`types` [#](https://www.typescriptlang.org/zh/tsconfig#types) | 默认情况下，所有 可见 的 ”@types” 包都将包含在你的编译过程中\n<!--rehype:className=style-list-arrow-->"
+      "title": "%E6%A8%A1%E5%9D%97(compilerOptions)",
+      "body": "%3A-%20%7C%20--%0A%3A-%20%7C%20--%0A%60allowUmdGlobalAccess%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23allowUmdGlobalAccess)%20%7C%20%E4%B8%BA%20true%20%E6%97%B6%EF%BC%8C%E5%B0%86%E5%85%81%E8%AE%B8%E4%BD%A0%E5%9C%A8%E6%A8%A1%E5%9D%97%E6%96%87%E4%BB%B6%E4%B8%AD%E4%BB%A5%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F%E7%9A%84%E5%BD%A2%E5%BC%8F%E8%AE%BF%E9%97%AE%20UMD%20%E7%9A%84%E5%AF%BC%E5%87%BA%0A%60baseUrl%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23baseUrl)%20%7C%20%E5%8F%AF%E4%BB%A5%E8%AE%A9%E6%82%A8%E8%AE%BE%E7%BD%AE%E8%A7%A3%E6%9E%90%E9%9D%9E%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E6%A8%A1%E5%9D%97%E5%90%8D%E6%97%B6%E7%9A%84%E5%9F%BA%E5%87%86%E7%9B%AE%E5%BD%95%0A%60module%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23module)%20%7C%20%E8%AE%BE%E7%BD%AE%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F%0A%60moduleResolution%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23moduleResolution)%20%7C%20%E6%8C%87%E5%AE%9A%E6%A8%A1%E5%9D%97%E8%A7%A3%E6%9E%90%E7%AD%96%E7%95%A5%EF%BC%9A'node'%EF%BC%88Node.js%EF%BC%89%E6%88%96%20'classic'%0A%60moduleSuffixes%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23moduleSuffixes)%20%7C%20%E6%8F%90%E4%BE%9B%E4%B8%80%E7%A7%8D%E5%9C%A8%E8%A7%A3%E6%9E%90%E6%A8%A1%E5%9D%97%E6%97%B6%E8%A6%86%E7%9B%96%E8%A6%81%E6%90%9C%E7%B4%A2%E7%9A%84%E9%BB%98%E8%AE%A4%E6%96%87%E4%BB%B6%E5%90%8D%E5%90%8E%E7%BC%80%E5%88%97%E8%A1%A8%E7%9A%84%E6%96%B9%E6%B3%95%0A%60noResolve%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23noResolve)%20%7C%20%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8CTypeScript%20%E5%B0%86%E6%A3%80%E6%9F%A5%E5%AF%BC%E5%85%A5%E5%92%8C%20%60%3Creference%60%20%E6%8C%87%E4%BB%A4%E7%9A%84%E5%88%9D%E5%A7%8B%E6%96%87%E4%BB%B6%E9%9B%86%EF%BC%8C%E5%B9%B6%E5%B0%86%E8%BF%99%E4%BA%9B%E8%A7%A3%E6%9E%90%E7%9A%84%E6%96%87%E4%BB%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%82%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%E4%B8%AD%0A%60paths%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23paths)%20%7C%20%E4%B8%80%E4%BA%9B%E5%B0%86%E6%A8%A1%E5%9D%97%E5%AF%BC%E5%85%A5%E9%87%8D%E6%96%B0%E6%98%A0%E5%B0%84%E5%88%B0%E7%9B%B8%E5%AF%B9%E4%BA%8E%20baseUrl%20%E8%B7%AF%E5%BE%84%E7%9A%84%E9%85%8D%E7%BD%AE%0A%60resolveJsonModule%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23resolveJsonModule)%20%7C%20%E5%85%81%E8%AE%B8%E5%AF%BC%E5%85%A5%E5%B8%A6%E6%9C%89%E2%80%9C.json%E2%80%9D%E6%89%A9%E5%B1%95%E5%90%8D%E7%9A%84%E6%A8%A1%E5%9D%97%EF%BC%8C%E8%BF%99%E6%98%AF%20node%20%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%81%9A%E6%B3%95%0A%60rootDir%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23rootDir)%20%7C%20%E9%BB%98%E8%AE%A4%3A%20%E6%89%80%E6%9C%89%E8%BE%93%E5%85%A5%E7%9A%84%E9%9D%9E%E5%A3%B0%E6%98%8E%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E8%B7%AF%E5%BE%84%0A%60rootDirs%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23rootDirs)%20%7C%20%E9%80%9A%E8%BF%87%20rootDirs%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%91%8A%E8%AF%89%E7%BC%96%E8%AF%91%E5%99%A8%E6%9C%89%E8%AE%B8%E5%A4%9A%E2%80%9C%E8%99%9A%E6%8B%9F%E2%80%9D%E7%9A%84%E7%9B%AE%E5%BD%95%E4%BD%9C%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%A0%B9%E7%9B%AE%E5%BD%95%0A%60typeRoots%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23typeRoots)%20%7C%20%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%89%80%E6%9C%89%20%E5%8F%AF%E8%A7%81%20%E7%9A%84%20%E2%80%9D%40types%E2%80%9D%20%E5%8C%85%E9%83%BD%E5%B0%86%E5%8C%85%E5%90%AB%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E4%B8%AD%0A%60types%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23types)%20%7C%20%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%89%80%E6%9C%89%20%E5%8F%AF%E8%A7%81%20%E7%9A%84%20%E2%80%9D%40types%E2%80%9D%20%E5%8C%85%E9%83%BD%E5%B0%86%E5%8C%85%E5%90%AB%E5%9C%A8%E4%BD%A0%E7%9A%84%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B%E4%B8%AD%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow--%3E",
+      "encoded": true
     },
     {
       "id": "s11-255",
       "sectionId": "s11",
       "title": "Emit(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`declaration` [#](https://www.typescriptlang.org/zh/tsconfig#declaration) | 为项目中的每个 TypeScript 或 JavaScript 文件生成 .d.ts 文件\n`declarationDir` [#](https://www.typescriptlang.org/zh/tsconfig#declarationDir) | 提供一种配置发出声明文件的根目录的方法\n`declarationMap` [#](https://www.typescriptlang.org/zh/tsconfig#declarationMap) | 为映射回原始 .ts 源文件的 .d.ts 文件生成源映射\n`downlevelIteration` [#](https://www.typescriptlang.org/zh/tsconfig#downlevelIteration) | 降级是 TypeScript 的术语，用于转译到旧版本的 JavaScript\n`emitBOM` [#](https://www.typescriptlang.org/zh/tsconfig#emitBOM) | 控制 TypeScript 在写入输出文件时是否会发出字节顺序标记 (BOM)\n`emitDeclarationOnly` [#](https://www.typescriptlang.org/zh/tsconfig#emitDeclarationOnly) | 只发出 .d.ts 文件；不要发出 .js 文件\n`importHelpers` [#](https://www.typescriptlang.org/zh/tsconfig#importHelpers) | 对于某些降级操作，TypeScript 使用一些辅助代码来执行扩展类、展开数组或对象以及异步操作等操作\n`importsNotUsedAsValues` [#](https://www.typescriptlang.org/zh/tsconfig#importsNotUsedAsValues) | 此标志控制导入的工作方式，有 3 个不同的选项: `remove`, `preserve`, `error`\n`inlineSourceMap` [#](https://www.typescriptlang.org/zh/tsconfig#inlineSourceMap) | 设置后，TypeScript 不会写出 .js.map 文件来提供源映射，而是将源映射内容嵌入到 .js 文件中\n`inlineSources` [#](https://www.typescriptlang.org/zh/tsconfig#inlineSources) | 设置后，TypeScript 会将 .ts 文件的原始内容作为嵌入字符串包含在源映射中（使用源映射的 sourcesContent 属性）\n`mapRoot` [#](https://www.typescriptlang.org/zh/tsconfig#mapRoot) | 指定调试器应该定位映射文件而不是生成位置的位置\n`newLine` [#](https://www.typescriptlang.org/zh/tsconfig#newLine) | 指定发出文件时要使用的行尾顺序：“CRLF”（dos）或“LF”（unix）\n`noEmit` [#](https://www.typescriptlang.org/zh/tsconfig#noEmit) | 不要发出编译器输出文件，如 JavaScript 源代码、源映射或声明\n`noEmitHelpers` [#](https://www.typescriptlang.org/zh/tsconfig#noEmitHelpers) | 您可以在全局范围内为您使用的助手提供实现，并完全关闭助手函数的发出，而不是使用 importHelpers 导入助手\n`noEmitOnError` [#](https://www.typescriptlang.org/zh/tsconfig#noEmitOnError) | 如果报告了任何错误，请不要发出编译器输出文件，如 JavaScript 源代码、源映射或声明\n`outDir` [#](https://www.typescriptlang.org/zh/tsconfig#outDir) | 如果指定，.js（以及 .d.ts、.js.map 等）文件将被发送到此目录中\n`outFile` [#](https://www.typescriptlang.org/zh/tsconfig#outFile) | 如果指定，所有全局（非模块）文件将连接到指定的单个输出文件中\n`preserveConstEnums` [#](https://www.typescriptlang.org/zh/tsconfig#preserveConstEnums) | 不要删除生成的代码中的 const enum 声明\n`preserveValueImports` [#](https://www.typescriptlang.org/zh/tsconfig#preserveValueImports) | 在某些情况下，TypeScript 无法检测到您正在使用导入\n`removeComments` [#](https://www.typescriptlang.org/zh/tsconfig#removeComments) | 转换为 JavaScript 时从 TypeScript 文件中删除所有注释\n`sourceMap` [#](https://www.typescriptlang.org/zh/tsconfig#sourceMap) | 启用源映射文件的生成\n`sourceRoot` [#](https://www.typescriptlang.org/zh/tsconfig#sourceRoot) | 指定调试器应定位 TypeScript 文件的位置，而不是相对源位置\n`stripInternal` [#](https://www.typescriptlang.org/zh/tsconfig#stripInternal) | 不要为在其 JSDoc 注释中具有 @internal 注释的代码发出声明\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s11-256",
       "sectionId": "s11",
       "title": "完整性(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`skipDefaultLibCheck` [#](https://www.typescriptlang.org/zh/tsconfig#skipDefaultLibCheck) | 请改用 `skipLibCheck`\n`skipLibCheck` [#](https://www.typescriptlang.org/zh/tsconfig#skipLibCheck) | 跳过声明文件的类型检查"
     },
     {
       "id": "s11-257",
       "sectionId": "s11",
       "title": "编辑器支持(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`disableSizeLimit` [#](https://www.typescriptlang.org/zh/tsconfig#disableSizeLimit) | 分配的内存量有一个上限。打开此标志将删除限制\n`plugins` [#](https://www.typescriptlang.org/zh/tsconfig#plugins) | 可在编辑器内运行的语言服务插件列表\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s11-258",
       "sectionId": "s11",
       "title": "输出格式(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`noErrorTruncation` [#](https://www.typescriptlang.org/zh/tsconfig#noErrorTruncation) | 不要截断错误消息\n`preserveWatchOutput` [#](https://www.typescriptlang.org/zh/tsconfig#preserveWatchOutput) | 保留监视输出\n`pretty` [#](https://www.typescriptlang.org/zh/tsconfig#pretty) | 使用颜色和上下文对错误和消息进行样式化，默认情况下启用\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s11-259",
       "sectionId": "s11",
       "title": "JavaScript 支持(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`allowJs` [#](https://www.typescriptlang.org/zh/tsconfig#allowJs) | 允许 JavaScript 文件在你的工程中被引入，而不是仅仅允许 .ts 和 .tsx 文件\n`checkJs` [#](https://www.typescriptlang.org/zh/tsconfig#checkJs) | 与 allowJs 配合使用，当 checkJs 被启用时，JavaScript 文件中会报告错误\n`maxNodeModuleJsDepth` [#](https://www.typescriptlang.org/zh/tsconfig#maxNodeModuleJsDepth) | 在 node_modules 下搜索和加载 JavaScript 文件的最大依赖深度\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s11-260",
       "sectionId": "s11",
       "title": "互操作约束(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`allowSyntheticDefaultImports` [#](https://www.typescriptlang.org/zh/tsconfig#allowSyntheticDefaultImports) | 允许合成默认导入\n`esModuleInterop` [#](https://www.typescriptlang.org/zh/tsconfig#esModuleInterop) | ES 模块互操作\n`forceConsistentCasingInFileNames` [#](https://www.typescriptlang.org/zh/tsconfig#forceConsistentCasingInFileNames) | 在文件名中强制使用一致的大小写\n`isolatedModules` [#](https://www.typescriptlang.org/zh/tsconfig#isolatedModules) | 隔离模块\n`preserveSymlinks` [#](https://www.typescriptlang.org/zh/tsconfig#preserveSymlinks) | 保留符号链接\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s11-261",
       "sectionId": "s11",
       "title": "编译器诊断(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`diagnostics` [#](https://www.typescriptlang.org/zh/tsconfig#diagnostics) | 用于输出调试信息\n`explainFiles` [#](https://www.typescriptlang.org/zh/tsconfig#explainFiles) | 打印 TypeScript 视为项目一部分的文件的名称以及它们是编译一部分的原因\n`extendedDiagnostics` [#](https://www.typescriptlang.org/zh/tsconfig#extendedDiagnostics) | 您可以使用此标志来发现 TypeScript 在编译时将时间花在哪里\n`generateCpuProfile` [#](https://www.typescriptlang.org/zh/tsconfig#generateCpuProfile) | 此选项使您有机会让 TypeScript 在编译器运行期间发出 v8 CPU 配置文件\n`listEmittedFiles` [#](https://www.typescriptlang.org/zh/tsconfig#listEmittedFiles) | 将编译过程中生成的文件的名称打印到终端\n`listFiles` [#](https://www.typescriptlang.org/zh/tsconfig#listFiles) | 打印编译部分文件的名称\n`traceResolution` [#](https://www.typescriptlang.org/zh/tsconfig#traceResolution) | 当您尝试调试未包含模块的原因时\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s11-262",
       "sectionId": "s11",
       "title": "%E5%90%91%E5%90%8E%E5%85%BC%E5%AE%B9%E6%80%A7(compilerOptions)",
-      "kind": "text",
       "body": "%3A-%20%7C%20--%0A%3A-%20%7C%20--%0A%60charset%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23charset)%20%7C%20%E5%9C%A8%E6%97%A9%E6%9C%9F%E7%89%88%E6%9C%AC%E7%9A%84%20TypeScript%20%E4%B8%AD%EF%BC%8C%E8%BF%99%E6%8E%A7%E5%88%B6%E4%BA%86%E4%BB%8E%E7%A3%81%E7%9B%98%E8%AF%BB%E5%8F%96%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E6%97%B6%E4%BD%BF%E7%94%A8%E7%9A%84%E7%BC%96%E7%A0%81%0A%60keyofStringsOnly%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23keyofStringsOnly)%20%7C%20%E6%AD%A4%E6%A0%87%E5%BF%97%E5%B0%86%20%60keyof%60%20%E7%B1%BB%E5%9E%8B%E8%BF%90%E7%AE%97%E7%AC%A6%E6%9B%B4%E6%94%B9%E4%B8%BA%E8%BF%94%E5%9B%9E%20%60string%60%20%E8%80%8C%E4%B8%8D%E6%98%AF%20%60string%20%7C%20number%60%20%E5%BD%93%E5%BA%94%E7%94%A8%E4%BA%8E%E5%85%B7%E6%9C%89%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B4%A2%E5%BC%95%E7%AD%BE%E5%90%8D%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%97%B6%0A%60noImplicitUseStrict%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23noImplicitUseStrict)%20%7C%20%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E5%BD%93%E5%90%91%E9%9D%9E%20ES6%20%E7%9B%AE%E6%A0%87%E5%8F%91%E5%87%BA%E6%A8%A1%E5%9D%97%E6%96%87%E4%BB%B6%E6%97%B6%EF%BC%8CTypeScript%20%E5%8F%91%E5%87%BA%60%22use%20strict%22%60%EF%BC%9B%E6%96%87%E4%BB%B6%E9%A1%B6%E9%83%A8%E7%9A%84%E5%BA%8F%E8%A8%80%E3%80%82%E6%AD%A4%E8%AE%BE%E7%BD%AE%E7%A6%81%E7%94%A8%E5%BA%8F%E8%A8%80%0A%60noStrictGenericChecks%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23noStrictGenericChecks)%20%7C%20TypeScript%20%E5%9C%A8%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E6%B3%9B%E5%9E%8B%E5%87%BD%E6%95%B0%E6%97%B6%E4%BC%9A%E7%BB%9F%E4%B8%80%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%0A%60out%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23out)%20%7C%20%E8%AF%B7%E6%94%B9%E7%94%A8%20%60outFile%60%0A%60suppressExcessPropertyErrors%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23suppressExcessPropertyErrors)%20%7C%20%E6%8A%91%E5%88%B6%E8%BF%87%E5%A4%9A%E7%9A%84%E5%B1%9E%E6%80%A7%E9%94%99%E8%AF%AF%0A%60suppressImplicitAnyIndexErrors%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23suppressImplicitAnyIndexErrors)%20%7C%20%E6%8A%91%E5%88%B6%E9%9A%90%E5%BC%8F%E4%BB%BB%E4%BD%95%E7%B4%A2%E5%BC%95%E9%94%99%E8%AF%AF%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow--%3E",
       "encoded": true
     },
@@ -2111,53 +878,32 @@
       "id": "s11-263",
       "sectionId": "s11",
       "title": "语言与环境(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`emitDecoratorMetadata` [#](https://www.typescriptlang.org/zh/tsconfig#emitDecoratorMetadata) | 发射装饰器元数据\n`experimentalDecorators` [#](https://www.typescriptlang.org/zh/tsconfig#experimentalDecorators) | 实验装饰器\n`jsx` [#](https://www.typescriptlang.org/zh/tsconfig#jsx) | 控制 JSX 在 JavaScript 文件中的输出方式\n`jsxFactory` [#](https://www.typescriptlang.org/zh/tsconfig#jsxFactory) | 使用经典 JSX 运行时编译 JSX 元素时更改在 .js 文件中调用的函数\n`jsxFragmentFactory` [#](https://www.typescriptlang.org/zh/tsconfig#jsxFragmentFactory) | 指定在使用 jsxFactory 编译器选项指定 react JSX emit 时要使用的 JSX 片段工厂函数，例如 `Fragment`\n`jsxImportSource` [#](https://www.typescriptlang.org/zh/tsconfig#jsxImportSource) | 声明模块说明符用于在将 jsx 用作 TypeScript 4.1 中引入的“react-jsx”或“react-jsxdev”时导入 jsx 和 jsxs 工厂函数\n`lib` [#](https://www.typescriptlang.org/zh/tsconfig#lib) | TypeScript 包括一组默认的内建 JS 接口（例如 Math）的类型定义，以及在浏览器环境中存在的对象的类型定义（例如 document）\n`moduleDetection` [#](https://www.typescriptlang.org/zh/tsconfig#moduleDetection) | 模块检测\n`noLib` [#](https://www.typescriptlang.org/zh/tsconfig#noLib) | 禁用自动包含任何库文件\n`reactNamespace` [#](https://www.typescriptlang.org/zh/tsconfig#reactNamespace) | 请改用 jsxFactory\n`target` [#](https://www.typescriptlang.org/zh/tsconfig#target) | 现代浏览器支持全部 ES6 的功能，所以 ES6 是一个不错的选择\n`useDefineForClassFields` [#](https://www.typescriptlang.org/zh/tsconfig#useDefineForClassFields) | 为类字段使用定义\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s11-264",
       "sectionId": "s11",
       "title": "项目(compilerOptions)",
-      "kind": "text",
       "body": ":- | --\n:- | --\n`composite` [#](https://www.typescriptlang.org/zh/tsconfig#composite) | composite 选项会强制执行某些约束，使得构建工具（包括 在 --build 模式下的 TypeScript 本身）可以快速确定一个工程是否已经建立\n`disableReferencedProjectLoad` [#](https://www.typescriptlang.org/zh/tsconfig#disableReferencedProjectLoad) | 禁用引用项目加载\n`disableSolutionSearching` [#](https://www.typescriptlang.org/zh/tsconfig#disableSolutionSearching) | 禁用解决方案搜索\n`disableSourceOfProjectReferenceRedirect` [#](https://www.typescriptlang.org/zh/tsconfig#disableSourceOfProjectReferenceRedirect) | 禁用源项目引用重定向\n`incremental` [#](https://www.typescriptlang.org/zh/tsconfig#incremental) | 使 TypeScript 将上次编译的工程图信息保存到磁盘上的文件中\n`tsBuildInfoFile` [#](https://www.typescriptlang.org/zh/tsconfig#tsBuildInfoFile) | 这个选项可以让您指定一个文件来存储增量编译信息，以作为复合工程的一部分，从而可以更快的构建更大的 TypeScript 代码库\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s11-265",
       "sectionId": "s11",
-      "title": "监听选项(watchOptions)",
-      "kind": "text",
-      "body": ":- | --\n:- | --\n`watchFile` [#](https://www.typescriptlang.org/zh/tsconfig#watch-watchFile) | 如何监视单个文件的策略\n`watchDirectory` [#](https://www.typescriptlang.org/zh/tsconfig#watch-watchDirectory) | 在缺乏递归文件监视功能的系统下监视整个目录树的策略\n`fallbackPolling` [#](https://www.typescriptlang.org/zh/tsconfig#watch-fallbackPolling) | 使用文件系统事件时，此选项指定当系统用完本机文件观察器和/或不支持本机文件观察器时使用的轮询策略\n`synchronousWatchDirectory` [#](https://www.typescriptlang.org/zh/tsconfig#watch-synchronousWatchDirectory) | 在本机不支持递归监视的平台上同步调用回调并更新目录监视程序的状态\n`excludeDirectories` [#](https://www.typescriptlang.org/zh/tsconfig#watch-excludeDirectories) | 您可以使用 excludeFiles 来大幅减少在 --watch 期间监视的文件数量\n`excludeFiles` [#](https://www.typescriptlang.org/zh/tsconfig#watch-excludeFiles) | 您可以使用 excludeFiles 从监视的文件中删除一组特定文件\n<!--rehype:className=style-list-arrow-->"
-    },
-    {
-      "id": "s11-266",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22watchOptions%22%3A%20%7B%0A%20%20%20%20%22synchronousWatchDirectory%22%3A%20true%0A%20%20%7D%0A%7D",
+      "title": "%E7%9B%91%E5%90%AC%E9%80%89%E9%A1%B9(watchOptions)",
+      "body": "%3A-%20%7C%20--%0A%3A-%20%7C%20--%0A%60watchFile%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23watch-watchFile)%20%7C%20%E5%A6%82%E4%BD%95%E7%9B%91%E8%A7%86%E5%8D%95%E4%B8%AA%E6%96%87%E4%BB%B6%E7%9A%84%E7%AD%96%E7%95%A5%0A%60watchDirectory%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23watch-watchDirectory)%20%7C%20%E5%9C%A8%E7%BC%BA%E4%B9%8F%E9%80%92%E5%BD%92%E6%96%87%E4%BB%B6%E7%9B%91%E8%A7%86%E5%8A%9F%E8%83%BD%E7%9A%84%E7%B3%BB%E7%BB%9F%E4%B8%8B%E7%9B%91%E8%A7%86%E6%95%B4%E4%B8%AA%E7%9B%AE%E5%BD%95%E6%A0%91%E7%9A%84%E7%AD%96%E7%95%A5%0A%60fallbackPolling%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23watch-fallbackPolling)%20%7C%20%E4%BD%BF%E7%94%A8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BA%8B%E4%BB%B6%E6%97%B6%EF%BC%8C%E6%AD%A4%E9%80%89%E9%A1%B9%E6%8C%87%E5%AE%9A%E5%BD%93%E7%B3%BB%E7%BB%9F%E7%94%A8%E5%AE%8C%E6%9C%AC%E6%9C%BA%E6%96%87%E4%BB%B6%E8%A7%82%E5%AF%9F%E5%99%A8%E5%92%8C%2F%E6%88%96%E4%B8%8D%E6%94%AF%E6%8C%81%E6%9C%AC%E6%9C%BA%E6%96%87%E4%BB%B6%E8%A7%82%E5%AF%9F%E5%99%A8%E6%97%B6%E4%BD%BF%E7%94%A8%E7%9A%84%E8%BD%AE%E8%AF%A2%E7%AD%96%E7%95%A5%0A%60synchronousWatchDirectory%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23watch-synchronousWatchDirectory)%20%7C%20%E5%9C%A8%E6%9C%AC%E6%9C%BA%E4%B8%8D%E6%94%AF%E6%8C%81%E9%80%92%E5%BD%92%E7%9B%91%E8%A7%86%E7%9A%84%E5%B9%B3%E5%8F%B0%E4%B8%8A%E5%90%8C%E6%AD%A5%E8%B0%83%E7%94%A8%E5%9B%9E%E8%B0%83%E5%B9%B6%E6%9B%B4%E6%96%B0%E7%9B%AE%E5%BD%95%E7%9B%91%E8%A7%86%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%8A%B6%E6%80%81%0A%60excludeDirectories%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23watch-excludeDirectories)%20%7C%20%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20excludeFiles%20%E6%9D%A5%E5%A4%A7%E5%B9%85%E5%87%8F%E5%B0%91%E5%9C%A8%20--watch%20%E6%9C%9F%E9%97%B4%E7%9B%91%E8%A7%86%E7%9A%84%E6%96%87%E4%BB%B6%E6%95%B0%E9%87%8F%0A%60excludeFiles%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23watch-excludeFiles)%20%7C%20%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20excludeFiles%20%E4%BB%8E%E7%9B%91%E8%A7%86%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%AD%E5%88%A0%E9%99%A4%E4%B8%80%E7%BB%84%E7%89%B9%E5%AE%9A%E6%96%87%E4%BB%B6%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow--%3E%0A%0A%60%60%60js%0A%7B%0A%20%20%22watchOptions%22%3A%20%7B%0A%20%20%20%20%22synchronousWatchDirectory%22%3A%20true%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s11-267",
       "sectionId": "s11",
-      "title": "类型采集(typeAcquisition)",
-      "kind": "text",
-      "body": ":- | --\n:- | --\n`enable` [#](https://www.typescriptlang.org/zh/tsconfig#type-enable) | 提供用于在 JavaScript 项目中禁用类型获取的配置\n`include` [#](https://www.typescriptlang.org/zh/tsconfig#type-include) | 如果您有一个 JavaScript 项目，其中 TypeScript 需要额外的指导来理解全局依赖关系，或者已通过 disableFilenameBasedTypeAcquisition 禁用了内置推理\n`exclude` [#](https://www.typescriptlang.org/zh/tsconfig#type-exclude) | 提供用于禁用 JavaScript 项目中特定模块的类型获取的配置\n`disableFilenameBasedTypeAcquisition` [#](https://www.typescriptlang.org/zh/tsconfig#type-disableFilenameBasedTypeAcquisition) | TypeScript 的类型获取可以根据项目中的文件名推断出应该添加哪些类型\n<!--rehype:className=style-list-arrow-->"
-    },
-    {
-      "id": "s11-268",
-      "sectionId": "s11",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22typeAcquisition%22%3A%20%7B%0A%20%20%20%20%22enable%22%3A%20false%0A%20%20%7D%0A%7D",
+      "title": "%E7%B1%BB%E5%9E%8B%E9%87%87%E9%9B%86(typeAcquisition)",
+      "body": "%3A-%20%7C%20--%0A%3A-%20%7C%20--%0A%60enable%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23type-enable)%20%7C%20%E6%8F%90%E4%BE%9B%E7%94%A8%E4%BA%8E%E5%9C%A8%20JavaScript%20%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%A6%81%E7%94%A8%E7%B1%BB%E5%9E%8B%E8%8E%B7%E5%8F%96%E7%9A%84%E9%85%8D%E7%BD%AE%0A%60include%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23type-include)%20%7C%20%E5%A6%82%E6%9E%9C%E6%82%A8%E6%9C%89%E4%B8%80%E4%B8%AA%20JavaScript%20%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%85%B6%E4%B8%AD%20TypeScript%20%E9%9C%80%E8%A6%81%E9%A2%9D%E5%A4%96%E7%9A%84%E6%8C%87%E5%AF%BC%E6%9D%A5%E7%90%86%E8%A7%A3%E5%85%A8%E5%B1%80%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%EF%BC%8C%E6%88%96%E8%80%85%E5%B7%B2%E9%80%9A%E8%BF%87%20disableFilenameBasedTypeAcquisition%20%E7%A6%81%E7%94%A8%E4%BA%86%E5%86%85%E7%BD%AE%E6%8E%A8%E7%90%86%0A%60exclude%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23type-exclude)%20%7C%20%E6%8F%90%E4%BE%9B%E7%94%A8%E4%BA%8E%E7%A6%81%E7%94%A8%20JavaScript%20%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%89%B9%E5%AE%9A%E6%A8%A1%E5%9D%97%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%8E%B7%E5%8F%96%E7%9A%84%E9%85%8D%E7%BD%AE%0A%60disableFilenameBasedTypeAcquisition%60%20%5B%23%5D(https%3A%2F%2Fwww.typescriptlang.org%2Fzh%2Ftsconfig%23type-disableFilenameBasedTypeAcquisition)%20%7C%20TypeScript%20%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%8E%B7%E5%8F%96%E5%8F%AF%E4%BB%A5%E6%A0%B9%E6%8D%AE%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E6%8E%A8%E6%96%AD%E5%87%BA%E5%BA%94%E8%AF%A5%E6%B7%BB%E5%8A%A0%E5%93%AA%E4%BA%9B%E7%B1%BB%E5%9E%8B%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow--%3E%0A%0A%60%60%60js%0A%7B%0A%20%20%22typeAcquisition%22%3A%20%7B%0A%20%20%20%20%22enable%22%3A%20false%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s12-269",
       "sectionId": "s12",
       "title": "另见",
-      "kind": "text",
       "body": "• [JavaScript 备忘清单](./javascript.md)\n• [TypeScript 官网](https://www.typescriptlang.org/) _(typescriptlang.org)_"
     }
   ],

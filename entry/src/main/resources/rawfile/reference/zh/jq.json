@@ -30,384 +30,115 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "这个快速参考备忘单提供了使用 [jq](https://stedolan.github.io/jq/) 命令的各种方法。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "介绍",
-      "kind": "text",
-      "body": "jq 就像用于 JSON 数据的 [sed](./sed.md) - 您可以使用它来切片、过滤、映射和转换结构化数据"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• [jq 官网](https://stedolan.github.io/jq/) _(stedolan.github.io)_\n• [jq 命令使用](https://jaywcjlove.github.io/linux-command/c/jq.html) _(jaywcjlove.github.io)_"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "安装"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ sudo apt-get install jq # Debian& Ubuntu\n$ sudo dnf install jq     # Fedora \n$ sudo zypper install jq  # openSUSE\n$ sudo pacman -S jq    # Arch\n$ brew install jq      # macOS & Homebrew\n$ port install jq      # macOS & MacPorts"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "语法"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ jq [options] <jq filter> [file...]\n$ jq [options] --args <jq filter> [strings...]\n$ jq [options] --jsonargs <jq filter> [JSON_TEXTS...]"
+      "body": "jq 就像用于 JSON 数据的 [sed](./sed.md) - 您可以使用它来切片、过滤、映射和转换结构化数据\n\n• [jq 官网](https://stedolan.github.io/jq/) _(stedolan.github.io)_\n• [jq 命令使用](https://jaywcjlove.github.io/linux-command/c/jq.html) _(jaywcjlove.github.io)_\n\n安装\n\n```bash\n$ sudo apt-get install jq # Debian& Ubuntu\n$ sudo dnf install jq     # Fedora \n$ sudo zypper install jq  # openSUSE\n$ sudo pacman -S jq    # Arch\n$ brew install jq      # macOS & Homebrew\n$ port install jq      # macOS & MacPorts\n```\n\n语法\n\n```bash\n$ jq [options] <jq filter> [file...]\n$ jq [options] --args <jq filter> [strings...]\n$ jq [options] --jsonargs <jq filter> [JSON_TEXTS...]\n```"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "选项",
-      "kind": "text",
       "body": ":- | -\n:- | -\n`-c`               | 紧凑而不是漂亮的输出\n`-n`               | 使用`null`作为单个输入值\n`-e`               | 根据输出设置退出状态代码\n`-s`               | 将所有输入读取（吸取）到数组中；应用过滤器\n`-r`               | 输出原始字符串，而不是JSON文本\n`-R`               | 读取原始字符串，而不是JSON文本\n`-C`               | 为 JSON 着色\n`-M`               | 单色（不要为JSON着色）\n`-S`               | 在输出上排序对象的键\n`--tab`            | 使用制表符进行缩进\n`--arg a v`        | 将变量 `$a` 设置为 value `<v>`\n`--argjson a v`    | 将变量 `$a` 设置为 JSON value `<v>`\n`--slurpfile a f`  | 将变量 `$a` 设置为从`<f>`读取的JSON文本数组\n`--rawfile a f`    | 将变量 `$a` 设置为包含`<f>`内容的字符串\n`--args`           | 其余参数是字符串参数，而不是文件\n`--jsonargs`       | 其余的参数是JSON参数，而不是文件\n`--`               | 终止参数处理"
     },
     {
       "id": "s2-8",
       "sectionId": "s2",
       "title": "%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E9%94%AE%E7%9A%84%E5%80%BC",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'%7B%22foo%22%3A%2042%2C%20%22bar%22%3A%20%22less%20interesting%20data%22%7D'%20%7C%20jq%20'.foo'",
+      "body": "%60%60%60bash%0A%24%20echo%20'%7B%22foo%22%3A%2042%2C%20%22bar%22%3A%20%22less%20interesting%20data%22%7D'%20%7C%20jq%20'.foo'%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A42%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s2-9",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-10",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "42"
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
       "title": "%E6%95%B0%E7%BB%84%E8%BF%90%E7%AE%97",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'%5B%7B%22name%22%3A%22JSON%22%2C%20%22good%22%3Atrue%7D%2C%20%7B%22name%22%3A%22XML%22%2C%20%22good%22%3Afalse%7D%5D'%20%7C%20jq%20'.%5B1%5D'",
-      "encoded": true
-    },
-    {
-      "id": "s2-12",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-13",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%7B%0A%20%20%22name%22%3A%20%22XML%22%2C%0A%20%20%22good%22%3A%20false%0A%7D",
+      "body": "%60%60%60bash%0A%24%20echo%20'%5B%7B%22name%22%3A%22JSON%22%2C%20%22good%22%3Atrue%7D%2C%20%7B%22name%22%3A%22XML%22%2C%20%22good%22%3Afalse%7D%5D'%20%7C%20jq%20'.%5B1%5D'%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A%7B%0A%20%20%22name%22%3A%20%22XML%22%2C%0A%20%20%22good%22%3A%20false%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
       "title": "%E6%9E%84%E9%80%A0%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%2F%E5%AF%B9%E8%B1%A1",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'%7B%22user%22%3A%22stedolan%22%2C%22titles%22%3A%5B%22JQ%20Primer%22%2C%20%22More%20JQ%22%5D%7D'%20%7C%20jq%20'%7Buser%2C%20title%3A%20.titles%5B%5D%7D'",
-      "encoded": true
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-16",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%7B%0A%20%20%22user%22%3A%20%22stedolan%22%2C%0A%20%20%22title%22%3A%20%22JQ%20Primer%22%0A%7D%0A%7B%0A%20%20%22user%22%3A%20%22stedolan%22%2C%0A%20%20%22title%22%3A%20%22More%20JQ%22%0A%7D",
+      "body": "%60%60%60bash%0A%24%20echo%20'%7B%22user%22%3A%22stedolan%22%2C%22titles%22%3A%5B%22JQ%20Primer%22%2C%20%22More%20JQ%22%5D%7D'%20%7C%20jq%20'%7Buser%2C%20title%3A%20.titles%5B%5D%7D'%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A%7B%0A%20%20%22user%22%3A%20%22stedolan%22%2C%0A%20%20%22title%22%3A%20%22JQ%20Primer%22%0A%7D%0A%7B%0A%20%20%22user%22%3A%20%22stedolan%22%2C%0A%20%20%22title%22%3A%20%22More%20JQ%22%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "%E8%AE%A1%E7%AE%97%E4%B8%80%E4%B8%AA%E5%80%BC%E7%9A%84%E9%95%BF%E5%BA%A6",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'%5B%5B1%2C2%5D%2C%20%22string%22%2C%20%7B%22a%22%3A2%7D%2C%20null%5D'%20%7C%20jq%20'.%5B%5D%20%7C%20length'",
+      "body": "%60%60%60bash%0A%24%20echo%20'%5B%5B1%2C2%5D%2C%20%22string%22%2C%20%7B%22a%22%3A2%7D%2C%20null%5D'%20%7C%20jq%20'.%5B%5D%20%7C%20length'%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A2%0A6%0A1%0A0%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "2\n6\n1\n0"
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "%E5%8F%96%E5%87%BA%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%94%AE",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'%7B%22abc%22%3A%201%2C%20%22abcd%22%3A%202%2C%20%22Foo%22%3A%203%7D'%20%7C%20jq%20'keys'",
-      "encoded": true
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%5B%0A%20%20%22Foo%22%2C%0A%20%20%22abc%22%2C%0A%20%20%22abcd%22%0A%5D",
+      "body": "%60%60%60bash%0A%24%20echo%20'%7B%22abc%22%3A%201%2C%20%22abcd%22%3A%202%2C%20%22Foo%22%3A%203%7D'%20%7C%20jq%20'keys'%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A%5B%0A%20%20%22Foo%22%2C%0A%20%20%22abc%22%2C%0A%20%20%22abcd%22%0A%5D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA%E8%BF%87%E6%BB%A4%E5%99%A8",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'%7B%20%22foo%22%3A%2042%2C%20%22bar%22%3A%20%22something%20else%22%2C%20%22baz%22%3A%20true%7D'%20%7C%20jq%20'.foo%2C%20.bar'",
-      "encoded": true
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-25",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "42%0A%22something%20else%22",
+      "body": "%60%60%60bash%0A%24%20echo%20'%7B%20%22foo%22%3A%2042%2C%20%22bar%22%3A%20%22something%20else%22%2C%20%22baz%22%3A%20true%7D'%20%7C%20jq%20'.foo%2C%20.bar'%20%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A42%0A%22something%20else%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-26",
       "sectionId": "s2",
       "title": "%E7%AE%A1%E9%81%93%E4%BC%A0%E9%80%92%E7%BB%99%E4%B8%8B%E4%B8%80%E4%B8%AA%E8%BF%87%E6%BB%A4%E5%99%A8",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'%5B%7B%22name%22%3A%22JSON%22%2C%20%22good%22%3Atrue%7D%2C%20%7B%22name%22%3A%22XML%22%2C%20%22good%22%3Afalse%7D%5D'%20%7C%20jq%20'.%5B%5D%20%7C%20.name'",
-      "encoded": true
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%22JSON%22%0A%22XML%22",
+      "body": "%60%60%60bash%0A%24%20echo%20'%5B%7B%22name%22%3A%22JSON%22%2C%20%22good%22%3Atrue%7D%2C%20%7B%22name%22%3A%22XML%22%2C%20%22good%22%3Afalse%7D%5D'%20%7C%20jq%20'.%5B%5D%20%7C%20.name'%20%20%20%20%20%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A%22JSON%22%0A%22XML%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
-      "title": "条件语句判断",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ echo '[1,5,3,0,7]' | jq 'map(select(. >= 2))'"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-31",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "[\n  5,\n  3,\n  7\n]"
+      "title": "%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5%E5%88%A4%E6%96%AD",
+      "body": "%60%60%60bash%0A%24%20echo%20'%5B1%2C5%2C3%2C0%2C7%5D'%20%7C%20jq%20'map(select(.%20%3E%3D%202))'%20%20%20%20%20%20%20%20%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A%5B%0A%20%205%2C%0A%20%203%2C%0A%20%207%0A%5D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-32",
       "sectionId": "s2",
-      "title": "每个输入调用过滤器",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ echo '[1,2,3]' | jq 'map(.+1)'"
-    },
-    {
-      "id": "s2-33",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "[\n  2,\n  3,\n  4\n]"
+      "title": "%E6%AF%8F%E4%B8%AA%E8%BE%93%E5%85%A5%E8%B0%83%E7%94%A8%E8%BF%87%E6%BB%A4%E5%99%A8",
+      "body": "%60%60%60bash%0A%24%20echo%20'%5B1%2C2%2C3%5D'%20%7C%20jq%20'map(.%2B1)'%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A%5B%0A%20%202%2C%0A%20%203%2C%0A%20%204%0A%5D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-35",
       "sectionId": "s2",
       "title": "%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'2'%20%7C%20jq%20'if%20.%20%3D%3D%200%20then%20%22zero%22%20elif%20.%20%3D%3D%201%20then%20%22one%22%20else%20%22many%22%20end'",
-      "encoded": true
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%22many%22",
+      "body": "%60%60%60bash%0A%24%20echo%20'2'%20%7C%20jq%20'if%20.%20%3D%3D%200%20then%20%22zero%22%20elif%20.%20%3D%3D%201%20then%20%22one%22%20else%20%22many%22%20end'%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A%22many%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-38",
       "sectionId": "s2",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%85%A5%E5%80%BC%E5%B9%B6%E8%BF%9B%E8%A1%8C%E8%BF%90%E7%AE%97",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'42'%20%7C%20jq%20'%22The%20input%20was%20%5C(.)%2C%20which%20is%20one%20less%20than%20%5C(.%2B1)%22'",
-      "encoded": true
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-40",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%22The%20input%20was%2042%2C%20which%20is%20one%20less%20than%2043%22",
+      "body": "%60%60%60bash%0A%24%20echo%20'42'%20%7C%20jq%20'%22The%20input%20was%20%5C(.)%2C%20which%20is%20one%20less%20than%20%5C(.%2B1)%22'%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60bash%0A%22The%20input%20was%2042%2C%20which%20is%20one%20less%20than%2043%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-41",
       "sectionId": "s2",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%20JSON%20%E6%95%B0%E7%BB%84",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20'a%20b%20c%20d'%20%7C%20jq%20-R%20'split(%22%20%22)'",
-      "encoded": true
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s2-43",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "json",
-      "code": "%5B%0A%20%20%22a%22%2C%0A%20%20%22b%22%2C%0A%20%20%22c%22%2C%0A%20%20%22d%22%0A%5D",
+      "body": "%60%60%60bash%0A%24%20echo%20'a%20b%20c%20d'%20%7C%20jq%20-R%20'split(%22%20%22)'%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60json%0A%5B%0A%20%20%22a%22%2C%0A%20%20%22b%22%2C%0A%20%20%22c%22%2C%0A%20%20%22d%22%0A%5D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-44",
       "sectionId": "s2",
       "title": "%E6%9B%B4%E6%94%B9%E5%8F%91%E5%B8%83%E6%B3%A8%E5%86%8C%E8%A1%A8",
-      "kind": "code",
-      "lang": "bash",
-      "code": "echo%20%22%24(jq%20'.publishConfig.registry%20%3D%20%22https%3A%2F%2Fnpm.pkg.github.com%22'%20package.json)%22%20%3E%20package.json",
-      "encoded": true
-    },
-    {
-      "id": "s2-45",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将组织范围添加到包名称"
-    },
-    {
-      "id": "s2-46",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "echo%20%22%24(jq%20'.name%20%3D%20%22%40scope%2Fpackage%22'%20package.json)%22%20%3E%20package.json",
+      "body": "%60%60%60bash%0Aecho%20%22%24(jq%20'.publishConfig.registry%20%3D%20%22https%3A%2F%2Fnpm.pkg.github.com%22'%20package.json)%22%20%3E%20package.json%0A%60%60%60%0A%0A%E5%B0%86%E7%BB%84%E7%BB%87%E8%8C%83%E5%9B%B4%E6%B7%BB%E5%8A%A0%E5%88%B0%E5%8C%85%E5%90%8D%E7%A7%B0%0A%0A%60%60%60bash%0Aecho%20%22%24(jq%20'.name%20%3D%20%22%40scope%2Fpackage%22'%20package.json)%22%20%3E%20package.json%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-47",
       "sectionId": "s3",
       "title": "另见",
-      "kind": "text",
       "body": "• [jq 官网](https://stedolan.github.io/jq/) _(stedolan.github.io)_\n• [jq 命令使用](https://jaywcjlove.github.io/linux-command/c/jq.html) _(jaywcjlove.github.io)_"
     }
   ],

@@ -39,6 +39,7 @@ interface MarkdownTableBlock {
   aligns: Array<MarkdownCellAlign>;
   header: Array<Array<MarkdownInlineToken>>;
   rows: Array<Array<Array<MarkdownInlineToken>>>;
+  columnWidths: Array<number>;
 }
 
 type MarkdownBlock = MarkdownParagraphBlock | MarkdownHeadingBlock | MarkdownCodeBlock | MarkdownListBlock | MarkdownTableBlock;
@@ -140,6 +141,60 @@ function padCells<T>(cells: Array<T>, targetLength: number, create: () => T): Ar
     out.push(create());
   }
   return out;
+}
+
+function getTokensTextLength(tokens: Array<MarkdownInlineToken>): number {
+  let len = 0;
+  for (let i = 0; i < tokens.length; i++) {
+    len += tokens[i].text.length;
+  }
+  return len;
+}
+
+function computeColumnWidths(header: Array<Array<MarkdownInlineToken>>, rows: Array<Array<Array<MarkdownInlineToken>>>): Array<number> {
+  const colCount = header.length > 0 ? header.length : (rows.length > 0 ? rows[0].length : 0);
+  const maxLengths: Array<number> = [];
+  for (let c = 0; c < colCount; c++) {
+    maxLengths.push(0);
+  }
+
+  for (let c = 0; c < header.length; c++) {
+    const len = getTokensTextLength(header[c]);
+    if (len > maxLengths[c]) {
+      maxLengths[c] = len;
+    }
+  }
+
+  for (let r = 0; r < rows.length; r++) {
+    const row = rows[r];
+    for (let c = 0; c < row.length && c < colCount; c++) {
+      const len = getTokensTextLength(row[c]);
+      if (len > maxLengths[c]) {
+        maxLengths[c] = len;
+      }
+    }
+  }
+
+  const widths: Array<number> = [];
+  for (let c = 0; c < colCount; c++) {
+    const charLen = maxLengths[c];
+    // 每个字符约 8px 宽度（中文约 14px），加上 padding 16px
+    // 短内容：最小 50px
+    // 中等内容：按字符数计算
+    // 长内容：最大 400px，让内容换行
+    const estimated = charLen * 10 + 16;
+    const minW = 50;
+    const maxW = 400;
+    if (estimated < minW) {
+      widths.push(minW);
+    } else if (estimated > maxW) {
+      widths.push(maxW);
+    } else {
+      widths.push(estimated);
+    }
+  }
+
+  return widths;
 }
 
 function appendTextToken(tokens: Array<MarkdownInlineToken>, text: string): void {
@@ -331,7 +386,8 @@ function parseBlocks(markdown: string): Array<MarkdownBlock> {
           i += 1;
         }
 
-        blocks.push({ kind: 'table', aligns, header, rows });
+        const columnWidths = computeColumnWidths(header, rows);
+        blocks.push({ kind: 'table', aligns, header, rows, columnWidths });
         continue;
       }
     }
@@ -512,9 +568,9 @@ export struct MarkdownView {
                       Column() {
                         this.InlineStyled(cell, this.mdHeadingColor(), FontWeight.Bold, this.tableTextAlign(block.aligns, colIndex));
                       }
-                      .constraintSize({ minWidth: 120 })
+                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : 60)
                       .alignItems(HorizontalAlign.Start)
-                      .padding({ left: 10, right: 10, top: 8, bottom: 8 })
+                      .padding({ left: 8, right: 8, top: 6, bottom: 6 })
                       .backgroundColor(this.mdTableHeaderBackgroundColor())
                       .borderWidth(1)
                       .borderColor(this.mdTableBorderColor());
@@ -528,9 +584,9 @@ export struct MarkdownView {
                       Column() {
                         this.InlineStyled(cell, this.fontColor, FontWeight.Normal, this.tableTextAlign(block.aligns, colIndex));
                       }
-                      .constraintSize({ minWidth: 120 })
+                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : 60)
                       .alignItems(HorizontalAlign.Start)
-                      .padding({ left: 10, right: 10, top: 8, bottom: 8 })
+                      .padding({ left: 8, right: 8, top: 6, bottom: 6 })
                       .backgroundColor(this.mdTableCellBackgroundColor())
                       .borderWidth(1)
                       .borderColor(this.mdTableBorderColor());

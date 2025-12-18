@@ -70,1307 +70,573 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "提供基本语法和方法的 C# 快速参考备忘单"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Hello.cs",
-      "kind": "code",
-      "lang": "cs",
-      "code": "class%20Hello%20%7B%0A%20%20%2F%2F%20main%20method%0A%20%20static%20void%20Main(string%5B%5D%20args)%0A%20%20%7B%0A%20%20%20%20%2F%2F%20%E8%BE%93%E5%87%BA%3A%20Hello%2C%20world!%0A%20%20%20%20Console.WriteLine(%22Hello%2C%20world!%22)%3B%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60cs%0Aclass%20Hello%20%7B%0A%20%20%2F%2F%20main%20method%0A%20%20static%20void%20Main(string%5B%5D%20args)%0A%20%20%7B%0A%20%20%20%20%2F%2F%20%E8%BE%93%E5%87%BA%3A%20Hello%2C%20world!%0A%20%20%20%20Console.WriteLine(%22Hello%2C%20world!%22)%3B%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E7%BC%96%E8%AF%91%E8%BF%90%E8%A1%8C%EF%BC%88%E7%A1%AE%E4%BF%9D%E5%9C%A8%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95%E4%B8%8B%EF%BC%89%0A%0A%60%60%60shell%0A%24%20dotnet%20run%0AHello%2C%20world!%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "编译运行（确保在项目目录下）"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ dotnet run\nHello, world!"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%E4%BD%BF%E7%94%A8%E6%97%B6%20using%20%E5%91%BD%E5%90%8D%E5%90%8D%E7%A7%B0%0Ausing%20Test%3B%0A%2F%2F%E5%88%9B%E5%BB%BA%EF%BC%9A%0Anamespace%20Test%7B%0A%20%20class%20Test_className%7B%0A%20%20%20%20%2F%2F%20main%E6%96%B9%E6%B3%95%E6%98%AF%E7%A8%8B%E5%BA%8F%E7%9A%84%E4%B8%BB%E5%85%A5%E5%8F%A3%0A%20%20%20%20public%20void%20Myclass()%20%7B%0A%20%20%20%20%20%20console.writeline(%22Test%22)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60cs%0A%2F%2F%E4%BD%BF%E7%94%A8%E6%97%B6%20using%20%E5%91%BD%E5%90%8D%E5%90%8D%E7%A7%B0%0Ausing%20Test%3B%0A%2F%2F%E5%88%9B%E5%BB%BA%EF%BC%9A%0Anamespace%20Test%7B%0A%20%20class%20Test_className%7B%0A%20%20%20%20%2F%2F%20main%E6%96%B9%E6%B3%95%E6%98%AF%E7%A8%8B%E5%BA%8F%E7%9A%84%E4%B8%BB%E5%85%A5%E5%8F%A3%0A%20%20%20%20public%20void%20Myclass()%20%7B%0A%20%20%20%20%20%20console.writeline(%22Test%22)%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "访问修饰符",
-      "kind": "text",
       "body": "| 声明的可访问性     | 含义     |\n|-----|----------------------|\n| `public`             | 访问不受限制 |\n| `protected`          | 访问限于包含类或派生自包含类的类型 (该类内部和继承类中可以访问)   |\n| `internal`           | 访问限于当前程序集          |\n| `protected internal` | 访问限于当前程序集或派生自包含类的类型         |\n| `private`            | 访问限于包含类              |\n| `private protected`  | 访问限于包含类或当前程序集中派生自包含类的类型,自 C# 7.2 之后可用 |"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2",
-      "kind": "code",
-      "lang": "cs",
-      "code": "string%20first%20%3D%20%22John%22%3B%0Astring%20last%20%3D%20%22Doe%22%3B%0A%2F%2F%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5%0Astring%20name%20%3D%20first%20%2B%20%22%20%22%20%2B%20last%3B%0AConsole.WriteLine(name)%3B%20%2F%2F%20%3D%3E%20John%20Doe",
+      "body": "%60%60%60cs%0Astring%20first%20%3D%20%22John%22%3B%0Astring%20last%20%3D%20%22Doe%22%3B%0A%2F%2F%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5%0Astring%20name%20%3D%20first%20%2B%20%22%20%22%20%2B%20last%3B%0AConsole.WriteLine(name)%3B%20%2F%2F%20%3D%3E%20John%20Doe%0A%60%60%60%0A%0A%E6%9F%A5%E7%9C%8B%3A%20%5BC%23%E5%AD%97%E7%AC%A6%E4%B8%B2%5D(%23c-%E5%AD%97%E7%AC%A6%E4%B8%B2)",
       "encoded": true
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "查看: [C#字符串](#c-字符串)"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "注释",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 单行注释\n\n/* \n * 多行\n * 注释 - 用于文档 \n */\n\n// TODO：\n// 向IDE中的任务列表添加注释（VS、Rider都支持）\n/// XML 单行注释，用于文档"
+      "body": "```cs\n// 单行注释\n\n/* \n * 多行\n * 注释 - 用于文档 \n */\n\n// TODO：\n// 向IDE中的任务列表添加注释（VS、Rider都支持）\n/// XML 单行注释，用于文档\n```"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5",
-      "kind": "text",
-      "body": "%60%60%60cs%20showLineNumbers%0AConsole.WriteLine(%22Enter%20number%3A%22)%3B%0Aif(int.TryParse(Console.ReadLine()%2Cout%20int%20input))%0A%7B%0A%2F%2F%20%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81%0AConsole.WriteLine(%24%22You%20entered%20%7Binput%7D%22)%3B%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "%0A%23%23%23%20%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD%0A%0A%60%60%60cs%0Aint%20j%20%3D%2010%3B%0Aif%20(j%20%3D%3D%2010)%20%7B%0A%20%20Console.WriteLine(%22I%20get%20printed%22)%3B%0A%7D%20else%20if%20(j%20%3E%2010)%20%7B%0A%20%20Console.WriteLine(%22I%20don't%22)%3B%0A%7D%20else%20%7B%0A%20%20Console.WriteLine(%22I%20also%20don't%22)%3B%0A%7D",
+      "body": "%60%60%60cs%20showLineNumbers%0AConsole.WriteLine(%22Enter%20number%3A%22)%3B%0Aif(int.TryParse(Console.ReadLine()%2Cout%20int%20input))%0A%7B%0A%2F%2F%20%E8%BE%93%E5%85%A5%E9%AA%8C%E8%AF%81%0AConsole.WriteLine(%24%22You%20entered%20%7Binput%7D%22)%3B%0A%7D%0A%0A%60%60%60%0A%0A%23%23%23%20%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD%0A%0A%60%60%60cs%0Aint%20j%20%3D%2010%3B%0Aif%20(j%20%3D%3D%2010)%20%7B%0A%20%20Console.WriteLine(%22I%20get%20printed%22)%3B%0A%7D%20else%20if%20(j%20%3E%2010)%20%7B%0A%20%20Console.WriteLine(%22I%20don't%22)%3B%0A%7D%20else%20%7B%0A%20%20Console.WriteLine(%22I%20also%20don't%22)%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
       "title": "%E5%8F%98%E9%87%8F",
-      "kind": "code",
-      "lang": "cs",
-      "code": "int%20intNum%20%3D%209%3B%0Along%20longNum%20%3D%209999999%3B%0Afloat%20floatNum%20%3D%209.99F%3B%0Adouble%20doubleNum%20%3D%2099.999%3B%0Adecimal%20decimalNum%20%3D%2099.9999M%3B%0Achar%20letter%20%3D%20'D'%3B%0Abool%20%40bool%20%3D%20true%3B%0Astring%20site%20%3D%20%22jaywcjlove.github.io%22%3B%0Avar%20num%20%3D%20999%3B%0Avar%20str%20%3D%20%22999%22%3B%0Avar%20bo%20%3D%20false%3B",
+      "body": "%60%60%60cs%0Aint%20intNum%20%3D%209%3B%0Along%20longNum%20%3D%209999999%3B%0Afloat%20floatNum%20%3D%209.99F%3B%0Adouble%20doubleNum%20%3D%2099.999%3B%0Adecimal%20decimalNum%20%3D%2099.9999M%3B%0Achar%20letter%20%3D%20'D'%3B%0Abool%20%40bool%20%3D%20true%3B%0Astring%20site%20%3D%20%22jaywcjlove.github.io%22%3B%0Avar%20num%20%3D%20999%3B%0Avar%20str%20%3D%20%22999%22%3B%0Avar%20bo%20%3D%20false%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "%E5%BE%AA%E7%8E%AF",
-      "kind": "code",
-      "lang": "cs",
-      "code": "int%5B%5D%20numbers%20%3D%20%7B1%2C%202%2C%203%2C%204%2C%205%7D%3B%0Afor(int%20i%20%3D%200%3B%20i%20%3C%20numbers.Length%3B%20i%2B%2B)%20%7B%0A%20%20Console.WriteLine(numbers%5Bi%5D)%3B%0A%7D%0A%0Aforeach(int%20num%20in%20numbers)%20%7B%0A%20%20Console.WriteLine(num)%3B%0A%7D%0A%0Awhile(true)%0A%7B%0A%20%20%20Console.WriteLine(%22%E5%8F%AA%E8%A6%81%E7%BB%99%E5%AE%9A%E7%9A%84%E6%9D%A1%E4%BB%B6%E4%B8%BA%E7%9C%9F%EF%BC%8Cwhile%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E4%BC%9A%E9%87%8D%E5%A4%8D%E6%89%A7%E8%A1%8C%22)%3B%0A%7D%0A%0Ado%0A%7B%0A%20%20%20Console.WriteLine(%22%E4%B8%8E%20while%20%E7%B1%BB%E4%BC%BC%EF%BC%8Cdo...while%20%E4%BC%9A%E7%A1%AE%E4%BF%9D%E8%87%B3%E5%B0%91%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1%E5%BE%AA%E7%8E%AF%E3%80%82%22)%3B%0A%7D%20while(%20true%20)%3B",
+      "body": "%60%60%60cs%0Aint%5B%5D%20numbers%20%3D%20%7B1%2C%202%2C%203%2C%204%2C%205%7D%3B%0Afor(int%20i%20%3D%200%3B%20i%20%3C%20numbers.Length%3B%20i%2B%2B)%20%7B%0A%20%20Console.WriteLine(numbers%5Bi%5D)%3B%0A%7D%0A%60%60%60%0A%0A%60%60%60cs%0Aforeach(int%20num%20in%20numbers)%20%7B%0A%20%20Console.WriteLine(num)%3B%0A%7D%0A%60%60%60%0A%0A%60%60%60cs%0Awhile(true)%0A%7B%0A%20%20%20Console.WriteLine(%22%E5%8F%AA%E8%A6%81%E7%BB%99%E5%AE%9A%E7%9A%84%E6%9D%A1%E4%BB%B6%E4%B8%BA%E7%9C%9F%EF%BC%8Cwhile%20%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5%E4%BC%9A%E9%87%8D%E5%A4%8D%E6%89%A7%E8%A1%8C%22)%3B%0A%7D%0A%60%60%60%0A%0A%60%60%60cs%0Ado%0A%7B%0A%20%20%20Console.WriteLine(%22%E4%B8%8E%20while%20%E7%B1%BB%E4%BC%BC%EF%BC%8Cdo...while%20%E4%BC%9A%E7%A1%AE%E4%BF%9D%E8%87%B3%E5%B0%91%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1%E5%BE%AA%E7%8E%AF%E3%80%82%22)%3B%0A%7D%20while(%20true%20)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "%E6%95%B0%E7%BB%84",
-      "kind": "code",
-      "lang": "cs",
-      "code": "char%5B%5D%20chars%20%3D%20new%20char%5B10%5D%3B%0Achars%5B0%5D%20%3D%20'a'%3B%0Achars%5B1%5D%20%3D%20'b'%3B%0Astring%5B%5D%20letters%20%3D%20%7B%22A%22%2C%20%22B%22%2C%20%22C%22%7D%3B%0Aint%5B%5D%20mylist%20%3D%20%7B100%2C%20200%7D%3B%0Abool%5B%5D%20answers%20%3D%20%7Btrue%2C%20false%7D%3B",
+      "body": "%60%60%60cs%0Achar%5B%5D%20chars%20%3D%20new%20char%5B10%5D%3B%0Achars%5B0%5D%20%3D%20'a'%3B%0Achars%5B1%5D%20%3D%20'b'%3B%0Astring%5B%5D%20letters%20%3D%20%7B%22A%22%2C%20%22B%22%2C%20%22C%22%7D%3B%0Aint%5B%5D%20mylist%20%3D%20%7B100%2C%20200%7D%3B%0Abool%5B%5D%20answers%20%3D%20%7Btrue%2C%20false%7D%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
       "title": "原始数据类型",
-      "kind": "text",
       "body": "| 关键字 | 名称         | System 别名 | 占用空间（Byte） | 数据范围                                 |\n| ------ | ------------ | ----------- | ---------- | ---------------------------------------- |\n| `bool`   | 布尔型       | `Boolean`     | 1          | true/false                               |\n| `sbyte`  | 有符号字节型 | `SByte`       | 1          | -128 ~ 127                               |\n| `byte`   | 字节型       | `Byte`        | 1          | 0 ~ 255                                  |\n| `short`  | 短整型       | `Int16`       | 2          | -32,768 ~ 32,767                         |\n| `ushort` | 无符号短整型 | `UInt16`      | 2          | 0 ~ 65,535                               |\n| `int`    | 整型         | `Int32`       | 4          | -2,147,483,648 ~ 2,147,483,647           |\n| `uint`   | 无符号整型   | `UInt32`      | 4          | 0 ~ 4,294,967,295                        |\n| `long`   | 长整型       | `Int64`       | 8          | -2^63 ~ 2^63-1                           |\n| `ulong`  | 无符号长整型 | `UInt64`      | 8          | 0 ~ 2^64-1                               |\n| `char`   | 字符型       | `Char`        | 8          | UTF-16 所编码的字符                      |\n| `float`  | 单精度浮点型 | `Single`      | 4          | ±1.5x10^45 ~ ±3.4x10^38                  |\n| `double` | 双精度浮点型 | `Double`      | 8          | ±5.0x10^-324 ~ ±1.7x10^308               |\n| `nint`   | 指针型       | `IntPtr`      | 与指针相同 | 与指针相同（受操作系统和处理器位宽影响） |\n| `nuint` | 无符号指针型 | `UIntPtr`     | 与指针相同 | 与指针相同（受操作系统和处理器位宽影响） |"
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
       "title": "基本数据类型",
-      "kind": "text",
       "body": "关键字 | 名称 | System 别名 | 说明\n:------ | ------ | ------ | ------\n(除指针型外的全部原始数据类型) | - | - | 原始数据类型都是值类型，基本数据类型包含部分本质上是引用的数据类型\n`string` | 字符串 | `String` | 可变长度\n`decimal` | 十进制浮点数 | `Decimal`     | 适合处理货币等计算，16字节长，不遵循 IEEE 754 关于浮点数的规则"
     },
     {
       "id": "s3-16",
       "sectionId": "s3",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5",
-      "kind": "code",
-      "lang": "cs",
-      "code": "string%20first%20%3D%20%22John%22%3B%0Astring%20last%20%3D%20%22Doe%22%3B%0Astring%20name%20%3D%20first%20%2B%20%22%20%22%20%2B%20last%3B%0AConsole.WriteLine(name)%3B%20%2F%2F%20%3D%3E%20John%20Doe",
+      "body": "%60%60%60cs%0Astring%20first%20%3D%20%22John%22%3B%0Astring%20last%20%3D%20%22Doe%22%3B%0Astring%20name%20%3D%20first%20%2B%20%22%20%22%20%2B%20last%3B%0AConsole.WriteLine(name)%3B%20%2F%2F%20%3D%3E%20John%20Doe%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-17",
       "sectionId": "s3",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC",
-      "kind": "code",
-      "lang": "cs",
-      "code": "string%20first%20%3D%20%22John%22%3B%0Astring%20last%20%3D%20%22Doe%22%3B%0Astring%20name%20%3D%20%24%22%7Bfirst%7D%20%7Blast%7D%22%3B%0AConsole.WriteLine(name)%3B%20%2F%2F%20%3D%3E%20John%20Doe",
+      "body": "%60%60%60cs%0Astring%20first%20%3D%20%22John%22%3B%0Astring%20last%20%3D%20%22Doe%22%3B%0Astring%20name%20%3D%20%24%22%7Bfirst%7D%20%7Blast%7D%22%3B%0AConsole.WriteLine(name)%3B%20%2F%2F%20%3D%3E%20John%20Doe%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-18",
       "sectionId": "s3",
       "title": "字符串成员",
-      "kind": "text",
       "body": "成员 | 说明\n:- | -\n`Length`    | 返回字符串长度的属性\n`Compare()`   | 比较两个字符串的静态方法\n`Contains()`  | 确定字符串是否包含特定的子字符串\n`Equals()`    | 确定两个字符串是否具有相同的字符数据\n`Format()`    | 通过 {0} 表示法和使用其他原语格式化字符串\n`Trim()`      | 从尾随和前导字符中删除特定字符的所有实例。 默认删除前导和尾随空格\n`Split()`     | 删除提供的字符并从两侧的剩余字符中创建一个数组\n<!--rehype:className=show-header-->"
     },
     {
       "id": "s3-19",
       "sectionId": "s3",
       "title": "%E9%80%90%E5%AD%97%E5%AD%97%E7%AC%A6%E4%B8%B2",
-      "kind": "text",
-      "body": "%60%60%60cs%20showLineNumbers%0Astring%20longString%20%3D%20%40%22I%20can%20type%20any%20characters%20in%20here%20!%23%40%24%25%5E%26*()__%2B%20''%20%5Cn%20%5Ct%20except%20double%20quotes%20and%20I%20will%20be%20taken%20literally.%20I%20even%20work%20with%20multiple%20lines.%22%3B",
-      "encoded": true
-    },
-    {
-      "id": "s3-20",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "%3C!--rehype%3AclassName%3Dwrap-text--%3E%0A%0A%23%23%23%20%E6%88%90%E5%91%98%E7%A4%BA%E4%BE%8B%0A%0A%60%60%60cs%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20System.String%20%E7%9A%84%E5%B1%9E%E6%80%A7%0Astring%20lengthOfString%20%3D%20%22How%20long%3F%22%3B%0AlengthOfString.Length%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%3D%3E%209%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20System.String%20%E7%9A%84%E6%96%B9%E6%B3%95%0AlengthOfString.Contains(%22How%22)%3B%20%2F%2F%20%3D%3E%20true",
+      "body": "%60%60%60cs%20showLineNumbers%0Astring%20longString%20%3D%20%40%22I%20can%20type%20any%20characters%20in%20here%20!%23%40%24%25%5E%26*()__%2B%20''%20%5Cn%20%5Ct%20except%20double%20quotes%20and%20I%20will%20be%20taken%20literally.%20I%20even%20work%20with%20multiple%20lines.%22%3B%0A%0A%60%60%60%0A%3C!--rehype%3AclassName%3Dwrap-text--%3E%0A%0A%23%23%23%20%E6%88%90%E5%91%98%E7%A4%BA%E4%BE%8B%0A%0A%60%60%60cs%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20System.String%20%E7%9A%84%E5%B1%9E%E6%80%A7%0Astring%20lengthOfString%20%3D%20%22How%20long%3F%22%3B%0AlengthOfString.Length%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%3D%3E%209%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20System.String%20%E7%9A%84%E6%96%B9%E6%B3%95%0AlengthOfString.Contains(%22How%22)%3B%20%2F%2F%20%3D%3E%20true%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-21",
       "sectionId": "s3",
       "title": "频繁字符串拼接",
-      "kind": "code",
-      "lang": "cs",
-      "code": "var sb = new StringBuilder();\nfor (int i = 0; i < 100; i++)\n{\n    sb.Append(i.ToString());\n}\nConsole.WriteLine(sb.ToString());\n// => 123456789...."
-    },
-    {
-      "id": "s3-22",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "对于频繁拼接字符串的场景（如：成百上千次循环），使用 `System.Text.StringBuilder` 提升性能"
+      "body": "```cs\nvar sb = new StringBuilder();\nfor (int i = 0; i < 100; i++)\n{\n    sb.Append(i.ToString());\n}\nConsole.WriteLine(sb.ToString());\n// => 123456789....\n```\n\n对于频繁拼接字符串的场景（如：成百上千次循环），使用 `System.Text.StringBuilder` 提升性能"
     },
     {
       "id": "s3-23",
       "sectionId": "s3",
       "title": "%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%96%87%E6%9C%AC",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20C%2311%20%E8%AF%AD%E6%B3%95%2C%20%E8%87%B3%E5%B0%913%E4%B8%AA%E5%8F%8C%E5%BC%95%E5%8F%B7(%22%22%22)%E5%BC%80%E5%A4%B4%E5%92%8C%E7%BB%93%E5%B0%BE%EF%BC%8C%E5%86%85%E5%AE%B9%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%85%A5%E4%BB%BB%E4%BD%95%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%0A%2F%2F%20%E5%8D%95%E8%A1%8C%3A%20%E5%B7%A6%E5%BC%95%E5%8F%B7%EF%BC%8C%E5%8F%B3%E5%BC%95%E5%8F%B7%EF%BC%8C%E5%86%85%E5%AE%B9%20%E4%B8%89%E8%80%85%E5%90%8C%E8%A1%8C%0Astring%20singleLine%20%3D%20%22%22%22Content%20begin%20%22Hello%20World!%22%20end.%22%22%22%3B%0A%0A%2F%2F%20%E5%A4%9A%E8%A1%8C%EF%BC%9A%E5%B7%A6%E5%BC%95%E5%8F%B7%EF%BC%8C%E5%8F%B3%E5%BC%95%E5%8F%B7%E5%90%84%E4%B8%80%E8%A1%8C%EF%BC%8C%E5%86%85%E5%AE%B9%E9%9C%80%E4%B8%8E%E5%8F%B3%E5%BC%95%E5%8F%B7%E7%BC%A9%E8%BF%9B%E5%AF%B9%E9%BD%90%0Astring%20multiLine%20%3D%20%22%22%22%0A%20%20%20%20Content%20begin%20%22Hello%20World!%22%20%2F%5Cn%3C%3E%22%22%20end.%0A%20%20%20%20%22%22%22%3B%0AConsole.WriteLine(multiLine)%3B%20%2F%2F%20%3D%3E%20Content%20begin%20%22Hello%20World!%22%20%2F%5Cn%3C%3E%22%22%20end.",
+      "body": "%60%60%60cs%0A%2F%2F%20C%2311%20%E8%AF%AD%E6%B3%95%2C%20%E8%87%B3%E5%B0%913%E4%B8%AA%E5%8F%8C%E5%BC%95%E5%8F%B7(%22%22%22)%E5%BC%80%E5%A4%B4%E5%92%8C%E7%BB%93%E5%B0%BE%EF%BC%8C%E5%86%85%E5%AE%B9%E5%8F%AF%E4%BB%A5%E8%BE%93%E5%85%A5%E4%BB%BB%E4%BD%95%E5%8E%9F%E5%A7%8B%E5%AD%97%E7%AC%A6%0A%2F%2F%20%E5%8D%95%E8%A1%8C%3A%20%E5%B7%A6%E5%BC%95%E5%8F%B7%EF%BC%8C%E5%8F%B3%E5%BC%95%E5%8F%B7%EF%BC%8C%E5%86%85%E5%AE%B9%20%E4%B8%89%E8%80%85%E5%90%8C%E8%A1%8C%0Astring%20singleLine%20%3D%20%22%22%22Content%20begin%20%22Hello%20World!%22%20end.%22%22%22%3B%0A%0A%2F%2F%20%E5%A4%9A%E8%A1%8C%EF%BC%9A%E5%B7%A6%E5%BC%95%E5%8F%B7%EF%BC%8C%E5%8F%B3%E5%BC%95%E5%8F%B7%E5%90%84%E4%B8%80%E8%A1%8C%EF%BC%8C%E5%86%85%E5%AE%B9%E9%9C%80%E4%B8%8E%E5%8F%B3%E5%BC%95%E5%8F%B7%E7%BC%A9%E8%BF%9B%E5%AF%B9%E9%BD%90%0Astring%20multiLine%20%3D%20%22%22%22%0A%20%20%20%20Content%20begin%20%22Hello%20World!%22%20%2F%5Cn%3C%3E%22%22%20end.%0A%20%20%20%20%22%22%22%3B%0AConsole.WriteLine(multiLine)%3B%20%2F%2F%20%3D%3E%20Content%20begin%20%22Hello%20World!%22%20%2F%5Cn%3C%3E%22%22%20end.%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-24",
       "sectionId": "s3",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A4%E7%A9%BA",
-      "kind": "code",
-      "lang": "cs",
-      "code": "string%20name%3B%20%2F%2F%E7%A9%BA%E5%BC%95%E7%94%A8%0Astring%20gender%20%3D%20%22%22%3B%20%2F%2F%E7%A9%BA%E5%80%BC%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20string.IsNullOrEmpty(%E5%AD%97%E7%AC%A6%E4%B8%B2)%20%E6%96%B9%E6%B3%95%EF%BC%8C%E8%BF%94%E5%9B%9E%20bool%20%E5%9E%8B%0AConsole.WriteLine(string.IsNullOrEmpty(name))%3B%20%2F%2F%E8%BE%93%E5%87%BA%20true%0AConsole.WriteLine(string.IsNullOrEmpty(gender))%3B%20%2F%2F%20%E8%BE%93%E5%87%BA%20true",
+      "body": "%60%60%60cs%0Astring%20name%3B%20%2F%2F%E7%A9%BA%E5%BC%95%E7%94%A8%0Astring%20gender%20%3D%20%22%22%3B%20%2F%2F%E7%A9%BA%E5%80%BC%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20string.IsNullOrEmpty(%E5%AD%97%E7%AC%A6%E4%B8%B2)%20%E6%96%B9%E6%B3%95%EF%BC%8C%E8%BF%94%E5%9B%9E%20bool%20%E5%9E%8B%0AConsole.WriteLine(string.IsNullOrEmpty(name))%3B%20%2F%2F%E8%BE%93%E5%87%BA%20true%0AConsole.WriteLine(string.IsNullOrEmpty(gender))%3B%20%2F%2F%20%E8%BE%93%E5%87%BA%20true%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-25",
       "sectionId": "s3",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%AA%E5%8F%96",
-      "kind": "code",
-      "lang": "cs",
-      "code": "string%20Str%20%3D%20%22%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%AA%E5%8F%96%22%3B%0AStr%20%3D%20Str.Substring(2%2C%201)%3B%0AConsole.WriteLine(Str)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%E2%80%9C%E4%B8%B2%E2%80%9D%EF%BC%8C%E6%84%8F%E4%B8%BA%E4%BB%8E%E7%AC%AC%E4%BA%8C%E4%B8%AA%E4%B8%8B%E6%A0%87%E5%BC%80%E5%A7%8B%E6%88%AA%E5%8F%96%E4%B8%80%E4%BD%8D%E5%AD%97%E7%AC%A6",
+      "body": "%60%60%60cs%0Astring%20Str%20%3D%20%22%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%88%AA%E5%8F%96%22%3B%0AStr%20%3D%20Str.Substring(2%2C%201)%3B%0AConsole.WriteLine(Str)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%E2%80%9C%E4%B8%B2%E2%80%9D%EF%BC%8C%E6%84%8F%E4%B8%BA%E4%BB%8E%E7%AC%AC%E4%BA%8C%E4%B8%AA%E4%B8%8B%E6%A0%87%E5%BC%80%E5%A7%8B%E6%88%AA%E5%8F%96%E4%B8%80%E4%BD%8D%E5%AD%97%E7%AC%A6%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-26",
       "sectionId": "s3",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E5%89%B2",
-      "kind": "code",
-      "lang": "cs",
-      "code": "string%20Name%20%3D%20%22%E5%AD%97A%E7%AC%A6A%E4%B8%B2A%E5%88%86A%E5%89%B2%22%3B%0Astring%5B%5D%20Names%3DName.Split(new%20char%5B%5D%20%7B%20'A'%20%7D)%3B%0A%2F%2F%20%E4%BC%9A%E4%BB%A5A%E4%B8%BA%E5%AA%92%E4%BB%8B%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E6%88%90%E8%8B%A5%E5%B9%B2%E4%BB%BD%0Afor%20(int%20i%20%3D%200%3B%20i%20%3C%20Names.Length%3B%20i%2B%2B)%0A%7B%0A%20%20%20%20Console.Write(Names%5Bi%5D)%3B%0A%7D",
+      "body": "%60%60%60cs%0Astring%20Name%20%3D%20%22%E5%AD%97A%E7%AC%A6A%E4%B8%B2A%E5%88%86A%E5%89%B2%22%3B%0Astring%5B%5D%20Names%3DName.Split(new%20char%5B%5D%20%7B%20'A'%20%7D)%3B%0A%2F%2F%20%E4%BC%9A%E4%BB%A5A%E4%B8%BA%E5%AA%92%E4%BB%8B%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%86%E6%88%90%E8%8B%A5%E5%B9%B2%E4%BB%BD%0Afor%20(int%20i%20%3D%200%3B%20i%20%3C%20Names.Length%3B%20i%2B%2B)%0A%7B%0A%20%20%20%20Console.Write(Names%5Bi%5D)%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-27",
       "sectionId": "s3",
       "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2",
-      "kind": "code",
-      "lang": "cs",
-      "code": "string%20Rep%20%3D%20%22%E5%AD%97%E7%AC%A61%E6%9B%BF%E6%8D%A2%22%3B%0ARep%20%3D%20Rep.Replace(%221%22%2C%20%22%E4%B8%B2%22)%3B%0AConsole.WriteLine(Rep)%3B%0A%2F%2F%20%E4%BC%9A%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%AD%E7%9A%84%20%E2%80%9C1%E2%80%9D%E6%9B%BF%E6%8D%A2%E6%88%90%E2%80%9C%E4%B8%B2%E2%80%9D",
+      "body": "%60%60%60cs%0Astring%20Rep%20%3D%20%22%E5%AD%97%E7%AC%A61%E6%9B%BF%E6%8D%A2%22%3B%0ARep%20%3D%20Rep.Replace(%221%22%2C%20%22%E4%B8%B2%22)%3B%0AConsole.WriteLine(Rep)%3B%0A%2F%2F%20%E4%BC%9A%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%AD%E7%9A%84%20%E2%80%9C1%E2%80%9D%E6%9B%BF%E6%8D%A2%E6%88%90%E2%80%9C%E4%B8%B2%E2%80%9D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-28",
       "sectionId": "s4",
       "title": "逻辑运算",
-      "kind": "code",
-      "lang": "cs",
-      "code": "//或运算, 与运算, 非运算\nbool A = true;\nbool B = false;\nbool Or = A || B; // = A | B\nbool And = A && B; // = A & B\nbool Not = !A;\n// ||,&& 与 |,& 分别为逻辑运算和条件逻辑运算, 两者的区别在于, \n// 前者仅在必要时才会计算右侧的值, 后者始终计算右侧的值. 例如:\nbool C = false;\nbool D = true;\nbool CalcD() {\n  D = !D;\n  return D;\n}\nbool E = C && CalcD(); // C: false, D: false, E: false\nbool F = C & CalcD(); // C:false, D: true, F: false\n// 两种运算方法稍有不同, 计算结果始终相同, 但第二种可能造成其他影响.\n//异或运算\nbool Xor = A ^ B;"
-    },
-    {
-      "id": "s4-29",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "C# 中的逻辑运算支持可空布尔类型运算. 注意条件逻辑运算不支持可空布尔类型."
-    },
-    {
-      "id": "s4-30",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "x |  y | x & y | x \\| y | x ^ y | ! x\n:- | - | --- | --- | --- | --\n<code>true</code> | <code>true</code> | <code>true</code> | <code>true</code> | false | false\n<code>true</code> | false | false | <code>true</code> | <code>true</code> | false\n<code>true</code> | <pur>null</pur> | <pur>null</pur> | <code>true</code> | <pur>null</pur> | false\nfalse | <code>true</code> | false | <code>true</code> | <code>true</code> | <code>true</code>\nfalse | false | false | false | false | <code>true</code>\nfalse | <pur>null</pur> | false | <pur>null</pur> | <pur>null</pur> | <code>true</code>\n<pur>null</pur> | <code>true</code> | <pur>null</pur> | <code>true</code> | <pur>null</pur> | <pur>null</pur>\n<pur>null</pur> | false | false | <pur>null</pur> | <pur>null</pur> | <pur>null</pur>\n<pur>null</pur> | <pur>null</pur> | <pur>null</pur> | <pur>null</pur> | <pur>null</pur> | <pur>null</pur>\n<!--rehype:className=show-header-->"
+      "body": "```cs\n//或运算, 与运算, 非运算\nbool A = true;\nbool B = false;\nbool Or = A || B; // = A | B\nbool And = A && B; // = A & B\nbool Not = !A;\n// ||,&& 与 |,& 分别为逻辑运算和条件逻辑运算, 两者的区别在于, \n// 前者仅在必要时才会计算右侧的值, 后者始终计算右侧的值. 例如:\nbool C = false;\nbool D = true;\nbool CalcD() {\n  D = !D;\n  return D;\n}\nbool E = C && CalcD(); // C: false, D: false, E: false\nbool F = C & CalcD(); // C:false, D: true, F: false\n// 两种运算方法稍有不同, 计算结果始终相同, 但第二种可能造成其他影响.\n//异或运算\nbool Xor = A ^ B;\n```\n\nC# 中的逻辑运算支持可空布尔类型运算. 注意条件逻辑运算不支持可空布尔类型.\n\nx |  y | x & y | x \\| y | x ^ y | ! x\n:- | - | --- | --- | --- | --\n<code>true</code> | <code>true</code> | <code>true</code> | <code>true</code> | false | false\n<code>true</code> | false | false | <code>true</code> | <code>true</code> | false\n<code>true</code> | <pur>null</pur> | <pur>null</pur> | <code>true</code> | <pur>null</pur> | false\nfalse | <code>true</code> | false | <code>true</code> | <code>true</code> | <code>true</code>\nfalse | false | false | false | false | <code>true</code>\nfalse | <pur>null</pur> | false | <pur>null</pur> | <pur>null</pur> | <code>true</code>\n<pur>null</pur> | <code>true</code> | <pur>null</pur> | <code>true</code> | <pur>null</pur> | <pur>null</pur>\n<pur>null</pur> | false | false | <pur>null</pur> | <pur>null</pur> | <pur>null</pur>\n<pur>null</pur> | <pur>null</pur> | <pur>null</pur> | <pur>null</pur> | <pur>null</pur> | <pur>null</pur>\n<!--rehype:className=show-header-->"
     },
     {
       "id": "s4-31",
       "sectionId": "s4",
       "title": "关系运算符",
-      "kind": "text",
-      "body": "C# 支持下表中的所有关系运算符。假设变量 A 的值为 1，变量 B 的值为 2，则："
-    },
-    {
-      "id": "s4-32",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "| 运算符 | 描述                                                           | 实例              |\n| :----- | -------------------------------------------------------------- | ----------------- |\n| ==     | 检查两个操作数的值是否相等，如果相等则条件为真。               | (A == B) 不为真。 |\n| !=     | 检查两个操作数的值是否相等，如果不相等则条件为真。             | (A != B) 为真。   |\n| >      | 检查左操作数的值是否大于右操作数的值，如果是则条件为真。       | (A > B) 不为真。  |\n| <      | 检查左操作数的值是否小于右操作数的值，如果是则条件为真。       | (A < B) 为真。    |\n| >=     | 检查左操作数的值是否大于或等于右操作数的值，如果是则条件为真。 | (A >= B) 不为真。 |\n| <=     | 检查左操作数的值是否小于或等于右操作数的值，如果是则条件为真。 | (A <= B) 为真。   |"
+      "body": "C# 支持下表中的所有关系运算符。假设变量 A 的值为 1，变量 B 的值为 2，则：\n\n| 运算符 | 描述                                                           | 实例              |\n| :----- | -------------------------------------------------------------- | ----------------- |\n| ==     | 检查两个操作数的值是否相等，如果相等则条件为真。               | (A == B) 不为真。 |\n| !=     | 检查两个操作数的值是否相等，如果不相等则条件为真。             | (A != B) 为真。   |\n| >      | 检查左操作数的值是否大于右操作数的值，如果是则条件为真。       | (A > B) 不为真。  |\n| <      | 检查左操作数的值是否小于右操作数的值，如果是则条件为真。       | (A < B) 为真。    |\n| >=     | 检查左操作数的值是否大于或等于右操作数的值，如果是则条件为真。 | (A >= B) 不为真。 |\n| <=     | 检查左操作数的值是否小于或等于右操作数的值，如果是则条件为真。 | (A <= B) 为真。   |"
     },
     {
       "id": "s4-33",
       "sectionId": "s4",
       "title": "算术运算符",
-      "kind": "text",
-      "body": "C# 支持下表中的所有算术运算符。假设变量 A 的值为 10，变量 B 的值为 20，则："
-    },
-    {
-      "id": "s4-34",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "| 运算符 | 描述                             | 实例              |\n| :----- | -------------------------------- | ----------------- |\n| +      | 把两个操作数相加                 | A + B 将得到 30   |\n| -      | 从第一个操作数中减去第二个操作数 | A - B 将得到 -10  |\n| \\*     | 把两个操作数相乘                 | A \\* B 将得到 200 |\n| /      | 分子除以分母                     | B / A 将得到 2    |\n| %      | 取模运算符，整除后的余数         | B % A 将得到 0    |\n| ++     | 自增运算符，整数值增加 1         | A++ 将得到 11     |\n| --     | 自减运算符，整数值减少 1         | A-- 将得到 9      |"
+      "body": "C# 支持下表中的所有算术运算符。假设变量 A 的值为 10，变量 B 的值为 20，则：\n\n| 运算符 | 描述                             | 实例              |\n| :----- | -------------------------------- | ----------------- |\n| +      | 把两个操作数相加                 | A + B 将得到 30   |\n| -      | 从第一个操作数中减去第二个操作数 | A - B 将得到 -10  |\n| \\*     | 把两个操作数相乘                 | A \\* B 将得到 200 |\n| /      | 分子除以分母                     | B / A 将得到 2    |\n| %      | 取模运算符，整除后的余数         | B % A 将得到 0    |\n| ++     | 自增运算符，整数值增加 1         | A++ 将得到 11     |\n| --     | 自减运算符，整数值减少 1         | A-- 将得到 9      |"
     },
     {
       "id": "s4-35",
       "sectionId": "s4",
       "title": "运算符优先级",
-      "kind": "text",
-      "body": "下表将按运算符优先级从高到低列出各个运算符，具有较高优先级的运算符出现在表格的上面，具有较低优先级的运算符出现在表格的下面。在表达式中，较高优先级的运算符会优先被计算。"
-    },
-    {
-      "id": "s4-36",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "| 类别       | 运算符                             | 结合性   |\n| :--------- | ---------------------------------- | -------- |\n| 后缀       | () [] -> . ++ - -                  | 从左到右 |\n| 一元       | + - ! ~ ++ - - (type)\\* & sizeof   | 从右到左 |\n| 乘除       | \\* / %                             | 从左到右 |\n| 加减       | + -                                | 从左到右 |\n| 移位       | << >>                              | 从左到右 |\n| 关系       | < <= > >=                          | 从左到右 |\n| 相等       | == !=                              | 从左到右 |\n| 位与 AND   | &                                  | 从左到右 |\n| 位异或 XOR | ^                                  | 从左到右 |\n| 位或 OR    | \\|                                 | 从左到右 |\n| 逻辑与 AND | &&                                 | 从左到右 |\n| 逻辑或 OR  | \\|\\|                               | 从左到右 |\n| 条件       | ?:                                 | 从右到左 |\n| 赋值       | = += -= \\*= /= %=>>= <<= &= ^= \\|= | 从右到左 |\n| 逗号       | ,                                  | 从左到右 |"
-    },
-    {
-      "id": "s4-37",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "运算符的优先级确定表达式中项的组合。这会影响到一个表达式如何计算。某些运算符比其他运算符有更高的优先级，例如，乘除运算符具有比加减运算符更高的优先级。"
+      "body": "下表将按运算符优先级从高到低列出各个运算符，具有较高优先级的运算符出现在表格的上面，具有较低优先级的运算符出现在表格的下面。在表达式中，较高优先级的运算符会优先被计算。\n\n| 类别       | 运算符                             | 结合性   |\n| :--------- | ---------------------------------- | -------- |\n| 后缀       | () [] -> . ++ - -                  | 从左到右 |\n| 一元       | + - ! ~ ++ - - (type)\\* & sizeof   | 从右到左 |\n| 乘除       | \\* / %                             | 从左到右 |\n| 加减       | + -                                | 从左到右 |\n| 移位       | << >>                              | 从左到右 |\n| 关系       | < <= > >=                          | 从左到右 |\n| 相等       | == !=                              | 从左到右 |\n| 位与 AND   | &                                  | 从左到右 |\n| 位异或 XOR | ^                                  | 从左到右 |\n| 位或 OR    | \\|                                 | 从左到右 |\n| 逻辑与 AND | &&                                 | 从左到右 |\n| 逻辑或 OR  | \\|\\|                               | 从左到右 |\n| 条件       | ?:                                 | 从右到左 |\n| 赋值       | = += -= \\*= /= %=>>= <<= &= ^= \\|= | 从右到左 |\n| 逗号       | ,                                  | 从左到右 |\n\n运算符的优先级确定表达式中项的组合。这会影响到一个表达式如何计算。某些运算符比其他运算符有更高的优先级，例如，乘除运算符具有比加减运算符更高的优先级。"
     },
     {
       "id": "s4-38",
       "sectionId": "s4",
       "title": "逻辑非运算符",
-      "kind": "code",
-      "lang": "cs",
-      "code": "bool passed = false;\nConsole.WriteLine(!passed); // 输出: True\nConsole.WriteLine(!true);   // 输出: False"
+      "body": "```cs\nbool passed = false;\nConsole.WriteLine(!passed); // 输出: True\nConsole.WriteLine(!true);   // 输出: False\n```"
     },
     {
       "id": "s4-39",
       "sectionId": "s4",
       "title": "%E9%80%BB%E8%BE%91%E2%80%9C%E4%B8%8E%E2%80%9D%E8%BF%90%E7%AE%97%E7%AC%A6%20%26",
-      "kind": "code",
-      "lang": "cs",
-      "code": "bool%20SecondOperand()%0A%7B%0A%20%20%20%20Console.WriteLine(%22%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%22)%3B%0A%20%20%20%20return%20true%3B%0A%7D%0A%0Abool%20a%20%3D%20false%20%26%20SecondOperand()%3B%0AConsole.WriteLine(a)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20False%0A%0Abool%20b%20%3D%20true%20%26%20SecondOperand()%3B%0AConsole.WriteLine(b)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True",
+      "body": "%60%60%60cs%0Abool%20SecondOperand()%0A%7B%0A%20%20%20%20Console.WriteLine(%22%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%22)%3B%0A%20%20%20%20return%20true%3B%0A%7D%0A%0Abool%20a%20%3D%20false%20%26%20SecondOperand()%3B%0AConsole.WriteLine(a)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20False%0A%0Abool%20b%20%3D%20true%20%26%20SecondOperand()%3B%0AConsole.WriteLine(b)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-40",
       "sectionId": "s4",
       "title": "逻辑异或运算符 ^",
-      "kind": "code",
-      "lang": "cs",
-      "code": "Console.WriteLine(true ^ true);  // 输出: False\nConsole.WriteLine(true ^ false); // 输出: True\nConsole.WriteLine(false ^ true); // 输出: True\nConsole.WriteLine(false ^ false);// 输出: False"
+      "body": "```cs\nConsole.WriteLine(true ^ true);  // 输出: False\nConsole.WriteLine(true ^ false); // 输出: True\nConsole.WriteLine(false ^ true); // 输出: True\nConsole.WriteLine(false ^ false);// 输出: False\n```"
     },
     {
       "id": "s4-41",
       "sectionId": "s4",
       "title": "%E9%80%BB%E8%BE%91%E6%88%96%E8%BF%90%E7%AE%97%E7%AC%A6%20%7C",
-      "kind": "code",
-      "lang": "cs",
-      "code": "bool%20SecondOperand()%0A%7B%0A%20%20%20%20Console.WriteLine(%22%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%22)%3B%0A%20%20%20%20return%20true%3B%0A%7D%0A%0Abool%20a%20%3D%20true%20%7C%20SecondOperand()%3B%0AConsole.WriteLine(a)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True%0A%0Abool%20b%20%3D%20false%20%7C%20SecondOperand()%3B%0AConsole.WriteLine(b)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True",
+      "body": "%60%60%60cs%0Abool%20SecondOperand()%0A%7B%0A%20%20%20%20Console.WriteLine(%22%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%22)%3B%0A%20%20%20%20return%20true%3B%0A%7D%0A%0Abool%20a%20%3D%20true%20%7C%20SecondOperand()%3B%0AConsole.WriteLine(a)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True%0A%0Abool%20b%20%3D%20false%20%7C%20SecondOperand()%3B%0AConsole.WriteLine(b)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-42",
       "sectionId": "s4",
       "title": "%E6%9D%A1%E4%BB%B6%E9%80%BB%E8%BE%91%E2%80%9C%E4%B8%8E%E2%80%9D%E8%BF%90%E7%AE%97%E7%AC%A6%20%26%26",
-      "kind": "code",
-      "lang": "cs",
-      "code": "bool%20SecondOperand()%0A%7B%0A%20%20%20%20Console.WriteLine(%22%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%22)%3B%0A%20%20%20%20return%20true%3B%0A%7D%0A%0Abool%20a%20%3D%20false%20%26%26%20SecondOperand()%3B%0AConsole.WriteLine(a)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20False%0A%0Abool%20b%20%3D%20true%20%26%26%20SecondOperand()%3B%0AConsole.WriteLine(b)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True",
+      "body": "%60%60%60cs%0Abool%20SecondOperand()%0A%7B%0A%20%20%20%20Console.WriteLine(%22%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%22)%3B%0A%20%20%20%20return%20true%3B%0A%7D%0A%0Abool%20a%20%3D%20false%20%26%26%20SecondOperand()%3B%0AConsole.WriteLine(a)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20False%0A%0Abool%20b%20%3D%20true%20%26%26%20SecondOperand()%3B%0AConsole.WriteLine(b)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-43",
       "sectionId": "s4",
       "title": "%E6%9D%A1%E4%BB%B6%E9%80%BB%E8%BE%91%E6%88%96%E8%BF%90%E7%AE%97%E7%AC%A6%20%7C%7C",
-      "kind": "code",
-      "lang": "cs",
-      "code": "bool%20SecondOperand()%0A%7B%0A%20%20%20%20Console.WriteLine(%22%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%22)%3B%0A%20%20%20%20return%20true%3B%0A%7D%0A%0Abool%20a%20%3D%20true%20%7C%7C%20SecondOperand()%3B%0AConsole.WriteLine(a)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20True%0A%0Abool%20b%20%3D%20false%20%7C%7C%20SecondOperand()%3B%0AConsole.WriteLine(b)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True",
+      "body": "%60%60%60cs%0Abool%20SecondOperand()%0A%7B%0A%20%20%20%20Console.WriteLine(%22%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%22)%3B%0A%20%20%20%20return%20true%3B%0A%7D%0A%0Abool%20a%20%3D%20true%20%7C%7C%20SecondOperand()%3B%0AConsole.WriteLine(a)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20True%0A%0Abool%20b%20%3D%20false%20%7C%7C%20SecondOperand()%3B%0AConsole.WriteLine(b)%3B%0A%2F%2F%20%E8%BE%93%E5%87%BA%3A%0A%2F%2F%20%E8%AE%A1%E7%AE%97%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%93%8D%E4%BD%9C%E6%95%B0%0A%2F%2F%20True%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-44",
       "sectionId": "s5",
       "title": "成员变量",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public class MyClass\n{\n    // 私有变量\n    private int myVariable;\n    // 公有属性\n    public string MyProperty { get; set; }\n}"
+      "body": "```cs\npublic class MyClass\n{\n    // 私有变量\n    private int myVariable;\n    // 公有属性\n    public string MyProperty { get; set; }\n}\n```"
     },
     {
       "id": "s5-45",
       "sectionId": "s5",
       "title": "静态成员",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public class MyClass\n{\n    public static int StaticVariable = 10;\n    public static void StaticMethod()\n    {\n        // 静态方法体\n    }\n}"
+      "body": "```cs\npublic class MyClass\n{\n    public static int StaticVariable = 10;\n    public static void StaticMethod()\n    {\n        // 静态方法体\n    }\n}\n```"
     },
     {
       "id": "s5-46",
       "sectionId": "s5",
       "title": "构造函数",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public class MyClass\n{\n    // 默认构造函数\n    public MyClass() \n    {\n        // 初始化代码\n    }\n\n    // 自定义构造函数\n    public MyClass(int value) \n    {\n        // 使用传入的值初始化\n    }\n\n    // 析构函数\n    ~MyClass() {\n        // Destructor body.\n    }\n\n}"
+      "body": "```cs\npublic class MyClass\n{\n    // 默认构造函数\n    public MyClass() \n    {\n        // 初始化代码\n    }\n\n    // 自定义构造函数\n    public MyClass(int value) \n    {\n        // 使用传入的值初始化\n    }\n\n    // 析构函数\n    ~MyClass() {\n        // Destructor body.\n    }\n\n}\n```"
     },
     {
       "id": "s5-47",
       "sectionId": "s5",
       "title": "方法",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public class MyClass\n{\n    // 无返回值方法\n    public void MyMethod()\n    {\n        // 方法体\n    }\n    // 有返回值方法\n    public int Add(int a, int b)\n    {\n        return a + b;\n    }\n}"
+      "body": "```cs\npublic class MyClass\n{\n    // 无返回值方法\n    public void MyMethod()\n    {\n        // 方法体\n    }\n    // 有返回值方法\n    public int Add(int a, int b)\n    {\n        return a + b;\n    }\n}\n```"
     },
     {
       "id": "s5-48",
       "sectionId": "s5",
       "title": "属性",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public class MyClass\n{\n    private string myField;\n    \n    public string MyProperty\n    {\n        get { return myField; }\n        set { myField = value; }\n    }\n}"
+      "body": "```cs\npublic class MyClass\n{\n    private string myField;\n    \n    public string MyProperty\n    {\n        get { return myField; }\n        set { myField = value; }\n    }\n}\n```"
     },
     {
       "id": "s5-49",
       "sectionId": "s5",
       "title": "接口",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public interface IMyInterface\n{\n    void MyMethod(); // 接口方法声明\n}\n\npublic class MyClass : IMyInterface\n{\n    public void MyMethod() // 实现接口方法\n    {\n        // 实现代码\n    }\n}"
+      "body": "```cs\npublic interface IMyInterface\n{\n    void MyMethod(); // 接口方法声明\n}\n\npublic class MyClass : IMyInterface\n{\n    public void MyMethod() // 实现接口方法\n    {\n        // 实现代码\n    }\n}\n```"
     },
     {
       "id": "s5-50",
       "sectionId": "s5",
       "title": "继承",
-      "kind": "text",
-      "body": "注意"
-    },
-    {
-      "id": "s5-51",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "• 在类定义中，只能有一个基类\n• 继承了一个抽象类，必须实现所继承的所有抽象成员(除非派生类也是抽象的)\n• 编译器不允许派生类的可访问性高于基类\n• 内部类可以继承于一个公共基类，但公共类不能继承于一个内部基类"
-    },
-    {
-      "id": "s5-52",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "因此，下述代码是合法的："
-    },
-    {
-      "id": "s5-53",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public class MyBase\n{\n    // Class members.\n}\ninternal class MyClass : MyBase\n{\n    // Class members.\n}"
-    },
-    {
-      "id": "s5-54",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "下述代码不能编译:"
-    },
-    {
-      "id": "s5-55",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "internal class MyBase\n{\n    // Class members.\n}\npublic class MyClass : MyBase\n{\n    // Class members.\n}"
-    },
-    {
-      "id": "s5-56",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "如果没有使用基类，被定义的类就只继承于基类 System.Object(它在 C# 中的别名是 object)。在继承层次结构中，所有类的根都是 `System.Object`"
+      "body": "注意\n\n• 在类定义中，只能有一个基类\n• 继承了一个抽象类，必须实现所继承的所有抽象成员(除非派生类也是抽象的)\n• 编译器不允许派生类的可访问性高于基类\n• 内部类可以继承于一个公共基类，但公共类不能继承于一个内部基类\n\n因此，下述代码是合法的：\n\n```cs\npublic class MyBase\n{\n    // Class members.\n}\ninternal class MyClass : MyBase\n{\n    // Class members.\n}\n```\n\n下述代码不能编译:\n\n```cs\ninternal class MyBase\n{\n    // Class members.\n}\npublic class MyClass : MyBase\n{\n    // Class members.\n}\n```\n\n如果没有使用基类，被定义的类就只继承于基类 System.Object(它在 C# 中的别名是 object)。在继承层次结构中，所有类的根都是 `System.Object`"
     },
     {
       "id": "s5-57",
       "sectionId": "s5",
       "title": "访问修饰符",
-      "kind": "text",
       "body": ":-- | :--\n:-- | :--\n`public` | 公有，可从任何位置访问\n`private` | 私有，只能在当前类中访问\n`protected` | 受保护，只能在当前类和派生类中访问\n`internal` | 内部，只能在同一程序集中访问\n`protected internal` | 受保护的内部，可以在同一程序集中的任何地方访问，以及派生类中\n`private protected` | 私有保护，只能在同一程序集中的派生类中访问\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s5-58",
       "sectionId": "s5",
       "title": "字段的特殊修饰符",
-      "kind": "text",
       "body": "| :--      | :--                                                          |\n| -------- | ------------------------------------------------------------ |\n| `readonly` | 表示这个字段只能在执行构造函数的过程中赋值，或由初始化赋值语句赋值 |\n| `static`   | 静态字段，必须通过类名来访问，例如：Class.staticField        |\n| `const`    | 常量字段，但同时也是静态字段，自带static                     |"
     },
     {
       "id": "s5-59",
       "sectionId": "s5",
       "title": "方法的特殊修饰符",
-      "kind": "text",
       "body": "| :--      | :--                                                          |\n| -------- | ------------------------------------------------------------ |\n| `static`   | 静态方法，只能通过类名来调用方法                             |\n| `virtual`  | 方法可以被重写                                               |\n| `abstract` | 抽象方法，只用于抽象类                                       |\n| `override` | 方法重写了基类的一个方法（如果方法被重写，就必须使用该关键字）。 |\n| `extern`   | 方法定义放在其他地方，可以在项目外部提供方法的实际实现代码   |\n| `sealed`   | 如果使用了 `override` ，也可以使用 `sealed` 来指定在派生类中不能再对这个方法进行进一步的修改，即这个方法不能被派生类重写 |"
     },
     {
       "id": "s5-60",
       "sectionId": "s5",
       "title": "公共类",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public class MyClass\n{\n  ...\n}"
-    },
-    {
-      "id": "s5-61",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "添加 `public` 声明为公共类"
+      "body": "```cs\npublic class MyClass\n{\n  ...\n}\n```\n\n添加 `public` 声明为公共类"
     },
     {
       "id": "s5-62",
       "sectionId": "s5",
       "title": "私有类",
-      "kind": "code",
-      "lang": "cs",
-      "code": "private class MyClass\n{\n  ...\n}"
-    },
-    {
-      "id": "s5-63",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "添加 `public` 声明为公共类"
+      "body": "```cs\nprivate class MyClass\n{\n  ...\n}\n```\n\n添加 `public` 声明为公共类"
     },
     {
       "id": "s5-64",
       "sectionId": "s5",
       "title": "命名约定",
-      "kind": "text",
       "body": "• 类名使用 PascalCase 格式\n• 成员变量和方法名使用 camelCase 格式\n• 公有成员和类型名应该使用有意义的名字"
     },
     {
       "id": "s5-65",
       "sectionId": "s5",
       "title": "默认情况(默认情况即为内部类)",
-      "kind": "code",
-      "lang": "cs",
-      "code": "class MyClass \n{\n  ...\n}\ninternal class MyCalss\n{\n  ...\n}"
-    },
-    {
-      "id": "s5-66",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "上面两个类相同，声明为内部（`internal`）类，只能在当前项目中的代码才能访问它"
-    },
-    {
-      "id": "s5-67",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "• 抽象类与密封类为互斥关系\n• 抽象类不能实例化，允许继承\n• 可以有抽象成员，密封类不允许继承\n• 都可以声明为公共类（public）和内部类（internal）"
+      "body": "```cs\nclass MyClass \n{\n  ...\n}\ninternal class MyCalss\n{\n  ...\n}\n```\n\n上面两个类相同，声明为内部（`internal`）类，只能在当前项目中的代码才能访问它\n\n• 抽象类与密封类为互斥关系\n• 抽象类不能实例化，允许继承\n• 可以有抽象成员，密封类不允许继承\n• 都可以声明为公共类（public）和内部类（internal）"
     },
     {
       "id": "s5-68",
       "sectionId": "s5",
       "title": "%E6%8A%BD%E8%B1%A1%E7%B1%BB%E4%B8%8E%E5%AF%86%E5%B0%81%E7%B1%BB%20-%20%E6%8A%BD%E8%B1%A1%E7%B1%BB%EF%BC%88abstract%EF%BC%89",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public%20abstract%20class%20MyClass%0A%7B%0A%20%20%2F%2F%20%E6%99%AE%E9%80%9A%E5%85%AC%E5%85%B1%E5%AD%97%E6%AE%B5%0A%20%20public%20string%20id%3B%0A%20%20%2F%2F%20%E6%8A%BD%E8%B1%A1%E5%AD%97%E6%AE%B5%0A%20%20public%20abstract%20string%20Name%20%7B%20get%3B%20%7D%0A%20%20%2F%2F%20%E5%B8%B8%E9%87%8F%E5%AD%97%E6%AE%B5%0A%20%20public%20const%20string%20Description%20%3D%20%22%E5%B8%B8%E9%87%8F%22%3B%0A%20%20%2F%2F%20%E9%9D%99%E6%80%81%E5%AD%97%E6%AE%B5%0A%20%20public%20static%20string%20Order%20%3D%20%22%E9%9D%99%E6%80%81%22%3B%0A%7D",
+      "body": "%60%60%60cs%0Apublic%20abstract%20class%20MyClass%0A%7B%0A%20%20%2F%2F%20%E6%99%AE%E9%80%9A%E5%85%AC%E5%85%B1%E5%AD%97%E6%AE%B5%0A%20%20public%20string%20id%3B%0A%20%20%2F%2F%20%E6%8A%BD%E8%B1%A1%E5%AD%97%E6%AE%B5%0A%20%20public%20abstract%20string%20Name%20%7B%20get%3B%20%7D%0A%20%20%2F%2F%20%E5%B8%B8%E9%87%8F%E5%AD%97%E6%AE%B5%0A%20%20public%20const%20string%20Description%20%3D%20%22%E5%B8%B8%E9%87%8F%22%3B%0A%20%20%2F%2F%20%E9%9D%99%E6%80%81%E5%AD%97%E6%AE%B5%0A%20%20public%20static%20string%20Order%20%3D%20%22%E9%9D%99%E6%80%81%22%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-69",
       "sectionId": "s5",
       "title": "密封类（sealed",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public sealed class MyClass\n{\n  ...\n}"
+      "body": "```cs\npublic sealed class MyClass\n{\n  ...\n}\n```"
     },
     {
       "id": "s6-70",
       "sectionId": "s6",
-      "title": "基本使用",
-      "kind": "text",
-      "body": "不带名称的基本元组创建"
-    },
-    {
-      "id": "s6-71",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "(%0A%20%20%20%20int%20item1%2C%0A%20%20%20%20string%20item2%2C%0A%20%20%20%20bool%20item3%0A)%20tuple1%20%3D%20(1%2C%20%22Hello%22%2C%20true)%3B%0A%0AConsole.WriteLine(%0A%20%20%20%20%24%22Item1%3A%20%7Btuple1.Item1%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Item2%3A%20%7Btuple1.Item2%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Item3%3A%20%7Btuple1.Item3%7D%22%0A)%3B",
-      "encoded": true
-    },
-    {
-      "id": "s6-72",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "带名称的元组创建（C# 7.0及以上版本）"
-    },
-    {
-      "id": "s6-73",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "(%0A%20%20%20%20string%20FirstName%2C%0A%20%20%20%20string%20LastName%2C%0A%20%20%20%20int%20Age%0A)%20person%20%3D%20(%22Alice%22%2C%20%22Smith%22%2C%2030)%3B%0A%0AConsole.WriteLine(%0A%20%20%20%20%24%22First%20Name%3A%20%7Bperson.FirstName%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Last%20Name%3A%20%7Bperson.LastName%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Age%3A%20%7Bperson.Age%7D%22%0A)%3B",
+      "title": "%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8",
+      "body": "%E4%B8%8D%E5%B8%A6%E5%90%8D%E7%A7%B0%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%85%83%E7%BB%84%E5%88%9B%E5%BB%BA%0A%0A%60%60%60cs%0A(%0A%20%20%20%20int%20item1%2C%0A%20%20%20%20string%20item2%2C%0A%20%20%20%20bool%20item3%0A)%20tuple1%20%3D%20(1%2C%20%22Hello%22%2C%20true)%3B%0A%0AConsole.WriteLine(%0A%20%20%20%20%24%22Item1%3A%20%7Btuple1.Item1%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Item2%3A%20%7Btuple1.Item2%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Item3%3A%20%7Btuple1.Item3%7D%22%0A)%3B%0A%60%60%60%0A%0A%E5%B8%A6%E5%90%8D%E7%A7%B0%E7%9A%84%E5%85%83%E7%BB%84%E5%88%9B%E5%BB%BA%EF%BC%88C%23%207.0%E5%8F%8A%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%EF%BC%89%0A%0A%60%60%60cs%0A(%0A%20%20%20%20string%20FirstName%2C%0A%20%20%20%20string%20LastName%2C%0A%20%20%20%20int%20Age%0A)%20person%20%3D%20(%22Alice%22%2C%20%22Smith%22%2C%2030)%3B%0A%0AConsole.WriteLine(%0A%20%20%20%20%24%22First%20Name%3A%20%7Bperson.FirstName%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Last%20Name%3A%20%7Bperson.LastName%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Age%3A%20%7Bperson.Age%7D%22%0A)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-74",
       "sectionId": "s6",
       "title": "%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E4%B8%8E%E6%8E%A5%E6%94%B6",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public%20(int%20Id%2C%20string%20Name%2C%20double%20Score)%20GetStudentInfo()%0A%7B%0A%20%20%20%20return%20(123%2C%20%22John%20Doe%22%2C%2095.5)%3B%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s6-75",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "使用"
-    },
-    {
-      "id": "s6-76",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "(%0A%20%20%20%20var%20id%2C%0A%20%20%20%20var%20name%2C%0A%20%20%20%20var%20score%0A)%20%3D%20GetStudentInfo()%3B%0A%0AConsole.WriteLine(%0A%20%20%20%20%24%22Id%3A%20%7Bid%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Name%3A%20%7Bname%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Score%3A%20%7Bscore%7D%22%0A)%3B",
+      "body": "%60%60%60cs%0Apublic%20(int%20Id%2C%20string%20Name%2C%20double%20Score)%20GetStudentInfo()%0A%7B%0A%20%20%20%20return%20(123%2C%20%22John%20Doe%22%2C%2095.5)%3B%0A%7D%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%0A%0A%60%60%60cs%0A(%0A%20%20%20%20var%20id%2C%0A%20%20%20%20var%20name%2C%0A%20%20%20%20var%20score%0A)%20%3D%20GetStudentInfo()%3B%0A%0AConsole.WriteLine(%0A%20%20%20%20%24%22Id%3A%20%7Bid%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Name%3A%20%7Bname%7D%2C%20%22%20%2B%0A%20%20%20%20%24%22Score%3A%20%7Bscore%7D%22%0A)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-77",
       "sectionId": "s6",
-      "title": "类中使用元组",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public class Student\n{\n    public int Id { get; set; }\n    public string Name { get; set; }\n    public double GPA { get; set; }\n\n    public void Deconstruct(out int id, out string name, out double gpa)\n    {\n        id = this.Id;\n        name = this.Name;\n        gpa = this.GPA;\n    }\n}"
-    },
-    {
-      "id": "s6-78",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "使用Deconstruct方法创建元组"
-    },
-    {
-      "id": "s6-79",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "Student%20student%20%3D%20new%20Student%0A%7B%0A%20%20%20%20Id%20%3D%201%2C%0A%20%20%20%20Name%20%3D%20%22Jane%22%2C%0A%20%20%20%20GPA%20%3D%203.8%0A%7D%3B%0A%0A(int%20id%2C%20string%20name%2C%20double%20gpa)%20%3D%20student%3B%0AConsole.WriteLine(%24%22Student%20Id%3A%20%7Bid%7D%2C%20Name%3A%20%7Bname%7D%2C%20GPA%3A%20%7Bgpa%7D%22)%3B",
+      "title": "%E7%B1%BB%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%85%83%E7%BB%84",
+      "body": "%60%60%60cs%0Apublic%20class%20Student%0A%7B%0A%20%20%20%20public%20int%20Id%20%7B%20get%3B%20set%3B%20%7D%0A%20%20%20%20public%20string%20Name%20%7B%20get%3B%20set%3B%20%7D%0A%20%20%20%20public%20double%20GPA%20%7B%20get%3B%20set%3B%20%7D%0A%0A%20%20%20%20public%20void%20Deconstruct(out%20int%20id%2C%20out%20string%20name%2C%20out%20double%20gpa)%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20id%20%3D%20this.Id%3B%0A%20%20%20%20%20%20%20%20name%20%3D%20this.Name%3B%0A%20%20%20%20%20%20%20%20gpa%20%3D%20this.GPA%3B%0A%20%20%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8Deconstruct%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E5%85%83%E7%BB%84%0A%0A%60%60%60cs%0AStudent%20student%20%3D%20new%20Student%0A%7B%0A%20%20%20%20Id%20%3D%201%2C%0A%20%20%20%20Name%20%3D%20%22Jane%22%2C%0A%20%20%20%20GPA%20%3D%203.8%0A%7D%3B%0A%0A(int%20id%2C%20string%20name%2C%20double%20gpa)%20%3D%20student%3B%0AConsole.WriteLine(%24%22Student%20Id%3A%20%7Bid%7D%2C%20Name%3A%20%7Bname%7D%2C%20GPA%3A%20%7Bgpa%7D%22)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-80",
       "sectionId": "s7",
       "title": "c#集合",
-      "kind": "text",
       "body": "| 集合                                                         | 有序  | 已排序 | 线程安全 | 允许空值 |\n| :----------------------------------------------------------- |:----| :----- | :------- | :------- |\n| [List](https://docs.microsoft.com/dotnet/api/system.collections.generic.list-1) | Y   | *N*    | *N*      | 是       |\n| [ArrayList](https://docs.microsoft.com/dotnet/api/system.collections.arraylist) (非泛型) | Y   | *N*    | *N*      | 是       |\n| [Vector](https://docs.microsoft.com/dotnet/api/system.collections.vector) (非泛型) | *N*   | *N*    | Y        | 是       |\n| [LinkedList](https://docs.microsoft.com/dotnet/api/system.collections.generic.linkedlist-1) | Y   | *N*    | *N*      | 是       |\n| [ConcurrentBag](https://docs.microsoft.com/dotnet/api/system.collections.concurrent.concurrentbag-1) | *N* | *N*    | Y        | 是       |\n| [HashSet](https://docs.microsoft.com/dotnet/api/system.collections.generic.hashset-1) | *N* | *N*    | *N*      | 是       |\n| [SortedSet](https://docs.microsoft.com/dotnet/api/system.collections.generic.sortedset-1) |  *N*   | Y      | *N*      | 是       |\n| [ConcurrentDictionary](https://docs.microsoft.com/dotnet/api/system.collections.concurrent.concurrentdictionary-2) | Y   | *N*    | Y        | 是       |\n| [Dictionary](https://docs.microsoft.com/dotnet/api/system.collections.generic.dictionary-2) | *N* | *N*    | *N*      | 是       |\n| [SortedDictionary](https://docs.microsoft.com/dotnet/api/system.collections.generic.sorteddictionary-2) | Y   | Y      | *N*      | 是       |\n| [Stack](https://docs.microsoft.com/dotnet/api/system.collections.generic.stack-1) | *N* | *N*    | *N*      | 是       |\n| [Queue](https://docs.microsoft.com/dotnet/api/system.collections.generic.queue-1) | *N* | *N*    | *N*      | 是       |\n| [ConcurrentQueue](https://docs.microsoft.com/dotnet/api/system.collections.concurrent.concurrentqueue-1) | *N* | *N*    | Y        | 是       |\n| [ConcurrentStack](https://docs.microsoft.com/dotnet/api/system.collections.concurrent.concurrentstack-1) | *N* | *N*    | Y        | 是       |\n| [HashTable](https://learn.microsoft.com/zh-cn/dotnet/api/system.collections.hashtable?view=net-6.0) | N   | Y      | Y        | 否       |"
     },
     {
       "id": "s7-81",
       "sectionId": "s7",
       "title": "List",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 创建一个整数类型的List\nList<int> numbers = new List<int>();\n\n// 增加（Add）\nnumbers.Add(10);\nnumbers.Add(20);\n//增加30，40两个元素\nnumbers.AddRange(new[] { 30, 40 });\n\n// 删除（Remove）\nif (numbers.Contains(20))\n{\n    numbers.Remove(20);\n}\n\n// 修改（更改特定索引处的元素）\nnumbers[0] = 50; // 直接替换元素\n\n// 查询（Find/Contains）\nbool isPresent = numbers.Contains(50);\n\n// 查找索引\nint index = numbers.IndexOf(40);\nif (index != -1)\n{\n    numbers[index] = 45; // 修改找到的元素\n}"
+      "body": "```cs\n// 创建一个整数类型的List\nList<int> numbers = new List<int>();\n\n// 增加（Add）\nnumbers.Add(10);\nnumbers.Add(20);\n//增加30，40两个元素\nnumbers.AddRange(new[] { 30, 40 });\n\n// 删除（Remove）\nif (numbers.Contains(20))\n{\n    numbers.Remove(20);\n}\n\n// 修改（更改特定索引处的元素）\nnumbers[0] = 50; // 直接替换元素\n\n// 查询（Find/Contains）\nbool isPresent = numbers.Contains(50);\n\n// 查找索引\nint index = numbers.IndexOf(40);\nif (index != -1)\n{\n    numbers[index] = 45; // 修改找到的元素\n}\n```"
     },
     {
       "id": "s7-82",
       "sectionId": "s7",
       "title": "HashSet",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84HashSet%0AHashSet%3Cstring%3E%20words%20%3D%20new%20HashSet%3Cstring%3E%20%7B%20%22apple%22%2C%20%22banana%22%20%7D%3B%0A%0A%2F%2F%20%E5%A2%9E%E5%8A%A0%EF%BC%88Add%EF%BC%89%0Awords.Add(%22cherry%22)%3B%0A%0A%2F%2F%20%E8%BF%94%E5%9B%9E%20false%EF%BC%8C%E5%9B%A0%E4%B8%BA%22apple%22%E5%B7%B2%E5%AD%98%E5%9C%A8%0Abool%20wasAdded%20%3D%20words.Add(%22apple%22)%3B%20%0A%0A%2F%2F%20%E5%88%A0%E9%99%A4%EF%BC%88Remove%EF%BC%89%0Awords.Remove(%22banana%22)%3B%0A%0A%2F%2F%20%E4%BF%AE%E6%94%B9%20-%20HashSet%E4%B8%8D%E5%85%81%E8%AE%B8%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9%E5%85%83%E7%B4%A0%0A%2F%2F%20%E9%9C%80%E5%88%A0%E9%99%A4%E5%90%8E%E9%87%8D%E6%96%B0%E6%B7%BB%E5%8A%A0%0Aif%20(words.Contains(%22cherry%22))%0A%7B%0A%20%20%20%20words.Remove(%22cherry%22)%3B%0A%20%20%20%20words.Add(%22cherries%22)%3B%0A%7D%0A%0A%2F%2F%20%E6%9F%A5%E8%AF%A2%EF%BC%88Contains%EF%BC%89%0Abool%20containsCherries%20%3D%20words.Contains(%22cherries%22)%3B",
+      "body": "%60%60%60cs%0A%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%B1%BB%E5%9E%8B%E7%9A%84HashSet%0AHashSet%3Cstring%3E%20words%20%3D%20new%20HashSet%3Cstring%3E%20%7B%20%22apple%22%2C%20%22banana%22%20%7D%3B%0A%0A%2F%2F%20%E5%A2%9E%E5%8A%A0%EF%BC%88Add%EF%BC%89%0Awords.Add(%22cherry%22)%3B%0A%0A%2F%2F%20%E8%BF%94%E5%9B%9E%20false%EF%BC%8C%E5%9B%A0%E4%B8%BA%22apple%22%E5%B7%B2%E5%AD%98%E5%9C%A8%0Abool%20wasAdded%20%3D%20words.Add(%22apple%22)%3B%20%0A%0A%2F%2F%20%E5%88%A0%E9%99%A4%EF%BC%88Remove%EF%BC%89%0Awords.Remove(%22banana%22)%3B%0A%0A%2F%2F%20%E4%BF%AE%E6%94%B9%20-%20HashSet%E4%B8%8D%E5%85%81%E8%AE%B8%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9%E5%85%83%E7%B4%A0%0A%2F%2F%20%E9%9C%80%E5%88%A0%E9%99%A4%E5%90%8E%E9%87%8D%E6%96%B0%E6%B7%BB%E5%8A%A0%0Aif%20(words.Contains(%22cherry%22))%0A%7B%0A%20%20%20%20words.Remove(%22cherry%22)%3B%0A%20%20%20%20words.Add(%22cherries%22)%3B%0A%7D%0A%0A%2F%2F%20%E6%9F%A5%E8%AF%A2%EF%BC%88Contains%EF%BC%89%0Abool%20containsCherries%20%3D%20words.Contains(%22cherries%22)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-83",
       "sectionId": "s7",
       "title": "ConcurrentBag",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 创建一个并发安全的整数集合\nConcurrentBag<int> concurrentNumbers = new ConcurrentBag<int>();\n\n// 增加（Add）\nconcurrentNumbers.Add(1);\nconcurrentNumbers.Add(2);\n\n// 删除（由于ConcurrentBag没有直接的Remove方法，只能通过迭代并尝试移除）\nforeach (var number in concurrentNumbers.ToArray())\n{\n    concurrentNumbers.TryTake(out _number); // 并发安全地移除一个元素\n}"
-    },
-    {
-      "id": "s7-84",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "修改（无法直接修改，同样需先移除再添加，但由于并发特性，不能保证一定能修改目标元素）。\n在并发环境下尤其复杂，此处省略示例"
-    },
-    {
-      "id": "s7-85",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 查询（Contains）\nbool hasOne = concurrentNumbers.Contains(1);"
+      "body": "```cs\n// 创建一个并发安全的整数集合\nConcurrentBag<int> concurrentNumbers = new ConcurrentBag<int>();\n\n// 增加（Add）\nconcurrentNumbers.Add(1);\nconcurrentNumbers.Add(2);\n\n// 删除（由于ConcurrentBag没有直接的Remove方法，只能通过迭代并尝试移除）\nforeach (var number in concurrentNumbers.ToArray())\n{\n    concurrentNumbers.TryTake(out _number); // 并发安全地移除一个元素\n}\n```\n\n修改（无法直接修改，同样需先移除再添加，但由于并发特性，不能保证一定能修改目标元素）。\n在并发环境下尤其复杂，此处省略示例\n\n```cs\n// 查询（Contains）\nbool hasOne = concurrentNumbers.Contains(1);\n```"
     },
     {
       "id": "s7-86",
       "sectionId": "s7",
       "title": "Stack",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 创建一个整数栈\nStack<int> stack = new Stack<int>();\nstack.Push(1);\nstack.Push(2);\n\n// 增加（Push）\nstack.Push(3);\n\n// 删除（Pop）并返回栈顶元素\nint topNumber = stack.Pop();\n\n// 修改（Stack不支持直接修改元素，需先Pop再Push）\nint poppedValue = stack.Pop();\n// 替换刚弹出的值\nstack.Push(poppedValue * 2); \n\n// 查询（Peek / Contains） 但不移除栈顶元素\nint peekedValue = stack.Peek();\nbool hasTwo = stack.Contains(2);"
+      "body": "```cs\n// 创建一个整数栈\nStack<int> stack = new Stack<int>();\nstack.Push(1);\nstack.Push(2);\n\n// 增加（Push）\nstack.Push(3);\n\n// 删除（Pop）并返回栈顶元素\nint topNumber = stack.Pop();\n\n// 修改（Stack不支持直接修改元素，需先Pop再Push）\nint poppedValue = stack.Pop();\n// 替换刚弹出的值\nstack.Push(poppedValue * 2); \n\n// 查询（Peek / Contains） 但不移除栈顶元素\nint peekedValue = stack.Peek();\nbool hasTwo = stack.Contains(2);\n```"
     },
     {
       "id": "s7-87",
       "sectionId": "s7",
       "title": "Dictionary",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%94%AE%E5%80%BC%E5%AF%B9%E5%AD%97%E5%85%B8%0ADictionary%3Cstring%2C%20int%3E%20scores%20%3D%20new%20Dictionary%3Cstring%2C%20int%3E%0A%7B%0A%20%20%20%20%7B%20%22Alice%22%2C%2085%20%7D%2C%0A%20%20%20%20%7B%20%22Bob%22%2C%2090%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E5%A2%9E%E5%8A%A0%EF%BC%88Add%EF%BC%89%0Ascores.Add(%22Charlie%22%2C%2088)%3B%0A%0A%2F%2F%20%E5%88%A0%E9%99%A4%EF%BC%88Remove%EF%BC%89%0Ascores.Remove(%22Bob%22)%3B%0A%0A%2F%2F%20%E4%BF%AE%E6%94%B9%EF%BC%88Update%EF%BC%89%0Aif%20(scores.ContainsKey(%22Alice%22))%0A%7B%0A%20%20%20%20scores%5B%22Alice%22%5D%20%3D%2090%3B%20%2F%2F%20%E7%9B%B4%E6%8E%A5%E6%9B%BF%E6%8D%A2%E5%80%BC%0A%7D%0A%0A%2F%2F%20%E6%9F%A5%E8%AF%A2%EF%BC%88ContainsKey%20%2F%20GetValueOrDefault%EF%BC%89%0Abool%20aliceExists%20%3D%20scores.ContainsKey(%22Alice%22)%3B%0Aint%20charlieScore%20%3D%20scores.GetValueOrDefault(%22Charlie%22%2C%200)%3B",
+      "body": "%60%60%60cs%0A%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E9%94%AE%E5%80%BC%E5%AF%B9%E5%AD%97%E5%85%B8%0ADictionary%3Cstring%2C%20int%3E%20scores%20%3D%20new%20Dictionary%3Cstring%2C%20int%3E%0A%7B%0A%20%20%20%20%7B%20%22Alice%22%2C%2085%20%7D%2C%0A%20%20%20%20%7B%20%22Bob%22%2C%2090%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E5%A2%9E%E5%8A%A0%EF%BC%88Add%EF%BC%89%0Ascores.Add(%22Charlie%22%2C%2088)%3B%0A%0A%2F%2F%20%E5%88%A0%E9%99%A4%EF%BC%88Remove%EF%BC%89%0Ascores.Remove(%22Bob%22)%3B%0A%0A%2F%2F%20%E4%BF%AE%E6%94%B9%EF%BC%88Update%EF%BC%89%0Aif%20(scores.ContainsKey(%22Alice%22))%0A%7B%0A%20%20%20%20scores%5B%22Alice%22%5D%20%3D%2090%3B%20%2F%2F%20%E7%9B%B4%E6%8E%A5%E6%9B%BF%E6%8D%A2%E5%80%BC%0A%7D%0A%0A%2F%2F%20%E6%9F%A5%E8%AF%A2%EF%BC%88ContainsKey%20%2F%20GetValueOrDefault%EF%BC%89%0Abool%20aliceExists%20%3D%20scores.ContainsKey(%22Alice%22)%3B%0Aint%20charlieScore%20%3D%20scores.GetValueOrDefault(%22Charlie%22%2C%200)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-88",
       "sectionId": "s7",
       "title": "Hashtable",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%93%88%E5%B8%8C%E8%A1%A8%0AHashtable%20hashTable%20%3D%20new%20Hashtable()%3B%0AhashTable.Add(%22key1%22%2C%20%22value1%22)%3B%0AhashTable.Add(%22key2%22%2C%20%22value2%22)%3B%0A%0A%2F%2F%20%E5%A2%9E%E5%8A%A0%EF%BC%88Add%EF%BC%89%0AhashTable.Add(%22key3%22%2C%20%22value3%22)%3B%0A%0A%2F%2F%20%E5%88%A0%E9%99%A4%EF%BC%88Remove%EF%BC%89%0AhashTable.Remove(%22key1%22)%3B%0A%0A%2F%2F%20%E4%BF%AE%E6%94%B9%EF%BC%88Replace%EF%BC%89%0Aobject%20oldValue%3B%0Aif%20(hashTable.ContainsKey(%22key2%22))%0A%7B%0A%20%20%20%20oldValue%20%3D%20hashTable%5B%22key2%22%5D%3B%0A%20%20%20%20hashTable%5B%22key2%22%5D%20%3D%20%22new_value2%22%3B%0A%7D%0A%0A%2F%2F%20%E6%9F%A5%E8%AF%A2%EF%BC%88Contains%20%2F%20GetValue%EF%BC%89%0Abool%20hasKey2%20%3D%20hashTable.ContainsKey(%22key2%22)%3B%0Astring%20valueOfKey2%20%3D%20(string)hashTable%5B%22key2%22%5D%3B",
+      "body": "%60%60%60cs%0A%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%93%88%E5%B8%8C%E8%A1%A8%0AHashtable%20hashTable%20%3D%20new%20Hashtable()%3B%0AhashTable.Add(%22key1%22%2C%20%22value1%22)%3B%0AhashTable.Add(%22key2%22%2C%20%22value2%22)%3B%0A%0A%2F%2F%20%E5%A2%9E%E5%8A%A0%EF%BC%88Add%EF%BC%89%0AhashTable.Add(%22key3%22%2C%20%22value3%22)%3B%0A%0A%2F%2F%20%E5%88%A0%E9%99%A4%EF%BC%88Remove%EF%BC%89%0AhashTable.Remove(%22key1%22)%3B%0A%0A%2F%2F%20%E4%BF%AE%E6%94%B9%EF%BC%88Replace%EF%BC%89%0Aobject%20oldValue%3B%0Aif%20(hashTable.ContainsKey(%22key2%22))%0A%7B%0A%20%20%20%20oldValue%20%3D%20hashTable%5B%22key2%22%5D%3B%0A%20%20%20%20hashTable%5B%22key2%22%5D%20%3D%20%22new_value2%22%3B%0A%7D%0A%0A%2F%2F%20%E6%9F%A5%E8%AF%A2%EF%BC%88Contains%20%2F%20GetValue%EF%BC%89%0Abool%20hasKey2%20%3D%20hashTable.ContainsKey(%22key2%22)%3B%0Astring%20valueOfKey2%20%3D%20(string)hashTable%5B%22key2%22%5D%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-89",
       "sectionId": "s8",
       "title": "LINQ",
-      "kind": "text",
       "body": "> C#语言中的LINQ（Language-Integrated Query）是一种强大的查询语言，它提供了一种统一的编程模型，使得数据查询变得更加直观和简洁。"
     },
     {
       "id": "s8-90",
       "sectionId": "s8",
       "title": "FROM",
-      "kind": "text",
       "body": "> 任何数据源，包括对象集合、数据库、XML等。"
     },
     {
       "id": "s8-91",
       "sectionId": "s8",
       "title": "WHERE",
-      "kind": "text",
-      "body": "> 条件查询"
-    },
-    {
-      "id": "s8-92",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8WHERE%E7%AD%9B%E9%80%89%E5%87%BA%E6%88%90%E7%BB%A9%E4%B8%BAA%E7%9A%84%E5%AD%A6%E7%94%9F%0Avar%20result1%20%3D%20students.Where(student%20%3D%3E%20student.Grade%20%3D%20%22A%22)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8WHERE%E7%AD%9B%E9%80%89%E5%87%BA%E5%B9%B4%E9%BE%84%E5%A4%A7%E4%BA%8E20%E7%9A%84%E5%AD%A6%E7%94%9F%0Avar%20result2%20%3D%20students.Where(student%20%3D%3E%20student.Age%20%3E%2020)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8WHERE%E7%AD%9B%E9%80%89%E5%87%BA%E5%90%8D%E5%AD%97%E5%8C%85%E5%90%AB'D'%E7%9A%84%E5%AD%A6%E7%94%9F%0Avar%20result3%20%3D%20students.Where(student%20%3D%3E%20student.Name.Contains(%22D%22))%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8WHERE%E7%AD%9B%E9%80%89%E5%87%BA%E5%90%8D%E5%AD%97%E4%B8%BA'Bob'%E5%92%8C'Echo'%E7%9A%84%E5%AD%A6%E7%94%9F%0AList%3Cstring%3E%20nameList%20%3D%20new()%20%7B%20%22Bob%22%2C%20%22Echo%22%20%7D%3B%0Avar%20result4%20%3D%20students.Where(student%20%3D%3E%20nameList.Contains(student.Name))%3B",
+      "body": "%3E%20%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%0A%0A%60%60%60cs%0A%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8WHERE%E7%AD%9B%E9%80%89%E5%87%BA%E6%88%90%E7%BB%A9%E4%B8%BAA%E7%9A%84%E5%AD%A6%E7%94%9F%0Avar%20result1%20%3D%20students.Where(student%20%3D%3E%20student.Grade%20%3D%20%22A%22)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8WHERE%E7%AD%9B%E9%80%89%E5%87%BA%E5%B9%B4%E9%BE%84%E5%A4%A7%E4%BA%8E20%E7%9A%84%E5%AD%A6%E7%94%9F%0Avar%20result2%20%3D%20students.Where(student%20%3D%3E%20student.Age%20%3E%2020)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8WHERE%E7%AD%9B%E9%80%89%E5%87%BA%E5%90%8D%E5%AD%97%E5%8C%85%E5%90%AB'D'%E7%9A%84%E5%AD%A6%E7%94%9F%0Avar%20result3%20%3D%20students.Where(student%20%3D%3E%20student.Name.Contains(%22D%22))%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8WHERE%E7%AD%9B%E9%80%89%E5%87%BA%E5%90%8D%E5%AD%97%E4%B8%BA'Bob'%E5%92%8C'Echo'%E7%9A%84%E5%AD%A6%E7%94%9F%0AList%3Cstring%3E%20nameList%20%3D%20new()%20%7B%20%22Bob%22%2C%20%22Echo%22%20%7D%3B%0Avar%20result4%20%3D%20students.Where(student%20%3D%3E%20nameList.Contains(student.Name))%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-93",
       "sectionId": "s8",
       "title": "GROUPBY",
-      "kind": "text",
-      "body": "> 分组查询"
-    },
-    {
-      "id": "s8-94",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8GROUP%20BY%E6%8C%89%E6%88%90%E7%BB%A9%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2%0Avar%20groupedByGrade%20%3D%20students.GroupBy(student%20%3D%3E%20student.Grade)%3B",
+      "body": "%3E%20%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2%0A%0A%60%60%60cs%0A%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8GROUP%20BY%E6%8C%89%E6%88%90%E7%BB%A9%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84%E6%9F%A5%E8%AF%A2%0Avar%20groupedByGrade%20%3D%20students.GroupBy(student%20%3D%3E%20student.Grade)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-95",
       "sectionId": "s8",
       "title": "SELECT",
-      "kind": "text",
-      "body": "> 结果查询"
-    },
-    {
-      "id": "s8-96",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8SELECT%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%8C%BF%E5%90%8D%E7%B1%BB%EF%BC%8C%E5%B9%B6%E8%BE%93%E5%87%BA%E4%B8%BA%E9%9B%86%E5%90%88%EF%BC%8C%E4%B8%80%E8%88%AC%E9%85%8D%E5%90%88Where%E4%BD%BF%E7%94%A8%0Avar%20result1%20%3D%20students.Select(student%20%3D%3E%20%0A%20%20new%20%0A%20%20%20%20%7B%0A%20%20%20%20%20%20student.Name%2C%0A%20%20%20%20%20%20%20%20student.Age%0A%20%20%20%20%7D)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8SELECT%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E6%8C%87%E5%AE%9A%E7%B1%BB%EF%BC%8C%E5%B9%B6%E8%BE%93%E5%87%BA%E4%B8%BA%E9%9B%86%E5%90%88%0Avar%20result2%20%3D%20students.Select(student%20%3D%3E%20new%20StudentDto()%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20StudentName%20%3D%20student.Name%2C%0A%20%20%20%20%20%20%20%20StudentAge%20%3D%20student.Age%0A%20%20%20%20%7D)%3B",
+      "body": "%3E%20%E7%BB%93%E6%9E%9C%E6%9F%A5%E8%AF%A2%0A%0A%60%60%60cs%0A%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8SELECT%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%8C%BF%E5%90%8D%E7%B1%BB%EF%BC%8C%E5%B9%B6%E8%BE%93%E5%87%BA%E4%B8%BA%E9%9B%86%E5%90%88%EF%BC%8C%E4%B8%80%E8%88%AC%E9%85%8D%E5%90%88Where%E4%BD%BF%E7%94%A8%0Avar%20result1%20%3D%20students.Select(student%20%3D%3E%20%0A%20%20new%20%0A%20%20%20%20%7B%0A%20%20%20%20%20%20student.Name%2C%0A%20%20%20%20%20%20%20%20student.Age%0A%20%20%20%20%7D)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8SELECT%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E6%8C%87%E5%AE%9A%E7%B1%BB%EF%BC%8C%E5%B9%B6%E8%BE%93%E5%87%BA%E4%B8%BA%E9%9B%86%E5%90%88%0Avar%20result2%20%3D%20students.Select(student%20%3D%3E%20new%20StudentDto()%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20StudentName%20%3D%20student.Name%2C%0A%20%20%20%20%20%20%20%20StudentAge%20%3D%20student.Age%0A%20%20%20%20%7D)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-97",
       "sectionId": "s8",
       "title": "ORDERBY",
-      "kind": "text",
-      "body": "> 排序"
-    },
-    {
-      "id": "s8-98",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8LINQ%E7%9A%84OrderBy%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F%0Avar%20result1%20%3D%20students.OrderBy(student%20%3D%3E%20student.Age)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8LINQ%E7%9A%84OrderByDescending%E8%BF%9B%E8%A1%8C%E9%99%8D%E5%BA%8F%E6%8E%92%E5%BA%8F%0Avar%20result2%20%3D%20students.OrderByDescending(student%20%3D%3E%20student.Age)%3B",
+      "body": "%3E%20%E6%8E%92%E5%BA%8F%0A%0A%60%60%60cs%0A%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8LINQ%E7%9A%84OrderBy%E8%BF%9B%E8%A1%8C%E6%8E%92%E5%BA%8F%0Avar%20result1%20%3D%20students.OrderBy(student%20%3D%3E%20student.Age)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8LINQ%E7%9A%84OrderByDescending%E8%BF%9B%E8%A1%8C%E9%99%8D%E5%BA%8F%E6%8E%92%E5%BA%8F%0Avar%20result2%20%3D%20students.OrderByDescending(student%20%3D%3E%20student.Age)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-99",
       "sectionId": "s8",
       "title": "JOIN",
-      "kind": "text",
-      "body": "• `Join`：用于执行内连接操作，它会返回两个数据源中满足连接条件的元素的交集\n• `GroupJoin`：用于执行左外连接（left outer join）操作，它会返回左边数据源的所有元素，以及每个元素所匹配的右边数据源的元素组成的集合。(嵌套)"
-    },
-    {
-      "id": "s8-100",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "示例数据源"
-    },
-    {
-      "id": "s8-101",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "List%3CDepartment%3E%20departments%20%3D%20new%20List%3CDepartment%3E%0A%7B%0A%20%20%20%20new%20Department%20%7B%20ID%20%3D%201%2C%20Name%20%3D%20%22HR%22%20%7D%2C%0A%20%20%20%20new%20Department%20%7B%20ID%20%3D%202%2C%20Name%20%3D%20%22IT%22%20%7D%0A%7D%3B",
+      "body": "%E2%80%A2%20%60Join%60%EF%BC%9A%E7%94%A8%E4%BA%8E%E6%89%A7%E8%A1%8C%E5%86%85%E8%BF%9E%E6%8E%A5%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%AE%83%E4%BC%9A%E8%BF%94%E5%9B%9E%E4%B8%A4%E4%B8%AA%E6%95%B0%E6%8D%AE%E6%BA%90%E4%B8%AD%E6%BB%A1%E8%B6%B3%E8%BF%9E%E6%8E%A5%E6%9D%A1%E4%BB%B6%E7%9A%84%E5%85%83%E7%B4%A0%E7%9A%84%E4%BA%A4%E9%9B%86%0A%E2%80%A2%20%60GroupJoin%60%EF%BC%9A%E7%94%A8%E4%BA%8E%E6%89%A7%E8%A1%8C%E5%B7%A6%E5%A4%96%E8%BF%9E%E6%8E%A5%EF%BC%88left%20outer%20join%EF%BC%89%E6%93%8D%E4%BD%9C%EF%BC%8C%E5%AE%83%E4%BC%9A%E8%BF%94%E5%9B%9E%E5%B7%A6%E8%BE%B9%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0%EF%BC%8C%E4%BB%A5%E5%8F%8A%E6%AF%8F%E4%B8%AA%E5%85%83%E7%B4%A0%E6%89%80%E5%8C%B9%E9%85%8D%E7%9A%84%E5%8F%B3%E8%BE%B9%E6%95%B0%E6%8D%AE%E6%BA%90%E7%9A%84%E5%85%83%E7%B4%A0%E7%BB%84%E6%88%90%E7%9A%84%E9%9B%86%E5%90%88%E3%80%82(%E5%B5%8C%E5%A5%97)%0A%0A%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0A%0A%60%60%60cs%0AList%3CDepartment%3E%20departments%20%3D%20new%20List%3CDepartment%3E%0A%7B%0A%20%20%20%20new%20Department%20%7B%20ID%20%3D%201%2C%20Name%20%3D%20%22HR%22%20%7D%2C%0A%20%20%20%20new%20Department%20%7B%20ID%20%3D%202%2C%20Name%20%3D%20%22IT%22%20%7D%0A%7D%3B%0A%60%60%60%0A%0A%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0A%0A%60%60%60cs%0AList%3CEmployee%3E%20employees%20%3D%20new%20List%3CEmployee%3E%0A%7B%0A%20%20%20%20new%20Employee%20%7B%20DepartmentID%20%3D%201%2C%20Name%20%3D%20%22Alice%22%20%7D%2C%0A%20%20%20%20new%20Employee%20%7B%20DepartmentID%20%3D%202%2C%20Name%20%3D%20%22Bob%22%20%7D%2C%0A%20%20%20%20new%20Employee%20%7B%20DepartmentID%20%3D%201%2C%20Name%20%3D%20%22Charlie%22%20%7D%2C%0A%20%20%20%20new%20Employee%20%7B%20DepartmentID%20%3D%203%2C%20Name%20%3D%20%22David%22%20%7D%0A%7D%3B%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20%60Join%60%EF%BC%8C%E5%B0%86%E9%83%A8%E9%97%A8%E5%92%8C%E5%91%98%E5%B7%A5%E7%9B%B8%E7%BB%93%E5%90%88%EF%BC%8C%E8%8E%B7%E5%8F%96%E9%83%A8%E9%97%A8%E5%90%8D%E7%A7%B0%E5%92%8C%E5%91%98%E5%B7%A5%E5%90%8D%E7%A7%B0%E7%9A%84%E9%9B%86%E5%90%88%0A%0A%60%60%60cs%0Avar%20joinQuery%20%3D%20departments.Join(employees%2C%20%0A%20%20%20%20department%20%3D%3E%20department.ID%2C%20employee%20%3D%3E%20employee.DepartmentID%2C%20%0A%20%20%20%20(department%2C%20employee)%20%3D%3E%20new%20%7B%20Department%20%3D%20department.Name%2C%20Employee%20%3D%20employee.Name%20%7D%0A)%3B%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20%60GroupJoin%60%EF%BC%8C%E5%B0%86%E9%83%A8%E9%97%A8%E5%92%8C%E5%91%98%E5%B7%A5%E7%9B%B8%E7%BB%93%E5%90%88%EF%BC%8C%E8%BF%94%E5%9B%9E%E6%89%80%E6%9C%89%E7%9A%84%E9%83%A8%E9%97%A8%EF%BC%8C%E5%B9%B6%E8%BF%94%E5%9B%9E%E6%AF%8F%E4%B8%AA%E9%83%A8%E9%97%A8%E7%9B%B8%E5%85%B3%E8%81%94%E7%9A%84%E5%91%98%E5%B7%A5%E9%9B%86%E5%90%88(%E5%B5%8C%E5%A5%97)%0A%0A%60%60%60cs%0Avar%20groupJoinQuery%20%3D%20departments.GroupJoin(employees%2C%20%0A%20%20%20%20department%20%3D%3E%20department.ID%2C%20employee%20%3D%3E%20employee.DepartmentID%2C%20%0A%20%20%20%20(department%2C%20employeeGroup)%20%3D%3E%20new%20%0A%20%20%20%20%20%20%20%20%7B%20%0A%20%20%20%20%20%20%20%20%20%20%20%20Department%20%3D%20department.Name%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20Employees%20%3D%20employeeGroup.Select(e%20%3D%3E%20e.Name).ToList()%20%0A%20%20%20%20%20%20%20%20%7D%0A)%3B%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s8-102",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "示例数据源"
-    },
-    {
-      "id": "s8-103",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "List%3CEmployee%3E%20employees%20%3D%20new%20List%3CEmployee%3E%0A%7B%0A%20%20%20%20new%20Employee%20%7B%20DepartmentID%20%3D%201%2C%20Name%20%3D%20%22Alice%22%20%7D%2C%0A%20%20%20%20new%20Employee%20%7B%20DepartmentID%20%3D%202%2C%20Name%20%3D%20%22Bob%22%20%7D%2C%0A%20%20%20%20new%20Employee%20%7B%20DepartmentID%20%3D%201%2C%20Name%20%3D%20%22Charlie%22%20%7D%2C%0A%20%20%20%20new%20Employee%20%7B%20DepartmentID%20%3D%203%2C%20Name%20%3D%20%22David%22%20%7D%0A%7D%3B",
-      "encoded": true
-    },
-    {
-      "id": "s8-104",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "使用 `Join`，将部门和员工相结合，获取部门名称和员工名称的集合"
-    },
-    {
-      "id": "s8-105",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "var joinQuery = departments.Join(employees, \n    department => department.ID, employee => employee.DepartmentID, \n    (department, employee) => new { Department = department.Name, Employee = employee.Name }\n);"
-    },
-    {
-      "id": "s8-106",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "使用 `GroupJoin`，将部门和员工相结合，返回所有的部门，并返回每个部门相关联的员工集合(嵌套)"
-    },
-    {
-      "id": "s8-107",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "var groupJoinQuery = departments.GroupJoin(employees, \n    department => department.ID, employee => employee.DepartmentID, \n    (department, employeeGroup) => new \n        { \n            Department = department.Name, \n            Employees = employeeGroup.Select(e => e.Name).ToList() \n        }\n);"
     },
     {
       "id": "s8-108",
       "sectionId": "s8",
       "title": "结果转换",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// ToList(): 将结果转换为List集合。\nList<Student> resultList = result.ToList();\n\n// ToDictionary(): 将结果转换为Dictionary字典。\nDictionary<string, int> resultDictionary = students\n    .ToDictionary(student => student.Name, student => student.Age);\n\n// ToArray(): 将结果转换为数组。\nStudent[] resultArray = result.ToArray();\n\n// First(): 获取结果中的第一个元素。\nStudent firstStudent = result.First();\n\n// FirstOrDefault(): 获取结果中的第一个元素，如果结果为空则返回默认值。\nStudent firstStudent = result.FirstOrDefault();"
+      "body": "```cs\n// ToList(): 将结果转换为List集合。\nList<Student> resultList = result.ToList();\n\n// ToDictionary(): 将结果转换为Dictionary字典。\nDictionary<string, int> resultDictionary = students\n    .ToDictionary(student => student.Name, student => student.Age);\n\n// ToArray(): 将结果转换为数组。\nStudent[] resultArray = result.ToArray();\n\n// First(): 获取结果中的第一个元素。\nStudent firstStudent = result.First();\n\n// FirstOrDefault(): 获取结果中的第一个元素，如果结果为空则返回默认值。\nStudent firstStudent = result.FirstOrDefault();\n```"
     },
     {
       "id": "s8-109",
       "sectionId": "s8",
       "title": "自定义扩展方法",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public static class CustomExtensions\n{\n    public static IEnumerable<T> CustomFilter<T>(this IEnumerable<T> source, Func<T, bool> predicate)\n    {\n        foreach (var item in source)\n        {\n            if (predicate(item))\n            {\n                yield return item;\n            }\n        }\n    }\n}\n// 使用自定义扩展方法\nvar filteredData = students.CustomFilter(s => s.Age > 20);"
+      "body": "```cs\npublic static class CustomExtensions\n{\n    public static IEnumerable<T> CustomFilter<T>(this IEnumerable<T> source, Func<T, bool> predicate)\n    {\n        foreach (var item in source)\n        {\n            if (predicate(item))\n            {\n                yield return item;\n            }\n        }\n    }\n}\n// 使用自定义扩展方法\nvar filteredData = students.CustomFilter(s => s.Age > 20);\n```"
     },
     {
       "id": "s8-110",
       "sectionId": "s8",
-      "title": "示例",
-      "kind": "text",
-      "body": "假设有一个包含学生信息的列表，每个学生有姓名、年龄和成绩。使用LINQ查询来选择年龄大于20岁的学生，然后按照他们的成绩进行分组，并选择每个分组中年龄最小的学生的姓名。"
-    },
-    {
-      "id": "s8-111",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B",
-      "encoded": true
-    },
-    {
-      "id": "s8-112",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "使用 `LINQ` 进行查询"
-    },
-    {
-      "id": "s8-113",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "var result = students\n    .Where(student => student.Age > 20) // WHERE: 选择年龄大于20的学生\n    .GroupBy(student => student.Grade)  // GROUP BY: 按成绩分组\n    .Select(group => group.OrderBy(student => student.Age).First().Name) // SELECT: 选择每个分组中年龄最小的学生的姓名\n    .ToList(); //转换为List<Student>()"
-    },
-    {
-      "id": "s8-114",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "输出结果"
-    },
-    {
-      "id": "s8-115",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%5B%22Charlie%22%2C%22Damon%22%2C%22David%22%5D",
+      "title": "%E7%A4%BA%E4%BE%8B",
+      "body": "%E5%81%87%E8%AE%BE%E6%9C%89%E4%B8%80%E4%B8%AA%E5%8C%85%E5%90%AB%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E7%9A%84%E5%88%97%E8%A1%A8%EF%BC%8C%E6%AF%8F%E4%B8%AA%E5%AD%A6%E7%94%9F%E6%9C%89%E5%A7%93%E5%90%8D%E3%80%81%E5%B9%B4%E9%BE%84%E5%92%8C%E6%88%90%E7%BB%A9%E3%80%82%E4%BD%BF%E7%94%A8LINQ%E6%9F%A5%E8%AF%A2%E6%9D%A5%E9%80%89%E6%8B%A9%E5%B9%B4%E9%BE%84%E5%A4%A7%E4%BA%8E20%E5%B2%81%E7%9A%84%E5%AD%A6%E7%94%9F%EF%BC%8C%E7%84%B6%E5%90%8E%E6%8C%89%E7%85%A7%E4%BB%96%E4%BB%AC%E7%9A%84%E6%88%90%E7%BB%A9%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84%EF%BC%8C%E5%B9%B6%E9%80%89%E6%8B%A9%E6%AF%8F%E4%B8%AA%E5%88%86%E7%BB%84%E4%B8%AD%E5%B9%B4%E9%BE%84%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%E3%80%82%0A%0A%60%60%60cs%0A%2F%2F%20%E7%A4%BA%E4%BE%8B%E6%95%B0%E6%8D%AE%E6%BA%90%0AList%3CStudent%3E%20students%20%3D%20new%20List%3CStudent%3E%0A%7B%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Alice%22%2C%20Age%20%3D%2025%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Bob%22%2C%20Age%20%3D%2030%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Barry%22%2C%20Age%20%3D%2035%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Charlie%22%2C%20Age%20%3D%2022%2C%20Grade%20%3D%20%22A%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22David%22%2C%20Age%20%3D%2021%2C%20Grade%20%3D%20%22C%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Damon%22%2C%20Age%20%3D%2028%2C%20Grade%20%3D%20%22B%22%20%7D%2C%0A%20%20%20%20new%20Student%20%7B%20Name%20%3D%20%22Echo%22%2C%20Age%20%3D%2018%2C%20Grade%20%3D%20%22C%22%20%7D%0A%7D%3B%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20%60LINQ%60%20%E8%BF%9B%E8%A1%8C%E6%9F%A5%E8%AF%A2%0A%0A%60%60%60cs%0Avar%20result%20%3D%20students%0A%20%20%20%20.Where(student%20%3D%3E%20student.Age%20%3E%2020)%20%2F%2F%20WHERE%3A%20%E9%80%89%E6%8B%A9%E5%B9%B4%E9%BE%84%E5%A4%A7%E4%BA%8E20%E7%9A%84%E5%AD%A6%E7%94%9F%0A%20%20%20%20.GroupBy(student%20%3D%3E%20student.Grade)%20%20%2F%2F%20GROUP%20BY%3A%20%E6%8C%89%E6%88%90%E7%BB%A9%E5%88%86%E7%BB%84%0A%20%20%20%20.Select(group%20%3D%3E%20group.OrderBy(student%20%3D%3E%20student.Age).First().Name)%20%2F%2F%20SELECT%3A%20%E9%80%89%E6%8B%A9%E6%AF%8F%E4%B8%AA%E5%88%86%E7%BB%84%E4%B8%AD%E5%B9%B4%E9%BE%84%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%A6%E7%94%9F%E7%9A%84%E5%A7%93%E5%90%8D%0A%20%20%20%20.ToList()%3B%20%2F%2F%E8%BD%AC%E6%8D%A2%E4%B8%BAList%3CStudent%3E()%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C%0A%0A%60%60%60cs%0A%5B%22Charlie%22%2C%22Damon%22%2C%22David%22%5D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-116",
       "sectionId": "s9",
       "title": "介绍",
-      "kind": "text",
       "body": "在 .NET 中，委托支持后期绑定，允许调用方在运行时提供方法的一部分，而不是在创建委托时定义完整算法，从而增强了灵活性和扩展性。"
     },
     {
       "id": "s9-117",
       "sectionId": "s9",
-      "title": "多播委托",
-      "kind": "text",
-      "body": "我们预先提供这些可用的方法"
-    },
-    {
-      "id": "s9-118",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public%20void%20Sub(int%20x%2C%20int%20y)%0A%7B%0A%20%20%20%20Console.WriteLine(%22x-y%3D%22%20%2B%20(x%20-%20y))%3B%0A%7D%0A%0Apublic%20void%20Mul(int%20x%2C%20int%20y)%0A%7B%0A%20%20%20%20Console.WriteLine(%22x*y%3D%22%20%2B%20(x%20*%20y))%3B%0A%7D",
+      "title": "%E5%A4%9A%E6%92%AD%E5%A7%94%E6%89%98",
+      "body": "%E6%88%91%E4%BB%AC%E9%A2%84%E5%85%88%E6%8F%90%E4%BE%9B%E8%BF%99%E4%BA%9B%E5%8F%AF%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95%0A%0A%60%60%60cs%0Apublic%20void%20Sub(int%20x%2C%20int%20y)%0A%7B%0A%20%20%20%20Console.WriteLine(%22x-y%3D%22%20%2B%20(x%20-%20y))%3B%0A%7D%0A%0Apublic%20void%20Mul(int%20x%2C%20int%20y)%0A%7B%0A%20%20%20%20Console.WriteLine(%22x*y%3D%22%20%2B%20(x%20*%20y))%3B%0A%7D%0A%60%60%60%0A%0A%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E5%A7%94%E6%89%98%E7%B1%BB%E5%9E%8B%0A%0A%60%60%60cs%0Apublic%20delegate%20void%20MyDelegate3(int%20x%2C%20int%20y)%3B%0A%60%60%60%0A%0A%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%EF%BC%8C%E6%8E%A5%E6%94%B6%E5%A7%94%E6%89%98%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%0A%0A%60%60%60cs%0Apublic%20void%20MyMethod3(int%20x%2C%20int%20y%2C%20MyDelegate3%20myDelegate)%0A%7B%0A%20%20%20%20myDelegate(x%2C%20y)%3B%0A%7D%0A%60%60%60%0A%0A%E5%AE%9A%E4%B9%89%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%A7%94%E6%89%98%E7%B1%BB%E5%9E%8B%0A%0A%60%60%60cs%0Apublic%20delegate%20void%20MyDelegate4(int%20x%2C%20int%20y)%3B%0A%60%60%60%0A%0A%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%EF%BC%8C%E6%8E%A5%E6%94%B6%E5%A7%94%E6%89%98%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%0A%0A%60%60%60cs%0Apublic%20void%20MyMethod4(int%20x%2C%20int%20y%2C%20MyDelegate4%20myDelegate)%0A%7B%0A%20%20%20%20myDelegate(x%2C%20y)%3B%0A%7D%0A%60%60%60%0A%0A%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%EF%BC%8C%E6%8E%A5%E6%94%B6%E5%A7%94%E6%89%98%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0%0A%0A%60%60%60cs%0Apublic%20void%20MyMethod5(int%20x%2C%20int%20y%2C%20MyDelegate3%20myDelegate%2C%20MyDelegate4%20myDelegate2)%0A%7B%0A%20%20%20%20myDelegate(x%2C%20y)%3B%0A%20%20%20%20myDelegate2(x%2C%20y)%3B%0A%7D%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s9-119",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "定义一个委托类型"
-    },
-    {
-      "id": "s9-120",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public delegate void MyDelegate3(int x, int y);"
-    },
-    {
-      "id": "s9-121",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "定义一个方法，接收委托作为参数"
-    },
-    {
-      "id": "s9-122",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public void MyMethod3(int x, int y, MyDelegate3 myDelegate)\n{\n    myDelegate(x, y);\n}"
-    },
-    {
-      "id": "s9-123",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "定义另一个委托类型"
-    },
-    {
-      "id": "s9-124",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public delegate void MyDelegate4(int x, int y);"
-    },
-    {
-      "id": "s9-125",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "定义一个方法，接收委托作为参数"
-    },
-    {
-      "id": "s9-126",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public void MyMethod4(int x, int y, MyDelegate4 myDelegate)\n{\n    myDelegate(x, y);\n}"
-    },
-    {
-      "id": "s9-127",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "定义一个方法，接收委托作为参数"
-    },
-    {
-      "id": "s9-128",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public void MyMethod5(int x, int y, MyDelegate3 myDelegate, MyDelegate4 myDelegate2)\n{\n    myDelegate(x, y);\n    myDelegate2(x, y);\n}"
     },
     {
       "id": "s9-129",
       "sectionId": "s9",
       "title": "多播委托",
-      "kind": "code",
-      "lang": "cs",
-      "code": "MyDelegate3 myDelegate31 = new MyDelegate3(Sub);\nMyDelegate4 myDelegate41 = new MyDelegate4(Mul);"
-    },
-    {
-      "id": "s9-130",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "调用 MyMethod3 方法，并传入委托作为参数"
-    },
-    {
-      "id": "s9-131",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "MyMethod3(10, 5, myDelegate31);\n// output:\n// x-y=5"
-    },
-    {
-      "id": "s9-132",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "调用 MyMethod4 方法，并传入委托作为参数"
-    },
-    {
-      "id": "s9-133",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "MyMethod4(10, 5, myDelegate41);\n// output:\n// x*y=50"
-    },
-    {
-      "id": "s9-134",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "调用 MyMethod5 方法，并传入委托作为参数"
-    },
-    {
-      "id": "s9-135",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "MyMethod5(10, 5, myDelegate31, myDelegate41);\n// output:\n// x-y=5\n// x*y=50"
+      "body": "```cs\nMyDelegate3 myDelegate31 = new MyDelegate3(Sub);\nMyDelegate4 myDelegate41 = new MyDelegate4(Mul);\n```\n\n调用 MyMethod3 方法，并传入委托作为参数\n\n```cs\nMyMethod3(10, 5, myDelegate31);\n// output:\n// x-y=5\n```\n\n调用 MyMethod4 方法，并传入委托作为参数\n\n```cs\nMyMethod4(10, 5, myDelegate41);\n// output:\n// x*y=50\n```\n\n调用 MyMethod5 方法，并传入委托作为参数\n\n```cs\nMyMethod5(10, 5, myDelegate31, myDelegate41);\n// output:\n// x-y=5\n// x*y=50\n```"
     },
     {
       "id": "s9-136",
       "sectionId": "s9",
       "title": "定义委托类型",
-      "kind": "text",
-      "body": "使用 `delegate` 关键字定义委托"
-    },
-    {
-      "id": "s9-137",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public delegate void MyDelegate(\n    int x, string y\n);"
-    },
-    {
-      "id": "s9-138",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "上述委托对应的函数实现应该类似:"
-    },
-    {
-      "id": "s9-139",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public void MyMethod(int x, string y);"
+      "body": "使用 `delegate` 关键字定义委托\n\n```cs\npublic delegate void MyDelegate(\n    int x, string y\n);\n```\n\n上述委托对应的函数实现应该类似:\n\n```cs\npublic void MyMethod(int x, string y);\n```"
     },
     {
       "id": "s9-140",
       "sectionId": "s9",
       "title": "创建委托实例",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 创建委托实例\nMyDelegate myDelegate = new MyDelegate(\n    MyMethod\n);"
+      "body": "```cs\n// 创建委托实例\nMyDelegate myDelegate = new MyDelegate(\n    MyMethod\n);\n```"
     },
     {
       "id": "s9-141",
       "sectionId": "s9",
       "title": "%E8%B0%83%E7%94%A8%E5%A7%94%E6%89%98",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E8%B0%83%E7%94%A8%E5%A7%94%E6%89%98%2C%E4%BC%A0%E5%85%A5%E5%AF%B9%E5%BA%94%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0%0AmyDelegate(10%2C%20%22Hello%22)%3B",
+      "body": "%60%60%60cs%0A%2F%2F%20%E8%B0%83%E7%94%A8%E5%A7%94%E6%89%98%2C%E4%BC%A0%E5%85%A5%E5%AF%B9%E5%BA%94%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0%0AmyDelegate(10%2C%20%22Hello%22)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-142",
       "sectionId": "s9",
       "title": "委托作为参数",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 定义另一个委托类型\npublic delegate int MyDelegate2(\n    int x, int y\n);\n\n// 定义一个方法，接收委托作为参数\npublic int MyMethod2(\n   int x, int y, MyDelegate2 myDelegate\n)\n{\n    return myDelegate(x, y);\n}\n\n// 创建委托实例\nMyDelegate2 myDelegate2 = new MyDelegate2(\n    Add\n);\n\n// 调用 MyMethod2 方法，并传入委托作为参数\nint result = MyMethod2(\n    10, 20, myDelegate2\n);"
+      "body": "```cs\n// 定义另一个委托类型\npublic delegate int MyDelegate2(\n    int x, int y\n);\n\n// 定义一个方法，接收委托作为参数\npublic int MyMethod2(\n   int x, int y, MyDelegate2 myDelegate\n)\n{\n    return myDelegate(x, y);\n}\n\n// 创建委托实例\nMyDelegate2 myDelegate2 = new MyDelegate2(\n    Add\n);\n\n// 调用 MyMethod2 方法，并传入委托作为参数\nint result = MyMethod2(\n    10, 20, myDelegate2\n);\n```"
     },
     {
       "id": "s9-143",
       "sectionId": "s9",
-      "title": "Action 委托",
-      "kind": "text",
-      "body": "Action 委托的变体最多可包含 16 个参数，且返回类型为 `void`"
-    },
-    {
-      "id": "s9-144",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAAction%0Apublic%20Action%3Cint%2C%20string%3E%20myAction%3B%0A%0A%2F%2F%20%E7%BB%99Action%E8%B5%8B%E5%80%BC%0AmyAction%20%3D%20(x%2C%20y)%20%3D%3E%20Console.WriteLine(%0A%20%20%20%20%22x%2By%3D%22%20%2B%20(x%20%2B%20y)%0A)%3B%0A%0A%2F%2F%20%E7%9B%B4%E6%8E%A5%E8%B0%83%E7%94%A8Action%0AmyAction(10%2C%20%22Hello%22)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20null%20%E5%90%88%E5%B9%B6%E8%BF%90%E7%AE%97%E7%AC%A6%E8%B0%83%E7%94%A8Action%0AmyAction%3F.Invoke(10%2C%20%22Hello%22)%3B",
+      "title": "Action%20%E5%A7%94%E6%89%98",
+      "body": "Action%20%E5%A7%94%E6%89%98%E7%9A%84%E5%8F%98%E4%BD%93%E6%9C%80%E5%A4%9A%E5%8F%AF%E5%8C%85%E5%90%AB%2016%20%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E4%B8%94%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%E4%B8%BA%20%60void%60%0A%0A%60%60%60cs%0A%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAAction%0Apublic%20Action%3Cint%2C%20string%3E%20myAction%3B%0A%0A%2F%2F%20%E7%BB%99Action%E8%B5%8B%E5%80%BC%0AmyAction%20%3D%20(x%2C%20y)%20%3D%3E%20Console.WriteLine(%0A%20%20%20%20%22x%2By%3D%22%20%2B%20(x%20%2B%20y)%0A)%3B%0A%0A%2F%2F%20%E7%9B%B4%E6%8E%A5%E8%B0%83%E7%94%A8Action%0AmyAction(10%2C%20%22Hello%22)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20null%20%E5%90%88%E5%B9%B6%E8%BF%90%E7%AE%97%E7%AC%A6%E8%B0%83%E7%94%A8Action%0AmyAction%3F.Invoke(10%2C%20%22Hello%22)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-145",
       "sectionId": "s9",
-      "title": "Func 委托",
-      "kind": "text",
-      "body": "Func 委托的变体可包含最多16个参数，返回类型可以是任意类型 T"
-    },
-    {
-      "id": "s9-146",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAFunc%2C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E6%98%AF%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%0Apublic%20Func%3Cint%2C%20int%2C%20string%3E%20myFunc%3B%0A%0A%2F%2F%20%E7%BB%99Func%E8%B5%8B%E5%80%BC%0AmyFunc%20%3D%20(x%2C%20y)%20%3D%3E%20%22x%2By%3D%22%20%2B%20(x%20%2B%20y)%3B%0A%0A%2F%2F%20%E8%B0%83%E7%94%A8Func%0Astring%20result%20%3D%20myFunc(10%2C%2020)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20null%20%E5%90%88%E5%B9%B6%E8%BF%90%E7%AE%97%E7%AC%A6%E8%B0%83%E7%94%A8Func%0Astring%20result2%20%3D%20myFunc%3F.Invoke(10%2C%2020)%3B",
+      "title": "Func%20%E5%A7%94%E6%89%98",
+      "body": "Func%20%E5%A7%94%E6%89%98%E7%9A%84%E5%8F%98%E4%BD%93%E5%8F%AF%E5%8C%85%E5%90%AB%E6%9C%80%E5%A4%9A16%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%E5%8F%AF%E4%BB%A5%E6%98%AF%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%20T%0A%0A%60%60%60cs%0A%2F%2F%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAFunc%2C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E6%98%AF%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%0Apublic%20Func%3Cint%2C%20int%2C%20string%3E%20myFunc%3B%0A%0A%2F%2F%20%E7%BB%99Func%E8%B5%8B%E5%80%BC%0AmyFunc%20%3D%20(x%2C%20y)%20%3D%3E%20%22x%2By%3D%22%20%2B%20(x%20%2B%20y)%3B%0A%0A%2F%2F%20%E8%B0%83%E7%94%A8Func%0Astring%20result%20%3D%20myFunc(10%2C%2020)%3B%0A%0A%2F%2F%20%E4%BD%BF%E7%94%A8%20null%20%E5%90%88%E5%B9%B6%E8%BF%90%E7%AE%97%E7%AC%A6%E8%B0%83%E7%94%A8Func%0Astring%20result2%20%3D%20myFunc%3F.Invoke(10%2C%2020)%3B%0A%60%60%60%0A%0A%E4%BA%8B%E4%BB%B6%E4%B8%8E%E5%A7%94%E6%89%98%E7%B1%BB%E4%BC%BC%EF%BC%8C%E9%83%BD%E6%98%AF%E5%90%8E%E6%9C%9F%E7%BB%91%E5%AE%9A%E6%9C%BA%E5%88%B6%E3%80%82%E5%AE%9E%E9%99%85%E4%B8%8A%EF%BC%8C%E4%BA%8B%E4%BB%B6%E6%98%AF%E5%BB%BA%E7%AB%8B%E5%9C%A8%E5%A7%94%E6%89%98%E5%9F%BA%E7%A1%80%E4%B8%8A%E7%9A%84%E4%B8%80%E7%A7%8D%E8%AF%AD%E8%A8%80%E6%94%AF%E6%8C%81%EF%BC%8C%E5%AE%83%E6%98%AF%20C%23%20%E5%AF%B9%E5%A7%94%E6%89%98%E7%9A%84%E5%B0%81%E8%A3%85%EF%BC%8C%E6%8F%90%E4%BE%9B%E4%BA%86%E6%9B%B4%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%BC%96%E7%A8%8B%E6%A8%A1%E5%9E%8B%EF%BC%8C%E5%B9%B6%E5%AE%9E%E7%8E%B0%E4%BA%86%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s9-147",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "事件与委托类似，都是后期绑定机制。实际上，事件是建立在委托基础上的一种语言支持，它是 C# 对委托的封装，提供了更面向对象的编程模型，并实现了观察者模式。"
     },
     {
       "id": "s9-148",
       "sectionId": "s9",
       "title": "事件定义",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 使用 event 关键字定义事件\npublic event EventHandler<EventArgs> MyEvent;"
+      "body": "```cs\n// 使用 event 关键字定义事件\npublic event EventHandler<EventArgs> MyEvent;\n```"
     },
     {
       "id": "s9-149",
       "sectionId": "s9",
       "title": "事件订阅",
-      "kind": "text",
-      "body": "我们实现定义一个方法作为事件处理器，并订阅事件"
-    },
-    {
-      "id": "s9-150",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public void MyEventHandler(object sender, EventArgs e)\n{\n    // 事件处理逻辑\n    // ...\n}\n\n// 订阅事件\nMyEvent += MyEventHandler;\n\n// 取消订阅事件\nMyEvent -= MyEventHandler;"
+      "body": "我们实现定义一个方法作为事件处理器，并订阅事件\n\n```cs\npublic void MyEventHandler(object sender, EventArgs e)\n{\n    // 事件处理逻辑\n    // ...\n}\n```\n\n```cs\n// 订阅事件\nMyEvent += MyEventHandler;\n\n// 取消订阅事件\nMyEvent -= MyEventHandler;\n```"
     },
     {
       "id": "s9-151",
       "sectionId": "s9",
       "title": "事件触发",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 触发事件\nMyEvent?.Invoke(this, new EventArgs());"
+      "body": "```cs\n// 触发事件\nMyEvent?.Invoke(this, new EventArgs());\n```"
     },
     {
       "id": "s9-152",
       "sectionId": "s9",
       "title": "%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%0Apublic%20class%20MyEventArgs%20%3A%20EventArgs%0A%7B%0A%20%20%20%20public%20int%20Value%20%7B%20get%3B%20set%3B%20%7D%0A%7D%0A%0A%2F%2F%20%E6%96%B0%E7%9A%84Handler%0Apublic%20void%20MyEventHandler2(object%20sender%2C%20MyEventArgs%20e)%0A%7B%0A%20%20%20%20%2F%2F%20%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91%2C%E8%BF%99%E9%87%8C%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96%E5%88%B0%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%0A%20%20%20%20Console.WriteLine(%22%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%80%BC%EF%BC%9A%22%20%2B%20e.Value)%3B%0A%7D%0A%0A%2F%2F%20%E8%A7%A6%E5%8F%91%E4%BA%8B%E4%BB%B6%0A%2F%2F%20output%3A%0A%2F%2F%20%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%80%BC%EF%BC%9A10%0AMyEvent%3F.Invoke(this%2C%20new%20MyEventArgs%20%7B%20Value%20%3D%2010%20%7D)%3B",
+      "body": "%60%60%60cs%0A%2F%2F%20%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%0Apublic%20class%20MyEventArgs%20%3A%20EventArgs%0A%7B%0A%20%20%20%20public%20int%20Value%20%7B%20get%3B%20set%3B%20%7D%0A%7D%0A%0A%2F%2F%20%E6%96%B0%E7%9A%84Handler%0Apublic%20void%20MyEventHandler2(object%20sender%2C%20MyEventArgs%20e)%0A%7B%0A%20%20%20%20%2F%2F%20%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E9%80%BB%E8%BE%91%2C%E8%BF%99%E9%87%8C%E5%8F%AF%E4%BB%A5%E8%8E%B7%E5%8F%96%E5%88%B0%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%0A%20%20%20%20Console.WriteLine(%22%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%80%BC%EF%BC%9A%22%20%2B%20e.Value)%3B%0A%7D%0A%0A%2F%2F%20%E8%A7%A6%E5%8F%91%E4%BA%8B%E4%BB%B6%0A%2F%2F%20output%3A%0A%2F%2F%20%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%E7%9A%84%E5%80%BC%EF%BC%9A10%0AMyEvent%3F.Invoke(this%2C%20new%20MyEventArgs%20%7B%20Value%20%3D%2010%20%7D)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s10-153",
       "sectionId": "s10",
       "title": "语法糖",
-      "kind": "text",
       "body": "> 语法糖需要根据 `c#` 版本来确实是否可以使用，一般情况下 `c# 8.0` 及以上的 `C#` 版本都已支持。"
     },
     {
       "id": "s10-154",
       "sectionId": "s10",
       "title": "对象判空及赋值",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 判断对象是否为空，为空抛出异常\nif(obj == null) throw new NullReferenceException();\n\n// 简化的语法糖\nobj ?? throw new NullReferenceException();\n\n// 判断 对象为空 的情况下再赋新值\n//     对象不为空 不进行赋值\nif(obj == null)\n{\n  obj = new object();\n}\n\n// 简化的语法糖\nobj ??= new object();"
+      "body": "```cs\n// 判断对象是否为空，为空抛出异常\nif(obj == null) throw new NullReferenceException();\n\n// 简化的语法糖\nobj ?? throw new NullReferenceException();\n\n// 判断 对象为空 的情况下再赋新值\n//     对象不为空 不进行赋值\nif(obj == null)\n{\n  obj = new object();\n}\n\n// 简化的语法糖\nobj ??= new object();\n```"
     },
     {
       "id": "s10-155",
       "sectionId": "s10",
       "title": "可空类型判空及赋值",
-      "kind": "code",
-      "lang": "cs",
-      "code": "// 可空类型\nint? nums = null;\n\n// 判断值是否为空，并进行不同的赋值\nif(nums == null)\n{\n  result = -1;\n} \nelse \n{\n  result = nums;\n}\n\n// 简化的语法糖\nint result = nums ?? -1;"
+      "body": "```cs\n// 可空类型\nint? nums = null;\n\n// 判断值是否为空，并进行不同的赋值\nif(nums == null)\n{\n  result = -1;\n} \nelse \n{\n  result = nums;\n}\n\n// 简化的语法糖\nint result = nums ?? -1;\n```"
     },
     {
       "id": "s10-156",
       "sectionId": "s10",
       "title": "减少空引用",
-      "kind": "text",
-      "body": "判断数组或 `list` 不能 `null` 且有元素"
-    },
-    {
-      "id": "s10-157",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "if(list != null && list.Count > 0)"
-    },
-    {
-      "id": "s10-158",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "简化的语法糖当 `list` 为 `null` 时，将直接返回 `false`"
-    },
-    {
-      "id": "s10-159",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "if(list?.Count > 0)"
-    },
-    {
-      "id": "s10-160",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "同样可运用在赋值时，如果 `obj` 为 `null`，将不会取 `obj.text` 的值，而是将会为 `text` 赋值 `null`"
-    },
-    {
-      "id": "s10-161",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "string text = obj?.text;"
+      "body": "判断数组或 `list` 不能 `null` 且有元素\n\n```cs\nif(list != null && list.Count > 0)\n```\n\n简化的语法糖当 `list` 为 `null` 时，将直接返回 `false`\n\n```cs\nif(list?.Count > 0)\n```\n\n同样可运用在赋值时，如果 `obj` 为 `null`，将不会取 `obj.text` 的值，而是将会为 `text` 赋值 `null`\n\n```cs\nstring text = obj?.text;\n```"
     },
     {
       "id": "s10-162",
       "sectionId": "s10",
       "title": "判断参数类型并转换类型+校验",
-      "kind": "text",
-      "body": "• 判断 `value` 是否为 `string` 类型，如果 `value` 是 `string` 类型\n• 那么将 `value` 转换为 `string` 类型，并赋值给 `stringValue`\n• 再判断 `stringValue` 是否不为 `Null` 或 `空`"
-    },
-    {
-      "id": "s10-163",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "code",
-      "lang": "cs",
-      "code": "if(value is string stringValue && !string.IsNullOrEmpty(stringValue))"
+      "body": "• 判断 `value` 是否为 `string` 类型，如果 `value` 是 `string` 类型\n• 那么将 `value` 转换为 `string` 类型，并赋值给 `stringValue`\n• 再判断 `stringValue` 是否不为 `Null` 或 `空`\n\n```cs\nif(value is string stringValue && !string.IsNullOrEmpty(stringValue))\n```"
     },
     {
       "id": "s10-164",
       "sectionId": "s10",
       "title": "Switch",
-      "kind": "code",
-      "lang": "cs",
-      "code": "public%20string%20GetNums(int%20num)%0A%7B%0A%20%20%2F%2F%20%E4%BD%BF%E7%94%A8%E8%BF%99%E7%A7%8D%E6%96%B9%E5%BC%8F%E7%9A%84switch%E6%97%B6%EF%BC%8C%E8%A6%81%E6%B1%82%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%E7%BB%9F%E4%B8%80%0A%20%20string%20str%20%3D%20num%20switch%0A%20%20%7B%0A%20%20%20%201%20%3D%3E%20%22num%E7%9A%84%E5%80%BC%E6%98%AF1%22%2C%0A%20%20%20%202%20%3D%3E%20%22num%E7%9A%84%E5%80%BC%E6%98%AF2%22%2C%0A%20%20%20%203%20%3D%3E%20%22num%E7%9A%84%E5%80%BC%E6%98%AF3%22%2C%0A%20%20%20%204%20%3D%3E%20%22num%E7%9A%84%E5%80%BC%E6%98%AF4%22%2C%0A%20%20%20%20_%20%3D%3E%20%22%E5%85%B6%E4%BB%96%22%0A%20%20%7D%3B%0A%0A%20%20return%20str%3B%0A%7D",
+      "body": "%60%60%60cs%0Apublic%20string%20GetNums(int%20num)%0A%7B%0A%20%20%2F%2F%20%E4%BD%BF%E7%94%A8%E8%BF%99%E7%A7%8D%E6%96%B9%E5%BC%8F%E7%9A%84switch%E6%97%B6%EF%BC%8C%E8%A6%81%E6%B1%82%E8%BF%94%E5%9B%9E%E7%B1%BB%E5%9E%8B%E7%BB%9F%E4%B8%80%0A%20%20string%20str%20%3D%20num%20switch%0A%20%20%7B%0A%20%20%20%201%20%3D%3E%20%22num%E7%9A%84%E5%80%BC%E6%98%AF1%22%2C%0A%20%20%20%202%20%3D%3E%20%22num%E7%9A%84%E5%80%BC%E6%98%AF2%22%2C%0A%20%20%20%203%20%3D%3E%20%22num%E7%9A%84%E5%80%BC%E6%98%AF3%22%2C%0A%20%20%20%204%20%3D%3E%20%22num%E7%9A%84%E5%80%BC%E6%98%AF4%22%2C%0A%20%20%20%20_%20%3D%3E%20%22%E5%85%B6%E4%BB%96%22%0A%20%20%7D%3B%0A%0A%20%20return%20str%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s10-165",
       "sectionId": "s10",
       "title": "%E5%88%87%E7%89%87%E6%93%8D%E4%BD%9C",
-      "kind": "code",
-      "lang": "cs",
-      "code": "%2F%2F%20**%E4%BB%A5%E4%B8%8B%E6%89%80%E6%9C%89%5B%5D%E4%B8%AD%E7%9A%84%E6%95%B0%E5%AD%97%E9%83%BD%E4%BB%A3%E8%A1%A8%E7%B4%A2%E5%BC%95**%0A%2F%2F%20**%E5%A6%82%E6%9E%9C%E6%98%AF%E8%8C%83%E5%9B%B4%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%B8%94%E5%A3%B0%E6%98%8E%E7%BB%93%E6%9D%9F%E7%B4%A2%E5%BC%95%EF%BC%8C%E9%82%A3%E4%B9%88%E9%83%BD%E5%B0%86%E4%B8%8D%E5%8C%85%E5%90%AB%E7%BB%93%E6%9D%9F%E7%B4%A2%E5%BC%95%E7%9A%84%E5%80%BC**%0A%0A%2F%2F%20%E6%95%B0%E7%BB%84%E4%BE%8B%E5%AD%90%0Astring%5B%5D%20arr%20%3D%20new%20string%5B%5D%20%7B%20%2210%22%2C%20%2220%22%2C%20%2230%22%2C%20%2240%22%2C%20%2250%22%2C%20%2260%22%2C%20%2270%22%2C%20%2280%22%2C%20%2290%22%2C%20%22100%22%20%7D%3B%0A%0A%2F%2F%20%E8%8E%B7%E5%8F%96%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%0Astring%20str%20%3D%20arr%5B%5E1%5D%3B%0A%0A%2F%2F%20%E8%8E%B7%E5%8F%96%E5%89%8D3%E4%B8%AA%E5%85%83%E7%B4%A0%EF%BC%8C%E4%BB%8E%E7%B4%A2%E5%BC%950%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E7%B4%A2%E5%BC%953(%E4%B8%8D%E5%8C%85%E5%90%AB)%EF%BC%9A%5B%2210%22%2C%2220%22%2C%2230%22%5D%0A%2F%2F%20%E5%8F%AF%E7%9C%81%E7%95%A5%E7%B4%A2%E5%BC%950%EF%BC%8C%E4%BB%8E%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E7%B4%A2%E5%BC%953(%E4%B8%8D%E5%8C%85%E5%90%AB)%0A%2F%2F%20string%5B%5D%20strs%20%3D%20arr%5B..3%5D%3B%0Astring%5B%5D%20strs1%20%3D%20arr%5B0..3%5D%3B%0A%0A%2F%2F%20%E8%8E%B7%E5%8F%96%E5%90%8E3%E4%B8%AA%E5%85%83%E7%B4%A0%EF%BC%8C%E4%BB%8E%E5%80%92%E6%95%B0%E7%AC%AC3%E4%B8%AA%E5%85%83%E7%B4%A0%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E6%9C%80%E5%90%8E%EF%BC%9A%5B%2280%22%2C%20%2290%22%2C%20%22100%22%5D%0A%2F%2F%20%E6%9C%80%E5%90%8E%E4%B8%80%E4%BD%8D%E7%B4%A2%E5%BC%95%E8%A2%AB%E7%9C%81%E7%95%A5%20string%5B%5D%20strs21%20%3D%20arr%5B%5E3..%5E0%5D%3B%0A%2F%2F%20%5E0%20%E5%80%92%E6%95%B0%E7%AC%AC0%E4%B8%AA%E5%85%83%E7%B4%A0%E6%98%AF%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%0Astring%5B%5D%20strs2%20%3D%20arr%5B%5E3..%5D%3B%0A%0A%2F%2F%20%E6%8C%87%E5%AE%9A%E8%8E%B7%E5%8F%96%20%E6%AD%A3%E5%90%91%20%E6%9F%90%E4%B8%80%E6%AE%B5%E5%85%83%E7%B4%A0%0A%2F%2F%20%E4%BB%8E%E7%B4%A2%E5%BC%953%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E7%B4%A2%E5%BC%957(%E4%B8%8D%E5%8C%85%E5%90%AB)%EF%BC%9A%5B%2240%22%2C%20%2250%22%2C%20%2260%22%2C%20%2270%22%5D%0Astring%5B%5D%20strs3%20%3D%20arr%5B3..7%5D%3B%0A%0A%2F%2F%20%E6%8C%87%E5%AE%9A%E8%8E%B7%E5%8F%96%20%E5%8F%8D%E5%90%91%20%E6%9F%90%E4%B8%80%E6%AE%B5%E5%85%83%E7%B4%A0%0A%2F%2F%20%E5%80%92%E6%95%B0%E7%AC%AC4%E4%B8%AA%E5%85%83%E7%B4%A0%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E5%80%92%E6%95%B0%E7%AC%AC2%E4%B8%AA%E5%85%83%E7%B4%A0(%E4%B8%8D%E5%8C%85%E5%90%AB)%EF%BC%9A%5B%2270%22%2C%2280%22%5D%0Astring%5B%5D%20strs4%20%3D%20arr%5B%5E4..%5E2%5D%3B",
+      "body": "%60%60%60cs%0A%2F%2F%20**%E4%BB%A5%E4%B8%8B%E6%89%80%E6%9C%89%5B%5D%E4%B8%AD%E7%9A%84%E6%95%B0%E5%AD%97%E9%83%BD%E4%BB%A3%E8%A1%A8%E7%B4%A2%E5%BC%95**%0A%2F%2F%20**%E5%A6%82%E6%9E%9C%E6%98%AF%E8%8C%83%E5%9B%B4%E7%B4%A2%E5%BC%95%EF%BC%8C%E4%B8%94%E5%A3%B0%E6%98%8E%E7%BB%93%E6%9D%9F%E7%B4%A2%E5%BC%95%EF%BC%8C%E9%82%A3%E4%B9%88%E9%83%BD%E5%B0%86%E4%B8%8D%E5%8C%85%E5%90%AB%E7%BB%93%E6%9D%9F%E7%B4%A2%E5%BC%95%E7%9A%84%E5%80%BC**%0A%0A%2F%2F%20%E6%95%B0%E7%BB%84%E4%BE%8B%E5%AD%90%0Astring%5B%5D%20arr%20%3D%20new%20string%5B%5D%20%7B%20%2210%22%2C%20%2220%22%2C%20%2230%22%2C%20%2240%22%2C%20%2250%22%2C%20%2260%22%2C%20%2270%22%2C%20%2280%22%2C%20%2290%22%2C%20%22100%22%20%7D%3B%0A%0A%2F%2F%20%E8%8E%B7%E5%8F%96%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0%0Astring%20str%20%3D%20arr%5B%5E1%5D%3B%0A%0A%2F%2F%20%E8%8E%B7%E5%8F%96%E5%89%8D3%E4%B8%AA%E5%85%83%E7%B4%A0%EF%BC%8C%E4%BB%8E%E7%B4%A2%E5%BC%950%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E7%B4%A2%E5%BC%953(%E4%B8%8D%E5%8C%85%E5%90%AB)%EF%BC%9A%5B%2210%22%2C%2220%22%2C%2230%22%5D%0A%2F%2F%20%E5%8F%AF%E7%9C%81%E7%95%A5%E7%B4%A2%E5%BC%950%EF%BC%8C%E4%BB%8E%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E7%B4%A2%E5%BC%953(%E4%B8%8D%E5%8C%85%E5%90%AB)%0A%2F%2F%20string%5B%5D%20strs%20%3D%20arr%5B..3%5D%3B%0Astring%5B%5D%20strs1%20%3D%20arr%5B0..3%5D%3B%0A%0A%2F%2F%20%E8%8E%B7%E5%8F%96%E5%90%8E3%E4%B8%AA%E5%85%83%E7%B4%A0%EF%BC%8C%E4%BB%8E%E5%80%92%E6%95%B0%E7%AC%AC3%E4%B8%AA%E5%85%83%E7%B4%A0%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E6%9C%80%E5%90%8E%EF%BC%9A%5B%2280%22%2C%20%2290%22%2C%20%22100%22%5D%0A%2F%2F%20%E6%9C%80%E5%90%8E%E4%B8%80%E4%BD%8D%E7%B4%A2%E5%BC%95%E8%A2%AB%E7%9C%81%E7%95%A5%20string%5B%5D%20strs21%20%3D%20arr%5B%5E3..%5E0%5D%3B%0A%2F%2F%20%5E0%20%E5%80%92%E6%95%B0%E7%AC%AC0%E4%B8%AA%E5%85%83%E7%B4%A0%E6%98%AF%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%0Astring%5B%5D%20strs2%20%3D%20arr%5B%5E3..%5D%3B%0A%0A%2F%2F%20%E6%8C%87%E5%AE%9A%E8%8E%B7%E5%8F%96%20%E6%AD%A3%E5%90%91%20%E6%9F%90%E4%B8%80%E6%AE%B5%E5%85%83%E7%B4%A0%0A%2F%2F%20%E4%BB%8E%E7%B4%A2%E5%BC%953%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E7%B4%A2%E5%BC%957(%E4%B8%8D%E5%8C%85%E5%90%AB)%EF%BC%9A%5B%2240%22%2C%20%2250%22%2C%20%2260%22%2C%20%2270%22%5D%0Astring%5B%5D%20strs3%20%3D%20arr%5B3..7%5D%3B%0A%0A%2F%2F%20%E6%8C%87%E5%AE%9A%E8%8E%B7%E5%8F%96%20%E5%8F%8D%E5%90%91%20%E6%9F%90%E4%B8%80%E6%AE%B5%E5%85%83%E7%B4%A0%0A%2F%2F%20%E5%80%92%E6%95%B0%E7%AC%AC4%E4%B8%AA%E5%85%83%E7%B4%A0%E5%BC%80%E5%A7%8B%20%E5%88%B0%20%E5%80%92%E6%95%B0%E7%AC%AC2%E4%B8%AA%E5%85%83%E7%B4%A0(%E4%B8%8D%E5%8C%85%E5%90%AB)%EF%BC%9A%5B%2270%22%2C%2280%22%5D%0Astring%5B%5D%20strs4%20%3D%20arr%5B%5E4..%5E2%5D%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s11-166",
       "sectionId": "s11",
       "title": "常用 .NET 概念",
-      "kind": "text",
       "body": "概念 | 中文名 | 定义\n:- | -|--\n`Runtime` | 运行时 | 执行给定的已编译代码单元所需的服务集合\n`Common Language Runtime (CLR)` | 通用语言运行库 | 主要定位、加载和托管 .NET 对象。<br/>CLR 还处理内存管理、应用程序托管、线程协调、执行安全检查和其他低级细节\n`Managed code` | 托管代码 | 在 `.NET` 运行时编译和运行的代码。 C#/F#/VB 就是例子\n`Unmanaged code` | 非托管代码 | 直接编译为机器代码且不能由 .NET 运行时直接托管的代码。<br/>不包含空闲内存管理、垃圾收集等。从 C/C++ 创建的 DLL 就是示例\n<!--rehype:className=show-header left-align-->"
     }
   ],

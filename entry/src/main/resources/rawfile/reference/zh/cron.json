@@ -25,73 +25,43 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "[Cron](https://en.wikipedia.org/wiki/Cron) 最适合安排重复性任务。 可以使用关联的 at 实用程序来完成一次性任务的调度。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "格式",
-      "kind": "code",
-      "lang": "bash",
-      "code": "Min  Hour Day  Mon  Weekday\n分钟  小时  天   月   周\n\n*    *    *    *    *   <要执行的命令>\n┬    ┬    ┬    ┬    ┬\n│    │    │    │    └─  星期几         (0=周日 .. 6=星期六)\n│    │    │    └──────  月            (1..12)\n│    │    └───────────  月份中的某天    (1..31)\n│    └────────────────  小时           (0..23)\n└─────────────────────  分钟           (0..59)"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "| 字段          | 范围   | 特殊字符             |\n|--------------|--------|--------------------|\n| 分钟 Minute   | 0 - 59 | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd>\n| 小时 Hour     | 0 - 23 | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd>\n| 月份中的某天   | 1 - 31 | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>?</kbd> <kbd>/</kbd> <kbd>L</kbd> <kbd>W</kbd>\n| 月 Month     | 1 - 12 | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd>\n| 星期几        | 0 - 6  | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>?</kbd> <kbd>/</kbd> <kbd>L</kbd> <kbd>#</kbd>\n| 年 Year       | 1970–2099  | <kbd>,</kbd> <kbd>-</kbd>"
+      "body": "```\nMin  Hour Day  Mon  Weekday\n分钟  小时  天   月   周\n```\n\n```bash\n*    *    *    *    *   <要执行的命令>\n┬    ┬    ┬    ┬    ┬\n│    │    │    │    └─  星期几         (0=周日 .. 6=星期六)\n│    │    │    └──────  月            (1..12)\n│    │    └───────────  月份中的某天    (1..31)\n│    └────────────────  小时           (0..23)\n└─────────────────────  分钟           (0..59)\n```\n\n| 字段          | 范围   | 特殊字符             |\n|--------------|--------|--------------------|\n| 分钟 Minute   | 0 - 59 | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd>\n| 小时 Hour     | 0 - 23 | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd>\n| 月份中的某天   | 1 - 31 | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>?</kbd> <kbd>/</kbd> <kbd>L</kbd> <kbd>W</kbd>\n| 月 Month     | 1 - 12 | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd>\n| 星期几        | 0 - 6  | <kbd>,</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>?</kbd> <kbd>/</kbd> <kbd>L</kbd> <kbd>#</kbd>\n| 年 Year       | 1970–2099  | <kbd>,</kbd> <kbd>-</kbd>"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "示例",
-      "kind": "text",
       "body": "| Example        | Description            |\n|----------------|------------------------|\n| `*/15 * * * *` | 每 15 分钟   |\n| `0 * * * *`    | 每隔一小时   |\n| `0 */2 * * *`  | 每 2 小时   |\n| `15 2 * * *`   | 每天凌晨 2 点 15 分   |\n| `15 2 * * ?`   | 每天凌晨 2 点 15 分   |\n| `10 9 * * 5`   | 每周五上午 9:10   |\n| `0 0 * * 0`    | 每个星期日的午夜   |\n| `15 2 * * 1L`  | 每月最后一个星期一凌晨 2 点 15 分   |\n| `15 0 * * 4#2` | 每个月的第二个星期四早上 00:15   |\n| `0 0 0 1 * *`  | 每个月的 1 日(每月)   |\n| `0 0 0 1 1 *`  | 每年 1 月 1 日(每年)   |\n| `@reboot`      | 每次重启 _(非标准)_   |"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "特殊字符串",
-      "kind": "text",
       "body": "| 特殊字符串       | 意义                                            |\n|----------------|----------------------------------------------------|\n| @reboot        | 运行一次，在系统启动时 _(非标准)_ |\n| @yearly        | 每年运行一次，“0 0 1 1 *” _(非标准)_ |\n| @annually      | (与@yearly 相同)_(非标准)_ |\n| @monthly       | 每月运行一次，“0 0 1 \\* \\*” _(非标准)_ |\n| @weekly        | 每周运行一次，“0 0 \\* \\* 0” _(非标准)_ |\n| @daily         | 每天运行一次，“0 0 \\* \\* \\*” _(非标准)_ |\n| @midnight      | (与@daily 相同)_(非标准)_ |\n| @hourly        | 每小时运行一次，“0 \\* \\* \\* \\*” _(非标准)_ |"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "Crontab 命令",
-      "kind": "text",
-      "body": "| -            | -                                           |\n|--------------|---------------------------------------------|\n| `crontab -e` | 如果不存在，则编辑或创建一个 crontab 文件       |\n| `crontab -l` | 显示 crontab 文件 |\n| `crontab -r` | 删除 crontab 文件 |\n| `crontab -v` | 显示您上次编辑 crontab 文件的时间 _(非标准)_ |"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "轻松添加任务"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "echo%20%22%40reboot%20echo%20hi%22%20%5C%7C%20crontab",
+      "title": "Crontab%20%E5%91%BD%E4%BB%A4",
+      "body": "%7C%20-%20%20%20%20%20%20%20%20%20%20%20%20%7C%20-%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C--------------%7C---------------------------------------------%7C%0A%7C%20%60crontab%20-e%60%20%7C%20%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%AD%98%E5%9C%A8%EF%BC%8C%E5%88%99%E7%BC%96%E8%BE%91%E6%88%96%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20crontab%20%E6%96%87%E4%BB%B6%20%20%20%20%20%20%20%7C%0A%7C%20%60crontab%20-l%60%20%7C%20%E6%98%BE%E7%A4%BA%20crontab%20%E6%96%87%E4%BB%B6%20%7C%0A%7C%20%60crontab%20-r%60%20%7C%20%E5%88%A0%E9%99%A4%20crontab%20%E6%96%87%E4%BB%B6%20%7C%0A%7C%20%60crontab%20-v%60%20%7C%20%E6%98%BE%E7%A4%BA%E6%82%A8%E4%B8%8A%E6%AC%A1%E7%BC%96%E8%BE%91%20crontab%20%E6%96%87%E4%BB%B6%E7%9A%84%E6%97%B6%E9%97%B4%20_(%E9%9D%9E%E6%A0%87%E5%87%86)_%20%7C%0A%0A%E8%BD%BB%E6%9D%BE%E6%B7%BB%E5%8A%A0%E4%BB%BB%E5%8A%A1%0A%0A%60%60%60bash%0Aecho%20%22%40reboot%20echo%20hi%22%20%5C%7C%20crontab%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "特殊字符",
-      "kind": "text",
       "body": "| 特殊字符             | 说明 |\n|---------------------|------------|\n`星号(*)`  | 匹配字段中的所有值或任何可能的值。\n`横杆(-)`  | 用于定义范围。例如：第 5 个字段(星期几)中的 1-5 每个工作日，即星期一到星期五\n`斜线 (/)` | 第一个字段(分钟)/15 表示每十五分钟或范围的增量。\n`逗号(,)`  | 用于分隔项目。例如：第二个字段(小时)中的 2、6、8 在凌晨 2 点、早上 6 点和早上 8 点执行\n`L`       | 仅允许用于 `月份中的某天` 或 `星期几` 字段，`星期几` 中的 `2L` 表示每个月的最后一个星期二\n`井号 (#)` | 仅允许用于 `星期几` 字段，后面必须在 1 到 5 的范围内。例如，`4#1` 表示给定月份的“第一个星期四”。\n`问号(?)`  | 可以代替“*”并允许用于月份和星期几。使用仅限于 cron 表达式中的 `月份中的某天` 或 `星期几`。"
     },
     {
       "id": "s2-9",
       "sectionId": "s2",
       "title": "另见",
-      "kind": "text",
       "body": "• [Devhints](https://devhints.io/cron) _(devhints.io)_\n• [Crontab Generator](https://crontab-generator.org/) _(crontab-generator.org)_\n• [Crontab guru](https://crontab.guru/) _(crontab.guru)_"
     }
   ],

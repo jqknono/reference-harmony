@@ -55,2108 +55,305 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "这个 [OpenSSL](https://www.openssl.org/) 快速参考备忘单展示了它的常用命令使用清单"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "基础",
-      "kind": "text",
-      "body": "检查版本"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl version -a"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "它在使用四个 CPU 内核并测试 RSA 算法的系统上运行速度有多快"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl speed -multi 4 rsa"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "获得基本帮助"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl help"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "生成 20 个随机字节并将它们显示在屏幕上"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rand -hex 20"
+      "body": "检查版本\n\n```bash\n$ openssl version -a\n```\n\n它在使用四个 CPU 内核并测试 RSA 算法的系统上运行速度有多快\n\n```bash\n$ openssl speed -multi 4 rsa\n```\n\n获得基本帮助\n\n```bash\n$ openssl help\n```\n\n生成 20 个随机字节并将它们显示在屏幕上\n\n```bash\n$ openssl rand -hex 20\n```"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
-      "title": "编码/解码",
-      "kind": "text",
-      "body": "使用 Base64 编码文件"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl base64 -in file.data"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 Base64 编码一些文本"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20-n%20%22some%20text%22%20%7C%20openssl%20base64",
+      "title": "%E7%BC%96%E7%A0%81%2F%E8%A7%A3%E7%A0%81",
+      "body": "%E4%BD%BF%E7%94%A8%20Base64%20%E7%BC%96%E7%A0%81%E6%96%87%E4%BB%B6%0A%0A%60%60%60bash%0A%24%20openssl%20base64%20-in%20file.data%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20Base64%20%E7%BC%96%E7%A0%81%E4%B8%80%E4%BA%9B%E6%96%87%E6%9C%AC%0A%0A%60%60%60bash%0A%24%20echo%20-n%20%22some%20text%22%20%7C%20openssl%20base64%0A%60%60%60%0A%0ABase64%20%E8%A7%A3%E7%A0%81%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%B9%B6%E8%BE%93%E5%87%BA%E5%88%B0%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%0A%0A%60%60%60bash%0A%24%20openssl%20base64%20-d%20-in%20encode%C2%ADd.data%20-out%20decode%C2%ADd.data%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Base64 解码一个文件并输出到另一个文件"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl base64 -d -in encode­d.data -out decode­d.data"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "使用哈希",
-      "kind": "text",
-      "body": "列出可用的摘要算法"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl list -diges­t-a­lgo­rithms"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 SHA256 散列文件"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl dgst -sha256 file.data"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 SHA256 散列文件及其二进制形式的输出（无输出十六进制编码） 没有 ASCII 或编码字符将打印到控制台，只有纯字节。 您可以附加 ' | xxd'"
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl dgst -binary -sha256 file.data"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 SHA3-512 的哈希文本"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20-n%20%22some%20text%22%20%7C%20openssl%20dgst%20-sha3-512",
-      "encoded": true
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "创建 HMAC - 使用特定密钥（以字节为单位）的文件的 SHA384"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl dgst -SHA384 -mac HMAC -macopt hexkey:369bd7d655 file.data"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "创建 HMAC - 一些文本的 SHA512"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20echo%20-n%20%22some%20text%22%20%7C%20openssl%20dgst%20-mac%20HMAC%20-macopt%20hexkey%C2%AD%3A36%C2%AD9bd%C2%AD7d655%20-sha512",
+      "title": "%E4%BD%BF%E7%94%A8%E5%93%88%E5%B8%8C",
+      "body": "%E5%88%97%E5%87%BA%E5%8F%AF%E7%94%A8%E7%9A%84%E6%91%98%E8%A6%81%E7%AE%97%E6%B3%95%0A%0A%60%60%60bash%0A%24%20openssl%20list%20-diges%C2%ADt-a%C2%ADlgo%C2%ADrithms%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20SHA256%20%E6%95%A3%E5%88%97%E6%96%87%E4%BB%B6%0A%0A%60%60%60bash%0A%24%20openssl%20dgst%20-sha256%20file.data%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20SHA256%20%E6%95%A3%E5%88%97%E6%96%87%E4%BB%B6%E5%8F%8A%E5%85%B6%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%BD%A2%E5%BC%8F%E7%9A%84%E8%BE%93%E5%87%BA%EF%BC%88%E6%97%A0%E8%BE%93%E5%87%BA%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%EF%BC%89%20%E6%B2%A1%E6%9C%89%20ASCII%20%E6%88%96%E7%BC%96%E7%A0%81%E5%AD%97%E7%AC%A6%E5%B0%86%E6%89%93%E5%8D%B0%E5%88%B0%E6%8E%A7%E5%88%B6%E5%8F%B0%EF%BC%8C%E5%8F%AA%E6%9C%89%E7%BA%AF%E5%AD%97%E8%8A%82%E3%80%82%20%E6%82%A8%E5%8F%AF%E4%BB%A5%E9%99%84%E5%8A%A0%20'%20%7C%20xxd'%0A%0A%60%60%60bash%0A%24%20openssl%20dgst%20-binary%20-sha256%20file.data%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20SHA3-512%20%E7%9A%84%E5%93%88%E5%B8%8C%E6%96%87%E6%9C%AC%0A%0A%60%60%60bash%0A%24%20echo%20-n%20%22some%20text%22%20%7C%20openssl%20dgst%20-sha3-512%0A%60%60%60%0A%0A%E5%88%9B%E5%BB%BA%20HMAC%20-%20%E4%BD%BF%E7%94%A8%E7%89%B9%E5%AE%9A%E5%AF%86%E9%92%A5%EF%BC%88%E4%BB%A5%E5%AD%97%E8%8A%82%E4%B8%BA%E5%8D%95%E4%BD%8D%EF%BC%89%E7%9A%84%E6%96%87%E4%BB%B6%E7%9A%84%20SHA384%0A%0A%60%60%60bash%0A%24%20openssl%20dgst%20-SHA384%20-mac%20HMAC%20-macopt%20hexkey%3A369bd7d655%20file.data%0A%60%60%60%0A%0A%E5%88%9B%E5%BB%BA%20HMAC%20-%20%E4%B8%80%E4%BA%9B%E6%96%87%E6%9C%AC%E7%9A%84%20SHA512%0A%0A%60%60%60bash%0A%24%20echo%20-n%20%22some%20text%22%20%7C%20openssl%20dgst%20-mac%20HMAC%20-macopt%20hexkey%C2%AD%3A36%C2%AD9bd%C2%AD7d655%20-sha512%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-27",
       "sectionId": "s1",
       "title": "非对称加密",
-      "kind": "text",
-      "body": "列出可用的椭圆曲线"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl ecparam -list_­curves"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "创建 4096 位 RSA 公私密钥对"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl genrsa -out pub_pr­iv.key 4096"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "显示详细的私钥信息"
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -text -in pub_priv.key -noout"
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 AES-256 算法加密公私钥对"
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in pub_priv.key -out encrypted.key -aes256"
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "删除密钥文件加密并将它们保存到另一个文件"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in encrypted.key -out cleartext.key"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "将公私钥对文件的公钥复制到另一个文件中"
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in pub_priv.key -pubout -out pubkey.key"
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 RSA 公钥加密文件"
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsautl -encrypt -inkey pubkey.key -pubin -in cleartext.file -out ciphertext.file"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 RSA 私钥解密文件"
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsautl -decrypt -inkey pub_priv.key -in ciphertext.file -out decrypted.file"
-    },
-    {
-      "id": "s1-43",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 P-224 椭圆曲线创建私钥"
-    },
-    {
-      "id": "s1-44",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl ecparam -name secp224k1 -genkey -out ecpriv.key"
-    },
-    {
-      "id": "s1-45",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 3DES 算法加密私钥"
-    },
-    {
-      "id": "s1-46",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl ec -in ecP384priv.key -des3 -out ecP384priv_enc.key"
+      "body": "列出可用的椭圆曲线\n\n```bash\n$ openssl ecparam -list_­curves\n```\n\n创建 4096 位 RSA 公私密钥对\n\n```bash\n$ openssl genrsa -out pub_pr­iv.key 4096\n```\n\n显示详细的私钥信息\n\n```bash\n$ openssl rsa -text -in pub_priv.key -noout\n```\n\n使用 AES-256 算法加密公私钥对\n\n```bash\n$ openssl rsa -in pub_priv.key -out encrypted.key -aes256\n```\n\n删除密钥文件加密并将它们保存到另一个文件\n\n```bash\n$ openssl rsa -in encrypted.key -out cleartext.key\n```\n\n将公私钥对文件的公钥复制到另一个文件中\n\n```bash\n$ openssl rsa -in pub_priv.key -pubout -out pubkey.key\n```\n\n使用 RSA 公钥加密文件\n\n```bash\n$ openssl rsautl -encrypt -inkey pubkey.key -pubin -in cleartext.file -out ciphertext.file\n```\n\n使用 RSA 私钥解密文件\n\n```bash\n$ openssl rsautl -decrypt -inkey pub_priv.key -in ciphertext.file -out decrypted.file\n```\n\n使用 P-224 椭圆曲线创建私钥\n\n```bash\n$ openssl ecparam -name secp224k1 -genkey -out ecpriv.key\n```\n\n使用 3DES 算法加密私钥\n\n```bash\n$ openssl ec -in ecP384priv.key -des3 -out ecP384priv_enc.key\n```"
     },
     {
       "id": "s1-47",
       "sectionId": "s1",
       "title": "对称加密",
-      "kind": "text",
-      "body": "列出所有支持的对称加密密码"
-    },
-    {
-      "id": "s1-48",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl enc -list"
-    },
-    {
-      "id": "s1-49",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用提供的 ASCII 编码密码和 AES-128-ECB 算法加密文件"
-    },
-    {
-      "id": "s1-50",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl enc -aes-128-ecb -in cleartext.file -out ciphertext.file -pass pass:thisisthepassword"
-    },
-    {
-      "id": "s1-51",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 AES-256-CBC 和密钥文件解密文件"
-    },
-    {
-      "id": "s1-52",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl enc -d -aes-256-cbc -in ciphertext.file -out cleartext.file -pass file:./key.file"
-    },
-    {
-      "id": "s1-53",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用以十六进制数字形式提供的特定加密密钥 (K) 加密文件"
-    },
-    {
-      "id": "s1-54",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl enc -aes-128-ecb -in cleartext.file -out ciphertext.file -K 1881807b2d1b3d22f14e9ec52563d981 -nosalt"
-    },
-    {
-      "id": "s1-55",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用指定的加密密钥（K：256 位）和初始化向量（iv：128 位）在 CBC 块密码模式下使用 ARIA 256 加密文件"
-    },
-    {
-      "id": "s1-56",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl enc -aria-256-cbc -in cleartext.file -out ciphertext.file -K f92d2e986b7a2a01683b4c40d0cbcf6feaa669ef2bb5ec3a25ce85d9548291c1 -iv 470bc29762496046882b61ecee68e07c -nosalt"
-    },
-    {
-      "id": "s1-57",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用提供的密钥和 iv 在 COUNTER 块密码模式下使用 Camellia 192 算法加密文件"
-    },
-    {
-      "id": "s1-58",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl enc -camellia-192-ctr -in cleartext.file -out ciphertext.file -K 6c7a1b3487d28d3bf444186d7c529b48d67dd6206c7a1b34 -iv 470bc29762496046882b61ecee68e07c"
+      "body": "列出所有支持的对称加密密码\n\n```bash\n$ openssl enc -list\n```\n\n使用提供的 ASCII 编码密码和 AES-128-ECB 算法加密文件\n\n```bash\n$ openssl enc -aes-128-ecb -in cleartext.file -out ciphertext.file -pass pass:thisisthepassword\n```\n\n使用 AES-256-CBC 和密钥文件解密文件\n\n```bash\n$ openssl enc -d -aes-256-cbc -in ciphertext.file -out cleartext.file -pass file:./key.file\n```\n\n使用以十六进制数字形式提供的特定加密密钥 (K) 加密文件\n\n```bash\n$ openssl enc -aes-128-ecb -in cleartext.file -out ciphertext.file -K 1881807b2d1b3d22f14e9ec52563d981 -nosalt\n```\n\n使用指定的加密密钥（K：256 位）和初始化向量（iv：128 位）在 CBC 块密码模式下使用 ARIA 256 加密文件\n\n```bash\n$ openssl enc -aria-256-cbc -in cleartext.file -out ciphertext.file -K f92d2e986b7a2a01683b4c40d0cbcf6feaa669ef2bb5ec3a25ce85d9548291c1 -iv 470bc29762496046882b61ecee68e07c -nosalt\n```\n\n使用提供的密钥和 iv 在 COUNTER 块密码模式下使用 Camellia 192 算法加密文件\n\n```bash\n$ openssl enc -camellia-192-ctr -in cleartext.file -out ciphertext.file -K 6c7a1b3487d28d3bf444186d7c529b48d67dd6206c7a1b34 -iv 470bc29762496046882b61ecee68e07c\n```"
     },
     {
       "id": "s1-59",
       "sectionId": "s1",
       "title": "数字签名",
-      "kind": "text",
-      "body": "为私钥生成 DSA 参数。 2048 位长度"
-    },
-    {
-      "id": "s1-60",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl dsaparam -out dsaparam.pem 2048"
-    },
-    {
-      "id": "s1-61",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "生成用于签署文档的 DSA 公私密钥并使用 AES128 算法对其进行保护"
-    },
-    {
-      "id": "s1-62",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl gendsa -out dsaprivatekey.pem -aes-128-cbc dsaparam.pem"
-    },
-    {
-      "id": "s1-63",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "将DSA公私钥文件的公钥复制到另一个文件中"
-    },
-    {
-      "id": "s1-64",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl dsa -in dsaprivatekey.pem -pubout -out dsapublickey.pem"
-    },
-    {
-      "id": "s1-65",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "打印出 DSA 密钥对文件的内容"
-    },
-    {
-      "id": "s1-66",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl dsa -in dsaprivatekey.pem -text -noout"
-    },
-    {
-      "id": "s1-67",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 RSA 私钥对文件的 sha-256 哈希进行签名"
-    },
-    {
-      "id": "s1-68",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl dgst -sha256 -sign rsakey.key -out signature.data document.pdf"
-    },
-    {
-      "id": "s1-69",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用公钥验证 SHA-256 文件签名"
-    },
-    {
-      "id": "s1-70",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl dgst -sha256 -verify publickey.pem -signature signature.data original.file"
-    },
-    {
-      "id": "s1-71",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 DSA 私钥对文件的 sha3-512 哈希进行签名"
-    },
-    {
-      "id": "s1-72",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkeyutl -sign -pkeyopt digest:sha3-512 -in document.docx -inkey dsaprivatekey.pem -out signature.data"
-    },
-    {
-      "id": "s1-73",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "验证 DSA 签名"
-    },
-    {
-      "id": "s1-74",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkeyutl -verify -sigfile dsasignature.data -inkey dsakey.pem -in document.docx"
-    },
-    {
-      "id": "s1-75",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 P-384 椭圆曲线创建私钥"
-    },
-    {
-      "id": "s1-76",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl ecparam -name secp384r1 -genkey -out ecP384priv.key"
-    },
-    {
-      "id": "s1-77",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用3DES算法加密私钥"
-    },
-    {
-      "id": "s1-78",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl ec -in ecP384priv.key -des3 -out ecP384priv_enc.key"
-    },
-    {
-      "id": "s1-79",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用带有生成密钥的椭圆曲线对 PDF 文件进行签名"
-    },
-    {
-      "id": "s1-80",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkeyutl -sign -inkey ecP384priv_enc.key -pkeyopt digest:sha3-512 -in document.pdf -out signature.data"
-    },
-    {
-      "id": "s1-81",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "验证文件的签名。 如果没问题，您必须收到“签名验证成功”"
-    },
-    {
-      "id": "s1-82",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkeyutl -verify -in document.pdf -sigfile signature.data -inkey ecP384priv_enc.key"
+      "body": "为私钥生成 DSA 参数。 2048 位长度\n\n```bash\n$ openssl dsaparam -out dsaparam.pem 2048\n```\n\n生成用于签署文档的 DSA 公私密钥并使用 AES128 算法对其进行保护\n\n```bash\n$ openssl gendsa -out dsaprivatekey.pem -aes-128-cbc dsaparam.pem\n```\n\n将DSA公私钥文件的公钥复制到另一个文件中\n\n```bash\n$ openssl dsa -in dsaprivatekey.pem -pubout -out dsapublickey.pem\n```\n\n打印出 DSA 密钥对文件的内容\n\n```bash\n$ openssl dsa -in dsaprivatekey.pem -text -noout\n```\n\n使用 RSA 私钥对文件的 sha-256 哈希进行签名\n\n```bash\n$ openssl dgst -sha256 -sign rsakey.key -out signature.data document.pdf\n```\n\n使用公钥验证 SHA-256 文件签名\n\n```bash\n$ openssl dgst -sha256 -verify publickey.pem -signature signature.data original.file\n```\n\n使用 DSA 私钥对文件的 sha3-512 哈希进行签名\n\n```bash\n$ openssl pkeyutl -sign -pkeyopt digest:sha3-512 -in document.docx -inkey dsaprivatekey.pem -out signature.data\n```\n\n验证 DSA 签名\n\n```bash\n$ openssl pkeyutl -verify -sigfile dsasignature.data -inkey dsakey.pem -in document.docx\n```\n\n使用 P-384 椭圆曲线创建私钥\n\n```bash\n$ openssl ecparam -name secp384r1 -genkey -out ecP384priv.key\n```\n\n使用3DES算法加密私钥\n\n```bash\n$ openssl ec -in ecP384priv.key -des3 -out ecP384priv_enc.key\n```\n\n使用带有生成密钥的椭圆曲线对 PDF 文件进行签名\n\n```bash\n$ openssl pkeyutl -sign -inkey ecP384priv_enc.key -pkeyopt digest:sha3-512 -in document.pdf -out signature.data\n```\n\n验证文件的签名。 如果没问题，您必须收到“签名验证成功”\n\n```bash\n$ openssl pkeyutl -verify -in document.pdf -sigfile signature.data -inkey ecP384priv_enc.key\n```"
     },
     {
       "id": "s1-83",
       "sectionId": "s1",
       "title": "数字证书",
-      "kind": "text",
-      "body": "生成 CSR 文件和 4096 位 RSA 密钥对"
-    },
-    {
-      "id": "s1-84",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl req -newkey rsa:4096 -keyout private.key -out request.csr"
-    },
-    {
-      "id": "s1-85",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "显示证书签名请求 ( CSR ) 内容"
-    },
-    {
-      "id": "s1-86",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl req -text -noout -in request.csr"
-    },
-    {
-      "id": "s1-87",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "显示 CSR 文件中包含的公钥"
-    },
-    {
-      "id": "s1-88",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl req -pubkey -noout -in request.csr"
-    },
-    {
-      "id": "s1-89",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用现有私钥创建证书签名请求 ( CSR )。 当您需要在不更改私钥的情况下更新公共数字证书时，这会很有用"
-    },
-    {
-      "id": "s1-90",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl req -new -key private.key -out request.csr"
-    },
-    {
-      "id": "s1-91",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "创建 EC P384 曲线参数文件以在下一步中使用椭圆曲线生成 CSR"
-    },
-    {
-      "id": "s1-92",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl genpkey -genparam -algorithm EC -out EC_params.pem -pkeyopt ec_paramgen_curve:secp384r1 -pkeyopt ec_param_enc:named_curve"
-    },
-    {
-      "id": "s1-93",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用在上一步中创建的椭圆曲线 P384 参数文件创建 CSR 文件。 而不是使用 RSA 密钥。"
-    },
-    {
-      "id": "s1-94",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl req -newkey ec:EC_params.pem -keyout EC_P384_priv.key -out EC_request.csr"
-    },
-    {
-      "id": "s1-95",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "创建自签名证书，新的 2048 位 RSA 密钥对，有效期为一年"
-    },
-    {
-      "id": "s1-96",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl req -newkey rsa:2048 -nodes -keyout priv.key -x509 -days 365 -out cert.crt"
-    },
-    {
-      "id": "s1-97",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 CSR 文件和用于签名的私钥创建并签署新证书（您必须准备好 openssl.cnf 文件）"
-    },
-    {
-      "id": "s1-98",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl ca -in request.csr -out certificate.crt -config ./CA/config/openssl.cnf"
-    },
-    {
-      "id": "s1-99",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "显示PEM格式证书信息"
-    },
-    {
-      "id": "s1-100",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -text -noout -in cert.crt"
-    },
-    {
-      "id": "s1-101",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "以 Abstract Sintax Notation One (ASN.1) 显示证书信息"
-    },
-    {
-      "id": "s1-102",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl asn1parse -in cert.crt"
-    },
-    {
-      "id": "s1-103",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "提取证书的公钥"
-    },
-    {
-      "id": "s1-104",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -pubkey -noout -in cert.crt"
-    },
-    {
-      "id": "s1-105",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在证书中提取公钥的模数"
-    },
-    {
-      "id": "s1-106",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -modulus -noout -in cert.crt"
-    },
-    {
-      "id": "s1-107",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "从 HTTPS/TLS 连接中提取域证书"
-    },
-    {
-      "id": "s1-108",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -connect domain.com:443 | openssl x509 -out certificate.crt"
-    },
-    {
-      "id": "s1-109",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "将证书从 PEM 格式转换为 DER 格式"
-    },
-    {
-      "id": "s1-110",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -inform PEM -outform DER -in cert.crt -out cert.der"
-    },
-    {
-      "id": "s1-111",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "检查证书公钥是否与私钥和请求文件匹配。 每个文件一步。 必须在输出哈希中匹配"
-    },
-    {
-      "id": "s1-112",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -modulus -in certificate.crt -noout | openssl dgst -sha256\n$ openssl rsa -modulus -in private.key -noout | openssl dgst -sha256\n$ openssl req -modulus -in request.csr -noout | openssl dgst -sha256"
+      "body": "生成 CSR 文件和 4096 位 RSA 密钥对\n\n```bash\n$ openssl req -newkey rsa:4096 -keyout private.key -out request.csr\n```\n\n显示证书签名请求 ( CSR ) 内容\n\n```bash\n$ openssl req -text -noout -in request.csr\n```\n\n显示 CSR 文件中包含的公钥\n\n```bash\n$ openssl req -pubkey -noout -in request.csr\n```\n\n使用现有私钥创建证书签名请求 ( CSR )。 当您需要在不更改私钥的情况下更新公共数字证书时，这会很有用\n\n```bash\n$ openssl req -new -key private.key -out request.csr\n```\n\n创建 EC P384 曲线参数文件以在下一步中使用椭圆曲线生成 CSR\n\n```bash\n$ openssl genpkey -genparam -algorithm EC -out EC_params.pem -pkeyopt ec_paramgen_curve:secp384r1 -pkeyopt ec_param_enc:named_curve\n```\n\n使用在上一步中创建的椭圆曲线 P384 参数文件创建 CSR 文件。 而不是使用 RSA 密钥。\n\n```bash\n$ openssl req -newkey ec:EC_params.pem -keyout EC_P384_priv.key -out EC_request.csr\n```\n\n创建自签名证书，新的 2048 位 RSA 密钥对，有效期为一年\n\n```bash\n$ openssl req -newkey rsa:2048 -nodes -keyout priv.key -x509 -days 365 -out cert.crt\n```\n\n使用 CSR 文件和用于签名的私钥创建并签署新证书（您必须准备好 openssl.cnf 文件）\n\n```bash\n$ openssl ca -in request.csr -out certificate.crt -config ./CA/config/openssl.cnf\n```\n\n显示PEM格式证书信息\n\n```bash\n$ openssl x509 -text -noout -in cert.crt\n```\n\n以 Abstract Sintax Notation One (ASN.1) 显示证书信息\n\n```bash\n$ openssl asn1parse -in cert.crt\n```\n\n提取证书的公钥\n\n```bash\n$ openssl x509 -pubkey -noout -in cert.crt\n```\n\n在证书中提取公钥的模数\n\n```bash\n$ openssl x509 -modulus -noout -in cert.crt\n```\n\n从 HTTPS/TLS 连接中提取域证书\n\n```bash\n$ openssl s_client -connect domain.com:443 | openssl x509 -out certificate.crt\n```\n\n将证书从 PEM 格式转换为 DER 格式\n\n```bash\n$ openssl x509 -inform PEM -outform DER -in cert.crt -out cert.der\n```\n\n检查证书公钥是否与私钥和请求文件匹配。 每个文件一步。 必须在输出哈希中匹配\n\n```bash\n$ openssl x509 -modulus -in certificate.crt -noout | openssl dgst -sha256\n$ openssl rsa -modulus -in private.key -noout | openssl dgst -sha256\n$ openssl req -modulus -in request.csr -noout | openssl dgst -sha256\n```"
     },
     {
       "id": "s1-113",
       "sectionId": "s1",
-      "title": "使用 TLS 协议",
-      "kind": "text",
-      "body": "列出所有支持的密码套件"
-    },
-    {
-      "id": "s1-114",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl ciphers -V 'ALL'"
-    },
-    {
-      "id": "s1-115",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "列出 AES 支持的所有密码套件"
-    },
-    {
-      "id": "s1-116",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl ciphers -V 'AES'"
-    },
-    {
-      "id": "s1-117",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "列出所有支持 CAMELLIA 和 SHA256 算法的密码套件。"
-    },
-    {
-      "id": "s1-118",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl ciphers -V 'CAMELLIA+SHA256'"
-    },
-    {
-      "id": "s1-119",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用端口 443 (HTTPS) 与服务器的 TLS 连接"
-    },
-    {
-      "id": "s1-120",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -connect domain.com:443"
-    },
-    {
-      "id": "s1-121",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 v1.2 与服务器的 TLS 连接"
-    },
-    {
-      "id": "s1-122",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -tls1_2 -connect domain.com:443"
-    },
-    {
-      "id": "s1-123",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "TLS 连接和禁用 v1.0"
-    },
-    {
-      "id": "s1-124",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -no_tls1 domain.com:443"
-    },
-    {
-      "id": "s1-125",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用特定密码套件的 TLS 连接"
-    },
-    {
-      "id": "s1-126",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -cipher DHE-RSA-AES256-GCM-SHA384 domain.com:443"
-    },
-    {
-      "id": "s1-127",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "显示服务器提供的所有证书的 TLS 连接"
-    },
-    {
-      "id": "s1-128",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -showcerts domain.com:443"
-    },
-    {
-      "id": "s1-129",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用证书、私钥和仅支持 TLS 1.2 设置监听端口以接收 TLS 连接"
-    },
-    {
-      "id": "s1-130",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_server -port 443 -cert cert.crt -key priv.key -tls1_2"
-    },
-    {
-      "id": "s1-131",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "从 HTTPS/TLS 连接中提取域证书"
-    },
-    {
-      "id": "s1-132",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -connect domain.com:443 | openssl x509 -out certificate.crt"
-    },
-    {
-      "id": "s1-133",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "nmap 命令：通过 HTTPS/TLS 连接显示启用的密码套件"
-    },
-    {
-      "id": "s1-134",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ nmap --script ssl-enum-ciphers -p 443 domain.com"
-    },
-    {
-      "id": "s1-135",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "nmap 命令：使用 SNI 通过 TLS (HTTPS) 连接显示启用的密码套件。 （将其更改为所需的 IP 和域名）"
-    },
-    {
-      "id": "s1-136",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ nmap --script ssl-enum-ciphers --script-args=tls.servername=domain.com 172.67.129.11"
+      "title": "%E4%BD%BF%E7%94%A8%20TLS%20%E5%8D%8F%E8%AE%AE",
+      "body": "%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E6%94%AF%E6%8C%81%E7%9A%84%E5%AF%86%E7%A0%81%E5%A5%97%E4%BB%B6%0A%0A%60%60%60bash%0A%24%20openssl%20ciphers%20-V%20'ALL'%0A%60%60%60%0A%0A%E5%88%97%E5%87%BA%20AES%20%E6%94%AF%E6%8C%81%E7%9A%84%E6%89%80%E6%9C%89%E5%AF%86%E7%A0%81%E5%A5%97%E4%BB%B6%0A%0A%60%60%60bash%0A%24%20openssl%20ciphers%20-V%20'AES'%0A%60%60%60%0A%0A%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%E6%94%AF%E6%8C%81%20CAMELLIA%20%E5%92%8C%20SHA256%20%E7%AE%97%E6%B3%95%E7%9A%84%E5%AF%86%E7%A0%81%E5%A5%97%E4%BB%B6%E3%80%82%0A%0A%60%60%60bash%0A%24%20openssl%20ciphers%20-V%20'CAMELLIA%2BSHA256'%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%E7%AB%AF%E5%8F%A3%20443%20(HTTPS)%20%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%20TLS%20%E8%BF%9E%E6%8E%A5%0A%0A%60%60%60bash%0A%24%20openssl%20s_client%20-connect%20domain.com%3A443%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20v1.2%20%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%20TLS%20%E8%BF%9E%E6%8E%A5%0A%0A%60%60%60bash%0A%24%20openssl%20s_client%20-tls1_2%20-connect%20domain.com%3A443%0A%60%60%60%0A%0ATLS%20%E8%BF%9E%E6%8E%A5%E5%92%8C%E7%A6%81%E7%94%A8%20v1.0%0A%0A%60%60%60bash%0A%24%20openssl%20s_client%20-no_tls1%20domain.com%3A443%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%E7%89%B9%E5%AE%9A%E5%AF%86%E7%A0%81%E5%A5%97%E4%BB%B6%E7%9A%84%20TLS%20%E8%BF%9E%E6%8E%A5%0A%0A%60%60%60bash%0A%24%20openssl%20s_client%20-cipher%20DHE-RSA-AES256-GCM-SHA384%20domain.com%3A443%0A%60%60%60%0A%0A%E6%98%BE%E7%A4%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8F%90%E4%BE%9B%E7%9A%84%E6%89%80%E6%9C%89%E8%AF%81%E4%B9%A6%E7%9A%84%20TLS%20%E8%BF%9E%E6%8E%A5%0A%0A%60%60%60bash%0A%24%20openssl%20s_client%20-showcerts%20domain.com%3A443%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%E8%AF%81%E4%B9%A6%E3%80%81%E7%A7%81%E9%92%A5%E5%92%8C%E4%BB%85%E6%94%AF%E6%8C%81%20TLS%201.2%20%E8%AE%BE%E7%BD%AE%E7%9B%91%E5%90%AC%E7%AB%AF%E5%8F%A3%E4%BB%A5%E6%8E%A5%E6%94%B6%20TLS%20%E8%BF%9E%E6%8E%A5%0A%0A%60%60%60bash%0A%24%20openssl%20s_server%20-port%20443%20-cert%20cert.crt%20-key%20priv.key%20-tls1_2%0A%60%60%60%0A%0A%E4%BB%8E%20HTTPS%2FTLS%20%E8%BF%9E%E6%8E%A5%E4%B8%AD%E6%8F%90%E5%8F%96%E5%9F%9F%E8%AF%81%E4%B9%A6%0A%0A%60%60%60bash%0A%24%20openssl%20s_client%20-connect%20domain.com%3A443%20%7C%20openssl%20x509%20-out%20certificate.crt%0A%60%60%60%0A%0Anmap%20%E5%91%BD%E4%BB%A4%EF%BC%9A%E9%80%9A%E8%BF%87%20HTTPS%2FTLS%20%E8%BF%9E%E6%8E%A5%E6%98%BE%E7%A4%BA%E5%90%AF%E7%94%A8%E7%9A%84%E5%AF%86%E7%A0%81%E5%A5%97%E4%BB%B6%0A%0A%60%60%60bash%0A%24%20nmap%20--script%20ssl-enum-ciphers%20-p%20443%20domain.com%0A%60%60%60%0A%0Anmap%20%E5%91%BD%E4%BB%A4%EF%BC%9A%E4%BD%BF%E7%94%A8%20SNI%20%E9%80%9A%E8%BF%87%20TLS%20(HTTPS)%20%E8%BF%9E%E6%8E%A5%E6%98%BE%E7%A4%BA%E5%90%AF%E7%94%A8%E7%9A%84%E5%AF%86%E7%A0%81%E5%A5%97%E4%BB%B6%E3%80%82%20%EF%BC%88%E5%B0%86%E5%85%B6%E6%9B%B4%E6%94%B9%E4%B8%BA%E6%89%80%E9%9C%80%E7%9A%84%20IP%20%E5%92%8C%E5%9F%9F%E5%90%8D%EF%BC%89%0A%0A%60%60%60bash%0A%24%20nmap%20--script%20ssl-enum-ciphers%20--script-args%3Dtls.servername%3Ddomain.com%20172.67.129.11%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-137",
       "sectionId": "s1",
       "title": "个人安全环境 (PSE)",
-      "kind": "text",
-      "body": "将证书从 PEM (base64) 格式转换为 DER（二进制）格式"
-    },
-    {
-      "id": "s1-138",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -in certif­ica­te.pem -outform DER -out certif­ica­te.der"
-    },
-    {
-      "id": "s1-139",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "将证书和私钥插入 PKCS #12 格式文件。 这些文件可以导入到 Windows 证书管理器或 Java Key Store (jks) 文件中"
-    },
-    {
-      "id": "s1-140",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkcs12 -export -out cert_key.p12 -inkey private.key -in certificate.crt"
-    },
-    {
-      "id": "s1-141",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "显示 PKCS #12 文件的内容"
-    },
-    {
-      "id": "s1-142",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkcs12 -in cert_k­ey.p12"
-    },
-    {
-      "id": "s1-143",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "将 .p12 文件转换为 Java Key Store。 此命令使用 java keytool 而不是 openssl。"
-    },
-    {
-      "id": "s1-144",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "keytool -importkeystore -destkeystore javakeystore.jks -srckeystore cert_key.p12 -srcstoretype pkcs12"
-    },
-    {
-      "id": "s1-145",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "将 PEM 证书转换为 PKCS #7 格式"
-    },
-    {
-      "id": "s1-146",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl crl2pkcs7 -nocrl -certfile certificate.crt -out cert.p7b"
-    },
-    {
-      "id": "s1-147",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "将 PKCS #7 文件从 PEM 转换为 DER"
-    },
-    {
-      "id": "s1-148",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkcs7 -in cert.p7b -outform DER -out p7.der"
+      "body": "将证书从 PEM (base64) 格式转换为 DER（二进制）格式\n\n```bash\n$ openssl x509 -in certif­ica­te.pem -outform DER -out certif­ica­te.der\n```\n\n将证书和私钥插入 PKCS #12 格式文件。 这些文件可以导入到 Windows 证书管理器或 Java Key Store (jks) 文件中\n\n```bash\n$ openssl pkcs12 -export -out cert_key.p12 -inkey private.key -in certificate.crt\n```\n\n显示 PKCS #12 文件的内容\n\n```bash\n$ openssl pkcs12 -in cert_k­ey.p12\n```\n\n将 .p12 文件转换为 Java Key Store。 此命令使用 java keytool 而不是 openssl。\n\n```bash\nkeytool -importkeystore -destkeystore javakeystore.jks -srckeystore cert_key.p12 -srcstoretype pkcs12\n```\n\n将 PEM 证书转换为 PKCS #7 格式\n\n```bash\n$ openssl crl2pkcs7 -nocrl -certfile certificate.crt -out cert.p7b\n```\n\n将 PKCS #7 文件从 PEM 转换为 DER\n\n```bash\n$ openssl pkcs7 -in cert.p7b -outform DER -out p7.der\n```"
     },
     {
       "id": "s2-149",
       "sectionId": "s2",
       "title": "查看 PEM 编码证书",
-      "kind": "text",
-      "body": "使用具有证书扩展名的命令将 cert.xxx 替换为证书名称"
-    },
-    {
-      "id": "s2-150",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -in cert.pem -text -noout\n$ openssl x509 -in cert.cer -text -noout\n$ openssl x509 -in cert.crt -text -noout"
-    },
-    {
-      "id": "s2-151",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "如果您收到以下错误，则表示您正在尝试查看 DER 编码的证书，并且需要使用下面“查看 DER 编码的证书”部分中的命令："
-    },
-    {
-      "id": "s2-152",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "unable to load certificate\n12626:error:0906D06C:PEM routines:PEM_read_bio:no start line:pem_lib.c:647:Expecting: TRUSTED CERTIFICATE View DER encoded Certificate"
+      "body": "使用具有证书扩展名的命令将 cert.xxx 替换为证书名称\n\n```bash\n$ openssl x509 -in cert.pem -text -noout\n$ openssl x509 -in cert.cer -text -noout\n$ openssl x509 -in cert.crt -text -noout\n```\n\n如果您收到以下错误，则表示您正在尝试查看 DER 编码的证书，并且需要使用下面“查看 DER 编码的证书”部分中的命令：\n\n```bash\nunable to load certificate\n12626:error:0906D06C:PEM routines:PEM_read_bio:no start line:pem_lib.c:647:Expecting: TRUSTED CERTIFICATE View DER encoded Certificate\n```"
     },
     {
       "id": "s2-153",
       "sectionId": "s2",
       "title": "查看 DER 编码证书",
-      "kind": "code",
-      "lang": "bash",
-      "code": "openssl x509 -in certificate.der -inform der -text -noout"
-    },
-    {
-      "id": "s2-154",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "如果您收到以下错误，则表示您正在尝试使用用于 DER 编码证书的命令查看 PEM 编码证书。 使用上面“查看 PEM 编码证书”部分中的命令："
-    },
-    {
-      "id": "s2-155",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "unable to load certificate\n13978:error:0D0680A8:asn1 encoding routines:ASN1_CHECK_TLEN:wrong tag:tasn_dec.c:1306:\n13978:error:0D07803A:asn1 encoding routines:ASN1_ITEM_EX_D2I:nested asn1 error:tasn_dec.c:380:Type=X509"
+      "body": "```bash\nopenssl x509 -in certificate.der -inform der -text -noout\n```\n\n如果您收到以下错误，则表示您正在尝试使用用于 DER 编码证书的命令查看 PEM 编码证书。 使用上面“查看 PEM 编码证书”部分中的命令：\n\n```bash\nunable to load certificate\n13978:error:0D0680A8:asn1 encoding routines:ASN1_CHECK_TLEN:wrong tag:tasn_dec.c:1306:\n13978:error:0D07803A:asn1 encoding routines:ASN1_ITEM_EX_D2I:nested asn1 error:tasn_dec.c:380:Type=X509\n```"
     },
     {
       "id": "s2-156",
       "sectionId": "s2",
       "title": "查看证书链中的所有证书",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# subject + issuer\nopenssl crl2pkcs7 -nocrl -certfile host.domain.tld-ca-chain.pem | openssl pkcs7 -print_certs -noout\n# full public keys\nopenssl crl2pkcs7 -nocrl -certfile host.domain.tld-ca-chain.pem | openssl pkcs7 -print_certs -text -noout"
+      "body": "```bash\n# subject + issuer\nopenssl crl2pkcs7 -nocrl -certfile host.domain.tld-ca-chain.pem | openssl pkcs7 -print_certs -noout\n# full public keys\nopenssl crl2pkcs7 -nocrl -certfile host.domain.tld-ca-chain.pem | openssl pkcs7 -print_certs -text -noout\n```"
     },
     {
       "id": "s3-157",
       "sectionId": "s3",
       "title": "转换示例",
-      "kind": "text",
-      "body": "将 DER 文件 (.crt .cer .der) 转换为 PEM"
-    },
-    {
-      "id": "s3-158",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "openssl x509 -inform der -in certificate.cer -out certificate.pem"
-    },
-    {
-      "id": "s3-159",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将 PEM 文件转换为 DER"
-    },
-    {
-      "id": "s3-160",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "openssl x509 -outform der -in certificate.pem -out certificate.der"
-    },
-    {
-      "id": "s3-161",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将包含私钥和证书的 PKCS#12 文件 (.pfx .p12) 转换为 PEM"
-    },
-    {
-      "id": "s3-162",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "openssl pkcs12 -in keyStore.pfx -out keyStore.pem -nodes\n# 您可以添加 -nocerts 以仅输出私钥或添加 -nokeys 以仅输出证书"
-    },
-    {
-      "id": "s3-163",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将 PEM 证书文件和私钥转换为 PKCS#12 (.pfx .p12)"
-    },
-    {
-      "id": "s3-164",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "openssl pkcs12 -export -out certificate.pfx -inkey privateKey.key -in certificate.crt -certfile CACert.crt"
-    },
-    {
-      "id": "s3-165",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将 PEM 转换为 CRT（.CRT 文件）"
-    },
-    {
-      "id": "s3-166",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "openssl x509 -outform der -in certificate.pem -out certificate.crt"
+      "body": "将 DER 文件 (.crt .cer .der) 转换为 PEM\n\n```bash\nopenssl x509 -inform der -in certificate.cer -out certificate.pem\n```\n\n将 PEM 文件转换为 DER\n\n```bash\nopenssl x509 -outform der -in certificate.pem -out certificate.der\n```\n\n将包含私钥和证书的 PKCS#12 文件 (.pfx .p12) 转换为 PEM\n\n```bash\nopenssl pkcs12 -in keyStore.pfx -out keyStore.pem -nodes\n# 您可以添加 -nocerts 以仅输出私钥或添加 -nokeys 以仅输出证书\n```\n\n将 PEM 证书文件和私钥转换为 PKCS#12 (.pfx .p12)\n\n```bash\nopenssl pkcs12 -export -out certificate.pfx -inkey privateKey.key -in certificate.crt -certfile CACert.crt\n```\n\n将 PEM 转换为 CRT（.CRT 文件）\n\n```bash\nopenssl x509 -outform der -in certificate.pem -out certificate.crt\n```"
     },
     {
       "id": "s3-167",
       "sectionId": "s3",
       "title": "OpenSSL 转换 PEM",
-      "kind": "text",
-      "body": "将 PEM 转换为 DER"
-    },
-    {
-      "id": "s3-168",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -outform der -in certificate.pem -out certificate.der"
-    },
-    {
-      "id": "s3-169",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将 PEM 转换为 P7B"
-    },
-    {
-      "id": "s3-170",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl crl2pkcs7 -nocrl -certfile certificate.cer -out certificate.p7b -certfile CACert.cer"
-    },
-    {
-      "id": "s3-171",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将 PEM 转换为 PFX"
-    },
-    {
-      "id": "s3-172",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkcs12 -export -out certificate.pfx -inkey privateKey.key -in certificate.crt -certfile CACert.crt"
+      "body": "将 PEM 转换为 DER\n\n```bash\n$ openssl x509 -outform der -in certificate.pem -out certificate.der\n```\n\n将 PEM 转换为 P7B\n\n```bash\n$ openssl crl2pkcs7 -nocrl -certfile certificate.cer -out certificate.p7b -certfile CACert.cer\n```\n\n将 PEM 转换为 PFX\n\n```bash\n$ openssl pkcs12 -export -out certificate.pfx -inkey privateKey.key -in certificate.crt -certfile CACert.crt\n```"
     },
     {
       "id": "s3-173",
       "sectionId": "s3",
       "title": "OpenSSL 转换 DER",
-      "kind": "text",
-      "body": "将 DER 转换为 PEM"
-    },
-    {
-      "id": "s3-174",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -inform der -in certificate.cer -out certificate.pem"
+      "body": "将 DER 转换为 PEM\n\n```bash\n$ openssl x509 -inform der -in certificate.cer -out certificate.pem\n```"
     },
     {
       "id": "s3-175",
       "sectionId": "s3",
       "title": "OpenSSL 转换 PFX",
-      "kind": "text",
-      "body": "将 PFX 转换为 PEM"
-    },
-    {
-      "id": "s3-176",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkcs12 -in certificate.pfx -out certificate.cer -nodes"
+      "body": "将 PFX 转换为 PEM\n\n```bash\n$ openssl pkcs12 -in certificate.pfx -out certificate.cer -nodes\n```"
     },
     {
       "id": "s3-177",
       "sectionId": "s3",
       "title": "OpenSSL 转换 P7B",
-      "kind": "text",
-      "body": "将 P7B 转换为 PEM"
-    },
-    {
-      "id": "s3-178",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkcs7 -print_certs -in certificate.p7b -out certificate.cer"
-    },
-    {
-      "id": "s3-179",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将 P7B 转换成 PFX"
-    },
-    {
-      "id": "s3-180",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl pkcs7 -print_certs -in certificate.p7b -out certificate.cer\n$ openssl pkcs12 -export -in certificate.cer -inkey privateKey.key -out certificate.pfx -certfile CACert.cer"
+      "body": "将 P7B 转换为 PEM\n\n```bash\n$ openssl pkcs7 -print_certs -in certificate.p7b -out certificate.cer\n```\n\n将 P7B 转换成 PFX\n\n```bash\n$ openssl pkcs7 -print_certs -in certificate.p7b -out certificate.cer\n$ openssl pkcs12 -export -in certificate.cer -inkey privateKey.key -out certificate.pfx -certfile CACert.cer\n```"
     },
     {
       "id": "s3-181",
       "sectionId": "s3",
-      "title": "通过 OpenSSL 生成 rsa 密钥",
-      "kind": "text",
-      "body": "在命令行上使用 OpenSSL 您首先需要生成公钥和私钥。 您应该使用 `-passout` 参数对这个文件进行密码保护，这个参数可以采用许多不同的形式，因此请查阅 OpenSSL 文档"
-    },
-    {
-      "id": "s3-182",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl genrsa -out private.pem 4096"
-    },
-    {
-      "id": "s3-183",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "这将创建一个名为 private.pem 的密钥文件，它使用 4096 位。 这个文件实际上有私钥和公钥，所以你应该从这个文件中提取公钥："
-    },
-    {
-      "id": "s3-184",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in private.pem -out public.pem -outform PEM -pubout\n# or\n$ openssl rsa -in private.pem -pubout > public.pem\n# or\n$ openssl rsa -in private.pem -pubout -out public.pem"
-    },
-    {
-      "id": "s3-185",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "您现在将拥有仅包含您的公钥的 public.pem，您可以与第 3 方自由共享。 您可以通过使用您的公钥自己加密一些东西然后使用您的私钥解密来测试这一切，首先我们需要一些数据来加密："
-    },
-    {
-      "id": "s3-186",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "示例文件："
-    },
-    {
-      "id": "s3-187",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ echo 'too many secrets' > file.txt"
-    },
-    {
-      "id": "s3-188",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "您现在在 file.txt 中有一些数据，让我们使用 OpenSSL 和公钥对其进行加密："
-    },
-    {
-      "id": "s3-189",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsautl -encrypt -inkey public.pem -pubin -in file.txt -out file.ssl"
-    },
-    {
-      "id": "s3-190",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "这会创建一个 file.txt 的加密版本，称为 file.ssl，如果你看这个文件，它只是二进制垃圾，对任何人都没有什么用处。 现在您可以使用私钥对其进行解密："
-    },
-    {
-      "id": "s3-191",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsautl -decrypt -inkey private.pem -in file.ssl -out decrypted.txt"
-    },
-    {
-      "id": "s3-192",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "您现在将在 decrypted.txt 中有一个未加密的文件："
-    },
-    {
-      "id": "s3-193",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "cat decrypted.txt\n |output -> too many secrets"
+      "title": "%E9%80%9A%E8%BF%87%20OpenSSL%20%E7%94%9F%E6%88%90%20rsa%20%E5%AF%86%E9%92%A5",
+      "body": "%E5%9C%A8%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8A%E4%BD%BF%E7%94%A8%20OpenSSL%20%E6%82%A8%E9%A6%96%E5%85%88%E9%9C%80%E8%A6%81%E7%94%9F%E6%88%90%E5%85%AC%E9%92%A5%E5%92%8C%E7%A7%81%E9%92%A5%E3%80%82%20%E6%82%A8%E5%BA%94%E8%AF%A5%E4%BD%BF%E7%94%A8%20%60-passout%60%20%E5%8F%82%E6%95%B0%E5%AF%B9%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%AF%86%E7%A0%81%E4%BF%9D%E6%8A%A4%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%8F%82%E6%95%B0%E5%8F%AF%E4%BB%A5%E9%87%87%E7%94%A8%E8%AE%B8%E5%A4%9A%E4%B8%8D%E5%90%8C%E7%9A%84%E5%BD%A2%E5%BC%8F%EF%BC%8C%E5%9B%A0%E6%AD%A4%E8%AF%B7%E6%9F%A5%E9%98%85%20OpenSSL%20%E6%96%87%E6%A1%A3%0A%0A%60%60%60bash%0A%24%20openssl%20genrsa%20-out%20private.pem%204096%0A%60%60%60%0A%0A%E8%BF%99%E5%B0%86%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20private.pem%20%E7%9A%84%E5%AF%86%E9%92%A5%E6%96%87%E4%BB%B6%EF%BC%8C%E5%AE%83%E4%BD%BF%E7%94%A8%204096%20%E4%BD%8D%E3%80%82%20%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E5%AE%9E%E9%99%85%E4%B8%8A%E6%9C%89%E7%A7%81%E9%92%A5%E5%92%8C%E5%85%AC%E9%92%A5%EF%BC%8C%E6%89%80%E4%BB%A5%E4%BD%A0%E5%BA%94%E8%AF%A5%E4%BB%8E%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%E4%B8%AD%E6%8F%90%E5%8F%96%E5%85%AC%E9%92%A5%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20openssl%20rsa%20-in%20private.pem%20-out%20public.pem%20-outform%20PEM%20-pubout%0A%23%20or%0A%24%20openssl%20rsa%20-in%20private.pem%20-pubout%20%3E%20public.pem%0A%23%20or%0A%24%20openssl%20rsa%20-in%20private.pem%20-pubout%20-out%20public.pem%0A%60%60%60%0A%0A%E6%82%A8%E7%8E%B0%E5%9C%A8%E5%B0%86%E6%8B%A5%E6%9C%89%E4%BB%85%E5%8C%85%E5%90%AB%E6%82%A8%E7%9A%84%E5%85%AC%E9%92%A5%E7%9A%84%20public.pem%EF%BC%8C%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%B8%8E%E7%AC%AC%203%20%E6%96%B9%E8%87%AA%E7%94%B1%E5%85%B1%E4%BA%AB%E3%80%82%20%E6%82%A8%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E4%BD%BF%E7%94%A8%E6%82%A8%E7%9A%84%E5%85%AC%E9%92%A5%E8%87%AA%E5%B7%B1%E5%8A%A0%E5%AF%86%E4%B8%80%E4%BA%9B%E4%B8%9C%E8%A5%BF%E7%84%B6%E5%90%8E%E4%BD%BF%E7%94%A8%E6%82%A8%E7%9A%84%E7%A7%81%E9%92%A5%E8%A7%A3%E5%AF%86%E6%9D%A5%E6%B5%8B%E8%AF%95%E8%BF%99%E4%B8%80%E5%88%87%EF%BC%8C%E9%A6%96%E5%85%88%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E4%B8%80%E4%BA%9B%E6%95%B0%E6%8D%AE%E6%9D%A5%E5%8A%A0%E5%AF%86%EF%BC%9A%0A%0A%E7%A4%BA%E4%BE%8B%E6%96%87%E4%BB%B6%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20echo%20'too%20many%20secrets'%20%3E%20file.txt%0A%60%60%60%0A%0A%E6%82%A8%E7%8E%B0%E5%9C%A8%E5%9C%A8%20file.txt%20%E4%B8%AD%E6%9C%89%E4%B8%80%E4%BA%9B%E6%95%B0%E6%8D%AE%EF%BC%8C%E8%AE%A9%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8%20OpenSSL%20%E5%92%8C%E5%85%AC%E9%92%A5%E5%AF%B9%E5%85%B6%E8%BF%9B%E8%A1%8C%E5%8A%A0%E5%AF%86%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20openssl%20rsautl%20-encrypt%20-inkey%20public.pem%20-pubin%20-in%20file.txt%20-out%20file.ssl%0A%60%60%60%0A%0A%E8%BF%99%E4%BC%9A%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20file.txt%20%E7%9A%84%E5%8A%A0%E5%AF%86%E7%89%88%E6%9C%AC%EF%BC%8C%E7%A7%B0%E4%B8%BA%20file.ssl%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%BD%A0%E7%9C%8B%E8%BF%99%E4%B8%AA%E6%96%87%E4%BB%B6%EF%BC%8C%E5%AE%83%E5%8F%AA%E6%98%AF%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%9E%83%E5%9C%BE%EF%BC%8C%E5%AF%B9%E4%BB%BB%E4%BD%95%E4%BA%BA%E9%83%BD%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8%E5%A4%84%E3%80%82%20%E7%8E%B0%E5%9C%A8%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%A7%81%E9%92%A5%E5%AF%B9%E5%85%B6%E8%BF%9B%E8%A1%8C%E8%A7%A3%E5%AF%86%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20openssl%20rsautl%20-decrypt%20-inkey%20private.pem%20-in%20file.ssl%20-out%20decrypted.txt%0A%60%60%60%0A%0A%E6%82%A8%E7%8E%B0%E5%9C%A8%E5%B0%86%E5%9C%A8%20decrypted.txt%20%E4%B8%AD%E6%9C%89%E4%B8%80%E4%B8%AA%E6%9C%AA%E5%8A%A0%E5%AF%86%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%9A%0A%0A%60%60%60bash%0Acat%20decrypted.txt%0A%20%7Coutput%20-%3E%20too%20many%20secrets%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-194",
       "sectionId": "s3",
       "title": "OpenSSL 中的 RSA 工具选项",
-      "kind": "text",
-      "body": "NAME"
-    },
-    {
-      "id": "s3-195",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ rsa - RSA key processing tool"
-    },
-    {
-      "id": "s3-196",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "SYNOPSIS 概要"
-    },
-    {
-      "id": "s3-197",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa [-help] [-inform PEM|NET|DER] [-outform PEM|NET|DER] [-in filename] [-passin arg] [-out filename] [-passout arg] [-aes128] [-aes192] [-aes256] [-camellia128] [-camellia192] [-camellia256] [-des] [-des3] [-idea] [-text] [-noout] [-modulus] [-check] [-pubin] [-pubout] [-RSAPublicKey_in] [-RSAPublicKey_out] [-engine id]"
-    },
-    {
-      "id": "s3-198",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "DESCRIPTION 描述"
-    },
-    {
-      "id": "s3-199",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "rsa 命令处理 RSA 密钥。 它们可以在各种形式之间转换，并且可以打印出它们的组成部分。\n请注意，此命令使用传统的 SSLeay 兼容格式进行私钥加密：较新的应用程序\n应该使用 pkcs8 实用程序使用更安全的 PKCS#8 格式。"
-    },
-    {
-      "id": "s3-200",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "COMMAND OPTIONS 命令选项"
-    },
-    {
-      "id": "s3-201",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "-help\n#> 打印出使用信息。\n\n-inform DER|NET|PEM\n#> 这指定了输入格式。 DER 选项使用与 PKCS #1 RSAPrivateKey 或 SubjectPublicKeyInfo 格式兼容的 ASN1 DER 编码形式。 PEM 形式是默认格式：它由 DER 格式 base64 编码，并带有额外的页眉和页脚行。 输入 PKCS#8 格式的私钥也 接受。 NET 形式是一种在注释部分中描述的格式。\n\n-outform DER|NET|PEM\n#> 这指定了输出格式，选项与 -inform 选项具有相同的含义。\n\n-in filename\n#> 如果未指定此选项，这将指定要从中读取密钥的输入文件名或标准输入。 如果密钥被加密，将提示输入密码。\n\n-passin arg\n#> 输入文件密码源。有关 arg 格式的更多信息，请参阅 openssl 中的 PASS PHRASE ARGUMENTS 部分。\n\n-out filename\n#> 如果未指定此选项，这将指定要写入密钥的输出文件名或标准输出。如果设置了任何加密选项，则会提示输入密码。输出文件名不应与输入文件名相同。\n\n-passout password\n#> 输出文件密码源。有关 arg 格式的更多信息，请参阅 openssl 中的 PASS PHRASE ARGUMENTS 部分。\n\n-aes128|-aes192|-aes256|-camellia128|-camellia192|-camellia256|-des|-des3|-idea\n#> 这些选项在输出之前使用指定的密码加密私钥。提示输入密码。如果未指定这些选项，则密钥将以纯文本形式写入。这意味着使用 rsa 实用程序读取没有加密选项的加密密钥可用于从密钥中删除密码短语，或者通过设置可用于添加或更改密码短语的加密选项。这些选项只能用于 PEM 格式的输出文件。\n\n-text\n#> 除了编码版本之外，还以纯文本形式打印出各种公钥或私钥组件。\n\n-noout\n#> 此选项可防止输出密钥的编码版本。\n\n-modulus\n#> 此选项打印出密钥模数的值。\n\n-check\n#> 此选项检查 RSA 私钥的一致性。\n\n-pubin\n#> 默认情况下，从输入文件中读取私钥：使用此选项，改为读取公钥。\n\n-pubout\n#> 默认情况下输出私钥：使用此选项将输出公钥。 如果输入是公钥，则会自动设置此选项。\n\n-RSAPublicKey_in, -RSAPublicKey_out\n#> 类似于 -pubin 和 -pubout，除了使用 RSAPublicKey 格式。\n\n-engine id\n#> 指定引擎（通过其唯一 ID 字符串）将导致 rsa 尝试获取对指定引擎的功能引用，从而在需要时对其进行初始化。 然后引擎将被设置为所有可用算法的默认值。"
+      "body": "NAME\n\n```bash\n$ rsa - RSA key processing tool\n```\n\nSYNOPSIS 概要\n\n```bash\n$ openssl rsa [-help] [-inform PEM|NET|DER] [-outform PEM|NET|DER] [-in filename] [-passin arg] [-out filename] [-passout arg] [-aes128] [-aes192] [-aes256] [-camellia128] [-camellia192] [-camellia256] [-des] [-des3] [-idea] [-text] [-noout] [-modulus] [-check] [-pubin] [-pubout] [-RSAPublicKey_in] [-RSAPublicKey_out] [-engine id]\n```\n\nDESCRIPTION 描述\n\n```bash\nrsa 命令处理 RSA 密钥。 它们可以在各种形式之间转换，并且可以打印出它们的组成部分。\n请注意，此命令使用传统的 SSLeay 兼容格式进行私钥加密：较新的应用程序\n应该使用 pkcs8 实用程序使用更安全的 PKCS#8 格式。\n```\n\nCOMMAND OPTIONS 命令选项\n\n```bash\n-help\n#> 打印出使用信息。\n\n-inform DER|NET|PEM\n#> 这指定了输入格式。 DER 选项使用与 PKCS #1 RSAPrivateKey 或 SubjectPublicKeyInfo 格式兼容的 ASN1 DER 编码形式。 PEM 形式是默认格式：它由 DER 格式 base64 编码，并带有额外的页眉和页脚行。 输入 PKCS#8 格式的私钥也 接受。 NET 形式是一种在注释部分中描述的格式。\n\n-outform DER|NET|PEM\n#> 这指定了输出格式，选项与 -inform 选项具有相同的含义。\n\n-in filename\n#> 如果未指定此选项，这将指定要从中读取密钥的输入文件名或标准输入。 如果密钥被加密，将提示输入密码。\n\n-passin arg\n#> 输入文件密码源。有关 arg 格式的更多信息，请参阅 openssl 中的 PASS PHRASE ARGUMENTS 部分。\n\n-out filename\n#> 如果未指定此选项，这将指定要写入密钥的输出文件名或标准输出。如果设置了任何加密选项，则会提示输入密码。输出文件名不应与输入文件名相同。\n\n-passout password\n#> 输出文件密码源。有关 arg 格式的更多信息，请参阅 openssl 中的 PASS PHRASE ARGUMENTS 部分。\n\n-aes128|-aes192|-aes256|-camellia128|-camellia192|-camellia256|-des|-des3|-idea\n#> 这些选项在输出之前使用指定的密码加密私钥。提示输入密码。如果未指定这些选项，则密钥将以纯文本形式写入。这意味着使用 rsa 实用程序读取没有加密选项的加密密钥可用于从密钥中删除密码短语，或者通过设置可用于添加或更改密码短语的加密选项。这些选项只能用于 PEM 格式的输出文件。\n\n-text\n#> 除了编码版本之外，还以纯文本形式打印出各种公钥或私钥组件。\n\n-noout\n#> 此选项可防止输出密钥的编码版本。\n\n-modulus\n#> 此选项打印出密钥模数的值。\n\n-check\n#> 此选项检查 RSA 私钥的一致性。\n\n-pubin\n#> 默认情况下，从输入文件中读取私钥：使用此选项，改为读取公钥。\n\n-pubout\n#> 默认情况下输出私钥：使用此选项将输出公钥。 如果输入是公钥，则会自动设置此选项。\n\n-RSAPublicKey_in, -RSAPublicKey_out\n#> 类似于 -pubin 和 -pubout，除了使用 RSAPublicKey 格式。\n\n-engine id\n#> 指定引擎（通过其唯一 ID 字符串）将导致 rsa 尝试获取对指定引擎的功能引用，从而在需要时对其进行初始化。 然后引擎将被设置为所有可用算法的默认值。\n```"
     },
     {
       "id": "s3-202",
       "sectionId": "s3",
       "title": "支持以下加密算法",
-      "kind": "text",
       "body": "• `-aes128`\n• `-aes192`\n• `-aes256`\n• `-des3`\n• `-des`"
     },
     {
       "id": "s3-203",
       "sectionId": "s3",
       "title": "示例",
-      "kind": "text",
-      "body": "要删除 RSA 私钥上的密码短语："
-    },
-    {
-      "id": "s3-204",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in key.pem -out keyout.pem"
-    },
-    {
-      "id": "s3-205",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "要使用三重 DES 加密私钥："
-    },
-    {
-      "id": "s3-206",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in key.pem -des3 -out keyout.pem"
-    },
-    {
-      "id": "s3-207",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "要将私钥从 PEM 格式转换为 DER 格式："
-    },
-    {
-      "id": "s3-208",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in key.pem -outform DER -out keyout.der"
-    },
-    {
-      "id": "s3-209",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将私钥的组件打印到标准输出："
-    },
-    {
-      "id": "s3-210",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in key.pem -text -noout"
-    },
-    {
-      "id": "s3-211",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "仅输出私钥的公共部分："
-    },
-    {
-      "id": "s3-212",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in key.pem -pubout -out pubkey.pem"
-    },
-    {
-      "id": "s3-213",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "以 RSAPublicKey 格式输出私钥的公共部分："
-    },
-    {
-      "id": "s3-214",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl rsa -in key.pem -RSAPublicKey_out -out pubkey.pem"
+      "body": "要删除 RSA 私钥上的密码短语：\n\n```bash\n$ openssl rsa -in key.pem -out keyout.pem\n```\n\n要使用三重 DES 加密私钥：\n\n```bash\n$ openssl rsa -in key.pem -des3 -out keyout.pem\n```\n\n要将私钥从 PEM 格式转换为 DER 格式：\n\n```bash\n$ openssl rsa -in key.pem -outform DER -out keyout.der\n```\n\n将私钥的组件打印到标准输出：\n\n```bash\n$ openssl rsa -in key.pem -text -noout\n```\n\n仅输出私钥的公共部分：\n\n```bash\n$ openssl rsa -in key.pem -pubout -out pubkey.pem\n```\n\n以 RSAPublicKey 格式输出私钥的公共部分：\n\n```bash\n$ openssl rsa -in key.pem -RSAPublicKey_out -out pubkey.pem\n```"
     },
     {
       "id": "s4-215",
       "sectionId": "s4",
       "title": "RSA 公钥",
-      "kind": "code",
-      "lang": "shell",
-      "code": "-----BEGIN RSA PUBLIC KEY-----\n-----END RSA PUBLIC KEY-----"
+      "body": "```shell\n-----BEGIN RSA PUBLIC KEY-----\n-----END RSA PUBLIC KEY-----\n```"
     },
     {
       "id": "s4-216",
       "sectionId": "s4",
       "title": "加密的 PEM 私钥",
-      "kind": "code",
-      "lang": "shell",
-      "code": "-----BEGIN RSA PRIVATE KEY-----\nProc-Type: 4,ENCRYPTED\n-----END RSA PRIVATE KEY-----"
+      "body": "```shell\n-----BEGIN RSA PRIVATE KEY-----\nProc-Type: 4,ENCRYPTED\n-----END RSA PRIVATE KEY-----\n```"
     },
     {
       "id": "s4-217",
       "sectionId": "s4",
       "title": "识别为 PEM 格式",
-      "kind": "text",
-      "body": "为了让 OpenSSL 将其识别为 PEM 格式，它必须使用 Base64 进行编码，并带有以下标头："
-    },
-    {
-      "id": "s4-218",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "-----BEGIN CERTIFICATE-----\nand footer :\n-----END CERTIFICATE-----"
-    },
-    {
-      "id": "s4-219",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "此外，每行的长度不得超过 79 个字符。 否则你会收到错误："
-    },
-    {
-      "id": "s4-220",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "2675996:error:0906D064:PEM routines:PEM_read_bio:bad base64 decode:pem_lib.c:818:"
-    },
-    {
-      "id": "s4-221",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "注意：PEM 标准 (RFC1421) 要求行长度为 64 个字符。 可以使用 UNIX 命令行实用程序转换存储为单行的 PEM 证书："
-    },
-    {
-      "id": "s4-222",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ fold -w 64"
-    },
-    {
-      "id": "s4-223",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "• PKCS#1 RSAPublicKey (PEM header: BEGIN RSA PUBLIC KEY)\n• PKCS#8 EncryptedPrivateKeyInfo (PEM header: BEGIN ENCRYPTED PRIVATE KEY)\n• PKCS#8 PrivateKeyInfo (PEM header: BEGIN PRIVATE KEY)\n• X.509 SubjectPublicKeyInfo (PEM header: BEGIN PUBLIC KEY)\n• CSR PEM header : (PEM header:—-BEGIN NEW CERTIFICATE REQUEST—–)\n• DSA PrivateKeyInfo (PEM header: (—–BEGIN DSA PRIVATE KEY—-)"
+      "body": "为了让 OpenSSL 将其识别为 PEM 格式，它必须使用 Base64 进行编码，并带有以下标头：\n\n```\n-----BEGIN CERTIFICATE-----\nand footer :\n-----END CERTIFICATE-----\n```\n\n此外，每行的长度不得超过 79 个字符。 否则你会收到错误：\n\n```\n2675996:error:0906D064:PEM routines:PEM_read_bio:bad base64 decode:pem_lib.c:818:\n```\n\n注意：PEM 标准 (RFC1421) 要求行长度为 64 个字符。 可以使用 UNIX 命令行实用程序转换存储为单行的 PEM 证书：\n\n```bash\n$ fold -w 64\n```\n\n• PKCS#1 RSAPublicKey (PEM header: BEGIN RSA PUBLIC KEY)\n• PKCS#8 EncryptedPrivateKeyInfo (PEM header: BEGIN ENCRYPTED PRIVATE KEY)\n• PKCS#8 PrivateKeyInfo (PEM header: BEGIN PRIVATE KEY)\n• X.509 SubjectPublicKeyInfo (PEM header: BEGIN PUBLIC KEY)\n• CSR PEM header : (PEM header:—-BEGIN NEW CERTIFICATE REQUEST—–)\n• DSA PrivateKeyInfo (PEM header: (—–BEGIN DSA PRIVATE KEY—-)"
     },
     {
       "id": "s4-224",
       "sectionId": "s4",
       "title": "CRL",
-      "kind": "code",
-      "lang": "shell",
-      "code": "-----BEGIN X509 CRL-----\n-----END X509 CRL-----"
+      "body": "```shell\n-----BEGIN X509 CRL-----\n-----END X509 CRL-----\n```"
     },
     {
       "id": "s4-225",
       "sectionId": "s4",
       "title": "CRT",
-      "kind": "code",
-      "lang": "shell",
-      "code": "-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----"
+      "body": "```shell\n-----BEGIN CERTIFICATE-----\n-----END CERTIFICATE-----\n```"
     },
     {
       "id": "s4-226",
       "sectionId": "s4",
       "title": "CSR",
-      "kind": "code",
-      "lang": "shell",
-      "code": "-----BEGIN CERTIFICATE REQUEST-----\n-----END CERTIFICATE REQUEST-----"
+      "body": "```shell\n-----BEGIN CERTIFICATE REQUEST-----\n-----END CERTIFICATE REQUEST-----\n```"
     },
     {
       "id": "s4-227",
       "sectionId": "s4",
       "title": "NEW CSR",
-      "kind": "code",
-      "lang": "",
-      "code": "-----BEGIN NEW CERTIFICATE REQUEST-----\n-----END NEW CERTIFICATE REQUEST-----"
+      "body": "```\n-----BEGIN NEW CERTIFICATE REQUEST-----\n-----END NEW CERTIFICATE REQUEST-----\n```"
     },
     {
       "id": "s4-228",
       "sectionId": "s4",
       "title": "PEM",
-      "kind": "code",
-      "lang": "",
-      "code": "-----END RSA PRIVATE KEY-----\n-----BEGIN RSA PRIVATE KEY-----"
+      "body": "```\n-----END RSA PRIVATE KEY-----\n-----BEGIN RSA PRIVATE KEY-----\n```"
     },
     {
       "id": "s4-229",
       "sectionId": "s4",
       "title": "PKCS7",
-      "kind": "code",
-      "lang": "",
-      "code": "-----BEGIN PKCS7-----\n-----END PKCS7-----"
+      "body": "```\n-----BEGIN PKCS7-----\n-----END PKCS7-----\n```"
     },
     {
       "id": "s4-230",
       "sectionId": "s4",
       "title": "私钥",
-      "kind": "code",
-      "lang": "",
-      "code": "-----BEGIN PRIVATE KEY-----\n-----END PRIVATE KEY-----"
+      "body": "```\n-----BEGIN PRIVATE KEY-----\n-----END PRIVATE KEY-----\n```"
     },
     {
       "id": "s4-231",
       "sectionId": "s4",
       "title": "DSA密钥",
-      "kind": "code",
-      "lang": "",
-      "code": "-----BEGIN DSA PRIVATE KEY-----\n-----END DSA PRIVATE KEY-----"
+      "body": "```\n-----BEGIN DSA PRIVATE KEY-----\n-----END DSA PRIVATE KEY-----\n```"
     },
     {
       "id": "s4-232",
       "sectionId": "s4",
       "title": "椭圆曲线",
-      "kind": "code",
-      "lang": "",
-      "code": "-----BEGIN EC PRIVATE KEY-----\n-----BEGIN EC PRIVATE KEY-----"
+      "body": "```\n-----BEGIN EC PRIVATE KEY-----\n-----BEGIN EC PRIVATE KEY-----\n```"
     },
     {
       "id": "s4-233",
       "sectionId": "s4",
       "title": "PGP 私钥",
-      "kind": "code",
-      "lang": "",
-      "code": "-----BEGIN PGP PRIVATE KEY BLOCK-----\n-----END PGP PRIVATE KEY BLOCK-----"
+      "body": "```\n-----BEGIN PGP PRIVATE KEY BLOCK-----\n-----END PGP PRIVATE KEY BLOCK-----\n```"
     },
     {
       "id": "s4-234",
       "sectionId": "s4",
       "title": "PGP 公钥",
-      "kind": "code",
-      "lang": "",
-      "code": "-----BEGIN PGP PUBLIC KEY BLOCK-----\n-----END PGP PUBLIC KEY BLOCK-----"
+      "body": "```\n-----BEGIN PGP PUBLIC KEY BLOCK-----\n-----END PGP PUBLIC KEY BLOCK-----\n```"
     },
     {
       "id": "s5-235",
       "sectionId": "s5",
       "title": "介绍",
-      "kind": "text",
-      "body": "在建立 SSL/TLS 连接之前，客户端需要确保收到的证书有效。为了做到这一点，客户端不仅要验证其公钥的真实性，还要验证与之相关的其他元数据（了解这一点对于了解典型数字证书的内容很重要）："
-    },
-    {
-      "id": "s5-236",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "• **`签名验证`** 这确保了证书没有以任何方式被更改\n• **`证书尚未过期`** 当证书由 CA 颁发时，它会指定一个到期日期\n• **`证书主题与主机名匹配`** 证书是为特定服务器颁发的。因此，证书主题名称需要与客户端尝试连接的 URL 相匹配\n• **`它没有被撤销`** 有时证书可以在任何需要的情况下被其颁发者撤销（例如，关联的私钥已被公开，因此证书无效）\n• **`它由受信任的 CA 签名`** 为了证明证书的真实性，我们需要获取 CA 证书并验证其可信度。然而在 PKI 中有一个信任链的概念，因此 CA 证书可能是由另一个 CA 颁发的。因此我们需要获得另一个 CA 的证书并验证它。依此类推……因此，为了信任证书，我们需要一直导航到根 CA。最后，如果我们信任根 CA，可以肯定地说我们信任整个链"
+      "body": "在建立 SSL/TLS 连接之前，客户端需要确保收到的证书有效。为了做到这一点，客户端不仅要验证其公钥的真实性，还要验证与之相关的其他元数据（了解这一点对于了解典型数字证书的内容很重要）：\n\n• **`签名验证`** 这确保了证书没有以任何方式被更改\n• **`证书尚未过期`** 当证书由 CA 颁发时，它会指定一个到期日期\n• **`证书主题与主机名匹配`** 证书是为特定服务器颁发的。因此，证书主题名称需要与客户端尝试连接的 URL 相匹配\n• **`它没有被撤销`** 有时证书可以在任何需要的情况下被其颁发者撤销（例如，关联的私钥已被公开，因此证书无效）\n• **`它由受信任的 CA 签名`** 为了证明证书的真实性，我们需要获取 CA 证书并验证其可信度。然而在 PKI 中有一个信任链的概念，因此 CA 证书可能是由另一个 CA 颁发的。因此我们需要获得另一个 CA 的证书并验证它。依此类推……因此，为了信任证书，我们需要一直导航到根 CA。最后，如果我们信任根 CA，可以肯定地说我们信任整个链"
     },
     {
       "id": "s5-237",
       "sectionId": "s5",
       "title": "验证信任链",
-      "kind": "text",
-      "body": "a) 您的整个 CA 链在一个文件中，实际的网络服务器或客户端证书在另一个文件中"
-    },
-    {
-      "id": "s5-238",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl verify -untrusted ca-chain.pem 客户端证书.pem"
-    },
-    {
-      "id": "s5-239",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "b) 单独文件中的根证书和中间证书以及另一个文件中的实际网络服务器或客户端证书"
-    },
-    {
-      "id": "s5-240",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl verify -CAfile root.pem -untrusted intermediate-chain.pem client-cert.pem"
-    },
-    {
-      "id": "s5-241",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "如果您有多个中间 `CA`（例如 `root.pem -> intermediate1.pem -> intermediate2.pem -> client-cert.pem`），将它们连接到一个文件中并通过：`-untrusted intermediate-chain.pem` 或执行它与 cat："
-    },
-    {
-      "id": "s5-242",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl verify -CAfile root.pem -untrusted <(cat intermediate1.pem intermediate2.pem) client-cert.pem"
-    },
-    {
-      "id": "s5-243",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "实例"
-    },
-    {
-      "id": "s5-244",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl verify -CAfile letsencrypt-root-cert/isrgrootx1.pem.txt -untrusted letsencrypt-intermediate-cert/letsencryptauthorityx3.pem.txt /etc/letsencrypt/live/sitename.tld/cert.pem \n/etc/letsencrypt/live/sitename.tld/cert.pem: OK"
+      "body": "a) 您的整个 CA 链在一个文件中，实际的网络服务器或客户端证书在另一个文件中\n\n```bash\n$ openssl verify -untrusted ca-chain.pem 客户端证书.pem\n```\n\nb) 单独文件中的根证书和中间证书以及另一个文件中的实际网络服务器或客户端证书\n\n```bash\n$ openssl verify -CAfile root.pem -untrusted intermediate-chain.pem client-cert.pem\n```\n\n如果您有多个中间 `CA`（例如 `root.pem -> intermediate1.pem -> intermediate2.pem -> client-cert.pem`），将它们连接到一个文件中并通过：`-untrusted intermediate-chain.pem` 或执行它与 cat：\n\n```bash\n$ openssl verify -CAfile root.pem -untrusted <(cat intermediate1.pem intermediate2.pem) client-cert.pem\n```\n\n实例\n\n```bash\n$ openssl verify -CAfile letsencrypt-root-cert/isrgrootx1.pem.txt -untrusted letsencrypt-intermediate-cert/letsencryptauthorityx3.pem.txt /etc/letsencrypt/live/sitename.tld/cert.pem \n/etc/letsencrypt/live/sitename.tld/cert.pem: OK\n```"
     },
     {
       "id": "s5-245",
       "sectionId": "s5",
       "title": "截止日期",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl x509 -enddate -noout -in file.pem"
+      "body": "```bash\n$ openssl x509 -enddate -noout -in file.pem\n```"
     },
     {
       "id": "s5-246",
       "sectionId": "s5",
-      "title": "验证本地证书文件",
-      "kind": "text",
-      "body": "这是我的 bash 命令行，用于按过期顺序列出多个证书，最近过期的证书最先过期。"
-    },
-    {
-      "id": "s5-247",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "for%20pem%20in%20%2Fetc%2Fssl%2Fcerts%2F*.pem%3B%20do%20%0A%20%20%20%20printf%20'%25s%3A%20%25s%5Cn'%20%5C%0A%20%20%20%20%20%20%22%24(date%20--date%3D%22%24(openssl%20x509%20-enddate%20-noout%20-in%20%22%24pem%22%7Ccut%20-d%3D%20-f%202)%22%20--iso-8601)%22%20%5C%0A%20%20%20%20%20%20%22%24pem%22%0Adone%20%7C%20sort",
+      "title": "%E9%AA%8C%E8%AF%81%E6%9C%AC%E5%9C%B0%E8%AF%81%E4%B9%A6%E6%96%87%E4%BB%B6",
+      "body": "%E8%BF%99%E6%98%AF%E6%88%91%E7%9A%84%20bash%20%E5%91%BD%E4%BB%A4%E8%A1%8C%EF%BC%8C%E7%94%A8%E4%BA%8E%E6%8C%89%E8%BF%87%E6%9C%9F%E9%A1%BA%E5%BA%8F%E5%88%97%E5%87%BA%E5%A4%9A%E4%B8%AA%E8%AF%81%E4%B9%A6%EF%BC%8C%E6%9C%80%E8%BF%91%E8%BF%87%E6%9C%9F%E7%9A%84%E8%AF%81%E4%B9%A6%E6%9C%80%E5%85%88%E8%BF%87%E6%9C%9F%E3%80%82%0A%0A%60%60%60bash%0Afor%20pem%20in%20%2Fetc%2Fssl%2Fcerts%2F*.pem%3B%20do%20%0A%20%20%20%20printf%20'%25s%3A%20%25s%5Cn'%20%5C%0A%20%20%20%20%20%20%22%24(date%20--date%3D%22%24(openssl%20x509%20-enddate%20-noout%20-in%20%22%24pem%22%7Ccut%20-d%3D%20-f%202)%22%20--iso-8601)%22%20%5C%0A%20%20%20%20%20%20%22%24pem%22%0Adone%20%7C%20sort%0A%60%60%60%0A%0A%E7%A4%BA%E4%BE%8B%E8%BE%93%E5%87%BA%EF%BC%9A%0A%0A%60%60%60%0A2015-12-16%3A%20%2Fetc%2Fssl%2Fcerts%2FStaat_der_Nederlanden_Root_CA.pem%0A2016-03-22%3A%20%2Fetc%2Fssl%2Fcerts%2FCA_Disig.pem%0A2016-08-14%3A%20%2Fetc%2Fssl%2Fcerts%2FEBG_Elektronik_Sertifika_Hizmet_S.pem%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s5-248",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "示例输出："
-    },
-    {
-      "id": "s5-249",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "2015-12-16: /etc/ssl/certs/Staat_der_Nederlanden_Root_CA.pem\n2016-03-22: /etc/ssl/certs/CA_Disig.pem\n2016-08-14: /etc/ssl/certs/EBG_Elektronik_Sertifika_Hizmet_S.pem"
     },
     {
       "id": "s5-250",
       "sectionId": "s5",
-      "title": "验证远程服务器",
-      "kind": "text",
-      "body": "这是一个 bash 函数，它会检查你所有的服务器，假设你正在使用 DNS 循环法。 请注意，这需要 GNU 日期并且不能在 Mac OS 上运行"
-    },
-    {
-      "id": "s5-251",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "function%20check_certs%20()%20%7B%0A%20%20if%20%5B%20-z%20%22%241%22%20%5D%0A%20%20then%0A%20%20%20%20echo%20%22domain%20name%20missing%22%0A%20%20%20%20exit%201%0A%20%20fi%0A%20%20name%3D%22%241%22%0A%20%20shift%0A%0A%20%20now_epoch%3D%24(%20date%20%2B%25s%20)%0A%0A%20%20dig%20%2Bnoall%20%2Banswer%20%24name%20%7C%20while%20read%20_%20_%20_%20_%20ip%3B%0A%20%20do%0A%20%20%20%20echo%20-n%20%22%24ip%3A%22%0A%20%20%20%20expiry_date%3D%24(%20echo%20%7C%20openssl%20s_client%20-showcerts%20-servername%20%24name%20-connect%20%24ip%3A443%202%3E%2Fdev%2Fnull%20%7C%20openssl%20x509%20-inform%20pem%20-noout%20-enddate%20%7C%20cut%20-d%20%22%3D%22%20-f%202%20)%0A%20%20%20%20echo%20-n%20%22%20%24expiry_date%22%3B%0A%20%20%20%20expiry_epoch%3D%24(%20date%20-d%20%22%24expiry_date%22%20%2B%25s%20)%0A%20%20%20%20expiry_days%3D%22%24((%20(%24expiry_epoch%20-%20%24now_epoch)%20%2F%20(3600%20*%2024)%20))%22%0A%20%20%20%20echo%20%22%20%20%20%20%24expiry_days%20days%22%0A%20%20done%0A%7D",
+      "title": "%E9%AA%8C%E8%AF%81%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8",
+      "body": "%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%20bash%20%E5%87%BD%E6%95%B0%EF%BC%8C%E5%AE%83%E4%BC%9A%E6%A3%80%E6%9F%A5%E4%BD%A0%E6%89%80%E6%9C%89%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%8C%E5%81%87%E8%AE%BE%E4%BD%A0%E6%AD%A3%E5%9C%A8%E4%BD%BF%E7%94%A8%20DNS%20%E5%BE%AA%E7%8E%AF%E6%B3%95%E3%80%82%20%E8%AF%B7%E6%B3%A8%E6%84%8F%EF%BC%8C%E8%BF%99%E9%9C%80%E8%A6%81%20GNU%20%E6%97%A5%E6%9C%9F%E5%B9%B6%E4%B8%94%E4%B8%8D%E8%83%BD%E5%9C%A8%20Mac%20OS%20%E4%B8%8A%E8%BF%90%E8%A1%8C%0A%0A%60%60%60bash%0Afunction%20check_certs%20()%20%7B%0A%20%20if%20%5B%20-z%20%22%241%22%20%5D%0A%20%20then%0A%20%20%20%20echo%20%22domain%20name%20missing%22%0A%20%20%20%20exit%201%0A%20%20fi%0A%20%20name%3D%22%241%22%0A%20%20shift%0A%0A%20%20now_epoch%3D%24(%20date%20%2B%25s%20)%0A%0A%20%20dig%20%2Bnoall%20%2Banswer%20%24name%20%7C%20while%20read%20_%20_%20_%20_%20ip%3B%0A%20%20do%0A%20%20%20%20echo%20-n%20%22%24ip%3A%22%0A%20%20%20%20expiry_date%3D%24(%20echo%20%7C%20openssl%20s_client%20-showcerts%20-servername%20%24name%20-connect%20%24ip%3A443%202%3E%2Fdev%2Fnull%20%7C%20openssl%20x509%20-inform%20pem%20-noout%20-enddate%20%7C%20cut%20-d%20%22%3D%22%20-f%202%20)%0A%20%20%20%20echo%20-n%20%22%20%24expiry_date%22%3B%0A%20%20%20%20expiry_epoch%3D%24(%20date%20-d%20%22%24expiry_date%22%20%2B%25s%20)%0A%20%20%20%20expiry_days%3D%22%24((%20(%24expiry_epoch%20-%20%24now_epoch)%20%2F%20(3600%20*%2024)%20))%22%0A%20%20%20%20echo%20%22%20%20%20%20%24expiry_days%20days%22%0A%20%20done%0A%7D%0A%60%60%60%0A%0A%E8%BE%93%E5%87%BA%E7%A4%BA%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20check_certs%20stackoverflow.com%0A151.101.1.69%3A%20Aug%2014%2012%3A00%3A00%202019%20GMT%20%20%20%20603%20days%0A151.101.65.69%3A%20Aug%2014%2012%3A00%3A00%202019%20GMT%20%20%20%20603%20days%0A151.101.129.69%3A%20Aug%2014%2012%3A00%3A00%202019%20GMT%20%20%20%20603%20days%0A151.101.193.69%3A%20Aug%2014%2012%3A00%3A00%202019%20GMT%20%20%20%20603%20days%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s5-252",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "输出示例："
-    },
-    {
-      "id": "s5-253",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ check_certs stackoverflow.com\n151.101.1.69: Aug 14 12:00:00 2019 GMT    603 days\n151.101.65.69: Aug 14 12:00:00 2019 GMT    603 days\n151.101.129.69: Aug 14 12:00:00 2019 GMT    603 days\n151.101.193.69: Aug 14 12:00:00 2019 GMT    603 days"
     },
     {
       "id": "s5-254",
       "sectionId": "s5",
-      "title": "验证 curl",
-      "kind": "code",
-      "lang": "bash",
-      "code": "curl --insecure -v https://www.google.com 2>&1 | awk 'BEGIN { cert=0 } /^\\* Server certificate:/ { cert=1 } /^\\*/ { if (cert) print }'\n\n* Server certificate:\n*  subject: C=US; ST=California; L=Mountain View; O=Google LLC; CN=www.google.com\n*  start date: Mar  1 09:46:35 2019 GMT\n*  expire date: May 24 09:25:00 2019 GMT\n*  issuer: C=US; O=Google Trust Services; CN=Google Internet Authority G3\n*  SSL certificate verify ok.\n* Using HTTP2, server supports multi-use\n* Connection state changed (HTTP/2 confirmed)\n* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0\n* Using Stream ID: 1 (easy handle 0x7ff5dc803600)\n* Connection state changed (MAX_CONCURRENT_STREAMS updated)!\n* Connection #0 to host www.google.com left intact"
-    },
-    {
-      "id": "s5-255",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "您需要为 [curl](./curl.md) 提供整个证书链，因为 [curl](./curl.md) 不再附带任何 CA 证书。 由于 cacert 选项只能使用一个文件，因此您需要将完整的链信息连接到 1 个文件中。 从 <https://curl.haxx.se/ca/cacert.pem> 获取根 CA 证书包。"
-    },
-    {
-      "id": "s5-256",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20curl%20--cacert%20certRepo%20-u%20user%3Apasswd%20-X%20GET%20-H%20'Content-Type%3A%20application%2Fjson'%20%22https%2F%2Fsomesecureserver.com%2Frest%2Ffield%22",
+      "title": "%E9%AA%8C%E8%AF%81%20curl",
+      "body": "%60%60%60bash%0Acurl%20--insecure%20-v%20https%3A%2F%2Fwww.google.com%202%3E%261%20%7C%20awk%20'BEGIN%20%7B%20cert%3D0%20%7D%20%2F%5E%5C*%20Server%20certificate%3A%2F%20%7B%20cert%3D1%20%7D%20%2F%5E%5C*%2F%20%7B%20if%20(cert)%20print%20%7D'%0A%0A*%20Server%20certificate%3A%0A*%20%20subject%3A%20C%3DUS%3B%20ST%3DCalifornia%3B%20L%3DMountain%20View%3B%20O%3DGoogle%20LLC%3B%20CN%3Dwww.google.com%0A*%20%20start%20date%3A%20Mar%20%201%2009%3A46%3A35%202019%20GMT%0A*%20%20expire%20date%3A%20May%2024%2009%3A25%3A00%202019%20GMT%0A*%20%20issuer%3A%20C%3DUS%3B%20O%3DGoogle%20Trust%20Services%3B%20CN%3DGoogle%20Internet%20Authority%20G3%0A*%20%20SSL%20certificate%20verify%20ok.%0A*%20Using%20HTTP2%2C%20server%20supports%20multi-use%0A*%20Connection%20state%20changed%20(HTTP%2F2%20confirmed)%0A*%20Copying%20HTTP%2F2%20data%20in%20stream%20buffer%20to%20connection%20buffer%20after%20upgrade%3A%20len%3D0%0A*%20Using%20Stream%20ID%3A%201%20(easy%20handle%200x7ff5dc803600)%0A*%20Connection%20state%20changed%20(MAX_CONCURRENT_STREAMS%20updated)!%0A*%20Connection%20%230%20to%20host%20www.google.com%20left%20intact%0A%60%60%60%0A%0A%E6%82%A8%E9%9C%80%E8%A6%81%E4%B8%BA%20%5Bcurl%5D(.%2Fcurl.md)%20%E6%8F%90%E4%BE%9B%E6%95%B4%E4%B8%AA%E8%AF%81%E4%B9%A6%E9%93%BE%EF%BC%8C%E5%9B%A0%E4%B8%BA%20%5Bcurl%5D(.%2Fcurl.md)%20%E4%B8%8D%E5%86%8D%E9%99%84%E5%B8%A6%E4%BB%BB%E4%BD%95%20CA%20%E8%AF%81%E4%B9%A6%E3%80%82%20%E7%94%B1%E4%BA%8E%20cacert%20%E9%80%89%E9%A1%B9%E5%8F%AA%E8%83%BD%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%EF%BC%8C%E5%9B%A0%E6%AD%A4%E6%82%A8%E9%9C%80%E8%A6%81%E5%B0%86%E5%AE%8C%E6%95%B4%E7%9A%84%E9%93%BE%E4%BF%A1%E6%81%AF%E8%BF%9E%E6%8E%A5%E5%88%B0%201%20%E4%B8%AA%E6%96%87%E4%BB%B6%E4%B8%AD%E3%80%82%20%E4%BB%8E%20%3Chttps%3A%2F%2Fcurl.haxx.se%2Fca%2Fcacert.pem%3E%20%E8%8E%B7%E5%8F%96%E6%A0%B9%20CA%20%E8%AF%81%E4%B9%A6%E5%8C%85%E3%80%82%0A%0A%60%60%60bash%0A%24%20curl%20--cacert%20certRepo%20-u%20user%3Apasswd%20-X%20GET%20-H%20'Content-Type%3A%20application%2Fjson'%20%22https%2F%2Fsomesecureserver.com%2Frest%2Ffield%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-257",
       "sectionId": "s5",
       "title": "验证 openssl s_client - 使用 SNI",
-      "kind": "text",
-      "body": "如果远程服务器使用 SNI（即在一个 IP 地址上共享多个 SSL 主机），您将需要发送正确的主机名以获得正确的证书（`-servername` 选项用于启用 SNI 支持）。"
-    },
-    {
-      "id": "s5-258",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -showcerts -servername www.example.com -connect www.example.com:443 </dev/null"
+      "body": "如果远程服务器使用 SNI（即在一个 IP 地址上共享多个 SSL 主机），您将需要发送正确的主机名以获得正确的证书（`-servername` 选项用于启用 SNI 支持）。\n\n```bash\n$ openssl s_client -showcerts -servername www.example.com -connect www.example.com:443 </dev/null\n```"
     },
     {
       "id": "s5-259",
       "sectionId": "s5",
       "title": "没有 SNI",
-      "kind": "text",
-      "body": "如果远程服务器没有使用 SNI，那么你可以跳过 `-servername` 参数："
-    },
-    {
-      "id": "s5-260",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "openssl s_client -showcerts -connect www.example.com:443 </dev/null"
-    },
-    {
-      "id": "s5-261",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "要查看站点证书的完整详细信息，您也可以使用以下命令链："
-    },
-    {
-      "id": "s5-262",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ echo | \\\n    openssl s_client -servername www.example.com -connect www.example.com:443 2>/dev/null | \\\n    openssl x509 -text"
-    },
-    {
-      "id": "s5-263",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "对于带有 starttls 的 SMTP，请使用："
-    },
-    {
-      "id": "s5-264",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -connect server:port -starttls smtp"
-    },
-    {
-      "id": "s5-265",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "对于 Client Auth 保护的资源，请使用："
-    },
-    {
-      "id": "s5-266",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -connect host:port -key our_private_key.pem -showcerts \\\n    -cert our_server-signed_cert.pem"
-    },
-    {
-      "id": "s5-267",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "`-prexit` 也会返回数据："
-    },
-    {
-      "id": "s5-268",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ openssl s_client -connect host:port -prexit"
+      "body": "如果远程服务器没有使用 SNI，那么你可以跳过 `-servername` 参数：\n\n```bash\nopenssl s_client -showcerts -connect www.example.com:443 </dev/null\n```\n\n要查看站点证书的完整详细信息，您也可以使用以下命令链：\n\n```bash\n$ echo | \\\n    openssl s_client -servername www.example.com -connect www.example.com:443 2>/dev/null | \\\n    openssl x509 -text\n```\n\n对于带有 starttls 的 SMTP，请使用：\n\n```bash\n$ openssl s_client -connect server:port -starttls smtp\n```\n\n对于 Client Auth 保护的资源，请使用：\n\n```bash\n$ openssl s_client -connect host:port -key our_private_key.pem -showcerts \\\n    -cert our_server-signed_cert.pem\n```\n\n`-prexit` 也会返回数据：\n\n```bash\n$ openssl s_client -connect host:port -prexit\n```"
     },
     {
       "id": "s5-269",
       "sectionId": "s5",
-      "title": "使用私钥验证 TLS 证书",
-      "kind": "text",
-      "body": "希望您永远不会遇到不知道用于生成 TLS 证书的私钥的情况，但如果您知道……这里是您可以检查的方法。"
-    },
-    {
-      "id": "s5-270",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "注意：这比将证书上传到生产环境以检查它们更好😉"
-    },
-    {
-      "id": "s5-271",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "假设我们已经生成了一个名为 example.com.key 的私钥和一个名为 example.com.crt 的证书，我们可以使用 openssl 检查 MD5 哈希值是否相同："
-    },
-    {
-      "id": "s5-272",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ openssl x509 -noout -modulus -in example.com.crt | openssl md5\n$ openssl rsa -noout -modulus -in example.com.key | openssl md5"
-    },
-    {
-      "id": "s5-273",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "为了让事情变得更好，你可以写一个脚本："
-    },
-    {
-      "id": "s5-274",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23!%2Fbin%2Fbash%0ACERT_MD5%3D%24(openssl%20x509%20-noout%20-modulus%20-in%20example.com.crt%20%7C%20openssl%20md5)%0A%20KEY_MD5%3D%24(openssl%20rsa%20%20-noout%20-modulus%20-in%20example.com.key%20%7C%20openssl%20md5)%0A%0Aif%20%5B%20%22%24CERT_MD5%22%20%3D%3D%20%22%24KEY_MD5%22%20%5D%3B%20then%0A%20%20echo%20%22Private%20key%20matches%20certificate%22%0Aelse%0A%20%20echo%20%22Private%20key%20does%20not%20match%20certificate%22%0Afi",
+      "title": "%E4%BD%BF%E7%94%A8%E7%A7%81%E9%92%A5%E9%AA%8C%E8%AF%81%20TLS%20%E8%AF%81%E4%B9%A6",
+      "body": "%E5%B8%8C%E6%9C%9B%E6%82%A8%E6%B0%B8%E8%BF%9C%E4%B8%8D%E4%BC%9A%E9%81%87%E5%88%B0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%94%A8%E4%BA%8E%E7%94%9F%E6%88%90%20TLS%20%E8%AF%81%E4%B9%A6%E7%9A%84%E7%A7%81%E9%92%A5%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%8C%E4%BD%86%E5%A6%82%E6%9E%9C%E6%82%A8%E7%9F%A5%E9%81%93%E2%80%A6%E2%80%A6%E8%BF%99%E9%87%8C%E6%98%AF%E6%82%A8%E5%8F%AF%E4%BB%A5%E6%A3%80%E6%9F%A5%E7%9A%84%E6%96%B9%E6%B3%95%E3%80%82%0A%0A%E6%B3%A8%E6%84%8F%EF%BC%9A%E8%BF%99%E6%AF%94%E5%B0%86%E8%AF%81%E4%B9%A6%E4%B8%8A%E4%BC%A0%E5%88%B0%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%BB%A5%E6%A3%80%E6%9F%A5%E5%AE%83%E4%BB%AC%E6%9B%B4%E5%A5%BD%F0%9F%98%89%0A%0A%E5%81%87%E8%AE%BE%E6%88%91%E4%BB%AC%E5%B7%B2%E7%BB%8F%E7%94%9F%E6%88%90%E4%BA%86%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20example.com.key%20%E7%9A%84%E7%A7%81%E9%92%A5%E5%92%8C%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20example.com.crt%20%E7%9A%84%E8%AF%81%E4%B9%A6%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20openssl%20%E6%A3%80%E6%9F%A5%20MD5%20%E5%93%88%E5%B8%8C%E5%80%BC%E6%98%AF%E5%90%A6%E7%9B%B8%E5%90%8C%EF%BC%9A%0A%0A%60%60%60shell%0A%24%20openssl%20x509%20-noout%20-modulus%20-in%20example.com.crt%20%7C%20openssl%20md5%0A%24%20openssl%20rsa%20-noout%20-modulus%20-in%20example.com.key%20%7C%20openssl%20md5%0A%60%60%60%0A%0A%E4%B8%BA%E4%BA%86%E8%AE%A9%E4%BA%8B%E6%83%85%E5%8F%98%E5%BE%97%E6%9B%B4%E5%A5%BD%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%86%99%E4%B8%80%E4%B8%AA%E8%84%9A%E6%9C%AC%EF%BC%9A%0A%0A%60%60%60bash%0A%23!%2Fbin%2Fbash%0ACERT_MD5%3D%24(openssl%20x509%20-noout%20-modulus%20-in%20example.com.crt%20%7C%20openssl%20md5)%0A%20KEY_MD5%3D%24(openssl%20rsa%20%20-noout%20-modulus%20-in%20example.com.key%20%7C%20openssl%20md5)%0A%0Aif%20%5B%20%22%24CERT_MD5%22%20%3D%3D%20%22%24KEY_MD5%22%20%5D%3B%20then%0A%20%20echo%20%22Private%20key%20matches%20certificate%22%0Aelse%0A%20%20echo%20%22Private%20key%20does%20not%20match%20certificate%22%0Afi%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-275",
       "sectionId": "s6",
       "title": "Java%20%E5%AF%86%E9%92%A5%E5%BA%93",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20keytool%20-importcert%20-file%20certificate.cer%20-keystore%20keystore.jks%20-alias%20%22Alias%22%20%0A%24%20..%5C..%5Cbin%5Ckeytool%20-import%20-trustcacerts%20-keystore%20cacerts%20-storepass%20changeit%20-noprompt%20-alias%20yourAliasName%20-file%20path%5Cto%5Ccertificate.cer%0A%24%20keytool%20-import%20-alias%20joe%20-file%20mycert.cer%20-keystore%20mycerts%20-storepass%20changeit",
+      "body": "%60%60%60bash%0A%24%20keytool%20-importcert%20-file%20certificate.cer%20-keystore%20keystore.jks%20-alias%20%22Alias%22%20%0A%24%20..%5C..%5Cbin%5Ckeytool%20-import%20-trustcacerts%20-keystore%20cacerts%20-storepass%20changeit%20-noprompt%20-alias%20yourAliasName%20-file%20path%5Cto%5Ccertificate.cer%0A%24%20keytool%20-import%20-alias%20joe%20-file%20mycert.cer%20-keystore%20mycerts%20-storepass%20changeit%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-276",
       "sectionId": "s7",
       "title": "%E4%BD%BF%E7%94%A8%20%60certstrap%60%20%E5%88%9B%E5%BB%BA%E5%BC%80%E5%8F%91%E8%AF%81%E4%B9%A6",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20brew%20install%20certstrap%0A%24%20certstrap%20init%20--common-name%20%22ExampleDevCA%22%20--expires%20%2210%20years%22%20-o%20%22My%20Tech%20Inc.%22%20-c%20%22DE%22%20-l%20%22Muenchen%22%20--st%20%22Bayern%22%20--stdout%0A%24%20certstrap%20request-cert%20--common-name%20%22example.localhost%22%20-o%20%22My%20Tech%20Inc.%22%20-c%20%22DE%22%20-l%20%22Muenchen%22%20--st%20%22Bayern%22%20--stdout%20--domain%20%22*.example.localhost%22%2C%22example.localhost%22%2C%22localhost%22%0A%24%20certstrap%20sign%20%22example.localhost%22%20--CA%20ExampleDevCA",
+      "body": "%60%60%60bash%0A%24%20brew%20install%20certstrap%0A%24%20certstrap%20init%20--common-name%20%22ExampleDevCA%22%20--expires%20%2210%20years%22%20-o%20%22My%20Tech%20Inc.%22%20-c%20%22DE%22%20-l%20%22Muenchen%22%20--st%20%22Bayern%22%20--stdout%0A%24%20certstrap%20request-cert%20--common-name%20%22example.localhost%22%20-o%20%22My%20Tech%20Inc.%22%20-c%20%22DE%22%20-l%20%22Muenchen%22%20--st%20%22Bayern%22%20--stdout%20--domain%20%22*.example.localhost%22%2C%22example.localhost%22%2C%22localhost%22%0A%24%20certstrap%20sign%20%22example.localhost%22%20--CA%20ExampleDevCA%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-277",
       "sectionId": "s7",
       "title": "%E4%BD%BF%E7%94%A8%20%60mkcert%60%20%E5%88%9B%E5%BB%BA%E5%BC%80%E5%8F%91%E8%AF%81%E4%B9%A6",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20brew%20install%20mkcert%0A%24%20mkcert%20%22*.example.localhost%22%0A%0A%23%20Clean%20up%20with%3A%0A%24%20rm%20-vrf%20%22%24HOME%2FLibrary%2FApplication%20Support%2Fmkcert%22%20%20_wildcard.example*",
+      "body": "%60%60%60bash%0A%24%20brew%20install%20mkcert%0A%24%20mkcert%20%22*.example.localhost%22%0A%0A%23%20Clean%20up%20with%3A%0A%24%20rm%20-vrf%20%22%24HOME%2FLibrary%2FApplication%20Support%2Fmkcert%22%20%20_wildcard.example*%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-278",
       "sectionId": "s8",
       "title": "另见",
-      "kind": "text",
       "body": "• [OpenSSL 官网](https://www.openssl.org/) _(openssl.org)_\n• [OpenSSL Cheat Sheet](https://cheatography.com/albertx/cheat-sheets/openssl/) _(cheatography.com)_\n• [OpenSSL Cheat Sheet](https://megamorf.gitlab.io/cheat-sheets/openssl/#convert) _(megamorf.gitlab.io)_"
     }
   ],

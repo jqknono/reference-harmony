@@ -35,568 +35,116 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "此快速参考备忘单提供了使用 SSH 的各种方法。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "连接",
-      "kind": "text",
-      "body": "连接到服务器（默认端口 22）"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh root@192.168.1.5"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在特定端口上连接"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh root@192.168.1.5 -p 6222"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "通过 pem 文件连接（0400 权限）"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh -i /path/file.pem root@192.168.1.5"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "请参阅：[SSH 权限](./chmod.md#ssh-权限)"
+      "body": "连接到服务器（默认端口 22）\n\n```shell\n$ ssh root@192.168.1.5\n```\n\n在特定端口上连接\n\n```shell\n$ ssh root@192.168.1.5 -p 6222\n```\n\n通过 pem 文件连接（0400 权限）\n\n```shell\n$ ssh -i /path/file.pem root@192.168.1.5\n```\n\n请参阅：[SSH 权限](./chmod.md#ssh-权限)"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "执行",
-      "kind": "text",
-      "body": "执行远程命令"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh root@192.168.1.5 'ls -l'"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "调用本地脚本"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh root@192.168.1.5 bash < script.sh"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "从服务器压缩和下载"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20ssh%20root%40192.168.1.5%20%22tar%20cvzf%20-%20~%2Fsource%22%20%3E%20output.tgz",
+      "title": "%E6%89%A7%E8%A1%8C",
+      "body": "%E6%89%A7%E8%A1%8C%E8%BF%9C%E7%A8%8B%E5%91%BD%E4%BB%A4%0A%0A%60%60%60shell%0A%24%20ssh%20root%40192.168.1.5%20'ls%20-l'%0A%60%60%60%0A%0A%E8%B0%83%E7%94%A8%E6%9C%AC%E5%9C%B0%E8%84%9A%E6%9C%AC%0A%0A%60%60%60shell%0A%24%20ssh%20root%40192.168.1.5%20bash%20%3C%20script.sh%0A%60%60%60%0A%0A%E4%BB%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8E%8B%E7%BC%A9%E5%92%8C%E4%B8%8B%E8%BD%BD%0A%0A%60%60%60shell%0A%24%20ssh%20root%40192.168.1.5%20%22tar%20cvzf%20-%20~%2Fsource%22%20%3E%20output.tgz%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "SCP",
-      "kind": "text",
-      "body": "从远程复制到本地"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ scp user@server:/dir/file.ext dest/"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "两台服务器之间的副本"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ scp user@server:/file user@server:/dir"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "从本地复制到远程"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ scp dest/file.ext user@server:/dir"
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "复制整个文件夹"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ scp -r user@server:/dir dest/"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "复制文件夹中的所有文件"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ scp user@server:/dir/* dest/"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "从服务器文件夹复制到当前文件夹"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ scp user@server:/dir/* ."
+      "body": "从远程复制到本地\n\n```shell\n$ scp user@server:/dir/file.ext dest/\n```\n\n两台服务器之间的副本\n\n```shell\n$ scp user@server:/file user@server:/dir\n```\n\n从本地复制到远程\n\n```shell\n$ scp dest/file.ext user@server:/dir\n```\n\n复制整个文件夹\n\n```shell\n$ scp -r user@server:/dir dest/\n```\n\n复制文件夹中的所有文件\n\n```shell\n$ scp user@server:/dir/* dest/\n```\n\n从服务器文件夹复制到当前文件夹\n\n```shell\n$ scp user@server:/dir/* .\n```"
     },
     {
       "id": "s1-26",
       "sectionId": "s1",
       "title": "配置位置",
-      "kind": "text",
       "body": "文件路径 | 说明\n:-|-\n`/etc/ssh/ssh_config`    | 系统范围的配置\n`~/.ssh/config`          | 用户特定的配置\n`~/.ssh/id_{type}`       | 私钥\n`~/.ssh/id_{type}.pub`   | 公钥\n`~/.ssh/known_hosts`     | 登录主机\n`~/.ssh/authorized_keys` | 授权登录密钥"
     },
     {
       "id": "s1-27",
       "sectionId": "s1",
       "title": "SCP 选项",
-      "kind": "text",
       "body": "选项 | 说明\n:-|-\nscp `-r`      | 递归复制整个目录\nscp `-C`      | 压缩数据\nscp `-v`      | 打印详细信息\nscp `-P` 8080 | 使用特定端口\nscp `-B`      | 批处理模式_（防止密码）_\nscp `-p`      | 保留时间和模式"
     },
     {
       "id": "s1-28",
       "sectionId": "s1",
       "title": "配置示例",
-      "kind": "code",
-      "lang": "toml",
-      "code": "Host server1 \n    HostName 192.168.1.5\n    User root\n    Port 22\n    IdentityFile ~/.ssh/server1.key"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "通过别名启动"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh server1"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "请参阅：完整 [配置选项](https://linux.die.net/man/5/ssh_config)"
+      "body": "```toml\nHost server1 \n    HostName 192.168.1.5\n    User root\n    Port 22\n    IdentityFile ~/.ssh/server1.key\n```\n\n通过别名启动\n\n```shell\n$ ssh server1\n```\n\n请参阅：完整 [配置选项](https://linux.die.net/man/5/ssh_config)"
     },
     {
       "id": "s1-32",
       "sectionId": "s1",
       "title": "ProxyJump",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh -J proxy_host1 remote_host2\n\n$ ssh -J user@proxy_host1 user@remote_host2"
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "多次跳跃"
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh -J user@proxy_host1:port1,user@proxy_host2:port2 user@remote_host3"
+      "body": "```shell\n$ ssh -J proxy_host1 remote_host2\n```\n\n```shell\n$ ssh -J user@proxy_host1 user@remote_host2\n```\n\n多次跳跃\n\n```shell\n$ ssh -J user@proxy_host1:port1,user@proxy_host2:port2 user@remote_host3\n```"
     },
     {
       "id": "s1-35",
       "sectionId": "s1",
       "title": "ssh-copy-id",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-copy-id user@server"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "复制到别名服务器"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-copy-id server1"
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "复制特定密钥"
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-copy-id -i ~/.ssh/id_rsa.pub user@server"
+      "body": "```shell\n$ ssh-copy-id user@server\n```\n\n复制到别名服务器\n\n```shell\n$ ssh-copy-id server1\n```\n\n复制特定密钥\n\n```shell\n$ ssh-copy-id -i ~/.ssh/id_rsa.pub user@server\n```"
     },
     {
       "id": "s2-40",
       "sectionId": "s2",
       "title": "ssh-keygen",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20ssh-keygen%20-t%20rsa%20-b%204096%20-C%20%22your%40mail.com%22",
+      "body": "%60%60%60shell%0A%24%20ssh-keygen%20-t%20rsa%20-b%204096%20-C%20%22your%40mail.com%22%20%0A%60%60%60%0A%0A%7C%20-%20%7C%20-%20%20%20%20%7C%20-%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C---%7C------%7C-------------------------------%7C%0A%7C%20%20%20%7C%20%60-t%60%20%7C%20%5B%E7%B1%BB%E5%9E%8B%5D(%23%E9%92%A5%E5%8C%99%E7%B1%BB%E5%9E%8B)%20%E9%94%AE%20%7C%0A%7C%20%20%20%7C%20%60-b%60%20%7C%20%E5%AF%86%E9%92%A5%E4%B8%AD%E7%9A%84%E4%BD%8D%E6%95%B0%20%7C%0A%7C%20%20%20%7C%20%60-C%60%20%7C%20%E6%8F%90%E4%BE%9B%E6%96%B0%E8%AF%84%E8%AE%BA%20%7C%0A%0A%E7%94%9F%E6%88%90%E5%B8%A6%E6%9C%89%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E4%BD%9C%E4%B8%BA%E6%B3%A8%E9%87%8A%E7%9A%84%20RSA%204096%20%E4%BD%8D%E5%AF%86%E9%92%A5",
       "encoded": true
-    },
-    {
-      "id": "s2-41",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "| - | -    | -                             |\n|---|------|-------------------------------|\n|   | `-t` | [类型](#钥匙类型) 键 |\n|   | `-b` | 密钥中的位数 |\n|   | `-C` | 提供新评论 |"
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "生成带有电子邮件作为注释的 RSA 4096 位密钥"
     },
     {
       "id": "s2-43",
       "sectionId": "s2",
       "title": "产生",
-      "kind": "text",
-      "body": "以交互方式生成密钥"
-    },
-    {
-      "id": "s2-44",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-keygen"
-    },
-    {
-      "id": "s2-45",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "指定文件名"
-    },
-    {
-      "id": "s2-46",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-keygen -f ~/.ssh/filename"
-    },
-    {
-      "id": "s2-47",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "从私钥生成公钥"
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-keygen -y -f private.key > public.pub"
-    },
-    {
-      "id": "s2-49",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "更改评论"
-    },
-    {
-      "id": "s2-50",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-keygen -c -f ~/.ssh/id_rsa"
-    },
-    {
-      "id": "s2-51",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "更改私钥密码"
-    },
-    {
-      "id": "s2-52",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-keygen -p -f ~/.ssh/id_rsa"
+      "body": "以交互方式生成密钥\n\n```shell\n$ ssh-keygen\n```\n\n指定文件名\n\n```shell\n$ ssh-keygen -f ~/.ssh/filename\n```\n\n从私钥生成公钥\n\n```shell\n$ ssh-keygen -y -f private.key > public.pub\n```\n\n更改评论\n\n```shell\n$ ssh-keygen -c -f ~/.ssh/id_rsa\n```\n\n更改私钥密码\n\n```shell\n$ ssh-keygen -p -f ~/.ssh/id_rsa\n```"
     },
     {
       "id": "s2-53",
       "sectionId": "s2",
       "title": "钥匙类型",
-      "kind": "text",
       "body": "• rsa\n• ed25519\n• dsa\n• ecdsa"
     },
     {
       "id": "s2-54",
       "sectionId": "s2",
       "title": "known_hosts",
-      "kind": "text",
-      "body": "从 known_hosts 搜索"
-    },
-    {
-      "id": "s2-55",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-keygen -F <ip/hostname>"
-    },
-    {
-      "id": "s2-56",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "从 known_hosts 中删除"
-    },
-    {
-      "id": "s2-57",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh-keygen -R <ip/hostname>"
+      "body": "从 known_hosts 搜索\n\n```shell\n$ ssh-keygen -F <ip/hostname>\n```\n\n从 known_hosts 中删除\n\n```shell\n$ ssh-keygen -R <ip/hostname>\n```"
     },
     {
       "id": "s2-58",
       "sectionId": "s2",
       "title": "密钥格式",
-      "kind": "text",
       "body": "• PEM\n• PKCS8"
     },
     {
       "id": "s3-59",
       "sectionId": "s3",
       "title": "动态端口转发语法",
-      "kind": "text",
-      "body": "将本地端口变成一个 SOCKS 代理，自动转发任意目标地址的请求（适用于代理上网）。"
-    },
-    {
-      "id": "s3-60",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh -D 本地SOCKS端口 用户名@SSH服务器 -N"
-    },
-    {
-      "id": "s3-61",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "示例：开启本地 1080 端口作为 SOCKS5 代理："
-    },
-    {
-      "id": "s3-62",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh -D 1080 -N user@example.com"
+      "body": "将本地端口变成一个 SOCKS 代理，自动转发任意目标地址的请求（适用于代理上网）。\n\n```shell\n$ ssh -D 本地SOCKS端口 用户名@SSH服务器 -N\n```\n\n示例：开启本地 1080 端口作为 SOCKS5 代理：\n\n```shell\n$ ssh -D 1080 -N user@example.com\n```"
     },
     {
       "id": "s3-63",
       "sectionId": "s3",
       "title": "验证 SOCKS5 代理",
-      "kind": "text",
-      "body": "使用 curl 命令验证 SOCKS5 代理是否工作正常："
-    },
-    {
-      "id": "s3-64",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 设置\n$ ssh -D 1080 -N user@example.com\n# 验证\n$ curl --socks5 127.0.0.1:1080 https://ifconfig.me"
-    },
-    {
-      "id": "s3-65",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "如果返回的是 `example.com` 服务器的公网 IP，说明 SOCKS5 代理正常工作。"
+      "body": "使用 curl 命令验证 SOCKS5 代理是否工作正常：\n\n```shell\n# 设置\n$ ssh -D 1080 -N user@example.com\n# 验证\n$ curl --socks5 127.0.0.1:1080 https://ifconfig.me\n```\n\n如果返回的是 `example.com` 服务器的公网 IP，说明 SOCKS5 代理正常工作。"
     },
     {
       "id": "s3-66",
       "sectionId": "s3",
       "title": "本地端口转发",
-      "kind": "text",
-      "body": "将本地端口的流量通过 SSH 隧道转发到目标服务器（适用于访问远程/内网服务）。"
-    },
-    {
-      "id": "s3-67",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh -L [本地IP:]本地端口:目标IP:目标端口 用户名@SSH服务器 -N"
-    },
-    {
-      "id": "s3-68",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "示例：将本地的 `4000` 端口转发到远程内网服务器 192.168.1.10:80："
-    },
-    {
-      "id": "s3-69",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh -L 4000:192.168.1.10:80 user@example.com -N"
-    },
-    {
-      "id": "s3-70",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "其中 `-N` 表示不执行远程命令，只是建立隧道。"
+      "body": "将本地端口的流量通过 SSH 隧道转发到目标服务器（适用于访问远程/内网服务）。\n\n```shell\n$ ssh -L [本地IP:]本地端口:目标IP:目标端口 用户名@SSH服务器 -N\n```\n\n示例：将本地的 `4000` 端口转发到远程内网服务器 192.168.1.10:80：\n\n```shell\n$ ssh -L 4000:192.168.1.10:80 user@example.com -N\n```\n\n其中 `-N` 表示不执行远程命令，只是建立隧道。"
     },
     {
       "id": "s3-71",
       "sectionId": "s3",
       "title": "远程端口转发",
-      "kind": "text",
-      "body": "让远程 SSH 服务器上的端口转发到本地的某个服务（适用于让外部访问你本地服务）。"
-    },
-    {
-      "id": "s3-72",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh -R [SSH服务器IP:]远程端口:本地IP:本地端口 用户名@SSH服务器 -N"
-    },
-    {
-      "id": "s3-73",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "示例：将远程服务器的 5000 端口映射到你本地的 localhost:3306（MySQL）："
-    },
-    {
-      "id": "s3-74",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ssh -R 5000:localhost:3306 user@example.com -N"
+      "body": "让远程 SSH 服务器上的端口转发到本地的某个服务（适用于让外部访问你本地服务）。\n\n```shell\n$ ssh -R [SSH服务器IP:]远程端口:本地IP:本地端口 用户名@SSH服务器 -N\n```\n\n示例：将远程服务器的 5000 端口映射到你本地的 localhost:3306（MySQL）：\n\n```shell\n$ ssh -R 5000:localhost:3306 user@example.com -N\n```"
     },
     {
       "id": "s4-75",
       "sectionId": "s4",
       "title": "另见",
-      "kind": "text",
       "body": "• [OpenSSH 配置文件示例](https://www.cyberciti.biz/faq/create-ssh-config-file-on-linux-unix/) _(cyberciti.biz)_\n• [ssh_config](https://linux.die.net/man/5/ssh_config) _(linux.die.net)_"
     }
   ],

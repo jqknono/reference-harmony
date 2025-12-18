@@ -30,933 +30,483 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "iptables 是一个配置 Linux 内核防火墙的命令行工具，是 [netfilter](https://en.wikipedia.org/wiki/Netfilter) 项目的一部分。这个快速参考备忘单显示了它的常用命令使用清单"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "介绍",
-      "kind": "text",
-      "body": "iptables 使用三个不同的链来允许或阻止流量：输入(input)、输出(output)和转发(forward)"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 输入(input) —— 此链用于控制传入连接的行为\n• 输出(output) —— 此链用于传出连接\n• 转发(forward) —— 这条链用于传入的连接，这些连接实际上不是在本地传递的，比如路由和 NATing"
+      "body": "iptables 使用三个不同的链来允许或阻止流量：输入(input)、输出(output)和转发(forward)\n\n• 输入(input) —— 此链用于控制传入连接的行为\n• 输出(output) —— 此链用于传出连接\n• 转发(forward) —— 这条链用于传入的连接，这些连接实际上不是在本地传递的，比如路由和 NATing"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "安装 iptables",
-      "kind": "text",
-      "body": "CentOS 7 上默认安装了 firewalld 作为防火墙，使用 iptables 建议关闭并禁用 firewalld。"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ systemctl stop firewalld\n$ systemctl disable firewalld"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "安装 iptables"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ yum install -y iptables-services"
+      "body": "CentOS 7 上默认安装了 firewalld 作为防火墙，使用 iptables 建议关闭并禁用 firewalld。\n\n```bash\n$ systemctl stop firewalld\n$ systemctl disable firewalld\n```\n\n安装 iptables\n\n```bash\n$ yum install -y iptables-services\n```"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "服务管理",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ systemctl status iptables  # 查看服务状态\n$ systemctl enable iptables  # 启用服务\n$ systemctl disable iptables # 禁用服务\n$ systemctl start iptables   # 启动服务\n$ systemctl restart iptables # 重启服务\n$ systemctl stop iptables    # 关闭服务"
+      "body": "```bash\n$ systemctl status iptables  # 查看服务状态\n$ systemctl enable iptables  # 启用服务\n$ systemctl disable iptables # 禁用服务\n$ systemctl start iptables   # 启动服务\n$ systemctl restart iptables # 重启服务\n$ systemctl stop iptables    # 关闭服务\n```"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "命令参数",
-      "kind": "text",
-      "body": "基本语法："
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables(选项)(参数)"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "%E5%8F%82%E6%95%B0%20%7C%20%E4%BD%9C%E7%94%A8%0A%3A-%20%7C%20--%0A%60-P%60%20%7C%20%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E7%AD%96%E7%95%A5%3A%20%3Cbr%2F%3E_iptables%20-P%20INPUT%20(DROP_%0A%60-F%60%20%7C%20%E6%B8%85%E7%A9%BA%E8%A7%84%E5%88%99%E9%93%BE%0A%60-L%60%20%7C%20%E6%9F%A5%E7%9C%8B%E8%A7%84%E5%88%99%E9%93%BE%0A%60-A%60%20%7C%20%E5%9C%A8%E8%A7%84%E5%88%99%E9%93%BE%E7%9A%84%E6%9C%AB%E5%B0%BE%E5%8A%A0%E5%85%A5%E6%96%B0%E8%A7%84%E5%88%99%0A%60-I%60%20%7C%20%60num%60%20%E5%9C%A8%E8%A7%84%E5%88%99%E9%93%BE%E7%9A%84%E5%A4%B4%E9%83%A8%E5%8A%A0%E5%85%A5%E6%96%B0%E8%A7%84%E5%88%99%0A%60-D%60%20%7C%20%60num%60%20%E5%88%A0%E9%99%A4%E6%9F%90%E4%B8%80%E6%9D%A1%E8%A7%84%E5%88%99%0A%60-s%60%20%7C%20%E5%8C%B9%E9%85%8D%E6%9D%A5%E6%BA%90%E5%9C%B0%E5%9D%80%20%60IP%2FMASK%60%20%3Cbr%2F%3E%E5%8A%A0%E5%8F%B9%E5%8F%B7%22!%22%E8%A1%A8%E7%A4%BA%E9%99%A4%E8%BF%99%E4%B8%AA%20%60IP%60%20%E5%A4%96%0A%60-d%60%20%7C%20%E5%8C%B9%E9%85%8D%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80%0A%60-i%60%20%7C%20%E7%BD%91%E5%8D%A1%E5%90%8D%E7%A7%B0%20%E5%8C%B9%E9%85%8D%E4%BB%8E%E8%BF%99%E5%9D%97%E7%BD%91%E5%8D%A1%E6%B5%81%E5%85%A5%E7%9A%84%E6%95%B0%E6%8D%AE%0A%60-o%60%20%7C%20%E7%BD%91%E5%8D%A1%E5%90%8D%E7%A7%B0%20%E5%8C%B9%E9%85%8D%E4%BB%8E%E8%BF%99%E5%9D%97%E7%BD%91%E5%8D%A1%E6%B5%81%E5%87%BA%E7%9A%84%E6%95%B0%E6%8D%AE%0A%60-p%60%20%7C%20%E5%8C%B9%E9%85%8D%E5%8D%8F%E8%AE%AE%2C%E5%A6%82%20tcp%2Cudp%2Cicmp%0A%60--dport%20num%60%20%7C%20%E5%8C%B9%E9%85%8D%E7%9B%AE%E6%A0%87%E7%AB%AF%E5%8F%A3%E5%8F%B7%0A%60--sport%20num%60%20%7C%20%E5%8C%B9%E9%85%8D%E6%9D%A5%E6%BA%90%E7%AB%AF%E5%8F%A3%E5%8F%B7",
+      "title": "%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0",
+      "body": "%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20iptables(%E9%80%89%E9%A1%B9)(%E5%8F%82%E6%95%B0)%0A%60%60%60%0A%0A%E5%8F%82%E6%95%B0%20%7C%20%E4%BD%9C%E7%94%A8%0A%3A-%20%7C%20--%0A%60-P%60%20%7C%20%E8%AE%BE%E7%BD%AE%E9%BB%98%E8%AE%A4%E7%AD%96%E7%95%A5%3A%20%3Cbr%2F%3E_iptables%20-P%20INPUT%20(DROP_%0A%60-F%60%20%7C%20%E6%B8%85%E7%A9%BA%E8%A7%84%E5%88%99%E9%93%BE%0A%60-L%60%20%7C%20%E6%9F%A5%E7%9C%8B%E8%A7%84%E5%88%99%E9%93%BE%0A%60-A%60%20%7C%20%E5%9C%A8%E8%A7%84%E5%88%99%E9%93%BE%E7%9A%84%E6%9C%AB%E5%B0%BE%E5%8A%A0%E5%85%A5%E6%96%B0%E8%A7%84%E5%88%99%0A%60-I%60%20%7C%20%60num%60%20%E5%9C%A8%E8%A7%84%E5%88%99%E9%93%BE%E7%9A%84%E5%A4%B4%E9%83%A8%E5%8A%A0%E5%85%A5%E6%96%B0%E8%A7%84%E5%88%99%0A%60-D%60%20%7C%20%60num%60%20%E5%88%A0%E9%99%A4%E6%9F%90%E4%B8%80%E6%9D%A1%E8%A7%84%E5%88%99%0A%60-s%60%20%7C%20%E5%8C%B9%E9%85%8D%E6%9D%A5%E6%BA%90%E5%9C%B0%E5%9D%80%20%60IP%2FMASK%60%20%3Cbr%2F%3E%E5%8A%A0%E5%8F%B9%E5%8F%B7%22!%22%E8%A1%A8%E7%A4%BA%E9%99%A4%E8%BF%99%E4%B8%AA%20%60IP%60%20%E5%A4%96%0A%60-d%60%20%7C%20%E5%8C%B9%E9%85%8D%E7%9B%AE%E6%A0%87%E5%9C%B0%E5%9D%80%0A%60-i%60%20%7C%20%E7%BD%91%E5%8D%A1%E5%90%8D%E7%A7%B0%20%E5%8C%B9%E9%85%8D%E4%BB%8E%E8%BF%99%E5%9D%97%E7%BD%91%E5%8D%A1%E6%B5%81%E5%85%A5%E7%9A%84%E6%95%B0%E6%8D%AE%0A%60-o%60%20%7C%20%E7%BD%91%E5%8D%A1%E5%90%8D%E7%A7%B0%20%E5%8C%B9%E9%85%8D%E4%BB%8E%E8%BF%99%E5%9D%97%E7%BD%91%E5%8D%A1%E6%B5%81%E5%87%BA%E7%9A%84%E6%95%B0%E6%8D%AE%0A%60-p%60%20%7C%20%E5%8C%B9%E9%85%8D%E5%8D%8F%E8%AE%AE%2C%E5%A6%82%20tcp%2Cudp%2Cicmp%0A%60--dport%20num%60%20%7C%20%E5%8C%B9%E9%85%8D%E7%9B%AE%E6%A0%87%E7%AB%AF%E5%8F%A3%E5%8F%B7%0A%60--sport%20num%60%20%7C%20%E5%8C%B9%E9%85%8D%E6%9D%A5%E6%BA%90%E7%AB%AF%E5%8F%A3%E5%8F%B7%0A%0A%60%60%60bash%0A%24%20iptables%20-t%20%E8%A1%A8%E5%90%8D%20%3C-A%2FI%2FD%2FR%3E%20%E8%A7%84%E5%88%99%E9%93%BE%E5%90%8D%20%5B%E8%A7%84%E5%88%99%E5%8F%B7%5D%20%3C-i%2Fo%20%E7%BD%91%E5%8D%A1%E5%90%8D%3E%20-p%20%E5%8D%8F%E8%AE%AE%E5%90%8D%20%3C-s%20%E6%BA%90IP%2F%E6%BA%90%E5%AD%90%E7%BD%91%3E%20--sport%20%E6%BA%90%E7%AB%AF%E5%8F%A3%20%3C-d%20%E7%9B%AE%E6%A0%87IP%2F%E7%9B%AE%E6%A0%87%E5%AD%90%E7%BD%91%3E%20--dport%20%E7%9B%AE%E6%A0%87%E7%AB%AF%E5%8F%A3%20-j%20%E5%8A%A8%E4%BD%9C%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -t 表名 <-A/I/D/R> 规则链名 [规则号] <-i/o 网卡名> -p 协议名 <-s 源IP/源子网> --sport 源端口 <-d 目标IP/目标子网> --dport 目标端口 -j 动作"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "开始配置规则",
-      "kind": "text",
-      "body": "默认情况下，所有链都配置为接受规则，因此在强化过程中，建议从拒绝所有配置开始，然后只打开需要的端口："
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables --policy INPUT DROP\n$ iptables --policy OUTPUT DROP\n$ iptables --policy FORWARD DROP"
+      "body": "默认情况下，所有链都配置为接受规则，因此在强化过程中，建议从拒绝所有配置开始，然后只打开需要的端口：\n\n```bash\n$ iptables --policy INPUT DROP\n$ iptables --policy OUTPUT DROP\n$ iptables --policy FORWARD DROP\n```"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "删除/插入规则",
-      "kind": "text",
-      "body": "按链条和编号删除规则"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -D INPUT 10"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "按规范删除规则"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -D INPUT -m conntrack --ctstate INVALID -j DROP"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "刷新所有规则，删除所有链，并接受所有"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -P INPUT ACCEPT\n$ iptables -P FORWARD ACCEPT\n$ iptables -P OUTPUT ACCEPT\n$ iptables -t nat -F\n$ iptables -t mangle -F\n$ iptables -F\n$ iptables -X\n\n# 冲洗所有链\n$ iptables -F\n# 刷新单链\n$ iptables -F INPUT\n# 插入规则\n$ iptables -I INPUT 2 -s 202.54.1.2 -j DROP"
+      "body": "按链条和编号删除规则\n\n```bash\n$ iptables -D INPUT 10\n```\n\n按规范删除规则\n\n```bash\n$ iptables -D INPUT -m conntrack --ctstate INVALID -j DROP\n```\n\n刷新所有规则，删除所有链，并接受所有\n\n```bash\n$ iptables -P INPUT ACCEPT\n$ iptables -P FORWARD ACCEPT\n$ iptables -P OUTPUT ACCEPT\n$ iptables -t nat -F\n$ iptables -t mangle -F\n$ iptables -F\n$ iptables -X\n```\n\n```bash\n# 冲洗所有链\n$ iptables -F\n# 刷新单链\n$ iptables -F INPUT\n# 插入规则\n$ iptables -I INPUT 2 -s 202.54.1.2 -j DROP\n```"
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
       "title": "显示规则",
-      "kind": "text",
-      "body": "详细打印出所有活动的 `iptables` 规则"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -n -L -v"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "...具有行号的相同输出："
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -n -L -v --line-numbers"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "最后，相同的数据输出但与 `INPUT`/`OUTPUT` 链相关："
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -L INPUT -n -viptables -L OUTPUT -n -v --line-numbers"
+      "body": "详细打印出所有活动的 `iptables` 规则\n\n```bash\n$ iptables -n -L -v\n```\n\n...具有行号的相同输出：\n\n```bash\n$ iptables -n -L -v --line-numbers\n```\n\n最后，相同的数据输出但与 `INPUT`/`OUTPUT` 链相关：\n\n```bash\n$ iptables -L INPUT -n -viptables -L OUTPUT -n -v --line-numbers\n```"
     },
     {
       "id": "s1-26",
       "sectionId": "s1",
       "title": "列出特定链的规则",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -L INPUT\n# 具有规则规范的相同数据：\n$ iptables -S INPUT\n# 包含数据包计数的规则列表\n$ iptables -L INPUT -v"
+      "body": "```bash\n$ iptables -L INPUT\n# 具有规则规范的相同数据：\n$ iptables -S INPUT\n# 包含数据包计数的规则列表\n$ iptables -L INPUT -v\n```"
     },
     {
       "id": "s1-27",
       "sectionId": "s1",
       "title": "保存规则",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 在基于 Debian 的系统上\n$ netfilter-persistent save\n# 在基于 RedHat 的系统上\n$ service iptables save"
+      "body": "```bash\n# 在基于 Debian 的系统上\n$ netfilter-persistent save\n# 在基于 RedHat 的系统上\n$ service iptables save\n```"
     },
     {
       "id": "s2-28",
       "sectionId": "s2",
       "title": "清空当前的所有规则和计数",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -F  # 清空所有的防火墙规则\n$ iptables -X  # 删除用户自定义的空链\n$ iptables -Z  # 清空计数"
+      "body": "```bash\n$ iptables -F  # 清空所有的防火墙规则\n$ iptables -X  # 删除用户自定义的空链\n$ iptables -Z  # 清空计数\n```"
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
       "title": "配置允许 ssh 端口连接",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -s 192.168.1.0/24 -p tcp --dport 22 -j ACCEPT"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`22` 为你的 `ssh` 端口， `-s 192.168.1.0/24` 表示允许这个网段的机器来连接，其它网段的 `ip` 地址是登陆不了你的机器的。`-j ACCEPT` 表示接受这样的请求"
+      "body": "```bash\n$ iptables -A INPUT -s 192.168.1.0/24 -p tcp --dport 22 -j ACCEPT\n```\n\n`22` 为你的 `ssh` 端口， `-s 192.168.1.0/24` 表示允许这个网段的机器来连接，其它网段的 `ip` 地址是登陆不了你的机器的。`-j ACCEPT` 表示接受这样的请求"
     },
     {
       "id": "s2-31",
       "sectionId": "s2",
       "title": "允许本地回环地址可以正常使用",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ iptables -A INPUT -i lo -j ACCEPT\n# 本地圆环地址就是那个127.0.0.1\n# 是本机上使用的,它进与出都设置为允许\n$ iptables -A OUTPUT -o lo -j ACCEPT"
+      "body": "```shell\n$ iptables -A INPUT -i lo -j ACCEPT\n# 本地圆环地址就是那个127.0.0.1\n# 是本机上使用的,它进与出都设置为允许\n$ iptables -A OUTPUT -o lo -j ACCEPT\n```"
     },
     {
       "id": "s2-32",
       "sectionId": "s2",
       "title": "设置默认的规则",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 配置默认的不让进\n$ iptables -P INPUT DROP\n# 默认的不允许转发\n$ iptables -P FORWARD DROP\n# 默认的可以出去\n$ iptables -P OUTPUT ACCEPT"
+      "body": "```shell\n# 配置默认的不让进\n$ iptables -P INPUT DROP\n# 默认的不允许转发\n$ iptables -P FORWARD DROP\n# 默认的可以出去\n$ iptables -P OUTPUT ACCEPT\n```"
     },
     {
       "id": "s2-33",
       "sectionId": "s2",
       "title": "配置白名单",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 允许机房内网机器可以访问\n$ iptables -A INPUT -p all -s 192.168.1.0/24 -j ACCEPT \n# 允许机房内网机器可以访问\n$ iptables -A INPUT -p all -s 192.168.140.0/24 -j ACCEPT \n# 允许 183.121.3.7 访问本机的3380端口\n$ iptables -A INPUT -p tcp -s 183.121.3.7 --dport 3380 -j ACCEPT"
+      "body": "```shell\n# 允许机房内网机器可以访问\n$ iptables -A INPUT -p all -s 192.168.1.0/24 -j ACCEPT \n# 允许机房内网机器可以访问\n$ iptables -A INPUT -p all -s 192.168.140.0/24 -j ACCEPT \n# 允许 183.121.3.7 访问本机的3380端口\n$ iptables -A INPUT -p tcp -s 183.121.3.7 --dport 3380 -j ACCEPT\n```"
     },
     {
       "id": "s2-34",
       "sectionId": "s2",
       "title": "开启相应的服务端口",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 开启 80 端口，因为web对外都是这个端口\n$ iptables -A INPUT -p tcp --dport 80 -j ACCEPT\n# 允许被 ping\n$ iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT\n# 已经建立的连接得让它进来\n$ iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT"
+      "body": "```shell\n# 开启 80 端口，因为web对外都是这个端口\n$ iptables -A INPUT -p tcp --dport 80 -j ACCEPT\n# 允许被 ping\n$ iptables -A INPUT -p icmp --icmp-type 8 -j ACCEPT\n# 已经建立的连接得让它进来\n$ iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT\n```"
     },
     {
       "id": "s2-35",
       "sectionId": "s2",
       "title": "保存规则到配置文件中",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 任何改动之前先备份，请保持这一优秀的习惯\n$ cp /etc/sysconfig/iptables /etc/sysconfig/iptables.bak\n$ iptables-save > /etc/sysconfig/iptables\n$ cat /etc/sysconfig/iptables"
+      "body": "```shell\n# 任何改动之前先备份，请保持这一优秀的习惯\n$ cp /etc/sysconfig/iptables /etc/sysconfig/iptables.bak\n$ iptables-save > /etc/sysconfig/iptables\n$ cat /etc/sysconfig/iptables\n```"
     },
     {
       "id": "s2-36",
       "sectionId": "s2",
       "title": "列出已设置的规则",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -L [-t 表名][链名]"
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• 四个表名 `raw`，`nat`，`filter`，`mangle`\n• 五个规则链名 `INPUT`、`OUTPUT`、`FORWARD`、`PREROUTING`、`POSTROUTING`\n• filter 表包含`INPUT`、`OUTPUT`、`FORWARD`三个规则链"
-    },
-    {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 列出 nat 上面的所有规则\n$ iptables -L -t nat                \n#            ^ -t 参数指定，必须是 raw， nat，filter，mangle 中的一个\n# 规则带编号\n$ iptables -L -t nat  --line-numbers\n$ iptables -L INPUT\n# 查看，这个列表看起来更详细\n$ iptables -L -nv"
+      "body": "```bash\n$ iptables -L [-t 表名][链名]\n```\n\n• 四个表名 `raw`，`nat`，`filter`，`mangle`\n• 五个规则链名 `INPUT`、`OUTPUT`、`FORWARD`、`PREROUTING`、`POSTROUTING`\n• filter 表包含`INPUT`、`OUTPUT`、`FORWARD`三个规则链\n\n```shell\n# 列出 nat 上面的所有规则\n$ iptables -L -t nat                \n#            ^ -t 参数指定，必须是 raw， nat，filter，mangle 中的一个\n# 规则带编号\n$ iptables -L -t nat  --line-numbers\n$ iptables -L INPUT\n# 查看，这个列表看起来更详细\n$ iptables -L -nv\n```"
     },
     {
       "id": "s2-39",
       "sectionId": "s2",
       "title": "清除已有规则",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 清空指定链 INPUT 上面的所有规则\n$ iptables -F INPUT\n# 删除指定的链，这个链必须没有被其它任何规则引用，\n# 而且这条上必须没有任何规则\n$ iptables -X INPUT\n    # 如果没有指定链名，则会删除该表中所有非内置的链\n# 把指定链，或者表中的所有链上的所有计数器清零\n$ iptables -Z INPUT"
+      "body": "```shell\n# 清空指定链 INPUT 上面的所有规则\n$ iptables -F INPUT\n# 删除指定的链，这个链必须没有被其它任何规则引用，\n# 而且这条上必须没有任何规则\n$ iptables -X INPUT\n    # 如果没有指定链名，则会删除该表中所有非内置的链\n# 把指定链，或者表中的所有链上的所有计数器清零\n$ iptables -Z INPUT\n```"
     },
     {
       "id": "s2-40",
       "sectionId": "s2",
       "title": "删除已添加的规则",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 添加一条规则\n$ iptables -A INPUT -s 192.168.1.5 -j DROP"
-    },
-    {
-      "id": "s2-41",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将所有 iptables 以序号标记显示，执行："
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ iptables -L -n --line-numbers"
-    },
-    {
-      "id": "s2-43",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "比如要删除 INPUT 里序号为 8 的规则，执行："
-    },
-    {
-      "id": "s2-44",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ iptables -D INPUT 8"
+      "body": "```shell\n# 添加一条规则\n$ iptables -A INPUT -s 192.168.1.5 -j DROP\n```\n\n将所有 iptables 以序号标记显示，执行：\n\n```shell\n$ iptables -L -n --line-numbers\n```\n\n比如要删除 INPUT 里序号为 8 的规则，执行：\n\n```shell\n$ iptables -D INPUT 8\n```"
     },
     {
       "id": "s2-45",
       "sectionId": "s2",
       "title": "开放指定的端口",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 允许本地回环接口(即运行本机访问本机)\n$ iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT\n# 允许已建立的或相关连的通行\n$ iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT\n# 允许所有本机向外的访问\n$ iptables -A OUTPUT -j ACCEPT\n# 允许访问22端口\n$ iptables -A INPUT -p tcp --dport 22 -j ACCEPT\n# 允许访问80端口\n$ iptables -A INPUT -p tcp --dport 80 -j ACCEPT\n# 允许ftp服务的21端口\n$ iptables -A INPUT -p tcp --dport 21 -j ACCEPT\n# 允许FTP服务的20端口\n$ iptables -A INPUT -p tcp --dport 20 -j ACCEPT\n# 禁止其他未允许的规则访问\n$ iptables -A INPUT -j reject\n# 禁止其他未允许的规则访问\n$ iptables -A FORWARD -j REJECT"
+      "body": "```shell\n# 允许本地回环接口(即运行本机访问本机)\n$ iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT\n# 允许已建立的或相关连的通行\n$ iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT\n# 允许所有本机向外的访问\n$ iptables -A OUTPUT -j ACCEPT\n# 允许访问22端口\n$ iptables -A INPUT -p tcp --dport 22 -j ACCEPT\n# 允许访问80端口\n$ iptables -A INPUT -p tcp --dport 80 -j ACCEPT\n# 允许ftp服务的21端口\n$ iptables -A INPUT -p tcp --dport 21 -j ACCEPT\n# 允许FTP服务的20端口\n$ iptables -A INPUT -p tcp --dport 20 -j ACCEPT\n# 禁止其他未允许的规则访问\n$ iptables -A INPUT -j reject\n# 禁止其他未允许的规则访问\n$ iptables -A FORWARD -j REJECT\n```"
     },
     {
       "id": "s2-46",
       "sectionId": "s2",
       "title": "屏蔽 IP",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 屏蔽恶意主机（比如，192.168.0.8\n$ iptables -A INPUT -p tcp -m tcp -s 192.168.0.8 -j DROP\n# 屏蔽单个IP的命令\n$ iptables -I INPUT -s 123.45.6.7 -j DROP\n# 封整个段即从123.0.0.1到123.255.255.254的命令\n$ iptables -I INPUT -s 123.0.0.0/8 -j DROP\n# 封IP段即从123.45.0.1到123.45.255.254的命令\n$ iptables -I INPUT -s 124.45.0.0/16 -j DROP\n# 封IP段即从123.45.6.1到123.45.6.254的命令是\n$ iptables -I INPUT -s 123.45.6.0/24 -j DROP"
+      "body": "```shell\n# 屏蔽恶意主机（比如，192.168.0.8\n$ iptables -A INPUT -p tcp -m tcp -s 192.168.0.8 -j DROP\n# 屏蔽单个IP的命令\n$ iptables -I INPUT -s 123.45.6.7 -j DROP\n# 封整个段即从123.0.0.1到123.255.255.254的命令\n$ iptables -I INPUT -s 123.0.0.0/8 -j DROP\n# 封IP段即从123.45.0.1到123.45.255.254的命令\n$ iptables -I INPUT -s 124.45.0.0/16 -j DROP\n# 封IP段即从123.45.6.1到123.45.6.254的命令是\n$ iptables -I INPUT -s 123.45.6.0/24 -j DROP\n```"
     },
     {
       "id": "s2-47",
       "sectionId": "s2",
       "title": "指定数据包出去的网络接口",
-      "kind": "text",
-      "body": "只对 OUTPUT，FORWARD，POSTROUTING 三个链起作用。"
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ iptables -A FORWARD -o eth0"
+      "body": "只对 OUTPUT，FORWARD，POSTROUTING 三个链起作用。\n\n```shell\n$ iptables -A FORWARD -o eth0\n```"
     },
     {
       "id": "s2-49",
       "sectionId": "s2",
       "title": "查看已添加的规则",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ iptables -L -n -v\nChain INPUT (policy DROP 48106 packets, 2690K bytes)\n pkts bytes target     prot opt in     out     source               destination\n 5075  589K ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0\n 191K   90M ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0           tcp dpt:22\n1499K  133M ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0           tcp dpt:80\n4364K 6351M ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED\n 6256  327K ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0\nChain FORWARD (policy ACCEPT 0 packets, 0 bytes)\n pkts bytes target     prot opt in     out     source               destination\nChain OUTPUT (policy ACCEPT 3382K packets, 1819M bytes)\n pkts bytes target     prot opt in     out     source               destination\n 5075  589K ACCEPT     all  --  *      lo      0.0.0.0/0            0.0.0.0/0"
+      "body": "```shell\n$ iptables -L -n -v\nChain INPUT (policy DROP 48106 packets, 2690K bytes)\n pkts bytes target     prot opt in     out     source               destination\n 5075  589K ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0\n 191K   90M ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0           tcp dpt:22\n1499K  133M ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0           tcp dpt:80\n4364K 6351M ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0           state RELATED,ESTABLISHED\n 6256  327K ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0\nChain FORWARD (policy ACCEPT 0 packets, 0 bytes)\n pkts bytes target     prot opt in     out     source               destination\nChain OUTPUT (policy ACCEPT 3382K packets, 1819M bytes)\n pkts bytes target     prot opt in     out     source               destination\n 5075  589K ACCEPT     all  --  *      lo      0.0.0.0/0            0.0.0.0/0\n```"
     },
     {
       "id": "s2-50",
       "sectionId": "s2",
       "title": "启动网络转发规则",
-      "kind": "text",
-      "body": "公网`210.14.67.7`让内网`192.168.188.0/24`上网"
-    },
-    {
-      "id": "s2-51",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ iptables -t nat -A POSTROUTING -s 192.168.188.0/24 -j SNAT --to-source 210.14.67.127"
+      "body": "公网`210.14.67.7`让内网`192.168.188.0/24`上网\n\n```shell\n$ iptables -t nat -A POSTROUTING -s 192.168.188.0/24 -j SNAT --to-source 210.14.67.127\n```"
     },
     {
       "id": "s2-52",
       "sectionId": "s2",
       "title": "端口映射",
-      "kind": "text",
-      "body": "本机的 2222 端口映射到内网 虚拟机的 22 端口"
-    },
-    {
-      "id": "s2-53",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ iptables -t nat -A PREROUTING -d 210.14.67.127 -p tcp --dport 2222  -j DNAT --to-dest 192.168.188.115:22"
+      "body": "本机的 2222 端口映射到内网 虚拟机的 22 端口\n\n```shell\n$ iptables -t nat -A PREROUTING -d 210.14.67.127 -p tcp --dport 2222  -j DNAT --to-dest 192.168.188.115:22\n```"
     },
     {
       "id": "s2-54",
       "sectionId": "s2",
-      "title": "字符串匹配",
-      "kind": "text",
-      "body": "比如，我们要过滤所有 TCP 连接中的字符串`test`，一旦出现它我们就终止这个连接，我们可以这么做："
-    },
-    {
-      "id": "s2-55",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20iptables%20-A%20INPUT%20-p%20tcp%20-m%20string%20--algo%20kmp%20--string%20%22test%22%20-j%20REJECT%20--reject-with%20tcp-reset%0A%24%20iptables%20-L%0A%23%20Chain%20INPUT%20(policy%20ACCEPT)%0A%23%20target%20%20%20%20%20prot%20opt%20source%20%20%20%20%20%20%20%20%20%20destination%0A%23%20REJECT%20%20%20%20%20tcp%20%20--%20%20anywhere%20%20%20%20%20%20%20%20anywhere%20%20%20%20%20%20%20%20STRING%20match%20%22test%22%20ALGO%20name%20kmp%20TO%2065535%20reject-with%20tcp-reset%0A%23%0A%23%20Chain%20FORWARD%20(policy%20ACCEPT)%0A%23%20target%20%20%20%20%20prot%20opt%20source%20%20%20%20%20%20%20%20%20%20destination%0A%23%0A%23%20Chain%20OUTPUT%20(policy%20ACCEPT)%0A%23%20target%20%20%20%20%20prot%20opt%20source%20%20%20%20%20%20%20%20%20%20destination",
+      "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%B9%E9%85%8D",
+      "body": "%E6%AF%94%E5%A6%82%EF%BC%8C%E6%88%91%E4%BB%AC%E8%A6%81%E8%BF%87%E6%BB%A4%E6%89%80%E6%9C%89%20TCP%20%E8%BF%9E%E6%8E%A5%E4%B8%AD%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%60test%60%EF%BC%8C%E4%B8%80%E6%97%A6%E5%87%BA%E7%8E%B0%E5%AE%83%E6%88%91%E4%BB%AC%E5%B0%B1%E7%BB%88%E6%AD%A2%E8%BF%99%E4%B8%AA%E8%BF%9E%E6%8E%A5%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E8%BF%99%E4%B9%88%E5%81%9A%EF%BC%9A%0A%0A%60%60%60shell%0A%24%20iptables%20-A%20INPUT%20-p%20tcp%20-m%20string%20--algo%20kmp%20--string%20%22test%22%20-j%20REJECT%20--reject-with%20tcp-reset%0A%24%20iptables%20-L%0A%23%20Chain%20INPUT%20(policy%20ACCEPT)%0A%23%20target%20%20%20%20%20prot%20opt%20source%20%20%20%20%20%20%20%20%20%20destination%0A%23%20REJECT%20%20%20%20%20tcp%20%20--%20%20anywhere%20%20%20%20%20%20%20%20anywhere%20%20%20%20%20%20%20%20STRING%20match%20%22test%22%20ALGO%20name%20kmp%20TO%2065535%20reject-with%20tcp-reset%0A%23%0A%23%20Chain%20FORWARD%20(policy%20ACCEPT)%0A%23%20target%20%20%20%20%20prot%20opt%20source%20%20%20%20%20%20%20%20%20%20destination%0A%23%0A%23%20Chain%20OUTPUT%20(policy%20ACCEPT)%0A%23%20target%20%20%20%20%20prot%20opt%20source%20%20%20%20%20%20%20%20%20%20destination%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-56",
       "sectionId": "s2",
       "title": "%E9%98%BB%E6%AD%A2%20Windows%20%E8%A0%95%E8%99%AB%E7%9A%84%E6%94%BB%E5%87%BB",
-      "kind": "code",
-      "lang": "shell",
-      "code": "%24%20iptables%20-I%20INPUT%20-j%20DROP%20-p%20tcp%20-s%200.0.0.0%2F0%20-m%20string%20--algo%20kmp%20--string%20%22cmd.exe%22",
+      "body": "%60%60%60shell%0A%24%20iptables%20-I%20INPUT%20-j%20DROP%20-p%20tcp%20-s%200.0.0.0%2F0%20-m%20string%20--algo%20kmp%20--string%20%22cmd.exe%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-57",
       "sectionId": "s2",
       "title": "防止 SYN 洪水攻击",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ iptables -A INPUT -p tcp --syn -m limit --limit 5/second -j ACCEPT"
+      "body": "```shell\n$ iptables -A INPUT -p tcp --syn -m limit --limit 5/second -j ACCEPT\n```"
     },
     {
       "id": "s2-58",
       "sectionId": "s2",
       "title": "允许环回连接",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -i lo -j ACCEPTiptables -A OUTPUT -o lo -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -i lo -j ACCEPTiptables -A OUTPUT -o lo -j ACCEPT\n```"
     },
     {
       "id": "s2-59",
       "sectionId": "s2",
       "title": "允许已建立和相关的传入连接",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT\n```"
     },
     {
       "id": "s2-60",
       "sectionId": "s2",
       "title": "允许已建立的传出连接",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A OUTPUT -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-61",
       "sectionId": "s2",
       "title": "内部到外部",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT"
+      "body": "```bash\n$ iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT\n```"
     },
     {
       "id": "s2-62",
       "sectionId": "s2",
       "title": "丢弃无效数据包",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -m conntrack --ctstate INVALID -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -m conntrack --ctstate INVALID -j DROP\n```"
     },
     {
       "id": "s2-63",
       "sectionId": "s2",
       "title": "阻止 IP 地址",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -s 192.168.1.10 -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -s 192.168.1.10 -j DROP\n```"
     },
     {
       "id": "s2-64",
       "sectionId": "s2",
       "title": "阻止和 IP 地址并拒绝",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -s 192.168.1.10 -j REJECT"
+      "body": "```bash\n$ iptables -A INPUT -s 192.168.1.10 -j REJECT\n```"
     },
     {
       "id": "s2-65",
       "sectionId": "s2",
       "title": "阻止与网络接口的连接",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -i eth0 -s 192.168.1.10 -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -i eth0 -s 192.168.1.10 -j DROP\n```"
     },
     {
       "id": "s2-66",
       "sectionId": "s2",
       "title": "允许所有传入的 SSH",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-67",
       "sectionId": "s2",
       "title": "允许来自特定 IP 地址或子网的传入 SSH",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-68",
       "sectionId": "s2",
       "title": "允许传出 SSH",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A OUTPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A INPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A OUTPUT -p tcp --dport 22 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A INPUT -p tcp --sport 22 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-69",
       "sectionId": "s2",
       "title": "允许来自特定 IP 地址或子网的传入 Rsync",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 873 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 873 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 873 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 873 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-70",
       "sectionId": "s2",
       "title": "允许传入 HTTP",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-71",
       "sectionId": "s2",
       "title": "允许传入 HTTPS",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-72",
       "sectionId": "s2",
       "title": "允许传入 HTTP 和 HTTPS",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-73",
       "sectionId": "s2",
       "title": "允许来自特定 IP 地址或子网的 MySQL",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 3306 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 3306 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 3306 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 3306 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-74",
       "sectionId": "s2",
       "title": "允许 MySQL 到特定的网络接口",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -i eth1 -p tcp --dport 3306 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -o eth1 -p tcp --sport 3306 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -i eth1 -p tcp --dport 3306 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -o eth1 -p tcp --sport 3306 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-75",
       "sectionId": "s2",
       "title": "允许来自特定 IP 地址或子网的 PostgreSQL",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 5432 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 5432 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp -s 192.168.1.0/24 --dport 5432 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 5432 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-76",
       "sectionId": "s2",
       "title": "允许 PostgreSQL 到特定的网络接口",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -i eth1 -p tcp --dport 5432 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -o eth1 -p tcp --sport 5432 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -i eth1 -p tcp --dport 5432 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -o eth1 -p tcp --sport 5432 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-77",
       "sectionId": "s2",
       "title": "阻止传出 SMTP 邮件",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A OUTPUT -p tcp --dport 25 -j REJECT"
+      "body": "```bash\n$ iptables -A OUTPUT -p tcp --dport 25 -j REJECT\n```"
     },
     {
       "id": "s2-78",
       "sectionId": "s2",
       "title": "允许所有传入的 SMTP",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --dport 25 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 25 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --dport 25 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 25 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-79",
       "sectionId": "s2",
       "title": "允许所有传入的 IMAP",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --dport 143 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 143 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --dport 143 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 143 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-80",
       "sectionId": "s2",
       "title": "允许所有传入的 IMAPS",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --dport 993 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 993 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --dport 993 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 993 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-81",
       "sectionId": "s2",
       "title": "允许所有传入的 POP3",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --dport 110 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 110 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --dport 110 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 110 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-82",
       "sectionId": "s2",
       "title": "允许所有传入的 POP3S",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --dport 995 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 995 -m conntrack --ctstate ESTABLISHED -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --dport 995 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT\n$ iptables -A OUTPUT -p tcp --sport 995 -m conntrack --ctstate ESTABLISHED -j ACCEPT\n```"
     },
     {
       "id": "s2-83",
       "sectionId": "s2",
       "title": "在公共接口上删除专用网络地址",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -i eth1 -s 192.168.1.0/24 -j DROP\n$ iptables -A INPUT -i eth1 -s 10.0.0.0/8 -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -i eth1 -s 192.168.1.0/24 -j DROP\n$ iptables -A INPUT -i eth1 -s 10.0.0.0/8 -j DROP\n```"
     },
     {
       "id": "s2-84",
       "sectionId": "s2",
-      "title": "将所有传出到 Facebook 网络",
-      "kind": "text",
-      "body": "获取 Facebook 作为："
-    },
-    {
-      "id": "s2-85",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20whois%20-h%20v4.whois.cymru.com%20%22%20-v%20%24(host%20facebook.com%20%7C%20grep%20%22has%20address%22%20%7C%20cut%20-d%20%22%20%22%20-f4)%22%20%7C%20tail%20-n1%20%7C%20awk%20'%7Bprint%20%241%7D'",
-      "encoded": true
-    },
-    {
-      "id": "s2-86",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "降低："
-    },
-    {
-      "id": "s2-87",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20for%20i%20in%20%24(whois%20-h%20whois.radb.net%20--%20'-i%20origin%20AS1273'%20%7C%20grep%20%22%5Eroute%3A%22%20%7C%20cut%20-d%20%22%3A%22%20-f2%20%7C%20sed%20-e%20's%2F%5E%5B%20%5Ct%5D*%2F%2F'%20%7C%20sort%20-n%20-t%20.%20-k%201%2C1%20-k%202%2C2%20-k%203%2C3%20-k%204%2C4%20%7C%20cut%20-d%20%22%3A%22%20-f2%20%7C%20sed%20's%2F%24%2F%3B%2F')%20%3B%20do%20%20iptables%20-A%20OUTPUT%20-s%20%22%24i%22%20-j%20REJECTdone",
+      "title": "%E5%B0%86%E6%89%80%E6%9C%89%E4%BC%A0%E5%87%BA%E5%88%B0%20Facebook%20%E7%BD%91%E7%BB%9C",
+      "body": "%E8%8E%B7%E5%8F%96%20Facebook%20%E4%BD%9C%E4%B8%BA%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20whois%20-h%20v4.whois.cymru.com%20%22%20-v%20%24(host%20facebook.com%20%7C%20grep%20%22has%20address%22%20%7C%20cut%20-d%20%22%20%22%20-f4)%22%20%7C%20tail%20-n1%20%7C%20awk%20'%7Bprint%20%241%7D'%0A%60%60%60%0A%0A%E9%99%8D%E4%BD%8E%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20for%20i%20in%20%24(whois%20-h%20whois.radb.net%20--%20'-i%20origin%20AS1273'%20%7C%20grep%20%22%5Eroute%3A%22%20%7C%20cut%20-d%20%22%3A%22%20-f2%20%7C%20sed%20-e%20's%2F%5E%5B%20%5Ct%5D*%2F%2F'%20%7C%20sort%20-n%20-t%20.%20-k%201%2C1%20-k%202%2C2%20-k%203%2C3%20-k%204%2C4%20%7C%20cut%20-d%20%22%3A%22%20-f2%20%7C%20sed%20's%2F%24%2F%3B%2F')%20%3B%20do%20%20iptables%20-A%20OUTPUT%20-s%20%22%24i%22%20-j%20REJECTdone%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-88",
       "sectionId": "s2",
       "title": "%E8%AE%B0%E5%BD%95%E5%92%8C%E4%B8%A2%E5%BC%83%E6%95%B0%E6%8D%AE%E5%8C%85",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20iptables%20-A%20INPUT%20-i%20eth1%20-s%2010.0.0.0%2F8%20-j%20LOG%20--log-prefix%20%22IP_SPOOF%20A%3A%20%22%0A%24%20iptables%20-A%20INPUT%20-i%20eth1%20-s%2010.0.0.0%2F8%20-j%20DROP",
+      "body": "%60%60%60bash%0A%24%20iptables%20-A%20INPUT%20-i%20eth1%20-s%2010.0.0.0%2F8%20-j%20LOG%20--log-prefix%20%22IP_SPOOF%20A%3A%20%22%0A%24%20iptables%20-A%20INPUT%20-i%20eth1%20-s%2010.0.0.0%2F8%20-j%20DROP%0A%60%60%60%0A%0A%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%89%80%E6%9C%89%E5%86%85%E5%AE%B9%E9%83%BD%E8%AE%B0%E5%BD%95%E5%88%B0%20%60%2Fvar%2Flog%2Fmessages%60%20%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20tail%20-f%20%2Fvar%2Flog%2Fmessagesgrep%20--color%20'IP%20SPOOF'%20%2Fvar%2Flog%2Fmessages%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s2-89",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "默认情况下，所有内容都记录到 `/var/log/messages` 文件中："
-    },
-    {
-      "id": "s2-90",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ tail -f /var/log/messagesgrep --color 'IP SPOOF' /var/log/messages"
     },
     {
       "id": "s2-91",
       "sectionId": "s2",
       "title": "%E8%AE%B0%E5%BD%95%E5%92%8C%E4%B8%A2%E5%BC%83%E6%97%A5%E5%BF%97%E6%9D%A1%E7%9B%AE%E6%95%B0%E9%87%8F%E6%9C%89%E9%99%90%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8C%85",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20iptables%20-A%20INPUT%20-i%20eth1%20-s%2010.0.0.0%2F8%20-m%20limit%20--limit%205%2Fm%20--limit-burst%207%20-j%20LOG%20--log-prefix%20%22IP_SPOOF%20A%3A%20%22%0A%24%20iptables%20-A%20INPUT%20-i%20eth1%20-s%2010.0.0.0%2F8%20-j%20DROP",
+      "body": "%60%60%60bash%0A%24%20iptables%20-A%20INPUT%20-i%20eth1%20-s%2010.0.0.0%2F8%20-m%20limit%20--limit%205%2Fm%20--limit-burst%207%20-j%20LOG%20--log-prefix%20%22IP_SPOOF%20A%3A%20%22%0A%24%20iptables%20-A%20INPUT%20-i%20eth1%20-s%2010.0.0.0%2F8%20-j%20DROP%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-92",
       "sectionId": "s2",
       "title": "丢弃或接受来自 Mac 地址的流量",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -m mac --mac-source 00:0F:EA:91:04:08 -j DROP\n$ iptables -A INPUT -p tcp --destination-port 22 -m mac --mac-source 00:0F:EA:91:04:07 -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -m mac --mac-source 00:0F:EA:91:04:08 -j DROP\n$ iptables -A INPUT -p tcp --destination-port 22 -m mac --mac-source 00:0F:EA:91:04:07 -j ACCEPT\n```"
     },
     {
       "id": "s2-93",
       "sectionId": "s2",
       "title": "阻止或允许 ICMP Ping 请求",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p icmp --icmp-type echo-request -j DROP\n$ iptables -A INPUT -i eth1 -p icmp --icmp-type echo-request -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -p icmp --icmp-type echo-request -j DROP\n$ iptables -A INPUT -i eth1 -p icmp --icmp-type echo-request -j DROP\n```"
     },
     {
       "id": "s2-94",
       "sectionId": "s2",
       "title": "使用 multiport 指定多个端口",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -i eth0 -p tcp -m state --state NEW -m multiport --dports ssh,smtp,http,https -j ACCEPT"
+      "body": "```bash\n$ iptables -A INPUT -i eth0 -p tcp -m state --state NEW -m multiport --dports ssh,smtp,http,https -j ACCEPT\n```"
     },
     {
       "id": "s2-95",
       "sectionId": "s2",
       "title": "%E4%BD%BF%E7%94%A8%20%60random*%60%20%E6%88%96%20%60nth*%60%20%E8%BF%9B%E8%A1%8C%E8%B4%9F%E8%BD%BD%E5%B9%B3%E8%A1%A1",
-      "kind": "code",
-      "lang": "bash",
-      "code": "_ips%3D(%22172.31.250.10%22%20%22172.31.250.11%22%20%22172.31.250.12%22%20%22172.31.250.13%22)for%20ip%20in%20%22%24%7B_ips%5B%40%5D%7D%22%20%3B%20do%20%20iptables%20-A%20PREROUTING%20-i%20eth0%20-p%20tcp%20--dport%2080%20-m%20state%20--state%20NEW%20-m%20nth%20--counter%200%20--every%204%20--packet%200%20%5C%20%20%20%20-j%20DNAT%20--to-destination%20%24%7Bip%7D%3A80done",
-      "encoded": true
-    },
-    {
-      "id": "s2-96",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "or"
-    },
-    {
-      "id": "s2-97",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "_ips%3D(%22172.31.250.10%22%20%22172.31.250.11%22%20%22172.31.250.12%22%20%22172.31.250.13%22)for%20ip%20in%20%22%24%7B_ips%5B%40%5D%7D%22%20%3B%20do%20%20iptables%20-A%20PREROUTING%20-i%20eth0%20-p%20tcp%20--dport%2080%20-m%20state%20--state%20NEW%20-m%20random%20--average%2025%20%5C%20%20%20%20-j%20DNAT%20--to-destination%20%24%7Bip%7D%3A80done",
+      "body": "%60%60%60bash%0A_ips%3D(%22172.31.250.10%22%20%22172.31.250.11%22%20%22172.31.250.12%22%20%22172.31.250.13%22)for%20ip%20in%20%22%24%7B_ips%5B%40%5D%7D%22%20%3B%20do%20%20iptables%20-A%20PREROUTING%20-i%20eth0%20-p%20tcp%20--dport%2080%20-m%20state%20--state%20NEW%20-m%20nth%20--counter%200%20--every%204%20--packet%200%20%5C%20%20%20%20-j%20DNAT%20--to-destination%20%24%7Bip%7D%3A80done%0A%60%60%60%0A%0Aor%0A%0A%60%60%60bash%0A_ips%3D(%22172.31.250.10%22%20%22172.31.250.11%22%20%22172.31.250.12%22%20%22172.31.250.13%22)for%20ip%20in%20%22%24%7B_ips%5B%40%5D%7D%22%20%3B%20do%20%20iptables%20-A%20PREROUTING%20-i%20eth0%20-p%20tcp%20--dport%2080%20-m%20state%20--state%20NEW%20-m%20random%20--average%2025%20%5C%20%20%20%20-j%20DNAT%20--to-destination%20%24%7Bip%7D%3A80done%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-98",
       "sectionId": "s2",
       "title": "使用 limit 和 `iplimit*` 限制连接数",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A FORWARD -m state --state NEW -p tcp -m multiport --dport http,https -o eth0 -i eth1 -m limit --limit 20/hour --limit-burst 5 -j ACCEPT"
-    },
-    {
-      "id": "s2-99",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "or"
-    },
-    {
-      "id": "s2-100",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp -m state --state NEW --dport http -m iplimit --iplimit-above 5 -j DROP"
+      "body": "```bash\n$ iptables -A FORWARD -m state --state NEW -p tcp -m multiport --dport http,https -o eth0 -i eth1 -m limit --limit 20/hour --limit-burst 5 -j ACCEPT\n```\n\nor\n\n```bash\n$ iptables -A INPUT -p tcp -m state --state NEW --dport http -m iplimit --iplimit-above 5 -j DROP\n```"
     },
     {
       "id": "s2-101",
       "sectionId": "s2",
       "title": "维护要匹配的最近连接列表",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A FORWARD -m recent --name portscan --rcheck --seconds 100 -j DROPiptables -A FORWARD -p tcp -i eth0 --dport 443 -m recent --name portscan --set -j DROP"
+      "body": "```bash\n$ iptables -A FORWARD -m recent --name portscan --rcheck --seconds 100 -j DROPiptables -A FORWARD -p tcp -i eth0 --dport 443 -m recent --name portscan --set -j DROP\n```"
     },
     {
       "id": "s2-102",
       "sectionId": "s2",
-      "title": "匹配数据包数据负载中的 “string*”",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A FORWARD -m string --string '.com' -j DROP\n$ iptables -A FORWARD -m string --string '.exe' -j DROP"
+      "title": "%E5%8C%B9%E9%85%8D%E6%95%B0%E6%8D%AE%E5%8C%85%E6%95%B0%E6%8D%AE%E8%B4%9F%E8%BD%BD%E4%B8%AD%E7%9A%84%20%E2%80%9Cstring*%E2%80%9D",
+      "body": "%60%60%60bash%0A%24%20iptables%20-A%20FORWARD%20-m%20string%20--string%20'.com'%20-j%20DROP%0A%24%20iptables%20-A%20FORWARD%20-m%20string%20--string%20'.exe'%20-j%20DROP%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-103",
       "sectionId": "s2",
       "title": "带有“时间*”的基于时间的规则",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A FORWARD -p tcp -m multiport --dport http,https -o eth0 -i eth1 -m time --timestart 21:30 --timestop 22:30 --days Mon,Tue,Wed,Thu,Fri -j ACCEPT"
+      "body": "```bash\n$ iptables -A FORWARD -p tcp -m multiport --dport http,https -o eth0 -i eth1 -m time --timestart 21:30 --timestop 22:30 --days Mon,Tue,Wed,Thu,Fri -j ACCEPT\n```"
     },
     {
       "id": "s2-104",
       "sectionId": "s2",
       "title": "基于 TTL 值的数据包匹配",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -s 1.2.3.4 -m ttl --ttl-lt 40 -j REJECT"
+      "body": "```bash\n$ iptables -A INPUT -s 1.2.3.4 -m ttl --ttl-lt 40 -j REJECT\n```"
     },
     {
       "id": "s2-105",
       "sectionId": "s2",
       "title": "防止端口扫描",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -N port-scanningiptables -A port-scanning -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 1/s --limit-burst 2 -j RETURNiptables -A port-scanning -j DROP"
+      "body": "```bash\n$ iptables -N port-scanningiptables -A port-scanning -p tcp --tcp-flags SYN,ACK,FIN,RST RST -m limit --limit 1/s --limit-burst 2 -j RETURNiptables -A port-scanning -j DROP\n```"
     },
     {
       "id": "s2-106",
       "sectionId": "s2",
       "title": "SSH 暴力破解保护",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --dport ssh -m conntrack --ctstate NEW -m recent --setiptables -A INPUT -p tcp --dport ssh -m conntrack --ctstate NEW -m recent --update --seconds 60 --hitcount 10 -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --dport ssh -m conntrack --ctstate NEW -m recent --setiptables -A INPUT -p tcp --dport ssh -m conntrack --ctstate NEW -m recent --update --seconds 60 --hitcount 10 -j DROP\n```"
     },
     {
       "id": "s2-107",
       "sectionId": "s2",
       "title": "同步泛洪保护",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -N syn_floodiptables -A INPUT -p tcp --syn -j syn_floodiptables -A syn_flood -m limit --limit 1/s --limit-burst 3 -j RETURN\n$ iptables -A syn_flood -j DROPiptables -A INPUT -p icmp -m limit --limit  1/s --limit-burst 1 -j ACCEPT\n$ iptables -A INPUT -p icmp -m limit --limit 1/s --limit-burst 1 -j LOG --log-prefix PING-DROP:\n$ iptables -A INPUT -p icmp -j DROPiptables -A OUTPUT -p icmp -j ACCEPT"
+      "body": "```bash\n$ iptables -N syn_floodiptables -A INPUT -p tcp --syn -j syn_floodiptables -A syn_flood -m limit --limit 1/s --limit-burst 3 -j RETURN\n$ iptables -A syn_flood -j DROPiptables -A INPUT -p icmp -m limit --limit  1/s --limit-burst 1 -j ACCEPT\n$ iptables -A INPUT -p icmp -m limit --limit 1/s --limit-burst 1 -j LOG --log-prefix PING-DROP:\n$ iptables -A INPUT -p icmp -j DROPiptables -A OUTPUT -p icmp -j ACCEPT\n```"
     },
     {
       "id": "s2-108",
       "sectionId": "s2",
       "title": "使用 SYNPROXY 缓解 SYN 泛洪",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -t raw -A PREROUTING -p tcp -m tcp --syn -j CT --notrack\n$ iptables -A INPUT -p tcp -m tcp -m conntrack --ctstate INVALID,UNTRACKED -j SYNPROXY --sack-perm --timestamp --wscale 7 --mss 1460\n$ iptables -A INPUT -m conntrack --ctstate INVALID -j DROP"
+      "body": "```bash\n$ iptables -t raw -A PREROUTING -p tcp -m tcp --syn -j CT --notrack\n$ iptables -A INPUT -p tcp -m tcp -m conntrack --ctstate INVALID,UNTRACKED -j SYNPROXY --sack-perm --timestamp --wscale 7 --mss 1460\n$ iptables -A INPUT -m conntrack --ctstate INVALID -j DROP\n```"
     },
     {
       "id": "s2-109",
       "sectionId": "s2",
       "title": "阻止非 SYN 的新数据包",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP"
-    },
-    {
-      "id": "s2-110",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "或"
-    },
-    {
-      "id": "s2-111",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -t mangle -A PREROUTING -p tcp ! --syn -m conntrack --ctstate NEW -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -p tcp ! --syn -m state --state NEW -j DROP\n```\n\n或\n\n```bash\n$ iptables -t mangle -A PREROUTING -p tcp ! --syn -m conntrack --ctstate NEW -j DROP\n```"
     },
     {
       "id": "s2-112",
       "sectionId": "s2",
       "title": "强制碎片数据包检查",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -f -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -f -j DROP\n```"
     },
     {
       "id": "s2-113",
       "sectionId": "s2",
       "title": "XMAS 包",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP\n```"
     },
     {
       "id": "s2-114",
       "sectionId": "s2",
       "title": "丢弃所有 NULL 数据包",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP"
+      "body": "```bash\n$ iptables -A INPUT -p tcp --tcp-flags ALL NONE -j DROP\n```"
     },
     {
       "id": "s2-115",
       "sectionId": "s2",
       "title": "阻止不常见的 MSS 值",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -t mangle -A PREROUTING -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP"
+      "body": "```bash\n$ iptables -t mangle -A PREROUTING -p tcp -m conntrack --ctstate NEW -m tcpmss ! --mss 536:65535 -j DROP\n```"
     },
     {
       "id": "s2-116",
       "sectionId": "s2",
       "title": "阻止带有虚假 TCP 标志的数据包",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags FIN,SYN FIN,SYN -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags SYN,RST SYN,RST -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags FIN,RST FIN,RST -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags FIN,ACK FIN -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ACK,URG URG -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ACK,FIN FIN -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ACK,PSH PSH -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL ALL -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL NONE -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL FIN,PSH,URG -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL SYN,FIN,PSH,URG -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -j DROP"
+      "body": "```bash\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags FIN,SYN FIN,SYN -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags SYN,RST SYN,RST -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags FIN,RST FIN,RST -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags FIN,ACK FIN -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ACK,URG URG -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ACK,FIN FIN -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ACK,PSH PSH -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL ALL -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL NONE -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL FIN,PSH,URG -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL SYN,FIN,PSH,URG -j DROP\n$ iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL SYN,RST,ACK,FIN,URG -j DROP\n```"
     },
     {
       "id": "s2-117",
       "sectionId": "s2",
       "title": "%E9%98%BB%E6%AD%A2%E6%9D%A5%E8%87%AA%E7%A7%81%E6%9C%89%E5%AD%90%E7%BD%91%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8C%85%EF%BC%88%E6%AC%BA%E9%AA%97%EF%BC%89",
-      "kind": "code",
-      "lang": "bash",
-      "code": "_subnets%3D(%22224.0.0.0%2F3%22%20%22169.254.0.0%2F16%22%20%22172.16.0.0%2F12%22%20%22192.0.2.0%2F24%22%20%22192.168.0.0%2F16%22%20%2210.0.0.0%2F8%22%20%220.0.0.0%2F8%22%20%22240.0.0.0%2F5%22)for%20_sub%20in%20%22%24%7B_subnets%5B%40%5D%7D%22%20%3B%20do%20%20iptables%20-t%20mangle%20-A%20PREROUTING%20-s%20%22%24_sub%22%20-j%20DROPdoneiptables%20-t%20mangle%20-A%20PREROUTING%20-s%20127.0.0.0%2F8%20!%20-i%20lo%20-j%20DROP",
+      "body": "%60%60%60bash%0A_subnets%3D(%22224.0.0.0%2F3%22%20%22169.254.0.0%2F16%22%20%22172.16.0.0%2F12%22%20%22192.0.2.0%2F24%22%20%22192.168.0.0%2F16%22%20%2210.0.0.0%2F8%22%20%220.0.0.0%2F8%22%20%22240.0.0.0%2F5%22)for%20_sub%20in%20%22%24%7B_subnets%5B%40%5D%7D%22%20%3B%20do%20%20iptables%20-t%20mangle%20-A%20PREROUTING%20-s%20%22%24_sub%22%20-j%20DROPdoneiptables%20-t%20mangle%20-A%20PREROUTING%20-s%20127.0.0.0%2F8%20!%20-i%20lo%20-j%20DROP%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-118",
       "sectionId": "s3",
       "title": "另见",
-      "kind": "text",
       "body": "• [Iptables 应用](https://dunwu.github.io/linux-tutorial/linux/ops/iptables.html)\n• [netfilter 官网](https://netfilter.org/)"
     }
   ],

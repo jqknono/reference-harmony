@@ -40,401 +40,229 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "This page contains a list of commonly used kubectl commands and flags."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Nodes",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl%20get%20no%20%23%20Display%20all%20node%20information%0Akubectl%20get%20no%20-o%20wide%20%23%20Show%20more%20information%20about%20all%20nodes%0Akubectl%20describe%20no%20%23%20Display%20node%20details%0Akubectl%20get%20no%20-o%20yaml%20%23%20Display%20node%20details%20in%20yaml%20format%0Akubectl%20get%20node%20--selector%3D%5Blabel_name%5D%20%23%20Filter%20the%20node%20with%20the%20specified%20label%0Akubectl%20get%20nodes%20-o%20jsonpath%3D'%7B.items%5B*%5D.status.addresses%5B%3F(%40.type%3D%22ExternalIP%22)%5D.address%7D'%0A%23%20Output%20the%20field%20information%20defined%20by%20the%20jsonpath%20expression%0Akubectl%20top%20node%20%5Bnode_name%5D%20%23%20Display%20node%20(CPU%2Fmemory%2Fstorage)%20usage",
+      "body": "%60%60%60bash%0Akubectl%20get%20no%20%23%20Display%20all%20node%20information%0Akubectl%20get%20no%20-o%20wide%20%23%20Show%20more%20information%20about%20all%20nodes%0Akubectl%20describe%20no%20%23%20Display%20node%20details%0Akubectl%20get%20no%20-o%20yaml%20%23%20Display%20node%20details%20in%20yaml%20format%0Akubectl%20get%20node%20--selector%3D%5Blabel_name%5D%20%23%20Filter%20the%20node%20with%20the%20specified%20label%0Akubectl%20get%20nodes%20-o%20jsonpath%3D'%7B.items%5B*%5D.status.addresses%5B%3F(%40.type%3D%22ExternalIP%22)%5D.address%7D'%0A%23%20Output%20the%20field%20information%20defined%20by%20the%20jsonpath%20expression%0Akubectl%20top%20node%20%5Bnode_name%5D%20%23%20Display%20node%20(CPU%2Fmemory%2Fstorage)%20usage%0A%60%60%60%0A%0AResource%20name%3A%20nodes%2C%20abbreviation%3A%20no",
       "encoded": true
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Resource name: nodes, abbreviation: no"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "Pods",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get po # Display all container group information\nkubectl get po -o wide\nkubectl describe po\nkubectl get po --show-labels # View the labels of the container group\nkubectl get po -l app=nginx\nkubectl get po -o yaml\nkubectl get pod [pod_name] -o yaml --export\nkubectl get pod [pod_name] -o yaml --export > nameoffile.yaml\n# Export container group information to yaml file in yaml format\nkubectl get pods --field-selector status.phase=Running\n# Use the field selector to filter out container group information"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Resource name: pods, abbreviation: po"
+      "body": "```bash\nkubectl get po # Display all container group information\nkubectl get po -o wide\nkubectl describe po\nkubectl get po --show-labels # View the labels of the container group\nkubectl get po -l app=nginx\nkubectl get po -o yaml\nkubectl get pod [pod_name] -o yaml --export\nkubectl get pod [pod_name] -o yaml --export > nameoffile.yaml\n# Export container group information to yaml file in yaml format\nkubectl get pods --field-selector status.phase=Running\n# Use the field selector to filter out container group information\n```\n\nResource name: pods, abbreviation: po"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "Namespaces",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get ns\nkubectl get ns -o yaml\nkubectl describe ns"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Resource name: namespaces, abbreviation: ns"
+      "body": "```bash\nkubectl get ns\nkubectl get ns -o yaml\nkubectl describe ns\n```\n\nResource name: namespaces, abbreviation: ns"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "Deployments",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get deploy\nkubectl describe deploy\nkubectl get deploy -o wide\nkubectl get deploy -o yaml"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Resource name: deployments, abbreviation: deploy"
+      "body": "```bash\nkubectl get deploy\nkubectl describe deploy\nkubectl get deploy -o wide\nkubectl get deploy -o yaml\n```\n\nResource name: deployments, abbreviation: deploy"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "Services",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get svc\nkubectl describe svc\nkubectl get svc -o wide\nkubectl get svc -o yaml\nkubectl get svc --show-labels"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Resource name: services, abbreviation: svc"
+      "body": "```bash\nkubectl get svc\nkubectl describe svc\nkubectl get svc -o wide\nkubectl get svc -o yaml\nkubectl get svc --show-labels\n```\n\nResource name: services, abbreviation: svc"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
       "title": "Daemon Sets",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get ds\nkubectl describe ds --all-namespaces\nkubectl describe ds [daemonset_name] -n [namespace_name]\nkubectl get ds [ds_name] -n [ns_name] -o yaml"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Resource name: daemonsets, abbreviation: ds"
+      "body": "```bash\nkubectl get ds\nkubectl describe ds --all-namespaces\nkubectl describe ds [daemonset_name] -n [namespace_name]\nkubectl get ds [ds_name] -n [ns_name] -o yaml\n```\n\nResource name: daemonsets, abbreviation: ds"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "Events",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get events\nkubectl get events -n kube-system\nkubectl get events -w"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Resource name: events, abbreviation: ev"
+      "body": "```bash\nkubectl get events\nkubectl get events -n kube-system\nkubectl get events -w\n```\n\nResource name: events, abbreviation: ev"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
       "title": "Logs",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl logs [pod_name]\nkubectl logs --since=1h [pod_name]\nkubectl logs --tail=20 [pod_name]\nkubectl logs -f -c [container_name] [pod_name]\nkubectl logs [pod_name] > pod.log"
+      "body": "```bash\nkubectl logs [pod_name]\nkubectl logs --since=1h [pod_name]\nkubectl logs --tail=20 [pod_name]\nkubectl logs -f -c [container_name] [pod_name]\nkubectl logs [pod_name] > pod.log\n```"
     },
     {
       "id": "s1-16",
       "sectionId": "s1",
       "title": "Service Accounts",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get sa\nkubectl get sa -o yaml\nkubectl get serviceaccounts default -o yaml >./sa.yaml\nkubectl replace serviceaccount default -f ./sa.yaml"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Resource name: serviceaccounts, abbreviation: ev"
+      "body": "```bash\nkubectl get sa\nkubectl get sa -o yaml\nkubectl get serviceaccounts default -o yaml >./sa.yaml\nkubectl replace serviceaccount default -f ./sa.yaml\n```\n\nResource name: serviceaccounts, abbreviation: ev"
     },
     {
       "id": "s1-18",
       "sectionId": "s1",
       "title": "Replica Sets",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get rs\nkubectl describe rs\nkubectl get rs -o wide\nkubectl get rs -o yaml"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Resource name: replicasets, abbreviation: rs"
+      "body": "```bash\nkubectl get rs\nkubectl describe rs\nkubectl get rs -o wide\nkubectl get rs -o yaml\n```\n\nResource name: replicasets, abbreviation: rs"
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
       "title": "Roles",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get roles --all-namespaces\nkubectl get roles --all-namespaces -o yaml"
+      "body": "```bash\nkubectl get roles --all-namespaces\nkubectl get roles --all-namespaces -o yaml\n```"
     },
     {
       "id": "s1-21",
       "sectionId": "s1",
       "title": "Secrets",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get secrets\nkubectl get secrets --all-namespaces\nkubectl get secrets -o yaml"
+      "body": "```bash\nkubectl get secrets\nkubectl get secrets --all-namespaces\nkubectl get secrets -o yaml\n```"
     },
     {
       "id": "s1-22",
       "sectionId": "s1",
       "title": "Config maps",
-      "kind": "text",
-      "body": "Resource name: configmaps, abbreviation: cm"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get cm\nkubectl get cm --all-namespaces\nkubectl get cm --all-namespaces -o yaml"
+      "body": "Resource name: configmaps, abbreviation: cm\n\n```bash\nkubectl get cm\nkubectl get cm --all-namespaces\nkubectl get cm --all-namespaces -o yaml\n```"
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
       "title": "Ingresses",
-      "kind": "text",
-      "body": "Resource name: ingresses, abbreviation: ing"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get ing\nkubectl get ing --all-namespaces"
+      "body": "Resource name: ingresses, abbreviation: ing\n\n```bash\nkubectl get ing\nkubectl get ing --all-namespaces\n```"
     },
     {
       "id": "s1-26",
       "sectionId": "s1",
       "title": "Persistent Volumes",
-      "kind": "text",
-      "body": "Resource name: persistentvolumes, abbreviation: pv"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get pv\nkubectl describe pv"
+      "body": "Resource name: persistentvolumes, abbreviation: pv\n\n```bash\nkubectl get pv\nkubectl describe pv\n```"
     },
     {
       "id": "s1-28",
       "sectionId": "s1",
       "title": "Persistent volume declaration",
-      "kind": "text",
-      "body": "Resource name: persistentvolumeclaims, abbreviation: pvc"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get pvc\nkubectl describe pvc"
+      "body": "Resource name: persistentvolumeclaims, abbreviation: pvc\n\n```bash\nkubectl get pvc\nkubectl describe pvc\n```"
     },
     {
       "id": "s1-30",
       "sectionId": "s1",
       "title": "storage class",
-      "kind": "text",
-      "body": "Resource name: storageclasses, Abbreviation: sc"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get sc\nkubectl get sc -o yaml"
+      "body": "Resource name: storageclasses, Abbreviation: sc\n\n```bash\nkubectl get sc\nkubectl get sc -o yaml\n```"
     },
     {
       "id": "s1-32",
       "sectionId": "s1",
       "title": "Multiple resources",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get svc, po\nkubectl get deploy, no\nkubectl get all\nkubectl get all --all-namespaces"
+      "body": "```bash\nkubectl get svc, po\nkubectl get deploy, no\nkubectl get all\nkubectl get all --all-namespaces\n```"
     },
     {
       "id": "s2-33",
       "sectionId": "s2",
       "title": "Taint",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl taint [node_name] [taint_name]"
+      "body": "```bash\nkubectl taint [node_name] [taint_name]\n```"
     },
     {
       "id": "s2-34",
       "sectionId": "s2",
       "title": "Label",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl label [node_name] disktype=ssd\nkubectl label [pod_name] env=prod"
+      "body": "```bash\nkubectl label [node_name] disktype=ssd\nkubectl label [pod_name] env=prod\n```"
     },
     {
       "id": "s2-35",
       "sectionId": "s2",
       "title": "Maintain/Schedulable",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl cordon [node_name] # node maintenance\nkubectl uncordon [node_name] # node is schedulable"
+      "body": "```bash\nkubectl cordon [node_name] # node maintenance\nkubectl uncordon [node_name] # node is schedulable\n```"
     },
     {
       "id": "s2-36",
       "sectionId": "s2",
       "title": "clear",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl drain [node_name] # empty the node"
+      "body": "```bash\nkubectl drain [node_name] # empty the node\n```"
     },
     {
       "id": "s2-37",
       "sectionId": "s2",
       "title": "Node/Pod",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl delete node [node_name]\nkubectl delete pod [pod_name]\nkubectl edit node [node_name]\nkubectl edit pod [pod_name]"
+      "body": "```bash\nkubectl delete node [node_name]\nkubectl delete pod [pod_name]\nkubectl edit node [node_name]\nkubectl edit pod [pod_name]\n```"
     },
     {
       "id": "s2-38",
       "sectionId": "s2",
       "title": "Stateless/Namespaced",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl edit deploy [deploy_name]\nkubectl delete deploy [deploy_name]\nkubectl expose deploy [deploy_name] --port=80 --type=NodePort\nkubectl scale deploy [deploy_name] --replicas=5\nkubectl delete ns\nkubectl edit ns [ns_name]"
+      "body": "```bash\nkubectl edit deploy [deploy_name]\nkubectl delete deploy [deploy_name]\nkubectl expose deploy [deploy_name] --port=80 --type=NodePort\nkubectl scale deploy [deploy_name] --replicas=5\nkubectl delete ns\nkubectl edit ns [ns_name]\n```"
     },
     {
       "id": "s2-39",
       "sectionId": "s2",
       "title": "Service",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl edit svc [svc_name]\nkubectl delete svc [svc_name]"
+      "body": "```bash\nkubectl edit svc [svc_name]\nkubectl delete svc [svc_name]\n```"
     },
     {
       "id": "s2-40",
       "sectionId": "s2",
       "title": "Daemon set",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl edit ds [ds_name] -n kube-system\nkubectl delete ds [ds_name]"
+      "body": "```bash\nkubectl edit ds [ds_name] -n kube-system\nkubectl delete ds [ds_name]\n```"
     },
     {
       "id": "s2-41",
       "sectionId": "s2",
       "title": "Service account",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl edit sa [sa_name]\nkubectl delete sa [sa_name]"
+      "body": "```bash\nkubectl edit sa [sa_name]\nkubectl delete sa [sa_name]\n```"
     },
     {
       "id": "s2-42",
       "sectionId": "s2",
       "title": "Notes",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl annotate po [pod_name] [annotation]\nkubectl annotateno [node_name]"
+      "body": "```bash\nkubectl annotate po [pod_name] [annotation]\nkubectl annotateno [node_name]\n```"
     },
     {
       "id": "s3-43",
       "sectionId": "s3",
       "title": "Create pod",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl create -f [name_of_file]\nkubectl apply -f [name_of_file]\nkubectl run [pod_name] --image=nginx --restart=Never\nkubectl run [pod_name] --generator=run-pod/v1 --image=nginx\nkubectl run [pod_name] --image=nginx --restart=Never"
+      "body": "```bash\nkubectl create -f [name_of_file]\nkubectl apply -f [name_of_file]\nkubectl run [pod_name] --image=nginx --restart=Never\nkubectl run [pod_name] --generator=run-pod/v1 --image=nginx\nkubectl run [pod_name] --image=nginx --restart=Never\n```"
     },
     {
       "id": "s3-44",
       "sectionId": "s3",
       "title": "Create Service",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl create svc nodeport [svc_name] --tcp=8080:80"
+      "body": "```bash\nkubectl create svc nodeport [svc_name] --tcp=8080:80\n```"
     },
     {
       "id": "s3-45",
       "sectionId": "s3",
       "title": "Create a stateless application",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl create -f [name_of_file]\nkubectl apply -f [name_of_file]\nkubectl create deploy [deploy_name] --image=nginx"
+      "body": "```bash\nkubectl create -f [name_of_file]\nkubectl apply -f [name_of_file]\nkubectl create deploy [deploy_name] --image=nginx\n```"
     },
     {
       "id": "s3-46",
       "sectionId": "s3",
       "title": "interaction",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl run [pod_name] --image=busybox --rm -it --restart=Never --sh"
+      "body": "```bash\nkubectl run [pod_name] --image=busybox --rm -it --restart=Never --sh\n```"
     },
     {
       "id": "s3-47",
       "sectionId": "s3",
       "title": "Output YAML",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl create deploy [deploy_name] --image=nginx --dry-run -o yaml > deploy.yaml\nkubectl get po [pod_name] -o yaml --export > pod.yaml"
+      "body": "```bash\nkubectl create deploy [deploy_name] --image=nginx --dry-run -o yaml > deploy.yaml\nkubectl get po [pod_name] -o yaml --export > pod.yaml\n```"
     },
     {
       "id": "s3-48",
       "sectionId": "s3",
       "title": "Help",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl -h\nkubectl create -h\nkubectl run -h\nkubectl explain deploy.spec"
+      "body": "```bash\nkubectl -h\nkubectl create -h\nkubectl run -h\nkubectl explain deploy.spec\n```"
     },
     {
       "id": "s4-49",
       "sectionId": "s4",
       "title": "APIs",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl get --raw /apis/metrics.k8s.io/"
+      "body": "```bash\nkubectl get --raw /apis/metrics.k8s.io/\n```"
     },
     {
       "id": "s4-50",
       "sectionId": "s4",
       "title": "Information",
-      "kind": "code",
-      "lang": "bash",
-      "code": "kubectl config\nkubectl cluster-info\nkubectl get componentstatus"
+      "body": "```bash\nkubectl config\nkubectl cluster-info\nkubectl get componentstatus\n```"
     },
     {
       "id": "s5-51",
       "sectionId": "s5",
       "title": "Also See",
-      "kind": "text",
       "body": "• [Kubernetes Official Documentation](https://kubernetes.io/zh-cn/docs/reference/kubectl/) _(kubernetes.io)_"
     }
   ],

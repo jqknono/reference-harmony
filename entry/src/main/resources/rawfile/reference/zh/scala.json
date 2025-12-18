@@ -35,350 +35,221 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "[![Repo Dependents](https://badgen.net/github/dependents-repo/scala/scala)](https://github.com/scala/scala/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/scala/scala)"
     },
     {
       "id": "intro-1",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "本速查表可以用于快速地查找 [Scala](https://github.com/scala/scala) 语法结构\n<!--rehype:style=padding-top: 12px;-->"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "介绍",
-      "kind": "text",
       "body": "• [Scala](https://github.com/scala/scala) 官网  _(github.com)_"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "函数",
-      "kind": "code",
-      "lang": "scala",
-      "code": "def f(x: Int) = { x*x }  // ✅ GOOD\ndef f(x: Int)   { x*x }   // ❌ BAD 定义函数,潜在风险: \n// 不加“=”号将会是一段返回Unit类型的过程，\n// 这将会导致意想不到的错误。\n\ndef f(x: Any) = println(x)  // ✅ GOOD\ndef f(x) = println(x)       // ❌ BAD 定义函数 语法错误: 每个参数都需要指定类型。\n\ntype R = Double    // 类型别名\ndef f(x: R) vs.\ndef f(x: => R)     // 传值调用 传名调用 （惰性参数）\n(x:R) => x*x       // 匿名函数\n(1 to 5).map(_*2) vs.     // 匿名函数: 下划线是参数的占位符\n(1 to 5).reduceLeft( _+_ )\n(1 to 5).map( x => x*x )  // 匿名函数: 必须命名以后才可以多次使用同一个参数\n\n(1 to 5).map(2*) // ✅ GOOD\n(1 to 5).map(*2) // ❌ BAD 匿名函数: 绑定中缀方法，明智的做法是2*_。\n\n\n(1 to 5).map { x => val y=x*2; println(y); y } // 匿名函数: 代码块风格，最后一个表达式作为返回值\n(1 to 5) filter {_%2 == 0} map {_*2}           // 匿名函数: 管道风格（或者用圆括号）\n\n// 匿名函数: 要传入多个代码块的话，需要使用花括号。\ndef compose(g:R=>R, h:R=>R) = (x:R) => g(h(x))\nval f = compose({_*2}, {_-1})\n\nval zscore = (mean:R, sd:R) => (x:R) => (x-mean)/sd // 柯里化, 显然的语法。\ndef zscore(mean:R, sd:R) = (x:R) => (x-mean)/sd // 柯里化, 显然的语法。\ndef zscore(mean:R, sd:R)(x:R) = (x-mean)/sd  // 柯里化，语法糖。然后:)\n\nval normer = zscore(7, 0.4) _  // 需要在尾部加下划线来变成偏函数（只对语法糖版本适用）\ndef mapmake[T](g:T=>T)(seq: List[T]) = seq.map(g) // 泛型\n\n5.+(3); 5 + 3\n(1 to 5) map (_*2) // 中缀语法糖\ndef sum(args: Int*) = args.reduceLeft(_+_) // 变长参数"
+      "body": "```scala\ndef f(x: Int) = { x*x }  // ✅ GOOD\ndef f(x: Int)   { x*x }   // ❌ BAD 定义函数,潜在风险: \n// 不加“=”号将会是一段返回Unit类型的过程，\n// 这将会导致意想不到的错误。\n\ndef f(x: Any) = println(x)  // ✅ GOOD\ndef f(x) = println(x)       // ❌ BAD 定义函数 语法错误: 每个参数都需要指定类型。\n\ntype R = Double    // 类型别名\ndef f(x: R) vs.\ndef f(x: => R)     // 传值调用 传名调用 （惰性参数）\n(x:R) => x*x       // 匿名函数\n(1 to 5).map(_*2) vs.     // 匿名函数: 下划线是参数的占位符\n(1 to 5).reduceLeft( _+_ )\n(1 to 5).map( x => x*x )  // 匿名函数: 必须命名以后才可以多次使用同一个参数\n\n(1 to 5).map(2*) // ✅ GOOD\n(1 to 5).map(*2) // ❌ BAD 匿名函数: 绑定中缀方法，明智的做法是2*_。\n\n\n(1 to 5).map { x => val y=x*2; println(y); y } // 匿名函数: 代码块风格，最后一个表达式作为返回值\n(1 to 5) filter {_%2 == 0} map {_*2}           // 匿名函数: 管道风格（或者用圆括号）\n\n// 匿名函数: 要传入多个代码块的话，需要使用花括号。\ndef compose(g:R=>R, h:R=>R) = (x:R) => g(h(x))\nval f = compose({_*2}, {_-1})\n\nval zscore = (mean:R, sd:R) => (x:R) => (x-mean)/sd // 柯里化, 显然的语法。\ndef zscore(mean:R, sd:R) = (x:R) => (x-mean)/sd // 柯里化, 显然的语法。\ndef zscore(mean:R, sd:R)(x:R) = (x-mean)/sd  // 柯里化，语法糖。然后:)\n\nval normer = zscore(7, 0.4) _  // 需要在尾部加下划线来变成偏函数（只对语法糖版本适用）\ndef mapmake[T](g:T=>T)(seq: List[T]) = seq.map(g) // 泛型\n\n5.+(3); 5 + 3\n(1 to 5) map (_*2) // 中缀语法糖\ndef sum(args: Int*) = args.reduceLeft(_+_) // 变长参数\n```"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "变量",
-      "kind": "code",
-      "lang": "scala",
-      "code": "var x = 5         // 可变变量      \nval x = 5         // ✅ GOOD\nx=6               // ❌ BAD 常量\nvar x: Double = 5 // 显式类型"
+      "body": "```scala\nvar x = 5         // 可变变量      \nval x = 5         // ✅ GOOD\nx=6               // ❌ BAD 常量\nvar x: Double = 5 // 显式类型\n```"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "包",
-      "kind": "code",
-      "lang": "scala",
-      "code": "import scala.collection._ // 通配符导入\nimport scala.collection.Vector\n// 选择性导入\nimport scala.collection.{Vector, Sequence}\n// 重命名导入\nimport scala.collection.{Vector => Vec28}\n// 导入java.util包里除Date之外的一切\nimport java.util.{Date => _, _}\n// 文件开头的包名 pkg\npackage pkg { ... } // 声明这是一个包"
+      "body": "```scala\nimport scala.collection._ // 通配符导入\nimport scala.collection.Vector\n// 选择性导入\nimport scala.collection.{Vector, Sequence}\n// 重命名导入\nimport scala.collection.{Vector => Vec28}\n// 导入java.util包里除Date之外的一切\nimport java.util.{Date => _, _}\n// 文件开头的包名 pkg\npackage pkg { ... } // 声明这是一个包\n```"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "数据结构",
-      "kind": "code",
-      "lang": "scala",
-      "code": "(1,2,3) // 元组字面量 (Tuple3)\n// 解构绑定：通过模式匹配来解构元组。\nvar (x,y,z) = (1,2,3)\n// ❌ BAD 潜在风险：整个元组被赋值给了每一个变量\nvar x,y,z = (1,2,3)\n// 列表 (不可变)\nvar xs = List(1,2,3)\nxs(2) // 用括号索引 (slides)\n1 :: List(2,3) // Cons（构成）\n1 to 5 /* 等价于 => */ 1 until 6\n// Range类型（语法糖）\n1 to 10 by 2\n// Unit类型的唯一成员 (相当于 C/Java 里的void)\n() (空括号)"
+      "body": "```scala\n(1,2,3) // 元组字面量 (Tuple3)\n// 解构绑定：通过模式匹配来解构元组。\nvar (x,y,z) = (1,2,3)\n// ❌ BAD 潜在风险：整个元组被赋值给了每一个变量\nvar x,y,z = (1,2,3)\n// 列表 (不可变)\nvar xs = List(1,2,3)\nxs(2) // 用括号索引 (slides)\n1 :: List(2,3) // Cons（构成）\n1 to 5 /* 等价于 => */ 1 until 6\n// Range类型（语法糖）\n1 to 10 by 2\n// Unit类型的唯一成员 (相当于 C/Java 里的void)\n() (空括号) \n```"
     },
     {
       "id": "s2-7",
       "sectionId": "s2",
       "title": "条件",
-      "kind": "code",
-      "lang": "scala",
-      "code": "if (check) happy else sad"
+      "body": "```scala\nif (check) happy else sad\n```"
     },
     {
       "id": "s2-8",
       "sectionId": "s2",
       "title": "条件（语法糖）",
-      "kind": "code",
-      "lang": "scala",
-      "code": "if (check) happy same as\nif (check) happy else ()"
+      "body": "```scala\nif (check) happy same as\nif (check) happy else ()\n```"
     },
     {
       "id": "s2-9",
       "sectionId": "s2",
       "title": "while 循环",
-      "kind": "code",
-      "lang": "scala",
-      "code": "while (x < 5) { println(x); x += 1}"
+      "body": "```scala\nwhile (x < 5) { println(x); x += 1}\n```"
     },
     {
       "id": "s2-10",
       "sectionId": "s2",
       "title": "do while 循环",
-      "kind": "code",
-      "lang": "scala",
-      "code": "do { println(x); x += 1} while (x < 5)"
+      "body": "```scala\ndo { println(x); x += 1} while (x < 5)\n```"
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
       "title": "break. (slides)",
-      "kind": "code",
-      "lang": "scala",
-      "code": "import scala.util.control.Breaks._\nbreakable {\n  for (x <- xs) {\n    if (Math.random < 0.1) break\n  }\n}"
+      "body": "```scala\nimport scala.util.control.Breaks._\nbreakable {\n  for (x <- xs) {\n    if (Math.random < 0.1) break\n  }\n}\n```"
     },
     {
       "id": "s2-12",
       "sectionId": "s2",
       "title": "for 表达式: filter/map",
-      "kind": "code",
-      "lang": "scala",
-      "code": "for (x <- xs if x%2 == 0) yield x*10\n// 等价于\nxs.filter(_%2 == 0).map(_*10)"
+      "body": "```scala\nfor (x <- xs if x%2 == 0) yield x*10\n// 等价于\nxs.filter(_%2 == 0).map(_*10)         \n```"
     },
     {
       "id": "s2-13",
       "sectionId": "s2",
       "title": "for 表达式: 解构绑定",
-      "kind": "code",
-      "lang": "scala",
-      "code": "for ((x,y) <- xs zip ys) yield x*y\n// 等价于\n(xs zip ys) map { case (x,y) => x*y }"
+      "body": "```scala\nfor ((x,y) <- xs zip ys) yield x*y\n// 等价于\n(xs zip ys) map { case (x,y) => x*y }\n```"
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
       "title": "for 表达式: 叉乘",
-      "kind": "code",
-      "lang": "scala",
-      "code": "for (x <- xs; y <- ys) yield x*y\n// 等价于\nxs flatMap {x => ys map {y => x*y}}"
+      "body": "```scala\nfor (x <- xs; y <- ys) yield x*y\n// 等价于\nxs flatMap {x => ys map {y => x*y}}\n```"
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
       "title": "for%20%E8%A1%A8%E8%BE%BE%E5%BC%8F%3A%20%E4%B8%8D%E5%8F%AF%E9%81%BF%E5%85%8D%E7%9A%84%E6%A0%BC%E5%BC%8F",
-      "kind": "code",
-      "lang": "scala",
-      "code": "for%20(x%20%3C-%20xs%3B%20y%20%3C-%20ys)%20%7B%0A%20%20%20println(%22%25d%2F%25d%20%3D%20%25.1f%22.format(x%2C%20y%2C%20x%2Fy.toFloat))%0A%7D",
+      "body": "%60%60%60scala%0Afor%20(x%20%3C-%20xs%3B%20y%20%3C-%20ys)%20%7B%0A%20%20%20println(%22%25d%2F%25d%20%3D%20%25.1f%22.format(x%2C%20y%2C%20x%2Fy.toFloat))%0A%7D%20%20%20%20%20%20%20%20%20%20%20%20%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
       "title": "for 表达式: 包括上边界的遍历",
-      "kind": "code",
-      "lang": "scala",
-      "code": "for (i <- 1 to 5) {\n  println(i)\n}"
+      "body": "```scala\nfor (i <- 1 to 5) {\n  println(i)\n}\n```"
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "for 表达式: 忽略上边界的遍历",
-      "kind": "code",
-      "lang": "scala",
-      "code": "for (i <- 1 until 5) {\n  println(i)\n}"
+      "body": "```scala\nfor (i <- 1 until 5) {\n  println(i)\n}\n```"
     },
     {
       "id": "s3-18",
       "sectionId": "s3",
       "title": "在函数的参数中使用模式匹配",
-      "kind": "code",
-      "lang": "scala",
-      "code": "// ✅ GOOD\n(xs zip ys) map { case (x,y) => x*y }\n// ❌ BAD\n(xs zip ys) map( (x,y) => x*y )"
+      "body": "```scala\n// ✅ GOOD\n(xs zip ys) map { case (x,y) => x*y }\n// ❌ BAD\n(xs zip ys) map( (x,y) => x*y )\n```"
     },
     {
       "id": "s3-19",
       "sectionId": "s3",
       "title": "%E5%8F%AF%E4%BB%A5%E5%8C%B9%E9%85%8D%E4%BB%BB%E4%BD%95Int%E7%B1%BB%E5%9E%8B%E5%80%BC%E7%9A%84%E5%90%8D%E7%A7%B0",
-      "kind": "code",
-      "lang": "scala",
-      "code": "val%20v42%20%3D%2042%0ASome(3)%20match%20%7B%0A%20%20case%20Some(v42)%20%3D%3E%20println(%2242%22)%0A%20%20case%20_%20%3D%3E%20println(%22Not%2042%22)%0A%7D",
+      "body": "%60%60%60scala%0Aval%20v42%20%3D%2042%0ASome(3)%20match%20%7B%0A%20%20case%20Some(v42)%20%3D%3E%20println(%2242%22)%0A%20%20case%20_%20%3D%3E%20println(%22Not%2042%22)%0A%7D%0A%60%60%60%0A%0A%E2%9D%8C%20BAD%3A%20%E2%80%9Cv42%E2%80%9D%20%E8%A2%AB%E8%A7%A3%E9%87%8A%E4%B8%BA%E5%8F%AF%E4%BB%A5%E5%8C%B9%E9%85%8D%E4%BB%BB%E4%BD%95Int%E7%B1%BB%E5%9E%8B%E5%80%BC%E7%9A%84%E5%90%8D%E7%A7%B0%EF%BC%8C%E6%89%93%E5%8D%B0%E8%BE%93%E5%87%BA%E2%80%9D42%E2%80%9D%0A%0A%60%60%60scala%0Aval%20v42%20%3D%2042%0ASome(3)%20match%20%7B%0A%20%20case%20Some(%60v42%60)%20%3D%3E%20println(%2242%22)%0A%20%20case%20_%20%3D%3E%20println(%22Not%2042%22)%0A%7D%0A%60%60%60%0A%0A%E2%9C%85%20GOOD%3A%20%E6%9C%89%E5%8F%8D%E5%BC%95%E5%8F%B7%E7%9A%84%20%E2%80%9C%60v42%60%E2%80%9D%20%E8%A2%AB%E8%A7%A3%E9%87%8A%E4%B8%BA%E5%B7%B2%E7%BB%8F%E5%AD%98%E5%9C%A8%E7%9A%84%20%60val%20v42%60%EF%BC%8C%E6%89%80%E4%BB%A5%E8%BE%93%E5%87%BA%E7%9A%84%E6%98%AF%20%E2%80%9CNot%2042%E2%80%9D.%0A%0A%60%60%60scala%0Aval%20UppercaseVal%20%3D%2042%0ASome(3)%20match%20%7B%0Acase%20Some(UppercaseVal)%20%3D%3E%20println(%2242%22)%0A%20%20case%20_%20%3D%3E%20println(%22Not%2042%22)%0A%7D%0A%60%60%60%0A%0A%E2%9C%85%20GOOD%3A%20UppercaseVal%20%E8%A2%AB%E8%A7%86%E4%BD%9C%E5%B7%B2%E7%BB%8F%E5%AD%98%E5%9C%A8%E7%9A%84%20val%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E6%A8%A1%E5%BC%8F%E5%8F%98%E9%87%8F%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%AE%83%E6%98%AF%E4%BB%A5%E5%A4%A7%E5%86%99%E5%AD%97%E6%AF%8D%E5%BC%80%E5%A4%B4%E7%9A%84%EF%BC%8C%E6%89%80%E4%BB%A5%20%60UppercaseVal%60%20%E6%89%80%E5%8C%85%E5%90%AB%E7%9A%84%E5%80%BC%EF%BC%8842%EF%BC%89%E5%92%8C%E6%A3%80%E6%9F%A5%E7%9A%84%E5%80%BC%EF%BC%883%EF%BC%89%E4%B8%8D%E5%8C%B9%E9%85%8D%EF%BC%8C%E8%BE%93%E5%87%BA%E2%80%9DNot%2042%E2%80%9D",
       "encoded": true
-    },
-    {
-      "id": "s3-20",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "❌ BAD: “v42” 被解释为可以匹配任何Int类型值的名称，打印输出”42”"
-    },
-    {
-      "id": "s3-21",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "scala",
-      "code": "val%20v42%20%3D%2042%0ASome(3)%20match%20%7B%0A%20%20case%20Some(%60v42%60)%20%3D%3E%20println(%2242%22)%0A%20%20case%20_%20%3D%3E%20println(%22Not%2042%22)%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s3-22",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "✅ GOOD: 有反引号的 “`v42`” 被解释为已经存在的 `val v42`，所以输出的是 “Not 42”."
-    },
-    {
-      "id": "s3-23",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "scala",
-      "code": "val%20UppercaseVal%20%3D%2042%0ASome(3)%20match%20%7B%0Acase%20Some(UppercaseVal)%20%3D%3E%20println(%2242%22)%0A%20%20case%20_%20%3D%3E%20println(%22Not%2042%22)%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s3-24",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "✅ GOOD: UppercaseVal 被视作已经存在的 val，而不是一个新的模式变量，因为它是以大写字母开头的，所以 `UppercaseVal` 所包含的值（42）和检查的值（3）不匹配，输出”Not 42”"
     },
     {
       "id": "s4-25",
       "sectionId": "s4",
       "title": "构造器参数 - 私有",
-      "kind": "code",
-      "lang": "scala",
-      "code": "class C(x: R) same as\nclass C(private val x: R)\nvar c = new C(4)"
+      "body": "```scala\nclass C(x: R) same as\nclass C(private val x: R)\nvar c = new C(4)\n```"
     },
     {
       "id": "s4-26",
       "sectionId": "s4",
       "title": "构造器参数 - 公有",
-      "kind": "code",
-      "lang": "scala",
-      "code": "class C(val x: R)\nvar c = new C(4)\nc.x"
+      "body": "```scala\nclass C(val x: R)\nvar c = new C(4)\nc.x\n```"
     },
     {
       "id": "s4-27",
       "sectionId": "s4",
       "title": "%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%B0%B1%E6%98%AF%E7%B1%BB%E7%9A%84%E4%B8%BB%E4%BD%93",
-      "kind": "code",
-      "lang": "scala",
-      "code": "class%20C(var%20x%3A%20R)%20%7B%0A%20%20assert(x%20%3E%200%2C%20%22positive%20please%22)%0A%20%20var%20y%20%3D%20x%0A%20%20val%20readonly%20%3D%205%0A%20%20private%20var%20secret%20%3D%201%0A%20%20def%20this%20%3D%20this(42)%0A%7D",
+      "body": "%60%60%60scala%0Aclass%20C(var%20x%3A%20R)%20%7B%0A%20%20assert(x%20%3E%200%2C%20%22positive%20please%22)%0A%20%20var%20y%20%3D%20x%0A%20%20val%20readonly%20%3D%205%0A%20%20private%20var%20secret%20%3D%201%0A%20%20def%20this%20%3D%20this(42)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-28",
       "sectionId": "s4",
       "title": "匿名类",
-      "kind": "code",
-      "lang": "scala",
-      "code": "new{ ... }"
+      "body": "```scala\nnew{ ... }\n```"
     },
     {
       "id": "s4-29",
       "sectionId": "s4",
       "title": "定义一个抽象类",
-      "kind": "code",
-      "lang": "scala",
-      "code": "abstract class D { ... } // 不可创建"
+      "body": "```scala\nabstract class D { ... } // 不可创建\n```"
     },
     {
       "id": "s4-30",
       "sectionId": "s4",
       "title": "定义一个继承子类",
-      "kind": "code",
-      "lang": "scala",
-      "code": "class C extends D { ... }"
+      "body": "```scala\nclass C extends D { ... }\n```"
     },
     {
       "id": "s4-31",
       "sectionId": "s4",
       "title": "继承与构造器参数",
-      "kind": "code",
-      "lang": "scala",
-      "code": "class D(var x: R)\nclass C(x: R) extends D(x)"
-    },
-    {
-      "id": "s4-32",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "愿望清单: 默认自动传参"
+      "body": "```scala\nclass D(var x: R)\nclass C(x: R) extends D(x)\n```\n\n愿望清单: 默认自动传参"
     },
     {
       "id": "s4-33",
       "sectionId": "s4",
       "title": "定义一个单例",
-      "kind": "code",
-      "lang": "scala",
-      "code": "object O extends D { ... }"
-    },
-    {
-      "id": "s4-34",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "和模块一样"
+      "body": "```scala\nobject O extends D { ... }\n```\n\n和模块一样"
     },
     {
       "id": "s4-35",
       "sectionId": "s4",
       "title": "特质",
-      "kind": "code",
-      "lang": "scala",
-      "code": "trait T { ... }\nclass C extends T { ... }\nclass C extends D with T { ... }"
-    },
-    {
-      "id": "s4-36",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "带有实现的接口，没有构造参数"
+      "body": "```scala\ntrait T { ... }\nclass C extends T { ... }\nclass C extends D with T { ... }     \n```\n\n带有实现的接口，没有构造参数"
     },
     {
       "id": "s4-37",
       "sectionId": "s4",
       "title": "多个特质",
-      "kind": "code",
-      "lang": "scala",
-      "code": "trait T1; trait T2\nclass C extends T1 with T2\nclass C extends D with T1 with T2"
+      "body": "```scala\ntrait T1; trait T2\nclass C extends T1 with T2\nclass C extends D with T1 with T2\n```"
     },
     {
       "id": "s4-38",
       "sectionId": "s4",
       "title": "必须声明覆盖该方法",
-      "kind": "code",
-      "lang": "scala",
-      "code": "class C extends D { override def f = ...}"
+      "body": "```scala\nclass C extends D { override def f = ...}\n```"
     },
     {
       "id": "s4-39",
       "sectionId": "s4",
       "title": "%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1",
-      "kind": "code",
-      "lang": "scala",
-      "code": "new%20java.io.File(%22f%22)%0Anew%20List%5BInt%5D%20%20%2F%2F%20%E2%9C%85%20GOOD%0AList(1%2C2%2C3)%20%20%20%20%2F%2F%20%E2%9D%8C%20BAD",
+      "body": "%60%60%60scala%0Anew%20java.io.File(%22f%22)%0Anew%20List%5BInt%5D%20%20%2F%2F%20%E2%9C%85%20GOOD%0AList(1%2C2%2C3)%20%20%20%20%2F%2F%20%E2%9D%8C%20BAD%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-40",
       "sectionId": "s4",
       "title": "类字面量",
-      "kind": "code",
-      "lang": "scala",
-      "code": "classOf[String]"
+      "body": "```scala\nclassOf[String]\n```"
     },
     {
       "id": "s4-41",
       "sectionId": "s4",
       "title": "类型检查 (运行时)",
-      "kind": "code",
-      "lang": "scala",
-      "code": "x.isInstanceOf[String]"
+      "body": "```scala\nx.isInstanceOf[String]\n```"
     },
     {
       "id": "s4-42",
       "sectionId": "s4",
       "title": "类型强制转换 (运行时)",
-      "kind": "code",
-      "lang": "scala",
-      "code": "x.asInstanceOf[String]"
+      "body": "```scala\nx.asInstanceOf[String]\n```"
     },
     {
       "id": "s4-43",
       "sectionId": "s4",
       "title": "归属 (编译时)",
-      "kind": "code",
-      "lang": "scala",
-      "code": "x: String"
+      "body": "```scala\nx: String\n```"
     }
   ],
   "source": {

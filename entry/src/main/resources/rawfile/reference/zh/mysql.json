@@ -40,1181 +40,153 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "本备忘单旨在快速理解 [MySQL](https://mysql.com) 所涉及的主要概念，提供了最常用的SQL语句，供您参考。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "介绍",
-      "kind": "text",
-      "body": "MySQL 为关系型数据库(Relational Database Management System)，一个关系型数据库由一个或数个表格组成，如下所示的一个表格"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "    name ▼ 键            ▼ 列(col)\n┌┈┈┈┈┬┈┈┈┈┈┈┈┈┬┈┈┈┈┈┈┬┈┈┈┈┈┈┈┐\n┆ id ┆ name   ┆ uid  ┆ level ┆  ◀ 表头header\n├┈┈┈┈┼┈┈┈┈┈┈┈┈┤┈┈┈┈┈┈┤┈┈┈┈┈┈┈┤\n┆  1 ┆ mysql  ┆ 0    ┆ 3     ┆\n├┈┈┈┈┼┈┈┈┈┈┈┈┈┤┈┈┈┈┈┈┤┈┈┈┈┈┈┈┤\n┆  2 ┆ redis  ┆ 12   ┆ 1     ┆  ◀ 行 row\n└┈┈┈┈┴┈┈┈┈┈┈┈┈┴┈┈┈┈┈┈┴┈┈┈┈┈┈┈┘\n    redis ▲ 值"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• `表头(header)` 每一列的名称\n• `列(col)` 具有相同数据类型的数据的集合\n• `行(row)` 每一行用来描述某个人/物的具体信息\n• `值(value)` 行的具体信息，每个值与该列数据类型相同\n• `键(key)` 用来识别某个特定的人/物的方法，有唯一性"
+      "body": "MySQL 为关系型数据库(Relational Database Management System)，一个关系型数据库由一个或数个表格组成，如下所示的一个表格\n\n```bash\n    name ▼ 键            ▼ 列(col)\n┌┈┈┈┈┬┈┈┈┈┈┈┈┈┬┈┈┈┈┈┈┬┈┈┈┈┈┈┈┐\n┆ id ┆ name   ┆ uid  ┆ level ┆  ◀ 表头header\n├┈┈┈┈┼┈┈┈┈┈┈┈┈┤┈┈┈┈┈┈┤┈┈┈┈┈┈┈┤\n┆  1 ┆ mysql  ┆ 0    ┆ 3     ┆\n├┈┈┈┈┼┈┈┈┈┈┈┈┈┤┈┈┈┈┈┈┤┈┈┈┈┈┈┈┤\n┆  2 ┆ redis  ┆ 12   ┆ 1     ┆  ◀ 行 row\n└┈┈┈┈┴┈┈┈┈┈┈┈┈┴┈┈┈┈┈┈┴┈┈┈┈┈┈┈┘\n    redis ▲ 值\n```\n\n• `表头(header)` 每一列的名称\n• `列(col)` 具有相同数据类型的数据的集合\n• `行(row)` 每一行用来描述某个人/物的具体信息\n• `值(value)` 行的具体信息，每个值与该列数据类型相同\n• `键(key)` 用来识别某个特定的人/物的方法，有唯一性"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "登录MySQL",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 默认用户名<root>，-p 是密码，\n# ⚠️参数后面不需要空格\nmysql -h 127.0.0.1 -u <用户名> -p<密码>\nmysql -D 数据库名 -h 主机名 -u 用户名 -p\nmysql -h <host> -P <端口号> -u <user> -p [db_name]\nmysql -h <host> -u <user> -p [db_name]"
+      "body": "```shell\n# 默认用户名<root>，-p 是密码，\n# ⚠️参数后面不需要空格\nmysql -h 127.0.0.1 -u <用户名> -p<密码>\nmysql -D 数据库名 -h 主机名 -u 用户名 -p\nmysql -h <host> -P <端口号> -u <user> -p [db_name]\nmysql -h <host> -u <user> -p [db_name]\n```"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "常用的 - 数据库 Database",
-      "kind": "text",
       "body": ":-|:-\n:-|:-\n`CREATE DATABASE` db `;` | `创建`数据库\n`SHOW DATABASES;`        | `列出`数据库\n`USE` db`;`              | `切换`到数据库\n`CONNECT` db `;`         | `切换`到数据库\n`DROP DATABASE` db`;`    | `删除`数据库"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "表 Table",
-      "kind": "text",
       "body": ":-|:-\n:-|:-\n`SHOW TABLES;`           | 列出当前数据库的表\n`SHOW FIELDS FROM` t`;`  | 表的列表字段\n`DESC` t`;`              | 显示表格结构\n`SHOW CREATE TABLE`t`;` | 显示创建表sql\n`TRUNCATE TABLE`t`;`    | 删除表中的所有数据\n`DROP TABLE`t`;`        | 删除表格"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "Proccess",
-      "kind": "text",
       "body": ":-|:-\n:-|:-\n`show processlist;` | 列出进程\n`kill` pid`;`       | 杀死进程"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "查看 MySQL 信息",
-      "kind": "code",
-      "lang": "shell",
-      "code": "# 显示当前mysql的version的各种信息\nmysql> status;\n# 显示当前mysql的version信息\nmysql> select version(); \n# 查看 MySQL 端口号\nmysql> show global variables like 'port';"
+      "title": "%E6%9F%A5%E7%9C%8B%20MySQL%20%E4%BF%A1%E6%81%AF",
+      "body": "%60%60%60shell%0A%23%20%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8Dmysql%E7%9A%84version%E7%9A%84%E5%90%84%E7%A7%8D%E4%BF%A1%E6%81%AF%0Amysql%3E%20status%3B%0A%23%20%E6%98%BE%E7%A4%BA%E5%BD%93%E5%89%8Dmysql%E7%9A%84version%E4%BF%A1%E6%81%AF%0Amysql%3E%20select%20version()%3B%20%0A%23%20%E6%9F%A5%E7%9C%8B%20MySQL%20%E7%AB%AF%E5%8F%A3%E5%8F%B7%0Amysql%3E%20show%20global%20variables%20like%20'port'%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "退出MySQL会话",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysql> exit"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "退出 `quit;` 或 `\\q;` 一样的效果"
+      "body": "```bash\nmysql> exit \n```\n\n退出 `quit;` 或 `\\q;` 一样的效果"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
       "title": "备份",
-      "kind": "text",
-      "body": "备份特定表"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysqldump -u user -p db_name table1 table2 > tables_backup.sql"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "备份多个数据库"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysqldump -u user -p --databases db1 db2 > multi_backup.sql"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "备份所有数据库"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysqldump -u user -p --all-databases > all_backup.sql"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "备份时压缩"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysqldump -u user -p db_name | gzip > db_backup.sql.gz"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "导出不带架构的数据库"
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "mysqldump -u user -p db_name --no-data=true --add-drop-table=false > db.sql"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "仅导出数据"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysqldump -u user -p --no-create-info db_name > only_data.sql"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "仅导出结构"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysqldump -u user -p --no-data db_name > only_schema.sql"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "导出时忽略某些表"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysqldump -u user -p db_name --ignore-table=db_name.table1 --ignore-table=db_name.table2 > partial.sql"
+      "body": "备份特定表\n\n```bash\nmysqldump -u user -p db_name table1 table2 > tables_backup.sql\n```\n\n备份多个数据库\n\n```bash\nmysqldump -u user -p --databases db1 db2 > multi_backup.sql\n```\n\n备份所有数据库\n\n```bash\nmysqldump -u user -p --all-databases > all_backup.sql\n```\n\n备份时压缩\n\n```bash\nmysqldump -u user -p db_name | gzip > db_backup.sql.gz\n```\n\n导出不带架构的数据库\n\n```shell\nmysqldump -u user -p db_name --no-data=true --add-drop-table=false > db.sql\n```\n\n仅导出数据\n\n```bash\nmysqldump -u user -p --no-create-info db_name > only_data.sql\n```\n\n仅导出结构\n\n```bash\nmysqldump -u user -p --no-data db_name > only_schema.sql\n```\n\n导出时忽略某些表\n\n```bash\nmysqldump -u user -p db_name --ignore-table=db_name.table1 --ignore-table=db_name.table2 > partial.sql\n```"
     },
     {
       "id": "s1-27",
       "sectionId": "s1",
-      "title": "恢复备份",
-      "kind": "text",
-      "body": "恢复单个数据库备份"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysql -u user -p db_name < db_backup.sql"
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "恢复多个数据库（带 `--databases` 选项备份的）"
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysql -u user -p < multi_backup.sql"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "恢复所有数据库（使用 `--all-databases` 备份的）"
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysql -u user -p < all_backup.sql"
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "从 gzip 压缩的备份恢复"
-    },
-    {
-      "id": "s1-34",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "gunzip < db_backup.sql.gz | mysql -u user -p db_name\n\n# 或：\n\nzcat db_backup.sql.gz | mysql -u user -p db_name"
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "恢复单张表（从 `mysqldump` 单表导出文件）"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysql -u user -p db_name < table1_backup.sql"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "先创建数据库再导入（如果备份中不包含 CREATE DATABASE）"
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysql%20-u%20user%20-p%20-e%20%22CREATE%20DATABASE%20IF%20NOT%20EXISTS%20db_name%3B%22%0A%0Amysql%20-u%20user%20-p%20db_name%20%3C%20db_backup.sql",
+      "title": "%E6%81%A2%E5%A4%8D%E5%A4%87%E4%BB%BD",
+      "body": "%E6%81%A2%E5%A4%8D%E5%8D%95%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%0A%0A%60%60%60bash%0Amysql%20-u%20user%20-p%20db_name%20%3C%20db_backup.sql%0A%60%60%60%0A%0A%E6%81%A2%E5%A4%8D%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88%E5%B8%A6%20%60--databases%60%20%E9%80%89%E9%A1%B9%E5%A4%87%E4%BB%BD%E7%9A%84%EF%BC%89%0A%0A%60%60%60bash%0Amysql%20-u%20user%20-p%20%3C%20multi_backup.sql%0A%60%60%60%0A%0A%E6%81%A2%E5%A4%8D%E6%89%80%E6%9C%89%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88%E4%BD%BF%E7%94%A8%20%60--all-databases%60%20%E5%A4%87%E4%BB%BD%E7%9A%84%EF%BC%89%0A%0A%60%60%60bash%0Amysql%20-u%20user%20-p%20%3C%20all_backup.sql%0A%60%60%60%0A%0A%E4%BB%8E%20gzip%20%E5%8E%8B%E7%BC%A9%E7%9A%84%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D%0A%0A%60%60%60bash%0Agunzip%20%3C%20db_backup.sql.gz%20%7C%20mysql%20-u%20user%20-p%20db_name%0A%0A%23%20%E6%88%96%EF%BC%9A%0A%0Azcat%20db_backup.sql.gz%20%7C%20mysql%20-u%20user%20-p%20db_name%0A%60%60%60%0A%0A%E6%81%A2%E5%A4%8D%E5%8D%95%E5%BC%A0%E8%A1%A8%EF%BC%88%E4%BB%8E%20%60mysqldump%60%20%E5%8D%95%E8%A1%A8%E5%AF%BC%E5%87%BA%E6%96%87%E4%BB%B6%EF%BC%89%0A%0A%60%60%60bash%0Amysql%20-u%20user%20-p%20db_name%20%3C%20table1_backup.sql%0A%60%60%60%0A%0A%E5%85%88%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93%E5%86%8D%E5%AF%BC%E5%85%A5%EF%BC%88%E5%A6%82%E6%9E%9C%E5%A4%87%E4%BB%BD%E4%B8%AD%E4%B8%8D%E5%8C%85%E5%90%AB%20CREATE%20DATABASE%EF%BC%89%0A%0A%60%60%60bash%0Amysql%20-u%20user%20-p%20-e%20%22CREATE%20DATABASE%20IF%20NOT%20EXISTS%20db_name%3B%22%0A%0Amysql%20-u%20user%20-p%20db_name%20%3C%20db_backup.sql%0A%60%60%60%0A%0A%E6%81%A2%E5%A4%8D%E6%8C%87%E5%AE%9A%E5%AD%97%E7%AC%A6%E9%9B%86%EF%BC%88%E9%98%B2%E6%AD%A2%E4%B9%B1%E7%A0%81%EF%BC%89%0A%0A%60%60%60bash%0Amysql%20--default-character-set%3Dutf8mb4%20-u%20user%20-p%20db_name%20%3C%20db_backup.sql%0A%60%60%60%0A%0A%E6%81%A2%E5%A4%8D%E6%97%B6%E8%B7%B3%E8%BF%87%E6%9F%90%E4%BA%9B%E9%94%99%E8%AF%AF%EF%BC%88%E5%A6%82%E9%87%8D%E5%A4%8D%E9%94%AE%EF%BC%89%0A%0A%60%60%60bash%0Amysql%20-u%20user%20-p%20--force%20db_name%20%3C%20db_backup.sql%0A%60%60%60%0A%0A%E6%81%A2%E5%A4%8D%E5%88%B0%E8%BF%9C%E7%A8%8B%E4%B8%BB%E6%9C%BA%E6%95%B0%E6%8D%AE%E5%BA%93%0A%0A%60%60%60bash%0Amysql%20-h%20remote_host%20-u%20user%20-p%20db_name%20%3C%20db_backup.sql%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "恢复指定字符集（防止乱码）"
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysql --default-character-set=utf8mb4 -u user -p db_name < db_backup.sql"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "恢复时跳过某些错误（如重复键）"
-    },
-    {
-      "id": "s1-42",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysql -u user -p --force db_name < db_backup.sql"
-    },
-    {
-      "id": "s1-43",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "恢复到远程主机数据库"
-    },
-    {
-      "id": "s1-44",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "mysql -h remote_host -u user -p db_name < db_backup.sql"
     },
     {
       "id": "s1-45",
       "sectionId": "s1",
-      "title": "错误处理（Error Handling）",
-      "kind": "text",
-      "body": "| 语句                          | 说明                             |\n| :--------------------------- | :------------------------------ |\n| `SHOW ERRORS;`               | 显示最近的错误                   |\n| `SHOW WARNINGS;`             | 显示最近的警告                   |\n| `SHOW COUNT(*) ERRORS;`      | 显示错误数量                     |\n| `SHOW COUNT(*) WARNINGS;`    | 显示警告数量                     |\n| `EXPLAIN SELECT ...;`        | 分析查询执行计划                 |\n| `SHOW ENGINE INNODB STATUS;` | 查看 InnoDB 状态和死锁信息       |\n| `SHOW PROFILE;` | 显示语句的资源消耗（需开启 profiling） |\n| `SHOW PROFILES;` | 显示所有已记录的 profiling 数据 |\n| `SHOW PROCESSLIST;` | 查看当前线程，排查长时间运行或阻塞的语句 |\n| `SHOW STATUS LIKE 'Last_error%';` | 查看上次语句执行的错误信息 |\n| `SHOW VARIABLES LIKE 'log_%';` | 查看错误日志相关配置 |\n| `SHOW BINARY LOGS;` | 查看二进制日志，排查事务或复制异常 |\n| `SHOW SLAVE STATUS\\G` | 查看主从复制错误（用于主从复制场景） |\n| `SHOW MASTER STATUS;` | 查看主库状态，辅助分析复制问题 |"
+      "title": "%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%EF%BC%88Error%20Handling%EF%BC%89",
+      "body": "%7C%20%E8%AF%AD%E5%8F%A5%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%AF%B4%E6%98%8E%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%3A---------------------------%20%7C%20%3A------------------------------%20%7C%0A%7C%20%60SHOW%20ERRORS%3B%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E6%98%BE%E7%A4%BA%E6%9C%80%E8%BF%91%E7%9A%84%E9%94%99%E8%AF%AF%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60SHOW%20WARNINGS%3B%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E6%98%BE%E7%A4%BA%E6%9C%80%E8%BF%91%E7%9A%84%E8%AD%A6%E5%91%8A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60SHOW%20COUNT(*)%20ERRORS%3B%60%20%20%20%20%20%20%7C%20%E6%98%BE%E7%A4%BA%E9%94%99%E8%AF%AF%E6%95%B0%E9%87%8F%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60SHOW%20COUNT(*)%20WARNINGS%3B%60%20%20%20%20%7C%20%E6%98%BE%E7%A4%BA%E8%AD%A6%E5%91%8A%E6%95%B0%E9%87%8F%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60EXPLAIN%20SELECT%20...%3B%60%20%20%20%20%20%20%20%20%7C%20%E5%88%86%E6%9E%90%E6%9F%A5%E8%AF%A2%E6%89%A7%E8%A1%8C%E8%AE%A1%E5%88%92%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60SHOW%20ENGINE%20INNODB%20STATUS%3B%60%20%7C%20%E6%9F%A5%E7%9C%8B%20InnoDB%20%E7%8A%B6%E6%80%81%E5%92%8C%E6%AD%BB%E9%94%81%E4%BF%A1%E6%81%AF%20%20%20%20%20%20%20%7C%0A%7C%20%60SHOW%20PROFILE%3B%60%20%7C%20%E6%98%BE%E7%A4%BA%E8%AF%AD%E5%8F%A5%E7%9A%84%E8%B5%84%E6%BA%90%E6%B6%88%E8%80%97%EF%BC%88%E9%9C%80%E5%BC%80%E5%90%AF%20profiling%EF%BC%89%20%7C%0A%7C%20%60SHOW%20PROFILES%3B%60%20%7C%20%E6%98%BE%E7%A4%BA%E6%89%80%E6%9C%89%E5%B7%B2%E8%AE%B0%E5%BD%95%E7%9A%84%20profiling%20%E6%95%B0%E6%8D%AE%20%7C%0A%7C%20%60SHOW%20PROCESSLIST%3B%60%20%7C%20%E6%9F%A5%E7%9C%8B%E5%BD%93%E5%89%8D%E7%BA%BF%E7%A8%8B%EF%BC%8C%E6%8E%92%E6%9F%A5%E9%95%BF%E6%97%B6%E9%97%B4%E8%BF%90%E8%A1%8C%E6%88%96%E9%98%BB%E5%A1%9E%E7%9A%84%E8%AF%AD%E5%8F%A5%20%7C%0A%7C%20%60SHOW%20STATUS%20LIKE%20'Last_error%25'%3B%60%20%7C%20%E6%9F%A5%E7%9C%8B%E4%B8%8A%E6%AC%A1%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E7%9A%84%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF%20%7C%0A%7C%20%60SHOW%20VARIABLES%20LIKE%20'log_%25'%3B%60%20%7C%20%E6%9F%A5%E7%9C%8B%E9%94%99%E8%AF%AF%E6%97%A5%E5%BF%97%E7%9B%B8%E5%85%B3%E9%85%8D%E7%BD%AE%20%7C%0A%7C%20%60SHOW%20BINARY%20LOGS%3B%60%20%7C%20%E6%9F%A5%E7%9C%8B%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%97%A5%E5%BF%97%EF%BC%8C%E6%8E%92%E6%9F%A5%E4%BA%8B%E5%8A%A1%E6%88%96%E5%A4%8D%E5%88%B6%E5%BC%82%E5%B8%B8%20%7C%0A%7C%20%60SHOW%20SLAVE%20STATUS%5CG%60%20%7C%20%E6%9F%A5%E7%9C%8B%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E9%94%99%E8%AF%AF%EF%BC%88%E7%94%A8%E4%BA%8E%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E5%9C%BA%E6%99%AF%EF%BC%89%20%7C%0A%7C%20%60SHOW%20MASTER%20STATUS%3B%60%20%7C%20%E6%9F%A5%E7%9C%8B%E4%B8%BB%E5%BA%93%E7%8A%B6%E6%80%81%EF%BC%8C%E8%BE%85%E5%8A%A9%E5%88%86%E6%9E%90%E5%A4%8D%E5%88%B6%E9%97%AE%E9%A2%98%20%7C",
+      "encoded": true
     },
     {
       "id": "s2-46",
       "sectionId": "s2",
       "title": "管理表格",
-      "kind": "text",
-      "body": "创建一个包含三列的新表"
-    },
-    {
-      "id": "s2-47",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE TABLE t (\n    id    INT,\n    name  VARCHAR DEFAULT NOT NULL,\n    price INT DEFAULT 0\n    PRIMARY KEY(id)\n);"
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "从数据库中删除表"
-    },
-    {
-      "id": "s2-49",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "DROP TABLE t ;"
-    },
-    {
-      "id": "s2-50",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "向表中添加新列"
-    },
-    {
-      "id": "s2-51",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "ALTER TABLE t ADD column;"
-    },
-    {
-      "id": "s2-52",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "从表中删除列c"
-    },
-    {
-      "id": "s2-53",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "ALTER TABLE t DROP COLUMN c ;"
-    },
-    {
-      "id": "s2-54",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "添加约束"
-    },
-    {
-      "id": "s2-55",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "ALTER TABLE t ADD constraint;"
-    },
-    {
-      "id": "s2-56",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "删除约束"
-    },
-    {
-      "id": "s2-57",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "ALTER TABLE t DROP constraint;"
-    },
-    {
-      "id": "s2-58",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将表从t1重命名为t2"
-    },
-    {
-      "id": "s2-59",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "ALTER TABLE t1 RENAME TO t2;"
-    },
-    {
-      "id": "s2-60",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将列 c1 重命名为 c2"
-    },
-    {
-      "id": "s2-61",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "ALTER TABLE t1 CHANGE c1 c2 datatype;\nALTER TABLE table_name RENAME COLUMN c1 TO c2;"
-    },
-    {
-      "id": "s2-62",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将列c1的数据类型改为datatype"
-    },
-    {
-      "id": "s2-63",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "ALTER TABLE t1 MODIFY c1 datatype;"
-    },
-    {
-      "id": "s2-64",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "删除表中的所有数据"
-    },
-    {
-      "id": "s2-65",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "TRUNCATE TABLE t;"
+      "body": "创建一个包含三列的新表\n\n```sql\nCREATE TABLE t (\n    id    INT,\n    name  VARCHAR DEFAULT NOT NULL,\n    price INT DEFAULT 0\n    PRIMARY KEY(id)\n);\n```\n\n从数据库中删除表\n\n```sql\nDROP TABLE t ;\n```\n\n向表中添加新列\n\n```sql\nALTER TABLE t ADD column;\n```\n\n从表中删除列c\n\n```sql\nALTER TABLE t DROP COLUMN c ;\n```\n\n添加约束\n\n```sql\nALTER TABLE t ADD constraint;\n```\n\n删除约束\n\n```sql\nALTER TABLE t DROP constraint;\n```\n\n将表从t1重命名为t2\n\n```sql\nALTER TABLE t1 RENAME TO t2;\n```\n\n将列 c1 重命名为 c2\n\n```sql\nALTER TABLE t1 CHANGE c1 c2 datatype;\nALTER TABLE table_name RENAME COLUMN c1 TO c2;\n```\n\n将列c1的数据类型改为datatype\n\n```sql\nALTER TABLE t1 MODIFY c1 datatype;\n```\n\n删除表中的所有数据\n\n```sql\nTRUNCATE TABLE t;\n```"
     },
     {
       "id": "s2-66",
       "sectionId": "s2",
       "title": "从表中查询数据",
-      "kind": "text",
-      "body": "从表中查询列c1、c2中的数据"
-    },
-    {
-      "id": "s2-67",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t"
-    },
-    {
-      "id": "s2-68",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "查询表中的所有行和列"
-    },
-    {
-      "id": "s2-69",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT * FROM t"
-    },
-    {
-      "id": "s2-70",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "查询数据并使用条件筛选行"
-    },
-    {
-      "id": "s2-71",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t\nWHERE condition"
-    },
-    {
-      "id": "s2-72",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "查询表中的不同行"
-    },
-    {
-      "id": "s2-73",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT DISTINCT c1 FROM t\nWHERE condition"
-    },
-    {
-      "id": "s2-74",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "按升序或降序对结果集排序"
-    },
-    {
-      "id": "s2-75",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t\nORDER BY c1 ASC [DESC]"
-    },
-    {
-      "id": "s2-76",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "跳过行的偏移并返回下n行"
-    },
-    {
-      "id": "s2-77",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t\nORDER BY c1 \nLIMIT n OFFSET offset"
-    },
-    {
-      "id": "s2-78",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用聚合函数对行进行分组"
-    },
-    {
-      "id": "s2-79",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, aggregate(c2)\nFROM t\nGROUP BY c1"
-    },
-    {
-      "id": "s2-80",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用HAVING子句筛选组"
-    },
-    {
-      "id": "s2-81",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, aggregate(c2)\nFROM t\nGROUP BY c1\nHAVING condition"
+      "body": "从表中查询列c1、c2中的数据\n\n```sql\nSELECT c1, c2 FROM t\n```\n\n查询表中的所有行和列\n\n```sql\nSELECT * FROM t\n```\n\n查询数据并使用条件筛选行\n\n```sql\nSELECT c1, c2 FROM t\nWHERE condition\n```\n\n查询表中的不同行\n\n```sql\nSELECT DISTINCT c1 FROM t\nWHERE condition\n```\n\n按升序或降序对结果集排序\n\n```sql\nSELECT c1, c2 FROM t\nORDER BY c1 ASC [DESC]\n```\n\n跳过行的偏移并返回下n行\n\n```sql\nSELECT c1, c2 FROM t\nORDER BY c1 \nLIMIT n OFFSET offset\n```\n\n使用聚合函数对行进行分组\n\n```sql\nSELECT c1, aggregate(c2)\nFROM t\nGROUP BY c1\n```\n\n使用HAVING子句筛选组\n\n```sql\nSELECT c1, aggregate(c2)\nFROM t\nGROUP BY c1\nHAVING condition\n```"
     },
     {
       "id": "s2-82",
       "sectionId": "s2",
       "title": "从多个表查询",
-      "kind": "text",
-      "body": "内部连接 t1 和 t2"
-    },
-    {
-      "id": "s2-83",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 \nFROM t1\nINNER JOIN t2 ON condition"
-    },
-    {
-      "id": "s2-84",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "左连接t1和t1"
-    },
-    {
-      "id": "s2-85",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 \nFROM t1\nLEFT JOIN t2 ON condition"
-    },
-    {
-      "id": "s2-86",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "右连接t1和t2"
-    },
-    {
-      "id": "s2-87",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 \nFROM t1\nRIGHT JOIN t2 ON condition"
-    },
-    {
-      "id": "s2-88",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "执行完全外部连接"
-    },
-    {
-      "id": "s2-89",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 \nFROM t1\nFULL OUTER JOIN t2 ON condition"
-    },
-    {
-      "id": "s2-90",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "生成表中行的笛卡尔积"
-    },
-    {
-      "id": "s2-91",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 \nFROM t1\nCROSS JOIN t2"
-    },
-    {
-      "id": "s2-92",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "执行交叉连接的另一种方法"
-    },
-    {
-      "id": "s2-93",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 \nFROM t1, t2"
-    },
-    {
-      "id": "s2-94",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用INNER Join子句将t1连接到自身"
-    },
-    {
-      "id": "s2-95",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2\nFROM t1 A\nINNER JOIN t1 B ON condition"
-    },
-    {
-      "id": "s2-96",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用SQL运算符，合并两个查询中的行"
-    },
-    {
-      "id": "s2-97",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t1\nUNION [ALL]\nSELECT c1, c2 FROM t2"
-    },
-    {
-      "id": "s2-98",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "返回两个查询的交集"
-    },
-    {
-      "id": "s2-99",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t1\nINTERSECT\nSELECT c1, c2 FROM t2"
-    },
-    {
-      "id": "s2-100",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "从另一个结果集中减去一个结果集"
-    },
-    {
-      "id": "s2-101",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t1\nMINUS\nSELECT c1, c2 FROM t2"
-    },
-    {
-      "id": "s2-102",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用模式匹配%查询行_"
-    },
-    {
-      "id": "s2-103",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t1\nWHERE c1 [NOT] LIKE pattern"
-    },
-    {
-      "id": "s2-104",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "查询列表中的行"
-    },
-    {
-      "id": "s2-105",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t\nWHERE c1 [NOT] IN value_list"
-    },
-    {
-      "id": "s2-106",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "查询两个值之间的行"
-    },
-    {
-      "id": "s2-107",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t\nWHERE  c1 BETWEEN low AND high"
-    },
-    {
-      "id": "s2-108",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "检查表中的值是否为NULL"
-    },
-    {
-      "id": "s2-109",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "SELECT c1, c2 FROM t\nWHERE  c1 IS [NOT] NULL"
+      "body": "内部连接 t1 和 t2\n\n```sql\nSELECT c1, c2 \nFROM t1\nINNER JOIN t2 ON condition\n```\n\n左连接t1和t1\n\n```sql\nSELECT c1, c2 \nFROM t1\nLEFT JOIN t2 ON condition\n```\n\n右连接t1和t2\n\n```sql\nSELECT c1, c2 \nFROM t1\nRIGHT JOIN t2 ON condition\n```\n\n执行完全外部连接\n\n```sql\nSELECT c1, c2 \nFROM t1\nFULL OUTER JOIN t2 ON condition\n```\n\n生成表中行的笛卡尔积\n\n```sql\nSELECT c1, c2 \nFROM t1\nCROSS JOIN t2\n```\n\n执行交叉连接的另一种方法\n\n```sql\nSELECT c1, c2 \nFROM t1, t2\n```\n\n使用INNER Join子句将t1连接到自身\n\n```sql\nSELECT c1, c2\nFROM t1 A\nINNER JOIN t1 B ON condition\n```\n\n使用SQL运算符，合并两个查询中的行\n\n```sql\nSELECT c1, c2 FROM t1\nUNION [ALL]\nSELECT c1, c2 FROM t2\n```\n\n返回两个查询的交集\n\n```sql\nSELECT c1, c2 FROM t1\nINTERSECT\nSELECT c1, c2 FROM t2\n```\n\n从另一个结果集中减去一个结果集\n\n```sql\nSELECT c1, c2 FROM t1\nMINUS\nSELECT c1, c2 FROM t2\n```\n\n使用模式匹配%查询行_\n\n```sql\nSELECT c1, c2 FROM t1\nWHERE c1 [NOT] LIKE pattern\n```\n\n查询列表中的行\n\n```sql\nSELECT c1, c2 FROM t\nWHERE c1 [NOT] IN value_list\n```\n\n查询两个值之间的行\n\n```sql\nSELECT c1, c2 FROM t\nWHERE  c1 BETWEEN low AND high\n```\n\n检查表中的值是否为NULL\n\n```sql\nSELECT c1, c2 FROM t\nWHERE  c1 IS [NOT] NULL\n```"
     },
     {
       "id": "s2-110",
       "sectionId": "s2",
       "title": "使用 SQL 约束",
-      "kind": "text",
-      "body": "将c1和c2设置为主键"
-    },
-    {
-      "id": "s2-111",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE TABLE t(\n    c1 INT, c2 INT, c3 VARCHAR,\n    PRIMARY KEY (c1,c2)\n);"
-    },
-    {
-      "id": "s2-112",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将c2列设置为外键"
-    },
-    {
-      "id": "s2-113",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE TABLE t1(\n    c1 INT PRIMARY KEY,  \n    c2 INT,\n    FOREIGN KEY (c2) REFERENCES t2(c2)\n);"
-    },
-    {
-      "id": "s2-114",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使c1和c2中的值唯一"
-    },
-    {
-      "id": "s2-115",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE TABLE t(\n    c1 INT, c1 INT,\n    UNIQUE(c2,c3)\n);"
-    },
-    {
-      "id": "s2-116",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "确保c1>0和c1>=c2中的值"
-    },
-    {
-      "id": "s2-117",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE TABLE t(\n  c1 INT, c2 INT,\n  CHECK(c1> 0 AND c1 >= c2)\n);"
-    },
-    {
-      "id": "s2-118",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "c2列中的设置值不为NULL"
-    },
-    {
-      "id": "s2-119",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE TABLE t(\n     c1 INT PRIMARY KEY,\n     c2 VARCHAR NOT NULL\n);"
+      "body": "将c1和c2设置为主键\n\n```sql\nCREATE TABLE t(\n    c1 INT, c2 INT, c3 VARCHAR,\n    PRIMARY KEY (c1,c2)\n);\n```\n\n将c2列设置为外键\n\n```sql\nCREATE TABLE t1(\n    c1 INT PRIMARY KEY,  \n    c2 INT,\n    FOREIGN KEY (c2) REFERENCES t2(c2)\n);\n```\n\n使c1和c2中的值唯一\n\n```sql\nCREATE TABLE t(\n    c1 INT, c1 INT,\n    UNIQUE(c2,c3)\n);\n```\n\n确保c1>0和c1>=c2中的值\n\n```sql\nCREATE TABLE t(\n  c1 INT, c2 INT,\n  CHECK(c1> 0 AND c1 >= c2)\n);\n```\n\nc2列中的设置值不为NULL\n\n```sql\nCREATE TABLE t(\n     c1 INT PRIMARY KEY,\n     c2 VARCHAR NOT NULL\n);\n```"
     },
     {
       "id": "s2-120",
       "sectionId": "s2",
       "title": "修改数据",
-      "kind": "text",
-      "body": "在表格中插入一行"
-    },
-    {
-      "id": "s2-121",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "INSERT INTO t(column_list)\nVALUES(value_list);"
-    },
-    {
-      "id": "s2-122",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "在表格中插入多行"
-    },
-    {
-      "id": "s2-123",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "INSERT INTO t(column_list)\nVALUES (value_list), \n       (value_list), …;"
-    },
-    {
-      "id": "s2-124",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将行从t2插入t1"
-    },
-    {
-      "id": "s2-125",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "INSERT INTO t1(column_list)\nSELECT column_list\nFROM t2;"
-    },
-    {
-      "id": "s2-126",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "更新列c1中所有行的新值"
-    },
-    {
-      "id": "s2-127",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "UPDATE t\nSET c1 = new_value;"
-    },
-    {
-      "id": "s2-128",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "更新列c1、c2中与条件匹配的值"
-    },
-    {
-      "id": "s2-129",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "UPDATE t\nSET c1 = new_value, \n        c2 = new_value\nWHERE condition;"
-    },
-    {
-      "id": "s2-130",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "删除表中的所有数据"
-    },
-    {
-      "id": "s2-131",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "DELETE FROM t;"
-    },
-    {
-      "id": "s2-132",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "删除表中的行子集"
-    },
-    {
-      "id": "s2-133",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "DELETE FROM t\nWHERE condition;"
+      "body": "在表格中插入一行\n\n```sql\nINSERT INTO t(column_list)\nVALUES(value_list);\n```\n\n在表格中插入多行\n\n```sql\nINSERT INTO t(column_list)\nVALUES (value_list), \n       (value_list), …;\n```\n\n将行从t2插入t1\n\n```sql\nINSERT INTO t1(column_list)\nSELECT column_list\nFROM t2;\n```\n\n更新列c1中所有行的新值\n\n```sql\nUPDATE t\nSET c1 = new_value;\n```\n\n更新列c1、c2中与条件匹配的值\n\n```sql\nUPDATE t\nSET c1 = new_value, \n        c2 = new_value\nWHERE condition;\n```\n\n删除表中的所有数据\n\n```sql\nDELETE FROM t;\n```\n\n删除表中的行子集\n\n```sql\nDELETE FROM t\nWHERE condition;\n```"
     },
     {
       "id": "s2-134",
       "sectionId": "s2",
       "title": "管理视图",
-      "kind": "text",
-      "body": "创建由c1和c2组成的新视图"
-    },
-    {
-      "id": "s2-135",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE VIEW v(c1,c2) \nAS\nSELECT c1, c2\nFROM t;"
-    },
-    {
-      "id": "s2-136",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用选中选项创建新视图"
-    },
-    {
-      "id": "s2-137",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE VIEW v(c1,c2) \nAS\nSELECT c1, c2\nFROM t;\nWITH [CASCADED | LOCAL] CHECK OPTION;"
-    },
-    {
-      "id": "s2-138",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "创建递归视图"
-    },
-    {
-      "id": "s2-139",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE RECURSIVE VIEW v \nAS\nselect-statement -- anchor part\nUNION [ALL]\nselect-statement; -- recursive part"
-    },
-    {
-      "id": "s2-140",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "创建临时视图"
-    },
-    {
-      "id": "s2-141",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE TEMPORARY VIEW v \nAS\nSELECT c1, c2\nFROM t;"
-    },
-    {
-      "id": "s2-142",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "删除视图"
-    },
-    {
-      "id": "s2-143",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "DROP VIEW view_name;"
+      "body": "创建由c1和c2组成的新视图\n\n```sql\nCREATE VIEW v(c1,c2) \nAS\nSELECT c1, c2\nFROM t;\n```\n\n使用选中选项创建新视图\n\n```sql\nCREATE VIEW v(c1,c2) \nAS\nSELECT c1, c2\nFROM t;\nWITH [CASCADED | LOCAL] CHECK OPTION;\n```\n\n创建递归视图\n\n```sql\nCREATE RECURSIVE VIEW v \nAS\nselect-statement -- anchor part\nUNION [ALL]\nselect-statement; -- recursive part\n```\n\n创建临时视图\n\n```sql\nCREATE TEMPORARY VIEW v \nAS\nSELECT c1, c2\nFROM t;\n```\n\n删除视图\n\n```sql\nDROP VIEW view_name;\n```"
     },
     {
       "id": "s2-144",
       "sectionId": "s2",
       "title": "管理触发器",
-      "kind": "text",
-      "body": "创建或修改触发器"
-    },
-    {
-      "id": "s2-145",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE OR MODIFY TRIGGER trigger_name\nWHEN EVENT\nON table_name TRIGGER_TYPE\nEXECUTE stored_procedure;"
+      "body": "创建或修改触发器\n\n```sql\nCREATE OR MODIFY TRIGGER trigger_name\nWHEN EVENT\nON table_name TRIGGER_TYPE\nEXECUTE stored_procedure;\n```"
     },
     {
       "id": "s2-146",
       "sectionId": "s2",
       "title": "WHEN",
-      "kind": "text",
       "body": ":-|:-\n:-|:-\n`BEFORE` | 在事件发生前调用\n`AFTER`  | 事件发生后调用"
     },
     {
       "id": "s2-147",
       "sectionId": "s2",
       "title": "EVENT",
-      "kind": "text",
       "body": ":-|:-\n:-|:-\n`INSERT` | 为INSERT调用\n`UPDATE` | 调用UPDATE\n`DELETE` | 调用DELETE"
     },
     {
       "id": "s2-148",
       "sectionId": "s2",
       "title": "TRIGGER_TYPE",
-      "kind": "text",
       "body": ":-|:-\n:-|:-\n`FOR EACH ROW`       | -\n`FOR EACH STATEMENT` | -"
     },
     {
       "id": "s2-149",
       "sectionId": "s2",
       "title": "管理索引",
-      "kind": "text",
-      "body": "在t表的c1和c2上创建索引"
-    },
-    {
-      "id": "s2-150",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE INDEX idx_name \nON t(c1,c2);"
-    },
-    {
-      "id": "s2-151",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "在t表的c3、c4上创建唯一索引"
-    },
-    {
-      "id": "s2-152",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE UNIQUE INDEX idx_name\nON t(c3,c4)"
-    },
-    {
-      "id": "s2-153",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "删除索引"
-    },
-    {
-      "id": "s2-154",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "DROP INDEX idx_name ON t;"
+      "body": "在t表的c1和c2上创建索引\n\n```sql\nCREATE INDEX idx_name \nON t(c1,c2);\n```\n\n在t表的c3、c4上创建唯一索引\n\n```sql\nCREATE UNIQUE INDEX idx_name\nON t(c3,c4)\n```\n\n删除索引\n\n```sql\nDROP INDEX idx_name ON t;\n```"
     },
     {
       "id": "s3-155",
       "sectionId": "s3",
       "title": "Strings",
-      "kind": "text",
       "body": "| -            | -                           |\n|--------------|-----------------------------|\n| `CHAR`       | String (0 - 255)            |\n| `VARCHAR`    | String (0 - 255)            |\n| `TINYTEXT`   | String (0 - 255)            |\n| `TEXT`       | String (0 - 65535)          |\n| `BLOB`       | String (0 - 65535)          |\n| `MEDIUMTEXT` | String (0 - 16777215)       |\n| `MEDIUMBLOB` | String (0 - 16777215)       |\n| `LONGTEXT`   | String (0 - 429496­7295)    |\n| `LONGBLOB`   | String (0 - 429496­7295)    |\n| `ENUM`       | One of preset options       |\n| `SET`        | Selection of preset options |"
     },
     {
       "id": "s3-156",
       "sectionId": "s3",
       "title": "Date & time",
-      "kind": "text",
       "body": "| Data Type   | Format              |\n|-------------|---------------------|\n| `DATE` | yyyy-MM-dd          |\n| `TIME` | hh:mm:ss            |\n| `DATETIME` | yyyy-MM-dd hh:mm:ss |\n| `TIMESTAMP` | yyyy-MM-dd hh:mm:ss |\n| `YEAR` | yyyy                |"
     },
     {
       "id": "s3-157",
       "sectionId": "s3",
       "title": "Numeric",
-      "kind": "text",
       "body": "%7C%20-%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20-%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C---------------%7C---------------------------------------------------------------%7C%0A%7C%20%60TINYINT%20x%60%20%20%20%7C%20Integer%20(-128%20to%20127)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60SMALLINT%20x%60%20%20%7C%20Integer%20(-32768%20to%2032767)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60MEDIUMINT%20x%60%20%7C%20Integer%20(-8388608%20to%208388607)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60INT%20x%60%20%20%20%20%20%20%20%7C%20Integer%20(-2147%C2%AD483648%20to%20214748%C2%AD3647)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60BIGINT%20x%60%20%20%20%20%7C%20Integer%20(-9223%C2%AD372%C2%AD036%C2%AD854%C2%AD775808%20to%20922337%C2%AD203%C2%AD685%C2%AD477%C2%AD5807)%20%7C%0A%7C%20%60FLOAT%60%20%20%20%20%20%20%20%7C%20Decimal%20(precise%20to%2023%20digits)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60DOUBLE%60%20%20%20%20%20%20%7C%20Decimal%20(24%20to%2053%20digits)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60DECIMAL%60%20%20%20%20%20%7C%20%22%C2%ADDOU%C2%ADBLE%C2%AD%22%20stored%20as%20string%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C",
       "encoded": true
     },
@@ -1222,42 +194,38 @@
       "id": "s4-158",
       "sectionId": "s4",
       "title": "聚合函数",
-      "kind": "text",
       "body": "| 函数      | 解释                           |\n| :--------- |:-------------------------------|\n| `SUM()`   | 计算一列值的总和               |\n| `AVG()`   | 计算一列值的平均值             |\n| `COUNT()` | 计算行数，可选择性地忽略NULL值 |\n| `MAX()`   | 找出一列的最大值               |\n| `MIN()`   | 找出一列的最小值               |\n| `GROUP_CONCAT()` | 将一组值连接成单一字符串，可指定分隔符，常用于分组。|"
     },
     {
       "id": "s4-159",
       "sectionId": "s4",
       "title": "数学函数",
-      "kind": "text",
       "body": "| 函数           | 解释                                           | 示例语法                | 结果     |\n| :-------------- | :---------------------------------------------- | :----------------------- | :-------- |\n| `ABS(x)`       | 返回数值的绝对值                               | `ABS(-5)`               | 5        |\n| `ROUND(x,y)`   | 四舍五入到指定的小数位数，y为小数位数，默认为0 | `ROUND(3.1415,2)`       | 3.14     |\n| `FLOOR(x)`     | 向下取整至最接近的整数                         | `FLOOR(3.7)`            | 3        |\n| `CEIL(x)`      | 向上取整至最接近的整数                         | `CEIL(3.3)`             | 4        |\n| `SQRT(x)`      | 返回一个数的平方根                             | `SQRT(16)`              | 4        |\n| `MOD(x,y)`     | 返回x除以y的余数                               | `MOD(10,3)`             | 1        |\n| `RAND([seed])` | 返回0到1之间的随机数，可选种子值               | `RAND()` 或 `RAND(123)` | 0.345... |"
     },
     {
       "id": "s4-160",
       "sectionId": "s4",
       "title": "日期和时间函数",
-      "kind": "text",
       "body": "| 函数            | 解释                       |\n| :--------------- | :-------------------------- |\n| `NOW()`         | 返回当前日期和时间         |\n| `CURDATE()`     | 返回当前日期               |\n| `CURTIME()`     | 返回当前时间               |\n| `DATE_FORMAT()` | 格式化日期时间输出         |\n| `DATEDIFF()`    | 计算两个日期之间相差的天数 |\n| `STR_TO_DATE()` | 将字符串转换为日期格式     |"
     },
     {
       "id": "s4-161",
       "sectionId": "s4",
-      "title": "字符串函数",
-      "kind": "text",
-      "body": "| 函数                           | 解释                     | 示例语法                     | 结果            |\n| :------------------------------ | :------------------------ | ---------------------------- | --------------- |\n| `CONCAT(s1,s2,...)`            | 连接两个或更多字符串     | `CONCAT('Hello, ','World!')` | 'Hello, World!' |\n| `LOWER(str)`                   | 转换为小写               | `LOWER('HELLO')`             | 'hello'         |\n| `UPPER(str)`                   | 转换为大写               | `UPPER('world')`             | 'WORLD'         |\n| `TRIM(str)`                    | 去除字符串两端空格       | `TRIM('  Hello  ')`          | 'Hello'         |\n| `LEFT(str,len)`                | 提取字符串左侧的若干字符 | `LEFT('Hello', 3)`           | 'Hel'           |\n| `RIGHT(str,len)`               | 提取字符串右侧的若干字符 | `RIGHT('Hello', 2)`          | 'lo'            |\n| `SUBSTR(str,pos,len)`          | 提取字符串中的一部分     | `SUBSTR('Hello', 2, 3)`      | 'ell'           |\n| `REPLACE(str,from_str,to_str)` | 替换字符串中的部分文本   | `REPLACE('Hello', 'l', 'L')` | 'HeLLo'         |"
+      "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%87%BD%E6%95%B0",
+      "body": "%7C%20%E5%87%BD%E6%95%B0%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%A7%A3%E9%87%8A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E7%A4%BA%E4%BE%8B%E8%AF%AD%E6%B3%95%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E7%BB%93%E6%9E%9C%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%3A------------------------------%20%7C%20%3A------------------------%20%7C%20----------------------------%20%7C%20---------------%20%7C%0A%7C%20%60CONCAT(s1%2Cs2%2C...)%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BF%9E%E6%8E%A5%E4%B8%A4%E4%B8%AA%E6%88%96%E6%9B%B4%E5%A4%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%20%20%20%20%20%7C%20%60CONCAT('Hello%2C%20'%2C'World!')%60%20%7C%20'Hello%2C%20World!'%20%7C%0A%7C%20%60LOWER(str)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%B0%8F%E5%86%99%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60LOWER('HELLO')%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20'hello'%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60UPPER(str)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%A4%A7%E5%86%99%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60UPPER('world')%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20'WORLD'%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60TRIM(str)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E5%8E%BB%E9%99%A4%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%A4%E7%AB%AF%E7%A9%BA%E6%A0%BC%20%20%20%20%20%20%20%7C%20%60TRIM('%20%20Hello%20%20')%60%20%20%20%20%20%20%20%20%20%20%7C%20'Hello'%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60LEFT(str%2Clen)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B7%A6%E4%BE%A7%E7%9A%84%E8%8B%A5%E5%B9%B2%E5%AD%97%E7%AC%A6%20%7C%20%60LEFT('Hello'%2C%203)%60%20%20%20%20%20%20%20%20%20%20%20%7C%20'Hel'%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60RIGHT(str%2Clen)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%B3%E4%BE%A7%E7%9A%84%E8%8B%A5%E5%B9%B2%E5%AD%97%E7%AC%A6%20%7C%20%60RIGHT('Hello'%2C%202)%60%20%20%20%20%20%20%20%20%20%20%7C%20'lo'%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60SUBSTR(str%2Cpos%2Clen)%60%20%20%20%20%20%20%20%20%20%20%7C%20%E6%8F%90%E5%8F%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86%20%20%20%20%20%7C%20%60SUBSTR('Hello'%2C%202%2C%203)%60%20%20%20%20%20%20%7C%20'ell'%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60REPLACE(str%2Cfrom_str%2Cto_str)%60%20%7C%20%E6%9B%BF%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E9%83%A8%E5%88%86%E6%96%87%E6%9C%AC%20%20%20%7C%20%60REPLACE('Hello'%2C%20'l'%2C%20'L')%60%20%7C%20'HeLLo'%20%20%20%20%20%20%20%20%20%7C",
+      "encoded": true
     },
     {
       "id": "s4-162",
       "sectionId": "s4",
-      "title": "高级函数",
-      "kind": "text",
-      "body": "| 函数                                | 解释                                               | 示例语法                                                     | 结果                                     |\n| ----------------------------------- | -------------------------------------------------- | ------------------------------------------------------------ | ---------------------------------------- |\n| BIN(x)                              | 返回 x 的二进制编码，x 为十进制数。                | `BIN(2)`                                                     | `10`                                     |\n| BINARY(s)                           | 将字符串 s 转换为二进制字符串。                    | `BINARY 'RUNOOB'`                                            | `'RUNOOB'`（显示效果，实际存储为二进制） |\n| CASE                                | 复合条件函数，根据条件返回不同结果。               | `CASE WHEN 1 > 0 THEN '1 > 0' WHEN 2 > 0 THEN '2 > 0' ELSE '3 > 0' END` | `'1 > 0'`                                |\n| CAST(x AS type)                     | 转换数据类型。                                     | `CAST('2017-08-29' AS DATE)`                                 | `2017-08-29`                             |\n| COALESCE(expr1, expr2, ..., expr_n) | 返回第一个非空表达式的值。                         | `COALESCE(NULL, NULL, 'runoob.com', NULL, 'google.com')`     | `'runoob.com'`                           |\n| CONNECTION_ID()                     | 返回当前连接的唯一ID。                             | `CONNECTION_ID()`                                            | `4292835`（示例值）                      |\n| CONV(x, f1, f2)                     | 将 f1 进制数转换为 f2 进制数。                     | `CONV(15, 10, 2)`                                            | `1111`                                   |\n| CONVERT(s USING cs)                 | 转换字符串 s 的字符集为 cs。                       | `CHARSET(CONVERT('ABC' USING gbk))`                          | `gbk`                                    |\n| CURRENT_USER()                      | 返回当前用户。                                     | `CURRENT_USER()`                                             | `guest@%`                                |\n| DATABASE()                          | 返回当前数据库名。                                 | `DATABASE()`                                                 | `runoob`                                 |\n| IF(expr, v1, v2)                    | 条件表达式，expr 为真则 v1，否则 v2。              | `IF(1 > 0, '正确', '错误')`                                  | `'正确'`                                 |\n| IFNULL(v1, v2)                      | 如果 v1 不为 NULL，则返回 v1，否则返回 v2。        | `IFNULL(NULL, 'Hello Word')`                                 | `'Hello Word'`                           |\n| ISNULL(expression)                  | 判断表达式是否为 NULL。                            | `ISNULL(NULL)`                                               | `1`                                      |\n| LAST_INSERT_ID()                    | 返回最近生成的 AUTO_INCREMENT 值。                 | `LAST_INSERT_ID()`                                           | `6`（示例值）                            |\n| NULLIF(expr1, expr2)                | 若 expr1 等于 expr2，则返回 NULL，否则返回 expr1。 | `NULLIF(25, 25)`                                             | `NULL`                                   |"
+      "title": "%E9%AB%98%E7%BA%A7%E5%87%BD%E6%95%B0",
+      "body": "%7C%20%E5%87%BD%E6%95%B0%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%A7%A3%E9%87%8A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E7%A4%BA%E4%BE%8B%E8%AF%AD%E6%B3%95%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E7%BB%93%E6%9E%9C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-----------------------------------%20%7C%20--------------------------------------------------%20%7C%20------------------------------------------------------------%20%7C%20----------------------------------------%20%7C%0A%7C%20BIN(x)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BF%94%E5%9B%9E%20x%20%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%BC%96%E7%A0%81%EF%BC%8Cx%20%E4%B8%BA%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60BIN(2)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%6010%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20BINARY(s)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E5%B0%86%E5%AD%97%E7%AC%A6%E4%B8%B2%20s%20%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60BINARY%20'RUNOOB'%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60'RUNOOB'%60%EF%BC%88%E6%98%BE%E7%A4%BA%E6%95%88%E6%9E%9C%EF%BC%8C%E5%AE%9E%E9%99%85%E5%AD%98%E5%82%A8%E4%B8%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%EF%BC%89%20%7C%0A%7C%20CASE%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E5%A4%8D%E5%90%88%E6%9D%A1%E4%BB%B6%E5%87%BD%E6%95%B0%EF%BC%8C%E6%A0%B9%E6%8D%AE%E6%9D%A1%E4%BB%B6%E8%BF%94%E5%9B%9E%E4%B8%8D%E5%90%8C%E7%BB%93%E6%9E%9C%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60CASE%20WHEN%201%20%3E%200%20THEN%20'1%20%3E%200'%20WHEN%202%20%3E%200%20THEN%20'2%20%3E%200'%20ELSE%20'3%20%3E%200'%20END%60%20%7C%20%60'1%20%3E%200'%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20CAST(x%20AS%20type)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BD%AC%E6%8D%A2%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60CAST('2017-08-29'%20AS%20DATE)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%602017-08-29%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20COALESCE(expr1%2C%20expr2%2C%20...%2C%20expr_n)%20%7C%20%E8%BF%94%E5%9B%9E%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%9D%9E%E7%A9%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%80%BC%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60COALESCE(NULL%2C%20NULL%2C%20'runoob.com'%2C%20NULL%2C%20'google.com')%60%20%20%20%20%20%7C%20%60'runoob.com'%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20CONNECTION_ID()%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%94%AF%E4%B8%80ID%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60CONNECTION_ID()%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%604292835%60%EF%BC%88%E7%A4%BA%E4%BE%8B%E5%80%BC%EF%BC%89%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20CONV(x%2C%20f1%2C%20f2)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E5%B0%86%20f1%20%E8%BF%9B%E5%88%B6%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%20f2%20%E8%BF%9B%E5%88%B6%E6%95%B0%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60CONV(15%2C%2010%2C%202)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%601111%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20CONVERT(s%20USING%20cs)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BD%AC%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%B8%B2%20s%20%E7%9A%84%E5%AD%97%E7%AC%A6%E9%9B%86%E4%B8%BA%20cs%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60CHARSET(CONVERT('ABC'%20USING%20gbk))%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60gbk%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20CURRENT_USER()%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60CURRENT_USER()%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60guest%40%25%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20DATABASE()%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BF%94%E5%9B%9E%E5%BD%93%E5%89%8D%E6%95%B0%E6%8D%AE%E5%BA%93%E5%90%8D%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60DATABASE()%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60runoob%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20IF(expr%2C%20v1%2C%20v2)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F%EF%BC%8Cexpr%20%E4%B8%BA%E7%9C%9F%E5%88%99%20v1%EF%BC%8C%E5%90%A6%E5%88%99%20v2%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60IF(1%20%3E%200%2C%20'%E6%AD%A3%E7%A1%AE'%2C%20'%E9%94%99%E8%AF%AF')%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60'%E6%AD%A3%E7%A1%AE'%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20IFNULL(v1%2C%20v2)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E5%A6%82%E6%9E%9C%20v1%20%E4%B8%8D%E4%B8%BA%20NULL%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E%20v1%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E%20v2%E3%80%82%20%20%20%20%20%20%20%20%7C%20%60IFNULL(NULL%2C%20'Hello%20Word')%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60'Hello%20Word'%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20ISNULL(expression)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E5%88%A4%E6%96%AD%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%98%AF%E5%90%A6%E4%B8%BA%20NULL%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60ISNULL(NULL)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%601%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20LAST_INSERT_ID()%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%BF%94%E5%9B%9E%E6%9C%80%E8%BF%91%E7%94%9F%E6%88%90%E7%9A%84%20AUTO_INCREMENT%20%E5%80%BC%E3%80%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60LAST_INSERT_ID()%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%606%60%EF%BC%88%E7%A4%BA%E4%BE%8B%E5%80%BC%EF%BC%89%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20NULLIF(expr1%2C%20expr2)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%E8%8B%A5%20expr1%20%E7%AD%89%E4%BA%8E%20expr2%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E%20NULL%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E%20expr1%E3%80%82%20%7C%20%60NULLIF(25%2C%2025)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60NULL%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C",
+      "encoded": true
     },
     {
       "id": "s5-163",
       "sectionId": "s5",
       "title": "另见",
-      "kind": "text",
       "body": "• [SQL 基础教程](http://www.w3school.com.cn/sql/index.asp) _(w3school.com.cn)_\n• [SQL 语句教程](http://www.1keydata.com/cn/sql/sql-count.php) _(1keydata.com)_\n• [21分钟 MySQL 基础入门](https://jaywcjlove.github.io/mysql-tutorial/21-minutes-MySQL-basic-entry.html) _(jaywcjlove.github.io)_"
     }
   ],

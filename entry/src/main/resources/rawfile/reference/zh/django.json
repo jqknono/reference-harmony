@@ -30,890 +30,199 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "Django 是 Python 的一款 Web 框架，本备忘单旨在快速理解 [Django](https://www.djangoproject.com/) 所涉及的主要概念，提供了最常用的 API 示例参考"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "准备环境",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ python --version\n# Python 3.9.2\n$ pip --version\n# pip 20.2.3 from c:\\python39\\lib\\site-packages\\pip (python 3.9)"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "如果你没有安装 PIP，你可以从这个页面下载并安装它：<https://pypi.org/project/pip/>"
+      "body": "```bash\n$ python --version\n# Python 3.9.2\n$ pip --version\n# pip 20.2.3 from c:\\python39\\lib\\site-packages\\pip (python 3.9)\n```\n\n如果你没有安装 PIP，你可以从这个页面下载并安装它：<https://pypi.org/project/pip/>"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "入门",
-      "kind": "text",
-      "body": "• 创建虚拟环境"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "  $ py -m venv myproject # Windows\n  $ python -m venv myproject # Unix/MacOS"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 其中包含子文件夹和文件，如下所示"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "  myproject\n   ├┈Include\n   ├┈Lib\n   ├┈Scripts\n   ╰┈pyvenv.cfg"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 以下命令来激活环境"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "  # Windows:\n  myproject\\Scripts\\activate.bat\n  # Unix/MacOS:\n  source myproject/bin/activate"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 提示符中看到以下结果："
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "  # Windows:\n  (myproject) C:\\Users\\Your Name>\n  # Unix/MacOS:\n  (myproject) ... $"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 安装 Django"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "  # Windows:\n  (myproject) C:\\Users\\Name>py -m pip install Django\n  # Unix/MacOS:\n  (myproject) ... $ python -m pip install Django"
+      "body": "• 创建虚拟环境\n\n  ```bash\n  $ py -m venv myproject # Windows\n  $ python -m venv myproject # Unix/MacOS\n  ```\n\n• 其中包含子文件夹和文件，如下所示\n\n  ```bash\n  myproject\n   ├┈Include\n   ├┈Lib\n   ├┈Scripts\n   ╰┈pyvenv.cfg\n  ```\n\n• 以下命令来激活环境\n\n  ```bash\n  # Windows:\n  myproject\\Scripts\\activate.bat\n  # Unix/MacOS:\n  source myproject/bin/activate\n  ```\n\n• 提示符中看到以下结果：\n\n  ```bash\n  # Windows:\n  (myproject) C:\\Users\\Your Name>\n  # Unix/MacOS:\n  (myproject) ... $\n  ```\n\n• 安装 Django\n\n  ```bash\n  # Windows:\n  (myproject) C:\\Users\\Name>py -m pip install Django\n  # Unix/MacOS:\n  (myproject) ... $ python -m pip install Django\n  ```"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "创建项目",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ django-admin startproject myworld"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "创建了一个 `myworld` 文件夹，内容如下："
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "myworld\n  ├┈ manage.py\n  ╰┈ myworld/\n     ├┈ __init__.py\n     ├┈ asgi.py\n     ├┈ settings.py\n     ├┈ urls.py\n     ╰┈ wsgi.py"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "运行 Django 项目"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ py manage.py runserver     # Windows\n$ python manage.py runserver # Unix/MacOS"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "打开一个新的浏览器窗口并在地址栏中输入 127.0.0.1:8000"
+      "body": "```bash\n$ django-admin startproject myworld\n```\n\n创建了一个 `myworld` 文件夹，内容如下：\n\n```bash\nmyworld\n  ├┈ manage.py\n  ╰┈ myworld/\n     ├┈ __init__.py\n     ├┈ asgi.py\n     ├┈ settings.py\n     ├┈ urls.py\n     ╰┈ wsgi.py\n```\n\n运行 Django 项目\n\n```bash\n$ py manage.py runserver     # Windows\n$ python manage.py runserver # Unix/MacOS\n```\n\n打开一个新的浏览器窗口并在地址栏中输入 127.0.0.1:8000"
     },
     {
       "id": "s1-19",
       "sectionId": "s1",
       "title": "检查 Django 版本",
-      "kind": "code",
-      "lang": "bash",
-      "code": "(myproject) C:\\Users\\Your Name>django-admin --version\n# 4.0.3"
+      "body": "```bash\n(myproject) C:\\Users\\Your Name>django-admin --version\n# 4.0.3\n```"
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
       "title": "创建应用",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ py manage.py startapp members"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "项目中创建了一个名为 `members` 的文件夹，内容如下："
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "myworld\n  ├┈ manage.py\n  ├┈ myworld/\n  ╰┈ members/\n     ├┈ migrations/\n     ┆  ╰┈ __init__.py\n     ├┈ __init__.py\n     ├┈ admin.py\n     ├┈ apps.py\n     ├┈ models.py\n     ├┈ tests.py\n     ╰┈ views.py"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "首先，看一下名为 `views.py` 的文件。这是我们收集发送回正确响应所需的信息的地方。"
+      "body": "```bash\n$ py manage.py startapp members\n```\n\n项目中创建了一个名为 `members` 的文件夹，内容如下：\n\n```bash\nmyworld\n  ├┈ manage.py\n  ├┈ myworld/\n  ╰┈ members/\n     ├┈ migrations/\n     ┆  ╰┈ __init__.py\n     ├┈ __init__.py\n     ├┈ admin.py\n     ├┈ apps.py\n     ├┈ models.py\n     ├┈ tests.py\n     ╰┈ views.py\n```\n\n首先，看一下名为 `views.py` 的文件。这是我们收集发送回正确响应所需的信息的地方。"
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
       "title": "应用目录介绍",
-      "kind": "text",
       "body": "• `Django` 接收 URL，检查 `urls.py` 文件，并调用与 URL 匹配的视图。\n• 位于 `views.py` 中的视图检查相关模型。\n• 模型是从 `models.py` 文件中导入的。\n• 然后视图将数据发送到模板文件夹中的指定模板。\n• 模板包含 `HTML` 和 `Django` 标记，并使用数据将完成的 `HTML` 内容返回给浏览器"
     },
     {
       "id": "s1-25",
       "sectionId": "s1",
-      "title": "视图",
-      "kind": "text",
-      "body": "Django 视图是接受 `http` 请求并返回 `http` 响应的 `Python` 函数，就像 `HTML` 文档一样。"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "使用 `Django` 的网页充满了不同任务和任务的视图。"
-    },
-    {
-      "id": "s1-27",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "视图通常放在一个名为 `views.py` 的文件中，该文件位于应用程序的文件夹中。"
-    },
-    {
-      "id": "s1-28",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "您的 `members` 文件夹中有一个 `views.py`，如下所示："
-    },
-    {
-      "id": "s1-29",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "PY",
-      "code": "from django.shortcuts import render\n\n# Create your views here."
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "找到它并打开它，并将内容替换为："
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "PY",
-      "code": "from%20django.shortcuts%20import%20render%0Afrom%20django.http%20import%20HttpResponse%0A%0Adef%20index(request)%3A%0A%20%20%20%20return%20HttpResponse(%22Hello%20world!%22)",
+      "title": "%E8%A7%86%E5%9B%BE",
+      "body": "Django%20%E8%A7%86%E5%9B%BE%E6%98%AF%E6%8E%A5%E5%8F%97%20%60http%60%20%E8%AF%B7%E6%B1%82%E5%B9%B6%E8%BF%94%E5%9B%9E%20%60http%60%20%E5%93%8D%E5%BA%94%E7%9A%84%20%60Python%60%20%E5%87%BD%E6%95%B0%EF%BC%8C%E5%B0%B1%E5%83%8F%20%60HTML%60%20%E6%96%87%E6%A1%A3%E4%B8%80%E6%A0%B7%E3%80%82%0A%0A%E4%BD%BF%E7%94%A8%20%60Django%60%20%E7%9A%84%E7%BD%91%E9%A1%B5%E5%85%85%E6%BB%A1%E4%BA%86%E4%B8%8D%E5%90%8C%E4%BB%BB%E5%8A%A1%E5%92%8C%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%A7%86%E5%9B%BE%E3%80%82%0A%0A%E8%A7%86%E5%9B%BE%E9%80%9A%E5%B8%B8%E6%94%BE%E5%9C%A8%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20%60views.py%60%20%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%8C%E8%AF%A5%E6%96%87%E4%BB%B6%E4%BD%8D%E4%BA%8E%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E3%80%82%0A%0A%E6%82%A8%E7%9A%84%20%60members%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%9C%89%E4%B8%80%E4%B8%AA%20%60views.py%60%EF%BC%8C%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A%0A%0A%60%60%60PY%0Afrom%20django.shortcuts%20import%20render%0A%0A%23%20Create%20your%20views%20here.%0A%60%60%60%0A%0A%E6%89%BE%E5%88%B0%E5%AE%83%E5%B9%B6%E6%89%93%E5%BC%80%E5%AE%83%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%86%85%E5%AE%B9%E6%9B%BF%E6%8D%A2%E4%B8%BA%EF%BC%9A%0A%0A%60%60%60PY%0Afrom%20django.shortcuts%20import%20render%0Afrom%20django.http%20import%20HttpResponse%0A%0Adef%20index(request)%3A%0A%20%20%20%20return%20HttpResponse(%22Hello%20world!%22)%0A%60%60%60%0A%0A%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E5%85%B3%E4%BA%8E%E5%A6%82%E4%BD%95%E5%B0%86%E5%93%8D%E5%BA%94%E5%8F%91%E9%80%81%E5%9B%9E%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B%E3%80%82%0A%0A%E4%BD%86%E6%98%AF%E6%88%91%E4%BB%AC%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E8%A7%86%E5%9B%BE%E5%91%A2%EF%BC%9F%20%E5%A5%BD%E5%90%A7%EF%BC%8C%E6%88%91%E4%BB%AC%E5%BF%85%E9%A1%BB%E9%80%9A%E8%BF%87%20URL%20%E8%B0%83%E7%94%A8%E8%A7%86%E5%9B%BE%E3%80%82",
       "encoded": true
-    },
-    {
-      "id": "s1-32",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "这是一个关于如何将响应发送回浏览器的简单示例。"
-    },
-    {
-      "id": "s1-33",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "但是我们如何执行视图呢？ 好吧，我们必须通过 URL 调用视图。"
     },
     {
       "id": "s1-34",
       "sectionId": "s1",
       "title": "URLs",
-      "kind": "text",
-      "body": "在与 `views.py` 文件相同的文件夹中创建一个名为 `urls.py` 的文件，并在其中输入以下代码："
-    },
-    {
-      "id": "s1-35",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "py",
-      "code": "from django.urls import path\nfrom . import views\nurlpatterns = [\n    path('', views.index, name='index'),\n]"
-    },
-    {
-      "id": "s1-36",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "刚刚创建的 `urls.py` 文件是特定于成员应用程序的。我们还必须在根目录 `myworld` 中进行一些路由。"
-    },
-    {
-      "id": "s1-37",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在 `myworld` 文件夹中有一个名为 `urls.py` 的文件，打开该文件并在 `import` 语句中添加 `include` 模块，并在列表中添加一个 `path()` 函数。文件将如下所示："
-    },
-    {
-      "id": "s1-38",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "py",
-      "code": "from django.contrib import admin\nfrom django.urls import include, path\n\nurlpatterns = [\n  path('members/', include('members.urls')),\n  path('admin/', admin.site.urls),\n]"
-    },
-    {
-      "id": "s1-39",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "如果服务器未运行，请导航到 `/myworld` 文件夹并在命令提示符下执行此命令："
-    },
-    {
-      "id": "s1-40",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ py manage.py runserver"
-    },
-    {
-      "id": "s1-41",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在浏览器窗口的地址栏中输入 `127.0.0.1:8000/members/`"
+      "body": "%E5%9C%A8%E4%B8%8E%20%60views.py%60%20%E6%96%87%E4%BB%B6%E7%9B%B8%E5%90%8C%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20%60urls.py%60%20%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E5%9C%A8%E5%85%B6%E4%B8%AD%E8%BE%93%E5%85%A5%E4%BB%A5%E4%B8%8B%E4%BB%A3%E7%A0%81%EF%BC%9A%0A%0A%60%60%60py%0Afrom%20django.urls%20import%20path%0Afrom%20.%20import%20views%0Aurlpatterns%20%3D%20%5B%0A%20%20%20%20path(''%2C%20views.index%2C%20name%3D'index')%2C%0A%5D%0A%60%60%60%0A%0A%E5%88%9A%E5%88%9A%E5%88%9B%E5%BB%BA%E7%9A%84%20%60urls.py%60%20%E6%96%87%E4%BB%B6%E6%98%AF%E7%89%B9%E5%AE%9A%E4%BA%8E%E6%88%90%E5%91%98%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E3%80%82%E6%88%91%E4%BB%AC%E8%BF%98%E5%BF%85%E9%A1%BB%E5%9C%A8%E6%A0%B9%E7%9B%AE%E5%BD%95%20%60myworld%60%20%E4%B8%AD%E8%BF%9B%E8%A1%8C%E4%B8%80%E4%BA%9B%E8%B7%AF%E7%94%B1%E3%80%82%0A%0A%E5%9C%A8%20%60myworld%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%9C%89%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20%60urls.py%60%20%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E6%89%93%E5%BC%80%E8%AF%A5%E6%96%87%E4%BB%B6%E5%B9%B6%E5%9C%A8%20%60import%60%20%E8%AF%AD%E5%8F%A5%E4%B8%AD%E6%B7%BB%E5%8A%A0%20%60include%60%20%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%B9%B6%E5%9C%A8%E5%88%97%E8%A1%A8%E4%B8%AD%E6%B7%BB%E5%8A%A0%E4%B8%80%E4%B8%AA%20%60path()%60%20%E5%87%BD%E6%95%B0%E3%80%82%E6%96%87%E4%BB%B6%E5%B0%86%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A%0A%0A%60%60%60py%0Afrom%20django.contrib%20import%20admin%0Afrom%20django.urls%20import%20include%2C%20path%0A%0Aurlpatterns%20%3D%20%5B%0A%20%20path('members%2F'%2C%20include('members.urls'))%2C%0A%20%20path('admin%2F'%2C%20admin.site.urls)%2C%0A%5D%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9C%AA%E8%BF%90%E8%A1%8C%EF%BC%8C%E8%AF%B7%E5%AF%BC%E8%88%AA%E5%88%B0%20%60%2Fmyworld%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B9%B6%E5%9C%A8%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%E4%B8%8B%E6%89%A7%E8%A1%8C%E6%AD%A4%E5%91%BD%E4%BB%A4%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20py%20manage.py%20runserver%0A%60%60%60%0A%0A%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%9C%B0%E5%9D%80%E6%A0%8F%E4%B8%AD%E8%BE%93%E5%85%A5%20%60127.0.0.1%3A8000%2Fmembers%2F%60",
+      "encoded": true
     },
     {
       "id": "s1-42",
       "sectionId": "s1",
-      "title": "模板",
-      "kind": "text",
-      "body": "在 `members` 文件夹中创建一个 `templates` 文件夹，并创建一个名为 `myfirst.html` 的 `HTML` 文件。文件结构应该是这样的："
-    },
-    {
-      "id": "s1-43",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "myworld\n ├┈ manage.py\n ├┈ myworld/\n ╰┈ members/\n    ╰┈ templates/\n       ╰┈ myfirst.html"
-    },
-    {
-      "id": "s1-44",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "打开 `HTML` 文件并插入以下内容："
-    },
-    {
-      "id": "s1-45",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<!DOCTYPE html>\n<html>\n<body>\n  <h1>Hello World!</h1>\n  <p>欢迎来到我的第一个 Django 项目！</p>\n</body>\n</html>"
-    },
-    {
-      "id": "s1-46",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "修改视图 `members/views.py`"
-    },
-    {
-      "id": "s1-47",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "py",
-      "code": "from django.http import HttpResponse\nfrom django.template import loader\n\ndef index(request):\n  template = loader.get_template('myfirst.html')\n  return HttpResponse(template.render())"
+      "title": "%E6%A8%A1%E6%9D%BF",
+      "body": "%E5%9C%A8%20%60members%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20%60templates%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E5%B9%B6%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20%60myfirst.html%60%20%E7%9A%84%20%60HTML%60%20%E6%96%87%E4%BB%B6%E3%80%82%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%BA%94%E8%AF%A5%E6%98%AF%E8%BF%99%E6%A0%B7%E7%9A%84%EF%BC%9A%0A%0A%60%60%60bash%0Amyworld%0A%20%E2%94%9C%E2%94%88%20manage.py%0A%20%E2%94%9C%E2%94%88%20myworld%2F%0A%20%E2%95%B0%E2%94%88%20members%2F%0A%20%20%20%20%E2%95%B0%E2%94%88%20templates%2F%0A%20%20%20%20%20%20%20%E2%95%B0%E2%94%88%20myfirst.html%0A%60%60%60%0A%0A%E6%89%93%E5%BC%80%20%60HTML%60%20%E6%96%87%E4%BB%B6%E5%B9%B6%E6%8F%92%E5%85%A5%E4%BB%A5%E4%B8%8B%E5%86%85%E5%AE%B9%EF%BC%9A%0A%0A%60%60%60html%0A%3C!DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Cbody%3E%0A%20%20%3Ch1%3EHello%20World!%3C%2Fh1%3E%0A%20%20%3Cp%3E%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%20Django%20%E9%A1%B9%E7%9B%AE%EF%BC%81%3C%2Fp%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E%0A%60%60%60%0A%0A%E4%BF%AE%E6%94%B9%E8%A7%86%E5%9B%BE%20%60members%2Fviews.py%60%0A%0A%60%60%60py%0Afrom%20django.http%20import%20HttpResponse%0Afrom%20django.template%20import%20loader%0A%0Adef%20index(request)%3A%0A%20%20template%20%3D%20loader.get_template('myfirst.html')%0A%20%20return%20HttpResponse(template.render())%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-48",
       "sectionId": "s1",
-      "title": "更改设置",
-      "kind": "text",
-      "body": "为了能够处理比“Hello World！”更复杂的东西，我们必须告诉 `Django` 一个新的应用程序已创建"
-    },
-    {
-      "id": "s1-49",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "这是在 `myworld` 文件夹的 `myworld/settings.py` 文件中完成的。查找 `INSTALLED_APPS[]` 列表并添加成员应用程序，如下所示："
-    },
-    {
-      "id": "s1-50",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "py",
-      "code": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'members.apps.MembersConfig'\n]"
-    },
-    {
-      "id": "s1-51",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "然后运行这个命令："
-    },
-    {
-      "id": "s1-52",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ py manage.py migrate"
-    },
-    {
-      "id": "s1-53",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "通过导航到 `/myworld` 文件夹启动服务器并执行以下命令："
-    },
-    {
-      "id": "s1-54",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ py manage.py runserver"
-    },
-    {
-      "id": "s1-55",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在浏览器窗口的地址栏中输入 127.0.0.1:8000/members/"
+      "title": "%E6%9B%B4%E6%94%B9%E8%AE%BE%E7%BD%AE",
+      "body": "%E4%B8%BA%E4%BA%86%E8%83%BD%E5%A4%9F%E5%A4%84%E7%90%86%E6%AF%94%E2%80%9CHello%20World%EF%BC%81%E2%80%9D%E6%9B%B4%E5%A4%8D%E6%9D%82%E7%9A%84%E4%B8%9C%E8%A5%BF%EF%BC%8C%E6%88%91%E4%BB%AC%E5%BF%85%E9%A1%BB%E5%91%8A%E8%AF%89%20%60Django%60%20%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%B7%B2%E5%88%9B%E5%BB%BA%0A%0A%E8%BF%99%E6%98%AF%E5%9C%A8%20%60myworld%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%20%60myworld%2Fsettings.py%60%20%E6%96%87%E4%BB%B6%E4%B8%AD%E5%AE%8C%E6%88%90%E7%9A%84%E3%80%82%E6%9F%A5%E6%89%BE%20%60INSTALLED_APPS%5B%5D%60%20%E5%88%97%E8%A1%A8%E5%B9%B6%E6%B7%BB%E5%8A%A0%E6%88%90%E5%91%98%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%8C%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A%0A%0A%60%60%60py%0AINSTALLED_APPS%20%3D%20%5B%0A%20%20%20%20'django.contrib.admin'%2C%0A%20%20%20%20'django.contrib.auth'%2C%0A%20%20%20%20'django.contrib.contenttypes'%2C%0A%20%20%20%20'django.contrib.sessions'%2C%0A%20%20%20%20'django.contrib.messages'%2C%0A%20%20%20%20'django.contrib.staticfiles'%2C%0A%20%20%20%20'members.apps.MembersConfig'%0A%5D%0A%60%60%60%0A%0A%E7%84%B6%E5%90%8E%E8%BF%90%E8%A1%8C%E8%BF%99%E4%B8%AA%E5%91%BD%E4%BB%A4%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20py%20manage.py%20migrate%0A%60%60%60%0A%0A%E9%80%9A%E8%BF%87%E5%AF%BC%E8%88%AA%E5%88%B0%20%60%2Fmyworld%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B9%B6%E6%89%A7%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20py%20manage.py%20runserver%0A%60%60%60%0A%0A%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E5%9C%B0%E5%9D%80%E6%A0%8F%E4%B8%AD%E8%BE%93%E5%85%A5%20127.0.0.1%3A8000%2Fmembers%2F",
+      "encoded": true
     },
     {
       "id": "s1-56",
       "sectionId": "s1",
-      "title": "创建表（模型）",
-      "kind": "text",
-      "body": "在 `/members/` 文件夹中，打开 `models.py` 文件。要在我们的数据库中添加成员表，首先创建一个成员类，并描述其中的表字段："
-    },
-    {
-      "id": "s1-57",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "py",
-      "code": "from django.db import models\n\nclass Members(models.Model):\n  firstname = models.CharField(max_length=255)\n  lastname = models.CharField(max_length=255)"
-    },
-    {
-      "id": "s1-58",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "然后导航到 `/myworld/` 文件夹并运行以下命令："
-    },
-    {
-      "id": "s1-59",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ py manage.py makemigrations members\n# Migrations for 'members':\n#   members\\migrations\\0001_initial.py\n#     - Create model Members"
-    },
-    {
-      "id": "s1-60",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "创建一个包含任何新更改的文件并将该文件存储在 `/migrations/` 文件夹中。下次运行 `py manage.py migrate` 时，Django 将根据迁移文件夹中新文件的内容创建并执行一条 SQL 语句。运行迁移命令："
-    },
-    {
-      "id": "s1-61",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ py manage.py migrate"
-    },
-    {
-      "id": "s1-62",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "从模型创建的 SQL 语句是："
-    },
-    {
-      "id": "s1-63",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE%20TABLE%20%22members_members%22%20(%0A%20%20%22id%22%20INT%20NOT%20NULL%20PRIMARY%20KEY%20AUTOINCREMENT%2C%0A%20%20%22firstname%22%20varchar(255)%20NOT%20NULL%2C%0A%20%20%22lastname%22%20varchar(255)%20NOT%20NULL%0A)%3B",
+      "title": "%E5%88%9B%E5%BB%BA%E8%A1%A8%EF%BC%88%E6%A8%A1%E5%9E%8B%EF%BC%89",
+      "body": "%E5%9C%A8%20%60%2Fmembers%2F%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%EF%BC%8C%E6%89%93%E5%BC%80%20%60models.py%60%20%E6%96%87%E4%BB%B6%E3%80%82%E8%A6%81%E5%9C%A8%E6%88%91%E4%BB%AC%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%88%90%E5%91%98%E8%A1%A8%EF%BC%8C%E9%A6%96%E5%85%88%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%88%90%E5%91%98%E7%B1%BB%EF%BC%8C%E5%B9%B6%E6%8F%8F%E8%BF%B0%E5%85%B6%E4%B8%AD%E7%9A%84%E8%A1%A8%E5%AD%97%E6%AE%B5%EF%BC%9A%0A%0A%60%60%60py%0Afrom%20django.db%20import%20models%0A%0Aclass%20Members(models.Model)%3A%0A%20%20firstname%20%3D%20models.CharField(max_length%3D255)%0A%20%20lastname%20%3D%20models.CharField(max_length%3D255)%0A%60%60%60%0A%0A%E7%84%B6%E5%90%8E%E5%AF%BC%E8%88%AA%E5%88%B0%20%60%2Fmyworld%2F%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B9%B6%E8%BF%90%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20py%20manage.py%20makemigrations%20members%0A%23%20Migrations%20for%20'members'%3A%0A%23%20%20%20members%5Cmigrations%5C0001_initial.py%0A%23%20%20%20%20%20-%20Create%20model%20Members%0A%60%60%60%0A%0A%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%8C%85%E5%90%AB%E4%BB%BB%E4%BD%95%E6%96%B0%E6%9B%B4%E6%94%B9%E7%9A%84%E6%96%87%E4%BB%B6%E5%B9%B6%E5%B0%86%E8%AF%A5%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E5%9C%A8%20%60%2Fmigrations%2F%60%20%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E3%80%82%E4%B8%8B%E6%AC%A1%E8%BF%90%E8%A1%8C%20%60py%20manage.py%20migrate%60%20%E6%97%B6%EF%BC%8CDjango%20%E5%B0%86%E6%A0%B9%E6%8D%AE%E8%BF%81%E7%A7%BB%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%96%B0%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9%E5%88%9B%E5%BB%BA%E5%B9%B6%E6%89%A7%E8%A1%8C%E4%B8%80%E6%9D%A1%20SQL%20%E8%AF%AD%E5%8F%A5%E3%80%82%E8%BF%90%E8%A1%8C%E8%BF%81%E7%A7%BB%E5%91%BD%E4%BB%A4%EF%BC%9A%0A%0A%60%60%60bash%0A%24%20py%20manage.py%20migrate%0A%60%60%60%0A%0A%E4%BB%8E%E6%A8%A1%E5%9E%8B%E5%88%9B%E5%BB%BA%E7%9A%84%20SQL%20%E8%AF%AD%E5%8F%A5%E6%98%AF%EF%BC%9A%0A%0A%60%60%60sql%0ACREATE%20TABLE%20%22members_members%22%20(%0A%20%20%22id%22%20INT%20NOT%20NULL%20PRIMARY%20KEY%20AUTOINCREMENT%2C%0A%20%20%22firstname%22%20varchar(255)%20NOT%20NULL%2C%0A%20%20%22lastname%22%20varchar(255)%20NOT%20NULL%0A)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-64",
       "sectionId": "s2",
-      "title": "模板变量",
-      "kind": "code",
-      "lang": "django",
-      "code": "<!-- template.html -->\n<h1>你好 {{ firstname }}，你好吗？</h1>"
-    },
-    {
-      "id": "s2-65",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "在视图 (`views.py`) 中创建变量，上面示例中的变量 `firstname` 通过视图发送到模板："
-    },
-    {
-      "id": "s2-66",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "py",
-      "code": "from django.http import HttpResponse\nfrom django.template import loader\n\ndef testing(request):\n  template = loader.get_template('template.html')\n  context = {\n    'firstname': '狂徒张三',\n  }\n  return HttpResponse(template.render(context, request))"
+      "title": "%E6%A8%A1%E6%9D%BF%E5%8F%98%E9%87%8F",
+      "body": "%60%60%60django%0A%3C!--%20template.html%20--%3E%0A%3Ch1%3E%E4%BD%A0%E5%A5%BD%20%7B%7B%20firstname%20%7D%7D%EF%BC%8C%E4%BD%A0%E5%A5%BD%E5%90%97%EF%BC%9F%3C%2Fh1%3E%0A%60%60%60%0A%0A%E5%9C%A8%E8%A7%86%E5%9B%BE%20(%60views.py%60)%20%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F%EF%BC%8C%E4%B8%8A%E9%9D%A2%E7%A4%BA%E4%BE%8B%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%20%60firstname%60%20%E9%80%9A%E8%BF%87%E8%A7%86%E5%9B%BE%E5%8F%91%E9%80%81%E5%88%B0%E6%A8%A1%E6%9D%BF%EF%BC%9A%0A%0A%60%60%60py%0Afrom%20django.http%20import%20HttpResponse%0Afrom%20django.template%20import%20loader%0A%0Adef%20testing(request)%3A%0A%20%20template%20%3D%20loader.get_template('template.html')%0A%20%20context%20%3D%20%7B%0A%20%20%20%20'firstname'%3A%20'%E7%8B%82%E5%BE%92%E5%BC%A0%E4%B8%89'%2C%0A%20%20%7D%0A%20%20return%20HttpResponse(template.render(context%2C%20request))%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-67",
       "sectionId": "s2",
       "title": "%E6%A8%A1%E6%9D%BF%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%8F%98%E9%87%8F",
-      "kind": "code",
-      "lang": "django",
-      "code": "%7B%25%20with%20firstname%3D%22Tobias%22%20%25%7D%0A%3Ch1%3E%E4%BD%A0%E5%A5%BD%20%7B%7B%20firstname%20%7D%7D%EF%BC%8C%E4%BD%A0%E5%A5%BD%E5%90%97%EF%BC%9F%3C%2Fh1%3E",
+      "body": "%60%60%60django%0A%7B%25%20with%20firstname%3D%22Tobias%22%20%25%7D%0A%3Ch1%3E%E4%BD%A0%E5%A5%BD%20%7B%7B%20firstname%20%7D%7D%EF%BC%8C%E4%BD%A0%E5%A5%BD%E5%90%97%EF%BC%9F%3C%2Fh1%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-68",
       "sectionId": "s2",
       "title": "数组循环",
-      "kind": "code",
-      "lang": "django",
-      "code": "<ul>\n  {% for x in mymembers %}\n    <li>{{ x.firstname }}</li>\n  {% endfor %}\n</ul>"
+      "body": "```django\n<ul>\n  {% for x in mymembers %}\n    <li>{{ x.firstname }}</li>\n  {% endfor %}\n</ul>\n```"
     },
     {
       "id": "s2-69",
       "sectionId": "s2",
       "title": "模板标签参考",
-      "kind": "text",
       "body": "标签 | 描述\n:- | :-\n`autoescape` | 指定自动转义模式是打开还是关闭\n`block` | 指定块部分\n`comment` | 指定注释部分\n`csrf_token` | 保护表单免受跨站点请求伪造\n`cycle` | 指定要在循环的每个循环中使用的内容\n`debug` | 指定调试信息\n`extends` | 指定父模板\n`filter` | 在返回之前过滤内容\n`firstof` | 返回第一个非空变量\n`for` | 指定一个 for 循环\n`if` | 指定一个 if 语句\n`ifchanged` | 仅当自上次迭代以来值已更改时才输出块<br> _(用于 for 循环)_\n`include` | 指定包含的内容/模板\n`load` | 从另一个库加载模板标签\n`lorem` | 输出随机文本\n`now` | 输出当前日期/时间\n`regroup` | 按组对对象进行排序\n`resetcycle` | 循环使用，重置循环\n`spaceless` | 删除 HTML 标签之间的空格\n`templatetag` | 输出指定的模板标签\n`url` | 返回 URL 的绝对 URL 部分\n`verbatim` | 指定不应由模板引擎呈现的内容\n`widthratio` | 给定值和最大值之间的比率计算宽度值\n`with` | 指定要在块中使用的变量\n<!--rehype:className=show-header-->"
     },
     {
       "id": "s2-70",
       "sectionId": "s2",
       "title": "If 语句",
-      "kind": "code",
-      "lang": "django",
-      "code": "{% if greeting == 1 %}\n  <h1>Hello</h1>\n{% elif greeting == 2 %}\n  <h1>Welcome</h1>\n{% else %}\n  <h1>Goodbye</h1>\n{% endif %}"
+      "body": "```django\n{% if greeting == 1 %}\n  <h1>Hello</h1>\n{% elif greeting == 2 %}\n  <h1>Welcome</h1>\n{% else %}\n  <h1>Goodbye</h1>\n{% endif %} \n```"
     },
     {
       "id": "s2-71",
       "sectionId": "s2",
       "title": "For 循环",
-      "kind": "code",
-      "lang": "django",
-      "code": "{% for x in cars %}\n  <h1>{{ x.brand }}</h1>\n  <p>{{ x.model }}</p>\n  <p>{{ x.year }}</p>\n{% endfor %}"
-    },
-    {
-      "id": "s2-72",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "数据 cars 空的展示内容："
-    },
-    {
-      "id": "s2-73",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "django",
-      "code": "<ul>\n  {% for x in cars %}\n    <h1>{{ x.brand }}</h1>\n    <p>{{ x.model }}</p>\n    <p>{{ x.year }}</p>\n  {% empty %}\n    <li>No members</li>\n  {% endfor %}\n</ul>"
+      "body": "```django\n{% for x in cars %}\n  <h1>{{ x.brand }}</h1>\n  <p>{{ x.model }}</p>\n  <p>{{ x.year }}</p>\n{% endfor %} \n```\n\n数据 cars 空的展示内容：\n\n```django\n<ul>\n  {% for x in cars %}\n    <h1>{{ x.brand }}</h1>\n    <p>{{ x.model }}</p>\n    <p>{{ x.year }}</p>\n  {% empty %}\n    <li>No members</li>\n  {% endfor %}\n</ul> \n```"
     },
     {
       "id": "s2-74",
       "sectionId": "s2",
       "title": "循环变量",
-      "kind": "text",
       "body": "• `forloop.counter` 当前循环，从 1 开始\n• `forloop.counter0` 当前循环，从 0 开始\n• `forloop.first` 循环是否在其第一次循环中\n• `forloop.last` 循环是否在其最后一次循环中\n• `forloop.parentloop`\n• `forloop.revcounter` 如果从末尾开始并向后计数，则以 1 结束\n• `forloop.revcounter0` 如果从末尾开始并向后计数，则以 0 结束"
     },
     {
       "id": "s2-75",
       "sectionId": "s2",
       "title": "过滤值",
-      "kind": "code",
-      "lang": "django",
-      "code": "<h1>你好 {{ firstname|upper }}，你好吗？</h1>"
-    },
-    {
-      "id": "s2-76",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "返回带有大写字母的变量名"
+      "body": "```django\n<h1>你好 {{ firstname|upper }}，你好吗？</h1>\n```\n\n返回带有大写字母的变量名"
     },
     {
       "id": "s2-77",
       "sectionId": "s2",
       "title": "注释",
-      "kind": "code",
-      "lang": "django",
-      "code": "<h1>欢迎大家{# 较小的注释 #}</h1>\n{% comment %}\n  <h1>欢迎女士们先生们</h1>\n{% endcomment %}"
+      "body": "```django\n<h1>欢迎大家{# 较小的注释 #}</h1>\n{% comment %}\n  <h1>欢迎女士们先生们</h1>\n{% endcomment %}\n```"
     },
     {
       "id": "s2-78",
       "sectionId": "s2",
       "title": "%E6%B3%A8%E9%87%8A%E6%8F%8F%E8%BF%B0",
-      "kind": "code",
-      "lang": "django",
-      "code": "%3Ch1%3E%E6%AC%A2%E8%BF%8E%E5%A4%A7%E5%AE%B6%7B%23%20%E8%BE%83%E5%B0%8F%E7%9A%84%E6%B3%A8%E9%87%8A%20%23%7D%3C%2Fh1%3E%0A%7B%25%20comment%20%22%E8%BF%99%E6%98%AF%E6%9C%80%E5%88%9D%E7%9A%84%E6%AC%A2%E8%BF%8E%E4%BF%A1%E6%81%AF%22%20%25%7D%0A%20%20%20%20%3Ch1%3E%E6%AC%A2%E8%BF%8E%E5%A5%B3%E5%A3%AB%E4%BB%AC%E5%85%88%E7%94%9F%E4%BB%AC%3C%2Fh1%3E%0A%7B%25%20endcomment%20%25%7D",
+      "body": "%60%60%60django%0A%3Ch1%3E%E6%AC%A2%E8%BF%8E%E5%A4%A7%E5%AE%B6%7B%23%20%E8%BE%83%E5%B0%8F%E7%9A%84%E6%B3%A8%E9%87%8A%20%23%7D%3C%2Fh1%3E%0A%7B%25%20comment%20%22%E8%BF%99%E6%98%AF%E6%9C%80%E5%88%9D%E7%9A%84%E6%AC%A2%E8%BF%8E%E4%BF%A1%E6%81%AF%22%20%25%7D%0A%20%20%20%20%3Ch1%3E%E6%AC%A2%E8%BF%8E%E5%A5%B3%E5%A3%AB%E4%BB%AC%E5%85%88%E7%94%9F%E4%BB%AC%3C%2Fh1%3E%0A%7B%25%20endcomment%20%25%7D%0A%60%60%60%0A%0A%E6%B3%A8%E9%87%8A%E5%85%81%E8%AE%B8%E6%82%A8%E6%8B%A5%E6%9C%89%E5%BA%94%E8%AF%A5%E8%A2%AB%E5%BF%BD%E7%95%A5%E7%9A%84%E4%BB%A3%E7%A0%81%E9%83%A8%E5%88%86",
       "encoded": true
-    },
-    {
-      "id": "s2-79",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "注释允许您拥有应该被忽略的代码部分"
     },
     {
       "id": "s2-80",
       "sectionId": "s2",
       "title": "双过滤值",
-      "kind": "code",
-      "lang": "django",
-      "code": "<h1>你好 {{ firstname|first|upper }}，你好吗？</h1>"
-    },
-    {
-      "id": "s2-81",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "返回变量 `firstname` 的第一个字符，小写"
+      "body": "```django\n<h1>你好 {{ firstname|first|upper }}，你好吗？</h1>\n```\n\n返回变量 `firstname` 的第一个字符，小写"
     },
     {
       "id": "s2-82",
       "sectionId": "s2",
       "title": "过滤器标签",
-      "kind": "code",
-      "lang": "django",
-      "code": "{% filter upper %}\n  <h1>Hello everyone, how are you?</h1>\n{% endfilter %}"
-    },
-    {
-      "id": "s2-83",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "返回内容大写"
+      "body": "```django\n{% filter upper %}\n  <h1>Hello everyone, how are you?</h1>\n{% endfilter %}\n```\n\n返回内容大写"
     },
     {
       "id": "s2-84",
       "sectionId": "s2",
       "title": "cycle",
-      "kind": "text",
-      "body": "如果你想为每次循环使用新的背景颜色，你可以使用 `cycle` 标签来做到这一点"
-    },
-    {
-      "id": "s2-85",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "django",
-      "code": "<ul>\n  {% for x in members %}\n    <li style='background-color:{% cycle 'lightblue' 'pink' 'yellow' 'coral' 'grey' %}'>\n      {{ x.firstname }}\n    </li>\n  {% endfor %}\n</ul>"
-    },
-    {
-      "id": "s2-86",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将参数值保存在变量中，以便以后使用："
-    },
-    {
-      "id": "s2-87",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "django",
-      "code": "<ul>\n  {% for x in members %}\n    {% cycle 'lightblue' 'pink' 'yellow' 'coral' 'grey' as bgcolor silent %}\n    <li style='background-color:{{ bgcolor }}'>\n      {{ x.firstname }}\n    </li>\n  {% endfor %}\n</ul>"
-    },
-    {
-      "id": "s2-88",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "你注意到 `silent` 关键字了吗？ 确保添加这个，否则参数值将在输出中显示两次"
-    },
-    {
-      "id": "s2-89",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "django",
-      "code": "<ul>\n  {% for x in members %}\n    {% cycle 'lightblue' 'pink' 'yellow' 'coral' 'grey' as bgcolor silent %}\n    {% if forloop.counter == 3 %}\n      {% resetcycle %}\n    {% endif %}\n    <li style='background-color:{{ bgcolor }}'>\n      {{ x.firstname }}\n    </li>\n  {% endfor %}\n</ul>"
-    },
-    {
-      "id": "s2-90",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "您可以使用 `{% resetcycle %}` 标签强制循环重新开始"
+      "body": "%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E4%B8%BA%E6%AF%8F%E6%AC%A1%E5%BE%AA%E7%8E%AF%E4%BD%BF%E7%94%A8%E6%96%B0%E7%9A%84%E8%83%8C%E6%99%AF%E9%A2%9C%E8%89%B2%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20%60cycle%60%20%E6%A0%87%E7%AD%BE%E6%9D%A5%E5%81%9A%E5%88%B0%E8%BF%99%E4%B8%80%E7%82%B9%0A%0A%60%60%60django%0A%3Cul%3E%0A%20%20%7B%25%20for%20x%20in%20members%20%25%7D%0A%20%20%20%20%3Cli%20style%3D'background-color%3A%7B%25%20cycle%20'lightblue'%20'pink'%20'yellow'%20'coral'%20'grey'%20%25%7D'%3E%0A%20%20%20%20%20%20%7B%7B%20x.firstname%20%7D%7D%0A%20%20%20%20%3C%2Fli%3E%0A%20%20%7B%25%20endfor%20%25%7D%0A%3C%2Ful%3E%20%0A%60%60%60%0A%0A%E5%B0%86%E5%8F%82%E6%95%B0%E5%80%BC%E4%BF%9D%E5%AD%98%E5%9C%A8%E5%8F%98%E9%87%8F%E4%B8%AD%EF%BC%8C%E4%BB%A5%E4%BE%BF%E4%BB%A5%E5%90%8E%E4%BD%BF%E7%94%A8%EF%BC%9A%0A%0A%60%60%60django%0A%3Cul%3E%0A%20%20%7B%25%20for%20x%20in%20members%20%25%7D%0A%20%20%20%20%7B%25%20cycle%20'lightblue'%20'pink'%20'yellow'%20'coral'%20'grey'%20as%20bgcolor%20silent%20%25%7D%0A%20%20%20%20%3Cli%20style%3D'background-color%3A%7B%7B%20bgcolor%20%7D%7D'%3E%0A%20%20%20%20%20%20%7B%7B%20x.firstname%20%7D%7D%0A%20%20%20%20%3C%2Fli%3E%0A%20%20%7B%25%20endfor%20%25%7D%0A%3C%2Ful%3E%20%0A%60%60%60%0A%0A%E4%BD%A0%E6%B3%A8%E6%84%8F%E5%88%B0%20%60silent%60%20%E5%85%B3%E9%94%AE%E5%AD%97%E4%BA%86%E5%90%97%EF%BC%9F%20%E7%A1%AE%E4%BF%9D%E6%B7%BB%E5%8A%A0%E8%BF%99%E4%B8%AA%EF%BC%8C%E5%90%A6%E5%88%99%E5%8F%82%E6%95%B0%E5%80%BC%E5%B0%86%E5%9C%A8%E8%BE%93%E5%87%BA%E4%B8%AD%E6%98%BE%E7%A4%BA%E4%B8%A4%E6%AC%A1%0A%0A%60%60%60django%0A%3Cul%3E%0A%20%20%7B%25%20for%20x%20in%20members%20%25%7D%0A%20%20%20%20%7B%25%20cycle%20'lightblue'%20'pink'%20'yellow'%20'coral'%20'grey'%20as%20bgcolor%20silent%20%25%7D%0A%20%20%20%20%7B%25%20if%20forloop.counter%20%3D%3D%203%20%25%7D%0A%20%20%20%20%20%20%7B%25%20resetcycle%20%25%7D%0A%20%20%20%20%7B%25%20endif%20%25%7D%0A%20%20%20%20%3Cli%20style%3D'background-color%3A%7B%7B%20bgcolor%20%7D%7D'%3E%0A%20%20%20%20%20%20%7B%7B%20x.firstname%20%7D%7D%0A%20%20%20%20%3C%2Fli%3E%0A%20%20%7B%25%20endfor%20%25%7D%0A%3C%2Ful%3E%20%0A%60%60%60%0A%0A%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20%60%7B%25%20resetcycle%20%25%7D%60%20%E6%A0%87%E7%AD%BE%E5%BC%BA%E5%88%B6%E5%BE%AA%E7%8E%AF%E9%87%8D%E6%96%B0%E5%BC%80%E5%A7%8B",
+      "encoded": true
     },
     {
       "id": "s2-91",
       "sectionId": "s2",
       "title": "每一行添加行号",
-      "kind": "code",
-      "lang": "django",
-      "code": "{% filter upper|linenumbers %}Hello!\nmy name is\nEmil.\nWhat is your name?{% endfilter %}"
-    },
-    {
-      "id": "s2-92",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "返回内容`大写`并在每一行添加`行号`"
+      "body": "```django\n{% filter upper|linenumbers %}Hello!\nmy name is\nEmil.\nWhat is your name?{% endfilter %}\n```\n\n返回内容`大写`并在每一行添加`行号`"
     },
     {
       "id": "s2-93",
       "sectionId": "s2",
-      "title": "导入模板",
-      "kind": "text",
-      "body": "`footer.html`:"
-    },
-    {
-      "id": "s2-94",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "django",
-      "code": "<p>您已到达本页底部，感谢您抽出宝贵时间</p>"
-    },
-    {
-      "id": "s2-95",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`template.html`:"
-    },
-    {
-      "id": "s2-96",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "django",
-      "code": "<h1>Hello</h1>\n<p>此页面包含模板中的页脚</p>\n{% include 'footer.html' %}"
+      "title": "%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF",
+      "body": "%60footer.html%60%3A%0A%0A%60%60%60django%0A%3Cp%3E%E6%82%A8%E5%B7%B2%E5%88%B0%E8%BE%BE%E6%9C%AC%E9%A1%B5%E5%BA%95%E9%83%A8%EF%BC%8C%E6%84%9F%E8%B0%A2%E6%82%A8%E6%8A%BD%E5%87%BA%E5%AE%9D%E8%B4%B5%E6%97%B6%E9%97%B4%3C%2Fp%3E%0A%60%60%60%0A%0A%60template.html%60%3A%0A%0A%60%60%60django%0A%3Ch1%3EHello%3C%2Fh1%3E%0A%3Cp%3E%E6%AD%A4%E9%A1%B5%E9%9D%A2%E5%8C%85%E5%90%AB%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E9%A1%B5%E8%84%9A%3C%2Fp%3E%0A%7B%25%20include%20'footer.html'%20%25%7D%20%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-97",
       "sectionId": "s2",
-      "title": "导入模板传入变量",
-      "kind": "text",
-      "body": "`mymenu.html`:"
-    },
-    {
-      "id": "s2-98",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "django",
-      "code": "<div>HOME | {{ me }} | ABOUT | FORUM | {{ sponsor }}</div>"
-    },
-    {
-      "id": "s2-99",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`template.html`:"
-    },
-    {
-      "id": "s2-100",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "django",
-      "code": "%7B%25%20include%20mymenu.html%20with%20me%3D%22%E5%BC%A0%E4%B8%89%22%20sponsor%3D%22Reference%22%20%25%7D%0A%0A%3Ch1%3EWelcome%3C%2Fh1%3E%0A%0A%3Cp%3EThis%20is%20my%20webpage%3C%2Fp%3E",
+      "title": "%E5%AF%BC%E5%85%A5%E6%A8%A1%E6%9D%BF%E4%BC%A0%E5%85%A5%E5%8F%98%E9%87%8F",
+      "body": "%60mymenu.html%60%3A%0A%0A%60%60%60django%0A%3Cdiv%3EHOME%20%7C%20%7B%7B%20me%20%7D%7D%20%7C%20ABOUT%20%7C%20FORUM%20%7C%20%7B%7B%20sponsor%20%7D%7D%3C%2Fdiv%3E%0A%60%60%60%0A%0A%60template.html%60%3A%0A%0A%60%60%60django%0A%7B%25%20include%20mymenu.html%20with%20me%3D%22%E5%BC%A0%E4%B8%89%22%20sponsor%3D%22Reference%22%20%25%7D%0A%0A%3Ch1%3EWelcome%3C%2Fh1%3E%0A%0A%3Cp%3EThis%20is%20my%20webpage%3C%2Fp%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-101",
       "sectionId": "s2",
       "title": "过滤器参考",
-      "kind": "text",
       "body": "Keyword | 描述\n:- | :-\n`add` | 添加指定的值\n`addslashes` | 在任何引号字符之前添加一个斜杠，以转义字符串\n`capfirst` | 返回大写的第一个字母\n`center` | 使值在指定宽度的中间居中\n`cut` | 删除任何指定的字符或短语\n`date` | 以指定格式返回日期\n`default` | 如果值为 `False`，则返回指定值\n`default_if_none` | 如果值为 `None`，则返回指定的值\n`dictsort` | 按给定值对字典进行排序\n`dictsortreversed` | 按给定值对字典进行反向排序\n`divisibleby` | 如果该值可以除以指定的数字，则返回 `True`，否则返回 `False`\n`escape` | 从字符串中转义 `HTML` 代码\n`escapejs` | 从字符串中转义 `JavaScript` 代码\n`filesizeformat` | 将数字返回为文件大小格式\n`first` | 返回对象的第一项（对于字符串，返回第一个字符）\n`floatformat` | 将浮点数四舍五入到指定的小数位数，默认为一位小数\n`force_escape` | 从字符串中转义 `HTML` 代码\n`get_digit` | 返回数字的特定数字\n`iriencode` | 将 `IRI` 转换为 `URL` 友好字符串\n`join` | 将列表中的项目返回为字符串\n`json_script` | 将一个对象返回为由 `<script></script>` 标签包围的 `JSON` 对象\n`last` | 返回对象的最后一项（对于字符串，返回最后一个字符）\n`length` | 返回对象中的项目数，或字符串中的字符数\n`length_is` | 如果长度与指定的数字相同，则返回 `True`\n`linebreaks` | 返回带有 `<br>` 而不是换行符和 `<p>` 而不是多个换行符的文本\n`linebreaksbr` | 返回带有 `<br>` 的文本，而不是换行符\n`linenumbers` | 返回每行带有行号的文本\n`ljust` | 根据指定的宽度左对齐值\n`lower` | 以小写字母返回文本\n`make_list` | 将值转换为列表对象\n`phone2numeric` | 将带字母的电话号码转换为数字电话号码\n`pluralize` | 如果指定的数值不是 `1`，则在值的末尾添加一个 `s`\n`pprint` |\n`random` | 返回对象的随机项\n`rjust` | 根据指定的宽度右对齐值\n`safe` | 标记此文本是安全的，不应进行 `HTML` 转义\n`safeseq` | 将对象的每个项目标记为安全且项目不应进行 `HTML` 转义\n`slice` | 返回文本或对象的指定切片\n`slugify` | 将文本转换为一个长字母数字小写单词\n`stringformat` | 将值转换为指定格式\n`striptags` | 从文本中删除 `HTML` 标记\n`time` | 以指定格式返回时间\n`timesince` | 返回两个日期时间之间的差\n`timeuntil` | 返回两个日期时间之间的差\n`title` | 文本中每个单词的第一个字符大写，所有其他字符都转换为小写\n`truncatechars` | 将字符串缩短为指定数量的字符\n`truncatechars_html` | 将字符串缩短为指定数量的字符，而不考虑任何 `HTML` 标记的长度\n`truncatewords` | 将字符串缩短为指定数量的单词\n`truncatewords_html` | 将字符串缩短为指定数量的单词，而不考虑任何 `HTML` 标记\n`unordered_list` | 将对象的项目返回为无序列的 `HTML` 列表\n`upper` | 以大写字母返回文本\n`urlencode` | `URL` 对字符串进行编码\n`urlize` | 将字符串中的任何 `URL` 作为 `HTML` 链接返回\n`urlizetrunc` | 将字符串中的任何 `URL` 作为 `HTML` 链接返回，但会将链接缩短为指定的字符数\n`wordcount` | 返回文本中的单词数\n`wordwrap` | 以指定的字符数换行\n`yesno` | 将布尔值转换为指定值\n`i18n` |\n`l10n` |\n`tz` |"
     },
     {
       "id": "s2-102",
       "sectionId": "s2",
       "title": "字段查询参考",
-      "kind": "text",
       "body": "Keyword | 描述\n:- | :-\n`contains` | 包含短语\n`icontains` | 与包含相同，但不区分大小写\n`date` | 匹配日期\n`day` | 匹配日期(日期，1-31)(日期)\n`endswith` | 以。。结束\n`iendswith` | 与 endwidth 相同，但不区分大小写\n`exact` | 完全匹配\n`iexact` | 与精确相同，但不区分大小写\n`in` | 匹配其中一个值\n`isnull` | 匹配 NULL 值\n`gt` | 比...更棒\n`gte` | 大于或等于\n`hour` | 匹配一个小时(对于日期时间)\n`lt` | 少于\n`lte` | 小于或等于\n`minute` | 匹配一分钟(对于日期时间)\n`month` | 匹配一个月(日期)\n`quarter` | 匹配一年中的一个季度 (1-4)(用于日期)\n`range` | 之间的匹配\n`regex` | 匹配正则表达式\n`iregex` | 与正则表达式相同，但不区分大小写\n`second` | 匹配一秒(对于日期时间)\n`startswith` | 以 ... 开始\n`istartswith` | 与 `startswith` 相同，但不区分大小写\n`time` | 匹配时间(用于日期时间)\n`week` | 匹配周数 (`1-53`)(用于日期)\n`week_day` | 匹配一周中的某一天 (1-7) 1 是星期日\n`iso_week_day` | 匹配 ISO 8601 星期几 (1-7) 1 是星期一\n`year` | 匹配一年(日期)\n`iso_year` | 匹配 ISO 8601 年份(日期)"
     },
     {
       "id": "s3-103",
       "sectionId": "s3",
-      "title": "添加 CSS 文件",
-      "kind": "text",
-      "body": "```bash {7}\nmyworld\n├┈ manage.py\n├┈ myworld/\n╰┈ members/\n├┈ templates/\n├┈ static/\n╰┈ myfirst.css"
-    },
-    {
-      "id": "s3-104",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n打开 `CSS` 文件 (`members/static/myfirst.css`) 并插入以下内容：\n\n```css\nbody {\n  background-color: lightblue;\n  font-family: verdana;\n}"
-    },
-    {
-      "id": "s3-105",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "修改模板 (`members/templates/template.html`) 引入 css 文件"
-    },
-    {
-      "id": "s3-106",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "%60%60%60django%20%7B1%2C4%7D%0A%7B%25%20load%20static%20%25%7D%0A%3C!DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Clink%20rel%3D%22stylesheet%22%20href%3D%22%7B%25%20static%20'myfirst.css'%20%25%7D%22%3E%0A%3Cbody%3E",
+      "title": "%E6%B7%BB%E5%8A%A0%20CSS%20%E6%96%87%E4%BB%B6",
+      "body": "%60%60%60bash%20%7B7%7D%0Amyworld%0A%E2%94%9C%E2%94%88%20manage.py%0A%E2%94%9C%E2%94%88%20myworld%2F%0A%E2%95%B0%E2%94%88%20members%2F%0A%E2%94%9C%E2%94%88%20templates%2F%0A%E2%94%9C%E2%94%88%20static%2F%0A%E2%95%B0%E2%94%88%20myfirst.css%0A%0A%60%60%60%0A%0A%E6%89%93%E5%BC%80%20%60CSS%60%20%E6%96%87%E4%BB%B6%20(%60members%2Fstatic%2Fmyfirst.css%60)%20%E5%B9%B6%E6%8F%92%E5%85%A5%E4%BB%A5%E4%B8%8B%E5%86%85%E5%AE%B9%EF%BC%9A%0A%0A%60%60%60css%0Abody%20%7B%0A%20%20background-color%3A%20lightblue%3B%0A%20%20font-family%3A%20verdana%3B%0A%7D%0A%60%60%60%0A%0A%E4%BF%AE%E6%94%B9%E6%A8%A1%E6%9D%BF%20(%60members%2Ftemplates%2Ftemplate.html%60)%20%E5%BC%95%E5%85%A5%20css%20%E6%96%87%E4%BB%B6%0A%0A%60%60%60django%20%7B1%2C4%7D%0A%7B%25%20load%20static%20%25%7D%0A%3C!DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Clink%20rel%3D%22stylesheet%22%20href%3D%22%7B%25%20static%20'myfirst.css'%20%25%7D%22%3E%0A%3Cbody%3E%0A%0A%60%60%60%0A%3C!--rehype%3AclassName%3Dwrap-text%20--%3E%0A%0A%23%23%23%20%E6%B7%BB%E5%8A%A0%20JS%20%E6%96%87%E4%BB%B6%0A%0A%60%60%60bash%20%7B7%7D%0Amyworld%0A%20%20%E2%94%9C%E2%94%88%20manage.py%0A%20%20%E2%94%9C%E2%94%88%20myworld%2F%0A%20%20%E2%95%B0%E2%94%88%20members%2F%0A%20%20%20%20%20%E2%94%9C%E2%94%88%20templates%2F%0A%20%20%20%20%20%E2%94%9C%E2%94%88%20static%2F%0A%20%20%20%20%20%20%20%20%E2%95%B0%E2%94%88%20myfirst.js%0A%60%60%60%0A%0A%E6%89%93%E5%BC%80%20%60JS%60%20%E6%96%87%E4%BB%B6%20(%60members%2Fstatic%2Fmyfirst.js%60)%20%E5%B9%B6%E6%8F%92%E5%85%A5%E4%BB%A5%E4%B8%8B%E5%86%85%E5%AE%B9%EF%BC%9A%0A%0A%60%60%60js%0Afunction%20myFunction()%20%7B%0A%20%20alert(%22Hello%20from%20a%20static%20file!%22)%3B%0A%7D%0A%60%60%60%0A%0A%E4%BF%AE%E6%94%B9%E6%A8%A1%E6%9D%BF%20(%60members%2Ftemplates%2Ftemplate.html%60)%20%E5%BC%95%E5%85%A5%20%60JS%60%20%E6%96%87%E4%BB%B6%0A%0A%60%60%60django%20%7B1%2C4%2C6%7D%0A%7B%25%20load%20static%20%25%7D%0A%3C!DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Cscript%20src%3D%22%7B%25%20static%20'myfirst.js'%20%25%7D%22%3E%3C%2Fscript%3E%0A%3Cbody%3E%0A%3Cbutton%20onclick%3D%22myFunction()%22%3EClick%20me!%3C%2Fbutton%3E%0A%0A%60%60%60%0A%3C!--rehype%3AclassName%3Dwrap-text%20--%3E%0A%0A%23%23%23%20%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%0A%0A%60%60%60bash%20%7B7%7D%0Amyworld%0A%20%20%E2%94%9C%E2%94%88%20manage.py%0A%20%20%E2%94%9C%E2%94%88%20myworld%2F%0A%20%20%E2%95%B0%E2%94%88%20members%2F%0A%20%20%20%20%20%E2%94%9C%E2%94%88%20templates%2F%0A%20%20%20%20%20%E2%94%9C%E2%94%88%20static%2F%0A%20%20%20%20%20%20%20%20%E2%95%B0%E2%94%88%20pineapple.jpg%0A%60%60%60%0A%0A%E6%89%93%E5%BC%80%20%60JS%60%20%E6%96%87%E4%BB%B6%20(%60members%2Fstatic%2Fpineapple.jpg%60)%20%E5%B9%B6%E6%8F%92%E5%85%A5%E4%BB%A5%E4%B8%8B%E5%86%85%E5%AE%B9%EF%BC%9A%0A%0A%60%60%60js%0Afunction%20myFunction()%20%7B%0A%20%20alert(%22Hello%20from%20a%20static%20file!%22)%3B%0A%7D%0A%60%60%60%0A%0A%E4%BF%AE%E6%94%B9%E6%A8%A1%E6%9D%BF%20(%60members%2Ftemplates%2Ftemplate.html%60)%20%E5%BC%95%E5%85%A5%20%60jpg%60%20%E6%96%87%E4%BB%B6%0A%0A%60%60%60django%20%7B1%2C5%7D%0A%7B%25%20load%20static%20%25%7D%0A%3C!DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Cbody%3E%0A%3Cimg%20src%3D%22%7B%25%20static%20'pineapple.jpg'%20%25%7D%22%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E%0A%0A%60%60%60%0A%3C!--rehype%3AclassName%3Dwrap-text%20--%3E%0A%0A%E5%8F%A6%E8%A7%81%0A----%0A%0A-%20%5BDjango%20%E5%AE%98%E7%BD%91%5D(https%3A%2F%2Fwww.djangoproject.com%2F)%20_(djangoproject.com)_%0A-%20%5BDjango%20%E6%95%99%E7%A8%8B%5D(https%3A%2F%2Fwww.runoob.com%2Fdjango%2Fdjango-tutorial.html)%20_(runoob.com)_%0A-%20%5BDjango%20%E6%A1%86%E6%9E%B6%E6%95%99%E7%A8%8B%5D(http%3A%2F%2Fc.biancheng.net%2Fdjango%2F)%20_(biancheng.net)_%0A-%20%5BDjango%204%20%E4%B8%AD%E6%96%87%E6%95%99%E7%A8%8B%5D(https%3A%2F%2Fwww.w3cschool.cn%2Fdjango4%2F)%20_(w3cschool.cn)_%0A-%20%5BDjango%20Tutorial%5D(https%3A%2F%2Fwww.w3schools.com%2Fdjango%2Findex.php)%20_(w3schools.com)_%0A%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s3-107",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text -->\n\n### 添加 JS 文件\n\n```bash {7}\nmyworld\n  ├┈ manage.py\n  ├┈ myworld/\n  ╰┈ members/\n     ├┈ templates/\n     ├┈ static/\n        ╰┈ myfirst.js"
-    },
-    {
-      "id": "s3-108",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "打开 `JS` 文件 (`members/static/myfirst.js`) 并插入以下内容："
-    },
-    {
-      "id": "s3-109",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "function%20myFunction()%20%7B%0A%20%20alert(%22Hello%20from%20a%20static%20file!%22)%3B%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s3-110",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "修改模板 (`members/templates/template.html`) 引入 `JS` 文件"
-    },
-    {
-      "id": "s3-111",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "%60%60%60django%20%7B1%2C4%2C6%7D%0A%7B%25%20load%20static%20%25%7D%0A%3C!DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Cscript%20src%3D%22%7B%25%20static%20'myfirst.js'%20%25%7D%22%3E%3C%2Fscript%3E%0A%3Cbody%3E%0A%3Cbutton%20onclick%3D%22myFunction()%22%3EClick%20me!%3C%2Fbutton%3E",
-      "encoded": true
-    },
-    {
-      "id": "s3-112",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text -->\n\n### 添加图片文件\n\n```bash {7}\nmyworld\n  ├┈ manage.py\n  ├┈ myworld/\n  ╰┈ members/\n     ├┈ templates/\n     ├┈ static/\n        ╰┈ pineapple.jpg"
-    },
-    {
-      "id": "s3-113",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "打开 `JS` 文件 (`members/static/pineapple.jpg`) 并插入以下内容："
-    },
-    {
-      "id": "s3-114",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "function%20myFunction()%20%7B%0A%20%20alert(%22Hello%20from%20a%20static%20file!%22)%3B%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s3-115",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "修改模板 (`members/templates/template.html`) 引入 `jpg` 文件"
-    },
-    {
-      "id": "s3-116",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "%60%60%60django%20%7B1%2C5%7D%0A%7B%25%20load%20static%20%25%7D%0A%3C!DOCTYPE%20html%3E%0A%3Chtml%3E%0A%3Cbody%3E%0A%3Cimg%20src%3D%22%7B%25%20static%20'pineapple.jpg'%20%25%7D%22%3E%0A%3C%2Fbody%3E%0A%3C%2Fhtml%3E",
-      "encoded": true
-    },
-    {
-      "id": "s3-117",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text -->\n\n另见\n----\n\n- [Django 官网](https://www.djangoproject.com/) _(djangoproject.com)_\n- [Django 教程](https://www.runoob.com/django/django-tutorial.html) _(runoob.com)_\n- [Django 框架教程](http://c.biancheng.net/django/) _(biancheng.net)_\n- [Django 4 中文教程](https://www.w3cschool.cn/django4/) _(w3cschool.cn)_\n- [Django Tutorial](https://www.w3schools.com/django/index.php) _(w3schools.com)_"
     }
   ],
   "source": {

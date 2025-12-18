@@ -35,344 +35,154 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "This is a quick reference cheat sheet for [Terraform](https://docs.docker.com/get-started/)."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "HCL%20Syntax%3A",
-      "kind": "code",
-      "lang": "",
-      "code": "(Block%20Name)%20%20(Resource%20Type)%20%20(Resource%20Name)%0A%20%20%20%20%20%20%7C%20%20%20%20%20%20%20%20%20%20%20%7C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%20%20%20%20%20%20%E2%96%BD%20%20%20%20%20%20%20%20%20%20%20%E2%96%BD%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BD%0A%20%20resource%20%22aws_instance%22%20%22my_aws_server%22%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%0A%20%20%20%20%20%20ami%20%20%20%20%20%20%20%20%20%20%20%3D%20%22ami-1251351351513%22%20%20%20%20%7C%3C--(Arguments)%0A%20%20%20%20%20%20instance_type%20%3D%20%22t2.micro%22%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%0A%0A%7D",
+      "body": "%60%60%60%0A(Block%20Name)%20%20(Resource%20Type)%20%20(Resource%20Name)%0A%20%20%20%20%20%20%7C%20%20%20%20%20%20%20%20%20%20%20%7C%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%20%20%20%20%20%20%E2%96%BD%20%20%20%20%20%20%20%20%20%20%20%E2%96%BD%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BD%0A%20%20resource%20%22aws_instance%22%20%22my_aws_server%22%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%0A%20%20%20%20%20%20ami%20%20%20%20%20%20%20%20%20%20%20%3D%20%22ami-1251351351513%22%20%20%20%20%7C%3C--(Arguments)%0A%20%20%20%20%20%20instance_type%20%3D%20%22t2.micro%22%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%0A%0A%7D%0A%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "Variable Types",
-      "kind": "text",
-      "body": "• Simple types: number, string, bool, null."
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• Complex types: Collection types: list, map, set Structural types: `object({<KEY> = <TYPE>, ...})`,"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "`tuple([<TYPE>, ...])`"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Order of Precedence: defaults < env vars < terraform.tfvars file < terraform.tfvars.json file < .auto.tfvars < command\nline (-var & -var-file)"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "variable%20%22%3CVAR%20NAME%3E%22%20%7B%0A%20%20%20%20description%20%3D%20%22%3CDESCRIPTION%20OF%20THE%20VAR%3E%22%0A%20%20%20%20type%20%20%20%20%20%20%20%20%3D%20%3CVAR%20TYPE%3E%0A%20%20%20%20default%20%20%20%20%20%3D%20%3CDEFAULT%20VALUE%3E%0A%7D%0A%0A%23%20type%20string%0Avariable%20%22aws_region%22%20%7B%0A%20%20%20%20description%20%3D%20%22AWS%20Region%22%0A%20%20%20%20type%20%20%20%20%20%20%20%20%3D%20string%0A%20%20%20%20default%20%20%20%20%20%3D%20%22us-east-1%22%0A%7D%0A%0A%23%20type%20list(string)%0Avariable%20%22azs%22%20%7B%0A%20%20%20%20description%20%3D%20%22AZs%20in%20the%20Region%22%0A%20%20%20%20type%20%20%20%20%20%20%20%20%3D%20list(string)%0A%20%20%20%20default%20%20%20%20%20%3D%20%5B%20%22us-east-1a%22%2C%20%22us-east-1b%22%2C%20%22us-east-1c%22%5D%0A%7D%0A%0A%23%20type%20map%0Avariable%20%22amis%22%20%7B%0A%20%20%20%20type%20%3D%20map(string)%0A%20%20%20%20default%20%3D%20%7B%0A%20%20%20%20%20%20%22eu-west-1%22%20%3D%20%22ami-0fdke15151513145%22%2C%0A%20%20%20%20%20%20%22us-east-1%22%20%3D%20%22ami-0d17359173587519%22%0A%20%20%20%20%7D%0A%7D%0A%0A%23%20type%20object%0Avariable%20%22egress_dsg%22%20%7B%0A%20%20%20%20type%20%3D%20object(%7B%0A%20%20%20%20%20%20%20%20from_port%20%3D%20number%0A%20%20%20%20%20%20%20%20to_port%20%3D%20number%0A%20%20%20%20%20%20%20%20protocol%20%3D%20string%0A%20%20%20%20%20%20%20%20cidr_blocks%20%3D%20list(string)%0A%20%20%20%20%7D)%0A%20%20%20%20default%20%3D%20%7B%0A%20%20%20%20%20from_port%20%3D%200%2C%0A%20%20%20%20%20to_port%20%3D%2065365%2C%0A%20%20%20%20%20protocol%20%3D%20%22tcp%22%2C%0A%20%20%20%20%20cidr_blocks%20%3D%20%5B%22100.0.0.0%2F16%22%2C%20%22200.0.0.0%2F16%22%2C%20%220.0.0.0%2F0%22%5D%0A%20%20%20%20%7D%0A%7D",
+      "title": "Variable%20Types",
+      "body": "%E2%80%A2%20Simple%20types%3A%20number%2C%20string%2C%20bool%2C%20null.%0A%0A%E2%80%A2%20Complex%20types%3A%20Collection%20types%3A%20list%2C%20map%2C%20set%20Structural%20types%3A%20%60object(%7B%3CKEY%3E%20%3D%20%3CTYPE%3E%2C%20...%7D)%60%2C%0A%0A%60tuple(%5B%3CTYPE%3E%2C%20...%5D)%60%0A%0AOrder%20of%20Precedence%3A%20defaults%20%3C%20env%20vars%20%3C%20terraform.tfvars%20file%20%3C%20terraform.tfvars.json%20file%20%3C%20.auto.tfvars%20%3C%20command%0Aline%20(-var%20%26%20-var-file)%0A%0A%60%60%60%0Avariable%20%22%3CVAR%20NAME%3E%22%20%7B%0A%20%20%20%20description%20%3D%20%22%3CDESCRIPTION%20OF%20THE%20VAR%3E%22%0A%20%20%20%20type%20%20%20%20%20%20%20%20%3D%20%3CVAR%20TYPE%3E%0A%20%20%20%20default%20%20%20%20%20%3D%20%3CDEFAULT%20VALUE%3E%0A%7D%0A%0A%23%20type%20string%0Avariable%20%22aws_region%22%20%7B%0A%20%20%20%20description%20%3D%20%22AWS%20Region%22%0A%20%20%20%20type%20%20%20%20%20%20%20%20%3D%20string%0A%20%20%20%20default%20%20%20%20%20%3D%20%22us-east-1%22%0A%7D%0A%0A%23%20type%20list(string)%0Avariable%20%22azs%22%20%7B%0A%20%20%20%20description%20%3D%20%22AZs%20in%20the%20Region%22%0A%20%20%20%20type%20%20%20%20%20%20%20%20%3D%20list(string)%0A%20%20%20%20default%20%20%20%20%20%3D%20%5B%20%22us-east-1a%22%2C%20%22us-east-1b%22%2C%20%22us-east-1c%22%5D%0A%7D%0A%0A%23%20type%20map%0Avariable%20%22amis%22%20%7B%0A%20%20%20%20type%20%3D%20map(string)%0A%20%20%20%20default%20%3D%20%7B%0A%20%20%20%20%20%20%22eu-west-1%22%20%3D%20%22ami-0fdke15151513145%22%2C%0A%20%20%20%20%20%20%22us-east-1%22%20%3D%20%22ami-0d17359173587519%22%0A%20%20%20%20%7D%0A%7D%0A%0A%23%20type%20object%0Avariable%20%22egress_dsg%22%20%7B%0A%20%20%20%20type%20%3D%20object(%7B%0A%20%20%20%20%20%20%20%20from_port%20%3D%20number%0A%20%20%20%20%20%20%20%20to_port%20%3D%20number%0A%20%20%20%20%20%20%20%20protocol%20%3D%20string%0A%20%20%20%20%20%20%20%20cidr_blocks%20%3D%20list(string)%0A%20%20%20%20%7D)%0A%20%20%20%20default%20%3D%20%7B%0A%20%20%20%20%20from_port%20%3D%200%2C%0A%20%20%20%20%20to_port%20%3D%2065365%2C%0A%20%20%20%20%20protocol%20%3D%20%22tcp%22%2C%0A%20%20%20%20%20cidr_blocks%20%3D%20%5B%22100.0.0.0%2F16%22%2C%20%22200.0.0.0%2F16%22%2C%20%220.0.0.0%2F0%22%5D%0A%20%20%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-7",
       "sectionId": "s2",
       "title": "Loops",
-      "kind": "text",
-      "body": "count, for_each, [for( o in var.list: o.id])"
-    },
-    {
-      "id": "s2-8",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "%23%20creating%20multiple%20EC2%20instances%20using%20count%0Aresource%20%22aws_instance%22%20%22server%22%20%7B%0A%20%20ami%20%3D%20%22ami-06ec8443c2a35b0ba%22%0A%20%20instance_type%20%3D%20%22t2.micro%22%0A%20%20count%20%3D%203%20%20%23%20creating%203%20resources%0A%7D%0A%0A%23%20declaring%20a%20variable%0Avariable%20%22users%22%20%7B%0A%20%20type%20%3D%20list(string)%0A%20%20default%20%3D%20%5B%22demo-user%22%2C%20%22admin1%22%2C%20%22john%22%5D%0A%7D%0A%0A%23%20creating%20IAM%20users%20using%20for_each%0Aresource%20%22aws_iam_user%22%20%22test%22%20%7B%0A%20%20for_each%20%3D%20toset(var.users)%20%23%20converts%20a%20list%20to%20a%20set%0A%20%20name%20%3D%20each.key%0A%7D%0A%0A%23%20A%20for%20expression%20creates%20a%20complex%20type%20value%20by%20transforming%20another%20complex%20type%20value.%0Avariable%20%22names%22%20%7B%0A%20%20%20%20type%20%3D%20list%0A%20%20%20%20default%20%3D%20%5B%22som%22%2C%20%22john%22%2C%20%22mary%22%5D%0A%7D%0A%0Aoutput%20%22show_names%22%20%7B%0A%20%20%20%20%23%20similar%20to%20Python's%20list%20comprehension%0A%20%20%20%20value%20%3D%20%5Bfor%20n%20in%20var.names%20%3A%20upper(n)%5D%0A%7D%0A%0Aoutput%20%22short_upper_names%22%20%7B%0A%20%20%23%20filter%20the%20resulting%20list%20by%20specifying%20a%20condition%3A%0A%20%20value%20%3D%20%5Bfor%20name%20in%20var.names%20%3A%20upper(name)%20if%20length(name)%20%3E%207%5D%0A%7D",
+      "body": "count%2C%20for_each%2C%20%5Bfor(%20o%20in%20var.list%3A%20o.id%5D)%0A%0A%60%60%60%0A%23%20creating%20multiple%20EC2%20instances%20using%20count%0Aresource%20%22aws_instance%22%20%22server%22%20%7B%0A%20%20ami%20%3D%20%22ami-06ec8443c2a35b0ba%22%0A%20%20instance_type%20%3D%20%22t2.micro%22%0A%20%20count%20%3D%203%20%20%23%20creating%203%20resources%0A%7D%0A%0A%23%20declaring%20a%20variable%0Avariable%20%22users%22%20%7B%0A%20%20type%20%3D%20list(string)%0A%20%20default%20%3D%20%5B%22demo-user%22%2C%20%22admin1%22%2C%20%22john%22%5D%0A%7D%0A%0A%23%20creating%20IAM%20users%20using%20for_each%0Aresource%20%22aws_iam_user%22%20%22test%22%20%7B%0A%20%20for_each%20%3D%20toset(var.users)%20%23%20converts%20a%20list%20to%20a%20set%0A%20%20name%20%3D%20each.key%0A%7D%0A%0A%23%20A%20for%20expression%20creates%20a%20complex%20type%20value%20by%20transforming%20another%20complex%20type%20value.%0Avariable%20%22names%22%20%7B%0A%20%20%20%20type%20%3D%20list%0A%20%20%20%20default%20%3D%20%5B%22som%22%2C%20%22john%22%2C%20%22mary%22%5D%0A%7D%0A%0Aoutput%20%22show_names%22%20%7B%0A%20%20%20%20%23%20similar%20to%20Python's%20list%20comprehension%0A%20%20%20%20value%20%3D%20%5Bfor%20n%20in%20var.names%20%3A%20upper(n)%5D%0A%7D%0A%0Aoutput%20%22short_upper_names%22%20%7B%0A%20%20%23%20filter%20the%20resulting%20list%20by%20specifying%20a%20condition%3A%0A%20%20value%20%3D%20%5Bfor%20name%20in%20var.names%20%3A%20upper(name)%20if%20length(name)%20%3E%207%5D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-9",
       "sectionId": "s2",
       "title": "Splat",
-      "kind": "text",
-      "body": "`Splat(var.list[*].id)`"
-    },
-    {
-      "id": "s2-10",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "%23%20Launch%20an%20EC2%20instance%0Aresource%20%22aws_instance%22%20%22server%22%20%7B%0A%20%20ami%20%3D%20%22ami-05cafdf7c9f772ad2%22%0A%20%20instance_type%20%3D%20%22t2.micro%22%0A%20%20count%20%3D%203%0A%7D%0A%0Aoutput%20%22private_addresses%22%7B%0A%20%20value%20%3D%20aws_instance.server%5B*%5D.private_ip%20%20%23%20splat%20expression%0A%7D",
+      "body": "%60Splat(var.list%5B*%5D.id)%60%0A%0A%60%60%60%0A%23%20Launch%20an%20EC2%20instance%0Aresource%20%22aws_instance%22%20%22server%22%20%7B%0A%20%20ami%20%3D%20%22ami-05cafdf7c9f772ad2%22%0A%20%20instance_type%20%3D%20%22t2.micro%22%0A%20%20count%20%3D%203%0A%7D%0A%0Aoutput%20%22private_addresses%22%7B%0A%20%20value%20%3D%20aws_instance.server%5B*%5D.private_ip%20%20%23%20splat%20expression%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
       "title": "depends_on",
-      "kind": "text",
-      "body": "if two resources depends on each other, depends_on specifies that dependency to enforce ordering"
-    },
-    {
-      "id": "s2-12",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "resource%20%22aws_iam_role_policy%22%20%22example%22%20%7B%0A%20%20%20%20name%20%3D%20%22example%22%0A%20%20%20%20role%20%3D%20%22s3%20access%22%0A%20%20%20%20policy%20%3D%20jsonencode(%7B%0A%20%20%20%20%20%20%22Statement%22%20%3D%20%5B%7B%0A%20%20%20%20%20%20%20%20%22Action%22%20%3D%20%22s3%3A*%22%2C%0A%20%20%20%20%20%20%20%20%22Effect%22%20%3D%20%22Allow%22%2C%0A%20%20%20%20%20%20%7D%5D%2C%0A%20%20%20%20%7D)%0A%7D%0A%0Aresource%20%22aws_instance%22%20%22my_server%22%20%7B%0A%20%20%20%20ami%20%20%3D%20%22ami-a255235%22%0A%20%20%20%20instance_type%20%3D%20%22t2.micro%22%0A%0A%20%20%20%20iam_instance_profile%20%3D%20aws_iam_instance_profile.my_server%0A%0A%20%20%20%20depends_on%20%3D%20%5B%0A%20%20%20%20%20%20aws_iam_role_policy.example%2C%0A%20%20%20%20%5D",
+      "body": "if%20two%20resources%20depends%20on%20each%20other%2C%20depends_on%20specifies%20that%20dependency%20to%20enforce%20ordering%0A%0A%60%60%60%0Aresource%20%22aws_iam_role_policy%22%20%22example%22%20%7B%0A%20%20%20%20name%20%3D%20%22example%22%0A%20%20%20%20role%20%3D%20%22s3%20access%22%0A%20%20%20%20policy%20%3D%20jsonencode(%7B%0A%20%20%20%20%20%20%22Statement%22%20%3D%20%5B%7B%0A%20%20%20%20%20%20%20%20%22Action%22%20%3D%20%22s3%3A*%22%2C%0A%20%20%20%20%20%20%20%20%22Effect%22%20%3D%20%22Allow%22%2C%0A%20%20%20%20%20%20%7D%5D%2C%0A%20%20%20%20%7D)%0A%7D%0A%0Aresource%20%22aws_instance%22%20%22my_server%22%20%7B%0A%20%20%20%20ami%20%20%3D%20%22ami-a255235%22%0A%20%20%20%20instance_type%20%3D%20%22t2.micro%22%0A%0A%20%20%20%20iam_instance_profile%20%3D%20aws_iam_instance_profile.my_server%0A%0A%20%20%20%20depends_on%20%3D%20%5B%0A%20%20%20%20%20%20aws_iam_role_policy.example%2C%0A%20%20%20%20%5D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-13",
       "sectionId": "s2",
       "title": "lifecycle",
-      "kind": "text",
-      "body": "A set of meta arguments to control behavior specific resources"
-    },
-    {
-      "id": "s2-14",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "resources%20%22aws_instance%22%20%22server%22%20%7B%0A%20%20ami%20%20%20%20%20%20%20%20%20%20%20%3D%20%22ami-a1b3414%22%0A%20%20instance_type%20%3D%20%22t2.micro%22%0A%0A%20%20lifecycle%20%7B%0A%20%20%20%20create_before_destroy%20%3D%20true%0A%20%20%20%20ignore_changes%20%3D%20%5B%0A%20%20%20%20%20%20%23%20Some%20resources%20have%20metadata%0A%20%20%20%20%20%20%23%20modified%20automatically%20outside%20of%20TF%0A%0A%20%20%20%20%20%20tags%0A%20%20%20%20%5D%0A%20%20%7D%0A%7D",
+      "body": "A%20set%20of%20meta%20arguments%20to%20control%20behavior%20specific%20resources%0A%0A%60%60%60%0Aresources%20%22aws_instance%22%20%22server%22%20%7B%0A%20%20ami%20%20%20%20%20%20%20%20%20%20%20%3D%20%22ami-a1b3414%22%0A%20%20instance_type%20%3D%20%22t2.micro%22%0A%0A%20%20lifecycle%20%7B%0A%20%20%20%20create_before_destroy%20%3D%20true%0A%20%20%20%20ignore_changes%20%3D%20%5B%0A%20%20%20%20%20%20%23%20Some%20resources%20have%20metadata%0A%20%20%20%20%20%20%23%20modified%20automatically%20outside%20of%20TF%0A%0A%20%20%20%20%20%20tags%0A%20%20%20%20%5D%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
       "title": "Conditionals",
-      "kind": "text",
       "body": "`condition ? true_val : false_val`"
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
       "title": "Built-In%20functions",
-      "kind": "text",
       "body": "%7C%20Function%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Result%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20------------------------------------------%20%7C%20-----------------------%20%7C%0A%7C%20%60max(5%2C%2010%2C%209)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%2012%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60min(5%2C%2010%2C%209)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%205%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60format(%22There%20are%20%25d%20servers%22%2C%204)%60%20%20%20%20%20%20%20%20%7C%20There%20are%204%20lights%20%20%20%20%20%20%7C%0A%7C%20%60join(%22%2C%22%20%5B%22foo%22%2C%20%22bar%22%2C%20%22baz%22%5D)%60%20%20%20%20%20%20%20%20%20%20%7C%20foo%2Cbar%2Cbaz%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60split(%22%2C%22%2C%20%22foo%2Cbar%2Cbaz%22)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%60%5B%22foo%22%2C%20%22bar%22%2C%20%22baz%22%5D%60%20%7C%0A%7C%20%60replace(%22hi%20world%22%2C%20%22%2Fw.*d%2F%22%2C%20%22mom%22%60%20%20%20%20%20%20%7C%20hi%20mom%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60substr(%22hello%20world%22%2C%201%2C%204)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20ello%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60lookup(%7Ba%3D%22lol%22%2C%20b%3D%22sad%22%7D%2C%20%22a%22%2C%20%22what%3F%22)%60%20%7C%20lol%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60lookup(%7Ba%3D%22lol%22%2C%20b%3D%22sad%22%7D%2C%20%22c%22%2C%20%22what%3F%22)%60%20%7C%20what%3F%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60slice(%5B%22a%22%2C%20%22b%22%2C%20%22c%22%2C%20%22d%22%5D%2C%201%2C%203)%60%20%20%20%20%20%20%20%20%7C%20%60%5B%22b%22%2C%20%22c%22%5D%60%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60timestamp()%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20%222022-04-02T05%3A52%3A48Z%22%20%20%7C%0A%7C%20%60cidr(%2210.1.2.240%2F28%22%2C%201)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%2010.1.2.241%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60cidr(%2210.1.2.240%2F28%22%2C%2014)%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%2010.1.2.254%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C",
       "encoded": true
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
-      "title": "Provider block",
-      "kind": "text",
-      "body": "Details of the provider(s) being used. Includes information like access mechanisms, regional options, profile touse etc."
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "provider%20%22aws%22%20%7B%0A%20%20region%20%3D%20%22us-east-1%22%0A%7D%0A%0A%23%20Additional%20provider%20config%20reference%20as%20%60aws.west%60.%0Aprovider%20%22aws%22%20%7B%0A%20%20alias%20%20%3D%20%22west%22%0A%20%20region%20%3D%20%22us-west-2%22%0A%7D",
+      "title": "Provider%20block",
+      "body": "Details%20of%20the%20provider(s)%20being%20used.%20Includes%20information%20like%20access%20mechanisms%2C%20regional%20options%2C%20profile%20touse%20etc.%0A%0A%60%60%60%0Aprovider%20%22aws%22%20%7B%0A%20%20region%20%3D%20%22us-east-1%22%0A%7D%0A%0A%23%20Additional%20provider%20config%20reference%20as%20%60aws.west%60.%0Aprovider%20%22aws%22%20%7B%0A%20%20alias%20%20%3D%20%22west%22%0A%20%20region%20%3D%20%22us-west-2%22%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-19",
       "sectionId": "s2",
       "title": "Requiring%20Providers",
-      "kind": "code",
-      "lang": "",
-      "code": "terraform%20%7B%0A%0A%20%20%23%20required_providers%20block%20specifies%20source%20and%20version%0A%20%20required_providers%20%7B%0A%20%20%20%20aws%20%3D%20%7B%0A%20%20%20%20%20%20source%20%20%3D%20%22hashicorp%2Faws%22%20%23%20where%20to%20find%20the%20provider%0A%20%20%20%20%20%20version%20%3D%20%225.8.0%22%20%23%20which%20version%20of%20the%20provider%20is%20needed%20for%20this%20config%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60%0Aterraform%20%7B%0A%0A%20%20%23%20required_providers%20block%20specifies%20source%20and%20version%0A%20%20required_providers%20%7B%0A%20%20%20%20aws%20%3D%20%7B%0A%20%20%20%20%20%20source%20%20%3D%20%22hashicorp%2Faws%22%20%23%20where%20to%20find%20the%20provider%0A%20%20%20%20%20%20version%20%3D%20%225.8.0%22%20%23%20which%20version%20of%20the%20provider%20is%20needed%20for%20this%20config%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
-      "title": "Locals block",
-      "kind": "text",
-      "body": "A local value assigns a name to an expression, so you can use the name multiple times within a module instead of\nrepeating the expression"
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "locals%20%7B%0A%20%20service_name%20%3D%20%22forum%22%0A%20%20owner%20%20%20%20%20%20%20%20%3D%20%22Community%20Team%22%0A%7D%0A%0A%23%20once%20local%20declared%20you%20can%20reference%20it%0Alocals%20%7B%0A%20%20common_tags%20%3D%20%7B%0A%20%20%20%20Service%20%3D%20local.service_name%0A%20%20%20%20Owner%20%20%20%3D%20local.owner",
+      "title": "Locals%20block",
+      "body": "A%20local%20value%20assigns%20a%20name%20to%20an%20expression%2C%20so%20you%20can%20use%20the%20name%20multiple%20times%20within%20a%20module%20instead%20of%0Arepeating%20the%20expression%0A%0A%60%60%60%0Alocals%20%7B%0A%20%20service_name%20%3D%20%22forum%22%0A%20%20owner%20%20%20%20%20%20%20%20%3D%20%22Community%20Team%22%0A%7D%0A%0A%23%20once%20local%20declared%20you%20can%20reference%20it%0Alocals%20%7B%0A%20%20common_tags%20%3D%20%7B%0A%20%20%20%20Service%20%3D%20local.service_name%0A%20%20%20%20Owner%20%20%20%3D%20local.owner%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-22",
       "sectionId": "s2",
       "title": "Output%20block",
-      "kind": "code",
-      "lang": "",
-      "code": "output%20%22api_base_url%22%20%7B%0A%20%20value%20%3D%20%22https%3A%2F%2F%24%7Baws_instance.example.private_dns%7D%3A8433%2F%22%0A%0A%20%20%23%20The%20EC2%20instance%20must%20have%20an%20encrypted%20root%20volume.%0A%20%20precondition%20%7B%0A%20%20%20%20condition%20%20%20%20%20%3D%20data.aws_ebs_volume.example.encrypted%0A%20%20%20%20error_message%20%3D%20%22The%20server's%20root%20volume%20is%20not%20encrypted.%22%0A%20%20%7D%0A%0A%20%20%23%20output%20can%20be%20marked%20as%20containing%20sensitive%0A%20%20sensitive%20%3D%20true%20%23%20output%20can%20be%20marked%20as%20containing%20sensitive%0A%7D",
+      "body": "%60%60%60%0Aoutput%20%22api_base_url%22%20%7B%0A%20%20value%20%3D%20%22https%3A%2F%2F%24%7Baws_instance.example.private_dns%7D%3A8433%2F%22%0A%0A%20%20%23%20The%20EC2%20instance%20must%20have%20an%20encrypted%20root%20volume.%0A%20%20precondition%20%7B%0A%20%20%20%20condition%20%20%20%20%20%3D%20data.aws_ebs_volume.example.encrypted%0A%20%20%20%20error_message%20%3D%20%22The%20server's%20root%20volume%20is%20not%20encrypted.%22%0A%20%20%7D%0A%0A%20%20%23%20output%20can%20be%20marked%20as%20containing%20sensitive%0A%20%20sensitive%20%3D%20true%20%23%20output%20can%20be%20marked%20as%20containing%20sensitive%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
-      "title": "Data block",
-      "kind": "text",
-      "body": "Data sources that can be queried (cloud provider, local list, etc.)"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "data%20%22aws_ami%22%20%22example%22%20%7B%0A%20%20most_recent%20%3D%20true%0A%0A%20%20owners%20%3D%20%5B%22self%22%5D%0A%20%20tags%20%3D%20%7B%0A%20%20%20%20Name%20%20%20%3D%20%22app-server%22%0A%20%20%20%20Tested%20%3D%20%22true%22%0A%20%20%7D%0A%7D",
+      "title": "Data%20block",
+      "body": "Data%20sources%20that%20can%20be%20queried%20(cloud%20provider%2C%20local%20list%2C%20etc.)%0A%0A%60%60%60%0Adata%20%22aws_ami%22%20%22example%22%20%7B%0A%20%20most_recent%20%3D%20true%0A%0A%20%20owners%20%3D%20%5B%22self%22%5D%0A%20%20tags%20%3D%20%7B%0A%20%20%20%20Name%20%20%20%3D%20%22app-server%22%0A%20%20%20%20Tested%20%3D%20%22true%22%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "Modules",
-      "kind": "code",
-      "lang": "",
-      "code": "module%20%22myec2%22%20%7B%0A%20%20source%20%3D%20%22..%2Fmodules%2Fec2%22%0A%0A%20%20%23%20module%20inputs%0A%20%20ami_id%20%3D%20var.ami_id%0A%20%20instance_type%20%3D%20var.instance_type%0A%20%20servers%20%3D%20var.servers%0A%7D",
+      "body": "%60%60%60%0Amodule%20%22myec2%22%20%7B%0A%20%20source%20%3D%20%22..%2Fmodules%2Fec2%22%0A%0A%20%20%23%20module%20inputs%0A%20%20ami_id%20%3D%20var.ami_id%0A%20%20instance_type%20%3D%20var.instance_type%0A%20%20servers%20%3D%20var.servers%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-26",
       "sectionId": "s2",
       "title": "Backends",
-      "kind": "text",
-      "body": "A backend defines where Terraform stores its state data files."
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Available backends: local(default), remote, azurerm, consul, cos, gcs, http, Kubernetes, oss, pg, s3"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "terraform%20%7B%0A%20%20backend%20%22remote%22%20%7B%0A%20%20%20%20organization%20%3D%20%22example_corp%22%0A%0A%20%20%20%20workspaces%20%7B%0A%20%20%20%20%20%20name%20%3D%20%22my-app-prod%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "body": "A%20backend%20defines%20where%20Terraform%20stores%20its%20state%20data%20files.%0A%0AAvailable%20backends%3A%20local(default)%2C%20remote%2C%20azurerm%2C%20consul%2C%20cos%2C%20gcs%2C%20http%2C%20Kubernetes%2C%20oss%2C%20pg%2C%20s3%0A%0A%60%60%60%0Aterraform%20%7B%0A%20%20backend%20%22remote%22%20%7B%0A%20%20%20%20organization%20%3D%20%22example_corp%22%0A%0A%20%20%20%20workspaces%20%7B%0A%20%20%20%20%20%20name%20%3D%20%22my-app-prod%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
       "title": "Resource Addressing",
-      "kind": "text",
       "body": "| Example                                           | Description             |\n| ------------------------------------------------- | ----------------------- |\n| `[module path][resource info`                     | Resource path syntax    |\n| `module.<MODULE_PATH>[optional] module index`     | Module path syntax      |\n| `resource_type.user_defined_name[optional index]` | Resource spec syntax    |\n| `<RESOURCE_TYPE>.<NAME>`                          | List all images         |\n| `var.<NAME>`                                      | Input Variable          |\n| `local.<NAME>`                                    | Locals                  |\n| `module.<MODULE_NAME>`                            | Child module outputs    |\n| `data.<DATA TYPE>.<NAME>`                         | Data blocks             |\n| `path.module`                                     | Location of expresssion |\n| `path.root`                                       | Root Module location    |\n| `terraform.workspace`                             | Current workspace       |"
     },
     {
       "id": "s3-30",
       "sectionId": "s3",
       "title": "Initialization",
-      "kind": "code",
-      "lang": "sh",
-      "code": "terraform init [options]\n\n    -upgrade            # Install latest module & provider versions\n    -reconfigure        # reconfigure backend, ignoring any saved config\n    -backend=false      # Disable backend & use previous Initialization\n    -migrate-state      # reconfigure backend & attempt to migrate any existing state"
+      "body": "```sh\nterraform init [options]\n\n    -upgrade            # Install latest module & provider versions\n    -reconfigure        # reconfigure backend, ignoring any saved config\n    -backend=false      # Disable backend & use previous Initialization\n    -migrate-state      # reconfigure backend & attempt to migrate any existing state\n```"
     },
     {
       "id": "s3-31",
       "sectionId": "s3",
       "title": "Planning",
-      "kind": "text",
-      "body": "Generates & review an execution plan"
-    },
-    {
-      "id": "s3-32",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "terraform%20plan%20%5Boptions%5D%0A%0A%20%20%20%20-var%20'user%3Djohn'%20%20%20%20%23%20set%20value%20for%20input%20vars%20in%20the%20root%20module%20of%20config%0A%20%20%20%20-var-file%3Dfilename%20%20%23%20load%20var%20values%20from%20the%20given%20file%0A%20%20%20%20-input%3Dtrue%20%20%20%20%20%20%20%20%20%23%20ask%20for%20input%20for%20vars%20if%20not%20directly%20set%0A%20%20%20%20-out%3Dpath%20%20%20%20%20%20%20%20%20%20%20%23%20write%20a%20plan%20file%20to%20given%20path.%20can%20be%20used%20as%20input%20for%20%22apply%22%0A%20%20%20%20-refresh-only%20%20%20%20%20%20%20%23%20verifies%20remote%20object%20consistency%20without%20proposing%20actions%20to%20undo%20changes%20done%20outside%20TF%0A%20%20%20%20-destroy%20%20%20%20%20%20%20%20%20%20%20%20%23%20create%20plan%20to%20destroy%20all%20objects%20currenly%20managed%0A%20%20%20%20-target%3Dresource%20%20%20%20%23%20target%20planning%20to%20given%20resouce%20%26%20its%20dependencies%20only.%0A%0Aterraform%20plan%20-refresh-only%20%23%20updates%20state%20to%20match%20changes%20made%20outside%20of%20TF.%20Good%20for%20drift%20detection",
+      "body": "Generates%20%26%20review%20an%20execution%20plan%0A%0A%60%60%60sh%0Aterraform%20plan%20%5Boptions%5D%0A%0A%20%20%20%20-var%20'user%3Djohn'%20%20%20%20%23%20set%20value%20for%20input%20vars%20in%20the%20root%20module%20of%20config%0A%20%20%20%20-var-file%3Dfilename%20%20%23%20load%20var%20values%20from%20the%20given%20file%0A%20%20%20%20-input%3Dtrue%20%20%20%20%20%20%20%20%20%23%20ask%20for%20input%20for%20vars%20if%20not%20directly%20set%0A%20%20%20%20-out%3Dpath%20%20%20%20%20%20%20%20%20%20%20%23%20write%20a%20plan%20file%20to%20given%20path.%20can%20be%20used%20as%20input%20for%20%22apply%22%0A%20%20%20%20-refresh-only%20%20%20%20%20%20%20%23%20verifies%20remote%20object%20consistency%20without%20proposing%20actions%20to%20undo%20changes%20done%20outside%20TF%0A%20%20%20%20-destroy%20%20%20%20%20%20%20%20%20%20%20%20%23%20create%20plan%20to%20destroy%20all%20objects%20currenly%20managed%0A%20%20%20%20-target%3Dresource%20%20%20%20%23%20target%20planning%20to%20given%20resouce%20%26%20its%20dependencies%20only.%0A%0Aterraform%20plan%20-refresh-only%20%23%20updates%20state%20to%20match%20changes%20made%20outside%20of%20TF.%20Good%20for%20drift%20detection%0A%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-33",
       "sectionId": "s3",
       "title": "Validation",
-      "kind": "code",
-      "lang": "sh",
-      "code": "terraform validate      # Validates the config files for errors"
+      "body": "```sh\nterraform validate      # Validates the config files for errors\n\n```"
     },
     {
       "id": "s3-34",
       "sectionId": "s3",
       "title": "Apply",
-      "kind": "text",
-      "body": "Executes changes to infra"
-    },
-    {
-      "id": "s3-35",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "terraform%20apply%20%5Boptions%5D%0A%0A%20%20%20%20-auto-approve%20%20%20%20%20%20%20%23%20skip%20interactive%20approval%20of%20plan%20before%20applying%0A%20%20%20%20-replace%20%20%20%20%20%20%20%20%20%20%20%20%23%20force%20replacement%20of%20a%20particular%20resource%20instance%0A%20%20%20%20-var%20'foo%3Dbar'%20%20%20%20%20%20%23%20set%20a%20value%20for%20input%20vars%20in%20the%20root%20module%20of%20config%0A%20%20%20%20-var-file%3Dfilename%20%20%23%20load%20var%20values%20from%20the%20given%20file%0A%20%20%20%20-parallelism%3Dn%20%20%20%20%20%20%23%20limit%20the%20no%20of%20concurrent%20operations.%20Default%3D10%0A%0Aterraform%20apply%20-auto-approve%20var-file%3Dweb-dev.tfvars%0Aterraform%20apply%20-replace%3D%22aws_instance.server%22%0Aterraform%20plan%20-refresh-only%20%23%20Updates%20statefile%20to%20accept%20changes%20made%20manually.",
+      "body": "Executes%20changes%20to%20infra%0A%0A%60%60%60sh%0Aterraform%20apply%20%5Boptions%5D%0A%0A%20%20%20%20-auto-approve%20%20%20%20%20%20%20%23%20skip%20interactive%20approval%20of%20plan%20before%20applying%0A%20%20%20%20-replace%20%20%20%20%20%20%20%20%20%20%20%20%23%20force%20replacement%20of%20a%20particular%20resource%20instance%0A%20%20%20%20-var%20'foo%3Dbar'%20%20%20%20%20%20%23%20set%20a%20value%20for%20input%20vars%20in%20the%20root%20module%20of%20config%0A%20%20%20%20-var-file%3Dfilename%20%20%23%20load%20var%20values%20from%20the%20given%20file%0A%20%20%20%20-parallelism%3Dn%20%20%20%20%20%20%23%20limit%20the%20no%20of%20concurrent%20operations.%20Default%3D10%0A%0Aterraform%20apply%20-auto-approve%20var-file%3Dweb-dev.tfvars%0Aterraform%20apply%20-replace%3D%22aws_instance.server%22%0Aterraform%20plan%20-refresh-only%20%23%20Updates%20statefile%20to%20accept%20changes%20made%20manually.%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-36",
       "sectionId": "s3",
       "title": "Destroy",
-      "kind": "text",
-      "body": "Destroy (deletes) Terraform managed infra. Same as `terraform apply -destroy `"
-    },
-    {
-      "id": "s3-37",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "terraform destroy [options]\n\n    -auto-approve        # skip interactive approval before destroying\n    -target              # limits destroy to only given resource & its dependencies\n\n\nterraform destroy -target aws_vpc.my_vpc -auto-approve"
-    },
-    {
-      "id": "s3-38",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Miscellaneous"
-    },
-    {
-      "id": "s3-39",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "terraform state show aws_instance.my_vm\nterraform state pull > my_terraform.tfstate\nterraform state mv aws_iam_role.my_ssm_role\nterraform state list\nterraform state rm aws_instance.my_server\n\nterraform import aws_instance.new_server i-243abc\nsudo apt install graphviz\nterraform graph | dot -Tpng > graph.png"
-    },
-    {
-      "id": "s3-40",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Logging"
-    },
-    {
-      "id": "s3-41",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "log levels = TRACE > DEBUG > INFO > WARN > ERROR"
-    },
-    {
-      "id": "s3-42",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "export TF_LOG_CORE=TRACE     # enable core logging\nexport TF_LOG_PROVIDER=TRACE # enable provider logging\nexport TF_LOG_PATH=logs.txt  # to persist logs"
+      "body": "Destroy (deletes) Terraform managed infra. Same as `terraform apply -destroy `\n\n```sh\nterraform destroy [options]\n\n    -auto-approve        # skip interactive approval before destroying\n    -target              # limits destroy to only given resource & its dependencies\n\n\nterraform destroy -target aws_vpc.my_vpc -auto-approve\n```\n\nMiscellaneous\n\n```sh\nterraform state show aws_instance.my_vm\nterraform state pull > my_terraform.tfstate\nterraform state mv aws_iam_role.my_ssm_role\nterraform state list\nterraform state rm aws_instance.my_server\n\nterraform import aws_instance.new_server i-243abc\nsudo apt install graphviz\nterraform graph | dot -Tpng > graph.png\n```\n\nLogging\n\nlog levels = TRACE > DEBUG > INFO > WARN > ERROR\n\n```sh\nexport TF_LOG_CORE=TRACE     # enable core logging\nexport TF_LOG_PROVIDER=TRACE # enable provider logging\nexport TF_LOG_PATH=logs.txt  # to persist logs\n```"
     },
     {
       "id": "s4-43",
       "sectionId": "s4",
       "title": "Also See",
-      "kind": "text",
       "body": "• [Docs](https://developer.hashicorp.com/terraform/language)\n• [Good FCC Article](https://www.freecodecamp.org/news/terraform-certified-associate-003-study-notes/)"
     }
   ],

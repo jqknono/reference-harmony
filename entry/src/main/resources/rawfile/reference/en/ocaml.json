@@ -40,517 +40,277 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "The [OCaml](https://www.ocaml.org/) cheat sheet is a one-page reference sheet for the OCaml programming language."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "hello.ml",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let%20()%20%3D%0A%20%20let%20message%20%3D%20%22Hello%2C%20World!%22%20in%0A%20%20Printf.printf%20%22%25s%5Cn%22%20message",
+      "body": "%60%60%60ml%0Alet%20()%20%3D%0A%20%20let%20message%20%3D%20%22Hello%2C%20World!%22%20in%0A%20%20Printf.printf%20%22%25s%5Cn%22%20message%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "Compile and Run",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ocamlc -o hello.byte hello.ml\n$ ./hello.byte"
+      "body": "```bash\n$ ocamlc -o hello.byte hello.ml\n$ ./hello.byte\n```"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "Build and Run with Dune",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ dune build hello.exe\n$ _build/default/hello.exe\n\n# you can also just run\n$ dune exec ./hello.exe"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "See the [dune](https://dune.build/) documentation for more info."
+      "body": "```bash\n$ dune build hello.exe\n$ _build/default/hello.exe\n\n# you can also just run\n$ dune exec ./hello.exe\n```\n\nSee the [dune](https://dune.build/) documentation for more info."
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "Imports",
-      "kind": "text",
-      "body": "Install modules with opam"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ opam install hex"
+      "body": "Install modules with opam\n\n```bash\n$ opam install hex\n```"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "Global Open",
-      "kind": "code",
-      "lang": "ml",
-      "code": "open Hex"
+      "body": "```ml\nopen Hex\n```"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "Local%20Open",
-      "kind": "code",
-      "lang": "ml",
-      "code": "Hex.of_string%20%22hex%20string%22%0A%0Alet%20open%20Hex%20in%0A%20%20of_string%20%22to%20hex%22",
+      "body": "%60%60%60ml%0AHex.of_string%20%22hex%20string%22%0A%0Alet%20open%20Hex%20in%0A%20%20of_string%20%22to%20hex%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "Comments - Line & Block Comments",
-      "kind": "code",
-      "lang": "ml",
-      "code": "(* A single line comment *)\n\n(* A multi-line comment\n* where we want to explain\n* something complex *)\n\n(* Outer comment\n   (* Nested comment *)\n   End of outer comment *)"
+      "body": "```ml\n(* A single line comment *)\n\n(* A multi-line comment\n* where we want to explain\n* something complex *)\n\n(* Outer comment\n   (* Nested comment *)\n   End of outer comment *)\n```"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "Documentation Comments",
-      "kind": "code",
-      "lang": "ml",
-      "code": "val sum : int -> int -> int\n(** [sum x y] returns the sum\n of two integers [x] and [y] *)"
+      "body": "```ml\nval sum : int -> int -> int\n(** [sum x y] returns the sum\n of two integers [x] and [y] *)\n```"
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
       "title": "Predefined Types - Unit",
-      "kind": "text",
-      "body": "Note: `#` Indicates execution at the toplevel followed by the output"
-    },
-    {
-      "id": "s2-12",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "# ();; (* equivalent to void in C *)\n- : unit = ()"
+      "body": "Note: `#` Indicates execution at the toplevel followed by the output\n\n```ml\n# ();; (* equivalent to void in C *)\n- : unit = ()\n```"
     },
     {
       "id": "s2-13",
       "sectionId": "s2",
       "title": "Basic%20Types",
-      "kind": "code",
-      "lang": "ml",
-      "code": "%23%205%20%3B%3B%20(*%20integer%20*)%0A-%20%3A%20int%20%3D%205%0A%0A%23%203.14%20%3B%3B%20%20(*%20float%20*)%0A-%20%3A%20float%20%3D%203.14%0A%0A%23%20true%20%3B%3B%20(*%20bool%20*)%0A-%20%3A%20bool%20%3D%20true%0A%0A%23%20false%20%3B%3B%0A-%20%3A%20bool%20%3D%20false%0A%0A%23%20'a'%20%3B%3B%20(*%20char%20*)%0A-%20%3A%20char%20%3D%20'a'%0A%0A%23%20%22a%20string%22%20%3B%3B%20(*%20string%20*)%0A-%20%3A%20string%20%3D%20%22a%20string%22%0A%0A%23%20String.to_bytes%20%22hello%22%20%3B%3B%20(*%20bytes%20*)%0A-%20%3A%20bytes%20%3D%20Bytes.of_string%20%22hello%22%0A%0A%23%20(3%2C%205)%3B%3B%20(*%20tuple%20*)%0A-%20%3A%20int%20*%20int%20%3D%20(3%2C%205)%0A%0A%23%20ref%200%3B%3B%20(*%20reference%20*)%0A-%20%3A%20int%20ref%20%3D%20%7Bcontents%20%3D%200%7D",
+      "body": "%60%60%60ml%0A%23%205%20%3B%3B%20(*%20integer%20*)%0A-%20%3A%20int%20%3D%205%0A%0A%23%203.14%20%3B%3B%20%20(*%20float%20*)%0A-%20%3A%20float%20%3D%203.14%0A%0A%23%20true%20%3B%3B%20(*%20bool%20*)%0A-%20%3A%20bool%20%3D%20true%0A%0A%23%20false%20%3B%3B%0A-%20%3A%20bool%20%3D%20false%0A%0A%23%20'a'%20%3B%3B%20(*%20char%20*)%0A-%20%3A%20char%20%3D%20'a'%0A%0A%23%20%22a%20string%22%20%3B%3B%20(*%20string%20*)%0A-%20%3A%20string%20%3D%20%22a%20string%22%0A%0A%23%20String.to_bytes%20%22hello%22%20%3B%3B%20(*%20bytes%20*)%0A-%20%3A%20bytes%20%3D%20Bytes.of_string%20%22hello%22%0A%0A%23%20(3%2C%205)%3B%3B%20(*%20tuple%20*)%0A-%20%3A%20int%20*%20int%20%3D%20(3%2C%205)%0A%0A%23%20ref%200%3B%3B%20(*%20reference%20*)%0A-%20%3A%20int%20ref%20%3D%20%7Bcontents%20%3D%200%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
       "title": "Options%20%26%20Results",
-      "kind": "code",
-      "lang": "ml",
-      "code": "%23%20Some%2042%3B%3B%0A-%20%3A%20int%20option%20%3D%20Some%2042%0A%0A%23%20Ok%2042%3B%3B%0A-%20%3A%20(int%2C%20'a)%20result%20%3D%20Ok%2042%0A%0A%23%20Error%20%22404%22%3B%3B%0A-%20%3A%20('a%2C%20int)%20result%20%3D%20Error%20404",
+      "body": "%60%60%60ml%0A%23%20Some%2042%3B%3B%0A-%20%3A%20int%20option%20%3D%20Some%2042%0A%0A%23%20Ok%2042%3B%3B%0A-%20%3A%20(int%2C%20'a)%20result%20%3D%20Ok%2042%0A%0A%23%20Error%20%22404%22%3B%3B%0A-%20%3A%20('a%2C%20int)%20result%20%3D%20Error%20404%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
-      "title": "Arrays & Lists - Arrays",
-      "kind": "code",
-      "lang": "ml",
-      "code": "# [|0; 1; 2; 3|];; (* create an array *)\n- : int array = [|0; 1; 2; 3|]\n\n# [|'u'; 's'; 'c'|].(1);; (* array access *)\n- char = 's'"
-    },
-    {
-      "id": "s2-16",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Arrays are mutable"
-    },
-    {
-      "id": "s2-17",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let scores = [|97; 85; 99|];;\n- : int array = [|97; 85; 99|]\n\n# scores.(2) <- 89;; (* update an element *)\n- unit = ()\n\n# scores;;\n- : int array = [|97; 85; 89|]"
+      "title": "Arrays%20%26%20Lists%20-%20Arrays",
+      "body": "%60%60%60ml%0A%23%20%5B%7C0%3B%201%3B%202%3B%203%7C%5D%3B%3B%20(*%20create%20an%20array%20*)%0A-%20%3A%20int%20array%20%3D%20%5B%7C0%3B%201%3B%202%3B%203%7C%5D%0A%0A%23%20%5B%7C'u'%3B%20's'%3B%20'c'%7C%5D.(1)%3B%3B%20(*%20array%20access%20*)%0A-%20char%20%3D%20's'%0A%60%60%60%0A%0AArrays%20are%20mutable%0A%0A%60%60%60ml%0Alet%20scores%20%3D%20%5B%7C97%3B%2085%3B%2099%7C%5D%3B%3B%0A-%20%3A%20int%20array%20%3D%20%5B%7C97%3B%2085%3B%2099%7C%5D%0A%0A%23%20scores.(2)%20%3C-%2089%3B%3B%20(*%20update%20an%20element%20*)%0A-%20unit%20%3D%20()%0A%0A%23%20scores%3B%3B%0A-%20%3A%20int%20array%20%3D%20%5B%7C97%3B%2085%3B%2089%7C%5D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-18",
       "sectionId": "s2",
       "title": "Lists",
-      "kind": "code",
-      "lang": "ml",
-      "code": "%23%20%5B1%3B%202%3B%203%5D%3B%3B%0A-%20%3A%20int%20list%20%3D%20%5B1%3B%202%3B%203%3B%5D%0A%0A%23%20%5B%22a%22%3B%20%22str%22%3B%20%22lst%22%5D%3B%3B%0A-%20%3A%20string%20list%20%3D%20%5B%22a%22%3B%20%22str%22%3B%20%22lst%22%5D",
+      "body": "%60%60%60ml%0A%23%20%5B1%3B%202%3B%203%5D%3B%3B%0A-%20%3A%20int%20list%20%3D%20%5B1%3B%202%3B%203%3B%5D%0A%0A%23%20%5B%22a%22%3B%20%22str%22%3B%20%22lst%22%5D%3B%3B%0A-%20%3A%20string%20list%20%3D%20%5B%22a%22%3B%20%22str%22%3B%20%22lst%22%5D%0A%60%60%60%0A%0ALists%20are%20immutable%0A%0A%60%60%60ml%0A%23%20let%20lst%20%3D%20%5B1%3B%202%3B%203%5D%3B%3B%0A-%20%3A%20int%20list%20%3D%20%5B1%3B%202%3B%203%5D%0A%0A%23%20let%20new_lst%20%3D%20%200%20%3A%3A%20lst%3B%3B%20(*%20prepend%20to%20a%20new%20list%20*)%0A-%20%3A%20int%20list%20%3D%20%5B0%3B%201%3B%202%3B%203%5D%0A%0A%23%20new_lst%20%40%20%5B4%3B5%3B6%5D%3B%3B%20(*%20combine%20two%20lists%20*)%0A-%20%3A%20int%20list%20%3D%20%5B0%3B%201%3B%202%3B%203%3B%204%3B%205%3B%206%5D%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Lists are immutable"
-    },
-    {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "# let lst = [1; 2; 3];;\n- : int list = [1; 2; 3]\n\n# let new_lst =  0 :: lst;; (* prepend to a new list *)\n- : int list = [0; 1; 2; 3]\n\n# new_lst @ [4;5;6];; (* combine two lists *)\n- : int list = [0; 1; 2; 3; 4; 5; 6]"
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
-      "title": "User-Defined Types - Records",
-      "kind": "text",
-      "body": "Bundle related data"
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "type%20person%20%3D%20%7B%0A%20%20name%3A%20string%3B%0A%20%20age%3A%20int%0A%7D%0A%0A%23%20let%20zeno%20%3D%20%7Bname%20%3D%20%22Zeno%22%3B%20age%20%3D%2030%7D%3B%3B%0Aval%20zeno%20%3A%20person%20%3D%20%7Bname%20%3D%20%22Zeno%22%3B%20age%20%3D%2030%7D",
+      "title": "User-Defined%20Types%20-%20Records",
+      "body": "Bundle%20related%20data%0A%0A%60%60%60ml%0Atype%20person%20%3D%20%7B%0A%20%20name%3A%20string%3B%0A%20%20age%3A%20int%0A%7D%0A%0A%23%20let%20zeno%20%3D%20%7Bname%20%3D%20%22Zeno%22%3B%20age%20%3D%2030%7D%3B%3B%0Aval%20zeno%20%3A%20person%20%3D%20%7Bname%20%3D%20%22Zeno%22%3B%20age%20%3D%2030%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "Variants",
-      "kind": "text",
-      "body": "Several different, but related types"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "type shape =\n  | Circle of float\n  | Rectangle of float * float\n\n# let my_shape = Circle 5.0;;\n- : shape = Circle 5."
+      "body": "Several different, but related types\n\n```ml\ntype shape =\n  | Circle of float\n  | Rectangle of float * float\n\n# let my_shape = Circle 5.0;;\n- : shape = Circle 5.\n```"
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "Aliases",
-      "kind": "text",
-      "body": "Provide meaningful name to complex or commonly used types"
-    },
-    {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "type point = float * float\n\n# let origin: point = (0.0, 0.0);;\nval origin : point = (0., 0.)"
+      "body": "Provide meaningful name to complex or commonly used types\n\n```ml\ntype point = float * float\n\n# let origin: point = (0.0, 0.0);;\nval origin : point = (0., 0.)\n```"
     },
     {
       "id": "s3-27",
       "sectionId": "s3",
       "title": "Functions - Single parameter",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let add_one x =\n  let result = x + 1 in\n  result\n\n# add_one 1;;\n- : int = 2"
+      "body": "```ml\nlet add_one x =\n  let result = x + 1 in\n  result\n\n# add_one 1;;\n- : int = 2\n```"
     },
     {
       "id": "s3-28",
       "sectionId": "s3",
       "title": "Multiple parameters",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let sum x y =\n  let result = x + y in\n  result\n\n# sum 1 2;;\n- : int = 3"
+      "body": "```ml\nlet sum x y =\n  let result = x + y in\n  result\n\n# sum 1 2;;\n- : int = 3\n```"
     },
     {
       "id": "s3-29",
       "sectionId": "s3",
       "title": "Tuple%20parameter",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let%20str_concat%20(x%2C%20y)%20%3D%0A%20%20x%20%5E%20%22%20%22%20%5E%20y%0A%0A%23%20str_concat%20(%22Hello%22%2C%20%22OCaml%22)%20%3B%3B%0A-%20%3A%20string%20%3D%20%22Hello%20Ocaml%22",
+      "body": "%60%60%60ml%0Alet%20str_concat%20(x%2C%20y)%20%3D%0A%20%20x%20%5E%20%22%20%22%20%5E%20y%0A%0A%23%20str_concat%20(%22Hello%22%2C%20%22OCaml%22)%20%3B%3B%0A-%20%3A%20string%20%3D%20%22Hello%20Ocaml%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-30",
       "sectionId": "s3",
       "title": "Recursive Functions - rec keyword",
-      "kind": "text",
-      "body": "All recusive functions use the rec keyword"
-    },
-    {
-      "id": "s3-31",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let rec factorial n =\n  if n < 1 then 1 else n * factorial (n - 1)"
-    },
-    {
-      "id": "s3-32",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "The above can cause stackoverflow."
+      "body": "All recusive functions use the rec keyword\n\n```ml\nlet rec factorial n =\n  if n < 1 then 1 else n * factorial (n - 1)\n```\n\nThe above can cause stackoverflow."
     },
     {
       "id": "s3-33",
       "sectionId": "s3",
       "title": "Tail Recursion",
-      "kind": "text",
-      "body": "Makes use of a helper function and the acc argument."
-    },
-    {
-      "id": "s3-34",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let rec factorial_helper n acc =\n  if n = 0 then acc\n  else factorial_helper (n - 1) (n * acc)"
-    },
-    {
-      "id": "s3-35",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Notice the last call is the recursive function."
-    },
-    {
-      "id": "s3-36",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let factorial n = factorial_helper n 1"
+      "body": "Makes use of a helper function and the acc argument.\n\n```ml\nlet rec factorial_helper n acc =\n  if n = 0 then acc\n  else factorial_helper (n - 1) (n * acc)\n```\n\nNotice the last call is the recursive function.\n\n```ml\nlet factorial n = factorial_helper n 1\n```"
     },
     {
       "id": "s3-37",
       "sectionId": "s3",
       "title": "Chaining - Application Operator",
-      "kind": "text",
-      "body": "Read from right to left, the first operation is `sum 2 3`"
-    },
-    {
-      "id": "s3-38",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "(* find log(2 + 3) *)\n# log @@ float_of_int @@ sum 2 3 ;;\n- : float = 1.609..."
+      "body": "Read from right to left, the first operation is `sum 2 3`\n\n```ml\n(* find log(2 + 3) *)\n# log @@ float_of_int @@ sum 2 3 ;;\n- : float = 1.609...\n```"
     },
     {
       "id": "s3-39",
       "sectionId": "s3",
       "title": "Pipeline",
-      "kind": "code",
-      "lang": "ml",
-      "code": "(* find log((x + y)!) *)\n# sum 2 3\n  |> factorial\n  |> float_of_int\n  |> log ;;\n- : float = 4.787..."
-    },
-    {
-      "id": "s3-40",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "`|>` takes the output of the function and passes it as input to the next function in the pipeline"
+      "body": "```ml\n(* find log((x + y)!) *)\n# sum 2 3\n  |> factorial\n  |> float_of_int\n  |> log ;;\n- : float = 4.787...\n```\n\n`|>` takes the output of the function and passes it as input to the next function in the pipeline"
     },
     {
       "id": "s4-41",
       "sectionId": "s4",
       "title": "If%20Statements%20-%20If%20Statement",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let%20is_pos%20x%20%3D%0A%20%20if%20x%20%3E%200%20then%20%22positive%22%20else%20%22negative%22",
+      "body": "%60%60%60ml%0Alet%20is_pos%20x%20%3D%0A%20%20if%20x%20%3E%200%20then%20%22positive%22%20else%20%22negative%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-42",
       "sectionId": "s4",
       "title": "If%20else%20if",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let%20f%20x%20%3D%0A%20%20if%20x%20%3E%203%20then%20%22gt%203%22%0A%20%20else%20if%20x%20%3C%203%20then%20%22lt%203%22%0A%20%20else%20%22eq%203%22",
+      "body": "%60%60%60ml%0Alet%20f%20x%20%3D%0A%20%20if%20x%20%3E%203%20then%20%22gt%203%22%0A%20%20else%20if%20x%20%3C%203%20then%20%22lt%203%22%0A%20%20else%20%22eq%203%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-43",
       "sectionId": "s4",
       "title": "Pattern%20Matching",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let%20is_pos%20x%20%3D%0A%20%20match%20x%20%3E%200%20with%0A%20%20%7C%20true%20%20-%3E%20%22positive%22%0A%20%20%7C%20false%20-%3E%20%22negative%22",
+      "body": "%60%60%60ml%0Alet%20is_pos%20x%20%3D%0A%20%20match%20x%20%3E%200%20with%0A%20%20%7C%20true%20%20-%3E%20%22positive%22%0A%20%20%7C%20false%20-%3E%20%22negative%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-44",
       "sectionId": "s4",
       "title": "Loops - For loop",
-      "kind": "code",
-      "lang": "ml",
-      "code": "for i = 1 to 5 do\n  print_int i\ndone"
+      "body": "```ml\nfor i = 1 to 5 do\n  print_int i\ndone\n```"
     },
     {
       "id": "s4-45",
       "sectionId": "s4",
       "title": "While loop",
-      "kind": "text",
-      "body": "Notice the `ref` is needed to have the while condition eventually become false."
-    },
-    {
-      "id": "s4-46",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let i = ref 0 in\n  while !i < 5 do\n    print_int !i;\n    i := !i + 1\n  done"
+      "body": "Notice the `ref` is needed to have the while condition eventually become false.\n\n```ml\nlet i = ref 0 in\n  while !i < 5 do\n    print_int !i;\n    i := !i + 1\n  done\n```"
     },
     {
       "id": "s4-47",
       "sectionId": "s4",
       "title": "Operators - Comparison Operators",
-      "kind": "code",
-      "lang": "ml",
-      "code": "=         (* equal to *)\n<>        (* not equal to *)\n>         (* greater than *)\n<         (* less than *)\n>=        (* greater than or eq to *)\n<=        (* less than or eq to *)"
+      "body": "```ml\n=         (* equal to *)\n<>        (* not equal to *)\n>         (* greater than *)\n<         (* less than *)\n>=        (* greater than or eq to *)\n<=        (* less than or eq to *)\n```"
     },
     {
       "id": "s4-48",
       "sectionId": "s4",
       "title": "Arithmatic Operators",
-      "kind": "code",
-      "lang": "ml",
-      "code": "(* int operator   float operator *)\n+                 +.  (* addition *)\n-                 -.  (* subtraction *)\n*                 *.  (* multiplication *)\n/                 /.  (* division *)\n                  **  (* power *)"
+      "body": "```ml\n(* int operator   float operator *)\n+                 +.  (* addition *)\n-                 -.  (* subtraction *)\n*                 *.  (* multiplication *)\n/                 /.  (* division *)\n                  **  (* power *)\n```"
     },
     {
       "id": "s5-49",
       "sectionId": "s5",
       "title": "List - Searching & Filtering",
-      "kind": "code",
-      "lang": "ml",
-      "code": "# let lst = [1; 2; 3];;\nval lst : int list = [1; 2; 3]\n\n# List.filter (fun x -> x mod 2 = 0) lst;;\n- : int list = [2]\n\n# List.find (fun x -> x = 4) lst;;\nException: Not_found\n\n# List.sort compare [2; 1; 3];;\n- : int list = [1; 2; 3]"
+      "body": "```ml\n# let lst = [1; 2; 3];;\nval lst : int list = [1; 2; 3]\n\n# List.filter (fun x -> x mod 2 = 0) lst;;\n- : int list = [2]\n\n# List.find (fun x -> x = 4) lst;;\nException: Not_found\n\n# List.sort compare [2; 1; 3];;\n- : int list = [1; 2; 3]\n```"
     },
     {
       "id": "s5-50",
       "sectionId": "s5",
       "title": "Applying Transformations",
-      "kind": "code",
-      "lang": "ml",
-      "code": "(* Loop over list and apply fun f *)\nList.iter f lst\n\n(* map a function to each elem *)\n(* Ex. double each element x in lst *)\nList.map (fun x -> x + x) lst\n\n(* Apply an operator between elements *)\n(* Ex. 1 + 2 + 3 *)\nList.fold_left (+) 0 lst"
+      "body": "```ml\n(* Loop over list and apply fun f *)\nList.iter f lst\n\n(* map a function to each elem *)\n(* Ex. double each element x in lst *)\nList.map (fun x -> x + x) lst\n\n(* Apply an operator between elements *)\n(* Ex. 1 + 2 + 3 *)\nList.fold_left (+) 0 lst\n```"
     },
     {
       "id": "s5-51",
       "sectionId": "s5",
       "title": "Associaton%20Lists%20-%20Definition%20and%20Access",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let%20scores%20%3D%0A%20%20%5B(%22math%22%2C%2091)%3B%20(%22phil%22%2C%2089)%3B%20(%22stats%22%2C%2094)%5D%0A%0A%23%20List.assoc%20%22stats%22%20scores%3B%3B%0A-%20%3A%20int%20%3D%2094%0A%0A%23%20List.mem_assoc%20%22math%22%20scores%3B%3B%0A-%20%3A%20bool%20%3D%20true",
+      "body": "%60%60%60ml%0Alet%20scores%20%3D%0A%20%20%5B(%22math%22%2C%2091)%3B%20(%22phil%22%2C%2089)%3B%20(%22stats%22%2C%2094)%5D%0A%0A%23%20List.assoc%20%22stats%22%20scores%3B%3B%0A-%20%3A%20int%20%3D%2094%0A%0A%23%20List.mem_assoc%20%22math%22%20scores%3B%3B%0A-%20%3A%20bool%20%3D%20true%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-52",
       "sectionId": "s5",
       "title": "Split%20and%20Combine",
-      "kind": "code",
-      "lang": "ml",
-      "code": "%23%20List.split%20scores%3B%3B%0A-%20%3A%20string%20list%20*%20int%20list%20%3D%20(%5B%22math%22%3B%20%22phil%22%3B%20%22stats%22%5D%2C%20%5B91%3B%2089%3B%2094%5D)%0A%0A%23%20List.combine%20%5B1%3B2%3B3%5D%20%5B4%3B%205%3B%206%5D%3B%3B%0A-%20%3A%20(int%20*%20int)%20list%20%3D%20%5B(1%2C%204)%3B%20(2%2C%205)%3B%20(3%2C%206)%5D",
+      "body": "%60%60%60ml%0A%23%20List.split%20scores%3B%3B%0A-%20%3A%20string%20list%20*%20int%20list%20%3D%20(%5B%22math%22%3B%20%22phil%22%3B%20%22stats%22%5D%2C%20%5B91%3B%2089%3B%2094%5D)%0A%0A%23%20List.combine%20%5B1%3B2%3B3%5D%20%5B4%3B%205%3B%206%5D%3B%3B%0A-%20%3A%20(int%20*%20int)%20list%20%3D%20%5B(1%2C%204)%3B%20(2%2C%205)%3B%20(3%2C%206)%5D%0A%60%60%60%0A%0AAssociation%20lists%20are%20similar%20to%20dictionaries%20or%20hashmaps",
       "encoded": true
-    },
-    {
-      "id": "s5-53",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "Association lists are similar to dictionaries or hashmaps"
     },
     {
       "id": "s5-54",
       "sectionId": "s5",
       "title": "Hash Tables",
-      "kind": "text",
       "body": "Hash Tables are mutable."
     },
     {
       "id": "s5-55",
       "sectionId": "s5",
       "title": "Initialize%20%26%20Add%20Data",
-      "kind": "code",
-      "lang": "ml",
-      "code": "%0A%23%20let%20my_htable%20%3D%20Hashtbl.create%203%3B%3B%0Aval%20my_htable%20%3A%20('_weak1%2C%20'_weak2)%20Hashtbl.t%20%3D%20%3Cabstr%3E%0A%0A%23%20Hashtbl.add%20my_htable%20%22A%22%20%22John%22%3B%0A%20%20Hashtbl.add%20my_htable%20%22A%22%20%22Jane%22%3B%0A%20%20Hashtbl.add%20my_htable%20%22B%22%20%22Max%22%3B%3B",
+      "body": "%60%60%60ml%0A%0A%23%20let%20my_htable%20%3D%20Hashtbl.create%203%3B%3B%0Aval%20my_htable%20%3A%20('_weak1%2C%20'_weak2)%20Hashtbl.t%20%3D%20%3Cabstr%3E%0A%0A%23%20Hashtbl.add%20my_htable%20%22A%22%20%22John%22%3B%0A%20%20Hashtbl.add%20my_htable%20%22A%22%20%22Jane%22%3B%0A%20%20Hashtbl.add%20my_htable%20%22B%22%20%22Max%22%3B%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-56",
       "sectionId": "s5",
       "title": "Find%20Data",
-      "kind": "code",
-      "lang": "ml",
-      "code": "%23%20Hashtbl.find%20my_htable%20%22A%22%3B%3B%0A-%20%3A%20string%20%3D%20%22Jane%22%0A%0A(*%20find%20all%20*)%0A%23%20Hashtbl.find_all%20my_htable%20%22A%22%3B%3B%0A-%20%3A%20string%20list%20%3D%20%5B%22Jane%22%3B%20%22John%22%5D",
+      "body": "%60%60%60ml%0A%23%20Hashtbl.find%20my_htable%20%22A%22%3B%3B%0A-%20%3A%20string%20%3D%20%22Jane%22%0A%0A(*%20find%20all%20*)%0A%23%20Hashtbl.find_all%20my_htable%20%22A%22%3B%3B%0A-%20%3A%20string%20list%20%3D%20%5B%22Jane%22%3B%20%22John%22%5D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-57",
       "sectionId": "s5",
       "title": "Maps",
-      "kind": "text",
       "body": "Maps are immutable key-value association tables."
     },
     {
       "id": "s5-58",
       "sectionId": "s5",
       "title": "Initialization%20%26%20Add%20Data",
-      "kind": "code",
-      "lang": "ml",
-      "code": "(*%20the%20Map.Make%20functor%20creates%20the%20custom%20map%20module%20*)%0A%23%20module%20StringMap%20%3D%20Map.Make(String)%3B%3B%0A%0Alet%20books%20%3D%0A%20%20StringMap.empty%0A%20%20%7C%3E%20StringMap.add%20%22Dune%22%20(%22Herbet%22%2C%201965)%0A%20%20%7C%3E%20StringMap.add%20%22Neuromancer%22%20(%22Gibson%22%2C%201984)",
+      "body": "%60%60%60ml%0A(*%20the%20Map.Make%20functor%20creates%20the%20custom%20map%20module%20*)%0A%23%20module%20StringMap%20%3D%20Map.Make(String)%3B%3B%0A%0Alet%20books%20%3D%0A%20%20StringMap.empty%0A%20%20%7C%3E%20StringMap.add%20%22Dune%22%20(%22Herbet%22%2C%201965)%0A%20%20%7C%3E%20StringMap.add%20%22Neuromancer%22%20(%22Gibson%22%2C%201984)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-59",
       "sectionId": "s5",
       "title": "Finding%20Entries",
-      "kind": "code",
-      "lang": "ml",
-      "code": "(*%20find_opt%20returns%20assoc%20val%20wrapped%20in%20an%20option%20else%20None%20*)%0A%23%20StringMap.find_opt%20%22Dune%22%20books%3B%3B%0A-%20%3A%20(string%20*%20int)%20option%20%3D%20Some%20(%22Herbet%22%2C%201965)%0A%0A(*%20find%20returns%20the%20association%20else%20Not_Found%20*)%0A%23%20StringMap.find%20%22Dune%22%20books%3B%3B%0A-%20%3A%20string%20*%20int%20%3D%20(%22Herbet%22%2C%201965)",
+      "body": "%60%60%60ml%0A(*%20find_opt%20returns%20assoc%20val%20wrapped%20in%20an%20option%20else%20None%20*)%0A%23%20StringMap.find_opt%20%22Dune%22%20books%3B%3B%0A-%20%3A%20(string%20*%20int)%20option%20%3D%20Some%20(%22Herbet%22%2C%201965)%0A%0A(*%20find%20returns%20the%20association%20else%20Not_Found%20*)%0A%23%20StringMap.find%20%22Dune%22%20books%3B%3B%0A-%20%3A%20string%20*%20int%20%3D%20(%22Herbet%22%2C%201965)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-60",
       "sectionId": "s5",
-      "title": "Adding & Removing Entries",
-      "kind": "text",
-      "body": "Creates a new map since maps are immutable"
-    },
-    {
-      "id": "s5-61",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let%20more_books%20%3D%20books%0A%20%20%7C%3E%20StringMap.add%20%22Foundation%22%20(%22Isaac%20Asimov%22%2C%201951)%0A%0Alet%20less_books%20%3D%0A%20%20%7C%3E%20StringMap.remove%20%22Dune%22",
+      "title": "Adding%20%26%20Removing%20Entries",
+      "body": "Creates%20a%20new%20map%20since%20maps%20are%20immutable%0A%0A%60%60%60ml%0Alet%20more_books%20%3D%20books%0A%20%20%7C%3E%20StringMap.add%20%22Foundation%22%20(%22Isaac%20Asimov%22%2C%201951)%0A%0Alet%20less_books%20%3D%0A%20%20%7C%3E%20StringMap.remove%20%22Dune%22%0A%60%60%60%0A%0AFiltering%0A%0A%60%60%60ml%0Alet%20eighties_books%20%3D%0A%20%20%20%20StringMap.filter%0A%20%20%20%20%20%20(fun%20_%20(_%2C%20year)%20-%3E%20year%20%3E%201980%20%26%20number%20%3C%201990)%20books%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s5-62",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "Filtering"
-    },
-    {
-      "id": "s5-63",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let eighties_books =\n    StringMap.filter\n      (fun _ (_, year) -> year > 1980 & number < 1990) books"
     },
     {
       "id": "s5-64",
       "sectionId": "s5",
       "title": "Printing%20Data",
-      "kind": "code",
-      "lang": "ml",
-      "code": "let%20print_books%20map%20%3D%0A%20%20StringMap.iter%20(fun%20title%20(author%2C%20year)%20-%3E%0A%20%20%20%20Printf.printf%20%22Title%3A%20%25s%2C%20Author%3A%20%25s%2C%20Year%3A%20%25d%5Cn%22%20title%20author%20year%0A%20%20)%20map%0A%0A%23%20let%20()%20%3D%20print_books%20eighties_books%3B%3B%0ATitle%3A%20Neuromancer%2C%20Author%3A%20Gibson%2C%20Year%3A%201984",
+      "body": "%60%60%60ml%0Alet%20print_books%20map%20%3D%0A%20%20StringMap.iter%20(fun%20title%20(author%2C%20year)%20-%3E%0A%20%20%20%20Printf.printf%20%22Title%3A%20%25s%2C%20Author%3A%20%25s%2C%20Year%3A%20%25d%5Cn%22%20title%20author%20year%0A%20%20)%20map%0A%0A%23%20let%20()%20%3D%20print_books%20eighties_books%3B%3B%0ATitle%3A%20Neuromancer%2C%20Author%3A%20Gibson%2C%20Year%3A%201984%0A%60%60%60",
       "encoded": true
     }
   ],

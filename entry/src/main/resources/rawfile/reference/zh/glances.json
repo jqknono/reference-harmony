@@ -45,818 +45,296 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "这是开始使用 [Glances](https://glances.readthedocs.io/en/latest/) 系统监控工具的快速参考备忘单，可以帮助用户监视系统的各种性能指标"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "功能特点 - 跨平台支持",
-      "kind": "text",
       "body": "• `Glances` 支持多种操作系统，包括 Linux、Windows、macOS 和 FreeBSD。"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "多种输出方式",
-      "kind": "text",
       "body": "• `命令行界面（CLI）`：通过终端查看系统监控数据。\n• `Web 界面`：通过浏览器访问并查看系统性能指标。\n• `API 输出`：可以将数据通过 REST API 或者 MQTT 传输到其他系统或服务。"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "详细的系统监控",
-      "kind": "text",
       "body": "• `CPU`：实时显示 CPU 的使用率、每个核心的负载情况。\n• `内存`：显示总内存、已用内存、缓存和交换分区的使用情况。\n• `磁盘 I/O`：显示磁盘的读写速度和 I/O 操作数。\n• `网络带宽`：显示网络接口的上传和下载速度。\n• `文件系统`：显示各个挂载点的使用情况。\n• `传感器`：显示系统温度、风扇速度等传感器数据（需要支持的硬件和驱动）。"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "扩展功能",
-      "kind": "text",
       "body": "• `插件系统`：支持通过插件扩展功能，可以自定义监控指标。\n• `导出数据`：支持将监控数据导出为 CSV、JSON 等格式。\n• `报警系统`：可以设置报警，当某些指标超过设定阈值时触发通知。"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "安装 - **通过 pip 安装**",
-      "kind": "code",
-      "lang": "sh",
-      "code": "pip install glances"
+      "body": "```sh\npip install glances\n```"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "**通过包管理器安装**",
-      "kind": "text",
-      "body": "**Debian/Ubuntu**:"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "sudo apt-get install glances"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "**Fedora**:"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "sudo dnf install glances"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "**macOS (使用 Homebrew)**:"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "brew install glances"
+      "body": "**Debian/Ubuntu**:\n\n```sh\nsudo apt-get install glances\n```\n\n**Fedora**:\n\n```sh\nsudo dnf install glances\n```\n\n**macOS (使用 Homebrew)**:\n\n```sh\nbrew install glances\n```"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "配置文件",
-      "kind": "text",
       "body": "Glances 的配置文件位于 `~/.config/glances/glances.conf`。通过编辑这个文件，可以自定义 Glances 的显示和行为。"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "例子配置文件",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[global]\nrefresh=2      # 设置刷新间隔（以秒为单位）\n\n[alert]\nenable = True\n\n# 邮件告警配置（放在 alert 下）\nmail = True\nmail_from = \nmail_to = \nmail_server = \nmail_port = 465\nmail_user = \nmail_password = \nmail_tls = True\n\n[cpu]\nenable=true    # 显示 CPU 负载平均值\n[mem]\nenable=true    # 显示内存使用情况\n[disk]\nenable=true    # 显示磁盘 I/O 信息\n[network]\nenable=true    # 显示网络带宽使用情况"
+      "body": "```ini\n[global]\nrefresh=2      # 设置刷新间隔（以秒为单位）\n\n[alert]\nenable = True\n\n# 邮件告警配置（放在 alert 下）\nmail = True\nmail_from = \nmail_to = \nmail_server = \nmail_port = 465\nmail_user = \nmail_password = \nmail_tls = True\n\n[cpu]\nenable=true    # 显示 CPU 负载平均值\n[mem]\nenable=true    # 显示内存使用情况\n[disk]\nenable=true    # 显示磁盘 I/O 信息\n[network]\nenable=true    # 显示网络带宽使用情况\n```"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "Web 访问",
-      "kind": "code",
-      "lang": "sh",
-      "code": "# 使用 Glances 的 API：\nglances -w\n# 访问 API：\ncurl http://<your_ip>:61208/api/3/all"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "**使用 Docker 部署 Glances**："
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "docker run --rm \\\n   -v /var/run/docker.sock:/var/run/docker.sock:ro \\\n   -v /glances/conf:/glances/conf:ro \\\n   -v /glances/data:/glances/data:rw \\\n   -p 61208-61209:61208-61209 \\\n   --name glances nicolargo/glances"
+      "body": "```sh\n# 使用 Glances 的 API：\nglances -w\n# 访问 API：\ncurl http://<your_ip>:61208/api/3/all\n```\n\n**使用 Docker 部署 Glances**：\n\n```sh\ndocker run --rm \\\n   -v /var/run/docker.sock:/var/run/docker.sock:ro \\\n   -v /glances/conf:/glances/conf:ro \\\n   -v /glances/data:/glances/data:rw \\\n   -p 61208-61209:61208-61209 \\\n   --name glances nicolargo/glances\n```"
     },
     {
       "id": "s1-17",
       "sectionId": "s1",
       "title": "使用方法 - **启动命令行界面**",
-      "kind": "code",
-      "lang": "sh",
-      "code": "glances"
+      "body": "```sh\nglances\n```"
     },
     {
       "id": "s1-18",
       "sectionId": "s1",
       "title": "**启动 Web 界面**",
-      "kind": "code",
-      "lang": "sh",
-      "code": "glances -w"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "启动后，通过浏览器访问 `http://<your_ip>:61208` 查看系统监控数据。"
+      "body": "```sh\nglances -w\n```\n\n启动后，通过浏览器访问 `http://<your_ip>:61208` 查看系统监控数据。"
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
       "title": "**启动以特定模式输出**",
-      "kind": "code",
-      "lang": "sh",
-      "code": "glances --export json  # JSON 输出\nglances --export csv   # CSV 输出"
+      "body": "```sh\nglances --export json  # JSON 输出\nglances --export csv   # CSV 输出\n```"
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "命令行选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`-h`, `--help` | 显示此帮助信息并退出\n`-V`, `--version` | 显示程序版本号并退出\n`-d`, `--debug` | 启用调试模式\n`-C CONF_FILE`, `--config CONF_FILE` | 配置文件的路径\n`--modules-list` | 显示模块（插件和导出）列表并退出\n`--stdout PLUGINS_STATS` | 显示插件统计信息到标准输出（用逗号分隔的插件/插件属性列表）\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s2-22",
       "sectionId": "s2",
       "title": "禁用启用选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`--disable-plugin PLUGIN` | 禁用插件（用逗号分隔的列表）\n`--enable-plugin PLUGIN` | 启用插件（用逗号分隔的列表）\n`--disable-process` | 禁用进程模块（减少Glances的CPU消耗）\n`--disable-webui` | 禁用Web界面（仅响应RESTful API）\n`--enable-history` | 启用历史模式\n`--disable-bold` | 禁用终端中的粗体模式\n`--disable-bg` | 禁用终端中的背景颜色\n`--enable-process-extended` | 启用顶级进程的扩展统计\n`--disable-check-update` | 禁用在线Glances版本检查\n`--disable-autodiscover` | 禁用自动发现功能\n`--light`, `--enable-light` | Curses UI的轻量模式（仅启用顶部菜单）\n`-q`, `--quiet` | 不显示 curses 界面\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "SNMP",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`--snmp-community SNMP_COMMUNITY` | SNMP社区\n`--snmp-port SNMP_PORT` | SNMP端口\n`--snmp-version SNMP_VERSION` | SNMP版本（1, 2c 或 3）\n`--snmp-user SNMP_USER` | SNMP用户名（仅适用于SNMPv3）\n`--snmp-auth SNMP_AUTH` | SNMP认证密钥（仅适用于SNMPv3）\n`--snmp-force` | 强制SNMP模式\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s2-24",
       "sectionId": "s2",
       "title": "命令行选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`--export EXPORT`| 启用导出模块（用逗号分隔的列表）\n`--export-csv-file EXPORT_CSV_FILE` | CSV导出文件路径\n`--export-json-file EXPORT_JSON_FILE`| JSON导出文件路径\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "命令行选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`-0`, `--disable-irix` | 任务的CPU使用率将按CPU总数进行划分\n`-1`, `--percpu` | 以每个CPU模式启动Glances\n`-2`, `--disable-left-sidebar` | 禁用网络、磁盘I/O、文件系统和传感器模块\n`-3`, `--disable-quicklook` | 禁用快速查看模块\n`-4`, `--full-quicklook` | 仅启用快速查看和负载模块\n`-5`, `--disable-top` | 禁用顶部菜单（快速查看、CPU、内存、交换区和负载）\n`-6`, `--meangpu` | 以平均GPU模式启动Glances\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s2-26",
       "sectionId": "s2",
       "title": "命令行选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`-c CLIENT`, `--client CLIENT` | 通过IPv4/IPv6地址、主机名或主机名:端口连接到Glances服务器\n`-s`, `--server` | 以服务器模式运行Glances\n`--browser` | 启动客户端浏览器（服务器列表）\n`-p PORT`, `--port PORT` | 定义客户端/服务器TCP端口 \\[默认：61209]\n`-B BIND_ADDRESS`, `--bind BIND_ADDRESS` | 将服务器绑定到给定的IPv4/IPv6地址或主机名\n`--username` | 定义客户端/服务器用户名\n`--password` | 定义客户端/服务器密码\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s2-27",
       "sectionId": "s2",
       "title": "命令行选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`-t TIME`, `--time TIME` | 设置刷新时间（秒）\\[默认：3秒]\n`-w`, `--webserver` |  以Web服务器模式运行Glances（需要bottle库）\n`--cached-time CACHED_TIME` | 设置服务器缓存时间 \\[默认：1秒]\n`--open-web-browser` |  尝试在默认的 Web 浏览器中打开Web界面\n`-f PROCESS_FILTER`, `--process-filter PROCESS_FILTER` | 设置进程过滤模式（正则表达式）\n`--process-short-name` | 强制使用进程名称的短名称\n`--hide-kernel-threads` |  在进程列表中隐藏内核线程（Windows不可用）\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s2-28",
       "sectionId": "s2",
       "title": "命令行选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`-b`, `--byte` | 以每秒字节数显示网络速率\n`--diskio-show-ramfs` | 在 DiskIO 插件中显示RAM文件系统\n`--diskio-iops` | 在 DiskIO 插件中显示每秒I/O操作数\n`--fahrenheit` | 以华氏度显示温度（默认是摄氏度）\n`--fs-free-space` | 显示文件系统的可用空间而非已用空间\n`--theme-white` | 优化显示颜色以适应白色背景\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s3-29",
       "sectionId": "s3",
       "title": "快捷键",
-      "kind": "text",
       "body": "| 快捷键 | 功能                        |\n|--------|-----------------------------|\n| `ENTER` | 设置进程过滤器 |\n| `a` | 自动排序进程列表 |\n| `A` |  启用/禁用应用程序监控进程 |\n| `b` |  在网络I/O中切换比特/秒或字节/秒 |\n| `B` |  查看每秒磁盘I/O计数器 |\n| `c` |  按CPU使用率排序进程 |\n| `C` |  启用/禁用云统计 |\n| `d` |  显示/隐藏磁盘I/O统计 |\n| `D` |  启用/禁用Docker统计 |\n| `e` |  启用/禁用顶级扩展统计 |\n| `E` |  清除当前进程过滤器 |\n| `f` |  显示/隐藏文件系统和文件夹监控统计 |\n| `F` |  在文件系统使用和可用空间之间切换 |\n| `g` |  为当前历史生成图表 |\n| `G` |  启用/禁用GPU统计 |\n| `h` |  显示/隐藏帮助屏幕 |\n| `i` |  按I/O速率排序进程 |\n| `I` |  显示/隐藏IP模块 |\n| `+`  | 增加选定进程的nice值/降低优先级(需要权限)- 仅在独立模式下 |\n| `-`  | 减少选定进程的nice值/提高优先级(需要权限)- 仅在独立模式下 |\n| `k` |  终止选定进程(需要权限)- 仅在独立模式下 |"
     },
     {
       "id": "s3-30",
       "sectionId": "s3",
       "title": "快捷键",
-      "kind": "text",
       "body": "| 快捷键 | 功能                        |\n|--------|-----------------------------|\n| `K` |  显示/隐藏TCP连接 |\n| `l` |  显示/隐藏日志消息 |\n| `m` |  按内存使用率排序进程 |\n| `M` |  重置进程摘要的最小/最大值 |\n| `n` |  显示/隐藏网络统计 |\n| `N` |  显示/隐藏当前时间 |\n| `p` |  按名称排序进程 |\n| `P` |  启用/禁用端口统计 |\n| `q\\|ESC\\|CTRL-C` | 退出当前Glances会话 |\n| `Q` |  显示/隐藏IRQ模块 |\n| `r` |  重置历史记录 |\n| `R` |  显示/隐藏RAID插件 |\n| `s` |  显示/隐藏传感器统计 |\n| `S` |  启用/禁用微小曲线图 |\n| `t` |  按CPU时间排序进程（TIME+） |\n| `T` |  以组合方式查看网络I/O |\n| `u` |  按用户排序进程 |\n| `U` |  查看累积网络I/O |\n| `w` |  删除已完成的警告日志消息 |\n| `W` |  显示/隐藏Wifi模块 |\n| `x` |  删除已完成的警告和严重日志消息 |\n| `z` |  显示/隐藏进程统计 |"
     },
     {
       "id": "s3-31",
       "sectionId": "s3",
       "title": "快捷键",
-      "kind": "text",
       "body": "| 快捷键 | 功能                        |\n|--------|-----------------------------|\n| `0` |  启用/禁用Irix/Solaris模式。任务的CPU使用率将按CPU总数进行划分 |\n| `1` |  在全局CPU和每个CPU统计之间切换 |\n| `2` |  启用/禁用左侧边栏 |\n| `3` |  启用/禁用快速查看模块 |\n| `4` |  启用/禁用除快速查看和负载模块外的所有模块 |\n| `5` |  启用/禁用顶部菜单（快速查看、CPU、内存、交换区和负载） |\n| `6` |  启用/禁用平均GPU模式 |\n| `9` |  在黑白主题之间切换UI主题 |\n| `/`  | 在进程命令行或命令名称之间切换 |\n| `F5` |  刷新curses用户界面的统计数据 |\n| `LEFT` |  向左导航进程排序 |\n| `RIGHT` |  向右导航进程排序 |\n| `UP` |  在进程列表中向上 |\n| `DOWN` |  在进程列表中向下。在Glances客户端浏览器中（通过`--browser`命令行参数访问）： |\n| `ENTER` |  运行选定的服务器 |\n| `UP` |  在服务器列表中向上 |\n| `DOWN` |  在服务器列表中向下 |\n| `q\\|ESC` | 退出Glances |"
     },
     {
       "id": "s4-32",
       "sectionId": "s4",
       "title": "位置",
-      "kind": "text",
-      "body": "您可以将自己的 `glances.conf` 文件放在以下位置："
-    },
-    {
-      "id": "s4-33",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": ":-- | -- | --\n:-- | -- | --\n`Linux`, `SunOS` | ~/.config/glances/, /etc/glances/, /usr/share/docs/glances/ |\n`*BSD` |~/.config/glances/, /usr/local/etc/glances/, /usr/share/docs/glances/ |\n`macOS` | ~/Library/Application Support/glances/, /usr/local/etc/glances/, /usr/share/docs/glances/ |\n`Windows` | %APPDATA%\\glances\\glances.conf |"
-    },
-    {
-      "id": "s4-34",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "• 在 Windows XP 上，%APPDATA% 为：`C:\\Documents and Settings\\<USERNAME>\\Application Data`\n• 在 Windows Vista 及更高版本上：`C:\\Users\\<用户名>\\AppData\\Roaming`"
+      "body": "您可以将自己的 `glances.conf` 文件放在以下位置：\n\n:-- | -- | --\n:-- | -- | --\n`Linux`, `SunOS` | ~/.config/glances/, /etc/glances/, /usr/share/docs/glances/ |\n`*BSD` |~/.config/glances/, /usr/local/etc/glances/, /usr/share/docs/glances/ |\n`macOS` | ~/Library/Application Support/glances/, /usr/local/etc/glances/, /usr/share/docs/glances/ |\n`Windows` | %APPDATA%\\glances\\glances.conf |\n\n• 在 Windows XP 上，%APPDATA% 为：`C:\\Documents and Settings\\<USERNAME>\\Application Data`\n• 在 Windows Vista 及更高版本上：`C:\\Users\\<用户名>\\AppData\\Roaming`"
     },
     {
       "id": "s4-35",
       "sectionId": "s4",
       "title": "语法",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[global]\n# 刷新率（默认为至少 2 秒）\n# 可以通过 -t <sec> 选项覆盖\n# 也可以在每个插件部分覆盖它\nrefresh=2\n# Glances 是否应该检查 PyPI 上是否有更新的版本？\ncheck_update=false\n# 历史大小（最大值数）\n# 默认值为28800：1天，每3秒1分\nhistory_size=28800"
+      "body": "```ini\n[global]\n# 刷新率（默认为至少 2 秒）\n# 可以通过 -t <sec> 选项覆盖\n# 也可以在每个插件部分覆盖它\nrefresh=2\n# Glances 是否应该检查 PyPI 上是否有更新的版本？\ncheck_update=false\n# 历史大小（最大值数）\n# 默认值为28800：1天，每3秒1分\nhistory_size=28800\n```"
     },
     {
       "id": "s4-36",
       "sectionId": "s4",
       "title": "CPU 插件的示例",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[cpu]\ndisable=False\nrefresh=3\nuser_careful=50\nuser_warning=70\nuser_critical=90\niowait_careful=50\niowait_warning=70\niowait_critical=90\nsystem_careful=50\nsystem_warning=70\nsystem_critical=90\nsteal_careful=50\nsteal_warning=70\nsteal_critical=90"
+      "body": "```ini\n[cpu]\ndisable=False\nrefresh=3\nuser_careful=50\nuser_warning=70\nuser_critical=90\niowait_careful=50\niowait_warning=70\niowait_critical=90\nsystem_careful=50\nsystem_warning=70\nsystem_critical=90\nsteal_careful=50\nsteal_warning=70\nsteal_critical=90\n```"
     },
     {
       "id": "s4-37",
       "sectionId": "s4",
       "title": "InfluxDB 导出模块",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[influxdb]\n# 配置 --export influxdb 选项\n# https://influxdb.com/\nhost=localhost\nport=8086\nuser=root\npassword=root\ndb=glances\nprefix=localhost\n#tags=foo:bar,spam:eggs"
+      "body": "```ini\n[influxdb]\n# 配置 --export influxdb 选项\n# https://influxdb.com/\nhost=localhost\nport=8086\nuser=root\npassword=root\ndb=glances\nprefix=localhost\n#tags=foo:bar,spam:eggs\n```"
     },
     {
       "id": "s4-38",
       "sectionId": "s4",
       "title": "Nginx AMP",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[amp_nginx]\n# 应启用 Nginx 状态页面 \n# https://easyengine.io/tutorials/nginx/status-page/\n\nenable=true\nregex=\\/usr\\/sbin\\/nginx\nrefresh=60\none_line=false\nstatus_url=http://localhost/nginx_status"
+      "body": "```ini\n[amp_nginx]\n# 应启用 Nginx 状态页面 \n# https://easyengine.io/tutorials/nginx/status-page/\n\nenable=true\nregex=\\/usr\\/sbin\\/nginx\nrefresh=60\none_line=false\nstatus_url=http://localhost/nginx_status\n```"
     },
     {
       "id": "s5-39",
       "sectionId": "s5",
       "title": "CSV",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export csv \\\n   --export-csv-file /tmp/glances.csv \\\n   --quiet"
-    },
-    {
-      "id": "s5-40",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "可以将统计数据导出到 CSV 文件"
+      "body": "```sh\n$ glances --export csv \\\n   --export-csv-file /tmp/glances.csv \\\n   --quiet\n```\n\n可以将统计数据导出到 CSV 文件"
     },
     {
       "id": "s5-41",
       "sectionId": "s5",
       "title": "JSON",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export json \\\n   --export-json-file /tmp/glances.json"
-    },
-    {
-      "id": "s5-42",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "可以将统计信息导出到 JSON 文件"
+      "body": "```sh\n$ glances --export json \\\n   --export-json-file /tmp/glances.json\n```\n\n可以将统计信息导出到 JSON 文件"
     },
     {
       "id": "s5-43",
       "sectionId": "s5",
       "title": "Cassandra",
-      "kind": "text",
-      "body": "您可以将统计数据导出到 Cassandra 或 Scylla 服务器"
-    },
-    {
-      "id": "s5-44",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[cassandra]\nhost=localhost\nport=9042\nprotocol_version=3\nkeyspace=glances\nreplication_factor=2\ntable=localhost"
-    },
-    {
-      "id": "s5-45",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-46",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export cassandra"
-    },
-    {
-      "id": "s5-47",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "数据模型如下："
-    },
-    {
-      "id": "s5-48",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sql",
-      "code": "CREATE TABLE <table> (plugin text, time timeuuid, stat map<text,float>, PRIMARY KEY (plugin, time))"
+      "body": "您可以将统计数据导出到 Cassandra 或 Scylla 服务器\n\n```ini\n[cassandra]\nhost=localhost\nport=9042\nprotocol_version=3\nkeyspace=glances\nreplication_factor=2\ntable=localhost\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export cassandra\n```\n\n数据模型如下：\n\n```sql\nCREATE TABLE <table> (plugin text, time timeuuid, stat map<text,float>, PRIMARY KEY (plugin, time))\n```"
     },
     {
       "id": "s5-49",
       "sectionId": "s5",
       "title": "Graph",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[graph]\n# --export graph 选项的配置\n# 设置创建图形（.svg 文件）的路径\n# 可以通过 --graph-path 命令行选项覆盖\npath=/tmp\n# 可以通过设置自动生成图表\n# generate_every 为一个非零值，对应于之间的秒数\n# 两代。将其设置为 0 以禁用图形自动生成。\ngenerate_every=60\n# 请参阅 Pygal lib 文档中的以下配置键定义\n# http://pygal.org/en/stable/documentation/index.html\nwidth=800\nheight=600\nstyle=DarkStyle"
-    },
-    {
-      "id": "s5-50",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-51",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export graph \\\n      --export-graph-path /tmp"
+      "body": "```ini\n[graph]\n# --export graph 选项的配置\n# 设置创建图形（.svg 文件）的路径\n# 可以通过 --graph-path 命令行选项覆盖\npath=/tmp\n# 可以通过设置自动生成图表\n# generate_every 为一个非零值，对应于之间的秒数\n# 两代。将其设置为 0 以禁用图形自动生成。\ngenerate_every=60\n# 请参阅 Pygal lib 文档中的以下配置键定义\n# http://pygal.org/en/stable/documentation/index.html\nwidth=800\nheight=600\nstyle=DarkStyle\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export graph \\\n      --export-graph-path /tmp\n```"
     },
     {
       "id": "s5-52",
       "sectionId": "s5",
       "title": "CouchDB",
-      "kind": "text",
-      "body": "您可以将统计数据导出到 CouchDB 服务器"
-    },
-    {
-      "id": "s5-53",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[mongodb]\nhost=localhost\nport=27017\ndb=glances\nuser=root\npassword=example"
-    },
-    {
-      "id": "s5-54",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-55",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export mongodb"
+      "body": "您可以将统计数据导出到 CouchDB 服务器\n\n```ini\n[mongodb]\nhost=localhost\nport=27017\ndb=glances\nuser=root\npassword=example\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export mongodb\n```"
     },
     {
       "id": "s5-56",
       "sectionId": "s5",
       "title": "InfluxDB",
-      "kind": "text",
-      "body": "您可以将统计数据导出到 InfluxDB 服务器（时间序列服务器）"
-    },
-    {
-      "id": "s5-57",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "测量 | 字段 | 标签\n:-- | -- | --\ncpu | user system iowait… |  hostname\nnetwork | read_bytes write_bytes time_since_update…  | hostname disk_name\ndiskio | rx tx time_since_update…  | hostname interface_name\ndocker | cpu_percent memory_usage…  | hostname name\ngpu | proc mem temperature…  | hostname gpu_id\n<!--rehype:className=show-header-->"
+      "body": "您可以将统计数据导出到 InfluxDB 服务器（时间序列服务器）\n\n测量 | 字段 | 标签\n:-- | -- | --\ncpu | user system iowait… |  hostname\nnetwork | read_bytes write_bytes time_since_update…  | hostname disk_name\ndiskio | rx tx time_since_update…  | hostname interface_name\ndocker | cpu_percent memory_usage…  | hostname name\ngpu | proc mem temperature…  | hostname gpu_id\n<!--rehype:className=show-header-->"
     },
     {
       "id": "s5-58",
       "sectionId": "s5",
       "title": "InfluxDB （最高版本 1.7.x）",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[influxdb]\nhost=localhost\nport=8086\nprotocol=http\nuser=root\npassword=root\ndb=glances\n# 所有测量名称都会添加前缀\n# Ex: prefix=foo\n#     => foo.cpu\n#     => foo.mem\n# 您还可以使用动态值\n#prefix=foo\n# 将为所有测量添加以下标签\n# 您还可以使用动态值\n# 注意：主机名始终作为标签添加\n#tags=foo:bar,spam:eggs,domain:`domainname`"
-    },
-    {
-      "id": "s5-59",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-60",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export influxdb"
+      "body": "```ini\n[influxdb]\nhost=localhost\nport=8086\nprotocol=http\nuser=root\npassword=root\ndb=glances\n# 所有测量名称都会添加前缀\n# Ex: prefix=foo\n#     => foo.cpu\n#     => foo.mem\n# 您还可以使用动态值\n#prefix=foo\n# 将为所有测量添加以下标签\n# 您还可以使用动态值\n# 注意：主机名始终作为标签添加\n#tags=foo:bar,spam:eggs,domain:`domainname`\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export influxdb\n```"
     },
     {
       "id": "s5-61",
       "sectionId": "s5",
       "title": "InfluxDB v2（来自 InfluxDB v1.8.x/Flux 和 InfluxDB v2.x）",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[influxdb2]\nhost=localhost\nport=8086\nprotocol=http\norg=nicolargo\nbucket=glances\ntoken=EjFUTWe8U-MIseEAkaVIgVnej_TrUpDy==\n# 设置两个导出之间的间隔（以秒为单位）\n# 如果时间间隔设置为 0，\n# 则使用 Glances 刷新时间（默认行为）\n#interval=0\n# 将为所有测量名称添加前缀\n# Ex: prefix=foo\n#     => foo.cpu\n#     => foo.mem\n# 您还可以使用动态值\n#prefix=foo\n# 将为所有测量添加以下标签\n# 您还可以使用动态值.\n# 注意：主机名始终作为标签添加\n#tags=foo:bar,spam:eggs,domain:`domainname`"
-    },
-    {
-      "id": "s5-62",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-63",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export influxdb2"
+      "body": "```ini\n[influxdb2]\nhost=localhost\nport=8086\nprotocol=http\norg=nicolargo\nbucket=glances\ntoken=EjFUTWe8U-MIseEAkaVIgVnej_TrUpDy==\n# 设置两个导出之间的间隔（以秒为单位）\n# 如果时间间隔设置为 0，\n# 则使用 Glances 刷新时间（默认行为）\n#interval=0\n# 将为所有测量名称添加前缀\n# Ex: prefix=foo\n#     => foo.cpu\n#     => foo.mem\n# 您还可以使用动态值\n#prefix=foo\n# 将为所有测量添加以下标签\n# 您还可以使用动态值.\n# 注意：主机名始终作为标签添加\n#tags=foo:bar,spam:eggs,domain:`domainname`\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export influxdb2\n```"
     },
     {
       "id": "s5-64",
       "sectionId": "s5",
       "title": "Elasticsearch",
-      "kind": "text",
-      "body": "可以将统计数据导出到 Elasticsearch 服务器"
-    },
-    {
-      "id": "s5-65",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[elasticsearch]\nhost=localhost\nport=9200\nindex=glances"
-    },
-    {
-      "id": "s5-66",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-67",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export elasticsearch"
+      "body": "可以将统计数据导出到 Elasticsearch 服务器\n\n```ini\n[elasticsearch]\nhost=localhost\nport=9200\nindex=glances\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export elasticsearch\n```"
     },
     {
       "id": "s5-68",
       "sectionId": "s5",
       "title": "MQTT",
-      "kind": "text",
-      "body": "您可以将统计信息导出到 `MQTT` 服务器"
-    },
-    {
-      "id": "s5-69",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[mqtt]\nhost=localhost\nport=883\ntls=true\nuser=glances\npassword=glances\ntopic=glances\ntopic_structure=per-metric"
-    },
-    {
-      "id": "s5-70",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-71",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export mqtt"
+      "body": "您可以将统计信息导出到 `MQTT` 服务器\n\n```ini\n[mqtt]\nhost=localhost\nport=883\ntls=true\nuser=glances\npassword=glances\ntopic=glances\ntopic_structure=per-metric\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export mqtt\n```"
     },
     {
       "id": "s5-72",
       "sectionId": "s5",
       "title": "MongoDB",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[couchdb]\nhost=localhost\nport=\nuser=root\npassword=example\ndb=glances"
-    },
-    {
-      "id": "s5-73",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-74",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export couchdb"
+      "body": "```ini\n[couchdb]\nhost=localhost\nport=\nuser=root\npassword=example\ndb=glances\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export couchdb\n```"
     },
     {
       "id": "s5-75",
       "sectionId": "s5",
       "title": "OpenTSDB",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[opentsdb]\nhost=localhost\nport=4242\nprefix=glances\ntags=foo:bar,spam:eggs"
-    },
-    {
-      "id": "s5-76",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-77",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export opentsdb"
+      "body": "```ini\n[opentsdb]\nhost=localhost\nport=4242\nprefix=glances\ntags=foo:bar,spam:eggs\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export opentsdb\n```"
     },
     {
       "id": "s5-78",
       "sectionId": "s5",
       "title": "Kafka",
-      "kind": "text",
-      "body": "您可以将统计信息导出到 Kafka 服务器"
-    },
-    {
-      "id": "s5-79",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[kafka]\nhost=localhost\nport=9092\ntopic=glances\n#compression=gzip\n# Tags will be added for all events\n#tags=foo:bar,spam:eggs\n# You can also use dynamic values\n#tags=hostname:`hostname -f`"
-    },
-    {
-      "id": "s5-80",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-81",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export kafka"
-    },
-    {
-      "id": "s5-82",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "内存插件的记录示例："
-    },
-    {
-      "id": "s5-83",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "py",
-      "code": "ConsumerRecord(topic%3Du'glances'%2C%20partition%3D0%2C%20offset%3D1305%2C%20timestamp%3D1490460592248%2C%20timestamp_type%3D0%2C%20key%3D'mem'%2C%20value%3Du'%7B%22available%22%3A%202094710784%2C%20%22used%22%3A%205777428480%2C%20%22cached%22%3A%202513543168%2C%20%22mem_careful%22%3A%2050.0%2C%20%22percent%22%3A%2073.4%2C%20%22free%22%3A%202094710784%2C%20%22mem_critical%22%3A%2090.0%2C%20%22inactive%22%3A%202361626624%2C%20%22shared%22%3A%20475504640%2C%20%22history_size%22%3A%2028800.0%2C%20%22mem_warning%22%3A%2070.0%2C%20%22total%22%3A%207872139264%2C%20%22active%22%3A%204834361344%2C%20%22buffers%22%3A%20160112640%7D'%2C%20checksum%3D214895201%2C%20serialized_key_size%3D3%2C%20serialized_value_size%3D303)",
+      "body": "%E6%82%A8%E5%8F%AF%E4%BB%A5%E5%B0%86%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E5%AF%BC%E5%87%BA%E5%88%B0%20Kafka%20%E6%9C%8D%E5%8A%A1%E5%99%A8%0A%0A%60%60%60ini%0A%5Bkafka%5D%0Ahost%3Dlocalhost%0Aport%3D9092%0Atopic%3Dglances%0A%23compression%3Dgzip%0A%23%20Tags%20will%20be%20added%20for%20all%20events%0A%23tags%3Dfoo%3Abar%2Cspam%3Aeggs%0A%23%20You%20can%20also%20use%20dynamic%20values%0A%23tags%3Dhostname%3A%60hostname%20-f%60%0A%60%60%60%0A%0A%E5%B9%B6%E8%BF%90%E8%A1%8C%20Glances%EF%BC%9A%0A%0A%60%60%60sh%0A%24%20glances%20--export%20kafka%0A%60%60%60%0A%0A%E5%86%85%E5%AD%98%E6%8F%92%E4%BB%B6%E7%9A%84%E8%AE%B0%E5%BD%95%E7%A4%BA%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60py%0AConsumerRecord(topic%3Du'glances'%2C%20partition%3D0%2C%20offset%3D1305%2C%20timestamp%3D1490460592248%2C%20timestamp_type%3D0%2C%20key%3D'mem'%2C%20value%3Du'%7B%22available%22%3A%202094710784%2C%20%22used%22%3A%205777428480%2C%20%22cached%22%3A%202513543168%2C%20%22mem_careful%22%3A%2050.0%2C%20%22percent%22%3A%2073.4%2C%20%22free%22%3A%202094710784%2C%20%22mem_critical%22%3A%2090.0%2C%20%22inactive%22%3A%202361626624%2C%20%22shared%22%3A%20475504640%2C%20%22history_size%22%3A%2028800.0%2C%20%22mem_warning%22%3A%2070.0%2C%20%22total%22%3A%207872139264%2C%20%22active%22%3A%204834361344%2C%20%22buffers%22%3A%20160112640%7D'%2C%20checksum%3D214895201%2C%20serialized_key_size%3D3%2C%20serialized_value_size%3D303)%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20Kafka%20Glances%20%E6%8F%92%E4%BB%B6%E7%9A%84%20Python%20%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60py%0Afrom%20kafka%20import%20KafkaConsumer%0Aimport%20json%0A%0Aconsumer%20%3D%20KafkaConsumer('glances'%2C%20value_deserializer%3Djson.loads)%0Afor%20s%20in%20consumer%3A%0A%20%20print(s)%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s5-84",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "使用 Kafka Glances 插件的 Python 代码示例："
-    },
-    {
-      "id": "s5-85",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "py",
-      "code": "from kafka import KafkaConsumer\nimport json\n\nconsumer = KafkaConsumer('glances', value_deserializer=json.loads)\nfor s in consumer:\n  print(s)"
     },
     {
       "id": "s5-86",
       "sectionId": "s5",
       "title": "Prometheus",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[prometheus]\nhost=localhost\nport=9091\nprefix=glances\nlabels=src:glances"
-    },
-    {
-      "id": "s5-87",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-88",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export prometheus"
+      "body": "```ini\n[prometheus]\nhost=localhost\nport=9091\nprefix=glances\nlabels=src:glances\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export prometheus\n```"
     },
     {
       "id": "s5-89",
       "sectionId": "s5",
       "title": "RabbitMQ",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[rabbitmq]\nhost=localhost\nport=5672\nuser=glances\npassword=glances\nqueue=glances_queue\n#protocol=amqps"
-    },
-    {
-      "id": "s5-90",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances："
-    },
-    {
-      "id": "s5-91",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export rabbitmq"
+      "body": "```ini\n[rabbitmq]\nhost=localhost\nport=5672\nuser=glances\npassword=glances\nqueue=glances_queue\n#protocol=amqps\n```\n\n并运行 Glances：\n\n```sh\n$ glances --export rabbitmq\n```"
     },
     {
       "id": "s5-92",
       "sectionId": "s5",
       "title": "RESTful",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[restful]\n# --export-restful 选项的配置\n# 例如，导出到 http://localhost:6789/\nhost=localhost\nport=6789\nprotocol=http\npath=/"
-    },
-    {
-      "id": "s5-93",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "URL语法"
-    },
-    {
-      "id": "s5-94",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "http://localhost:6789/\n|      |         |   |\n|      |         |   path\n|      |         port\n|      host\nprotocol"
-    },
-    {
-      "id": "s5-95",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances"
-    },
-    {
-      "id": "s5-96",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export restful"
+      "body": "```ini\n[restful]\n# --export-restful 选项的配置\n# 例如，导出到 http://localhost:6789/\nhost=localhost\nport=6789\nprotocol=http\npath=/\n```\n\nURL语法\n\n```\nhttp://localhost:6789/\n|      |         |   |\n|      |         |   path\n|      |         port\n|      host\nprotocol\n```\n\n并运行 Glances\n\n```sh\n$ glances --export restful\n```"
     },
     {
       "id": "s5-97",
       "sectionId": "s5",
       "title": "ZeroMQ",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[zeromq]\nhost=127.0.0.1\nport=5678\nprefix=G"
-    },
-    {
-      "id": "s5-98",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances"
-    },
-    {
-      "id": "s5-99",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export zeromq"
-    },
-    {
-      "id": "s5-100",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "以下是订阅 Glances 统计数据的简单 Python 客户端："
-    },
-    {
-      "id": "s5-101",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "py",
-      "code": "import%20json%0Aimport%20zmq%0A%0Acontext%20%3D%20zmq.Context()%0A%0Asubscriber%20%3D%20context.socket(zmq.SUB)%0Asubscriber.setsockopt(zmq.SUBSCRIBE%2C%20'G')%0Asubscriber.connect(%22tcp%3A%2F%2F127.0.0.1%3A5678%22)%0A%0Awhile%20True%3A%0A%20%20%20%20_%2C%20plugin%2C%20data_raw%20%3D%20subscriber.recv_multipart()%0A%20%20%20%20data%20%3D%20json.loads(data_raw)%0A%20%20%20%20print('%7B%7D%20%3D%3E%20%7B%7D'.format(plugin%2C%20data))%0A%0Asubscriber.close()%0Acontext.term()",
+      "body": "%60%60%60ini%0A%5Bzeromq%5D%0Ahost%3D127.0.0.1%0Aport%3D5678%0Aprefix%3DG%0A%60%60%60%0A%0A%E5%B9%B6%E8%BF%90%E8%A1%8C%20Glances%0A%0A%60%60%60sh%0A%24%20glances%20--export%20zeromq%0A%60%60%60%0A%0A%E4%BB%A5%E4%B8%8B%E6%98%AF%E8%AE%A2%E9%98%85%20Glances%20%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE%E7%9A%84%E7%AE%80%E5%8D%95%20Python%20%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%9A%0A%0A%60%60%60py%0Aimport%20json%0Aimport%20zmq%0A%0Acontext%20%3D%20zmq.Context()%0A%0Asubscriber%20%3D%20context.socket(zmq.SUB)%0Asubscriber.setsockopt(zmq.SUBSCRIBE%2C%20'G')%0Asubscriber.connect(%22tcp%3A%2F%2F127.0.0.1%3A5678%22)%0A%0Awhile%20True%3A%0A%20%20%20%20_%2C%20plugin%2C%20data_raw%20%3D%20subscriber.recv_multipart()%0A%20%20%20%20data%20%3D%20json.loads(data_raw)%0A%20%20%20%20print('%7B%7D%20%3D%3E%20%7B%7D'.format(plugin%2C%20data))%0A%0Asubscriber.close()%0Acontext.term()%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-102",
       "sectionId": "s5",
       "title": "Riemann",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[riemann]\nhost=localhost\nport=5555"
-    },
-    {
-      "id": "s5-103",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances"
-    },
-    {
-      "id": "s5-104",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export riemann"
+      "body": "```ini\n[riemann]\nhost=localhost\nport=5555\n```\n\n并运行 Glances\n\n```sh\n$ glances --export riemann\n```"
     },
     {
       "id": "s5-105",
       "sectionId": "s5",
       "title": "StatsD",
-      "kind": "code",
-      "lang": "ini",
-      "code": "[statsd]\nhost=localhost\nport=8125\nprefix=glances"
-    },
-    {
-      "id": "s5-106",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "并运行 Glances"
-    },
-    {
-      "id": "s5-107",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "sh",
-      "code": "$ glances --export statsd"
+      "body": "```ini\n[statsd]\nhost=localhost\nport=8125\nprefix=glances\n```\n\n并运行 Glances\n\n```sh\n$ glances --export statsd\n```"
     },
     {
       "id": "s6-108",
       "sectionId": "s6",
       "title": "另见",
-      "kind": "text",
       "body": "• [Glances 官方文档](https://nicolargo.github.io/glances/) _nicolargo.github.io_"
     }
   ],

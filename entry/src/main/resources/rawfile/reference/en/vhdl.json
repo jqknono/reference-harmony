@@ -70,82 +70,43 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "VHDL (VHSIC Hardware Description Language) cheat sheet - A comprehensive reference for digital hardware design and simulation."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Introduction",
-      "kind": "text",
-      "body": "VHDL is a hardware description language used for electronic design automation to describe digital and mixed-signal systems."
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• [IEEE 1076 Standard](https://standards.ieee.org/ieee/1076/3636/) _(IEEE Standard)_\n• [VHDL Tutorial](https://www.nandland.com/vhdl/tutorials/tutorial-introduction-to-vhdl-for-beginners.html) _(nandland.com)_\n• [Digital Design VHDL](https://vhdl.lapinoo.net/) _(lapinoo.net)_"
+      "body": "VHDL is a hardware description language used for electronic design automation to describe digital and mixed-signal systems.\n\n• [IEEE 1076 Standard](https://standards.ieee.org/ieee/1076/3636/) _(IEEE Standard)_\n• [VHDL Tutorial](https://www.nandland.com/vhdl/tutorials/tutorial-introduction-to-vhdl-for-beginners.html) _(nandland.com)_\n• [Digital Design VHDL](https://vhdl.lapinoo.net/) _(lapinoo.net)_"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "Basic%20Entity",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "entity%20hello_world%20is%0Aend%20hello_world%3B%0A%0Aarchitecture%20behavioral%20of%20hello_world%20is%0Abegin%0A%20%20--%20Simple%20testbench%20process%0A%20%20process%0A%20%20begin%0A%20%20%20%20report%20%22Hello%2C%20VHDL%20World!%22%3B%0A%20%20%20%20wait%3B%0A%20%20end%20process%3B%0Aend%20behavioral%3B",
+      "body": "%60%60%60vhdl%0Aentity%20hello_world%20is%0Aend%20hello_world%3B%0A%0Aarchitecture%20behavioral%20of%20hello_world%20is%0Abegin%0A%20%20--%20Simple%20testbench%20process%0A%20%20process%0A%20%20begin%0A%20%20%20%20report%20%22Hello%2C%20VHDL%20World!%22%3B%0A%20%20%20%20wait%3B%0A%20%20end%20process%3B%0Aend%20behavioral%3B%0A%60%60%60%0A%0AA%20basic%20VHDL%20entity%20and%20architecture",
       "encoded": true
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "A basic VHDL entity and architecture"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "Simple AND Gate",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "library ieee;\nuse ieee.std_logic_1164.all;\n\nentity and_gate is\n  port (\n    a : in  std_logic;\n    b : in  std_logic;\n    y : out std_logic\n  );\nend and_gate;\n\narchitecture behavioral of and_gate is\nbegin\n  y <= a and b;\nend behavioral;"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Basic two-input AND gate implementation"
+      "body": "```vhdl\nlibrary ieee;\nuse ieee.std_logic_1164.all;\n\nentity and_gate is\n  port (\n    a : in  std_logic;\n    b : in  std_logic;\n    y : out std_logic\n  );\nend and_gate;\n\narchitecture behavioral of and_gate is\nbegin\n  y <= a and b;\nend behavioral;\n```\n\nBasic two-input AND gate implementation"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "Libraries and Packages",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "library ieee;\nuse ieee.std_logic_1164.all;\nuse ieee.numeric_std.all;\nuse ieee.std_logic_arith.all;\nuse ieee.std_logic_unsigned.all;\n\nlibrary work;\nuse work.my_package.all;"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Common library declarations"
+      "body": "```vhdl\nlibrary ieee;\nuse ieee.std_logic_1164.all;\nuse ieee.numeric_std.all;\nuse ieee.std_logic_arith.all;\nuse ieee.std_logic_unsigned.all;\n\nlibrary work;\nuse work.my_package.all;\n```\n\nCommon library declarations"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "Comments",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Single line comment\n\n/* Multi-line comment\n   spanning multiple lines\n   (VHDL-2008 feature) */"
+      "body": "```vhdl\n-- Single line comment\n\n/* Multi-line comment\n   spanning multiple lines\n   (VHDL-2008 feature) */\n```"
     },
     {
       "id": "s2-10",
       "sectionId": "s2",
       "title": "Standard%20Logic%20Types",
-      "kind": "text",
       "body": "%7C%20Type%20%7C%20Description%20%7C%20Values%20%7C%0A%7C------%7C-------------%7C---------%7C%0A%7C%20%60bit%60%20%7C%20Binary%20bit%20%7C%20'0'%2C%20'1'%20%7C%0A%7C%20%60std_logic%60%20%7C%20IEEE%20standard%20%7C%20'0'%2C%20'1'%2C%20'Z'%2C%20'X'%2C%20'H'%2C%20'L'%2C%20'W'%2C%20'U'%2C%20'-'%20%7C%0A%7C%20%60boolean%60%20%7C%20Boolean%20type%20%7C%20true%2C%20false%20%7C%0A%7C%20%60integer%60%20%7C%20Integer%20type%20%7C%20-2%5E31%20to%202%5E31-1%20%7C%0A%7C%20%60real%60%20%7C%20Real%20number%20%7C%20Floating%20point%20%7C%0A%7C%20%60character%60%20%7C%20Single%20character%20%7C%20ASCII%20characters%20%7C%0A%7C%20%60string%60%20%7C%20Character%20array%20%7C%20%22Hello%20World%22%20%7C",
       "encoded": true
     },
@@ -153,280 +114,220 @@
       "id": "s2-11",
       "sectionId": "s2",
       "title": "Vector Types",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Bit vectors\nsignal data_bus : bit_vector(7 downto 0);\nsignal address  : bit_vector(15 downto 0);\n\n-- Standard logic vectors\nsignal data     : std_logic_vector(7 downto 0);\nsignal control  : std_logic_vector(3 downto 0);\n\n-- Signed and unsigned (numeric_std)\nsignal counter  : unsigned(7 downto 0);\nsignal offset   : signed(15 downto 0);"
+      "body": "```vhdl\n-- Bit vectors\nsignal data_bus : bit_vector(7 downto 0);\nsignal address  : bit_vector(15 downto 0);\n\n-- Standard logic vectors\nsignal data     : std_logic_vector(7 downto 0);\nsignal control  : std_logic_vector(3 downto 0);\n\n-- Signed and unsigned (numeric_std)\nsignal counter  : unsigned(7 downto 0);\nsignal offset   : signed(15 downto 0);\n```"
     },
     {
       "id": "s2-12",
       "sectionId": "s2",
       "title": "Array Types",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Array type declaration\ntype memory_type is array (0 to 255) of std_logic_vector(7 downto 0);\n\n-- Array signal declaration\nsignal memory : memory_type;\n\n-- Multi-dimensional arrays\ntype matrix_type is array (0 to 3, 0 to 3) of integer;\nsignal matrix : matrix_type;"
+      "body": "```vhdl\n-- Array type declaration\ntype memory_type is array (0 to 255) of std_logic_vector(7 downto 0);\n\n-- Array signal declaration\nsignal memory : memory_type;\n\n-- Multi-dimensional arrays\ntype matrix_type is array (0 to 3, 0 to 3) of integer;\nsignal matrix : matrix_type;\n```"
     },
     {
       "id": "s2-13",
       "sectionId": "s2",
       "title": "Record%20Types",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "--%20Record%20type%20declaration%0Atype%20cpu_interface%20is%20record%0A%20%20address%20%3A%20std_logic_vector(15%20downto%200)%3B%0A%20%20data%20%20%20%20%3A%20std_logic_vector(7%20downto%200)%3B%0A%20%20read_en%20%3A%20std_logic%3B%0A%20%20write_en%3A%20std_logic%3B%0Aend%20record%3B%0A%0A--%20Record%20signal%0Asignal%20cpu_bus%20%3A%20cpu_interface%3B%0A%0A--%20Access%20record%20fields%0Acpu_bus.address%20%3C%3D%20x%221234%22%3B%0Acpu_bus.data%20%20%20%20%3C%3D%20x%22AB%22%3B",
+      "body": "%60%60%60vhdl%0A--%20Record%20type%20declaration%0Atype%20cpu_interface%20is%20record%0A%20%20address%20%3A%20std_logic_vector(15%20downto%200)%3B%0A%20%20data%20%20%20%20%3A%20std_logic_vector(7%20downto%200)%3B%0A%20%20read_en%20%3A%20std_logic%3B%0A%20%20write_en%3A%20std_logic%3B%0Aend%20record%3B%0A%0A--%20Record%20signal%0Asignal%20cpu_bus%20%3A%20cpu_interface%3B%0A%0A--%20Access%20record%20fields%0Acpu_bus.address%20%3C%3D%20x%221234%22%3B%0Acpu_bus.data%20%20%20%20%3C%3D%20x%22AB%22%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-14",
       "sectionId": "s3",
       "title": "Entity Declaration",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "entity counter is\n  generic (\n    WIDTH : integer := 8;\n    MAX_COUNT : integer := 255\n  );\n  port (\n    clk     : in  std_logic;\n    reset   : in  std_logic;\n    enable  : in  std_logic;\n    count   : out std_logic_vector(WIDTH-1 downto 0);\n    overflow: out std_logic\n  );\nend entity counter;"
-    },
-    {
-      "id": "s3-15",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "Entity with generics and ports"
+      "body": "```vhdl\nentity counter is\n  generic (\n    WIDTH : integer := 8;\n    MAX_COUNT : integer := 255\n  );\n  port (\n    clk     : in  std_logic;\n    reset   : in  std_logic;\n    enable  : in  std_logic;\n    count   : out std_logic_vector(WIDTH-1 downto 0);\n    overflow: out std_logic\n  );\nend entity counter;\n```\n\nEntity with generics and ports"
     },
     {
       "id": "s3-16",
       "sectionId": "s3",
-      "title": "Architecture Styles",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Behavioral Architecture\narchitecture behavioral of counter is\n  signal count_int : unsigned(WIDTH-1 downto 0);\nbegin\n  process(clk, reset)\n  begin\n    if reset = '1' then\n      count_int <= (others => '0');\n      overflow <= '0';\n    elsif rising_edge(clk) then\n      if enable = '1' then\n        if count_int = MAX_COUNT then\n          count_int <= (others => '0');\n          overflow <= '1';\n        else\n          count_int <= count_int + 1;\n          overflow <= '0';\n        end if;\n      end if;\n    end if;\n  end process;\n  \n  count <= std_logic_vector(count_int);\nend behavioral;"
+      "title": "Architecture%20Styles",
+      "body": "%60%60%60vhdl%0A--%20Behavioral%20Architecture%0Aarchitecture%20behavioral%20of%20counter%20is%0A%20%20signal%20count_int%20%3A%20unsigned(WIDTH-1%20downto%200)%3B%0Abegin%0A%20%20process(clk%2C%20reset)%0A%20%20begin%0A%20%20%20%20if%20reset%20%3D%20'1'%20then%0A%20%20%20%20%20%20count_int%20%3C%3D%20(others%20%3D%3E%20'0')%3B%0A%20%20%20%20%20%20overflow%20%3C%3D%20'0'%3B%0A%20%20%20%20elsif%20rising_edge(clk)%20then%0A%20%20%20%20%20%20if%20enable%20%3D%20'1'%20then%0A%20%20%20%20%20%20%20%20if%20count_int%20%3D%20MAX_COUNT%20then%0A%20%20%20%20%20%20%20%20%20%20count_int%20%3C%3D%20(others%20%3D%3E%20'0')%3B%0A%20%20%20%20%20%20%20%20%20%20overflow%20%3C%3D%20'1'%3B%0A%20%20%20%20%20%20%20%20else%0A%20%20%20%20%20%20%20%20%20%20count_int%20%3C%3D%20count_int%20%2B%201%3B%0A%20%20%20%20%20%20%20%20%20%20overflow%20%3C%3D%20'0'%3B%0A%20%20%20%20%20%20%20%20end%20if%3B%0A%20%20%20%20%20%20end%20if%3B%0A%20%20%20%20end%20if%3B%0A%20%20end%20process%3B%0A%20%20%0A%20%20count%20%3C%3D%20std_logic_vector(count_int)%3B%0Aend%20behavioral%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-17",
       "sectionId": "s3",
       "title": "Structural Architecture",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "architecture structural of adder_4bit is\n  component full_adder is\n    port (\n      a, b, cin : in  std_logic;\n      sum, cout : out std_logic\n    );\n  end component;\n  \n  signal carry : std_logic_vector(3 downto 0);\nbegin\n  -- Component instantiation\n  FA0: full_adder port map (a(0), b(0), cin, sum(0), carry(0));\n  FA1: full_adder port map (a(1), b(1), carry(0), sum(1), carry(1));\n  FA2: full_adder port map (a(2), b(2), carry(1), sum(2), carry(2));\n  FA3: full_adder port map (a(3), b(3), carry(2), sum(3), cout);\nend structural;"
+      "body": "```vhdl\narchitecture structural of adder_4bit is\n  component full_adder is\n    port (\n      a, b, cin : in  std_logic;\n      sum, cout : out std_logic\n    );\n  end component;\n  \n  signal carry : std_logic_vector(3 downto 0);\nbegin\n  -- Component instantiation\n  FA0: full_adder port map (a(0), b(0), cin, sum(0), carry(0));\n  FA1: full_adder port map (a(1), b(1), carry(0), sum(1), carry(1));\n  FA2: full_adder port map (a(2), b(2), carry(1), sum(2), carry(2));\n  FA3: full_adder port map (a(3), b(3), carry(2), sum(3), cout);\nend structural;\n```"
     },
     {
       "id": "s3-18",
       "sectionId": "s3",
       "title": "Dataflow%20Architecture",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "architecture%20dataflow%20of%20mux_4to1%20is%0Abegin%0A%20%20--%20Concurrent%20signal%20assignments%0A%20%20output%20%3C%3D%20input0%20when%20sel%20%3D%20%2200%22%20else%0A%20%20%20%20%20%20%20%20%20%20%20%20input1%20when%20sel%20%3D%20%2201%22%20else%0A%20%20%20%20%20%20%20%20%20%20%20%20input2%20when%20sel%20%3D%20%2210%22%20else%0A%20%20%20%20%20%20%20%20%20%20%20%20input3%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20--%20Conditional%20assignment%0A%20%20with%20sel%20select%0A%20%20%20%20output%20%3C%3D%20input0%20when%20%2200%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20input1%20when%20%2201%22%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20input2%20when%20%2210%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20input3%20when%20others%3B%0Aend%20dataflow%3B",
+      "body": "%60%60%60vhdl%0Aarchitecture%20dataflow%20of%20mux_4to1%20is%0Abegin%0A%20%20--%20Concurrent%20signal%20assignments%0A%20%20output%20%3C%3D%20input0%20when%20sel%20%3D%20%2200%22%20else%0A%20%20%20%20%20%20%20%20%20%20%20%20input1%20when%20sel%20%3D%20%2201%22%20else%0A%20%20%20%20%20%20%20%20%20%20%20%20input2%20when%20sel%20%3D%20%2210%22%20else%0A%20%20%20%20%20%20%20%20%20%20%20%20input3%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20--%20Conditional%20assignment%0A%20%20with%20sel%20select%0A%20%20%20%20output%20%3C%3D%20input0%20when%20%2200%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20input1%20when%20%2201%22%2C%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20input2%20when%20%2210%22%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20input3%20when%20others%3B%0Aend%20dataflow%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-19",
       "sectionId": "s4",
-      "title": "Clocked Process",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Synchronous process with clock and reset\nprocess(clk, reset)\nbegin\n  if reset = '1' then\n    -- Asynchronous reset\n    output <= '0';\n    state <= IDLE;\n  elsif rising_edge(clk) then\n    -- Synchronous logic\n    case state is\n      when IDLE =>\n        if start = '1' then\n          state <= ACTIVE;\n        end if;\n      when ACTIVE =>\n        output <= '1';\n        if done = '1' then\n          state <= IDLE;\n        end if;\n    end case;\n  end if;\nend process;"
+      "title": "Clocked%20Process",
+      "body": "%60%60%60vhdl%0A--%20Synchronous%20process%20with%20clock%20and%20reset%0Aprocess(clk%2C%20reset)%0Abegin%0A%20%20if%20reset%20%3D%20'1'%20then%0A%20%20%20%20--%20Asynchronous%20reset%0A%20%20%20%20output%20%3C%3D%20'0'%3B%0A%20%20%20%20state%20%3C%3D%20IDLE%3B%0A%20%20elsif%20rising_edge(clk)%20then%0A%20%20%20%20--%20Synchronous%20logic%0A%20%20%20%20case%20state%20is%0A%20%20%20%20%20%20when%20IDLE%20%3D%3E%0A%20%20%20%20%20%20%20%20if%20start%20%3D%20'1'%20then%0A%20%20%20%20%20%20%20%20%20%20state%20%3C%3D%20ACTIVE%3B%0A%20%20%20%20%20%20%20%20end%20if%3B%0A%20%20%20%20%20%20when%20ACTIVE%20%3D%3E%0A%20%20%20%20%20%20%20%20output%20%3C%3D%20'1'%3B%0A%20%20%20%20%20%20%20%20if%20done%20%3D%20'1'%20then%0A%20%20%20%20%20%20%20%20%20%20state%20%3C%3D%20IDLE%3B%0A%20%20%20%20%20%20%20%20end%20if%3B%0A%20%20%20%20end%20case%3B%0A%20%20end%20if%3B%0Aend%20process%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-20",
       "sectionId": "s4",
       "title": "Combinational%20Process",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "--%20Combinational%20logic%20process%0Aprocess(a%2C%20b%2C%20sel)%0Abegin%0A%20%20case%20sel%20is%0A%20%20%20%20when%20%2200%22%20%3D%3E%0A%20%20%20%20%20%20result%20%3C%3D%20a%20and%20b%3B%0A%20%20%20%20when%20%2201%22%20%3D%3E%0A%20%20%20%20%20%20result%20%3C%3D%20a%20or%20b%3B%0A%20%20%20%20when%20%2210%22%20%3D%3E%0A%20%20%20%20%20%20result%20%3C%3D%20a%20xor%20b%3B%0A%20%20%20%20when%20others%20%3D%3E%0A%20%20%20%20%20%20result%20%3C%3D%20not%20a%3B%0A%20%20end%20case%3B%0Aend%20process%3B",
+      "body": "%60%60%60vhdl%0A--%20Combinational%20logic%20process%0Aprocess(a%2C%20b%2C%20sel)%0Abegin%0A%20%20case%20sel%20is%0A%20%20%20%20when%20%2200%22%20%3D%3E%0A%20%20%20%20%20%20result%20%3C%3D%20a%20and%20b%3B%0A%20%20%20%20when%20%2201%22%20%3D%3E%0A%20%20%20%20%20%20result%20%3C%3D%20a%20or%20b%3B%0A%20%20%20%20when%20%2210%22%20%3D%3E%0A%20%20%20%20%20%20result%20%3C%3D%20a%20xor%20b%3B%0A%20%20%20%20when%20others%20%3D%3E%0A%20%20%20%20%20%20result%20%3C%3D%20not%20a%3B%0A%20%20end%20case%3B%0Aend%20process%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-21",
       "sectionId": "s4",
       "title": "Wait%20Statements",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "--%20Testbench%20process%20with%20wait%20statements%0Aprocess%0Abegin%0A%20%20--%20Initialize%0A%20%20reset%20%3C%3D%20'1'%3B%0A%20%20wait%20for%2010%20ns%3B%0A%20%20%0A%20%20reset%20%3C%3D%20'0'%3B%0A%20%20wait%20for%2020%20ns%3B%0A%20%20%0A%20%20--%20Apply%20stimulus%0A%20%20data_in%20%3C%3D%20x%22AA%22%3B%0A%20%20wait%20until%20rising_edge(clk)%3B%0A%20%20%0A%20%20--%20Wait%20for%20condition%0A%20%20wait%20until%20ready%20%3D%20'1'%3B%0A%20%20%0A%20%20wait%3B%20%20--%20Wait%20indefinitely%0Aend%20process%3B",
+      "body": "%60%60%60vhdl%0A--%20Testbench%20process%20with%20wait%20statements%0Aprocess%0Abegin%0A%20%20--%20Initialize%0A%20%20reset%20%3C%3D%20'1'%3B%0A%20%20wait%20for%2010%20ns%3B%0A%20%20%0A%20%20reset%20%3C%3D%20'0'%3B%0A%20%20wait%20for%2020%20ns%3B%0A%20%20%0A%20%20--%20Apply%20stimulus%0A%20%20data_in%20%3C%3D%20x%22AA%22%3B%0A%20%20wait%20until%20rising_edge(clk)%3B%0A%20%20%0A%20%20--%20Wait%20for%20condition%0A%20%20wait%20until%20ready%20%3D%20'1'%3B%0A%20%20%0A%20%20wait%3B%20%20--%20Wait%20indefinitely%0Aend%20process%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-22",
       "sectionId": "s5",
       "title": "Logical Operators",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Logical operators\nresult <= a and b;\nresult <= a or b;\nresult <= a nand b;\nresult <= a nor b;\nresult <= a xor b;\nresult <= a xnor b;\nresult <= not a;"
+      "body": "```vhdl\n-- Logical operators\nresult <= a and b;\nresult <= a or b;\nresult <= a nand b;\nresult <= a nor b;\nresult <= a xor b;\nresult <= a xnor b;\nresult <= not a;\n```"
     },
     {
       "id": "s5-23",
       "sectionId": "s5",
-      "title": "Arithmetic Operators",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Arithmetic operators (requires numeric_std)\nsignal a, b : unsigned(7 downto 0);\nsignal result : unsigned(8 downto 0);\n\nresult <= ('0' & a) + ('0' & b);  -- Addition with carry\nresult <= a - b;                   -- Subtraction\nresult <= a * b;                   -- Multiplication\nresult <= a / b;                   -- Division (synthesis limited)\nresult <= a mod b;                 -- Modulo\nresult <= a rem b;                 -- Remainder\nresult <= a ** 2;                  -- Exponentiation\n\n-- Increment/Decrement\ncounter <= counter + 1;\ncounter <= counter - 1;"
+      "title": "Arithmetic%20Operators",
+      "body": "%60%60%60vhdl%0A--%20Arithmetic%20operators%20(requires%20numeric_std)%0Asignal%20a%2C%20b%20%3A%20unsigned(7%20downto%200)%3B%0Asignal%20result%20%3A%20unsigned(8%20downto%200)%3B%0A%0Aresult%20%3C%3D%20('0'%20%26%20a)%20%2B%20('0'%20%26%20b)%3B%20%20--%20Addition%20with%20carry%0Aresult%20%3C%3D%20a%20-%20b%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%20Subtraction%0Aresult%20%3C%3D%20a%20*%20b%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%20Multiplication%0Aresult%20%3C%3D%20a%20%2F%20b%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%20Division%20(synthesis%20limited)%0Aresult%20%3C%3D%20a%20mod%20b%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%20Modulo%0Aresult%20%3C%3D%20a%20rem%20b%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%20Remainder%0Aresult%20%3C%3D%20a%20**%202%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20--%20Exponentiation%0A%0A--%20Increment%2FDecrement%0Acounter%20%3C%3D%20counter%20%2B%201%3B%0Acounter%20%3C%3D%20counter%20-%201%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s5-24",
       "sectionId": "s5",
       "title": "Relational Operators",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Comparison operators\nif a = b then         -- Equal\nif a /= b then        -- Not equal\nif a < b then         -- Less than\nif a <= b then        -- Less than or equal\nif a > b then         -- Greater than\nif a >= b then        -- Greater than or equal"
+      "body": "```vhdl\n-- Comparison operators\nif a = b then         -- Equal\nif a /= b then        -- Not equal\nif a < b then         -- Less than\nif a <= b then        -- Less than or equal\nif a > b then         -- Greater than\nif a >= b then        -- Greater than or equal\n```"
     },
     {
       "id": "s5-25",
       "sectionId": "s5",
       "title": "Shift Operators",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Shift operators (VHDL-2008)\nsignal data : std_logic_vector(7 downto 0);\n\ndata <= data sll 1;   -- Shift left logical\ndata <= data srl 1;   -- Shift right logical\ndata <= data sla 1;   -- Shift left arithmetic\ndata <= data sra 1;   -- Shift right arithmetic\ndata <= data rol 1;   -- Rotate left\ndata <= data ror 1;   -- Rotate right"
+      "body": "```vhdl\n-- Shift operators (VHDL-2008)\nsignal data : std_logic_vector(7 downto 0);\n\ndata <= data sll 1;   -- Shift left logical\ndata <= data srl 1;   -- Shift right logical\ndata <= data sla 1;   -- Shift left arithmetic\ndata <= data sra 1;   -- Shift right arithmetic\ndata <= data rol 1;   -- Rotate left\ndata <= data ror 1;   -- Rotate right\n```"
     },
     {
       "id": "s6-26",
       "sectionId": "s6",
       "title": "If-Then-Else",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "--%20Simple%20if%20statement%0Aif%20enable%20%3D%20'1'%20then%0A%20%20output%20%3C%3D%20input%3B%0Aend%20if%3B%0A%0A--%20If-else%0Aif%20reset%20%3D%20'1'%20then%0A%20%20counter%20%3C%3D%200%3B%0Aelse%0A%20%20counter%20%3C%3D%20counter%20%2B%201%3B%0Aend%20if%3B%0A%0A--%20If-elsif-else%0Aif%20sel%20%3D%20%2200%22%20then%0A%20%20output%20%3C%3D%20input0%3B%0Aelsif%20sel%20%3D%20%2201%22%20then%0A%20%20output%20%3C%3D%20input1%3B%0Aelsif%20sel%20%3D%20%2210%22%20then%0A%20%20output%20%3C%3D%20input2%3B%0Aelse%0A%20%20output%20%3C%3D%20input3%3B%0Aend%20if%3B",
+      "body": "%60%60%60vhdl%0A--%20Simple%20if%20statement%0Aif%20enable%20%3D%20'1'%20then%0A%20%20output%20%3C%3D%20input%3B%0Aend%20if%3B%0A%0A--%20If-else%0Aif%20reset%20%3D%20'1'%20then%0A%20%20counter%20%3C%3D%200%3B%0Aelse%0A%20%20counter%20%3C%3D%20counter%20%2B%201%3B%0Aend%20if%3B%0A%0A--%20If-elsif-else%0Aif%20sel%20%3D%20%2200%22%20then%0A%20%20output%20%3C%3D%20input0%3B%0Aelsif%20sel%20%3D%20%2201%22%20then%0A%20%20output%20%3C%3D%20input1%3B%0Aelsif%20sel%20%3D%20%2210%22%20then%0A%20%20output%20%3C%3D%20input2%3B%0Aelse%0A%20%20output%20%3C%3D%20input3%3B%0Aend%20if%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-27",
       "sectionId": "s6",
-      "title": "Case Statement",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Case statement\ncase state is\n  when IDLE =>\n    next_state <= START;\n    output <= '0';\n  when START =>\n    next_state <= ACTIVE;\n    output <= '1';\n  when ACTIVE =>\n    if done = '1' then\n      next_state <= IDLE;\n    else\n      next_state <= ACTIVE;\n    end if;\n  when others =>\n    next_state <= IDLE;\n    output <= '0';\nend case;"
+      "title": "Case%20Statement",
+      "body": "%60%60%60vhdl%0A--%20Case%20statement%0Acase%20state%20is%0A%20%20when%20IDLE%20%3D%3E%0A%20%20%20%20next_state%20%3C%3D%20START%3B%0A%20%20%20%20output%20%3C%3D%20'0'%3B%0A%20%20when%20START%20%3D%3E%0A%20%20%20%20next_state%20%3C%3D%20ACTIVE%3B%0A%20%20%20%20output%20%3C%3D%20'1'%3B%0A%20%20when%20ACTIVE%20%3D%3E%0A%20%20%20%20if%20done%20%3D%20'1'%20then%0A%20%20%20%20%20%20next_state%20%3C%3D%20IDLE%3B%0A%20%20%20%20else%0A%20%20%20%20%20%20next_state%20%3C%3D%20ACTIVE%3B%0A%20%20%20%20end%20if%3B%0A%20%20when%20others%20%3D%3E%0A%20%20%20%20next_state%20%3C%3D%20IDLE%3B%0A%20%20%20%20output%20%3C%3D%20'0'%3B%0Aend%20case%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-28",
       "sectionId": "s6",
       "title": "For Loops",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- For loop in process\nprocess(clk)\nbegin\n  if rising_edge(clk) then\n    for i in 0 to 7 loop\n      shift_reg(i+1) <= shift_reg(i);\n    end loop;\n    shift_reg(0) <= serial_in;\n  end if;\nend process;\n\n-- Generate statement with for loop\ngen_mux: for i in 0 to 3 generate\n  mux_inst: entity work.mux_2to1\n    port map (\n      a => input_a(i),\n      b => input_b(i),\n      sel => sel,\n      y => output(i)\n    );\nend generate;"
+      "body": "```vhdl\n-- For loop in process\nprocess(clk)\nbegin\n  if rising_edge(clk) then\n    for i in 0 to 7 loop\n      shift_reg(i+1) <= shift_reg(i);\n    end loop;\n    shift_reg(0) <= serial_in;\n  end if;\nend process;\n\n-- Generate statement with for loop\ngen_mux: for i in 0 to 3 generate\n  mux_inst: entity work.mux_2to1\n    port map (\n      a => input_a(i),\n      b => input_b(i),\n      sel => sel,\n      y => output(i)\n    );\nend generate;\n```"
     },
     {
       "id": "s6-29",
       "sectionId": "s6",
       "title": "While Loops",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- While loop (primarily for testbenches)\nprocess\n  variable count : integer := 0;\nbegin\n  while count < 10 loop\n    wait until rising_edge(clk);\n    count := count + 1;\n  end loop;\n  wait;\nend process;"
+      "body": "```vhdl\n-- While loop (primarily for testbenches)\nprocess\n  variable count : integer := 0;\nbegin\n  while count < 10 loop\n    wait until rising_edge(clk);\n    count := count + 1;\n  end loop;\n  wait;\nend process;\n```"
     },
     {
       "id": "s7-30",
       "sectionId": "s7",
-      "title": "Function Declaration",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Function declaration\nfunction to_integer(input : std_logic_vector) return integer is\n  variable result : integer := 0;\nbegin\n  for i in input'range loop\n    result := result * 2;\n    if input(i) = '1' then\n      result := result + 1;\n    end if;\n  end loop;\n  return result;\nend function;\n\n-- Function usage\nsignal address : std_logic_vector(7 downto 0);\nsignal addr_int : integer;\n\naddr_int <= to_integer(address);"
+      "title": "Function%20Declaration",
+      "body": "%60%60%60vhdl%0A--%20Function%20declaration%0Afunction%20to_integer(input%20%3A%20std_logic_vector)%20return%20integer%20is%0A%20%20variable%20result%20%3A%20integer%20%3A%3D%200%3B%0Abegin%0A%20%20for%20i%20in%20input'range%20loop%0A%20%20%20%20result%20%3A%3D%20result%20*%202%3B%0A%20%20%20%20if%20input(i)%20%3D%20'1'%20then%0A%20%20%20%20%20%20result%20%3A%3D%20result%20%2B%201%3B%0A%20%20%20%20end%20if%3B%0A%20%20end%20loop%3B%0A%20%20return%20result%3B%0Aend%20function%3B%0A%0A--%20Function%20usage%0Asignal%20address%20%3A%20std_logic_vector(7%20downto%200)%3B%0Asignal%20addr_int%20%3A%20integer%3B%0A%0Aaddr_int%20%3C%3D%20to_integer(address)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s7-31",
       "sectionId": "s7",
       "title": "Procedure Declaration",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Procedure declaration\nprocedure write_memory(\n  signal clk : in std_logic;\n  signal addr : in std_logic_vector(7 downto 0);\n  signal data : in std_logic_vector(7 downto 0);\n  signal mem : inout memory_type\n) is\nbegin\n  wait until rising_edge(clk);\n  mem(to_integer(unsigned(addr))) <= data;\nend procedure;\n\n-- Procedure call\nwrite_memory(clk, address, data_in, memory);"
+      "body": "```vhdl\n-- Procedure declaration\nprocedure write_memory(\n  signal clk : in std_logic;\n  signal addr : in std_logic_vector(7 downto 0);\n  signal data : in std_logic_vector(7 downto 0);\n  signal mem : inout memory_type\n) is\nbegin\n  wait until rising_edge(clk);\n  mem(to_integer(unsigned(addr))) <= data;\nend procedure;\n\n-- Procedure call\nwrite_memory(clk, address, data_in, memory);\n```"
     },
     {
       "id": "s7-32",
       "sectionId": "s7",
-      "title": "Package Declaration",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Package declaration\npackage my_package is\n  -- Constants\n  constant DATA_WIDTH : integer := 8;\n  constant ADDR_WIDTH : integer := 16;\n  \n  -- Types\n  type state_type is (IDLE, READ, WRITE, DONE);\n  \n  -- Functions\n  function parity(data : std_logic_vector) return std_logic;\n  \n  -- Procedures\n  procedure reset_signals(signal clk : in std_logic);\nend package;\n\n-- Package body\npackage body my_package is\n  function parity(data : std_logic_vector) return std_logic is\n    variable result : std_logic := '0';\n  begin\n    for i in data'range loop\n      result := result xor data(i);\n    end loop;\n    return result;\n  end function;\nend package body;"
+      "title": "Package%20Declaration",
+      "body": "%60%60%60vhdl%0A--%20Package%20declaration%0Apackage%20my_package%20is%0A%20%20--%20Constants%0A%20%20constant%20DATA_WIDTH%20%3A%20integer%20%3A%3D%208%3B%0A%20%20constant%20ADDR_WIDTH%20%3A%20integer%20%3A%3D%2016%3B%0A%20%20%0A%20%20--%20Types%0A%20%20type%20state_type%20is%20(IDLE%2C%20READ%2C%20WRITE%2C%20DONE)%3B%0A%20%20%0A%20%20--%20Functions%0A%20%20function%20parity(data%20%3A%20std_logic_vector)%20return%20std_logic%3B%0A%20%20%0A%20%20--%20Procedures%0A%20%20procedure%20reset_signals(signal%20clk%20%3A%20in%20std_logic)%3B%0Aend%20package%3B%0A%0A--%20Package%20body%0Apackage%20body%20my_package%20is%0A%20%20function%20parity(data%20%3A%20std_logic_vector)%20return%20std_logic%20is%0A%20%20%20%20variable%20result%20%3A%20std_logic%20%3A%3D%20'0'%3B%0A%20%20begin%0A%20%20%20%20for%20i%20in%20data'range%20loop%0A%20%20%20%20%20%20result%20%3A%3D%20result%20xor%20data(i)%3B%0A%20%20%20%20end%20loop%3B%0A%20%20%20%20return%20result%3B%0A%20%20end%20function%3B%0Aend%20package%20body%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-33",
       "sectionId": "s8",
-      "title": "Basic Testbench",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "library ieee;\nuse ieee.std_logic_1164.all;\nuse ieee.numeric_std.all;\n\nentity tb_counter is\nend tb_counter;\n\narchitecture behavioral of tb_counter is\n  -- Component declaration\n  component counter is\n    port (\n      clk     : in  std_logic;\n      reset   : in  std_logic;\n      enable  : in  std_logic;\n      count   : out std_logic_vector(7 downto 0)\n    );\n  end component;\n  \n  -- Testbench signals\n  signal clk     : std_logic := '0';\n  signal reset   : std_logic := '1';\n  signal enable  : std_logic := '0';\n  signal count   : std_logic_vector(7 downto 0);\n  \n  -- Clock period\n  constant clk_period : time := 10 ns;\n\nbegin\n  -- Unit Under Test instantiation\n  uut: counter\n    port map (\n      clk    => clk,\n      reset  => reset,\n      enable => enable,\n      count  => count\n    );\n  \n  -- Clock generation\n  clk_proc: process\n  begin\n    clk <= '0';\n    wait for clk_period/2;\n    clk <= '1';\n    wait for clk_period/2;\n  end process;\n  \n  -- Stimulus process\n  stim_proc: process\n  begin\n    -- Reset phase\n    reset <= '1';\n    wait for 20 ns;\n    reset <= '0';\n    \n    -- Enable counting\n    enable <= '1';\n    wait for 100 ns;\n    \n    -- Disable counting\n    enable <= '0';\n    wait for 50 ns;\n    \n    -- End simulation\n    wait;\n  end process;\nend behavioral;"
+      "title": "Basic%20Testbench",
+      "body": "%60%60%60vhdl%0Alibrary%20ieee%3B%0Ause%20ieee.std_logic_1164.all%3B%0Ause%20ieee.numeric_std.all%3B%0A%0Aentity%20tb_counter%20is%0Aend%20tb_counter%3B%0A%0Aarchitecture%20behavioral%20of%20tb_counter%20is%0A%20%20--%20Component%20declaration%0A%20%20component%20counter%20is%0A%20%20%20%20port%20(%0A%20%20%20%20%20%20clk%20%20%20%20%20%3A%20in%20%20std_logic%3B%0A%20%20%20%20%20%20reset%20%20%20%3A%20in%20%20std_logic%3B%0A%20%20%20%20%20%20enable%20%20%3A%20in%20%20std_logic%3B%0A%20%20%20%20%20%20count%20%20%20%3A%20out%20std_logic_vector(7%20downto%200)%0A%20%20%20%20)%3B%0A%20%20end%20component%3B%0A%20%20%0A%20%20--%20Testbench%20signals%0A%20%20signal%20clk%20%20%20%20%20%3A%20std_logic%20%3A%3D%20'0'%3B%0A%20%20signal%20reset%20%20%20%3A%20std_logic%20%3A%3D%20'1'%3B%0A%20%20signal%20enable%20%20%3A%20std_logic%20%3A%3D%20'0'%3B%0A%20%20signal%20count%20%20%20%3A%20std_logic_vector(7%20downto%200)%3B%0A%20%20%0A%20%20--%20Clock%20period%0A%20%20constant%20clk_period%20%3A%20time%20%3A%3D%2010%20ns%3B%0A%0Abegin%0A%20%20--%20Unit%20Under%20Test%20instantiation%0A%20%20uut%3A%20counter%0A%20%20%20%20port%20map%20(%0A%20%20%20%20%20%20clk%20%20%20%20%3D%3E%20clk%2C%0A%20%20%20%20%20%20reset%20%20%3D%3E%20reset%2C%0A%20%20%20%20%20%20enable%20%3D%3E%20enable%2C%0A%20%20%20%20%20%20count%20%20%3D%3E%20count%0A%20%20%20%20)%3B%0A%20%20%0A%20%20--%20Clock%20generation%0A%20%20clk_proc%3A%20process%0A%20%20begin%0A%20%20%20%20clk%20%3C%3D%20'0'%3B%0A%20%20%20%20wait%20for%20clk_period%2F2%3B%0A%20%20%20%20clk%20%3C%3D%20'1'%3B%0A%20%20%20%20wait%20for%20clk_period%2F2%3B%0A%20%20end%20process%3B%0A%20%20%0A%20%20--%20Stimulus%20process%0A%20%20stim_proc%3A%20process%0A%20%20begin%0A%20%20%20%20--%20Reset%20phase%0A%20%20%20%20reset%20%3C%3D%20'1'%3B%0A%20%20%20%20wait%20for%2020%20ns%3B%0A%20%20%20%20reset%20%3C%3D%20'0'%3B%0A%20%20%20%20%0A%20%20%20%20--%20Enable%20counting%0A%20%20%20%20enable%20%3C%3D%20'1'%3B%0A%20%20%20%20wait%20for%20100%20ns%3B%0A%20%20%20%20%0A%20%20%20%20--%20Disable%20counting%0A%20%20%20%20enable%20%3C%3D%20'0'%3B%0A%20%20%20%20wait%20for%2050%20ns%3B%0A%20%20%20%20%0A%20%20%20%20--%20End%20simulation%0A%20%20%20%20wait%3B%0A%20%20end%20process%3B%0Aend%20behavioral%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-34",
       "sectionId": "s8",
       "title": "Assert%20Statements",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "--%20Assert%20for%20verification%0Aprocess(clk)%0Abegin%0A%20%20if%20rising_edge(clk)%20then%0A%20%20%20%20--%20Check%20counter%20overflow%0A%20%20%20%20assert%20count%20%2F%3D%20%2211111111%22%20%0A%20%20%20%20%20%20report%20%22Counter%20overflow%20detected!%22%20%0A%20%20%20%20%20%20severity%20warning%3B%0A%20%20%20%20%0A%20%20%20%20--%20Check%20reset%20functionality%0A%20%20%20%20if%20reset%20%3D%20'1'%20then%0A%20%20%20%20%20%20assert%20count%20%3D%20%2200000000%22%0A%20%20%20%20%20%20%20%20report%20%22Reset%20failed!%22%0A%20%20%20%20%20%20%20%20severity%20error%3B%0A%20%20%20%20end%20if%3B%0A%20%20end%20if%3B%0Aend%20process%3B",
+      "body": "%60%60%60vhdl%0A--%20Assert%20for%20verification%0Aprocess(clk)%0Abegin%0A%20%20if%20rising_edge(clk)%20then%0A%20%20%20%20--%20Check%20counter%20overflow%0A%20%20%20%20assert%20count%20%2F%3D%20%2211111111%22%20%0A%20%20%20%20%20%20report%20%22Counter%20overflow%20detected!%22%20%0A%20%20%20%20%20%20severity%20warning%3B%0A%20%20%20%20%0A%20%20%20%20--%20Check%20reset%20functionality%0A%20%20%20%20if%20reset%20%3D%20'1'%20then%0A%20%20%20%20%20%20assert%20count%20%3D%20%2200000000%22%0A%20%20%20%20%20%20%20%20report%20%22Reset%20failed!%22%0A%20%20%20%20%20%20%20%20severity%20error%3B%0A%20%20%20%20end%20if%3B%0A%20%20end%20if%3B%0Aend%20process%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-35",
       "sectionId": "s8",
       "title": "File%20I%2FO",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "--%20File%20I%2FO%20for%20testbenches%0Ause%20std.textio.all%3B%0A%0Aprocess%0A%20%20file%20input_file%20%20%3A%20text%20open%20read_mode%20is%20%22input.txt%22%3B%0A%20%20file%20output_file%20%3A%20text%20open%20write_mode%20is%20%22output.txt%22%3B%0A%20%20variable%20line_in%20%20%3A%20line%3B%0A%20%20variable%20line_out%20%3A%20line%3B%0A%20%20variable%20data%20%20%20%20%20%3A%20integer%3B%0Abegin%0A%20%20while%20not%20endfile(input_file)%20loop%0A%20%20%20%20readline(input_file%2C%20line_in)%3B%0A%20%20%20%20read(line_in%2C%20data)%3B%0A%20%20%20%20%0A%20%20%20%20--%20Process%20data%0A%20%20%20%20data%20%3A%3D%20data%20*%202%3B%0A%20%20%20%20%0A%20%20%20%20write(line_out%2C%20data)%3B%0A%20%20%20%20writeline(output_file%2C%20line_out)%3B%0A%20%20end%20loop%3B%0A%20%20%0A%20%20wait%3B%0Aend%20process%3B",
+      "body": "%60%60%60vhdl%0A--%20File%20I%2FO%20for%20testbenches%0Ause%20std.textio.all%3B%0A%0Aprocess%0A%20%20file%20input_file%20%20%3A%20text%20open%20read_mode%20is%20%22input.txt%22%3B%0A%20%20file%20output_file%20%3A%20text%20open%20write_mode%20is%20%22output.txt%22%3B%0A%20%20variable%20line_in%20%20%3A%20line%3B%0A%20%20variable%20line_out%20%3A%20line%3B%0A%20%20variable%20data%20%20%20%20%20%3A%20integer%3B%0Abegin%0A%20%20while%20not%20endfile(input_file)%20loop%0A%20%20%20%20readline(input_file%2C%20line_in)%3B%0A%20%20%20%20read(line_in%2C%20data)%3B%0A%20%20%20%20%0A%20%20%20%20--%20Process%20data%0A%20%20%20%20data%20%3A%3D%20data%20*%202%3B%0A%20%20%20%20%0A%20%20%20%20write(line_out%2C%20data)%3B%0A%20%20%20%20writeline(output_file%2C%20line_out)%3B%0A%20%20end%20loop%3B%0A%20%20%0A%20%20wait%3B%0Aend%20process%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-36",
       "sectionId": "s9",
-      "title": "Signal Attributes",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Common signal attributes\nsignal data : std_logic_vector(7 downto 0);\n\n-- Range attributes\ndata'left      -- 7 (leftmost index)\ndata'right     -- 0 (rightmost index)\ndata'high      -- 7 (highest index)\ndata'low       -- 0 (lowest index)\ndata'range     -- 7 downto 0\ndata'length    -- 8 (number of elements)\n\n-- Event attributes\nclk'event      -- true if clk changed\nclk'last_event -- time since last event\ndata'stable(5 ns) -- true if stable for 5 ns"
+      "title": "Signal%20Attributes",
+      "body": "%60%60%60vhdl%0A--%20Common%20signal%20attributes%0Asignal%20data%20%3A%20std_logic_vector(7%20downto%200)%3B%0A%0A--%20Range%20attributes%0Adata'left%20%20%20%20%20%20--%207%20(leftmost%20index)%0Adata'right%20%20%20%20%20--%200%20(rightmost%20index)%0Adata'high%20%20%20%20%20%20--%207%20(highest%20index)%0Adata'low%20%20%20%20%20%20%20--%200%20(lowest%20index)%0Adata'range%20%20%20%20%20--%207%20downto%200%0Adata'length%20%20%20%20--%208%20(number%20of%20elements)%0A%0A--%20Event%20attributes%0Aclk'event%20%20%20%20%20%20--%20true%20if%20clk%20changed%0Aclk'last_event%20--%20time%20since%20last%20event%0Adata'stable(5%20ns)%20--%20true%20if%20stable%20for%205%20ns%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-37",
       "sectionId": "s9",
-      "title": "Type Attributes",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Type attributes\ntype state_type is (IDLE, ACTIVE, DONE);\n\nstate_type'left        -- IDLE\nstate_type'right       -- DONE\nstate_type'pos(ACTIVE) -- 1\nstate_type'val(2)      -- DONE\nstate_type'succ(IDLE)  -- ACTIVE\nstate_type'pred(DONE)  -- ACTIVE"
+      "title": "Type%20Attributes",
+      "body": "%60%60%60vhdl%0A--%20Type%20attributes%0Atype%20state_type%20is%20(IDLE%2C%20ACTIVE%2C%20DONE)%3B%0A%0Astate_type'left%20%20%20%20%20%20%20%20--%20IDLE%0Astate_type'right%20%20%20%20%20%20%20--%20DONE%0Astate_type'pos(ACTIVE)%20--%201%0Astate_type'val(2)%20%20%20%20%20%20--%20DONE%0Astate_type'succ(IDLE)%20%20--%20ACTIVE%0Astate_type'pred(DONE)%20%20--%20ACTIVE%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-38",
       "sectionId": "s9",
-      "title": "Generate Statements",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Conditional generate\ngen_async: if ASYNC_RESET generate\n  process(clk, reset)\n  begin\n    if reset = '1' then\n      output <= '0';\n    elsif rising_edge(clk) then\n      output <= input;\n    end if;\n  end process;\nend generate;\n\ngen_sync: if not ASYNC_RESET generate\n  process(clk)\n  begin\n    if rising_edge(clk) then\n      if reset = '1' then\n        output <= '0';\n      else\n        output <= input;\n      end if;\n    end if;\n  end process;\nend generate;"
+      "title": "Generate%20Statements",
+      "body": "%60%60%60vhdl%0A--%20Conditional%20generate%0Agen_async%3A%20if%20ASYNC_RESET%20generate%0A%20%20process(clk%2C%20reset)%0A%20%20begin%0A%20%20%20%20if%20reset%20%3D%20'1'%20then%0A%20%20%20%20%20%20output%20%3C%3D%20'0'%3B%0A%20%20%20%20elsif%20rising_edge(clk)%20then%0A%20%20%20%20%20%20output%20%3C%3D%20input%3B%0A%20%20%20%20end%20if%3B%0A%20%20end%20process%3B%0Aend%20generate%3B%0A%0Agen_sync%3A%20if%20not%20ASYNC_RESET%20generate%0A%20%20process(clk)%0A%20%20begin%0A%20%20%20%20if%20rising_edge(clk)%20then%0A%20%20%20%20%20%20if%20reset%20%3D%20'1'%20then%0A%20%20%20%20%20%20%20%20output%20%3C%3D%20'0'%3B%0A%20%20%20%20%20%20else%0A%20%20%20%20%20%20%20%20output%20%3C%3D%20input%3B%0A%20%20%20%20%20%20end%20if%3B%0A%20%20%20%20end%20if%3B%0A%20%20end%20process%3B%0Aend%20generate%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s10-39",
       "sectionId": "s10",
-      "title": "State Machines",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Finite State Machine\ntype state_type is (IDLE, LOAD, EXECUTE, STORE, DONE);\nsignal current_state, next_state : state_type;\n\n-- State register\nprocess(clk, reset)\nbegin\n  if reset = '1' then\n    current_state <= IDLE;\n  elsif rising_edge(clk) then\n    current_state <= next_state;\n  end if;\nend process;\n\n-- Next state logic\nprocess(current_state, start, load_done, exec_done, store_done)\nbegin\n  case current_state is\n    when IDLE =>\n      if start = '1' then\n        next_state <= LOAD;\n      else\n        next_state <= IDLE;\n      end if;\n      \n    when LOAD =>\n      if load_done = '1' then\n        next_state <= EXECUTE;\n      else\n        next_state <= LOAD;\n      end if;\n      \n    when EXECUTE =>\n      if exec_done = '1' then\n        next_state <= STORE;\n      else\n        next_state <= EXECUTE;\n      end if;\n      \n    when STORE =>\n      if store_done = '1' then\n        next_state <= DONE;\n      else\n        next_state <= STORE;\n      end if;\n      \n    when DONE =>\n      next_state <= IDLE;\n  end case;\nend process;\n\n-- Output logic\nprocess(current_state)\nbegin\n  -- Default outputs\n  load_enable <= '0';\n  exec_enable <= '0';\n  store_enable <= '0';\n  busy <= '1';\n  \n  case current_state is\n    when IDLE =>\n      busy <= '0';\n    when LOAD =>\n      load_enable <= '1';\n    when EXECUTE =>\n      exec_enable <= '1';\n    when STORE =>\n      store_enable <= '1';\n    when DONE =>\n      busy <= '0';\n  end case;\nend process;"
+      "title": "State%20Machines",
+      "body": "%60%60%60vhdl%0A--%20Finite%20State%20Machine%0Atype%20state_type%20is%20(IDLE%2C%20LOAD%2C%20EXECUTE%2C%20STORE%2C%20DONE)%3B%0Asignal%20current_state%2C%20next_state%20%3A%20state_type%3B%0A%0A--%20State%20register%0Aprocess(clk%2C%20reset)%0Abegin%0A%20%20if%20reset%20%3D%20'1'%20then%0A%20%20%20%20current_state%20%3C%3D%20IDLE%3B%0A%20%20elsif%20rising_edge(clk)%20then%0A%20%20%20%20current_state%20%3C%3D%20next_state%3B%0A%20%20end%20if%3B%0Aend%20process%3B%0A%0A--%20Next%20state%20logic%0Aprocess(current_state%2C%20start%2C%20load_done%2C%20exec_done%2C%20store_done)%0Abegin%0A%20%20case%20current_state%20is%0A%20%20%20%20when%20IDLE%20%3D%3E%0A%20%20%20%20%20%20if%20start%20%3D%20'1'%20then%0A%20%20%20%20%20%20%20%20next_state%20%3C%3D%20LOAD%3B%0A%20%20%20%20%20%20else%0A%20%20%20%20%20%20%20%20next_state%20%3C%3D%20IDLE%3B%0A%20%20%20%20%20%20end%20if%3B%0A%20%20%20%20%20%20%0A%20%20%20%20when%20LOAD%20%3D%3E%0A%20%20%20%20%20%20if%20load_done%20%3D%20'1'%20then%0A%20%20%20%20%20%20%20%20next_state%20%3C%3D%20EXECUTE%3B%0A%20%20%20%20%20%20else%0A%20%20%20%20%20%20%20%20next_state%20%3C%3D%20LOAD%3B%0A%20%20%20%20%20%20end%20if%3B%0A%20%20%20%20%20%20%0A%20%20%20%20when%20EXECUTE%20%3D%3E%0A%20%20%20%20%20%20if%20exec_done%20%3D%20'1'%20then%0A%20%20%20%20%20%20%20%20next_state%20%3C%3D%20STORE%3B%0A%20%20%20%20%20%20else%0A%20%20%20%20%20%20%20%20next_state%20%3C%3D%20EXECUTE%3B%0A%20%20%20%20%20%20end%20if%3B%0A%20%20%20%20%20%20%0A%20%20%20%20when%20STORE%20%3D%3E%0A%20%20%20%20%20%20if%20store_done%20%3D%20'1'%20then%0A%20%20%20%20%20%20%20%20next_state%20%3C%3D%20DONE%3B%0A%20%20%20%20%20%20else%0A%20%20%20%20%20%20%20%20next_state%20%3C%3D%20STORE%3B%0A%20%20%20%20%20%20end%20if%3B%0A%20%20%20%20%20%20%0A%20%20%20%20when%20DONE%20%3D%3E%0A%20%20%20%20%20%20next_state%20%3C%3D%20IDLE%3B%0A%20%20end%20case%3B%0Aend%20process%3B%0A%0A--%20Output%20logic%0Aprocess(current_state)%0Abegin%0A%20%20--%20Default%20outputs%0A%20%20load_enable%20%3C%3D%20'0'%3B%0A%20%20exec_enable%20%3C%3D%20'0'%3B%0A%20%20store_enable%20%3C%3D%20'0'%3B%0A%20%20busy%20%3C%3D%20'1'%3B%0A%20%20%0A%20%20case%20current_state%20is%0A%20%20%20%20when%20IDLE%20%3D%3E%0A%20%20%20%20%20%20busy%20%3C%3D%20'0'%3B%0A%20%20%20%20when%20LOAD%20%3D%3E%0A%20%20%20%20%20%20load_enable%20%3C%3D%20'1'%3B%0A%20%20%20%20when%20EXECUTE%20%3D%3E%0A%20%20%20%20%20%20exec_enable%20%3C%3D%20'1'%3B%0A%20%20%20%20when%20STORE%20%3D%3E%0A%20%20%20%20%20%20store_enable%20%3C%3D%20'1'%3B%0A%20%20%20%20when%20DONE%20%3D%3E%0A%20%20%20%20%20%20busy%20%3C%3D%20'0'%3B%0A%20%20end%20case%3B%0Aend%20process%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s10-40",
       "sectionId": "s10",
       "title": "Generic Programming",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Generic entity\nentity generic_counter is\n  generic (\n    WIDTH : positive := 8;\n    MAX_VALUE : positive := 255;\n    RESET_VALUE : natural := 0\n  );\n  port (\n    clk   : in  std_logic;\n    reset : in  std_logic;\n    enable: in  std_logic;\n    count : out std_logic_vector(WIDTH-1 downto 0);\n    tc    : out std_logic  -- Terminal count\n  );\nend entity;\n\n-- Generic instantiation\ncounter_8bit: entity work.generic_counter\n  generic map (\n    WIDTH => 8,\n    MAX_VALUE => 255,\n    RESET_VALUE => 0\n  )\n  port map (\n    clk => system_clk,\n    reset => system_reset,\n    enable => count_enable,\n    count => counter_value,\n    tc => counter_tc\n  );"
+      "body": "```vhdl\n-- Generic entity\nentity generic_counter is\n  generic (\n    WIDTH : positive := 8;\n    MAX_VALUE : positive := 255;\n    RESET_VALUE : natural := 0\n  );\n  port (\n    clk   : in  std_logic;\n    reset : in  std_logic;\n    enable: in  std_logic;\n    count : out std_logic_vector(WIDTH-1 downto 0);\n    tc    : out std_logic  -- Terminal count\n  );\nend entity;\n\n-- Generic instantiation\ncounter_8bit: entity work.generic_counter\n  generic map (\n    WIDTH => 8,\n    MAX_VALUE => 255,\n    RESET_VALUE => 0\n  )\n  port map (\n    clk => system_clk,\n    reset => system_reset,\n    enable => count_enable,\n    count => counter_value,\n    tc => counter_tc\n  );\n```"
     },
     {
       "id": "s10-41",
       "sectionId": "s10",
       "title": "Configurations",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Configuration declaration\nconfiguration counter_config of tb_counter is\n  for behavioral\n    for uut : counter\n      use entity work.counter(behavioral);\n    end for;\n  end for;\nend configuration;\n\n-- Alternative configuration\nconfiguration counter_rtl_config of tb_counter is\n  for behavioral\n    for uut : counter\n      use entity work.counter(rtl);\n    end for;\n  end for;\nend configuration;"
+      "body": "```vhdl\n-- Configuration declaration\nconfiguration counter_config of tb_counter is\n  for behavioral\n    for uut : counter\n      use entity work.counter(behavioral);\n    end for;\n  end for;\nend configuration;\n\n-- Alternative configuration\nconfiguration counter_rtl_config of tb_counter is\n  for behavioral\n    for uut : counter\n      use entity work.counter(rtl);\n    end for;\n  end for;\nend configuration;\n```"
     },
     {
       "id": "s11-42",
       "sectionId": "s11",
       "title": "Clock%20Domain%20Crossing",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "--%20Double%20flip-flop%20synchronizer%0Aentity%20synchronizer%20is%0A%20%20port%20(%0A%20%20%20%20clk_dest%20%3A%20in%20%20std_logic%3B%0A%20%20%20%20reset%20%20%20%20%3A%20in%20%20std_logic%3B%0A%20%20%20%20async_in%20%3A%20in%20%20std_logic%3B%0A%20%20%20%20sync_out%20%3A%20out%20std_logic%0A%20%20)%3B%0Aend%20entity%3B%0A%0Aarchitecture%20rtl%20of%20synchronizer%20is%0A%20%20signal%20ff1%2C%20ff2%20%3A%20std_logic%3B%0A%20%20attribute%20ASYNC_REG%20%3A%20string%3B%0A%20%20attribute%20ASYNC_REG%20of%20ff1%20%3A%20signal%20is%20%22TRUE%22%3B%0A%20%20attribute%20ASYNC_REG%20of%20ff2%20%3A%20signal%20is%20%22TRUE%22%3B%0Abegin%0A%20%20process(clk_dest%2C%20reset)%0A%20%20begin%0A%20%20%20%20if%20reset%20%3D%20'1'%20then%0A%20%20%20%20%20%20ff1%20%3C%3D%20'0'%3B%0A%20%20%20%20%20%20ff2%20%3C%3D%20'0'%3B%0A%20%20%20%20elsif%20rising_edge(clk_dest)%20then%0A%20%20%20%20%20%20ff1%20%3C%3D%20async_in%3B%0A%20%20%20%20%20%20ff2%20%3C%3D%20ff1%3B%0A%20%20%20%20end%20if%3B%0A%20%20end%20process%3B%0A%20%20%0A%20%20sync_out%20%3C%3D%20ff2%3B%0Aend%20rtl%3B",
+      "body": "%60%60%60vhdl%0A--%20Double%20flip-flop%20synchronizer%0Aentity%20synchronizer%20is%0A%20%20port%20(%0A%20%20%20%20clk_dest%20%3A%20in%20%20std_logic%3B%0A%20%20%20%20reset%20%20%20%20%3A%20in%20%20std_logic%3B%0A%20%20%20%20async_in%20%3A%20in%20%20std_logic%3B%0A%20%20%20%20sync_out%20%3A%20out%20std_logic%0A%20%20)%3B%0Aend%20entity%3B%0A%0Aarchitecture%20rtl%20of%20synchronizer%20is%0A%20%20signal%20ff1%2C%20ff2%20%3A%20std_logic%3B%0A%20%20attribute%20ASYNC_REG%20%3A%20string%3B%0A%20%20attribute%20ASYNC_REG%20of%20ff1%20%3A%20signal%20is%20%22TRUE%22%3B%0A%20%20attribute%20ASYNC_REG%20of%20ff2%20%3A%20signal%20is%20%22TRUE%22%3B%0Abegin%0A%20%20process(clk_dest%2C%20reset)%0A%20%20begin%0A%20%20%20%20if%20reset%20%3D%20'1'%20then%0A%20%20%20%20%20%20ff1%20%3C%3D%20'0'%3B%0A%20%20%20%20%20%20ff2%20%3C%3D%20'0'%3B%0A%20%20%20%20elsif%20rising_edge(clk_dest)%20then%0A%20%20%20%20%20%20ff1%20%3C%3D%20async_in%3B%0A%20%20%20%20%20%20ff2%20%3C%3D%20ff1%3B%0A%20%20%20%20end%20if%3B%0A%20%20end%20process%3B%0A%20%20%0A%20%20sync_out%20%3C%3D%20ff2%3B%0Aend%20rtl%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s11-43",
       "sectionId": "s11",
-      "title": "Memory Inference",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- RAM inference\ntype ram_type is array (0 to 255) of std_logic_vector(7 downto 0);\nsignal ram : ram_type;\n\nprocess(clk)\nbegin\n  if rising_edge(clk) then\n    if write_enable = '1' then\n      ram(to_integer(unsigned(address))) <= data_in;\n    end if;\n    data_out <= ram(to_integer(unsigned(address)));\n  end if;\nend process;"
+      "title": "Memory%20Inference",
+      "body": "%60%60%60vhdl%0A--%20RAM%20inference%0Atype%20ram_type%20is%20array%20(0%20to%20255)%20of%20std_logic_vector(7%20downto%200)%3B%0Asignal%20ram%20%3A%20ram_type%3B%0A%0Aprocess(clk)%0Abegin%0A%20%20if%20rising_edge(clk)%20then%0A%20%20%20%20if%20write_enable%20%3D%20'1'%20then%0A%20%20%20%20%20%20ram(to_integer(unsigned(address)))%20%3C%3D%20data_in%3B%0A%20%20%20%20end%20if%3B%0A%20%20%20%20data_out%20%3C%3D%20ram(to_integer(unsigned(address)))%3B%0A%20%20end%20if%3B%0Aend%20process%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s11-44",
       "sectionId": "s11",
-      "title": "Reset Strategies",
-      "kind": "code",
-      "lang": "vhdl",
-      "code": "-- Asynchronous reset\nprocess(clk, async_reset)\nbegin\n  if async_reset = '1' then\n    output <= '0';\n  elsif rising_edge(clk) then\n    output <= input;\n  end if;\nend process;\n\n-- Synchronous reset\nprocess(clk)\nbegin\n  if rising_edge(clk) then\n    if sync_reset = '1' then\n      output <= '0';\n    else\n      output <= input;\n    end if;\n  end if;\nend process;"
+      "title": "Reset%20Strategies",
+      "body": "%60%60%60vhdl%0A--%20Asynchronous%20reset%0Aprocess(clk%2C%20async_reset)%0Abegin%0A%20%20if%20async_reset%20%3D%20'1'%20then%0A%20%20%20%20output%20%3C%3D%20'0'%3B%0A%20%20elsif%20rising_edge(clk)%20then%0A%20%20%20%20output%20%3C%3D%20input%3B%0A%20%20end%20if%3B%0Aend%20process%3B%0A%0A--%20Synchronous%20reset%0Aprocess(clk)%0Abegin%0A%20%20if%20rising_edge(clk)%20then%0A%20%20%20%20if%20sync_reset%20%3D%20'1'%20then%0A%20%20%20%20%20%20output%20%3C%3D%20'0'%3B%0A%20%20%20%20else%0A%20%20%20%20%20%20output%20%3C%3D%20input%3B%0A%20%20%20%20end%20if%3B%0A%20%20end%20if%3B%0Aend%20process%3B%0A%60%60%60",
+      "encoded": true
     }
   ],
   "source": {

@@ -65,344 +65,226 @@
       "id": "s1-0",
       "sectionId": "s1",
       "title": "A Quick Overview to Jest",
-      "kind": "text",
       "body": "Jest is a delightful JavaScript testing framework maintained by Facebook. It is widely used for **unit testing**, **integration testing**, and even **end-to-end testing** in modern JavaScript and Node.js applications. Jest comes with a powerful set of features, including a built-in test runner, assertion library, mocking utilities, snapshot testing, and test coverage reporting."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "A Quick Overview to Jest",
-      "kind": "text",
       "body": "This guide targets **Jest v20** and gives a concise yet practical overview of how to use it effectively."
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "Key Concepts Explained",
-      "kind": "text",
       "body": "• **`describe()`**: Used to group related test cases into a test suite.\n• **`test()` / `it()`**: Define a single test case. `it()` is just a BDD-style alias for `test()`.\n• **`expect()`**: Assertion library that checks whether a value meets expectations.\n• **`beforeEach()` / `afterEach()`**: Runs code before or after every test in a suite.\n• **`beforeAll()` / `afterAll()`**: Runs setup/teardown code once before or after all tests.\n• **`.only` / `.skip`**: Focus or ignore specific tests/suites.\n• **Snapshot testing**: Captures the rendered output and compares it across test runs.\n• **Mock functions**: Simulate function behavior or monitor how functions are called.\n• **Timer mocks**: Test time-based behavior like `setTimeout()` and `setInterval()`.\n• **Async testing**: Write tests that handle Promises or `async/await`."
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
-      "title": "🚀 Quick Start",
-      "kind": "code",
-      "lang": "bash",
-      "code": "npm install --save-dev jest babel-jest"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Add this to your `package.json`:"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "json",
-      "code": "%22scripts%22%3A%20%7B%0A%20%20%22test%22%3A%20%22jest%22%0A%7D",
+      "title": "%F0%9F%9A%80%20Quick%20Start",
+      "body": "%60%60%60bash%0Anpm%20install%20--save-dev%20jest%20babel-jest%0A%60%60%60%0A%0AAdd%20this%20to%20your%20%60package.json%60%3A%0A%0A%60%60%60json%0A%22scripts%22%3A%20%7B%0A%20%20%22test%22%3A%20%22jest%22%0A%7D%0A%60%60%60%0A%0ARun%20your%20tests%3A%0A%0A%60%60%60bash%0Anpm%20test%20--%20--watch%0A%60%60%60%0A%0A%F0%9F%93%96%20See%3A%20%5BGetting%20Started%5D(https%3A%2F%2Fjestjs.io%2Fdocs%2Fgetting-started)",
       "encoded": true
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Run your tests:"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "npm test -- --watch"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "📖 See: [Getting Started](https://jestjs.io/docs/getting-started)"
     },
     {
       "id": "s2-9",
       "sectionId": "s2",
-      "title": "✍️ Writing Tests",
-      "kind": "code",
-      "lang": "js",
-      "code": "describe('My work', () => {\n  test('works', () => {\n    expect(2).toEqual(2);\n  });\n});"
+      "title": "%E2%9C%8D%EF%B8%8F%20Writing%20Tests",
+      "body": "%60%60%60js%0Adescribe('My%20work'%2C%20()%20%3D%3E%20%7B%0A%20%20test('works'%2C%20()%20%3D%3E%20%7B%0A%20%20%20%20expect(2).toEqual(2)%3B%0A%20%20%7D)%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-10",
       "sectionId": "s2",
       "title": "✍️ Writing Tests",
-      "kind": "text",
       "body": "• **describe**: Group related tests.\n• **test** or **it**: Define individual test cases.\n• **expect**: Make assertions."
     },
     {
       "id": "s2-11",
       "sectionId": "s2",
       "title": "✍️ Writing Tests",
-      "kind": "text",
       "body": "🔄 `it()` is an alias for `test()`."
     },
     {
       "id": "s3-12",
       "sectionId": "s3",
       "title": "🔧 Setup Hooks",
-      "kind": "text",
       "body": "Use these for setup/teardown routines:"
     },
     {
       "id": "s3-13",
       "sectionId": "s3",
       "title": "🔧 Setup Hooks",
-      "kind": "code",
-      "lang": "js",
-      "code": "beforeEach(() => { ... });\nafterEach(() => { ... });\nbeforeAll(() => { ... });\nafterAll(() => { ... });"
+      "body": "```js\nbeforeEach(() => { ... });\nafterEach(() => { ... });\nbeforeAll(() => { ... });\nafterAll(() => { ... });\n```"
     },
     {
       "id": "s4-14",
       "sectionId": "s4",
       "title": "🎯 Focusing or Skipping Tests",
-      "kind": "text",
       "body": "**Focusing tests:**"
     },
     {
       "id": "s4-15",
       "sectionId": "s4",
       "title": "🎯 Focusing or Skipping Tests",
-      "kind": "code",
-      "lang": "js",
-      "code": "describe.only(...);\nit.only(...); // or fit()"
+      "body": "```js\ndescribe.only(...);\nit.only(...); // or fit()\n```"
     },
     {
       "id": "s4-16",
       "sectionId": "s4",
       "title": "🎯 Focusing or Skipping Tests",
-      "kind": "text",
       "body": "**Skipping tests:**"
     },
     {
       "id": "s4-17",
       "sectionId": "s4",
       "title": "🎯 Focusing or Skipping Tests",
-      "kind": "code",
-      "lang": "js",
-      "code": "describe.skip(...);\nit.skip(...); // or xit()"
+      "body": "```js\ndescribe.skip(...);\nit.skip(...); // or xit()\n```"
     },
     {
       "id": "s5-18",
       "sectionId": "s5",
       "title": "🏁 Optional CLI Flags",
-      "kind": "text",
       "body": "| Flag                  | Description                             |\n| --------------------- | --------------------------------------- |\n| `--coverage`          | Show test coverage summary              |\n| `--detectOpenHandles` | Detect unclosed handles (e.g., sockets) |\n| `--runInBand`         | Run tests serially (useful for CI)      |"
     },
     {
       "id": "s6-19",
       "sectionId": "s6",
       "title": "Basic",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect(value).not.toBe(value);\nexpect(value).toEqual(value);\nexpect(value).toBeTruthy();"
-    },
-    {
-      "id": "s6-20",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "> Note: `toEqual` performs deep equality."
+      "body": "```js\nexpect(value).not.toBe(value);\nexpect(value).toEqual(value);\nexpect(value).toBeTruthy();\n```\n\n> Note: `toEqual` performs deep equality."
     },
     {
       "id": "s6-21",
       "sectionId": "s6",
       "title": "Snapshots",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect(value).toMatchSnapshot();\nexpect(value).toMatchInlineSnapshot();"
-    },
-    {
-      "id": "s6-22",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "> Inline snapshots require Prettier."
+      "body": "```js\nexpect(value).toMatchSnapshot();\nexpect(value).toMatchInlineSnapshot();\n```\n\n> Inline snapshots require Prettier."
     },
     {
       "id": "s6-23",
       "sectionId": "s6",
       "title": "Errors",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect(fn).toThrow(error);\nexpect(fn).toThrowErrorMatchingSnapshot();"
+      "body": "```js\nexpect(fn).toThrow(error);\nexpect(fn).toThrowErrorMatchingSnapshot();\n```"
     },
     {
       "id": "s6-24",
       "sectionId": "s6",
       "title": "Booleans",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect(value).toBeFalsy();\nexpect(value).toBeNull();\nexpect(value).toBeTruthy();\nexpect(value).toBeUndefined();\nexpect(value).toBeDefined();"
+      "body": "```js\nexpect(value).toBeFalsy();\nexpect(value).toBeNull();\nexpect(value).toBeTruthy();\nexpect(value).toBeUndefined();\nexpect(value).toBeDefined();\n```"
     },
     {
       "id": "s6-25",
       "sectionId": "s6",
       "title": "Numbers",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect(value).toBeCloseTo(number, digits);\nexpect(value).toBeGreaterThan(number);\nexpect(value).toBeLessThanOrEqual(number);"
+      "body": "```js\nexpect(value).toBeCloseTo(number, digits);\nexpect(value).toBeGreaterThan(number);\nexpect(value).toBeLessThanOrEqual(number);\n```"
     },
     {
       "id": "s6-26",
       "sectionId": "s6",
       "title": "Objects",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect(value).toBeInstanceOf(Class);\nexpect(value).toMatchObject(obj);\nexpect(value).toHaveProperty('key', value);"
+      "body": "%60%60%60js%0Aexpect(value).toBeInstanceOf(Class)%3B%0Aexpect(value).toMatchObject(obj)%3B%0Aexpect(value).toHaveProperty('key'%2C%20value)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-27",
       "sectionId": "s6",
       "title": "Arrays/Strings",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect(value).toContain(item);\nexpect(value).toHaveLength(number);\nexpect(value).toMatch(/pattern/);"
+      "body": "```js\nexpect(value).toContain(item);\nexpect(value).toHaveLength(number);\nexpect(value).toMatch(/pattern/);\n```"
     },
     {
       "id": "s6-28",
       "sectionId": "s6",
       "title": "Custom Matchers",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect.extend(customMatchers);\nexpect.any(Constructor);\nexpect.assertions(1);"
+      "body": "```js\nexpect.extend(customMatchers);\nexpect.any(Constructor);\nexpect.assertions(1);\n```"
     },
     {
       "id": "s7-29",
       "sectionId": "s7",
       "title": "Promises",
-      "kind": "code",
-      "lang": "js",
-      "code": "test('resolves correctly', () => {\n  return somePromise().then(data => {\n    expect(data).toEqual(...);\n  });\n});"
+      "body": "%60%60%60js%0Atest('resolves%20correctly'%2C%20()%20%3D%3E%20%7B%0A%20%20return%20somePromise().then(data%20%3D%3E%20%7B%0A%20%20%20%20expect(data).toEqual(...)%3B%0A%20%20%7D)%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s7-30",
       "sectionId": "s7",
-      "title": "Async/Await",
-      "kind": "code",
-      "lang": "js",
-      "code": "test('awaits correctly', async () => {\n  const result = await asyncFunc();\n  expect(result).toBe(...);\n});"
-    },
-    {
-      "id": "s7-31",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "📖 See: [Jest Async Testing](https://jestjs.io/docs/asynchronous)"
+      "title": "Async%2FAwait",
+      "body": "%60%60%60js%0Atest('awaits%20correctly'%2C%20async%20()%20%3D%3E%20%7B%0A%20%20const%20result%20%3D%20await%20asyncFunc()%3B%0A%20%20expect(result).toBe(...)%3B%0A%7D)%3B%0A%60%60%60%0A%0A%F0%9F%93%96%20See%3A%20%5BJest%20Async%20Testing%5D(https%3A%2F%2Fjestjs.io%2Fdocs%2Fasynchronous)",
+      "encoded": true
     },
     {
       "id": "s8-32",
       "sectionId": "s8",
-      "title": "📸 Snapshot Testing",
-      "kind": "code",
-      "lang": "js",
-      "code": "it('renders correctly', () => {\n  const output = something();\n  expect(output).toMatchSnapshot();\n});"
+      "title": "%F0%9F%93%B8%20Snapshot%20Testing",
+      "body": "%60%60%60js%0Ait('renders%20correctly'%2C%20()%20%3D%3E%20%7B%0A%20%20const%20output%20%3D%20something()%3B%0A%20%20expect(output).toMatchSnapshot()%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-33",
       "sectionId": "s8",
       "title": "📸 Snapshot Testing",
-      "kind": "text",
       "body": "For React components:"
     },
     {
       "id": "s8-34",
       "sectionId": "s8",
-      "title": "📸 Snapshot Testing",
-      "kind": "code",
-      "lang": "js",
-      "code": "import renderer from 'react-test-renderer';\n\nit('matches snapshot', () => {\n  const tree = renderer.create(<Component />).toJSON();\n  expect(tree).toMatchSnapshot();\n});"
+      "title": "%F0%9F%93%B8%20Snapshot%20Testing",
+      "body": "%60%60%60js%0Aimport%20renderer%20from%20'react-test-renderer'%3B%0A%0Ait('matches%20snapshot'%2C%20()%20%3D%3E%20%7B%0A%20%20const%20tree%20%3D%20renderer.create(%3CComponent%20%2F%3E).toJSON()%3B%0A%20%20expect(tree).toMatchSnapshot()%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-35",
       "sectionId": "s9",
-      "title": "⏲️ Timers",
-      "kind": "code",
-      "lang": "js",
-      "code": "jest.useFakeTimers();\n\nit('delays call', () => {\n  jest.runOnlyPendingTimers();\n  jest.runAllTimers();\n});"
+      "title": "%E2%8F%B2%EF%B8%8F%20Timers",
+      "body": "%60%60%60js%0Ajest.useFakeTimers()%3B%0A%0Ait('delays%20call'%2C%20()%20%3D%3E%20%7B%0A%20%20jest.runOnlyPendingTimers()%3B%0A%20%20jest.runAllTimers()%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-36",
       "sectionId": "s9",
       "title": "⏲️ Timers",
-      "kind": "text",
       "body": "📖 See: [Timer Mocks](https://jestjs.io/docs/timer-mocks)"
     },
     {
       "id": "s10-37",
       "sectionId": "s10",
       "title": "Creating Mocks",
-      "kind": "code",
-      "lang": "js",
-      "code": "const fn = jest.fn();\nconst squared = jest.fn((n) => n * n);"
+      "body": "```js\nconst fn = jest.fn();\nconst squared = jest.fn((n) => n * n);\n```"
     },
     {
       "id": "s10-38",
       "sectionId": "s10",
       "title": "Assertions",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect(fn).toHaveBeenCalled();\nexpect(fn).toHaveBeenCalledTimes(2);\nexpect(fn).toHaveBeenCalledWith(arg1, arg2);"
+      "body": "```js\nexpect(fn).toHaveBeenCalled();\nexpect(fn).toHaveBeenCalledTimes(2);\nexpect(fn).toHaveBeenCalledWith(arg1, arg2);\n```"
     },
     {
       "id": "s10-39",
       "sectionId": "s10",
       "title": "Flexible Matchers",
-      "kind": "code",
-      "lang": "js",
-      "code": "expect(fn).toHaveBeenCalledWith(expect.any(String));\nexpect(fn).toHaveBeenCalledWith(expect.arrayContaining([1, 2]));"
+      "body": "```js\nexpect(fn).toHaveBeenCalledWith(expect.any(String));\nexpect(fn).toHaveBeenCalledWith(expect.arrayContaining([1, 2]));\n```"
     },
     {
       "id": "s10-40",
       "sectionId": "s10",
       "title": "Instances",
-      "kind": "code",
-      "lang": "js",
-      "code": "const MyClass = jest.fn();\nconst a = new MyClass();\nconst b = new MyClass();\nMyClass.mock.instances; // [a, b]"
+      "body": "```js\nconst MyClass = jest.fn();\nconst a = new MyClass();\nconst b = new MyClass();\nMyClass.mock.instances; // [a, b]\n```"
     },
     {
       "id": "s10-41",
       "sectionId": "s10",
       "title": "Call Data",
-      "kind": "code",
-      "lang": "js",
-      "code": "fn.mock.calls.length;\nfn.mock.calls[0][0];"
+      "body": "```js\nfn.mock.calls.length;\nfn.mock.calls[0][0];\n```"
     },
     {
       "id": "s10-42",
       "sectionId": "s10",
-      "title": "Return Values",
-      "kind": "code",
-      "lang": "js",
-      "code": "jest.fn().mockReturnValue('hello');\njest.fn().mockReturnValueOnce('hi');"
+      "title": "Return%20Values",
+      "body": "%60%60%60js%0Ajest.fn().mockReturnValue('hello')%3B%0Ajest.fn().mockReturnValueOnce('hi')%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s10-43",
       "sectionId": "s10",
       "title": "Mock Implementations",
-      "kind": "code",
-      "lang": "js",
-      "code": "const fn = jest\n  .fn()\n  .mockImplementationOnce(() => 1)\n  .mockImplementationOnce(() => 2);"
-    },
-    {
-      "id": "s10-44",
-      "sectionId": "s10",
-      "title": "",
-      "kind": "text",
-      "body": "This comprehensive guide helps you get started with Jest testing or use it like a pro. It pairs perfectly with the React Testing Library for a user-centric testing workflow."
+      "body": "```js\nconst fn = jest\n  .fn()\n  .mockImplementationOnce(() => 1)\n  .mockImplementationOnce(() => 2);\n```\n\nThis comprehensive guide helps you get started with Jest testing or use it like a pro. It pairs perfectly with the React Testing Library for a user-centric testing workflow."
     }
   ],
   "source": {

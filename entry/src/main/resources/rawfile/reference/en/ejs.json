@@ -45,250 +45,145 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "EJS(Embedded JavaScript) is a simple templating language that lets you generate HTML markup with plain JavaScript."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Hello world - install",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ npm install ejs"
+      "body": "```shell\n$ npm install ejs\n```"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "hello.ejs",
-      "kind": "code",
-      "lang": "html",
-      "code": "<% if (user.email) { %>\n  <h1><%= user.email %></h1>\n<% } %>"
+      "body": "```html\n<% if (user.email) { %>\n  <h1><%= user.email %></h1>\n<% } %>\n```"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "CLI",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ejs hello.ejs -o hello.html"
+      "body": "```shell\n$ ejs hello.ejs -o hello.html\n```"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "Render%20with%20Data",
-      "kind": "code",
-      "lang": "js",
-      "code": "let%20ejs%20%3D%20require('ejs')%3B%0A%0Alet%20people%20%3D%20%5B'geddy'%2C%20'neil'%2C%20'alex'%5D%3B%0Alet%20tpl%20%3D%20'%3C%25%3D%20people.join(%22%2C%20%22)%3B%20%25%3E'%3B%0A%0Alet%20html%20%3D%20ejs.render(tpl%2C%20%7B%20people%3A%20people%20%7D)%3B%0Aconsole.log(html)%3B",
+      "body": "%60%60%60js%0Alet%20ejs%20%3D%20require('ejs')%3B%0A%0Alet%20people%20%3D%20%5B'geddy'%2C%20'neil'%2C%20'alex'%5D%3B%0Alet%20tpl%20%3D%20'%3C%25%3D%20people.join(%22%2C%20%22)%3B%20%25%3E'%3B%0A%0Alet%20html%20%3D%20ejs.render(tpl%2C%20%7B%20people%3A%20people%20%7D)%3B%0Aconsole.log(html)%3B%0A%60%60%60%0A%0APass%20EJS%20a%20template%20string%20and%20some%20data.",
       "encoded": true
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Pass EJS a template string and some data."
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "Browser%20Support",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Cscript%20src%3D%22https%3A%2F%2Funpkg.com%2Fejs%22%3E%3C%2Fscript%3E%0A%3Cscript%3E%0A%20%20let%20people%20%3D%20%5B'geddy'%2C%20'neil'%2C%20'alex'%5D%3B%0A%20%20let%20html%20%3D%20ejs.render('%3C%25%3D%20people.join(%22%2C%20%22)%3B%20%25%3E'%2C%20%7B%20people%3A%20people%20%7D)%3B%0A%20%20console.log(html)%3B%0A%3C%2Fscript%3E",
+      "body": "%60%60%60html%0A%3Cscript%20src%3D%22https%3A%2F%2Funpkg.com%2Fejs%22%3E%3C%2Fscript%3E%0A%3Cscript%3E%0A%20%20let%20people%20%3D%20%5B'geddy'%2C%20'neil'%2C%20'alex'%5D%3B%0A%20%20let%20html%20%3D%20ejs.render('%3C%25%3D%20people.join(%22%2C%20%22)%3B%20%25%3E'%2C%20%7B%20people%3A%20people%20%7D)%3B%0A%20%20console.log(html)%3B%0A%3C%2Fscript%3E%0A%60%60%60%0A%0AUse%20ejs%20in%20a%20script%20tag.",
       "encoded": true
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Use ejs in a script tag."
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "Variables",
-      "kind": "text",
       "body": "|              |                                  |\n| ------------ | -------------------------------- |\n| `<%= var %>` | Prints the value of the variable |\n| `<%- var %>` | Prints without HTML escaping     |"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "CLI",
-      "kind": "text",
-      "body": "Render and specify an output file."
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ejs hello.ejs -o hello.html"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Feed it a template file and a data file"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ejs hello.ejs -f data.json -o hello.html"
+      "body": "Render and specify an output file.\n\n```shell\n$ ejs hello.ejs -o hello.html\n```\n\nFeed it a template file and a data file\n\n```shell\n$ ejs hello.ejs -f data.json -o hello.html\n```"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "Comments",
-      "kind": "code",
-      "lang": "html",
-      "code": "<%# This line will denote a comment %>\n\n<%# This is a multi-line EJS comment.\n    It can span multiple lines,\n    but will not be displayed\n    in the final HTML output.\n%>"
+      "body": "```html\n<%# This line will denote a comment %>\n```\n\n```html\n<%# This is a multi-line EJS comment.\n    It can span multiple lines,\n    but will not be displayed\n    in the final HTML output.\n%>\n```"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "Method",
-      "kind": "code",
-      "lang": "js",
-      "code": "let ejs = require('ejs');\nlet template = ejs.compile(str, options);\n\ntemplate(data);\n// => Rendered HTML string\n\nejs.render(str, data, options);\n// => Rendered HTML string\n\nejs.renderFile(filename, data, options, function (err, str) {\n  // str => Rendered HTML string\n});"
+      "body": "%60%60%60js%0Alet%20ejs%20%3D%20require('ejs')%3B%0Alet%20template%20%3D%20ejs.compile(str%2C%20options)%3B%0A%0Atemplate(data)%3B%0A%2F%2F%20%3D%3E%20Rendered%20HTML%20string%0A%0Aejs.render(str%2C%20data%2C%20options)%3B%0A%2F%2F%20%3D%3E%20Rendered%20HTML%20string%0A%0Aejs.renderFile(filename%2C%20data%2C%20options%2C%20function%20(err%2C%20str)%20%7B%0A%20%20%2F%2F%20str%20%3D%3E%20Rendered%20HTML%20string%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "Including Files",
-      "kind": "code",
-      "lang": "html",
-      "code": "<%- include('partials/navbar.ejs') %>"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Include a template with data:"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<% include('header', { title: 'My Page' }) %>\n\n<ul>\n  <% users.forEach(function(user){ %>\n    <%- include('item', {user: user}); %>\n  <% }); %>\n</ul>"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "To include a template, needs a file name option, paths are relative"
+      "title": "Including%20Files",
+      "body": "%60%60%60html%0A%3C%25-%20include('partials%2Fnavbar.ejs')%20%25%3E%0A%60%60%60%0A%0AInclude%20a%20template%20with%20data%3A%0A%0A%60%60%60html%0A%3C%25%20include('header'%2C%20%7B%20title%3A%20'My%20Page'%20%7D)%20%25%3E%0A%60%60%60%0A%0A%60%60%60html%0A%3Cul%3E%0A%20%20%3C%25%20users.forEach(function(user)%7B%20%25%3E%0A%20%20%20%20%3C%25-%20include('item'%2C%20%7Buser%3A%20user%7D)%3B%20%25%3E%0A%20%20%3C%25%20%7D)%3B%20%25%3E%0A%3C%2Ful%3E%0A%60%60%60%0A%0ATo%20include%20a%20template%2C%20needs%20a%20file%20name%20option%2C%20paths%20are%20relative",
+      "encoded": true
     },
     {
       "id": "s2-19",
       "sectionId": "s2",
       "title": "Conditionals",
-      "kind": "code",
-      "lang": "html",
-      "code": "<% if (userLoggedIn) { %>\n  <p>Welcome, <%= username %>!</p>\n<% } else { %>\n  <p>Please log in.</p>\n<% } %>"
+      "body": "```html\n<% if (userLoggedIn) { %>\n  <p>Welcome, <%= username %>!</p>\n<% } else { %>\n  <p>Please log in.</p>\n<% } %>\n```"
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "Using loops",
-      "kind": "code",
-      "lang": "html",
-      "code": "<ul>\n  <% for(i=0; i < users.length; i++) { %>\n    <li><%= users[i].username %></li>\n  <% } %>\n</ul>"
+      "body": "```html\n<ul>\n  <% for(i=0; i < users.length; i++) { %>\n    <li><%= users[i].username %></li>\n  <% } %>\n</ul>\n```"
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "Custom%20delimiters",
-      "kind": "code",
-      "lang": "js",
-      "code": "let%20ejs%20%3D%20require('ejs')%2C%0A%20%20users%20%3D%20%5B'geddy'%2C%20'neil'%2C%20'alex'%5D%3B%0A%0A%2F%2F%20Just%20one%20template%0Aejs.render('%3C%3F%3D%20users.join(%22%20%7C%20%22)%3B%20%3F%3E'%2C%20%7B%20users%3A%20users%20%7D%2C%20%7B%20delimiter%3A%20'%3F'%20%7D)%3B%0A%2F%2F%20%3D%3E%20'geddy%20%7C%20neil%20%7C%20alex'%0A%0A%2F%2F%20Or%20globally%0Aejs.delimiter%20%3D%20'%24'%3B%0Aejs.render('%3C%24%3D%20users.join(%22%20%7C%20%22)%3B%20%24%3E'%2C%20%7B%20users%3A%20users%20%7D)%3B%0A%2F%2F%20%3D%3E%20'geddy%20%7C%20neil%20%7C%20alex'",
+      "body": "%60%60%60js%0Alet%20ejs%20%3D%20require('ejs')%2C%0A%20%20users%20%3D%20%5B'geddy'%2C%20'neil'%2C%20'alex'%5D%3B%0A%0A%2F%2F%20Just%20one%20template%0Aejs.render('%3C%3F%3D%20users.join(%22%20%7C%20%22)%3B%20%3F%3E'%2C%20%7B%20users%3A%20users%20%7D%2C%20%7B%20delimiter%3A%20'%3F'%20%7D)%3B%0A%2F%2F%20%3D%3E%20'geddy%20%7C%20neil%20%7C%20alex'%0A%0A%2F%2F%20Or%20globally%0Aejs.delimiter%20%3D%20'%24'%3B%0Aejs.render('%3C%24%3D%20users.join(%22%20%7C%20%22)%3B%20%24%3E'%2C%20%7B%20users%3A%20users%20%7D)%3B%0A%2F%2F%20%3D%3E%20'geddy%20%7C%20neil%20%7C%20alex'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-22",
       "sectionId": "s2",
       "title": "Caching",
-      "kind": "code",
-      "lang": "js",
-      "code": "let ejs = require('ejs'),\n  LRU = require('lru-cache');\n\n// LRU cache with 100-item limit\nejs.cache = LRU(100);"
+      "body": "%60%60%60js%0Alet%20ejs%20%3D%20require('ejs')%2C%0A%20%20LRU%20%3D%20require('lru-cache')%3B%0A%0A%2F%2F%20LRU%20cache%20with%20100-item%20limit%0Aejs.cache%20%3D%20LRU(100)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
-      "title": "Custom file loader",
-      "kind": "code",
-      "lang": "js",
-      "code": "let ejs = require('ejs');\nlet myFileLoader = function (filePath) {\n  return 'myFileLoader: ' + fs.readFileSync(filePath);\n};\n\nejs.fileLoader = myFileLoader;"
+      "title": "Custom%20file%20loader",
+      "body": "%60%60%60js%0Alet%20ejs%20%3D%20require('ejs')%3B%0Alet%20myFileLoader%20%3D%20function%20(filePath)%20%7B%0A%20%20return%20'myFileLoader%3A%20'%20%2B%20fs.readFileSync(filePath)%3B%0A%7D%3B%0A%0Aejs.fileLoader%20%3D%20myFileLoader%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-24",
       "sectionId": "s2",
       "title": "Layouts",
-      "kind": "code",
-      "lang": "html",
-      "code": "<%- include('header'); -%>\n<h1>\n  Title\n</h1>\n<p>\n  My page\n</p>\n<%- include('footer'); -%>"
+      "body": "%60%60%60html%0A%3C%25-%20include('header')%3B%20-%25%3E%0A%3Ch1%3E%0A%20%20Title%0A%3C%2Fh1%3E%0A%3Cp%3E%0A%20%20My%20page%0A%3C%2Fp%3E%0A%3C%25-%20include('footer')%3B%20-%25%3E%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-25",
       "sectionId": "s3",
       "title": "Example",
-      "kind": "code",
-      "lang": "html",
-      "code": "%3Cdiv%20id%3D%22output%22%3E%3C%2Fdiv%3E%0A%3Cscript%20src%3D%22ejs.min.js%22%3E%3C%2Fscript%3E%0A%3Cscript%3E%0A%20%20let%20people%20%3D%20%5B'geddy'%2C%20'neil'%2C%20'alex'%5D%2C%0A%20%20%20%20html%20%3D%20ejs.render('%3C%25%3D%20people.join(%22%2C%20%22)%3B%20%25%3E'%2C%20%7B%20people%3A%20people%20%7D)%3B%0A%20%20%2F%2F%20With%20jQuery%3A%0A%20%20%24('%23output').html(html)%3B%0A%20%20%2F%2F%20Vanilla%20JS%3A%0A%20%20document.getElementById('output').innerHTML%20%3D%20html%3B%0A%3C%2Fscript%3E",
+      "body": "%60%60%60html%0A%3Cdiv%20id%3D%22output%22%3E%3C%2Fdiv%3E%0A%3Cscript%20src%3D%22ejs.min.js%22%3E%3C%2Fscript%3E%0A%3Cscript%3E%0A%20%20let%20people%20%3D%20%5B'geddy'%2C%20'neil'%2C%20'alex'%5D%2C%0A%20%20%20%20html%20%3D%20ejs.render('%3C%25%3D%20people.join(%22%2C%20%22)%3B%20%25%3E'%2C%20%7B%20people%3A%20people%20%7D)%3B%0A%20%20%2F%2F%20With%20jQuery%3A%0A%20%20%24('%23output').html(html)%3B%0A%20%20%2F%2F%20Vanilla%20JS%3A%0A%20%20document.getElementById('output').innerHTML%20%3D%20html%3B%0A%3C%2Fscript%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-26",
       "sectionId": "s3",
       "title": "Caveats",
-      "kind": "code",
-      "lang": "js",
-      "code": "let%20str%20%3D%20%22Hello%20%3C%25%3D%20include('file'%2C%20%7Bperson%3A%20'John'%7D)%3B%20%25%3E%22%2C%0A%20%20fn%20%3D%20ejs.compile(str%2C%20%7B%20client%3A%20true%20%7D)%3B%0A%0A%2F%2F%20include%20callback%0Afn(data%2C%20null%2C%20function%20(path%2C%20d)%20%7B%0A%20%20%2F%2F%20path%20-%3E%20'file'%0A%20%20%2F%2F%20d%20-%3E%20%7Bperson%3A%20'John'%7D%0A%20%20%2F%2F%20Put%20your%20code%20here%0A%20%20%2F%2F%20Return%20the%20contents%20of%20file%20as%20a%20string%0A%7D)%3B%20%2F%2F%20returns%20rendered%20string",
+      "body": "%60%60%60js%0Alet%20str%20%3D%20%22Hello%20%3C%25%3D%20include('file'%2C%20%7Bperson%3A%20'John'%7D)%3B%20%25%3E%22%2C%0A%20%20fn%20%3D%20ejs.compile(str%2C%20%7B%20client%3A%20true%20%7D)%3B%0A%0A%2F%2F%20include%20callback%0Afn(data%2C%20null%2C%20function%20(path%2C%20d)%20%7B%0A%20%20%2F%2F%20path%20-%3E%20'file'%0A%20%20%2F%2F%20d%20-%3E%20%7Bperson%3A%20'John'%7D%0A%20%20%2F%2F%20Put%20your%20code%20here%0A%20%20%2F%2F%20Return%20the%20contents%20of%20file%20as%20a%20string%0A%7D)%3B%20%2F%2F%20returns%20rendered%20string%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-27",
       "sectionId": "s4",
-      "title": "Options list",
-      "kind": "text",
-      "body": "| Option             | Description                                                                                                                                                                                                                   |\n| ------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |\n| cache              | Compiled functions are cached, requires filename                                                                                                                                                                              |\n| filename           | Used by cache to key caches, and for includes                                                                                                                                                                                 |\n| root               | Set project root for includes with an absolute path (e.g. `/file.ejs`). Can be an array to try to resolve include from multiple directories.                                                                                  |\n| views              | An array of paths to use when resolving includes with relative paths.                                                                                                                                                         |\n| context            | Function execution context                                                                                                                                                                                                    |\n| compileDebug       | When false, no debug instrumentation is compiled                                                                                                                                                                              |\n| client             | Returns standalone compiled function                                                                                                                                                                                          |\n| delimiter          | Character to use for inner delimiter, by default `%`                                                                                                                                                                          |\n| openDelimiter      | Character to use for opening delimiter, by default `<`                                                                                                                                                                        |\n| closeDelimiter     | Character to use for closing delimiter, by default `>`                                                                                                                                                                        |\n| debug              | Outputs generated function body                                                                                                                                                                                               |\n| strict             | When set to `true`, generated function is in strict mode                                                                                                                                                                      |\n| \\_with             | Whether or not to use with() {} constructs. If `false`, then the locals will be stored in the locals object. (Implies `--strict`)                                                                                             |\n| localsName         | Name to use for the object storing local variables when not using with defaults to `locals`                                                                                                                                   |\n| rmWhitespace       | Remove all safe-to-remove whitespace, including leading and trailing whitespace. It also enables a safer version of `-%> `line slurping for all scriptlet tags (it does not strip new lines of tags in the middle of a line). |\n| escape             | The escaping function used with `<%=` construct. It is used in rendering and is `.toString()`ed in the generation of client functions. (By default escapes XML).                                                              |\n| outputFunctionName | Set to a string (e.g., 'echo' or 'print') for a function to print output inside scriptlet tags.                                                                                                                               |\n| async              | When true, EJS will use an async function for rendering. (Depends on async/await support in the JS runtime.                                                                                                                   |"
+      "title": "Options%20list",
+      "body": "%7C%20Option%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20------------------%20%7C%20%3A----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------%20%7C%0A%7C%20cache%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Compiled%20functions%20are%20cached%2C%20requires%20filename%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20filename%20%20%20%20%20%20%20%20%20%20%20%7C%20Used%20by%20cache%20to%20key%20caches%2C%20and%20for%20includes%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20root%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Set%20project%20root%20for%20includes%20with%20an%20absolute%20path%20(e.g.%20%60%2Ffile.ejs%60).%20Can%20be%20an%20array%20to%20try%20to%20resolve%20include%20from%20multiple%20directories.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20views%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20An%20array%20of%20paths%20to%20use%20when%20resolving%20includes%20with%20relative%20paths.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20context%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Function%20execution%20context%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20compileDebug%20%20%20%20%20%20%20%7C%20When%20false%2C%20no%20debug%20instrumentation%20is%20compiled%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20client%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Returns%20standalone%20compiled%20function%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20delimiter%20%20%20%20%20%20%20%20%20%20%7C%20Character%20to%20use%20for%20inner%20delimiter%2C%20by%20default%20%60%25%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20openDelimiter%20%20%20%20%20%20%7C%20Character%20to%20use%20for%20opening%20delimiter%2C%20by%20default%20%60%3C%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20closeDelimiter%20%20%20%20%20%7C%20Character%20to%20use%20for%20closing%20delimiter%2C%20by%20default%20%60%3E%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20debug%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Outputs%20generated%20function%20body%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20strict%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20When%20set%20to%20%60true%60%2C%20generated%20function%20is%20in%20strict%20mode%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%5C_with%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Whether%20or%20not%20to%20use%20with()%20%7B%7D%20constructs.%20If%20%60false%60%2C%20then%20the%20locals%20will%20be%20stored%20in%20the%20locals%20object.%20(Implies%20%60--strict%60)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20localsName%20%20%20%20%20%20%20%20%20%7C%20Name%20to%20use%20for%20the%20object%20storing%20local%20variables%20when%20not%20using%20with%20defaults%20to%20%60locals%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20rmWhitespace%20%20%20%20%20%20%20%7C%20Remove%20all%20safe-to-remove%20whitespace%2C%20including%20leading%20and%20trailing%20whitespace.%20It%20also%20enables%20a%20safer%20version%20of%20%60-%25%3E%20%60line%20slurping%20for%20all%20scriptlet%20tags%20(it%20does%20not%20strip%20new%20lines%20of%20tags%20in%20the%20middle%20of%20a%20line).%20%7C%0A%7C%20escape%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20The%20escaping%20function%20used%20with%20%60%3C%25%3D%60%20construct.%20It%20is%20used%20in%20rendering%20and%20is%20%60.toString()%60ed%20in%20the%20generation%20of%20client%20functions.%20(By%20default%20escapes%20XML).%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20outputFunctionName%20%7C%20Set%20to%20a%20string%20(e.g.%2C%20'echo'%20or%20'print')%20for%20a%20function%20to%20print%20output%20inside%20scriptlet%20tags.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20async%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20When%20true%2C%20EJS%20will%20use%20an%20async%20function%20for%20rendering.%20(Depends%20on%20async%2Fawait%20support%20in%20the%20JS%20runtime.%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C",
+      "encoded": true
     },
     {
       "id": "s5-28",
       "sectionId": "s5",
-      "title": "Tags list",
-      "kind": "text",
-      "body": "| Tag               | Description                                                          |\n| ----------------- | :------------------------------------------------------------------- |\n| `<%`              | 'Scriptlet' tag, for control-flow, no output                         |\n| <code><%\\_</code> | 'Whitespace Slurping' Scriptlet tag, strips all whitespace before it |\n| `<%=`             | Outputs the value into the template (HTML escaped)                   |\n| `<%-`             | Outputs the unescaped value into the template                        |\n| `<%#`             | Comment tag, no execution, no output                                 |\n| `<%%`             | Outputs a literal `<%`                                               |\n| `%>`              | Plain ending tag                                                     |\n| `-%>`             | Trim-mode ('newline slurp') tag, trims following newline             |\n| <code>\\_%></code> | 'Whitespace Slurping' ending tag, removes all whitespace after it    |"
+      "title": "Tags%20list",
+      "body": "%7C%20Tag%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-----------------%20%7C%20%3A-------------------------------------------------------------------%20%7C%0A%7C%20%60%3C%25%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20'Scriptlet'%20tag%2C%20for%20control-flow%2C%20no%20output%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%3Ccode%3E%3C%25%5C_%3C%2Fcode%3E%20%7C%20'Whitespace%20Slurping'%20Scriptlet%20tag%2C%20strips%20all%20whitespace%20before%20it%20%7C%0A%7C%20%60%3C%25%3D%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Outputs%20the%20value%20into%20the%20template%20(HTML%20escaped)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%3C%25-%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Outputs%20the%20unescaped%20value%20into%20the%20template%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%3C%25%23%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Comment%20tag%2C%20no%20execution%2C%20no%20output%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%3C%25%25%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Outputs%20a%20literal%20%60%3C%25%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60%25%3E%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Plain%20ending%20tag%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60-%25%3E%60%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Trim-mode%20('newline%20slurp')%20tag%2C%20trims%20following%20newline%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%3Ccode%3E%5C_%25%3E%3C%2Fcode%3E%20%7C%20'Whitespace%20Slurping'%20ending%20tag%2C%20removes%20all%20whitespace%20after%20it%20%20%20%20%7C",
+      "encoded": true
     },
     {
       "id": "s6-29",
       "sectionId": "s6",
       "title": "CLI list",
-      "kind": "text",
-      "body": "| Option                               | Description                                                                                 |\n| ------------------------------------ | :------------------------------------------------------------------------------------------ |\n| `cache`                              | Compiled functions are cached, requires filename                                            |\n| `-o` / `--output-file FILE`          | Write the rendered output to FILE rather than stdout.                                       |\n| `-f` / `--data-file FILE`            | Must be JSON-formatted. Use parsed input from FILE as data for rendering.                   |\n| `-i` / `--data-input STRING`         | Must be JSON-formatted and URI-encoded. Use parsed input from STRING as data for rendering. |\n| `-m` / `--delimiter CHARACTER`       | Use CHARACTER with angle brackets for open/close (defaults to %).                           |\n| `-p` / `--open-delimiter CHARACTER`  | Use CHARACTER instead of left angle bracket to open.                                        |\n| `-c` / `--close-delimiter CHARACTER` | Use CHARACTER instead of right angle bracket to close.                                      |\n| `-s` / `--strict`                    | When set to `true`, generated function is in strict mode                                    |\n| `-n` / `--no-with`                   | Use `locals` object for vars rather than using `with` (implies --strict).                   |\n| `-l` / `--locals-name`               | Name to use for the object storing local variables when not using `with`.                   |\n| `-w` / `--rm-whitespace`             | Remove all safe-to-remove whitespace, including leading and trailing whitespace.            |\n| `-d` / `--debug`                     | Outputs generated function body                                                             |\n| `-h` / `--help`                      | Display this help message.                                                                  |\n| `-V` / `-v` / `--version`            | Display the EJS version.                                                                    |"
-    },
-    {
-      "id": "s6-30",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "Examples of use :"
-    },
-    {
-      "id": "s6-31",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ ejs -p [ -c ] ./template_file.ejs -o ./output.html\n$ ejs ./test/fixtures/user.ejs name=Lerxst\n$ ejs -n -l _ ./some_template.ejs -f ./data_file.json"
+      "body": "| Option                               | Description                                                                                 |\n| ------------------------------------ | :------------------------------------------------------------------------------------------ |\n| `cache`                              | Compiled functions are cached, requires filename                                            |\n| `-o` / `--output-file FILE`          | Write the rendered output to FILE rather than stdout.                                       |\n| `-f` / `--data-file FILE`            | Must be JSON-formatted. Use parsed input from FILE as data for rendering.                   |\n| `-i` / `--data-input STRING`         | Must be JSON-formatted and URI-encoded. Use parsed input from STRING as data for rendering. |\n| `-m` / `--delimiter CHARACTER`       | Use CHARACTER with angle brackets for open/close (defaults to %).                           |\n| `-p` / `--open-delimiter CHARACTER`  | Use CHARACTER instead of left angle bracket to open.                                        |\n| `-c` / `--close-delimiter CHARACTER` | Use CHARACTER instead of right angle bracket to close.                                      |\n| `-s` / `--strict`                    | When set to `true`, generated function is in strict mode                                    |\n| `-n` / `--no-with`                   | Use `locals` object for vars rather than using `with` (implies --strict).                   |\n| `-l` / `--locals-name`               | Name to use for the object storing local variables when not using `with`.                   |\n| `-w` / `--rm-whitespace`             | Remove all safe-to-remove whitespace, including leading and trailing whitespace.            |\n| `-d` / `--debug`                     | Outputs generated function body                                                             |\n| `-h` / `--help`                      | Display this help message.                                                                  |\n| `-V` / `-v` / `--version`            | Display the EJS version.                                                                    |\n\nExamples of use :\n\n```shell\n$ ejs -p [ -c ] ./template_file.ejs -o ./output.html\n$ ejs ./test/fixtures/user.ejs name=Lerxst\n$ ejs -n -l _ ./some_template.ejs -f ./data_file.json\n```"
     }
   ],
   "source": {

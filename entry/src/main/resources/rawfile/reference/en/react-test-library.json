@@ -40,232 +40,111 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "When it comes to testing React apps manually, we can either choose to render individual component trees in a simplified test environment or run the complete app in a realistic browser environment (end-to-end testing). But for automated tests, React Testing Library (RTL) is recommended for its user-centric approach and maintainability."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Introduction",
-      "kind": "text",
       "body": "React Testing Library is built on top of DOM Testing Library to test React components by querying and interacting with real DOM nodes, avoiding reliance on implementation details."
     },
     {
       "id": "s2-2",
       "sectionId": "s2",
       "title": "1. Purpose & Solution",
-      "kind": "text",
-      "body": "RTL addresses maintainability by focusing on user-visible behavior:"
-    },
-    {
-      "id": "s2-3",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• Tests run in actual DOM nodes.\n• Queries mirror user interactions.\n• `data-testid` as an escape hatch when needed.\n• Encourages accessibility."
+      "body": "RTL addresses maintainability by focusing on user-visible behavior:\n\n• Tests run in actual DOM nodes.\n• Queries mirror user interactions.\n• `data-testid` as an escape hatch when needed.\n• Encourages accessibility."
     },
     {
       "id": "s2-4",
       "sectionId": "s2",
-      "title": "2. A basic component render test",
-      "kind": "text",
-      "body": "**Component (App.js):**"
-    },
-    {
-      "id": "s2-5",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "const title = 'Hello, World!';\n\nfunction App() {\n  return <div>{title}</div>;\n}\n\nexport default App;"
-    },
-    {
-      "id": "s2-6",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "**Test (App.test.js):**"
-    },
-    {
-      "id": "s2-7",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "import { render } from '@testing-library/react';\nimport App from './App';\n\ndescribe('App', () => {\n  test('renders App component', () => {\n    render(<App />);\n  });\n});"
-    },
-    {
-      "id": "s2-8",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Add debug to inspect output:"
-    },
-    {
-      "id": "s2-9",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "import { render, screen } from '@testing-library/react';\nimport App from './App';\n\ndescribe('App', () => {\n  test('renders App component', () => {\n    render(<App />);\n    screen.debug();\n  });\n});"
-    },
-    {
-      "id": "s2-10",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "Output in console:"
-    },
-    {
-      "id": "s2-11",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "html",
-      "code": "<body>\n  <div>\n    <div>Hello, World!</div>\n  </div>\n</body>"
+      "title": "2.%20A%20basic%20component%20render%20test",
+      "body": "**Component%20(App.js)%3A**%0A%0A%60%60%60js%0Aconst%20title%20%3D%20'Hello%2C%20World!'%3B%0A%0Afunction%20App()%20%7B%0A%20%20return%20%3Cdiv%3E%7Btitle%7D%3C%2Fdiv%3E%3B%0A%7D%0A%0Aexport%20default%20App%3B%0A%60%60%60%0A%0A**Test%20(App.test.js)%3A**%0A%0A%60%60%60js%0Aimport%20%7B%20render%20%7D%20from%20'%40testing-library%2Freact'%3B%0Aimport%20App%20from%20'.%2FApp'%3B%0A%0Adescribe('App'%2C%20()%20%3D%3E%20%7B%0A%20%20test('renders%20App%20component'%2C%20()%20%3D%3E%20%7B%0A%20%20%20%20render(%3CApp%20%2F%3E)%3B%0A%20%20%7D)%3B%0A%7D)%3B%0A%60%60%60%0A%0AAdd%20debug%20to%20inspect%20output%3A%0A%0A%60%60%60js%0Aimport%20%7B%20render%2C%20screen%20%7D%20from%20'%40testing-library%2Freact'%3B%0Aimport%20App%20from%20'.%2FApp'%3B%0A%0Adescribe('App'%2C%20()%20%3D%3E%20%7B%0A%20%20test('renders%20App%20component'%2C%20()%20%3D%3E%20%7B%0A%20%20%20%20render(%3CApp%20%2F%3E)%3B%0A%20%20%20%20screen.debug()%3B%0A%20%20%7D)%3B%0A%7D)%3B%0A%60%60%60%0A%0AOutput%20in%20console%3A%0A%0A%60%60%60html%0A%3Cbody%3E%0A%20%20%3Cdiv%3E%0A%20%20%20%20%3Cdiv%3EHello%2C%20World!%3C%2Fdiv%3E%0A%20%20%3C%2Fdiv%3E%0A%3C%2Fbody%3E%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-12",
       "sectionId": "s2",
       "title": "3. Why use RTL vs Enzyme?",
-      "kind": "text",
       "body": "• Tests based on user interactions, not internal APIs.\n• Improves maintainability after refactors.\n• Intuitive syntax (`getByText`, `getByAltText`, etc.)."
     },
     {
       "id": "s2-13",
       "sectionId": "s2",
-      "title": "4. Queries in RTL",
-      "kind": "code",
-      "lang": "js",
-      "code": "import { render, screen } from '@testing-library/react';\n\ntest('should show login form', () => {\n  render(<Login />);\n  const input = screen.getByLabelText('Username');\n  // events & assertions\n});"
-    },
-    {
-      "id": "s2-14",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "**Single element queries:**"
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• `getBy*`: throws if none found\n• `queryBy*`: returns null if none\n• `findBy*`: async Promise"
-    },
-    {
-      "id": "s2-16",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "**Multiple elements queries:**"
-    },
-    {
-      "id": "s2-17",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• `getAllBy*`: throws if none\n• `queryAllBy*`: returns \\[] if none\n• `findAllBy*`: async Promise array"
+      "title": "4.%20Queries%20in%20RTL",
+      "body": "%60%60%60js%0Aimport%20%7B%20render%2C%20screen%20%7D%20from%20'%40testing-library%2Freact'%3B%0A%0Atest('should%20show%20login%20form'%2C%20()%20%3D%3E%20%7B%0A%20%20render(%3CLogin%20%2F%3E)%3B%0A%20%20const%20input%20%3D%20screen.getByLabelText('Username')%3B%0A%20%20%2F%2F%20events%20%26%20assertions%0A%7D)%3B%0A%60%60%60%0A%0A**Single%20element%20queries%3A**%0A%0A%E2%80%A2%20%60getBy*%60%3A%20throws%20if%20none%20found%0A%E2%80%A2%20%60queryBy*%60%3A%20returns%20null%20if%20none%0A%E2%80%A2%20%60findBy*%60%3A%20async%20Promise%0A%0A**Multiple%20elements%20queries%3A**%0A%0A%E2%80%A2%20%60getAllBy*%60%3A%20throws%20if%20none%0A%E2%80%A2%20%60queryAllBy*%60%3A%20returns%20%5C%5B%5D%20if%20none%0A%E2%80%A2%20%60findAllBy*%60%3A%20async%20Promise%20array",
+      "encoded": true
     },
     {
       "id": "s2-18",
       "sectionId": "s2",
       "title": "5. Component tree testing level",
-      "kind": "text",
       "body": "• Test at user interaction level, not per individual child component unless needed."
     },
     {
       "id": "s3-19",
       "sectionId": "s3",
       "title": "1. Jest vs RTL",
-      "kind": "text",
       "body": "• **Jest**: Test runner & assertion library (`describe`, `test`, `expect`).\n• **RTL**: DOM utilities for React; works within Jest (or other runners)."
     },
     {
       "id": "s3-20",
       "sectionId": "s3",
       "title": "2.%20Mocking%20with%20MSW",
-      "kind": "code",
-      "lang": "js",
-      "code": "%2F%2F%20fetch.test.jsx%0Aimport%20React%20from%20'react'%3B%0Aimport%20%7B%20rest%20%7D%20from%20'msw'%3B%0Aimport%20%7B%20setupServer%20%7D%20from%20'msw%2Fnode'%3B%0Aimport%20%7B%20render%2C%20fireEvent%2C%20waitFor%2C%20screen%20%7D%20from%20'%40testing-library%2Freact'%3B%0Aimport%20'%40testing-library%2Fjest-dom'%3B%0Aimport%20Fetch%20from%20'..%2Ffetch'%3B%0A%0Aconst%20server%20%3D%20setupServer(%0A%20%20rest.get('%2Fgreeting'%2C%20(req%2C%20res%2C%20ctx)%20%3D%3E%0A%20%20%20%20res(ctx.json(%7B%20greeting%3A%20'hello%20there'%20%7D))%0A%20%20)%0A)%3B%0A%0AbeforeAll(()%20%3D%3E%20server.listen())%3B%0AafterEach(()%20%3D%3E%20server.resetHandlers())%3B%0AafterAll(()%20%3D%3E%20server.close())%3B%0A%0Atest('loads%20and%20displays%20greeting'%2C%20async%20()%20%3D%3E%20%7B%0A%20%20render(%3CFetch%20url%3D%22%2Fgreeting%22%20%2F%3E)%3B%0A%20%20fireEvent.click(screen.getByText('Load%20Greeting'))%3B%0A%20%20await%20waitFor(()%20%3D%3E%20screen.getByRole('heading'))%3B%0A%20%20expect(screen.getByRole('heading')).toHaveTextContent('hello%20there')%3B%0A%20%20expect(screen.getByRole('button')).toBeDisabled()%3B%0A%7D)%3B%0A%0Atest('handles%20server%20error'%2C%20async%20()%20%3D%3E%20%7B%0A%20%20server.use(rest.get('%2Fgreeting'%2C%20(req%2C%20res%2C%20ctx)%20%3D%3E%20res(ctx.status(500))))%3B%0A%20%20render(%3CFetch%20url%3D%22%2Fgreeting%22%20%2F%3E)%3B%0A%20%20fireEvent.click(screen.getByText('Load%20Greeting'))%3B%0A%20%20await%20waitFor(()%20%3D%3E%20screen.getByRole('alert'))%3B%0A%20%20expect(screen.getByRole('alert')).toHaveTextContent('Oops%2C%20failed%20to%20fetch!')%3B%0A%20%20expect(screen.getByRole('button')).not.toBeDisabled()%3B%0A%7D)%3B",
+      "body": "%60%60%60js%0A%2F%2F%20fetch.test.jsx%0Aimport%20React%20from%20'react'%3B%0Aimport%20%7B%20rest%20%7D%20from%20'msw'%3B%0Aimport%20%7B%20setupServer%20%7D%20from%20'msw%2Fnode'%3B%0Aimport%20%7B%20render%2C%20fireEvent%2C%20waitFor%2C%20screen%20%7D%20from%20'%40testing-library%2Freact'%3B%0Aimport%20'%40testing-library%2Fjest-dom'%3B%0Aimport%20Fetch%20from%20'..%2Ffetch'%3B%0A%0Aconst%20server%20%3D%20setupServer(%0A%20%20rest.get('%2Fgreeting'%2C%20(req%2C%20res%2C%20ctx)%20%3D%3E%0A%20%20%20%20res(ctx.json(%7B%20greeting%3A%20'hello%20there'%20%7D))%0A%20%20)%0A)%3B%0A%0AbeforeAll(()%20%3D%3E%20server.listen())%3B%0AafterEach(()%20%3D%3E%20server.resetHandlers())%3B%0AafterAll(()%20%3D%3E%20server.close())%3B%0A%0Atest('loads%20and%20displays%20greeting'%2C%20async%20()%20%3D%3E%20%7B%0A%20%20render(%3CFetch%20url%3D%22%2Fgreeting%22%20%2F%3E)%3B%0A%20%20fireEvent.click(screen.getByText('Load%20Greeting'))%3B%0A%20%20await%20waitFor(()%20%3D%3E%20screen.getByRole('heading'))%3B%0A%20%20expect(screen.getByRole('heading')).toHaveTextContent('hello%20there')%3B%0A%20%20expect(screen.getByRole('button')).toBeDisabled()%3B%0A%7D)%3B%0A%0Atest('handles%20server%20error'%2C%20async%20()%20%3D%3E%20%7B%0A%20%20server.use(rest.get('%2Fgreeting'%2C%20(req%2C%20res%2C%20ctx)%20%3D%3E%20res(ctx.status(500))))%3B%0A%20%20render(%3CFetch%20url%3D%22%2Fgreeting%22%20%2F%3E)%3B%0A%20%20fireEvent.click(screen.getByText('Load%20Greeting'))%3B%0A%20%20await%20waitFor(()%20%3D%3E%20screen.getByRole('alert'))%3B%0A%20%20expect(screen.getByRole('alert')).toHaveTextContent('Oops%2C%20failed%20to%20fetch!')%3B%0A%20%20expect(screen.getByRole('button')).not.toBeDisabled()%3B%0A%7D)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-21",
       "sectionId": "s3",
-      "title": "3. `render` options",
-      "kind": "code",
-      "lang": "js",
-      "code": "import { render } from '@testing-library/react';\nimport '@testing-library/jest-dom';\n\ntest('renders a message', () => {\n  const table = document.createElement('table');\n  const { container } = render(<TableBody {...props} />, {\n    container: document.body.appendChild(table),\n    baseElement: document.body,\n    hydrate: true,\n    legacyRoot: true,\n    queries: {\n      /* custom queries */\n    }\n  });\n  expect(container).toBeInTheDocument();\n});"
+      "title": "3.%20%60render%60%20options",
+      "body": "%60%60%60js%0Aimport%20%7B%20render%20%7D%20from%20'%40testing-library%2Freact'%3B%0Aimport%20'%40testing-library%2Fjest-dom'%3B%0A%0Atest('renders%20a%20message'%2C%20()%20%3D%3E%20%7B%0A%20%20const%20table%20%3D%20document.createElement('table')%3B%0A%20%20const%20%7B%20container%20%7D%20%3D%20render(%3CTableBody%20%7B...props%7D%20%2F%3E%2C%20%7B%0A%20%20%20%20container%3A%20document.body.appendChild(table)%2C%0A%20%20%20%20baseElement%3A%20document.body%2C%0A%20%20%20%20hydrate%3A%20true%2C%0A%20%20%20%20legacyRoot%3A%20true%2C%0A%20%20%20%20queries%3A%20%7B%0A%20%20%20%20%20%20%2F*%20custom%20queries%20*%2F%0A%20%20%20%20%7D%0A%20%20%7D)%3B%0A%20%20expect(container).toBeInTheDocument()%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-22",
       "sectionId": "s3",
-      "title": "4. `renderHook` usage",
-      "kind": "code",
-      "lang": "js",
-      "code": "import { renderHook } from '@testing-library/react';\n\ntest('returns logged in user', () => {\n  const { result, rerender } = renderHook(\n    ({ name } = {}) => useLoggedInUser(name),\n    { initialProps: { name: 'Alice' } }\n  );\n  expect(result.current).toEqual({ name: 'Alice' });\n  rerender({ name: 'Bob' });\n  expect(result.current).toEqual({ name: 'Bob' });\n});"
+      "title": "4.%20%60renderHook%60%20usage",
+      "body": "%60%60%60js%0Aimport%20%7B%20renderHook%20%7D%20from%20'%40testing-library%2Freact'%3B%0A%0Atest('returns%20logged%20in%20user'%2C%20()%20%3D%3E%20%7B%0A%20%20const%20%7B%20result%2C%20rerender%20%7D%20%3D%20renderHook(%0A%20%20%20%20(%7B%20name%20%7D%20%3D%20%7B%7D)%20%3D%3E%20useLoggedInUser(name)%2C%0A%20%20%20%20%7B%20initialProps%3A%20%7B%20name%3A%20'Alice'%20%7D%20%7D%0A%20%20)%3B%0A%20%20expect(result.current).toEqual(%7B%20name%3A%20'Alice'%20%7D)%3B%0A%20%20rerender(%7B%20name%3A%20'Bob'%20%7D)%3B%0A%20%20expect(result.current).toEqual(%7B%20name%3A%20'Bob'%20%7D)%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-23",
       "sectionId": "s4",
       "title": "1.%20Adding%20custom%20queries",
-      "kind": "code",
-      "lang": "js",
-      "code": "const%20dom%20%3D%20require('%40testing-library%2Fdom')%3B%0Aconst%20%7B%20queryHelpers%2C%20buildQueries%20%7D%20%3D%20require('%40testing-library%2Freact')%3B%0A%0A%2F%2F%20Override%20testId%20attribute%0Aexport%20const%20queryByTestId%20%3D%20queryHelpers.queryByAttribute.bind(%0A%20%20null%2C%0A%20%20'data-test-id'%0A)%3B%0Aexport%20const%20queryAllByTestId%20%3D%20queryHelpers.queryAllByAttribute.bind(%0A%20%20null%2C%0A%20%20'data-test-id'%0A)%3B%0Aexport%20function%20getAllByTestId(container%2C%20id%2C%20...rest)%20%7B%0A%20%20const%20els%20%3D%20queryAllByTestId(container%2C%20id%2C%20...rest)%3B%0A%20%20if%20(!els.length)%0A%20%20%20%20throw%20queryHelpers.getElementError(%0A%20%20%20%20%20%20%60No%20element%20with%20%5Bdata-test-id%3D%22%24%7Bid%7D%22%5D%60%2C%0A%20%20%20%20%20%20container%0A%20%20%20%20)%3B%0A%20%20return%20els%3B%0A%7D%0Aexport%20function%20getByTestId(container%2C%20id%2C%20...rest)%20%7B%0A%20%20const%20els%20%3D%20getAllByTestId(container%2C%20id%2C%20...rest)%3B%0A%20%20if%20(els.length%20%3E%201)%0A%20%20%20%20throw%20queryHelpers.getElementError(%0A%20%20%20%20%20%20%60Multiple%20elements%20with%20%5Bdata-test-id%3D%22%24%7Bid%7D%22%5D%60%2C%0A%20%20%20%20%20%20container%0A%20%20%20%20)%3B%0A%20%20return%20els%5B0%5D%3B%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s4-24",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "Or using `buildQueries`:"
-    },
-    {
-      "id": "s4-25",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "const%20queryAllByDataCy%20%3D%20(...args)%20%3D%3E%0A%20%20queryHelpers.queryAllByAttribute('data-cy'%2C%20...args)%3B%0Aconst%20%5B%0A%20%20queryByDataCy%2C%0A%20%20getAllByDataCy%2C%0A%20%20getByDataCy%2C%0A%20%20findAllByDataCy%2C%0A%20%20findByDataCy%0A%5D%20%3D%20buildQueries(%0A%20%20queryAllByDataCy%2C%0A%20%20(c%2C%20v)%20%3D%3E%20%60Found%20multiple%20elements%20with%20data-cy%3D%22%24%7Bv%7D%22%60%2C%0A%20%20(c%2C%20v)%20%3D%3E%20%60Unable%20to%20find%20element%20with%20data-cy%3D%22%24%7Bv%7D%22%60%0A)%3B",
+      "body": "%60%60%60js%0Aconst%20dom%20%3D%20require('%40testing-library%2Fdom')%3B%0Aconst%20%7B%20queryHelpers%2C%20buildQueries%20%7D%20%3D%20require('%40testing-library%2Freact')%3B%0A%0A%2F%2F%20Override%20testId%20attribute%0Aexport%20const%20queryByTestId%20%3D%20queryHelpers.queryByAttribute.bind(%0A%20%20null%2C%0A%20%20'data-test-id'%0A)%3B%0Aexport%20const%20queryAllByTestId%20%3D%20queryHelpers.queryAllByAttribute.bind(%0A%20%20null%2C%0A%20%20'data-test-id'%0A)%3B%0Aexport%20function%20getAllByTestId(container%2C%20id%2C%20...rest)%20%7B%0A%20%20const%20els%20%3D%20queryAllByTestId(container%2C%20id%2C%20...rest)%3B%0A%20%20if%20(!els.length)%0A%20%20%20%20throw%20queryHelpers.getElementError(%0A%20%20%20%20%20%20%60No%20element%20with%20%5Bdata-test-id%3D%22%24%7Bid%7D%22%5D%60%2C%0A%20%20%20%20%20%20container%0A%20%20%20%20)%3B%0A%20%20return%20els%3B%0A%7D%0Aexport%20function%20getByTestId(container%2C%20id%2C%20...rest)%20%7B%0A%20%20const%20els%20%3D%20getAllByTestId(container%2C%20id%2C%20...rest)%3B%0A%20%20if%20(els.length%20%3E%201)%0A%20%20%20%20throw%20queryHelpers.getElementError(%0A%20%20%20%20%20%20%60Multiple%20elements%20with%20%5Bdata-test-id%3D%22%24%7Bid%7D%22%5D%60%2C%0A%20%20%20%20%20%20container%0A%20%20%20%20)%3B%0A%20%20return%20els%5B0%5D%3B%0A%7D%0A%60%60%60%0A%0AOr%20using%20%60buildQueries%60%3A%0A%0A%60%60%60js%0Aconst%20queryAllByDataCy%20%3D%20(...args)%20%3D%3E%0A%20%20queryHelpers.queryAllByAttribute('data-cy'%2C%20...args)%3B%0Aconst%20%5B%0A%20%20queryByDataCy%2C%0A%20%20getAllByDataCy%2C%0A%20%20getByDataCy%2C%0A%20%20findAllByDataCy%2C%0A%20%20findByDataCy%0A%5D%20%3D%20buildQueries(%0A%20%20queryAllByDataCy%2C%0A%20%20(c%2C%20v)%20%3D%3E%20%60Found%20multiple%20elements%20with%20data-cy%3D%22%24%7Bv%7D%22%60%2C%0A%20%20(c%2C%20v)%20%3D%3E%20%60Unable%20to%20find%20element%20with%20data-cy%3D%22%24%7Bv%7D%22%60%0A)%3B%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-26",
       "sectionId": "s4",
-      "title": "2. Skipping auto cleanup",
-      "kind": "text",
-      "body": "• Via CLI: `cross-env RTL_SKIP_AUTO_CLEANUP=true jest`\n• Or add to Jest `setupFiles`: `import '@testing-library/react/dont-cleanup-after-each';`"
+      "title": "2.%20Skipping%20auto%20cleanup",
+      "body": "%E2%80%A2%20Via%20CLI%3A%20%60cross-env%20RTL_SKIP_AUTO_CLEANUP%3Dtrue%20jest%60%0A%E2%80%A2%20Or%20add%20to%20Jest%20%60setupFiles%60%3A%20%60import%20'%40testing-library%2Freact%2Fdont-cleanup-after-each'%3B%60",
+      "encoded": true
     },
     {
       "id": "s4-27",
       "sectionId": "s4",
       "title": "3. Migrating from Enzyme",
-      "kind": "text",
       "body": "• Install RTL & jest-dom.\n• Replace `shallow`/`mount` with `render` + `screen`.\n• Migrate tests incrementally."
     },
     {
       "id": "s4-28",
       "sectionId": "s4",
-      "title": "4. Querying within elements",
-      "kind": "code",
-      "lang": "js",
-      "code": "import { render, within } from '@testing-library/react';\n\nconst { getByText } = render(<MyComponent />);\nconst section = getByText('messages');\nconst hello = within(section).getByText('hello');"
+      "title": "4.%20Querying%20within%20elements",
+      "body": "%60%60%60js%0Aimport%20%7B%20render%2C%20within%20%7D%20from%20'%40testing-library%2Freact'%3B%0A%0Aconst%20%7B%20getByText%20%7D%20%3D%20render(%3CMyComponent%20%2F%3E)%3B%0Aconst%20section%20%3D%20getByText('messages')%3B%0Aconst%20hello%20%3D%20within(section).getByText('hello')%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-29",
       "sectionId": "s4",
-      "title": "5. Integration testing",
-      "kind": "code",
-      "lang": "js",
-      "code": "import { render, cleanup, waitFor } from '@testing-library/react';\nimport userEvent from '@testing-library/user-event';\nimport nock from 'nock';\nimport App from '../App';\n\nconst REPOS = [{ name: 'repo1', description: '...' }];\n\nbeforeAll(() =>\n  nock('https://api.github.com')\n    .persist()\n    .get('/users/alice/repos')\n    .reply(200, REPOS)\n);\nafterEach(cleanup);\n\ntest('user sees public repos', async () => {\n  render(<App />);\n  userEvent.type(screen.getByPlaceholderText('Enter username'), 'alice');\n  userEvent.click(screen.getByRole('button', { name: /submit/i }));\n  await waitFor(() =>\n    REPOS.forEach((r) => expect(screen.getByText(r.name)).toBeInTheDocument())\n  );\n  expect(screen.queryByText('Loading...')).toBeNull();\n});"
+      "title": "5.%20Integration%20testing",
+      "body": "%60%60%60js%0Aimport%20%7B%20render%2C%20cleanup%2C%20waitFor%20%7D%20from%20'%40testing-library%2Freact'%3B%0Aimport%20userEvent%20from%20'%40testing-library%2Fuser-event'%3B%0Aimport%20nock%20from%20'nock'%3B%0Aimport%20App%20from%20'..%2FApp'%3B%0A%0Aconst%20REPOS%20%3D%20%5B%7B%20name%3A%20'repo1'%2C%20description%3A%20'...'%20%7D%5D%3B%0A%0AbeforeAll(()%20%3D%3E%0A%20%20nock('https%3A%2F%2Fapi.github.com')%0A%20%20%20%20.persist()%0A%20%20%20%20.get('%2Fusers%2Falice%2Frepos')%0A%20%20%20%20.reply(200%2C%20REPOS)%0A)%3B%0AafterEach(cleanup)%3B%0A%0Atest('user%20sees%20public%20repos'%2C%20async%20()%20%3D%3E%20%7B%0A%20%20render(%3CApp%20%2F%3E)%3B%0A%20%20userEvent.type(screen.getByPlaceholderText('Enter%20username')%2C%20'alice')%3B%0A%20%20userEvent.click(screen.getByRole('button'%2C%20%7B%20name%3A%20%2Fsubmit%2Fi%20%7D))%3B%0A%20%20await%20waitFor(()%20%3D%3E%0A%20%20%20%20REPOS.forEach((r)%20%3D%3E%20expect(screen.getByText(r.name)).toBeInTheDocument())%0A%20%20)%3B%0A%20%20expect(screen.queryByText('Loading...')).toBeNull()%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s5-30",
       "sectionId": "s5",
       "title": "Conclusion",
-      "kind": "text",
       "body": "This comprehensive cheat sheet covers basic to advanced RTL usage—rendering, querying, mocking, custom queries, and integration tests—to help you write robust, maintainable tests."
     }
   ],

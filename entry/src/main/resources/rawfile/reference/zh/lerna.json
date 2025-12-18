@@ -25,523 +25,164 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "[![NPM version](https://img.shields.io/npm/v/lerna.svg?style=flat)](https://www.npmjs.com/package/lerna)\n[![Downloads](https://img.shields.io/npm/dm/lerna.svg?style=flat)](https://www.npmjs.com/package/lerna)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/lerna/lerna/nest)](https://github.com/lerna/lerna/nest/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/lerna/lerna/nest)"
     },
     {
       "id": "intro-1",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "本备忘单旨在快速理解 [Lerna v6](https://github.com/lerna/lerna) 所涉及的主要概念，显示了它的常用命令使用清单\n<!--rehype:style=padding-top: 12px;-->"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "介绍",
-      "kind": "text",
-      "body": "现代构建系统，用于管理和发布来自同一存储库的多个 JavaScript/TypeScript 包。"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ npx lerna@latest init"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "下面是示例目录结构"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "```shell {15}\n├── README.md\n├── remixapp   # web 应用 (remixapp)\n│   ├── src\n│   └── package.json\n│\n├── packages\n│   ├── footer # 组件(@remixapp/footer)\n│   │   ├── src\n│   │   └── package.json\n│   │\n│   └── header # 组件(@remixapp/header)\n│       ├── src\n│       └── package.json\n│\n├── lerna.json\n└── package.json"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "%0A%23%23%23%20%E5%BC%95%E5%AF%BC%E7%A8%8B%E5%BA%8F%20(Bootstrap)%0A%3C!--rehype%3Awrap-class%3Drow-span-2--%3E%0A%0A%E5%AE%83%E5%9C%A8%20%60package.json%60%20%E4%B8%AD%E4%BE%9D%E8%B5%96%E4%BA%8E%E5%AE%83%E4%BB%AC%EF%BC%8C%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A%0A%0A%60%60%60json%20%7B3%2C4%7D%0A%22dependencies%22%3A%20%7B%0A%20%20%2F%2F%20....%0A%20%20%22%40remixapp%2Fheader%22%3A%20%22*%22%2C%0A%20%20%22%40remixapp%2Ffooter%22%3A%20%22*%22%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "`remixapp` 应用程序导入`页眉`和`页脚`库，如下所示："
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20%7B%20Header%20%7D%20from%20%22header%22%3B%0Aimport%20%7B%20Footer%20%7D%20from%20%22footer%22%3B%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CHeader%20%2F%3E%0A%20%20%20%20%20%20%3Cdiv%3EContent!%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3CFooter%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%3B%0A%7D",
+      "title": "%E4%BB%8B%E7%BB%8D",
+      "body": "%E7%8E%B0%E4%BB%A3%E6%9E%84%E5%BB%BA%E7%B3%BB%E7%BB%9F%EF%BC%8C%E7%94%A8%E4%BA%8E%E7%AE%A1%E7%90%86%E5%92%8C%E5%8F%91%E5%B8%83%E6%9D%A5%E8%87%AA%E5%90%8C%E4%B8%80%E5%AD%98%E5%82%A8%E5%BA%93%E7%9A%84%E5%A4%9A%E4%B8%AA%20JavaScript%2FTypeScript%20%E5%8C%85%E3%80%82%0A%0A%60%60%60bash%0A%24%20npx%20lerna%40latest%20init%0A%60%60%60%0A%0A%E4%B8%8B%E9%9D%A2%E6%98%AF%E7%A4%BA%E4%BE%8B%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%0A%0A%60%60%60shell%20%7B15%7D%0A%E2%94%9C%E2%94%80%E2%94%80%20README.md%0A%E2%94%9C%E2%94%80%E2%94%80%20remixapp%20%20%20%23%20web%20%E5%BA%94%E7%94%A8%20(remixapp)%0A%E2%94%82%C2%A0%C2%A0%20%E2%94%9C%E2%94%80%E2%94%80%20src%0A%E2%94%82%C2%A0%C2%A0%20%E2%94%94%E2%94%80%E2%94%80%20package.json%0A%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%20packages%0A%E2%94%82%C2%A0%C2%A0%20%E2%94%9C%E2%94%80%E2%94%80%20footer%20%23%20%E7%BB%84%E4%BB%B6(%40remixapp%2Ffooter)%0A%E2%94%82%20%20%20%E2%94%82%C2%A0%C2%A0%20%E2%94%9C%E2%94%80%E2%94%80%20src%0A%E2%94%82%20%20%20%E2%94%82%C2%A0%C2%A0%20%E2%94%94%E2%94%80%E2%94%80%20package.json%0A%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%C2%A0%C2%A0%20%E2%94%94%E2%94%80%E2%94%80%20header%20%23%20%E7%BB%84%E4%BB%B6(%40remixapp%2Fheader)%0A%E2%94%82%20%20%20%20%C2%A0%C2%A0%20%E2%94%9C%E2%94%80%E2%94%80%20src%0A%E2%94%82%20%20%20%20%C2%A0%C2%A0%20%E2%94%94%E2%94%80%E2%94%80%20package.json%0A%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%20lerna.json%0A%E2%94%94%E2%94%80%E2%94%80%20package.json%0A%0A%60%60%60%0A%0A%23%23%23%20%E5%BC%95%E5%AF%BC%E7%A8%8B%E5%BA%8F%20(Bootstrap)%0A%3C!--rehype%3Awrap-class%3Drow-span-2--%3E%0A%0A%E5%AE%83%E5%9C%A8%20%60package.json%60%20%E4%B8%AD%E4%BE%9D%E8%B5%96%E4%BA%8E%E5%AE%83%E4%BB%AC%EF%BC%8C%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A%0A%0A%60%60%60json%20%7B3%2C4%7D%0A%22dependencies%22%3A%20%7B%0A%20%20%2F%2F%20....%0A%20%20%22%40remixapp%2Fheader%22%3A%20%22*%22%2C%0A%20%20%22%40remixapp%2Ffooter%22%3A%20%22*%22%0A%7D%0A%60%60%60%0A%0A%60remixapp%60%20%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%AF%BC%E5%85%A5%60%E9%A1%B5%E7%9C%89%60%E5%92%8C%60%E9%A1%B5%E8%84%9A%60%E5%BA%93%EF%BC%8C%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A%0A%0A%60%60%60jsx%0Aimport%20%7B%20Header%20%7D%20from%20%22header%22%3B%0Aimport%20%7B%20Footer%20%7D%20from%20%22footer%22%3B%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CHeader%20%2F%3E%0A%20%20%20%20%20%20%3Cdiv%3EContent!%3C%2Fdiv%3E%0A%20%20%20%20%20%20%3CFooter%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%3B%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "useWorkspaces",
-      "kind": "text",
-      "body": "%60%60%60json%20%7B3%7D%0A%7B%0A%22%24schema%22%3A%20%22node_modules%2Flerna%2Fschemas%2Flerna-schema.json%22%2C%0A%22useWorkspaces%22%3A%20true%2C%0A%22version%22%3A%20%220.0.0%22%0A%7D",
+      "body": "%60%60%60json%20%7B3%7D%0A%7B%0A%22%24schema%22%3A%20%22node_modules%2Flerna%2Fschemas%2Flerna-schema.json%22%2C%0A%22useWorkspaces%22%3A%20true%2C%0A%22version%22%3A%20%220.0.0%22%0A%7D%0A%0A%60%60%60%0A%3C!--rehype%3AclassName%3Dwrap-text%20--%3E%0A%0A%E5%9C%A8%20%60lerna.json%60%20%E4%B8%AD%E9%85%8D%E7%BD%AE%20%60useWorkspaces%60%20%E5%91%8A%E8%AF%89%20%60Lerna%60%20%E5%B0%86%E5%8C%85%E9%93%BE%E6%8E%A5%E8%BF%87%E7%A8%8B%E5%A7%94%E6%89%98%E7%BB%99%E4%BD%A0%E7%9A%84%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%20(%E6%AD%A4%E5%8A%9F%E8%83%BD%E7%94%B1%20npm%E3%80%81yarn%20%E5%92%8C%20pnpm%20%E6%94%AF%E6%8C%81)%E3%80%82%0A%0A%23%23%23%20%E4%BB%BB%E5%8A%A1%E8%BF%90%E8%A1%8C%0A%0A%60%60%60bash%0Anpx%20lerna%20run%20test%20--scope%3Dheader%20%23%20%E5%8D%95%E4%B8%AA%0A%60%60%60%0A%0A%E5%A4%9A%E4%B8%AA%E4%BB%BB%E5%8A%A1%E8%BF%90%E8%A1%8C%0A%0A%60%60%60bash%0Anpx%20lerna%20run%20test%20--scope%3Dheader%2Cfooter%0A%60%60%60%0A%0A%E5%BF%BD%E7%95%A5%20%60header%60%2C%60footer%60%20%E5%85%B6%E5%AE%83%E5%8C%85%E4%B8%AD%E8%BF%90%E8%A1%8C%E4%BB%BB%E5%8A%A1%E8%BF%90%E8%A1%8C%0A%0A%60%60%60bash%0Anpx%20lerna%20run%20build%20--ignore%3Dheader%2Cfooter%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "<!--rehype:className=wrap-text -->\n\n在 `lerna.json` 中配置 `useWorkspaces` 告诉 `Lerna` 将包链接过程委托给你的包管理器 (此功能由 npm、yarn 和 pnpm 支持)。\n\n### 任务运行\n\n```bash\nnpx lerna run test --scope=header # 单个"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "多个任务运行"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "npx lerna run test --scope=header,footer"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "忽略 `header`,`footer` 其它包中运行任务运行"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "npx lerna run build --ignore=header,footer"
     },
     {
       "id": "s2-15",
       "sectionId": "s2",
       "title": "run/exec 运行命令",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 在所有包含它的包中运行 npm run my-script\n$ lerna run <script> -- [..args]\n$ lerna run test\n$ lerna run build\n\n# 观看所有包并在更改时转换，流式前缀输出\n$ lerna run --parallel watch\n\n# 在所有包中运行命令\n$ lerna exec -- <command> [..args]\n$ lerna exec -- rm -rf ./node_modules\n$ lerna exec -- protractor conf.js"
-    },
-    {
-      "id": "s2-16",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`--npm-client <client>` [#](https://github.com/lerna/lerna/tree/main/commands/run#--npm-client-client) | 必须是知道如何运行 npm 生命周期脚本的可执行文件，默认值是 `npm`\n`--stream` [#](https://github.com/lerna/lerna/tree/main/commands/run#--stream) | 立即从子进程流式输出，以原始包名称为前缀\n`--parallel` [#](https://github.com/lerna/lerna/tree/main/commands/run#--parallel) | 类似于 `--stream` 但完全忽略并发和拓扑排序，立即在所有匹配的包中运行给定的命令或脚本，并带有前缀流输出\n`--no-bail` [#](https://github.com/lerna/lerna/tree/main/commands/run#--no-bail) | 默认情况下，如果任何脚本运行返回非零退出代码，`lerna run` 将退出并出现错误。传递 `--no-bail` 以禁用此行为\n`--no-prefix` [#](https://github.com/lerna/lerna/tree/main/commands/run#--no-prefix) | 当输出为流式传输（`--stream` 或 `--parallel`）时禁用包名称前缀。当将结果传送到其他进程（例如编辑器插件）时，此选项很有用\n`--profile` [#](https://github.com/lerna/lerna/tree/main/commands/run#--profile) | 分析脚本执行并生成性能配置文件\n`--profile-location <location>` [#](https://github.com/lerna/lerna/tree/main/commands/run#--profile-location-location) | 您可以为性能配置文件输出提供自定义位置。提供的路径将相对于当前工作目录进行解析。\n`useNx=false` [#](https://github.com/lerna/lerna/tree/main/commands/run#usenxfalse) | 通过将 `useNx` 设置为 `false`，您可以使用 `lerna` 中的遗留任务运行实现 (`p-map` 和 `p-queue`)，而不是使用由 [Nx](https://nx.dev) 提供支持的默认现代任务运行器实现。\n<!--rehype:className=style-list-arrow-->"
+      "body": "```bash\n# 在所有包含它的包中运行 npm run my-script\n$ lerna run <script> -- [..args]\n$ lerna run test\n$ lerna run build\n\n# 观看所有包并在更改时转换，流式前缀输出\n$ lerna run --parallel watch\n\n# 在所有包中运行命令\n$ lerna exec -- <command> [..args]\n$ lerna exec -- rm -rf ./node_modules\n$ lerna exec -- protractor conf.js\n```\n\n:- | :-\n:- | :-\n`--npm-client <client>` [#](https://github.com/lerna/lerna/tree/main/commands/run#--npm-client-client) | 必须是知道如何运行 npm 生命周期脚本的可执行文件，默认值是 `npm`\n`--stream` [#](https://github.com/lerna/lerna/tree/main/commands/run#--stream) | 立即从子进程流式输出，以原始包名称为前缀\n`--parallel` [#](https://github.com/lerna/lerna/tree/main/commands/run#--parallel) | 类似于 `--stream` 但完全忽略并发和拓扑排序，立即在所有匹配的包中运行给定的命令或脚本，并带有前缀流输出\n`--no-bail` [#](https://github.com/lerna/lerna/tree/main/commands/run#--no-bail) | 默认情况下，如果任何脚本运行返回非零退出代码，`lerna run` 将退出并出现错误。传递 `--no-bail` 以禁用此行为\n`--no-prefix` [#](https://github.com/lerna/lerna/tree/main/commands/run#--no-prefix) | 当输出为流式传输（`--stream` 或 `--parallel`）时禁用包名称前缀。当将结果传送到其他进程（例如编辑器插件）时，此选项很有用\n`--profile` [#](https://github.com/lerna/lerna/tree/main/commands/run#--profile) | 分析脚本执行并生成性能配置文件\n`--profile-location <location>` [#](https://github.com/lerna/lerna/tree/main/commands/run#--profile-location-location) | 您可以为性能配置文件输出提供自定义位置。提供的路径将相对于当前工作目录进行解析。\n`useNx=false` [#](https://github.com/lerna/lerna/tree/main/commands/run#usenxfalse) | 通过将 `useNx` 设置为 `false`，您可以使用 `lerna` 中的遗留任务运行实现 (`p-map` 和 `p-queue`)，而不是使用由 [Nx](https://nx.dev) 提供支持的默认现代任务运行器实现。\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "publish 发布包",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 发布自上次发布以来已更改的软件包\n$ lerna publish              \n# 显式发布在当前提交中标记的包\n$ lerna publish from-git     \n# 显式发布注册表中不存在最新版本的软件包\n$ lerna publish from-package\n# 使用下一个语义预发布版本，例如\n$ lerna publish --canary\n# 1.0.0 => 1.0.1-alpha.0+${SHA}\n# 自上次提交以来更改的包\n# 随后的金丝雀发布将产生1.0.1-alpha.1+${SHA}等\n\n$ lerna publish --canary --preid beta\n# 1.0.0 => 1.0.1-beta.0+${SHA}\n\n# 以下是等价的：\n$ lerna publish --canary minor\n$ lerna publish --canary preminor\n# 1.0.0 => 1.1.0-alpha.0+${SHA}"
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`--canary` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--canary) | 使用此标志运行时，以更精细的方式（每次提交）发布包\n`--contents <dir>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--contents-dir) | 要发布的子目录。 必须适用于所有包，并且必须包含 `package.json` 文件\n`--dist-tag <tag>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--dist-tag-tag) | 使用此标志运行时，将使用给定的 `npm dist-tag`（默认为 `latest`）发布到 `npm`\n`--git-head <sha>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--git-head-sha) | 打包 `tarball` 时将显式 `SHA` 设置为清单上的 `gitHead`，仅允许使用 `from-package` 位置\n`--graph-type <all\\|dependencies>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--graph-type-alldependencies) | 设置在构建包图时使用哪种依赖项。默认值是依赖项，即仅包含包的 `package.json` 的依赖项部分中列出的包\n`--ignore-scripts` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--ignore-scripts) | 传递时，此标志将在 `lerna` 发布期间禁用运行[生命周期脚本](https://github.com/lerna/lerna/tree/main/commands/publish#lifecycle-scripts)\n`--ignore-prepublish` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--ignore-prepublish) | 传递时，此标志将禁用在 `lerna` 发布期间运行[已弃用](https://docs.npmjs.com/cli/v8/using-npm/scripts#prepare-and-prepublish)的[预发布脚本](https://github.com/lerna/lerna/tree/main/commands/publish#lifecycle-scripts)\n`--legacy-auth` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--legacy-auth) | 发布需要身份验证的包时，您正在使用仅使用旧版 `Base64` `用户名:密码` 的内部托管 NPM 注册表。这与 NPM 发布 `_auth` 标志相同\n`--no-git-reset` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--no-git-reset) | 默认情况下，`lerna publish` 确保对工作树的任何更改都已重置\n`--no-granular-pathspec` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--no-granular-pathspec) | 默认情况下，`lerna publish` 将尝试（如果启用）`git checkout` 仅在发布过程中临时修改的叶包清单\n`--verify-access` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--verify-access) | 从历史上看，`lerna` 试图通过使用给定令牌执行一些抢占式 `npm API` 请求来快速解决授权/身份验证问题\n`--otp` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--otp) | 发布需要双重身份验证的包时，您可以使用 `--otp` 指定一次性密码\n`--preid` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--preid) | 与同名的 `lerna` 版本选项不同，该选项只适用于 `--canary` 版本计算\n`--pre-dist-tag <tag>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--pre-dist-tag-tag) | 与 `--dist-tag` 的工作方式相同，但仅适用于使用预发布版本发布的软件包\n`--registry <url>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--registry-url) | 使用此标志运行时，转发的 `npm` 命令将为您的包使用指定的注册表\n`--tag-version-prefix` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--tag-version-prefix) | 此选项允许提供自定义前缀而不是默认前缀：`v`\n`--temp-tag` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--temp-tag) | 传递时，此标志将更改默认发布过程，首先将所有更改的包发布到临时 `dist-tag(lerna-temp)`，然后将新版本移动到 `--dist-tag` 配置的 `dist-tag` (默认`latest`)\n`--yes` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--yes) | 使用此标志运行时，`lerna publish` 将跳过所有确认提示\n<!--rehype:className=style-list-arrow-->"
+      "body": "```bash\n# 发布自上次发布以来已更改的软件包\n$ lerna publish              \n# 显式发布在当前提交中标记的包\n$ lerna publish from-git     \n# 显式发布注册表中不存在最新版本的软件包\n$ lerna publish from-package\n# 使用下一个语义预发布版本，例如\n$ lerna publish --canary\n# 1.0.0 => 1.0.1-alpha.0+${SHA}\n# 自上次提交以来更改的包\n# 随后的金丝雀发布将产生1.0.1-alpha.1+${SHA}等\n\n$ lerna publish --canary --preid beta\n# 1.0.0 => 1.0.1-beta.0+${SHA}\n\n# 以下是等价的：\n$ lerna publish --canary minor\n$ lerna publish --canary preminor\n# 1.0.0 => 1.1.0-alpha.0+${SHA}\n```\n\n:- | :-\n:- | :-\n`--canary` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--canary) | 使用此标志运行时，以更精细的方式（每次提交）发布包\n`--contents <dir>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--contents-dir) | 要发布的子目录。 必须适用于所有包，并且必须包含 `package.json` 文件\n`--dist-tag <tag>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--dist-tag-tag) | 使用此标志运行时，将使用给定的 `npm dist-tag`（默认为 `latest`）发布到 `npm`\n`--git-head <sha>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--git-head-sha) | 打包 `tarball` 时将显式 `SHA` 设置为清单上的 `gitHead`，仅允许使用 `from-package` 位置\n`--graph-type <all\\|dependencies>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--graph-type-alldependencies) | 设置在构建包图时使用哪种依赖项。默认值是依赖项，即仅包含包的 `package.json` 的依赖项部分中列出的包\n`--ignore-scripts` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--ignore-scripts) | 传递时，此标志将在 `lerna` 发布期间禁用运行[生命周期脚本](https://github.com/lerna/lerna/tree/main/commands/publish#lifecycle-scripts)\n`--ignore-prepublish` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--ignore-prepublish) | 传递时，此标志将禁用在 `lerna` 发布期间运行[已弃用](https://docs.npmjs.com/cli/v8/using-npm/scripts#prepare-and-prepublish)的[预发布脚本](https://github.com/lerna/lerna/tree/main/commands/publish#lifecycle-scripts)\n`--legacy-auth` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--legacy-auth) | 发布需要身份验证的包时，您正在使用仅使用旧版 `Base64` `用户名:密码` 的内部托管 NPM 注册表。这与 NPM 发布 `_auth` 标志相同\n`--no-git-reset` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--no-git-reset) | 默认情况下，`lerna publish` 确保对工作树的任何更改都已重置\n`--no-granular-pathspec` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--no-granular-pathspec) | 默认情况下，`lerna publish` 将尝试（如果启用）`git checkout` 仅在发布过程中临时修改的叶包清单\n`--verify-access` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--verify-access) | 从历史上看，`lerna` 试图通过使用给定令牌执行一些抢占式 `npm API` 请求来快速解决授权/身份验证问题\n`--otp` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--otp) | 发布需要双重身份验证的包时，您可以使用 `--otp` 指定一次性密码\n`--preid` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--preid) | 与同名的 `lerna` 版本选项不同，该选项只适用于 `--canary` 版本计算\n`--pre-dist-tag <tag>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--pre-dist-tag-tag) | 与 `--dist-tag` 的工作方式相同，但仅适用于使用预发布版本发布的软件包\n`--registry <url>` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--registry-url) | 使用此标志运行时，转发的 `npm` 命令将为您的包使用指定的注册表\n`--tag-version-prefix` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--tag-version-prefix) | 此选项允许提供自定义前缀而不是默认前缀：`v`\n`--temp-tag` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--temp-tag) | 传递时，此标志将更改默认发布过程，首先将所有更改的包发布到临时 `dist-tag(lerna-temp)`，然后将新版本移动到 `--dist-tag` 配置的 `dist-tag` (默认`latest`)\n`--yes` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--yes) | 使用此标志运行时，`lerna publish` 将跳过所有确认提示\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s2-19",
       "sectionId": "s2",
       "title": "不推荐使用的选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`--no-verify-access` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--no-verify-access) | 旧的抢先访问验证现在默认关闭，因此不需要 `--no-verify-access`\n`--skip-npm` [#](https://github.com/lerna/lerna/tree/main/commands/publish#--skip-npm) | 直接调用 [lerna version](#version-修改版本号)\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s2-20",
       "sectionId": "s2",
       "title": "%E6%AF%8F%E4%B8%AA%E5%8C%85%E4%B8%AD%E7%9A%84%E9%85%8D%E7%BD%AE",
-      "kind": "code",
-      "lang": "json",
-      "code": "%22publishConfig%22%3A%20%7B%0A%20%20%22access%22%3A%20%22public%22%2C%0A%20%20%22registry%22%3A%20%22http%3A%2F%2Fmy-registry.com%22%2C%0A%20%20%22tag%22%3A%20%22flippin-sweet%22%2C%0A%20%20%22directory%22%3A%20%22dist%22%0A%7D",
+      "body": "%60%60%60json%0A%22publishConfig%22%3A%20%7B%0A%20%20%22access%22%3A%20%22public%22%2C%0A%20%20%22registry%22%3A%20%22http%3A%2F%2Fmy-registry.com%22%2C%0A%20%20%22tag%22%3A%20%22flippin-sweet%22%2C%0A%20%20%22directory%22%3A%20%22dist%22%0A%7D%0A%60%60%60%0A%0A%3A-%20%7C%20%3A-%0A%3A-%20%7C%20%3A-%0A%60access%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fpublish%23publishconfigaccess)%20%7C%20%E8%A6%81%E5%8F%91%E5%B8%83%E5%85%B7%E6%9C%89%E8%8C%83%E5%9B%B4%E7%9A%84%E5%8C%85(%E4%BE%8B%E5%A6%82%EF%BC%8C%60%40mycompany%2Frocks%60)%0A%60registry%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fpublish%23publishconfigregistry)%20%7C%20%E9%80%9A%E8%BF%87%E8%AE%BE%E7%BD%AE%E6%B3%A8%E5%86%8C%E8%A1%A8%E6%9D%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%8F%E4%B8%AA%E5%8C%85%E7%9A%84%E6%B3%A8%E5%86%8C%E8%A1%A8%0A%60tag%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fpublish%23publishconfigtag)%20%7C%20%E6%82%A8%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E8%AE%BE%E7%BD%AE%E6%A0%87%E7%AD%BE%E6%9D%A5%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%8F%E4%B8%AA%E5%8C%85%E7%9A%84%20%60dist-tag%60%0A%60directory%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fpublish%23publishconfigtag)%20%7C%20%E8%BF%99%E4%B8%AA%20_%E9%9D%9E%E6%A0%87%E5%87%86_%20%E5%AD%97%E6%AE%B5%E5%85%81%E8%AE%B8%E6%82%A8%E5%83%8F%20%60--contents%60%20%E4%B8%80%E6%A0%B7%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%91%E5%B8%83%E7%9A%84%E5%AD%90%E7%9B%AE%E5%BD%95%EF%BC%8C%E4%BD%86%E5%9F%BA%E4%BA%8E%E6%AF%8F%E4%B8%AA%E5%8C%85%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow--%3E",
       "encoded": true
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`access` [#](https://github.com/lerna/lerna/tree/main/commands/publish#publishconfigaccess) | 要发布具有范围的包(例如，`@mycompany/rocks`)\n`registry` [#](https://github.com/lerna/lerna/tree/main/commands/publish#publishconfigregistry) | 通过设置注册表来自定义每个包的注册表\n`tag` [#](https://github.com/lerna/lerna/tree/main/commands/publish#publishconfigtag) | 您可以通过设置标签来自定义每个包的 `dist-tag`\n`directory` [#](https://github.com/lerna/lerna/tree/main/commands/publish#publishconfigtag) | 这个 _非标准_ 字段允许您像 `--contents` 一样自定义发布的子目录，但基于每个包\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s2-22",
       "sectionId": "s2",
       "title": "version%20%E4%BF%AE%E6%94%B9%E7%89%88%E6%9C%AC%E5%8F%B7",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20lerna%20version%201.0.1%20%23%20%E6%98%8E%E7%A1%AE%E7%9A%84%0A%24%20lerna%20version%20patch%20%23%20semver%20%E5%85%B3%E9%94%AE%E5%AD%97%0A%24%20lerna%20version%20%20%20%20%20%20%20%23%20%E4%BB%8E%E6%8F%90%E7%A4%BA%E4%B8%AD%E9%80%89%E6%8B%A9%0A%0A%24%20lerna%20version%20%5Bmajor%20%7C%20minor%20%7C%20...%5D%0A%23%20%E4%BD%BF%E7%94%A8%E4%B8%8B%E4%B8%80%E4%B8%AA%E8%AF%AD%E4%B9%89%E7%89%88%E6%9C%AC%E5%80%BC%0A%23%20%E8%BF%99%E4%BC%9A%E8%B7%B3%E8%BF%87%E2%80%9C%E4%B8%BA...%E9%80%89%E6%8B%A9%E6%96%B0%E7%89%88%E6%9C%AC%E2%80%9D%E6%8F%90%E7%A4%BA%0A%23%20%E5%BC%BA%E5%88%B6%E6%89%80%E6%9C%89%E5%8C%85%E7%89%88%E6%9C%AC%E5%8C%96%0A%24%20lerna%20version%20--force-publish%0A%24%20lerna%20version%20-m%20%22chore(doc)%3A%20publish%20%25s%22%0A%23%20%E6%8F%90%E4%BA%A4%E6%B6%88%E6%81%AF%20%3D%20%22chore(doc)%3A%20publish%20v1.0.0%22%0A%24%20lerna%20version%20-m%20%22chore(doc)%3A%20publish%20%25v%22%0A%23%20%E6%8F%90%E4%BA%A4%E6%B6%88%E6%81%AF%20%3D%20%22chore(doc)%3A%20publish%201.0.0%22",
+      "body": "%60%60%60bash%0A%24%20lerna%20version%201.0.1%20%23%20%E6%98%8E%E7%A1%AE%E7%9A%84%0A%24%20lerna%20version%20patch%20%23%20semver%20%E5%85%B3%E9%94%AE%E5%AD%97%0A%24%20lerna%20version%20%20%20%20%20%20%20%23%20%E4%BB%8E%E6%8F%90%E7%A4%BA%E4%B8%AD%E9%80%89%E6%8B%A9%0A%0A%24%20lerna%20version%20%5Bmajor%20%7C%20minor%20%7C%20...%5D%0A%23%20%E4%BD%BF%E7%94%A8%E4%B8%8B%E4%B8%80%E4%B8%AA%E8%AF%AD%E4%B9%89%E7%89%88%E6%9C%AC%E5%80%BC%0A%23%20%E8%BF%99%E4%BC%9A%E8%B7%B3%E8%BF%87%E2%80%9C%E4%B8%BA...%E9%80%89%E6%8B%A9%E6%96%B0%E7%89%88%E6%9C%AC%E2%80%9D%E6%8F%90%E7%A4%BA%0A%23%20%E5%BC%BA%E5%88%B6%E6%89%80%E6%9C%89%E5%8C%85%E7%89%88%E6%9C%AC%E5%8C%96%0A%24%20lerna%20version%20--force-publish%0A%24%20lerna%20version%20-m%20%22chore(doc)%3A%20publish%20%25s%22%0A%23%20%E6%8F%90%E4%BA%A4%E6%B6%88%E6%81%AF%20%3D%20%22chore(doc)%3A%20publish%20v1.0.0%22%0A%24%20lerna%20version%20-m%20%22chore(doc)%3A%20publish%20%25v%22%0A%23%20%E6%8F%90%E4%BA%A4%E6%B6%88%E6%81%AF%20%3D%20%22chore(doc)%3A%20publish%201.0.0%22%0A%60%60%60%0A%0A%E2%80%A2%20%60major%60%20%E9%87%8D%E5%A4%A7%E7%9A%84%0A%E2%80%A2%20%60minor%60%20%E6%AC%A1%E8%A6%81%E7%9A%84%0A%E2%80%A2%20%60patch%60%20%E4%BF%AE%E8%A1%A5%0A%E2%80%A2%20%60premajor%60%20%E4%B8%BB%E8%A6%81%E7%9A%84%0A%E2%80%A2%20%60preminor%60%20%E5%88%9D%E7%BA%A7%0A%E2%80%A2%20%60prepatch%60%20%E9%A2%84%E8%A1%A5%E4%B8%81%0A%E2%80%A2%20%60prerelease%60%20%E9%A2%84%E5%8F%91%E8%A1%8C%0A%0A%3A-%20%7C%20%3A-%0A%3A-%20%7C%20%3A-%0A%60--allow-branch%20%3Cglob%3E%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--allow-branch-glob)%20%7C%20%E4%B8%8E%E5%90%AF%E7%94%A8%20%60lerna%20version%60%20%E7%9A%84%20%60git%60%20%E5%88%86%E6%94%AF%E5%8C%B9%E9%85%8D%E7%9A%84%20%60glob%60%20%E7%99%BD%E5%90%8D%E5%8D%95%0A%60--amend%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--amend)%20%7C%20%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%A0%87%E5%BF%97%E8%BF%90%E8%A1%8C%E6%97%B6%EF%BC%8C%60lerna%20version%60%20%E5%B0%86%E5%9C%A8%E5%BD%93%E5%89%8D%E6%8F%90%E4%BA%A4%E4%B8%8A%E6%89%A7%E8%A1%8C%E6%89%80%E6%9C%89%E6%9B%B4%E6%94%B9%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E6%B7%BB%E5%8A%A0%E6%96%B0%E7%9A%84%0A%60--changelog-preset%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--changelog-preset)%20%7C%20%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%9B%B4%E6%94%B9%E6%97%A5%E5%BF%97%E9%A2%84%E8%AE%BE%E8%AE%BE%E7%BD%AE%E4%B8%BA%20%5Bangular%5D(https%3A%2F%2Fgithub.com%2Fconventional-changelog%2Fconventional-changelog%2Ftree%2Fmaster%2Fpackages%2Fconventional-changelog-angular%23angular-convention)%0A%60--conventional-commits%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--conventional-commits)%20%7C%20%E4%BD%BF%E7%94%A8%E5%B8%B8%E8%A7%84%E6%8F%90%E4%BA%A4%E8%A7%84%E8%8C%83%E6%9D%A5%E7%A1%AE%E5%AE%9A%5B%E7%89%88%E6%9C%AC%20bump%5D(https%3A%2F%2Fgithub.com%2Fconventional-changelog%2Fconventional-changelog%2Ftree%2Fmaster%2Fpackages%2Fconventional-recommended-bump)%20%E5%B9%B6%E7%94%9F%E6%88%90%20CHANGELOG.md%20%E6%96%87%E4%BB%B6%0A%60--conventional-graduate%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--conventional-graduate)%20%7C%20%E5%B0%86%E4%BD%BF%E7%94%A8%20%60*%60%20%E5%AF%B9%E6%8C%87%E5%AE%9A%E7%9A%84%E5%8C%85(%E9%80%97%E5%8F%B7%E5%88%86%E9%9A%94)%E6%88%96%E6%89%80%E6%9C%89%E5%8C%85%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BA%A7%0A%60--conventional-prerelease%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--conventional-prerelease)%20%7C%20%E9%A2%84%E5%8F%91%E5%B8%83%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E6%8C%87%E5%AE%9A%E7%9A%84%E5%8C%85%0A%60--create-release%20%3Ctype%3E%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--create-release-type)%20%7C%20%E6%A0%B9%E6%8D%AE%E6%9B%B4%E6%94%B9%E7%9A%84%E5%8C%85%E5%88%9B%E5%BB%BA%E6%AD%A3%E5%BC%8F%E7%9A%84%20%60GitHub%60%20%E6%88%96%20%60GitLab%60%20%E7%89%88%E6%9C%AC%0A%60--exact%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--exact)%20%7C%20%E5%9C%A8%E6%9B%B4%E6%96%B0%E7%9A%84%E5%8C%85%E4%B8%AD%E7%B2%BE%E7%A1%AE%E6%8C%87%E5%AE%9A%E6%9B%B4%E6%96%B0%E7%9A%84%E4%BE%9D%E8%B5%96%E9%A1%B9%EF%BC%88%E6%B2%A1%E6%9C%89%E6%A0%87%E7%82%B9%E7%AC%A6%E5%8F%B7%EF%BC%89%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E4%B8%8E%20%5Bsemver%5D(.%2Fsemver.md)%20%E5%85%BC%E5%AE%B9%EF%BC%88%E4%BD%BF%E7%94%A8%60%5E%60%EF%BC%89%0A%60--force-publish%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--force-publish)%20%7C%20%E5%BC%BA%E5%88%B6%E5%8F%91%E5%B8%83%E6%8C%87%E5%AE%9A%E7%9A%84%E5%8C%85%0A%60--git-remote%20%3Cname%3E%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--git-remote-name)%20%7C%20%E6%8A%8A%20%60git%60%20%E6%9B%B4%E6%94%B9%E6%8E%A8%E9%80%81%E5%88%B0%E6%8C%87%E5%AE%9A%E7%9A%84%E8%BF%9C%E7%A8%8B%E4%BD%8D%E7%BD%AE%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%60origin%60%0A%60--ignore-changes%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--ignore-changes)%20%7C%20%E6%A3%80%E6%B5%8B%E6%9B%B4%E6%94%B9%E7%9A%84%E5%8C%85%E6%97%B6%E5%BF%BD%E7%95%A5%E4%B8%8E%20%60glob%60%20%E5%8C%B9%E9%85%8D%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E6%9B%B4%E6%94%B9%0A%60--ignore-scripts%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--ignore-scripts)%20%7C%20%E7%A6%81%E7%94%A8%E5%9C%A8%20%60lerna%20version%60%20%E6%9C%9F%E9%97%B4%E8%BF%90%E8%A1%8C%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E8%84%9A%E6%9C%AC%0A%60--include-merged-tags%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--include-merged-tags)%20%7C%20%E5%9C%A8%E6%A3%80%E6%B5%8B%E5%88%B0%E6%9B%B4%E6%94%B9%E7%9A%84%E5%8C%85%E6%97%B6%E5%8C%85%E6%8B%AC%E6%9D%A5%E8%87%AA%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF%E7%9A%84%E6%A0%87%E7%AD%BE%0A%60--message%20%3Cmsg%3E%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--message-msg)%20%7C%20%E6%AD%A4%E9%80%89%E9%A1%B9%E5%88%AB%E5%90%8D%E4%B8%BA%20%60-m%60%20%E4%BB%A5%E4%B8%8E%20%60git%20commit%60%20%E8%BF%9B%E8%A1%8C%E5%A5%87%E5%81%B6%E6%A0%A1%E9%AA%8C%0A%60--no-changelog%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--no-changelog)%20%7C%20%E4%BD%BF%E7%94%A8%E5%B8%B8%E8%A7%84%E6%8F%90%E4%BA%A4%E6%97%B6%EF%BC%8C%E4%B8%8D%E8%A6%81%E7%94%9F%E6%88%90%E4%BB%BB%E4%BD%95%20CHANGELOG.md%20%E6%96%87%E4%BB%B6%0A%60--no-commit-hooks%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--no-commit-hooks)%20%7C%20%E5%85%81%E8%AE%B8%20%60git%20commit%20hooks%60%20%E5%9C%A8%E6%8F%90%E4%BA%A4%E7%89%88%E6%9C%AC%E6%9B%B4%E6%94%B9%E6%97%B6%E8%BF%90%E8%A1%8C%E3%80%82%E9%80%9A%E8%BF%87%20%60--no-commit-hooks%60%20%E7%A6%81%E7%94%A8%E6%AD%A4%E8%A1%8C%E4%B8%BA%0A%60--no-git-tag-version%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--no-git-tag-version)%20%7C%20%E5%B0%86%E6%8F%90%E4%BA%A4%E5%AF%B9%20%60package.json%60%20%E6%96%87%E4%BB%B6%E7%9A%84%E6%9B%B4%E6%94%B9%E5%B9%B6%E6%A0%87%E8%AE%B0%E5%8F%91%E5%B8%83%E3%80%82%E9%80%9A%E8%BF%87%20%60--no-git-tag-version%60%20%E7%A6%81%E7%94%A8%E8%AF%A5%E8%A1%8C%E4%B8%BA%0A%60--no-granular-pathspec%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--no-granular-pathspec)%20%7C%20%E4%BB%85%E6%B7%BB%E5%8A%A0%E5%9C%A8%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E8%BF%87%E7%A8%8B%E4%B8%AD%E6%9B%B4%E6%94%B9%E7%9A%84%E5%8F%B6%E5%8C%85%E6%B8%85%E5%8D%95(%E5%8F%AF%E8%83%BD%E8%BF%98%E6%9C%89%E5%8F%98%E6%9B%B4%E6%97%A5%E5%BF%97)%E3%80%82%E8%BF%99%E4%BA%A7%E7%94%9F%E4%BA%86%20%60git%20add%20--packages%2F*%2Fpackage.json%60%20%E7%9A%84%E7%AD%89%E4%BB%B7%E7%89%A9%EF%BC%8C%E4%BD%86%E9%92%88%E5%AF%B9%E6%9B%B4%E6%94%B9%E7%9A%84%E5%86%85%E5%AE%B9%E9%87%8F%E8%BA%AB%E5%AE%9A%E5%88%B6%0A%60--no-private%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--no-private)%20%7C%20%E5%9C%A8%E9%80%89%E6%8B%A9%E7%89%88%E6%9C%AC%E3%80%81%E6%8F%90%E4%BA%A4%E5%92%8C%E6%A0%87%E8%AE%B0%E7%89%88%E6%9C%AC%E6%97%B6%E5%8C%85%E5%90%AB%E7%A7%81%E6%9C%89%E5%8C%85%E3%80%82%E9%80%9A%E8%BF%87%20%60--no-private%60%20%E7%A6%81%E7%94%A8%E6%AD%A4%E8%A1%8C%E4%B8%BA%0A%60--no-push%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--no-push)%20%7C%20%E5%B0%86%E5%B7%B2%E6%8F%90%E4%BA%A4%E5%92%8C%E6%A0%87%E8%AE%B0%E7%9A%84%E6%9B%B4%E6%94%B9%E6%8E%A8%E9%80%81%E5%88%B0%E9%85%8D%E7%BD%AE%E7%9A%84%20%60git%20remote%60%E3%80%82%E9%80%9A%E8%BF%87%20%60--no-push%60%20%E7%A6%81%E7%94%A8%E6%AD%A4%E8%A1%8C%E4%B8%BA%0A%60--preid%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--preid)%20%7C%20%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%A0%87%E5%BF%97%E8%BF%90%E8%A1%8C%E6%97%B6%EF%BC%8Clerna%20%E7%89%88%E6%9C%AC%E5%B0%86%E4%BD%BF%E7%94%A8%E6%8C%87%E5%AE%9A%E7%9A%84%5B%E9%A2%84%E5%8F%91%E5%B8%83%E6%A0%87%E8%AF%86%E7%AC%A6%5D(https%3A%2F%2Fsemver.org%2F%23spec-item-9)%E5%A2%9E%E5%8A%A0%20%60premajor%60%E3%80%81%60preminor%60%E3%80%81%60prepatch%60%20%E6%88%96%20%60prerelease%60%20%5Bsemver%5D(.%2Fsemver.md)%20bumps%0A%60--sign-git-commit%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--sign-git-commit)%20%7C%20%E6%AD%A4%E9%80%89%E9%A1%B9%E7%B1%BB%E4%BC%BC%E4%BA%8E%E5%90%8C%E5%90%8D%E7%9A%84%20npm%20%E7%89%88%E6%9C%AC%E9%80%89%E9%A1%B9%0A%60--sign-git-tag%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--sign-git-tag)%20%7C%20%E6%AD%A4%E9%80%89%E9%A1%B9%E7%B1%BB%E4%BC%BC%E4%BA%8E%E5%90%8C%E5%90%8D%E7%9A%84%20%60npm%60%20%E7%89%88%E6%9C%AC%E9%80%89%E9%A1%B9%0A%60--force-git-tag%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--force-git-tag)%20%7C%20%E6%AD%A4%E9%80%89%E9%A1%B9%E6%9B%BF%E6%8D%A2%E4%BB%BB%E4%BD%95%E7%8E%B0%E6%9C%89%E6%A0%87%E8%AE%B0%E8%80%8C%E4%B8%8D%E6%98%AF%E5%A4%B1%E8%B4%A5%0A%60--tag-version-prefix%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--tag-version-prefix)%20%7C%20%E6%AD%A4%E9%80%89%E9%A1%B9%E5%85%81%E8%AE%B8%E6%8F%90%E4%BE%9B%E8%87%AA%E5%AE%9A%E4%B9%89%E5%89%8D%E7%BC%80%E8%80%8C%E4%B8%8D%E6%98%AF%E9%BB%98%E8%AE%A4%E5%89%8D%E7%BC%80%EF%BC%9A%60v%60%0A%60--yes%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fversion%23--yes)%20%7C%20%E4%BD%BF%E7%94%A8%E6%AD%A4%E6%A0%87%E5%BF%97%E8%BF%90%E8%A1%8C%E6%97%B6%EF%BC%8C%60lerna%60%20%E7%89%88%E6%9C%AC%E5%B0%86%E8%B7%B3%E8%BF%87%E6%89%80%E6%9C%89%E7%A1%AE%E8%AE%A4%E6%8F%90%E7%A4%BA%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow--%3E",
       "encoded": true
-    },
-    {
-      "id": "s2-23",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• `major` 重大的\n• `minor` 次要的\n• `patch` 修补\n• `premajor` 主要的\n• `preminor` 初级\n• `prepatch` 预补丁\n• `prerelease` 预发行"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`--allow-branch <glob>` [#](https://github.com/lerna/lerna/tree/main/commands/version#--allow-branch-glob) | 与启用 `lerna version` 的 `git` 分支匹配的 `glob` 白名单\n`--amend` [#](https://github.com/lerna/lerna/tree/main/commands/version#--amend) | 使用此标志运行时，`lerna version` 将在当前提交上执行所有更改，而不是添加新的\n`--changelog-preset` [#](https://github.com/lerna/lerna/tree/main/commands/version#--changelog-preset) | 默认情况下，更改日志预设设置为 [angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular#angular-convention)\n`--conventional-commits` [#](https://github.com/lerna/lerna/tree/main/commands/version#--conventional-commits) | 使用常规提交规范来确定[版本 bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump) 并生成 CHANGELOG.md 文件\n`--conventional-graduate` [#](https://github.com/lerna/lerna/tree/main/commands/version#--conventional-graduate) | 将使用 `*` 对指定的包(逗号分隔)或所有包进行分级\n`--conventional-prerelease` [#](https://github.com/lerna/lerna/tree/main/commands/version#--conventional-prerelease) | 预发布版本发布指定的包\n`--create-release <type>` [#](https://github.com/lerna/lerna/tree/main/commands/version#--create-release-type) | 根据更改的包创建正式的 `GitHub` 或 `GitLab` 版本\n`--exact` [#](https://github.com/lerna/lerna/tree/main/commands/version#--exact) | 在更新的包中精确指定更新的依赖项（没有标点符号），而不是与 [semver](./semver.md) 兼容（使用`^`）\n`--force-publish` [#](https://github.com/lerna/lerna/tree/main/commands/version#--force-publish) | 强制发布指定的包\n`--git-remote <name>` [#](https://github.com/lerna/lerna/tree/main/commands/version#--git-remote-name) | 把 `git` 更改推送到指定的远程位置，而不是`origin`\n`--ignore-changes` [#](https://github.com/lerna/lerna/tree/main/commands/version#--ignore-changes) | 检测更改的包时忽略与 `glob` 匹配的文件中的更改\n`--ignore-scripts` [#](https://github.com/lerna/lerna/tree/main/commands/version#--ignore-scripts) | 禁用在 `lerna version` 期间运行的生命周期脚本\n`--include-merged-tags` [#](https://github.com/lerna/lerna/tree/main/commands/version#--include-merged-tags) | 在检测到更改的包时包括来自合并分支的标签\n`--message <msg>` [#](https://github.com/lerna/lerna/tree/main/commands/version#--message-msg) | 此选项别名为 `-m` 以与 `git commit` 进行奇偶校验\n`--no-changelog` [#](https://github.com/lerna/lerna/tree/main/commands/version#--no-changelog) | 使用常规提交时，不要生成任何 CHANGELOG.md 文件\n`--no-commit-hooks` [#](https://github.com/lerna/lerna/tree/main/commands/version#--no-commit-hooks) | 允许 `git commit hooks` 在提交版本更改时运行。通过 `--no-commit-hooks` 禁用此行为\n`--no-git-tag-version` [#](https://github.com/lerna/lerna/tree/main/commands/version#--no-git-tag-version) | 将提交对 `package.json` 文件的更改并标记发布。通过 `--no-git-tag-version` 禁用该行为\n`--no-granular-pathspec` [#](https://github.com/lerna/lerna/tree/main/commands/version#--no-granular-pathspec) | 仅添加在版本控制过程中更改的叶包清单(可能还有变更日志)。这产生了 `git add --packages/*/package.json` 的等价物，但针对更改的内容量身定制\n`--no-private` [#](https://github.com/lerna/lerna/tree/main/commands/version#--no-private) | 在选择版本、提交和标记版本时包含私有包。通过 `--no-private` 禁用此行为\n`--no-push` [#](https://github.com/lerna/lerna/tree/main/commands/version#--no-push) | 将已提交和标记的更改推送到配置的 `git remote`。通过 `--no-push` 禁用此行为\n`--preid` [#](https://github.com/lerna/lerna/tree/main/commands/version#--preid) | 使用此标志运行时，lerna 版本将使用指定的[预发布标识符](https://semver.org/#spec-item-9)增加 `premajor`、`preminor`、`prepatch` 或 `prerelease` [semver](./semver.md) bumps\n`--sign-git-commit` [#](https://github.com/lerna/lerna/tree/main/commands/version#--sign-git-commit) | 此选项类似于同名的 npm 版本选项\n`--sign-git-tag` [#](https://github.com/lerna/lerna/tree/main/commands/version#--sign-git-tag) | 此选项类似于同名的 `npm` 版本选项\n`--force-git-tag` [#](https://github.com/lerna/lerna/tree/main/commands/version#--force-git-tag) | 此选项替换任何现有标记而不是失败\n`--tag-version-prefix` [#](https://github.com/lerna/lerna/tree/main/commands/version#--tag-version-prefix) | 此选项允许提供自定义前缀而不是默认前缀：`v`\n`--yes` [#](https://github.com/lerna/lerna/tree/main/commands/version#--yes) | 使用此标志运行时，`lerna` 版本将跳过所有确认提示\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "不推荐使用的选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`--cd-version` [#](https://github.com/lerna/lerna/tree/main/commands/version#--cd-version) | 将 `semver` 关键字传递给 [bump](https://github.com/lerna/lerna/tree/main/commands/version#semver-bump) 位置\n`--repo-version` [#](https://github.com/lerna/lerna/tree/main/commands/version#--repo-version) | 将明确的版本号传递给 [bump](https://github.com/lerna/lerna/tree/main/commands/version#semver-bump) 位置\n`--skip-git` [#](https://github.com/lerna/lerna/tree/main/commands/version#--skip-git) | 请改用 `--no-git-tag-version` 和 `--no-push`\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s2-26",
       "sectionId": "s2",
       "title": "bootstrap",
-      "kind": "text",
-      "body": "将本地包`链接`在一起，并`安装`其余的包依赖项"
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ lerna bootstrap -- --production \\\n                     --no-optional\n$ lerna bootstrap --hoist"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`--hoist [glob]` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--strict) | 在 `repo` 根目录安装与 `glob` 匹配的外部依赖项，以便它们可用于所有包\n`--strict` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--nohoist-glob) | 与提升 _(hoist)_ 一起使用时，会在发出版本警告后抛出错误并停止引导\n`--nohoist [glob]` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--nohoist-glob) | 不要在 `repo` 根目录安装与 `glob` 匹配的外部依赖项。这可用于选择不提升某些依赖项\n`--ignore` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--ignore) | 当与 `bootstrap` 命令一起使用时，还可以在 `lerna` 中设置 `--ignore` 标志\n<!--rehype:className=style-list-arrow-->"
+      "body": "将本地包`链接`在一起，并`安装`其余的包依赖项\n\n```bash\n$ lerna bootstrap -- --production \\\n                     --no-optional\n$ lerna bootstrap --hoist\n```\n\n:- | :-\n:- | :-\n`--hoist [glob]` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--strict) | 在 `repo` 根目录安装与 `glob` 匹配的外部依赖项，以便它们可用于所有包\n`--strict` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--nohoist-glob) | 与提升 _(hoist)_ 一起使用时，会在发出版本警告后抛出错误并停止引导\n`--nohoist [glob]` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--nohoist-glob) | 不要在 `repo` 根目录安装与 `glob` 匹配的外部依赖项。这可用于选择不提升某些依赖项\n`--ignore` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--ignore) | 当与 `bootstrap` 命令一起使用时，还可以在 `lerna` 中设置 `--ignore` 标志\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s2-29",
       "sectionId": "s2",
       "title": "选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`--ignore-prepublish` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--ignore-prepublish) | 跳过默认在引导程序包中运行的预发布生命周期脚本\n`--ignore-scripts` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--ignore-scripts) | 跳过通常在引导程序包中运行（准备等）的任何生命周期脚本\n`--registry <url>` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--registry-url) | 指定 npm 包的仓库地址\n`--npm-client <client>` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--npm-client-client) | 必须是知道如何安装 `npm` 包依赖项的可执行文件\n`--use-workspaces` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--use-workspaces) | 启用与 `Yarn Workspaces` 的集成(从 `yarn@0.27+` 开始可用)\n`--no-ci` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--no-ci) | 在 `CI` 环境中调用 `npm ci` 而不是 `npm install`\n`--force-local` [#](https://github.com/lerna/lerna/tree/main/commands/bootstrap#--force-local) | 此标志会导致引导命令始终对本地依赖项进行符号链接，而不管匹配的版本范围如何\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s2-30",
       "sectionId": "s2",
       "title": "info 本地环境信息",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ lerna info\n\nlerna notice cli v6.0.0\n Environment info:\n\n  System(系统):\n    OS: macOS 12.2\n    CPU: (8) x64 Apple M1\n  Binaries(二进制文件):\n    Node: 16.17.0 - /usr/local/bin/node\n    Yarn: 1.22.10 - /usr/local/bin/yarn\n    npm: 8.5.0 - /usr/local/bin/npm\n  Utilities(实用程序):\n    Git: 2.33.0 - /opt/homebrew/bin/git\n  npmPackages:\n    lerna: ^6.0.0 => 6.0.0"
+      "body": "```bash\n$ lerna info\n\nlerna notice cli v6.0.0\n Environment info:\n\n  System(系统):\n    OS: macOS 12.2\n    CPU: (8) x64 Apple M1\n  Binaries(二进制文件):\n    Node: 16.17.0 - /usr/local/bin/node\n    Yarn: 1.22.10 - /usr/local/bin/yarn\n    npm: 8.5.0 - /usr/local/bin/npm\n  Utilities(实用程序):\n    Git: 2.33.0 - /opt/homebrew/bin/git\n  npmPackages:\n    lerna: ^6.0.0 => 6.0.0\n```"
     },
     {
       "id": "s2-31",
       "sectionId": "s2",
       "title": "%E8%BF%87%E6%BB%A4%E9%80%89%E9%A1%B9",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20lerna%20exec%20--scope%20my-component%20--%20ls%20-la%0A%24%20lerna%20run%20--scope%20toolbar-*%20test%0A%24%20lerna%20run%20--scope%20package-1%20--scope%20*-2%20lint%0A%0A%24%20lerna%20exec%20--ignore%20package-%7B1%2C2%2C5%7D%20%20--%20ls%20-la%0A%24%20lerna%20run%20--ignore%20package-1%20%20test%0A%24%20lerna%20run%20--ignore%20package-%40(1%7C2)%20--ignore%20package-3%20lint%0A%0A%23%20%E5%88%97%E5%87%BA%E8%87%AA%E6%9C%80%E6%96%B0%E6%A0%87%E7%AD%BE%E4%BB%A5%E6%9D%A5%E5%B7%B2%E6%9B%B4%E6%94%B9%E7%9A%84%E5%8C%85%E7%9A%84%E5%86%85%E5%AE%B9%0A%24%20lerna%20exec%20--since%20--%20ls%20-la%0A%23%20%E5%AF%B9%E8%87%AA%20main%20%E4%BB%A5%E6%9D%A5%E5%8F%91%E7%94%9F%E6%9B%B4%E6%94%B9%E7%9A%84%E6%89%80%E6%9C%89%E5%8C%85%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95%0A%24%20lerna%20run%20test%20--since%20main%0A%23%20%E5%88%97%E5%87%BA%E8%87%AA%20some-branch%20%E4%BB%A5%E6%9D%A5%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E7%9A%84%E6%89%80%E6%9C%89%E5%8C%85%0A%24%20lerna%20ls%20--since%20some-branch%0A%0A%23%20my-component%20%E5%8F%8A%E5%85%B6%E6%89%80%E6%9C%89%E4%BE%9D%E8%B5%96%E9%A1%B9%E5%B0%86%E8%A2%AB%E5%BC%95%E5%AF%BC%0A%24%20lerna%20bootstrap%20--scope%20my-component%20--include-dependencies%0A%0A%24%20lerna%20bootstrap%20--scope%20%22package-*%22%20--ignore%20%22package-util-*%22%20--include-dependencies%0A%23%20%E6%89%80%E6%9C%89%E5%8C%B9%E9%85%8D%20%E2%80%9Cpackage-util-*%E2%80%9D%20%E7%9A%84%E5%8C%85%E9%83%BD%E5%B0%86%E8%A2%AB%E5%BF%BD%E7%95%A5%EF%BC%8C%E9%99%A4%E9%9D%9E%E5%AE%83%E4%BB%AC%E6%98%AF%0A%23%20%E4%BE%9D%E8%B5%96%E4%BA%8E%E5%90%8D%E7%A7%B0%E4%B8%8E%20%E2%80%9Cpackage-*%E2%80%9D%20%E5%8C%B9%E9%85%8D%E7%9A%84%E5%8C%85",
+      "body": "%60%60%60bash%0A%24%20lerna%20exec%20--scope%20my-component%20--%20ls%20-la%0A%24%20lerna%20run%20--scope%20toolbar-*%20test%0A%24%20lerna%20run%20--scope%20package-1%20--scope%20*-2%20lint%0A%0A%24%20lerna%20exec%20--ignore%20package-%7B1%2C2%2C5%7D%20%20--%20ls%20-la%0A%24%20lerna%20run%20--ignore%20package-1%20%20test%0A%24%20lerna%20run%20--ignore%20package-%40(1%7C2)%20--ignore%20package-3%20lint%0A%0A%23%20%E5%88%97%E5%87%BA%E8%87%AA%E6%9C%80%E6%96%B0%E6%A0%87%E7%AD%BE%E4%BB%A5%E6%9D%A5%E5%B7%B2%E6%9B%B4%E6%94%B9%E7%9A%84%E5%8C%85%E7%9A%84%E5%86%85%E5%AE%B9%0A%24%20lerna%20exec%20--since%20--%20ls%20-la%0A%23%20%E5%AF%B9%E8%87%AA%20main%20%E4%BB%A5%E6%9D%A5%E5%8F%91%E7%94%9F%E6%9B%B4%E6%94%B9%E7%9A%84%E6%89%80%E6%9C%89%E5%8C%85%E8%BF%90%E8%A1%8C%E6%B5%8B%E8%AF%95%0A%24%20lerna%20run%20test%20--since%20main%0A%23%20%E5%88%97%E5%87%BA%E8%87%AA%20some-branch%20%E4%BB%A5%E6%9D%A5%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E7%9A%84%E6%89%80%E6%9C%89%E5%8C%85%0A%24%20lerna%20ls%20--since%20some-branch%0A%0A%23%20my-component%20%E5%8F%8A%E5%85%B6%E6%89%80%E6%9C%89%E4%BE%9D%E8%B5%96%E9%A1%B9%E5%B0%86%E8%A2%AB%E5%BC%95%E5%AF%BC%0A%24%20lerna%20bootstrap%20--scope%20my-component%20--include-dependencies%0A%0A%24%20lerna%20bootstrap%20--scope%20%22package-*%22%20--ignore%20%22package-util-*%22%20--include-dependencies%0A%23%20%E6%89%80%E6%9C%89%E5%8C%B9%E9%85%8D%20%E2%80%9Cpackage-util-*%E2%80%9D%20%E7%9A%84%E5%8C%85%E9%83%BD%E5%B0%86%E8%A2%AB%E5%BF%BD%E7%95%A5%EF%BC%8C%E9%99%A4%E9%9D%9E%E5%AE%83%E4%BB%AC%E6%98%AF%0A%23%20%E4%BE%9D%E8%B5%96%E4%BA%8E%E5%90%8D%E7%A7%B0%E4%B8%8E%20%E2%80%9Cpackage-*%E2%80%9D%20%E5%8C%B9%E9%85%8D%E7%9A%84%E5%8C%85%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-32",
       "sectionId": "s2",
       "title": "选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`--scope <glob>` [#](https://github.com/lerna/lerna/tree/main/core/filter-options#--scope-glob) | 仅包括名称与给定 `glob` 匹配的包\n`--ignore <glob>` [#](https://github.com/lerna/lerna/tree/main/core/filter-options#--ignore-glob) | 排除名称与给定 `glob` 匹配的包\n`--no-private` [#](https://github.com/lerna/lerna/tree/main/core/filter-options#--no-private) | 排除私有包\n`--since [ref]` [#](https://github.com/lerna/lerna/tree/main/core/filter-options#--since-ref) | 仅包括自指定 `ref` 以来已更改的包\n`--exclude-dependents` [#](https://github.com/lerna/lerna/tree/main/core/filter-options#--exclude-dependents) | 使用 `--since` 运行命令时排除所有传递依赖项，覆盖默认的“changed”算法\n`--include-dependents` [#](https://github.com/lerna/lerna/tree/main/core/filter-options#--include-dependents) | 无论 `--scope`、`--ignore` 或 `--since` 是什么，在运行命令时都包括所有传递依赖项\n`--include-dependencies` [#](https://github.com/lerna/lerna/tree/main/core/filter-options#--include-dependencies) | 无论 `--scope`、`--ignore` 或 `--since` [#](https://github.com/lerna/lerna/tree/main/core/filter-options#--since-ref) 是什么，在运行命令时都包括所有传递依赖项\n`--include-merged-tags` [#](https://github.com/lerna/lerna/tree/main/core/filter-options#--include-merged-tags) | 使用 `--since` 运行命令时包括来自合并分支的标签"
     },
     {
       "id": "s2-33",
       "sectionId": "s2",
       "title": "list",
-      "kind": "text",
-      "body": "列出本地程序包，也尊重所有可用的[过滤选项](#过滤选项)"
-    },
-    {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 与 lerna list 相同，它本身类似于 ls 命令\nlerna ls\n# 相当于 lerna ls -l，显示长输出\nlerna ll\n# 相当于 lerna ls -la，显示所有包(包括私有包）\nlerna la"
+      "body": "列出本地程序包，也尊重所有可用的[过滤选项](#过滤选项)\n\n```bash\n# 与 lerna list 相同，它本身类似于 ls 命令\nlerna ls\n# 相当于 lerna ls -l，显示长输出\nlerna ll\n# 相当于 lerna ls -la，显示所有包(包括私有包）\nlerna la\n```"
     },
     {
       "id": "s2-35",
       "sectionId": "s2",
       "title": "选项",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`--json` | 显示为 JSON [#](https://github.com/lerna/lerna/tree/main/commands/publish#--json)\n`--ndjson` | 换行符分隔 [#](https://github.com/lerna/lerna/tree/main/commands/publish#--ndjson)\n`-a,--all` | 所有包 [#](https://github.com/lerna/lerna/tree/main/commands/publish#--all)\n`-l,--long` | 显示扩展信息 [#](https://github.com/lerna/lerna/tree/main/commands/publish#--long)\n`-p,--parseable` | 显示可解析的输出 [#](https://github.com/lerna/lerna/tree/main/commands/publish#--parseable)\n`--toposort` | 按拓扑排序 [#](https://github.com/lerna/lerna/tree/main/commands/publish#--toposort)\n`--graph` | JSON 格式邻接依赖关系图 [#](https://github.com/lerna/lerna/tree/main/commands/publish#--graph)"
     },
     {
       "id": "s2-36",
       "sectionId": "s2",
       "title": "changed",
-      "kind": "text",
-      "body": "列出自上次标记版本以来已更改的本地软件包"
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• `lerna changed` 支持 `lerna ls` 支持的所有[选项](#选项-1)\n• 与 `lerna ls` 不同的是不支持过滤器选项"
-    },
-    {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "`lerna changed` 支持 `lerna version` 的以下选项"
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`--conventional-graduate` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--conventional-graduate)\n`--force-publish` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--force-publish)\n`--ignore-changes` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--ignore-changes)\n`--include-merged-tags` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--include-merged-tags)"
+      "body": "列出自上次标记版本以来已更改的本地软件包\n\n• `lerna changed` 支持 `lerna ls` 支持的所有[选项](#选项-1)\n• 与 `lerna ls` 不同的是不支持过滤器选项\n\n`lerna changed` 支持 `lerna version` 的以下选项\n\n:- | :-\n:- | :-\n`--conventional-graduate` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--conventional-graduate)\n`--force-publish` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--force-publish)\n`--ignore-changes` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--ignore-changes)\n`--include-merged-tags` | [#](https://github.com/lerna/lerna/tree/main/commands/publishhttps://github.com/lerna/lerna/tree/main/commands/version#--include-merged-tags)"
     },
     {
       "id": "s2-40",
       "sectionId": "s2",
       "title": "init",
-      "kind": "text",
-      "body": "创建新的 Lerna 仓库或将现有仓库升级到当前版本 Lerna"
-    },
-    {
-      "id": "s2-41",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• 如果 `lerna` 不存在，请将其添加到 `package.json` 中的 `devDependency`\n• 创建一个 `lerna.json` 配置文件来存储版本号\n• 如果不存在 `.gitignore`，则生成一个忽略文件"
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ lerna init --independent"
-    },
-    {
-      "id": "s2-43",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`--independent` [#](https://github.com/lerna/lerna/tree/main/commands/init#--independent) | 使用独立版本控制模式 [#](https://github.com/lerna/lerna/tree/main/commands/init#--independent)\n`--exact` [#](https://github.com/lerna/lerna/tree/main/commands/init#--exact) | 添加或更新 `lerna` 的本地版本时将使用插入符范围 [#](https://github.com/lerna/lerna/tree/main/commands/init#--exact)"
-    },
-    {
-      "id": "s2-44",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "它将配置 `lerna.json` 以强制所有后续执行完全匹配"
-    },
-    {
-      "id": "s2-45",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22command%22%3A%20%7B%0A%20%20%20%20%22init%22%3A%20%7B%0A%20%20%20%20%20%20%22exact%22%3A%20true%0A%20%20%20%20%7D%0A%20%20%7D%2C%0A%20%20%22version%22%3A%20%220.0.0%22%0A%7D",
+      "body": "%E5%88%9B%E5%BB%BA%E6%96%B0%E7%9A%84%20Lerna%20%E4%BB%93%E5%BA%93%E6%88%96%E5%B0%86%E7%8E%B0%E6%9C%89%E4%BB%93%E5%BA%93%E5%8D%87%E7%BA%A7%E5%88%B0%E5%BD%93%E5%89%8D%E7%89%88%E6%9C%AC%20Lerna%0A%0A%E2%80%A2%20%E5%A6%82%E6%9E%9C%20%60lerna%60%20%E4%B8%8D%E5%AD%98%E5%9C%A8%EF%BC%8C%E8%AF%B7%E5%B0%86%E5%85%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%20%60package.json%60%20%E4%B8%AD%E7%9A%84%20%60devDependency%60%0A%E2%80%A2%20%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20%60lerna.json%60%20%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E6%9D%A5%E5%AD%98%E5%82%A8%E7%89%88%E6%9C%AC%E5%8F%B7%0A%E2%80%A2%20%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%AD%98%E5%9C%A8%20%60.gitignore%60%EF%BC%8C%E5%88%99%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E5%BF%BD%E7%95%A5%E6%96%87%E4%BB%B6%0A%0A%60%60%60shell%0A%24%20lerna%20init%20--independent%0A%60%60%60%0A%0A%3A-%20%7C%20%3A-%0A%3A-%20%7C%20%3A-%0A%60--independent%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Finit%23--independent)%20%7C%20%E4%BD%BF%E7%94%A8%E7%8B%AC%E7%AB%8B%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6%E6%A8%A1%E5%BC%8F%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Finit%23--independent)%0A%60--exact%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Finit%23--exact)%20%7C%20%E6%B7%BB%E5%8A%A0%E6%88%96%E6%9B%B4%E6%96%B0%20%60lerna%60%20%E7%9A%84%E6%9C%AC%E5%9C%B0%E7%89%88%E6%9C%AC%E6%97%B6%E5%B0%86%E4%BD%BF%E7%94%A8%E6%8F%92%E5%85%A5%E7%AC%A6%E8%8C%83%E5%9B%B4%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Finit%23--exact)%0A%0A%E5%AE%83%E5%B0%86%E9%85%8D%E7%BD%AE%20%60lerna.json%60%20%E4%BB%A5%E5%BC%BA%E5%88%B6%E6%89%80%E6%9C%89%E5%90%8E%E7%BB%AD%E6%89%A7%E8%A1%8C%E5%AE%8C%E5%85%A8%E5%8C%B9%E9%85%8D%0A%0A%60%60%60js%0A%7B%0A%20%20%22command%22%3A%20%7B%0A%20%20%20%20%22init%22%3A%20%7B%0A%20%20%20%20%20%20%22exact%22%3A%20true%0A%20%20%20%20%7D%0A%20%20%7D%2C%0A%20%20%22version%22%3A%20%220.0.0%22%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-46",
       "sectionId": "s2",
       "title": "import",
-      "kind": "text",
-      "body": "将一个包导入到带有提交历史的 `monorepo`"
-    },
-    {
-      "id": "s2-47",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8%20Lerna%0A%24%20git%20init%20lerna-repo%20%26%26%20cd%20lerna-repo%0A%24%20npx%20lerna%20init%0A%24%20npm%20install%0A%23%20%E6%B7%BB%E5%8A%A0%E6%8F%90%E4%BA%A4%0A%24%20git%20add%20.%0A%23%20%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%9C%89%E6%8F%90%E4%BA%A4%EF%BC%8C%E5%AF%BC%E5%85%A5%E5%91%BD%E4%BB%A4%E5%B0%86%E5%A4%B1%E8%B4%A5%0A%24%20git%20commit%20-m%20%22Initial%20lerna%20commit%22%0A%23%20%E5%AF%BC%E5%85%A5%E5%85%B6%E4%BB%96%E5%AD%98%E5%82%A8%E5%BA%93%0A%24%20npx%20lerna%20import%20%3C%E5%A4%96%E9%83%A8%E5%AD%98%E5%82%A8%E5%BA%93%E7%9A%84%E8%B7%AF%E5%BE%84%3E%0A%24%20npx%20lerna%20import%20~%2FProduct%20--flatten",
+      "body": "%E5%B0%86%E4%B8%80%E4%B8%AA%E5%8C%85%E5%AF%BC%E5%85%A5%E5%88%B0%E5%B8%A6%E6%9C%89%E6%8F%90%E4%BA%A4%E5%8E%86%E5%8F%B2%E7%9A%84%20%60monorepo%60%0A%0A%60%60%60bash%0A%23%20%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8%20Lerna%0A%24%20git%20init%20lerna-repo%20%26%26%20cd%20lerna-repo%0A%24%20npx%20lerna%20init%0A%24%20npm%20install%0A%23%20%E6%B7%BB%E5%8A%A0%E6%8F%90%E4%BA%A4%0A%24%20git%20add%20.%0A%23%20%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%9C%89%E6%8F%90%E4%BA%A4%EF%BC%8C%E5%AF%BC%E5%85%A5%E5%91%BD%E4%BB%A4%E5%B0%86%E5%A4%B1%E8%B4%A5%0A%24%20git%20commit%20-m%20%22Initial%20lerna%20commit%22%0A%23%20%E5%AF%BC%E5%85%A5%E5%85%B6%E4%BB%96%E5%AD%98%E5%82%A8%E5%BA%93%0A%24%20npx%20lerna%20import%20%3C%E5%A4%96%E9%83%A8%E5%AD%98%E5%82%A8%E5%BA%93%E7%9A%84%E8%B7%AF%E5%BE%84%3E%0A%24%20npx%20lerna%20import%20~%2FProduct%20--flatten%0A%60%60%60%0A%0A%E9%80%89%E9%A1%B9%0A%0A%3A-%20%7C%20%3A-%0A%3A-%20%7C%20%3A-%0A%60--flatten%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fimport%23--flatten)%20%7C%20%E5%BD%93%E5%AF%BC%E5%85%A5%E5%85%B7%E6%9C%89%E5%86%B2%E7%AA%81%E7%9A%84%E5%90%88%E5%B9%B6%E6%8F%90%E4%BA%A4%E7%9A%84%E5%AD%98%E5%82%A8%E5%BA%93%E6%97%B6%EF%BC%8C%E5%AF%BC%E5%85%A5%E5%91%BD%E4%BB%A4%E5%B0%86%E6%97%A0%E6%B3%95%E5%B0%9D%E8%AF%95%E5%BA%94%E7%94%A8%E6%89%80%E6%9C%89%E6%8F%90%E4%BA%A4%0A%60--dest%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fimport%23--dest)%20%7C%20%E5%AF%BC%E5%85%A5%E4%BB%93%E5%BA%93%E6%97%B6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%20%60lerna.json%60%20%E4%B8%AD%E5%88%97%E5%87%BA%E7%9A%84%E7%9B%AE%E5%BD%95%E6%9D%A5%E6%8C%87%E5%AE%9A%E7%9B%AE%E6%A0%87%E7%9B%AE%E5%BD%95%0A%60--preserve-commit%60%20%5B%23%5D(https%3A%2F%2Fgithub.com%2Flerna%2Flerna%2Ftree%2Fmain%2Fcommands%2Fimport%23--preserve-commit)%20%7C%20%E6%AF%8F%E4%B8%AA%20git%20%E6%8F%90%E4%BA%A4%E9%83%BD%E6%9C%89%E4%B8%80%E4%B8%AA%E4%BD%9C%E8%80%85%E5%92%8C%E4%B8%80%E4%B8%AA%E6%8F%90%E4%BA%A4%E8%80%85%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow--%3E",
       "encoded": true
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "选项"
-    },
-    {
-      "id": "s2-49",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`--flatten` [#](https://github.com/lerna/lerna/tree/main/commands/import#--flatten) | 当导入具有冲突的合并提交的存储库时，导入命令将无法尝试应用所有提交\n`--dest` [#](https://github.com/lerna/lerna/tree/main/commands/import#--dest) | 导入仓库时，可以通过 `lerna.json` 中列出的目录来指定目标目录\n`--preserve-commit` [#](https://github.com/lerna/lerna/tree/main/commands/import#--preserve-commit) | 每个 git 提交都有一个作者和一个提交者\n<!--rehype:className=style-list-arrow-->"
     },
     {
       "id": "s2-50",
       "sectionId": "s2",
       "title": "add",
-      "kind": "text",
-      "body": "将依赖项添加到匹配的包"
-    },
-    {
-      "id": "s2-51",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ lerna add <package>[@version] \\\n        [--dev] [--exact] [--peer]"
-    },
-    {
-      "id": "s2-52",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "选项"
-    },
-    {
-      "id": "s2-53",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": ":- | :-\n:- | :-\n`--dev` [#](https://github.com/lerna/lerna/tree/main/commands/add#--dev) | 将新包添加到 `devDependencies`\n`--exact` [#](https://github.com/lerna/lerna/tree/main/commands/add#--exact) | 添加具有精确版本（例如 `1.0.1`）而不是默认 `^` semver 范围（例如 `^1.0.1`）的新包\n`--peer` [#](https://github.com/lerna/lerna/tree/main/commands/add#--peer) | 将新包添加到 `peerDependencies`\n`--registry <url>` [#](https://github.com/lerna/lerna/tree/main/commands/add#--registry-url) | 使用自定义注册表安装目标包\n`--no-bootstrap` [#](https://github.com/lerna/lerna/tree/main/commands/add#--no-bootstrap) | 跳过链式 `lerna bootstrap`\n<!--rehype:className=style-list-arrow-->"
-    },
-    {
-      "id": "s2-54",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "实例"
-    },
-    {
-      "id": "s2-55",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 将 mod-1 包添加到“prefix-”前缀文件夹中的包中\n$ lerna add mod-1 packages/prefix-*\n# 将 mod-1 安装到mod-2\n$ lerna add mod-1 --scope=mod-2\n# 在 devDependencies 中安装 mod-1 到 mod-2\n$ lerna add mod-1 --scope=mod-2 --dev\n# 在 peerDependencies 中安装 mod-1 到 mod-2\n$ lerna add mod-1 --scope=mod-2 --peer\n# 在除 mod-1 之外的所有模块中安装 mod-1\n$ lerna add mod-1\n# 在所有模块中安装 babel-core\n$ lerna add babel-core"
+      "body": "将依赖项添加到匹配的包\n\n```shell\n$ lerna add <package>[@version] \\\n        [--dev] [--exact] [--peer]\n```\n\n选项\n\n:- | :-\n:- | :-\n`--dev` [#](https://github.com/lerna/lerna/tree/main/commands/add#--dev) | 将新包添加到 `devDependencies`\n`--exact` [#](https://github.com/lerna/lerna/tree/main/commands/add#--exact) | 添加具有精确版本（例如 `1.0.1`）而不是默认 `^` semver 范围（例如 `^1.0.1`）的新包\n`--peer` [#](https://github.com/lerna/lerna/tree/main/commands/add#--peer) | 将新包添加到 `peerDependencies`\n`--registry <url>` [#](https://github.com/lerna/lerna/tree/main/commands/add#--registry-url) | 使用自定义注册表安装目标包\n`--no-bootstrap` [#](https://github.com/lerna/lerna/tree/main/commands/add#--no-bootstrap) | 跳过链式 `lerna bootstrap`\n<!--rehype:className=style-list-arrow-->\n\n实例\n\n```bash\n# 将 mod-1 包添加到“prefix-”前缀文件夹中的包中\n$ lerna add mod-1 packages/prefix-*\n# 将 mod-1 安装到mod-2\n$ lerna add mod-1 --scope=mod-2\n# 在 devDependencies 中安装 mod-1 到 mod-2\n$ lerna add mod-1 --scope=mod-2 --dev\n# 在 peerDependencies 中安装 mod-1 到 mod-2\n$ lerna add mod-1 --scope=mod-2 --peer\n# 在除 mod-1 之外的所有模块中安装 mod-1\n$ lerna add mod-1\n# 在所有模块中安装 babel-core\n$ lerna add babel-core\n```"
     },
     {
       "id": "s2-56",
       "sectionId": "s2",
       "title": "diff",
-      "kind": "text",
-      "body": "比较自上次发布以来的所有包或单个包"
-    },
-    {
-      "id": "s2-57",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ lerna diff [package]\n$ lerna diff\n$ lerna diff package-name # 区分一个特定的包"
-    },
-    {
-      "id": "s2-58",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "类似于 `lerna changed`，此命令运行 `git diff`"
+      "body": "比较自上次发布以来的所有包或单个包\n\n```bash\n$ lerna diff [package]\n$ lerna diff\n$ lerna diff package-name # 区分一个特定的包\n```\n\n类似于 `lerna changed`，此命令运行 `git diff`"
     },
     {
       "id": "s2-59",
       "sectionId": "s2",
       "title": "clean",
-      "kind": "text",
-      "body": "从所有包中删除 `node_modules` 目录"
-    },
-    {
-      "id": "s2-60",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ lerna clean"
-    },
-    {
-      "id": "s2-61",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "接受所有[过滤选项](#过滤选项)。`lerna clean` 不会从根 `node_modules` 目录中删除模块，即使您启用了 `--hoist` 选项"
+      "body": "从所有包中删除 `node_modules` 目录\n\n```bash\n$ lerna clean\n```\n\n接受所有[过滤选项](#过滤选项)。`lerna clean` 不会从根 `node_modules` 目录中删除模块，即使您启用了 `--hoist` 选项"
     },
     {
       "id": "s2-62",
       "sectionId": "s2",
       "title": "add-caching",
-      "kind": "text",
-      "body": "运行设置基本缓存选项的向导"
-    },
-    {
-      "id": "s2-63",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ lerna add-caching"
+      "body": "运行设置基本缓存选项的向导\n\n```bash\n$ lerna add-caching\n```"
     },
     {
       "id": "s2-64",
       "sectionId": "s2",
       "title": "link",
-      "kind": "text",
-      "body": "将所有相互依赖的包符号链接在一起"
-    },
-    {
-      "id": "s2-65",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ lerna link"
-    },
-    {
-      "id": "s2-66",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[`--force-local`](https://github.com/lerna/lerna/tree/main/commands/link#--force-local) 设置会导致链接命令始终对本地依赖项进行符号链接"
+      "body": "将所有相互依赖的包符号链接在一起\n\n```bash\n$ lerna link\n```\n\n[`--force-local`](https://github.com/lerna/lerna/tree/main/commands/link#--force-local) 设置会导致链接命令始终对本地依赖项进行符号链接"
     },
     {
       "id": "s2-67",
       "sectionId": "s2",
       "title": "repair",
-      "kind": "text",
-      "body": "更新配置文件以匹配当前安装的 lerna 版本"
-    },
-    {
-      "id": "s2-68",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ npm i lerna@latest\n$ lerna repair"
-    },
-    {
-      "id": "s2-69",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "[`lerna repair`](https://github.com/lerna/lerna/tree/main/core/lerna/commands/repair#usage) 在升级后最有用，可确保应用新版本 lerna 的任何配置文件更改"
+      "body": "更新配置文件以匹配当前安装的 lerna 版本\n\n```bash\n$ npm i lerna@latest\n$ lerna repair\n```\n\n[`lerna repair`](https://github.com/lerna/lerna/tree/main/core/lerna/commands/repair#usage) 在升级后最有用，可确保应用新版本 lerna 的任何配置文件更改"
     }
   ],
   "source": {

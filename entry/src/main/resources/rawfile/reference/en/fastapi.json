@@ -60,199 +60,155 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "Intro",
-      "kind": "text",
       "body": "A concise cheatsheet for FastAPI, a fast and modern web framework for building APIs with Python 3.7+."
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Install & Run",
-      "kind": "code",
-      "lang": "bash",
-      "code": "pip install fastapi uvicorn\nuvicorn main:app --reload"
+      "body": "```bash\npip install fastapi uvicorn\nuvicorn main:app --reload\n```"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "Hello%20World",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi%20import%20FastAPI%0Aapp%20%3D%20FastAPI()%0A%0A%40app.get(%22%2F%22)%0Adef%20root()%3A%0A%20%20%20%20return%20%7B%22message%22%3A%20%22Hello%20FastAPI%22%7D",
+      "body": "%60%60%60python%0Afrom%20fastapi%20import%20FastAPI%0Aapp%20%3D%20FastAPI()%0A%0A%40app.get(%22%2F%22)%0Adef%20root()%3A%0A%20%20%20%20return%20%7B%22message%22%3A%20%22Hello%20FastAPI%22%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "CLI Run Hint",
-      "kind": "code",
-      "lang": "bash",
-      "code": "uvicorn main:app --reload"
+      "body": "```bash\nuvicorn main:app --reload\n```"
     },
     {
       "id": "s2-4",
       "sectionId": "s2",
       "title": "Path%20Parameter",
-      "kind": "code",
-      "lang": "python",
-      "code": "%40app.get(%22%2Fitems%2F%7Bid%7D%22)%0Adef%20read(id%3A%20int)%3A%0A%20%20%20%20return%20%7B%22id%22%3A%20id%7D",
+      "body": "%60%60%60python%0A%40app.get(%22%2Fitems%2F%7Bid%7D%22)%0Adef%20read(id%3A%20int)%3A%0A%20%20%20%20return%20%7B%22id%22%3A%20id%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-5",
       "sectionId": "s2",
       "title": "Query%20Parameter",
-      "kind": "code",
-      "lang": "python",
-      "code": "%40app.get(%22%2Fsearch%22)%0Adef%20find(q%3A%20str%20%3D%20%22default%22)%3A%0A%20%20%20%20return%20%7B%22q%22%3A%20q%7D",
+      "body": "%60%60%60python%0A%40app.get(%22%2Fsearch%22)%0Adef%20find(q%3A%20str%20%3D%20%22default%22)%3A%0A%20%20%20%20return%20%7B%22q%22%3A%20q%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-6",
       "sectionId": "s2",
       "title": "Optional%20Query",
-      "kind": "code",
-      "lang": "python",
-      "code": "%40app.get(%22%2Ffilter%22)%0Adef%20filter_data(limit%3A%20int%20%3D%2010%2C%20active%3A%20bool%20%3D%20True)%3A%0A%20%20%20%20return%20%7B%22limit%22%3A%20limit%2C%20%22active%22%3A%20active%7D",
+      "body": "%60%60%60python%0A%40app.get(%22%2Ffilter%22)%0Adef%20filter_data(limit%3A%20int%20%3D%2010%2C%20active%3A%20bool%20%3D%20True)%3A%0A%20%20%20%20return%20%7B%22limit%22%3A%20limit%2C%20%22active%22%3A%20active%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-7",
       "sectionId": "s3",
       "title": "Using Pydantic",
-      "kind": "code",
-      "lang": "python",
-      "code": "from pydantic import BaseModel\n\nclass Item(BaseModel):\n    name: str\n    price: float"
+      "body": "```python\nfrom pydantic import BaseModel\n\nclass Item(BaseModel):\n    name: str\n    price: float\n```"
     },
     {
       "id": "s3-8",
       "sectionId": "s3",
       "title": "JSON%20Body",
-      "kind": "code",
-      "lang": "python",
-      "code": "%40app.post(%22%2Fitems%2F%22)%0Adef%20create(item%3A%20Item)%3A%0A%20%20%20%20return%20item",
+      "body": "%60%60%60python%0A%40app.post(%22%2Fitems%2F%22)%0Adef%20create(item%3A%20Item)%3A%0A%20%20%20%20return%20item%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-9",
       "sectionId": "s3",
       "title": "Response%20Model",
-      "kind": "code",
-      "lang": "python",
-      "code": "%40app.post(%22%2Fitems%2F%22%2C%20response_model%3DItem)%0Adef%20create(item%3A%20Item)%3A%0A%20%20%20%20return%20item",
+      "body": "%60%60%60python%0A%40app.post(%22%2Fitems%2F%22%2C%20response_model%3DItem)%0Adef%20create(item%3A%20Item)%3A%0A%20%20%20%20return%20item%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-10",
       "sectionId": "s4",
       "title": "Form%20Input",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi%20import%20Form%0A%0A%40app.post(%22%2Flogin%22)%0Adef%20login(user%3A%20str%20%3D%20Form(...))%3A%0A%20%20%20%20return%20%7B%22user%22%3A%20user%7D",
+      "body": "%60%60%60python%0Afrom%20fastapi%20import%20Form%0A%0A%40app.post(%22%2Flogin%22)%0Adef%20login(user%3A%20str%20%3D%20Form(...))%3A%0A%20%20%20%20return%20%7B%22user%22%3A%20user%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-11",
       "sectionId": "s4",
       "title": "File%20Upload",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi%20import%20UploadFile%2C%20File%0A%0A%40app.post(%22%2Fupload%22)%0Adef%20upload(f%3A%20UploadFile%20%3D%20File(...))%3A%0A%20%20%20%20return%20%7B%22filename%22%3A%20f.filename%7D",
+      "body": "%60%60%60python%0Afrom%20fastapi%20import%20UploadFile%2C%20File%0A%0A%40app.post(%22%2Fupload%22)%0Adef%20upload(f%3A%20UploadFile%20%3D%20File(...))%3A%0A%20%20%20%20return%20%7B%22filename%22%3A%20f.filename%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-12",
       "sectionId": "s4",
       "title": "Headers%20%2F%20Cookies",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi%20import%20Header%2C%20Cookie%0A%0A%40app.get(%22%2Finfo%22)%0Adef%20info(ua%3A%20str%20%3D%20Header(None))%3A%0A%20%20%20%20return%20%7B%22UA%22%3A%20ua%7D",
+      "body": "%60%60%60python%0Afrom%20fastapi%20import%20Header%2C%20Cookie%0A%0A%40app.get(%22%2Finfo%22)%0Adef%20info(ua%3A%20str%20%3D%20Header(None))%3A%0A%20%20%20%20return%20%7B%22UA%22%3A%20ua%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-13",
       "sectionId": "s5",
       "title": "Middleware",
-      "kind": "code",
-      "lang": "python",
-      "code": "%40app.middleware(%22http%22)%0Aasync%20def%20log_req(req%2C%20call_next)%3A%0A%20%20%20%20res%20%3D%20await%20call_next(req)%0A%20%20%20%20return%20res",
+      "body": "%60%60%60python%0A%40app.middleware(%22http%22)%0Aasync%20def%20log_req(req%2C%20call_next)%3A%0A%20%20%20%20res%20%3D%20await%20call_next(req)%0A%20%20%20%20return%20res%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-14",
       "sectionId": "s5",
       "title": "Dependency",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi%20import%20Depends%0A%0Adef%20auth(token%3A%20str%20%3D%20%22%22)%3A%0A%20%20%20%20if%20token%20!%3D%20%22xyz%22%3A%20raise%20HTTPException(401)%0A%20%20%20%20return%20True%0A%0A%40app.get(%22%2Fsecure%22)%0Adef%20secure(_%3A%20bool%20%3D%20Depends(auth))%3A%0A%20%20%20%20return%20%7B%22secure%22%3A%20True%7D",
+      "body": "%60%60%60python%0Afrom%20fastapi%20import%20Depends%0A%0Adef%20auth(token%3A%20str%20%3D%20%22%22)%3A%0A%20%20%20%20if%20token%20!%3D%20%22xyz%22%3A%20raise%20HTTPException(401)%0A%20%20%20%20return%20True%0A%0A%40app.get(%22%2Fsecure%22)%0Adef%20secure(_%3A%20bool%20%3D%20Depends(auth))%3A%0A%20%20%20%20return%20%7B%22secure%22%3A%20True%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-15",
       "sectionId": "s6",
       "title": "HTTP%20Error",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi%20import%20HTTPException%0A%0A%40app.get(%22%2Ferr%22)%0Adef%20error()%3A%0A%20%20%20%20raise%20HTTPException(404%2C%20%22Not%20Found%22)",
+      "body": "%60%60%60python%0Afrom%20fastapi%20import%20HTTPException%0A%0A%40app.get(%22%2Ferr%22)%0Adef%20error()%3A%0A%20%20%20%20raise%20HTTPException(404%2C%20%22Not%20Found%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-16",
       "sectionId": "s6",
       "title": "JSON%20API",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi%20import%20FastAPI%0A%0A%40app.get(%22%2Fjson%22)%0Adef%20get_data()%3A%0A%20%20%20%20return%20%7B%22status%22%3A%20%22ok%22%7D",
+      "body": "%60%60%60python%0Afrom%20fastapi%20import%20FastAPI%0A%0A%40app.get(%22%2Fjson%22)%0Adef%20get_data()%3A%0A%20%20%20%20return%20%7B%22status%22%3A%20%22ok%22%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-17",
       "sectionId": "s7",
       "title": "Mount%20Static",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi.staticfiles%20import%20StaticFiles%0Aapp.mount(%22%2Fstatic%22%2C%20StaticFiles(directory%3D%22static%22)%2C%20name%3D%22static%22)",
+      "body": "%60%60%60python%0Afrom%20fastapi.staticfiles%20import%20StaticFiles%0Aapp.mount(%22%2Fstatic%22%2C%20StaticFiles(directory%3D%22static%22)%2C%20name%3D%22static%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-18",
       "sectionId": "s7",
       "title": "Jinja2%20Support",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi.templating%20import%20Jinja2Templates%0Atemplates%20%3D%20Jinja2Templates(%22templates%22)",
+      "body": "%60%60%60python%0Afrom%20fastapi.templating%20import%20Jinja2Templates%0Atemplates%20%3D%20Jinja2Templates(%22templates%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-19",
       "sectionId": "s8",
       "title": "Routers%20(Blueprints)",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi%20import%20APIRouter%0Arouter%20%3D%20APIRouter()%0A%0A%40router.get(%22%2F%22)%0Adef%20admin()%3A%0A%20%20%20%20return%20%7B%22admin%22%3A%20True%7D%0A%0Aapp.include_router(router%2C%20prefix%3D%22%2Fadmin%22)",
+      "body": "%60%60%60python%0Afrom%20fastapi%20import%20APIRouter%0Arouter%20%3D%20APIRouter()%0A%0A%40router.get(%22%2F%22)%0Adef%20admin()%3A%0A%20%20%20%20return%20%7B%22admin%22%3A%20True%7D%0A%0Aapp.include_router(router%2C%20prefix%3D%22%2Fadmin%22)%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-20",
       "sectionId": "s8",
       "title": "Folder Layout",
-      "kind": "code",
-      "lang": "bash",
-      "code": "project/\n├── main.py\n├── static/\n├── templates/\n├── routers/\n│   └── admin.py\n└── models/"
+      "body": "```bash\nproject/\n├── main.py\n├── static/\n├── templates/\n├── routers/\n│   └── admin.py\n└── models/\n```"
     },
     {
       "id": "s9-21",
       "sectionId": "s9",
       "title": "Built-in Docs",
-      "kind": "text",
       "body": "• Swagger: `/docs`\n• ReDoc: `/redoc`"
     },
     {
       "id": "s9-22",
       "sectionId": "s9",
       "title": "Custom%20Status%20Code",
-      "kind": "code",
-      "lang": "python",
-      "code": "from%20fastapi%20import%20status%0A%0A%40app.post(%22%2Fcreate%22%2C%20status_code%3Dstatus.HTTP_201_CREATED)%0Adef%20create()%3A%0A%20%20%20%20return%20%7B%22msg%22%3A%20%22Created%22%7D",
+      "body": "%60%60%60python%0Afrom%20fastapi%20import%20status%0A%0A%40app.post(%22%2Fcreate%22%2C%20status_code%3Dstatus.HTTP_201_CREATED)%0Adef%20create()%3A%0A%20%20%20%20return%20%7B%22msg%22%3A%20%22Created%22%7D%0A%60%60%60",
       "encoded": true
     }
   ],

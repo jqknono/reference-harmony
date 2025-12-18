@@ -30,277 +30,127 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "这是一份 [`Pinia`](https://pinia.vuejs.org/) 状态管理库的备忘单，列出了 Pinia 的常用命令和操作。"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "安装 Pinia",
-      "kind": "code",
-      "lang": "bash",
-      "code": "npm install pinia\n# or\nyarn add pinia\n# or\npnpm add pinia"
+      "body": "```bash\nnpm install pinia\n# or\nyarn add pinia\n# or\npnpm add pinia\n```"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "定义 Store",
-      "kind": "text",
-      "body": "创建一个 store 文件（例如 `src/stores/counter.js`），并定义 `store`"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "import { defineStore } from 'pinia'\n\nexport const useCounterStore = defineStore('counter', {\n  state: () => ({\n    count: 0\n  }),\n  actions: {\n    increment() {\n      this.count++\n    }\n  },\n  getters: {\n    doubleCount: (state) => state.count * 2\n  }\n})"
+      "title": "%E5%AE%9A%E4%B9%89%20Store",
+      "body": "%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20store%20%E6%96%87%E4%BB%B6%EF%BC%88%E4%BE%8B%E5%A6%82%20%60src%2Fstores%2Fcounter.js%60%EF%BC%89%EF%BC%8C%E5%B9%B6%E5%AE%9A%E4%B9%89%20%60store%60%0A%0A%60%60%60javascript%0Aimport%20%7B%20defineStore%20%7D%20from%20'pinia'%0A%0Aexport%20const%20useCounterStore%20%3D%20defineStore('counter'%2C%20%7B%0A%20%20state%3A%20()%20%3D%3E%20(%7B%0A%20%20%20%20count%3A%200%0A%20%20%7D)%2C%0A%20%20actions%3A%20%7B%0A%20%20%20%20increment()%20%7B%0A%20%20%20%20%20%20this.count%2B%2B%0A%20%20%20%20%7D%0A%20%20%7D%2C%0A%20%20getters%3A%20%7B%0A%20%20%20%20doubleCount%3A%20(state)%20%3D%3E%20state.count%20*%202%0A%20%20%7D%0A%7D)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
-      "title": "创建 Pinia 实例",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "import { createApp } from 'vue'\nimport { createPinia } from 'pinia'\nimport App from './App.vue'\n\nconst app = createApp(App)\nconst pinia = createPinia()\n\napp.use(pinia)\napp.mount('#app')"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在你的 [Vue](./vue.md) 应用中创建一个 Pinia 实例并将其传递给 [Vue](./vue.md)"
+      "title": "%E5%88%9B%E5%BB%BA%20Pinia%20%E5%AE%9E%E4%BE%8B",
+      "body": "%60%60%60javascript%0Aimport%20%7B%20createApp%20%7D%20from%20'vue'%0Aimport%20%7B%20createPinia%20%7D%20from%20'pinia'%0Aimport%20App%20from%20'.%2FApp.vue'%0A%0Aconst%20app%20%3D%20createApp(App)%0Aconst%20pinia%20%3D%20createPinia()%0A%0Aapp.use(pinia)%0Aapp.mount('%23app')%0A%60%60%60%0A%0A%E5%9C%A8%E4%BD%A0%E7%9A%84%20%5BVue%5D(.%2Fvue.md)%20%E5%BA%94%E7%94%A8%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20Pinia%20%E5%AE%9E%E4%BE%8B%E5%B9%B6%E5%B0%86%E5%85%B6%E4%BC%A0%E9%80%92%E7%BB%99%20%5BVue%5D(.%2Fvue.md)",
+      "encoded": true
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "热重载 Store",
-      "kind": "text",
-      "body": "使用 Vite 时，你可以启用热重载功能："
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "if (import.meta.hot) {\n  import.meta.hot.accept(acceptHMRUpdate(useCounterStore, import.meta.hot))\n}"
+      "body": "使用 Vite 时，你可以启用热重载功能：\n\n```javascript\nif (import.meta.hot) {\n  import.meta.hot.accept(acceptHMRUpdate(useCounterStore, import.meta.hot))\n}\n```"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
-      "title": "使用 Store",
-      "kind": "text",
-      "body": "在组件中使用 `store`"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "%3Ctemplate%3E%0A%20%20%3Cdiv%3E%0A%20%20%20%20%3Cp%3ECount%3A%20%7B%7B%20counterStore.count%20%7D%7D%3C%2Fp%3E%0A%20%20%20%20%3Cp%3EDouble%20Count%3A%20%7B%7B%20counterStore.doubleCount%20%7D%7D%3C%2Fp%3E%0A%20%20%20%20%3Cbutton%20%40click%3D%22counterStore.increment%22%3EIncrement%3C%2Fbutton%3E%0A%20%20%3C%2Fdiv%3E%0A%3C%2Ftemplate%3E%0A%0A%3Cscript%3E%0Aimport%20%7B%20useCounterStore%20%7D%20from%20'%40%2Fstores%2Fcounter'%0A%0Aexport%20default%20%7B%0A%20%20setup()%20%7B%0A%20%20%20%20const%20counterStore%20%3D%20useCounterStore()%0A%0A%20%20%20%20return%20%7B%0A%20%20%20%20%20%20counterStore%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%3C%2Fscript%3E",
+      "title": "%E4%BD%BF%E7%94%A8%20Store",
+      "body": "%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8%20%60store%60%0A%0A%60%60%60javascript%0A%3Ctemplate%3E%0A%20%20%3Cdiv%3E%0A%20%20%20%20%3Cp%3ECount%3A%20%7B%7B%20counterStore.count%20%7D%7D%3C%2Fp%3E%0A%20%20%20%20%3Cp%3EDouble%20Count%3A%20%7B%7B%20counterStore.doubleCount%20%7D%7D%3C%2Fp%3E%0A%20%20%20%20%3Cbutton%20%40click%3D%22counterStore.increment%22%3EIncrement%3C%2Fbutton%3E%0A%20%20%3C%2Fdiv%3E%0A%3C%2Ftemplate%3E%0A%0A%3Cscript%3E%0Aimport%20%7B%20useCounterStore%20%7D%20from%20'%40%2Fstores%2Fcounter'%0A%0Aexport%20default%20%7B%0A%20%20setup()%20%7B%0A%20%20%20%20const%20counterStore%20%3D%20useCounterStore()%0A%0A%20%20%20%20return%20%7B%0A%20%20%20%20%20%20counterStore%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%3C%2Fscript%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
-      "title": "Modules 模式",
-      "kind": "text",
-      "body": "Pinia 不使用传统的 Vuex 模块模式。相反，推荐使用独立的 store 文件："
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "// src/stores/user.js\nimport { defineStore } from 'pinia'\n\nexport const useUserStore = defineStore('user', {\n  state: () => ({\n    name: 'Alice',\n    age: 25\n  }),\n  actions: {\n    setName(name) {\n      this.name = name\n    }\n  },\n  getters: {\n    isAdult: (state) => state.age >= 18\n  }\n})"
+      "title": "Modules%20%E6%A8%A1%E5%BC%8F",
+      "body": "Pinia%20%E4%B8%8D%E4%BD%BF%E7%94%A8%E4%BC%A0%E7%BB%9F%E7%9A%84%20Vuex%20%E6%A8%A1%E5%9D%97%E6%A8%A1%E5%BC%8F%E3%80%82%E7%9B%B8%E5%8F%8D%EF%BC%8C%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E7%8B%AC%E7%AB%8B%E7%9A%84%20store%20%E6%96%87%E4%BB%B6%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F%2F%20src%2Fstores%2Fuser.js%0Aimport%20%7B%20defineStore%20%7D%20from%20'pinia'%0A%0Aexport%20const%20useUserStore%20%3D%20defineStore('user'%2C%20%7B%0A%20%20state%3A%20()%20%3D%3E%20(%7B%0A%20%20%20%20name%3A%20'Alice'%2C%0A%20%20%20%20age%3A%2025%0A%20%20%7D)%2C%0A%20%20actions%3A%20%7B%0A%20%20%20%20setName(name)%20%7B%0A%20%20%20%20%20%20this.name%20%3D%20name%0A%20%20%20%20%7D%0A%20%20%7D%2C%0A%20%20getters%3A%20%7B%0A%20%20%20%20isAdult%3A%20(state)%20%3D%3E%20state.age%20%3E%3D%2018%0A%20%20%7D%0A%7D)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
-      "title": "使用 Options API",
-      "kind": "text",
-      "body": "如果你更喜欢 Options API，可以这样使用 Pinia："
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "<script>\nimport { defineComponent } from 'vue'\nimport { useCounterStore } from '@/stores/counter'\n\nexport default defineComponent({\n  setup() {\n    const counterStore = useCounterStore()\n\n    return {\n      counterStore\n    }\n  }\n})\n</script>"
+      "title": "%E4%BD%BF%E7%94%A8%20Options%20API",
+      "body": "%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%9B%B4%E5%96%9C%E6%AC%A2%20Options%20API%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%BF%99%E6%A0%B7%E4%BD%BF%E7%94%A8%20Pinia%EF%BC%9A%0A%0A%60%60%60javascript%0A%3Cscript%3E%0Aimport%20%7B%20defineComponent%20%7D%20from%20'vue'%0Aimport%20%7B%20useCounterStore%20%7D%20from%20'%40%2Fstores%2Fcounter'%0A%0Aexport%20default%20defineComponent(%7B%0A%20%20setup()%20%7B%0A%20%20%20%20const%20counterStore%20%3D%20useCounterStore()%0A%0A%20%20%20%20return%20%7B%0A%20%20%20%20%20%20counterStore%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D)%0A%3C%2Fscript%3E%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-14",
       "sectionId": "s2",
-      "title": "使用组合函数",
-      "kind": "text",
-      "body": "你可以将 store 与组合函数一起使用："
-    },
-    {
-      "id": "s2-15",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "// src/composables/useCounter.js\nimport { useCounterStore } from '@/stores/counter'\n\nexport function useCounter() {\n  const counterStore = useCounterStore()\n\n  return {\n    count: counterStore.count,\n    doubleCount: counterStore.doubleCount,\n    increment: counterStore.increment\n  }\n}"
+      "title": "%E4%BD%BF%E7%94%A8%E7%BB%84%E5%90%88%E5%87%BD%E6%95%B0",
+      "body": "%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%B0%86%20store%20%E4%B8%8E%E7%BB%84%E5%90%88%E5%87%BD%E6%95%B0%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F%2F%20src%2Fcomposables%2FuseCounter.js%0Aimport%20%7B%20useCounterStore%20%7D%20from%20'%40%2Fstores%2Fcounter'%0A%0Aexport%20function%20useCounter()%20%7B%0A%20%20const%20counterStore%20%3D%20useCounterStore()%0A%0A%20%20return%20%7B%0A%20%20%20%20count%3A%20counterStore.count%2C%0A%20%20%20%20doubleCount%3A%20counterStore.doubleCount%2C%0A%20%20%20%20increment%3A%20counterStore.increment%0A%20%20%7D%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
-      "title": "插件",
-      "kind": "text",
-      "body": "Pinia 支持插件。你可以编写插件来扩展 Pinia 的功能："
-    },
-    {
-      "id": "s2-17",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "// src/plugins/piniaPlugin.js\nexport function piniaPlugin({ store }) {\n  store.$onAction(({ name, store, args, after, onError }) => {\n    console.log(`Action ${name} was called with args:`, args)\n  })\n}\n\n// main.js\nimport { createPinia } from 'pinia'\nimport { piniaPlugin } from './plugins/piniaPlugin'\n\nconst pinia = createPinia()\npinia.use(piniaPlugin)"
+      "title": "%E6%8F%92%E4%BB%B6",
+      "body": "Pinia%20%E6%94%AF%E6%8C%81%E6%8F%92%E4%BB%B6%E3%80%82%E4%BD%A0%E5%8F%AF%E4%BB%A5%E7%BC%96%E5%86%99%E6%8F%92%E4%BB%B6%E6%9D%A5%E6%89%A9%E5%B1%95%20Pinia%20%E7%9A%84%E5%8A%9F%E8%83%BD%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F%2F%20src%2Fplugins%2FpiniaPlugin.js%0Aexport%20function%20piniaPlugin(%7B%20store%20%7D)%20%7B%0A%20%20store.%24onAction((%7B%20name%2C%20store%2C%20args%2C%20after%2C%20onError%20%7D)%20%3D%3E%20%7B%0A%20%20%20%20console.log(%60Action%20%24%7Bname%7D%20was%20called%20with%20args%3A%60%2C%20args)%0A%20%20%7D)%0A%7D%0A%0A%2F%2F%20main.js%0Aimport%20%7B%20createPinia%20%7D%20from%20'pinia'%0Aimport%20%7B%20piniaPlugin%20%7D%20from%20'.%2Fplugins%2FpiniaPlugin'%0A%0Aconst%20pinia%20%3D%20createPinia()%0Apinia.use(piniaPlugin)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-18",
       "sectionId": "s2",
       "title": "持久化状态 - 1. 安装  `pinia-plugin-persist`",
-      "kind": "code",
-      "lang": "bash",
-      "code": "npm  pinia-plugin-persist"
+      "body": "```bash\nnpm  pinia-plugin-persist\n```"
     },
     {
       "id": "s2-19",
       "sectionId": "s2",
-      "title": "2. 配置 Pinia 和 `pinia-plugin-persist`",
-      "kind": "text",
-      "body": "在你的入口文件中配置 Pinia 和 `pinia-plugin-persist`。"
-    },
-    {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "**⚠️ Vue 2 项目**"
-    },
-    {
-      "id": "s2-21",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "import Vue from 'vue'\nimport vueCompositionApi from '@vue/composition-api'\nimport { createPinia, PiniaVuePlugin } from 'pinia'\nimport piniaPersist from 'pinia-plugin-persist'\nimport App from './App.vue'\n\nVue.use(vueCompositionApi)\nVue.use(PiniaVuePlugin)\n\nconst pinia = createPinia()\npinia.use(piniaPersist)\n\nnew Vue({\n  pinia,\n  render: h => h(App)\n}).$mount('#app')"
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "**Vue 3 项目：**"
-    },
-    {
-      "id": "s2-23",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "import { createApp } from 'vue'\nimport { createPinia } from 'pinia'\nimport piniaPersist from 'pinia-plugin-persist'\nimport App from './App.vue'\n\nconst pinia = createPinia()\npinia.use(piniaPersist)\n\ncreateApp(App)\n  .use(pinia)\n  .mount('#app')"
+      "title": "2.%20%E9%85%8D%E7%BD%AE%20Pinia%20%E5%92%8C%20%60pinia-plugin-persist%60",
+      "body": "%E5%9C%A8%E4%BD%A0%E7%9A%84%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6%E4%B8%AD%E9%85%8D%E7%BD%AE%20Pinia%20%E5%92%8C%20%60pinia-plugin-persist%60%E3%80%82%0A%0A**%E2%9A%A0%EF%B8%8F%20Vue%202%20%E9%A1%B9%E7%9B%AE**%0A%0A%60%60%60javascript%0Aimport%20Vue%20from%20'vue'%0Aimport%20vueCompositionApi%20from%20'%40vue%2Fcomposition-api'%0Aimport%20%7B%20createPinia%2C%20PiniaVuePlugin%20%7D%20from%20'pinia'%0Aimport%20piniaPersist%20from%20'pinia-plugin-persist'%0Aimport%20App%20from%20'.%2FApp.vue'%0A%0AVue.use(vueCompositionApi)%0AVue.use(PiniaVuePlugin)%0A%0Aconst%20pinia%20%3D%20createPinia()%0Apinia.use(piniaPersist)%0A%0Anew%20Vue(%7B%0A%20%20pinia%2C%0A%20%20render%3A%20h%20%3D%3E%20h(App)%0A%7D).%24mount('%23app')%0A%60%60%60%0A%0A**Vue%203%20%E9%A1%B9%E7%9B%AE%EF%BC%9A**%0A%0A%60%60%60javascript%0Aimport%20%7B%20createApp%20%7D%20from%20'vue'%0Aimport%20%7B%20createPinia%20%7D%20from%20'pinia'%0Aimport%20piniaPersist%20from%20'pinia-plugin-persist'%0Aimport%20App%20from%20'.%2FApp.vue'%0A%0Aconst%20pinia%20%3D%20createPinia()%0Apinia.use(piniaPersist)%0A%0AcreateApp(App)%0A%20%20.use(pinia)%0A%20%20.mount('%23app')%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-24",
       "sectionId": "s2",
-      "title": "3. 创建 Store 并启用持久化",
-      "kind": "text",
-      "body": "创建一个 Pinia store，并启用持久化存储。"
-    },
-    {
-      "id": "s2-25",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "// stores/userStore.js\nimport { defineStore } from 'pinia'\n\nexport const useUserStore = defineStore('userStore', {\n  state: () => ({\n    firstName: 'S',\n    lastName: 'L',\n    accessToken: 'xxxxxxxxxxxxx'\n  }),\n  actions: {\n    setToken(value) {\n      this.accessToken = value\n    }\n  },\n  persist: {\n    enabled: true,\n    strategies: [\n      {\n        storage: localStorage,\n        paths: ['accessToken']\n      }\n    ]\n  }\n})"
+      "title": "3.%20%E5%88%9B%E5%BB%BA%20Store%20%E5%B9%B6%E5%90%AF%E7%94%A8%E6%8C%81%E4%B9%85%E5%8C%96",
+      "body": "%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20Pinia%20store%EF%BC%8C%E5%B9%B6%E5%90%AF%E7%94%A8%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%98%E5%82%A8%E3%80%82%0A%0A%60%60%60javascript%0A%2F%2F%20stores%2FuserStore.js%0Aimport%20%7B%20defineStore%20%7D%20from%20'pinia'%0A%0Aexport%20const%20useUserStore%20%3D%20defineStore('userStore'%2C%20%7B%0A%20%20state%3A%20()%20%3D%3E%20(%7B%0A%20%20%20%20firstName%3A%20'S'%2C%0A%20%20%20%20lastName%3A%20'L'%2C%0A%20%20%20%20accessToken%3A%20'xxxxxxxxxxxxx'%0A%20%20%7D)%2C%0A%20%20actions%3A%20%7B%0A%20%20%20%20setToken(value)%20%7B%0A%20%20%20%20%20%20this.accessToken%20%3D%20value%0A%20%20%20%20%7D%0A%20%20%7D%2C%0A%20%20persist%3A%20%7B%0A%20%20%20%20enabled%3A%20true%2C%0A%20%20%20%20strategies%3A%20%5B%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20storage%3A%20localStorage%2C%0A%20%20%20%20%20%20%20%20paths%3A%20%5B'accessToken'%5D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%5D%0A%20%20%7D%0A%7D)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-26",
       "sectionId": "s2",
-      "title": "4. 使用 Store",
-      "kind": "text",
-      "body": "在组件中使用创建好的 store。"
-    },
-    {
-      "id": "s2-27",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "// src/components/SomeComponent.vue\n<template>\n  <div>\n    <p>{{ userStore.firstName }} {{ userStore.lastName }}</p>\n    <p>{{ userStore.accessToken }}</p>\n  </div>\n</template>\n\n<script>\nimport { useUserStore } from '@/stores/userStore'\n\nexport default {\n  setup() {\n    const userStore = useUserStore()\n    \n    return { userStore }\n  }\n}\n</script>"
+      "title": "4.%20%E4%BD%BF%E7%94%A8%20Store",
+      "body": "%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%88%9B%E5%BB%BA%E5%A5%BD%E7%9A%84%20store%E3%80%82%0A%0A%60%60%60javascript%0A%2F%2F%20src%2Fcomponents%2FSomeComponent.vue%0A%3Ctemplate%3E%0A%20%20%3Cdiv%3E%0A%20%20%20%20%3Cp%3E%7B%7B%20userStore.firstName%20%7D%7D%20%7B%7B%20userStore.lastName%20%7D%7D%3C%2Fp%3E%0A%20%20%20%20%3Cp%3E%7B%7B%20userStore.accessToken%20%7D%7D%3C%2Fp%3E%0A%20%20%3C%2Fdiv%3E%0A%3C%2Ftemplate%3E%0A%0A%3Cscript%3E%0Aimport%20%7B%20useUserStore%20%7D%20from%20'%40%2Fstores%2FuserStore'%0A%0Aexport%20default%20%7B%0A%20%20setup()%20%7B%0A%20%20%20%20const%20userStore%20%3D%20useUserStore()%0A%20%20%20%20%0A%20%20%20%20return%20%7B%20userStore%20%7D%0A%20%20%7D%0A%7D%0A%3C%2Fscript%3E%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-28",
       "sectionId": "s2",
-      "title": "SSR 支持",
-      "kind": "text",
-      "body": "Pinia 支持服务端渲染 (SSR)。在你的 SSR 入口文件中创建 Pinia 实例："
-    },
-    {
-      "id": "s2-29",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "import { createPinia } from 'pinia'\n\nexport function createApp() {\n  const app = createSSRApp(App)\n  const pinia = createPinia()\n\n  app.use(pinia)\n  return { app, pinia }\n}"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "明白了，让我们来结合 `pinia-plugin-persist` 插件完善 Pinia 备忘清单。"
+      "title": "SSR%20%E6%94%AF%E6%8C%81",
+      "body": "Pinia%20%E6%94%AF%E6%8C%81%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93%20(SSR)%E3%80%82%E5%9C%A8%E4%BD%A0%E7%9A%84%20SSR%20%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6%E4%B8%AD%E5%88%9B%E5%BB%BA%20Pinia%20%E5%AE%9E%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60javascript%0Aimport%20%7B%20createPinia%20%7D%20from%20'pinia'%0A%0Aexport%20function%20createApp()%20%7B%0A%20%20const%20app%20%3D%20createSSRApp(App)%0A%20%20const%20pinia%20%3D%20createPinia()%0A%0A%20%20app.use(pinia)%0A%20%20return%20%7B%20app%2C%20pinia%20%7D%0A%7D%0A%60%60%60%0A%0A%E6%98%8E%E7%99%BD%E4%BA%86%EF%BC%8C%E8%AE%A9%E6%88%91%E4%BB%AC%E6%9D%A5%E7%BB%93%E5%90%88%20%60pinia-plugin-persist%60%20%E6%8F%92%E4%BB%B6%E5%AE%8C%E5%96%84%20Pinia%20%E5%A4%87%E5%BF%98%E6%B8%85%E5%8D%95%E3%80%82",
+      "encoded": true
     },
     {
       "id": "s2-31",
       "sectionId": "s2",
       "title": "使用 Vue Devtools",
-      "kind": "text",
       "body": "Pinia 可以与 Vue Devtools 一起使用。确保你安装了最新版本的 Vue Devtools，然后你可以在 Devtools 中查看和调试你的 Pinia store。"
     },
     {
       "id": "s2-32",
       "sectionId": "s2",
-      "title": "使用异步 Actions",
-      "kind": "text",
-      "body": "Pinia 支持在 actions 中使用异步代码："
-    },
-    {
-      "id": "s2-33",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "// src/stores/todo.js\nimport { defineStore } from 'pinia'\nimport axios from 'axios'\n\nexport const useTodoStore = defineStore('todo', {\n  state: () => ({\n    todos: []\n  }),\n  actions: {\n    async fetchTodos() {\n      const response = await axios.get('/api/todos')\n      this.todos = response.data\n    }\n  }\n})"
+      "title": "%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%20Actions",
+      "body": "Pinia%20%E6%94%AF%E6%8C%81%E5%9C%A8%20actions%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%BC%82%E6%AD%A5%E4%BB%A3%E7%A0%81%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F%2F%20src%2Fstores%2Ftodo.js%0Aimport%20%7B%20defineStore%20%7D%20from%20'pinia'%0Aimport%20axios%20from%20'axios'%0A%0Aexport%20const%20useTodoStore%20%3D%20defineStore('todo'%2C%20%7B%0A%20%20state%3A%20()%20%3D%3E%20(%7B%0A%20%20%20%20todos%3A%20%5B%5D%0A%20%20%7D)%2C%0A%20%20actions%3A%20%7B%0A%20%20%20%20async%20fetchTodos()%20%7B%0A%20%20%20%20%20%20const%20response%20%3D%20await%20axios.get('%2Fapi%2Ftodos')%0A%20%20%20%20%20%20this.todos%20%3D%20response.data%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-34",
       "sectionId": "s2",
-      "title": "测试 Pinia Store",
-      "kind": "text",
-      "body": "你可以使用 Vue Test Utils 和 Jest 来测试你的 Pinia store："
-    },
-    {
-      "id": "s2-35",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "javascript",
-      "code": "// __tests__/counterStore.test.js\nimport { setActivePinia, createPinia } from 'pinia'\nimport { useCounterStore } from '@/stores/counter'\n\ndescribe('Counter Store', () => {\n  beforeEach(() => {\n    setActivePinia(createPinia())\n  })\n\n  it('increments the count', () => {\n    const counterStore = useCounterStore()\n    expect(counterStore.count).toBe(0)\n    counterStore.increment()\n    expect(counterStore.count).toBe(1)\n  })\n\n  it('returns double count', () => {\n    const counterStore = useCounterStore()\n    counterStore.count = 2\n    expect(counterStore.doubleCount).toBe(4)\n  })\n})"
+      "title": "%E6%B5%8B%E8%AF%95%20Pinia%20Store",
+      "body": "%E4%BD%A0%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20Vue%20Test%20Utils%20%E5%92%8C%20Jest%20%E6%9D%A5%E6%B5%8B%E8%AF%95%E4%BD%A0%E7%9A%84%20Pinia%20store%EF%BC%9A%0A%0A%60%60%60javascript%0A%2F%2F%20__tests__%2FcounterStore.test.js%0Aimport%20%7B%20setActivePinia%2C%20createPinia%20%7D%20from%20'pinia'%0Aimport%20%7B%20useCounterStore%20%7D%20from%20'%40%2Fstores%2Fcounter'%0A%0Adescribe('Counter%20Store'%2C%20()%20%3D%3E%20%7B%0A%20%20beforeEach(()%20%3D%3E%20%7B%0A%20%20%20%20setActivePinia(createPinia())%0A%20%20%7D)%0A%0A%20%20it('increments%20the%20count'%2C%20()%20%3D%3E%20%7B%0A%20%20%20%20const%20counterStore%20%3D%20useCounterStore()%0A%20%20%20%20expect(counterStore.count).toBe(0)%0A%20%20%20%20counterStore.increment()%0A%20%20%20%20expect(counterStore.count).toBe(1)%0A%20%20%7D)%0A%0A%20%20it('returns%20double%20count'%2C%20()%20%3D%3E%20%7B%0A%20%20%20%20const%20counterStore%20%3D%20useCounterStore()%0A%20%20%20%20counterStore.count%20%3D%202%0A%20%20%20%20expect(counterStore.doubleCount).toBe(4)%0A%20%20%7D)%0A%7D)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-36",
       "sectionId": "s3",
       "title": "另见",
-      "kind": "text",
       "body": "• [Pinia 官方文档](https://pinia.vuejs.org/)\n• [Pinia GitHub 仓库](https://github.com/vuejs/pinia)\n• [Pinia 快速上手](https://pinia.vuejs.org/getting-started.html)\n• [pinia-plugin-persist 官方文档](https://seb-l.github.io/pinia-plugin-persist/basic-usage.html)"
     }
   ],

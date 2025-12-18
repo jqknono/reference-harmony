@@ -65,1229 +65,479 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "[![NPM version](https://img.shields.io/npm/v/next.svg?style=flat)](https://www.npmjs.com/package/next)\n[![Downloads](https://img.shields.io/npm/dm/next.svg?style=flat)](https://www.npmjs.com/package/next)\n[![Repo Dependents](https://badgen.net/github/dependents-repo/vercel/next.js)](https://github.com/vercel/next.js/network/dependents)\n[![Github repo](https://badgen.net/badge/icon/Github?icon=github&label)](https://github.com/vercel/next.js)"
     },
     {
       "id": "intro-1",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "这是一份快速参考备忘单，包含 [Next.js](https://nextjs.org/) 的 API 参考列表和一些示例\n<!--rehype:style=padding-top: 12px;-->"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "创建项目",
-      "kind": "code",
-      "lang": "shell",
-      "code": "npx create-next-app@latest\n# or\nyarn create next-app\n# or\npnpm create next-app"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "或者创建 [TypeScript](./typescript.md) 项目"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "npx create-next-app@latest --typescript\n# or\nyarn create next-app --typescript\n# or\npnpm create next-app --typescript"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "运行 `npm run dev` 或 `yarn dev` 或 `pnpm dev` 以在 <http://localhost:3000> 上启动开发服务器"
+      "body": "```shell\nnpx create-next-app@latest\n# or\nyarn create next-app\n# or\npnpm create next-app\n```\n\n或者创建 [TypeScript](./typescript.md) 项目\n\n```shell\nnpx create-next-app@latest --typescript\n# or\nyarn create next-app --typescript\n# or\npnpm create next-app --typescript\n```\n\n运行 `npm run dev` 或 `yarn dev` 或 `pnpm dev` 以在 <http://localhost:3000> 上启动开发服务器"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "添加首页",
-      "kind": "text",
-      "body": "使用以下内容填充 `pages/index.js`："
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "function HomePage() {\n  return <div>Welcome to Next.js!</div>\n}\n\nexport default HomePage"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "`Next.js` 是围绕页面的概念构建的。 页面是从 `pages` 目录中的 `.js`、`.jsx`、`.ts` 或 `.tsx` 文件导出的 `React` 组件"
+      "body": "使用以下内容填充 `pages/index.js`：\n\n```jsx\nfunction HomePage() {\n  return <div>Welcome to Next.js!</div>\n}\n\nexport default HomePage\n```\n\n`Next.js` 是围绕页面的概念构建的。 页面是从 `pages` 目录中的 `.js`、`.jsx`、`.ts` 或 `.tsx` 文件导出的 `React` 组件"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "getServerSideProps",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "function Page({ data }) {\n  // 渲染数据...\n}\n\n// 每个请求都会调用它\nexport async function getServerSideProps() {\n  // 从外部 API 获取数据\n  const res = await fetch(`https://.../data`)\n  const data = await res.json()\n\n  // 通过 props 向页面传递数据\n  return { props: { data } }\n}\n\nexport default Page"
-    },
-    {
-      "id": "s1-10",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "如果您从页面导出一个名为 `getServerSideProps`（服务器端渲染）的函数，`Next.js` 将使用 `getServerSideProps` 返回的数据在每个请求上预渲染该页面"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 当您直接请求此页面时，`getServerSideProps` 在请求时运行，此页面将使用返回的 props 进行预渲染\n• 当您通过 `next/link` 或 `next/router` 在客户端页面转换上请求此页面时，`Next.js` 会向服务器发送 API 请求，服务器运行 `getServerSideProps`"
+      "body": "```jsx\nfunction Page({ data }) {\n  // 渲染数据...\n}\n\n// 每个请求都会调用它\nexport async function getServerSideProps() {\n  // 从外部 API 获取数据\n  const res = await fetch(`https://.../data`)\n  const data = await res.json()\n\n  // 通过 props 向页面传递数据\n  return { props: { data } }\n}\n\nexport default Page\n```\n\n如果您从页面导出一个名为 `getServerSideProps`（服务器端渲染）的函数，`Next.js` 将使用 `getServerSideProps` 返回的数据在每个请求上预渲染该页面\n\n• 当您直接请求此页面时，`getServerSideProps` 在请求时运行，此页面将使用返回的 props 进行预渲染\n• 当您通过 `next/link` 或 `next/router` 在客户端页面转换上请求此页面时，`Next.js` 会向服务器发送 API 请求，服务器运行 `getServerSideProps`"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "getStaticPaths",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/posts/[id].js\nexport async function getStaticPaths() {\n  // 当这是真的时（在预览环境中）不要预呈现任何静态页面（更快的构建，但更慢的初始页面加载）\n  if (process.env.SKIP_BUILD_STATIC_GENERATION) {\n    return {\n      paths: [],\n      fallback: 'blocking',\n    }\n  }\n\n  // 调用外部 API 端点以获取帖子\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  // 根据帖子获取我们要预渲染的路径 在生产环境中，预渲染所有页面\n  // （构建速度较慢，但初始页面加载速度较快）\n  const paths = posts.map((post) => ({\n    params: { id: post.id },\n  }))\n\n  // { fallback: false } 表示其他路由应该 404\n  return { paths, fallback: false }\n}"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "如果页面具有动态路由并使用 `getStaticProps`，则需要定义要静态生成的路径列表"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 数据来自无头 CMS\n• 数据来自数据库\n• 数据来自文件系统\n• 数据可以公开缓存（非用户特定）\n• 页面必须预渲染（用于 SEO）并且速度非常快 —— `getStaticProps` 生成 HTML 和 JSON 文件，这两种文件都可以由 CDN 缓存以提高性能"
+      "body": "%60%60%60jsx%0A%2F%2F%20pages%2Fposts%2F%5Bid%5D.js%0Aexport%20async%20function%20getStaticPaths()%20%7B%0A%20%20%2F%2F%20%E5%BD%93%E8%BF%99%E6%98%AF%E7%9C%9F%E7%9A%84%E6%97%B6%EF%BC%88%E5%9C%A8%E9%A2%84%E8%A7%88%E7%8E%AF%E5%A2%83%E4%B8%AD%EF%BC%89%E4%B8%8D%E8%A6%81%E9%A2%84%E5%91%88%E7%8E%B0%E4%BB%BB%E4%BD%95%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%EF%BC%88%E6%9B%B4%E5%BF%AB%E7%9A%84%E6%9E%84%E5%BB%BA%EF%BC%8C%E4%BD%86%E6%9B%B4%E6%85%A2%E7%9A%84%E5%88%9D%E5%A7%8B%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%EF%BC%89%0A%20%20if%20(process.env.SKIP_BUILD_STATIC_GENERATION)%20%7B%0A%20%20%20%20return%20%7B%0A%20%20%20%20%20%20paths%3A%20%5B%5D%2C%0A%20%20%20%20%20%20fallback%3A%20'blocking'%2C%0A%20%20%20%20%7D%0A%20%20%7D%0A%0A%20%20%2F%2F%20%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%20API%20%E7%AB%AF%E7%82%B9%E4%BB%A5%E8%8E%B7%E5%8F%96%E5%B8%96%E5%AD%90%0A%20%20const%20res%20%3D%20await%20fetch('https%3A%2F%2F...%2Fposts')%0A%20%20const%20posts%20%3D%20await%20res.json()%0A%0A%20%20%2F%2F%20%E6%A0%B9%E6%8D%AE%E5%B8%96%E5%AD%90%E8%8E%B7%E5%8F%96%E6%88%91%E4%BB%AC%E8%A6%81%E9%A2%84%E6%B8%B2%E6%9F%93%E7%9A%84%E8%B7%AF%E5%BE%84%20%E5%9C%A8%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%AD%EF%BC%8C%E9%A2%84%E6%B8%B2%E6%9F%93%E6%89%80%E6%9C%89%E9%A1%B5%E9%9D%A2%0A%20%20%2F%2F%20%EF%BC%88%E6%9E%84%E5%BB%BA%E9%80%9F%E5%BA%A6%E8%BE%83%E6%85%A2%EF%BC%8C%E4%BD%86%E5%88%9D%E5%A7%8B%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E9%80%9F%E5%BA%A6%E8%BE%83%E5%BF%AB%EF%BC%89%0A%20%20const%20paths%20%3D%20posts.map((post)%20%3D%3E%20(%7B%0A%20%20%20%20params%3A%20%7B%20id%3A%20post.id%20%7D%2C%0A%20%20%7D))%0A%0A%20%20%2F%2F%20%7B%20fallback%3A%20false%20%7D%20%E8%A1%A8%E7%A4%BA%E5%85%B6%E4%BB%96%E8%B7%AF%E7%94%B1%E5%BA%94%E8%AF%A5%20404%0A%20%20return%20%7B%20paths%2C%20fallback%3A%20false%20%7D%0A%7D%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E9%A1%B5%E9%9D%A2%E5%85%B7%E6%9C%89%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%B9%B6%E4%BD%BF%E7%94%A8%20%60getStaticProps%60%EF%BC%8C%E5%88%99%E9%9C%80%E8%A6%81%E5%AE%9A%E4%B9%89%E8%A6%81%E9%9D%99%E6%80%81%E7%94%9F%E6%88%90%E7%9A%84%E8%B7%AF%E5%BE%84%E5%88%97%E8%A1%A8%0A%0A%E2%80%A2%20%E6%95%B0%E6%8D%AE%E6%9D%A5%E8%87%AA%E6%97%A0%E5%A4%B4%20CMS%0A%E2%80%A2%20%E6%95%B0%E6%8D%AE%E6%9D%A5%E8%87%AA%E6%95%B0%E6%8D%AE%E5%BA%93%0A%E2%80%A2%20%E6%95%B0%E6%8D%AE%E6%9D%A5%E8%87%AA%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%0A%E2%80%A2%20%E6%95%B0%E6%8D%AE%E5%8F%AF%E4%BB%A5%E5%85%AC%E5%BC%80%E7%BC%93%E5%AD%98%EF%BC%88%E9%9D%9E%E7%94%A8%E6%88%B7%E7%89%B9%E5%AE%9A%EF%BC%89%0A%E2%80%A2%20%E9%A1%B5%E9%9D%A2%E5%BF%85%E9%A1%BB%E9%A2%84%E6%B8%B2%E6%9F%93%EF%BC%88%E7%94%A8%E4%BA%8E%20SEO%EF%BC%89%E5%B9%B6%E4%B8%94%E9%80%9F%E5%BA%A6%E9%9D%9E%E5%B8%B8%E5%BF%AB%20%E2%80%94%E2%80%94%20%60getStaticProps%60%20%E7%94%9F%E6%88%90%20HTML%20%E5%92%8C%20JSON%20%E6%96%87%E4%BB%B6%EF%BC%8C%E8%BF%99%E4%B8%A4%E7%A7%8D%E6%96%87%E4%BB%B6%E9%83%BD%E5%8F%AF%E4%BB%A5%E7%94%B1%20CDN%20%E7%BC%93%E5%AD%98%E4%BB%A5%E6%8F%90%E9%AB%98%E6%80%A7%E8%83%BD",
+      "encoded": true
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
       "title": "getStaticProps",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// 帖子将在构建时由 getStaticProps() 填充\nfunction Blog({ posts }) {\n  return (\n    <ul>\n      {posts.map((post) => (\n        <li>{post.title}</li>\n      ))}\n    </ul>\n  )\n}\n\n// 这个函数在服务器端的构建时被调用。\n// 它不会在客户端调用，因此您甚至可以直接进行数据库查询。\nexport async function getStaticProps() {\n  // 调用外部 API 端点以获取帖子。 您可以使用任何数据获取库\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  // 通过返回 { props: { posts } }，Blog 组件将在构建时接收 `posts` 作为 prop\n  return {\n    props: {\n      posts,\n    },\n  }\n}\n\nexport default Blog"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在服务器端的构建时被调用"
+      "body": "%60%60%60jsx%0A%2F%2F%20%E5%B8%96%E5%AD%90%E5%B0%86%E5%9C%A8%E6%9E%84%E5%BB%BA%E6%97%B6%E7%94%B1%20getStaticProps()%20%E5%A1%AB%E5%85%85%0Afunction%20Blog(%7B%20posts%20%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%7Bposts.map((post)%20%3D%3E%20(%0A%20%20%20%20%20%20%20%20%3Cli%3E%7Bpost.title%7D%3C%2Fli%3E%0A%20%20%20%20%20%20))%7D%0A%20%20%20%20%3C%2Ful%3E%0A%20%20)%0A%7D%0A%0A%2F%2F%20%E8%BF%99%E4%B8%AA%E5%87%BD%E6%95%B0%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E6%9E%84%E5%BB%BA%E6%97%B6%E8%A2%AB%E8%B0%83%E7%94%A8%E3%80%82%0A%2F%2F%20%E5%AE%83%E4%B8%8D%E4%BC%9A%E5%9C%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%B0%83%E7%94%A8%EF%BC%8C%E5%9B%A0%E6%AD%A4%E6%82%A8%E7%94%9A%E8%87%B3%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9F%A5%E8%AF%A2%E3%80%82%0Aexport%20async%20function%20getStaticProps()%20%7B%0A%20%20%2F%2F%20%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%20API%20%E7%AB%AF%E7%82%B9%E4%BB%A5%E8%8E%B7%E5%8F%96%E5%B8%96%E5%AD%90%E3%80%82%20%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E4%BB%BB%E4%BD%95%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E5%BA%93%0A%20%20const%20res%20%3D%20await%20fetch('https%3A%2F%2F...%2Fposts')%0A%20%20const%20posts%20%3D%20await%20res.json()%0A%0A%20%20%2F%2F%20%E9%80%9A%E8%BF%87%E8%BF%94%E5%9B%9E%20%7B%20props%3A%20%7B%20posts%20%7D%20%7D%EF%BC%8CBlog%20%E7%BB%84%E4%BB%B6%E5%B0%86%E5%9C%A8%E6%9E%84%E5%BB%BA%E6%97%B6%E6%8E%A5%E6%94%B6%20%60posts%60%20%E4%BD%9C%E4%B8%BA%20prop%0A%20%20return%20%7B%0A%20%20%20%20props%3A%20%7B%0A%20%20%20%20%20%20posts%2C%0A%20%20%20%20%7D%2C%0A%20%20%7D%0A%7D%0A%0Aexport%20default%20Blog%0A%60%60%60%0A%0A%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E6%9E%84%E5%BB%BA%E6%97%B6%E8%A2%AB%E8%B0%83%E7%94%A8",
+      "encoded": true
     },
     {
       "id": "s1-17",
       "sectionId": "s1",
-      "title": "增量静态再生",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "function Blog({ posts }) {\n  return (\n    <ul>\n      {posts.map((post) => (\n        <li key={post.id}>{post.title}</li>\n      ))}\n    </ul>\n  )\n}\n\n// 这个函数在服务器端的构建时被调用\n// 如果启用了重新验证并且有新请求进入，它可能会在无服务器功能上再次调用\nexport async function getStaticProps() {\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  return {\n    props: {\n      posts,\n    },\n    // Next.js 将尝试重新生成页面：\n    // - 当请求进来时\n    // - 最多每 10 秒一次\n    revalidate: 10, // 片刻之间\n  }\n}\n\n// 这个函数在服务器端的构建时被调用\n// 如果尚未生成路径，则可能会在无服务器函数上再次调用它\nexport async function getStaticPaths() {\n  const res = await fetch('https://.../posts')\n  const posts = await res.json()\n\n  // 根据帖子获取我们要预渲染的路径\n  const paths = posts.map((post) => ({\n    params: { id: post.id },\n  }))\n\n  // 我们将在构建时仅预渲染这些路径\n  // { fallback: blocking } 如果路径不存在，服务器将按需呈现页面\n  return { paths, fallback: 'blocking' }\n}\n\nexport default Blog"
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• 在初始请求之后和 10 秒之前对页面的任何请求也会被缓存和即时\n• 在 10 秒窗口之后，下一个请求仍将显示缓存的（陈旧的）页面\n• Next.js 在后台触发页面的重新生成\n• 一旦页面生成成功，Next.js 将使缓存失效并显示更新后的页面。如果后台重新生成失败，旧页面仍将保持不变"
+      "title": "%E5%A2%9E%E9%87%8F%E9%9D%99%E6%80%81%E5%86%8D%E7%94%9F",
+      "body": "%60%60%60jsx%0Afunction%20Blog(%7B%20posts%20%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%7Bposts.map((post)%20%3D%3E%20(%0A%20%20%20%20%20%20%20%20%3Cli%20key%3D%7Bpost.id%7D%3E%7Bpost.title%7D%3C%2Fli%3E%0A%20%20%20%20%20%20))%7D%0A%20%20%20%20%3C%2Ful%3E%0A%20%20)%0A%7D%0A%0A%2F%2F%20%E8%BF%99%E4%B8%AA%E5%87%BD%E6%95%B0%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E6%9E%84%E5%BB%BA%E6%97%B6%E8%A2%AB%E8%B0%83%E7%94%A8%0A%2F%2F%20%E5%A6%82%E6%9E%9C%E5%90%AF%E7%94%A8%E4%BA%86%E9%87%8D%E6%96%B0%E9%AA%8C%E8%AF%81%E5%B9%B6%E4%B8%94%E6%9C%89%E6%96%B0%E8%AF%B7%E6%B1%82%E8%BF%9B%E5%85%A5%EF%BC%8C%E5%AE%83%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%9C%A8%E6%97%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%8A%9F%E8%83%BD%E4%B8%8A%E5%86%8D%E6%AC%A1%E8%B0%83%E7%94%A8%0Aexport%20async%20function%20getStaticProps()%20%7B%0A%20%20const%20res%20%3D%20await%20fetch('https%3A%2F%2F...%2Fposts')%0A%20%20const%20posts%20%3D%20await%20res.json()%0A%0A%20%20return%20%7B%0A%20%20%20%20props%3A%20%7B%0A%20%20%20%20%20%20posts%2C%0A%20%20%20%20%7D%2C%0A%20%20%20%20%2F%2F%20Next.js%20%E5%B0%86%E5%B0%9D%E8%AF%95%E9%87%8D%E6%96%B0%E7%94%9F%E6%88%90%E9%A1%B5%E9%9D%A2%EF%BC%9A%0A%20%20%20%20%2F%2F%20-%20%E5%BD%93%E8%AF%B7%E6%B1%82%E8%BF%9B%E6%9D%A5%E6%97%B6%0A%20%20%20%20%2F%2F%20-%20%E6%9C%80%E5%A4%9A%E6%AF%8F%2010%20%E7%A7%92%E4%B8%80%E6%AC%A1%0A%20%20%20%20revalidate%3A%2010%2C%20%2F%2F%20%E7%89%87%E5%88%BB%E4%B9%8B%E9%97%B4%0A%20%20%7D%0A%7D%0A%0A%2F%2F%20%E8%BF%99%E4%B8%AA%E5%87%BD%E6%95%B0%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%9A%84%E6%9E%84%E5%BB%BA%E6%97%B6%E8%A2%AB%E8%B0%83%E7%94%A8%0A%2F%2F%20%E5%A6%82%E6%9E%9C%E5%B0%9A%E6%9C%AA%E7%94%9F%E6%88%90%E8%B7%AF%E5%BE%84%EF%BC%8C%E5%88%99%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%9C%A8%E6%97%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%87%BD%E6%95%B0%E4%B8%8A%E5%86%8D%E6%AC%A1%E8%B0%83%E7%94%A8%E5%AE%83%0Aexport%20async%20function%20getStaticPaths()%20%7B%0A%20%20const%20res%20%3D%20await%20fetch('https%3A%2F%2F...%2Fposts')%0A%20%20const%20posts%20%3D%20await%20res.json()%0A%0A%20%20%2F%2F%20%E6%A0%B9%E6%8D%AE%E5%B8%96%E5%AD%90%E8%8E%B7%E5%8F%96%E6%88%91%E4%BB%AC%E8%A6%81%E9%A2%84%E6%B8%B2%E6%9F%93%E7%9A%84%E8%B7%AF%E5%BE%84%0A%20%20const%20paths%20%3D%20posts.map((post)%20%3D%3E%20(%7B%0A%20%20%20%20params%3A%20%7B%20id%3A%20post.id%20%7D%2C%0A%20%20%7D))%0A%0A%20%20%2F%2F%20%E6%88%91%E4%BB%AC%E5%B0%86%E5%9C%A8%E6%9E%84%E5%BB%BA%E6%97%B6%E4%BB%85%E9%A2%84%E6%B8%B2%E6%9F%93%E8%BF%99%E4%BA%9B%E8%B7%AF%E5%BE%84%0A%20%20%2F%2F%20%7B%20fallback%3A%20blocking%20%7D%20%E5%A6%82%E6%9E%9C%E8%B7%AF%E5%BE%84%E4%B8%8D%E5%AD%98%E5%9C%A8%EF%BC%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B0%86%E6%8C%89%E9%9C%80%E5%91%88%E7%8E%B0%E9%A1%B5%E9%9D%A2%0A%20%20return%20%7B%20paths%2C%20fallback%3A%20'blocking'%20%7D%0A%7D%0A%0Aexport%20default%20Blog%0A%60%60%60%0A%0A%E2%80%A2%20%E5%9C%A8%E5%88%9D%E5%A7%8B%E8%AF%B7%E6%B1%82%E4%B9%8B%E5%90%8E%E5%92%8C%2010%20%E7%A7%92%E4%B9%8B%E5%89%8D%E5%AF%B9%E9%A1%B5%E9%9D%A2%E7%9A%84%E4%BB%BB%E4%BD%95%E8%AF%B7%E6%B1%82%E4%B9%9F%E4%BC%9A%E8%A2%AB%E7%BC%93%E5%AD%98%E5%92%8C%E5%8D%B3%E6%97%B6%0A%E2%80%A2%20%E5%9C%A8%2010%20%E7%A7%92%E7%AA%97%E5%8F%A3%E4%B9%8B%E5%90%8E%EF%BC%8C%E4%B8%8B%E4%B8%80%E4%B8%AA%E8%AF%B7%E6%B1%82%E4%BB%8D%E5%B0%86%E6%98%BE%E7%A4%BA%E7%BC%93%E5%AD%98%E7%9A%84%EF%BC%88%E9%99%88%E6%97%A7%E7%9A%84%EF%BC%89%E9%A1%B5%E9%9D%A2%0A%E2%80%A2%20Next.js%20%E5%9C%A8%E5%90%8E%E5%8F%B0%E8%A7%A6%E5%8F%91%E9%A1%B5%E9%9D%A2%E7%9A%84%E9%87%8D%E6%96%B0%E7%94%9F%E6%88%90%0A%E2%80%A2%20%E4%B8%80%E6%97%A6%E9%A1%B5%E9%9D%A2%E7%94%9F%E6%88%90%E6%88%90%E5%8A%9F%EF%BC%8CNext.js%20%E5%B0%86%E4%BD%BF%E7%BC%93%E5%AD%98%E5%A4%B1%E6%95%88%E5%B9%B6%E6%98%BE%E7%A4%BA%E6%9B%B4%E6%96%B0%E5%90%8E%E7%9A%84%E9%A1%B5%E9%9D%A2%E3%80%82%E5%A6%82%E6%9E%9C%E5%90%8E%E5%8F%B0%E9%87%8D%E6%96%B0%E7%94%9F%E6%88%90%E5%A4%B1%E8%B4%A5%EF%BC%8C%E6%97%A7%E9%A1%B5%E9%9D%A2%E4%BB%8D%E5%B0%86%E4%BF%9D%E6%8C%81%E4%B8%8D%E5%8F%98",
+      "encoded": true
     },
     {
       "id": "s1-19",
       "sectionId": "s1",
-      "title": "使用 useEffect 客户端数据获取",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import { useState, useEffect } from 'react'\n\nfunction Profile() {\n  const [data, setData] = useState(null)\n  const [isLoading, setLoading] = useState(false)\n\n  useEffect(() => {\n    setLoading(true)\n    fetch('/api/profile-data')\n      .then((res) => res.json())\n      .then((data) => {\n        setData(data)\n        setLoading(false)\n      })\n  }, [])\n\n  if (isLoading) return <p>Loading...</p>\n  if (!data) return <p>No profile data</p>\n\n  return (\n    <div>\n      <h1>{data.name}</h1>\n      <p>{data.bio}</p>\n    </div>\n  )\n}"
+      "title": "%E4%BD%BF%E7%94%A8%20useEffect%20%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96",
+      "body": "%60%60%60jsx%0Aimport%20%7B%20useState%2C%20useEffect%20%7D%20from%20'react'%0A%0Afunction%20Profile()%20%7B%0A%20%20const%20%5Bdata%2C%20setData%5D%20%3D%20useState(null)%0A%20%20const%20%5BisLoading%2C%20setLoading%5D%20%3D%20useState(false)%0A%0A%20%20useEffect(()%20%3D%3E%20%7B%0A%20%20%20%20setLoading(true)%0A%20%20%20%20fetch('%2Fapi%2Fprofile-data')%0A%20%20%20%20%20%20.then((res)%20%3D%3E%20res.json())%0A%20%20%20%20%20%20.then((data)%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20setData(data)%0A%20%20%20%20%20%20%20%20setLoading(false)%0A%20%20%20%20%20%20%7D)%0A%20%20%7D%2C%20%5B%5D)%0A%0A%20%20if%20(isLoading)%20return%20%3Cp%3ELoading...%3C%2Fp%3E%0A%20%20if%20(!data)%20return%20%3Cp%3ENo%20profile%20data%3C%2Fp%3E%0A%0A%20%20return%20(%0A%20%20%20%20%3Cdiv%3E%0A%20%20%20%20%20%20%3Ch1%3E%7Bdata.name%7D%3C%2Fh1%3E%0A%20%20%20%20%20%20%3Cp%3E%7Bdata.bio%7D%3C%2Fp%3E%0A%20%20%20%20%3C%2Fdiv%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-20",
       "sectionId": "s1",
-      "title": "使用 SWR 获取客户端数据",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import useSWR from 'swr'\n\nconst fetcher = (...args) => fetch(...args).then((res) => res.json())\n\nfunction Profile() {\n  const { data, error } = useSWR('/api/profile-data', fetcher)\n\n  if (error) return <div>Failed to load</div>\n  if (!data) return <div>Loading...</div>\n\n  return (\n    <div>\n      <h1>{data.name}</h1>\n      <p>{data.bio}</p>\n    </div>\n  )\n}"
+      "title": "%E4%BD%BF%E7%94%A8%20SWR%20%E8%8E%B7%E5%8F%96%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%95%B0%E6%8D%AE",
+      "body": "%60%60%60jsx%0Aimport%20useSWR%20from%20'swr'%0A%0Aconst%20fetcher%20%3D%20(...args)%20%3D%3E%20fetch(...args).then((res)%20%3D%3E%20res.json())%0A%0Afunction%20Profile()%20%7B%0A%20%20const%20%7B%20data%2C%20error%20%7D%20%3D%20useSWR('%2Fapi%2Fprofile-data'%2C%20fetcher)%0A%0A%20%20if%20(error)%20return%20%3Cdiv%3EFailed%20to%20load%3C%2Fdiv%3E%0A%20%20if%20(!data)%20return%20%3Cdiv%3ELoading...%3C%2Fdiv%3E%0A%0A%20%20return%20(%0A%20%20%20%20%3Cdiv%3E%0A%20%20%20%20%20%20%3Ch1%3E%7Bdata.name%7D%3C%2Fh1%3E%0A%20%20%20%20%20%20%3Cp%3E%7Bdata.bio%7D%3C%2Fp%3E%0A%20%20%20%20%3C%2Fdiv%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s1-21",
       "sectionId": "s1",
-      "title": "静态文件服务",
-      "kind": "text",
-      "body": "Next.js 可以在根目录中名为 `public` 的文件夹下提供静态文件，如图像。 然后，您的代码可以从基本 URL (`/`) 开始引用 `public` 中的文件"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Image%20from%20'next%2Fimage'%0A%0Afunction%20Avatar()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CImage%0A%20%20%20%20%20%20src%3D%22%2Fme.png%22%0A%20%20%20%20%20%20alt%3D%22me%22%0A%20%20%20%20%20%20width%3D%2264%22%0A%20%20%20%20%20%20height%3D%2264%22%0A%20%20%20%20%2F%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20Avatar",
+      "title": "%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1",
+      "body": "Next.js%20%E5%8F%AF%E4%BB%A5%E5%9C%A8%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%B8%AD%E5%90%8D%E4%B8%BA%20%60public%60%20%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E6%8F%90%E4%BE%9B%E9%9D%99%E6%80%81%E6%96%87%E4%BB%B6%EF%BC%8C%E5%A6%82%E5%9B%BE%E5%83%8F%E3%80%82%20%E7%84%B6%E5%90%8E%EF%BC%8C%E6%82%A8%E7%9A%84%E4%BB%A3%E7%A0%81%E5%8F%AF%E4%BB%A5%E4%BB%8E%E5%9F%BA%E6%9C%AC%20URL%20(%60%2F%60)%20%E5%BC%80%E5%A7%8B%E5%BC%95%E7%94%A8%20%60public%60%20%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%0A%0A%60%60%60jsx%0Aimport%20Image%20from%20'next%2Fimage'%0A%0Afunction%20Avatar()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CImage%0A%20%20%20%20%20%20src%3D%22%2Fme.png%22%0A%20%20%20%20%20%20alt%3D%22me%22%0A%20%20%20%20%20%20width%3D%2264%22%0A%20%20%20%20%20%20height%3D%2264%22%0A%20%20%20%20%2F%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20Avatar%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-23",
       "sectionId": "s1",
-      "title": "支持的浏览器和功能",
-      "kind": "text",
-      "body": "Next.js 支持零配置的现代浏览器"
-    },
-    {
-      "id": "s1-24",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• Chrome 64+\n• Edge 79+\n• Firefox 67+\n• Opera 51+\n• Safari 12+"
-    },
-    {
-      "id": "s1-25",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "Next.js 支持在 `package.json` 文件中配置 `Browserslist`"
-    },
-    {
-      "id": "s1-26",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22browserslist%22%3A%20%5B%0A%20%20%20%20%22chrome%2064%22%2C%0A%20%20%20%20%22edge%2079%22%2C%0A%20%20%20%20%22firefox%2067%22%2C%0A%20%20%20%20%22opera%2051%22%2C%0A%20%20%20%20%22safari%2012%22%0A%20%20%5D%0A%7D",
+      "title": "%E6%94%AF%E6%8C%81%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%92%8C%E5%8A%9F%E8%83%BD",
+      "body": "Next.js%20%E6%94%AF%E6%8C%81%E9%9B%B6%E9%85%8D%E7%BD%AE%E7%9A%84%E7%8E%B0%E4%BB%A3%E6%B5%8F%E8%A7%88%E5%99%A8%0A%0A%E2%80%A2%20Chrome%2064%2B%0A%E2%80%A2%20Edge%2079%2B%0A%E2%80%A2%20Firefox%2067%2B%0A%E2%80%A2%20Opera%2051%2B%0A%E2%80%A2%20Safari%2012%2B%0A%0ANext.js%20%E6%94%AF%E6%8C%81%E5%9C%A8%20%60package.json%60%20%E6%96%87%E4%BB%B6%E4%B8%AD%E9%85%8D%E7%BD%AE%20%60Browserslist%60%0A%0A%60%60%60js%0A%7B%0A%20%20%22browserslist%22%3A%20%5B%0A%20%20%20%20%22chrome%2064%22%2C%0A%20%20%20%20%22edge%2079%22%2C%0A%20%20%20%20%22firefox%2067%22%2C%0A%20%20%20%20%22opera%2051%22%2C%0A%20%20%20%20%22safari%2012%22%0A%20%20%5D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-27",
       "sectionId": "s2",
-      "title": "添加全局样式表",
-      "kind": "text",
-      "body": "如果不存在，请创建一个 `pages/_app.js` 文件。 然后，导入 `styles.css` 文件"
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import '../styles.css';\n\n// 在新的“pages/_app.js”文件中需要此默认导出\nexport default function MyApp({\n  Component, pageProps\n}) {\n  return <Component {...pageProps} />\n}"
-    },
-    {
-      "id": "s2-29",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "例如，考虑以下名为 `styles.css` 的样式表"
-    },
-    {
-      "id": "s2-30",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "css",
-      "code": "body {\n  font-family:\n    'SF Pro Text', 'SF Pro Icons',\n    'Helvetica Neue', 'Helvetica',\n    'Arial', sans-serif;\n  margin: 0 auto;\n}"
+      "title": "%E6%B7%BB%E5%8A%A0%E5%85%A8%E5%B1%80%E6%A0%B7%E5%BC%8F%E8%A1%A8",
+      "body": "%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%AD%98%E5%9C%A8%EF%BC%8C%E8%AF%B7%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%20%60pages%2F_app.js%60%20%E6%96%87%E4%BB%B6%E3%80%82%20%E7%84%B6%E5%90%8E%EF%BC%8C%E5%AF%BC%E5%85%A5%20%60styles.css%60%20%E6%96%87%E4%BB%B6%0A%0A%60%60%60jsx%0Aimport%20'..%2Fstyles.css'%3B%0A%0A%2F%2F%20%E5%9C%A8%E6%96%B0%E7%9A%84%E2%80%9Cpages%2F_app.js%E2%80%9D%E6%96%87%E4%BB%B6%E4%B8%AD%E9%9C%80%E8%A6%81%E6%AD%A4%E9%BB%98%E8%AE%A4%E5%AF%BC%E5%87%BA%0Aexport%20default%20function%20MyApp(%7B%0A%20%20Component%2C%20pageProps%0A%7D)%20%7B%0A%20%20return%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%7D%0A%60%60%60%0A%0A%E4%BE%8B%E5%A6%82%EF%BC%8C%E8%80%83%E8%99%91%E4%BB%A5%E4%B8%8B%E5%90%8D%E4%B8%BA%20%60styles.css%60%20%E7%9A%84%E6%A0%B7%E5%BC%8F%E8%A1%A8%0A%0A%60%60%60css%0Abody%20%7B%0A%20%20font-family%3A%0A%20%20%20%20'SF%20Pro%20Text'%2C%20'SF%20Pro%20Icons'%2C%0A%20%20%20%20'Helvetica%20Neue'%2C%20'Helvetica'%2C%0A%20%20%20%20'Arial'%2C%20sans-serif%3B%0A%20%20margin%3A%200%20auto%3B%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-31",
       "sectionId": "s2",
-      "title": "从 node_modules 导入样式",
-      "kind": "text",
-      "body": "对于全局样式表，如 `bootstrap` 或 `nprogress`，您应该在 `pages/_app.js` 中导入文件"
-    },
-    {
-      "id": "s2-32",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/_app.js\nimport 'bootstrap/dist/css/bootstrap.css'\n\nexport default function MyApp({\n  Component, pageProps\n}) {\n  return <Component {...pageProps} />\n}"
-    },
-    {
-      "id": "s2-33",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "从 <red>Next.js 9.5.4</red> 开始，您的应用程序中的任何地方都允许从 `node_modules` 导入 CSS 文件"
+      "title": "%E4%BB%8E%20node_modules%20%E5%AF%BC%E5%85%A5%E6%A0%B7%E5%BC%8F",
+      "body": "%E5%AF%B9%E4%BA%8E%E5%85%A8%E5%B1%80%E6%A0%B7%E5%BC%8F%E8%A1%A8%EF%BC%8C%E5%A6%82%20%60bootstrap%60%20%E6%88%96%20%60nprogress%60%EF%BC%8C%E6%82%A8%E5%BA%94%E8%AF%A5%E5%9C%A8%20%60pages%2F_app.js%60%20%E4%B8%AD%E5%AF%BC%E5%85%A5%E6%96%87%E4%BB%B6%0A%0A%60%60%60jsx%0A%2F%2F%20pages%2F_app.js%0Aimport%20'bootstrap%2Fdist%2Fcss%2Fbootstrap.css'%0A%0Aexport%20default%20function%20MyApp(%7B%0A%20%20Component%2C%20pageProps%0A%7D)%20%7B%0A%20%20return%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%7D%0A%60%60%60%0A%0A%E4%BB%8E%20%3Cred%3ENext.js%209.5.4%3C%2Fred%3E%20%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%82%A8%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E4%BB%BB%E4%BD%95%E5%9C%B0%E6%96%B9%E9%83%BD%E5%85%81%E8%AE%B8%E4%BB%8E%20%60node_modules%60%20%E5%AF%BC%E5%85%A5%20CSS%20%E6%96%87%E4%BB%B6",
+      "encoded": true
     },
     {
       "id": "s2-34",
       "sectionId": "s2",
-      "title": "添加组件级 CSS (CSS Modules)",
-      "kind": "text",
-      "body": "您无需担心 .error {} 与任何其他 `.css` 或 `.module.css` 文件！他将被生成 `hash` 名称"
-    },
-    {
-      "id": "s2-35",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "css",
-      "code": ".error {\n  color: white;\n  background-color: red;\n}"
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "然后，创建 `components/Button.js`，导入并使用上面的 CSS 文件："
-    },
-    {
-      "id": "s2-37",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20styles%20from%20'.%2FButton.module.css'%0A%0Aexport%20function%20Button()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cbutton%0A%20%20%20%20%20%20type%3D%22button%22%0A%20%20%20%20%20%20%2F%2F%20%E8%AF%B7%E6%B3%A8%E6%84%8F%E2%80%9Cerror%E2%80%9D%E7%B1%BB%0A%20%20%20%20%20%20%2F%2F%20%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%9C%E4%B8%BA%E5%AF%BC%E5%85%A5%E7%9A%84%E2%80%9Cstyles%E2%80%9D%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE%E7%9A%84%0A%20%20%20%20%20%20className%3D%7Bstyles.error%7D%0A%20%20%20%20%3E%0A%20%20%20%20%20%20Destroy%0A%20%20%20%20%3C%2Fbutton%3E%0A%20%20)%0A%7D",
+      "title": "%E6%B7%BB%E5%8A%A0%E7%BB%84%E4%BB%B6%E7%BA%A7%20CSS%20(CSS%20Modules)",
+      "body": "%E6%82%A8%E6%97%A0%E9%9C%80%E6%8B%85%E5%BF%83%20.error%20%7B%7D%20%E4%B8%8E%E4%BB%BB%E4%BD%95%E5%85%B6%E4%BB%96%20%60.css%60%20%E6%88%96%20%60.module.css%60%20%E6%96%87%E4%BB%B6%EF%BC%81%E4%BB%96%E5%B0%86%E8%A2%AB%E7%94%9F%E6%88%90%20%60hash%60%20%E5%90%8D%E7%A7%B0%0A%0A%60%60%60css%0A.error%20%7B%0A%20%20color%3A%20white%3B%0A%20%20background-color%3A%20red%3B%0A%7D%0A%60%60%60%0A%0A%E7%84%B6%E5%90%8E%EF%BC%8C%E5%88%9B%E5%BB%BA%20%60components%2FButton.js%60%EF%BC%8C%E5%AF%BC%E5%85%A5%E5%B9%B6%E4%BD%BF%E7%94%A8%E4%B8%8A%E9%9D%A2%E7%9A%84%20CSS%20%E6%96%87%E4%BB%B6%EF%BC%9A%0A%0A%60%60%60jsx%0Aimport%20styles%20from%20'.%2FButton.module.css'%0A%0Aexport%20function%20Button()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cbutton%0A%20%20%20%20%20%20type%3D%22button%22%0A%20%20%20%20%20%20%2F%2F%20%E8%AF%B7%E6%B3%A8%E6%84%8F%E2%80%9Cerror%E2%80%9D%E7%B1%BB%0A%20%20%20%20%20%20%2F%2F%20%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%9C%E4%B8%BA%E5%AF%BC%E5%85%A5%E7%9A%84%E2%80%9Cstyles%E2%80%9D%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B1%9E%E6%80%A7%E8%AE%BF%E9%97%AE%E7%9A%84%0A%20%20%20%20%20%20className%3D%7Bstyles.error%7D%0A%20%20%20%20%3E%0A%20%20%20%20%20%20Destroy%0A%20%20%20%20%3C%2Fbutton%3E%0A%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s2-38",
       "sectionId": "s2",
       "title": "Sass 支持",
-      "kind": "text",
-      "body": "Next.js 允许您使用 `.scss` 和 `.sass` 扩展名导入 Sass，可以通过 CSS 模块和 `.module.scss` 或 `.module.sass` 扩展名使用组件级 `Sass`"
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "$ npm install --save-dev sass"
-    },
-    {
-      "id": "s2-40",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "在使用 Next.js 的内置 `Sass` 支持之前，请务必<pur>安装 `sass`</pur>"
+      "body": "Next.js 允许您使用 `.scss` 和 `.sass` 扩展名导入 Sass，可以通过 CSS 模块和 `.module.scss` 或 `.module.sass` 扩展名使用组件级 `Sass`\n\n```shell\n$ npm install --save-dev sass\n```\n\n在使用 Next.js 的内置 `Sass` 支持之前，请务必<pur>安装 `sass`</pur>"
     },
     {
       "id": "s2-41",
       "sectionId": "s2",
-      "title": "自定义 Sass 选项",
-      "kind": "text",
-      "body": "通过在 `next.config.js` 中使用 `sassOptions` 来实现配置 `Sass` 编译器。例如添加 `includePaths`："
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "const path = require('path')\n\nmodule.exports = {\n  sassOptions: {\n    includePaths:\n        [path.join(__dirname, 'styles')],\n  },\n}"
+      "title": "%E8%87%AA%E5%AE%9A%E4%B9%89%20Sass%20%E9%80%89%E9%A1%B9",
+      "body": "%E9%80%9A%E8%BF%87%E5%9C%A8%20%60next.config.js%60%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20%60sassOptions%60%20%E6%9D%A5%E5%AE%9E%E7%8E%B0%E9%85%8D%E7%BD%AE%20%60Sass%60%20%E7%BC%96%E8%AF%91%E5%99%A8%E3%80%82%E4%BE%8B%E5%A6%82%E6%B7%BB%E5%8A%A0%20%60includePaths%60%EF%BC%9A%0A%0A%60%60%60js%0Aconst%20path%20%3D%20require('path')%0A%0Amodule.exports%20%3D%20%7B%0A%20%20sassOptions%3A%20%7B%0A%20%20%20%20includePaths%3A%0A%20%20%20%20%20%20%20%20%5Bpath.join(__dirname%2C%20'styles')%5D%2C%0A%20%20%7D%2C%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-43",
       "sectionId": "s2",
-      "title": "Sass 变量",
-      "kind": "code",
-      "lang": "sass",
-      "code": "/* variables.module.scss */\n$primary-color: #64ff00;\n\n:export {\n  primaryColor: $primary-color;\n}"
-    },
-    {
-      "id": "s2-44",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "在 `pages/_app.js` 中导入 `variables.module.scss`"
-    },
-    {
-      "id": "s2-45",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import variables from '../styles/variables.module.scss'\n\nexport default function MyApp({ Component, pageProps }) {\n  return (\n    <Layout color={variables.primaryColor}>\n      <Component {...pageProps} />\n    </Layout>\n  )\n}"
+      "title": "Sass%20%E5%8F%98%E9%87%8F",
+      "body": "%60%60%60sass%0A%2F*%20variables.module.scss%20*%2F%0A%24primary-color%3A%20%2364ff00%3B%0A%0A%3Aexport%20%7B%0A%20%20primaryColor%3A%20%24primary-color%3B%0A%7D%0A%60%60%60%0A%0A%E5%9C%A8%20%60pages%2F_app.js%60%20%E4%B8%AD%E5%AF%BC%E5%85%A5%20%60variables.module.scss%60%0A%0A%60%60%60jsx%0Aimport%20variables%20from%20'..%2Fstyles%2Fvariables.module.scss'%0A%0Aexport%20default%20function%20MyApp(%7B%20Component%2C%20pageProps%20%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CLayout%20color%3D%7Bvariables.primaryColor%7D%3E%0A%20%20%20%20%20%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%20%20%20%20%3C%2FLayout%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s2-46",
       "sectionId": "s2",
       "title": "CSS-in-JS",
-      "kind": "text",
-      "body": "最简单的一种是内联样式："
-    },
-    {
-      "id": "s2-47",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "function HiThere() {\n  return (\n    <p style={{ color: 'red' }}>hi 这里</p>\n  )\n}\n\nexport default HiThere"
-    },
-    {
-      "id": "s2-48",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "使用 [styled-jsx](https://github.com/vercel/styled-jsx) 的组件如下所示："
-    },
-    {
-      "id": "s2-49",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "function HelloWorld() {\n  return (\n    <div>\n      Hello world\n      <p>scoped!</p>\n      <style jsx>{`\n        p { color: blue; }\n        div { background: red; }\n        @media (max-width: 600px) {\n          div { background: blue; }\n        }\n      `}</style>\n      <style global jsx>{`\n        body { background: black; }\n      `}</style>\n    </div>\n  )\n}\n\nexport default HelloWorld"
-    },
-    {
-      "id": "s2-50",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "当然，你也可以使用 [styled-components](./styled-components.md)"
+      "body": "%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%80%E7%A7%8D%E6%98%AF%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F%EF%BC%9A%0A%0A%60%60%60jsx%0Afunction%20HiThere()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cp%20style%3D%7B%7B%20color%3A%20'red'%20%7D%7D%3Ehi%20%E8%BF%99%E9%87%8C%3C%2Fp%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20HiThere%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20%5Bstyled-jsx%5D(https%3A%2F%2Fgithub.com%2Fvercel%2Fstyled-jsx)%20%E7%9A%84%E7%BB%84%E4%BB%B6%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A%0A%0A%60%60%60jsx%0Afunction%20HelloWorld()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cdiv%3E%0A%20%20%20%20%20%20Hello%20world%0A%20%20%20%20%20%20%3Cp%3Escoped!%3C%2Fp%3E%0A%20%20%20%20%20%20%3Cstyle%20jsx%3E%7B%60%0A%20%20%20%20%20%20%20%20p%20%7B%20color%3A%20blue%3B%20%7D%0A%20%20%20%20%20%20%20%20div%20%7B%20background%3A%20red%3B%20%7D%0A%20%20%20%20%20%20%20%20%40media%20(max-width%3A%20600px)%20%7B%0A%20%20%20%20%20%20%20%20%20%20div%20%7B%20background%3A%20blue%3B%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%60%7D%3C%2Fstyle%3E%0A%20%20%20%20%20%20%3Cstyle%20global%20jsx%3E%7B%60%0A%20%20%20%20%20%20%20%20body%20%7B%20background%3A%20black%3B%20%7D%0A%20%20%20%20%20%20%60%7D%3C%2Fstyle%3E%0A%20%20%20%20%3C%2Fdiv%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20HelloWorld%0A%60%60%60%0A%0A%E5%BD%93%E7%84%B6%EF%BC%8C%E4%BD%A0%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20%5Bstyled-components%5D(.%2Fstyled-components.md)",
+      "encoded": true
     },
     {
       "id": "s3-51",
       "sectionId": "s3",
-      "title": "基础示例",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// components/layout.js\nimport Navbar from './navbar'\nimport Footer from './footer'\n\nexport default function Layout({ children }) {\n  return (\n    <>\n      <Navbar />\n      <main>{children}</main>\n      <Footer />\n    </>\n  )\n}"
+      "title": "%E5%9F%BA%E7%A1%80%E7%A4%BA%E4%BE%8B",
+      "body": "%60%60%60jsx%0A%2F%2F%20components%2Flayout.js%0Aimport%20Navbar%20from%20'.%2Fnavbar'%0Aimport%20Footer%20from%20'.%2Ffooter'%0A%0Aexport%20default%20function%20Layout(%7B%20children%20%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CNavbar%20%2F%3E%0A%20%20%20%20%20%20%3Cmain%3E%7Bchildren%7D%3C%2Fmain%3E%0A%20%20%20%20%20%20%3CFooter%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-52",
       "sectionId": "s3",
-      "title": "带有自定义应用程序的单一共享布局",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/_app.js\nimport Layout from '../components/layout'\n\nexport default function MyApp({ Component, pageProps }) {\n  return (\n    <Layout>\n      <Component {...pageProps} />\n    </Layout>\n  )\n}"
+      "title": "%E5%B8%A6%E6%9C%89%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8D%95%E4%B8%80%E5%85%B1%E4%BA%AB%E5%B8%83%E5%B1%80",
+      "body": "%60%60%60jsx%0A%2F%2F%20pages%2F_app.js%0Aimport%20Layout%20from%20'..%2Fcomponents%2Flayout'%0A%0Aexport%20default%20function%20MyApp(%7B%20Component%2C%20pageProps%20%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CLayout%3E%0A%20%20%20%20%20%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%20%20%20%20%3C%2FLayout%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-53",
       "sectionId": "s3",
-      "title": "使用 TypeScript",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/index.tsx\nimport type { ReactElement } from 'react'\nimport Layout from '../components/layout'\nimport NestedLayout from '../components/nested-layout'\nimport type { NextPageWithLayout } from './_app'\n\nconst Page: NextPageWithLayout = () => {\n  return <p>hello world</p>\n}\n\nPage.getLayout = function getLayout(page: ReactElement) {\n  return (\n    <Layout>\n      <NestedLayout>{page}</NestedLayout>\n    </Layout>\n  )\n}\n\nexport default Page\n\n// pages/_app.tsx\n\nimport type { ReactElement, ReactNode } from 'react'\nimport type { NextPage } from 'next'\nimport type { AppProps } from 'next/app'\n\nexport type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {\n  getLayout?: (page: ReactElement) => ReactNode\n}\n\ntype AppPropsWithLayout = AppProps & {\n  Component: NextPageWithLayout\n}\n\nexport default function MyApp({ Component, pageProps }: AppPropsWithLayout) {\n  // 使用在页面级别定义的布局（如果可用）\n  const getLayout = Component.getLayout ?? ((page) => page)\n\n  return getLayout(<Component {...pageProps} />)\n}"
+      "title": "%E4%BD%BF%E7%94%A8%20TypeScript",
+      "body": "%60%60%60jsx%0A%2F%2F%20pages%2Findex.tsx%0Aimport%20type%20%7B%20ReactElement%20%7D%20from%20'react'%0Aimport%20Layout%20from%20'..%2Fcomponents%2Flayout'%0Aimport%20NestedLayout%20from%20'..%2Fcomponents%2Fnested-layout'%0Aimport%20type%20%7B%20NextPageWithLayout%20%7D%20from%20'.%2F_app'%0A%0Aconst%20Page%3A%20NextPageWithLayout%20%3D%20()%20%3D%3E%20%7B%0A%20%20return%20%3Cp%3Ehello%20world%3C%2Fp%3E%0A%7D%0A%0APage.getLayout%20%3D%20function%20getLayout(page%3A%20ReactElement)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CLayout%3E%0A%20%20%20%20%20%20%3CNestedLayout%3E%7Bpage%7D%3C%2FNestedLayout%3E%0A%20%20%20%20%3C%2FLayout%3E%0A%20%20)%0A%7D%0A%0Aexport%20default%20Page%0A%60%60%60%0A%0A%60%60%60jsx%0A%2F%2F%20pages%2F_app.tsx%0A%0Aimport%20type%20%7B%20ReactElement%2C%20ReactNode%20%7D%20from%20'react'%0Aimport%20type%20%7B%20NextPage%20%7D%20from%20'next'%0Aimport%20type%20%7B%20AppProps%20%7D%20from%20'next%2Fapp'%0A%0Aexport%20type%20NextPageWithLayout%3CP%20%3D%20%7B%7D%2C%20IP%20%3D%20P%3E%20%3D%20NextPage%3CP%2C%20IP%3E%20%26%20%7B%0A%20%20getLayout%3F%3A%20(page%3A%20ReactElement)%20%3D%3E%20ReactNode%0A%7D%0A%0Atype%20AppPropsWithLayout%20%3D%20AppProps%20%26%20%7B%0A%20%20Component%3A%20NextPageWithLayout%0A%7D%0A%0Aexport%20default%20function%20MyApp(%7B%20Component%2C%20pageProps%20%7D%3A%20AppPropsWithLayout)%20%7B%0A%20%20%2F%2F%20%E4%BD%BF%E7%94%A8%E5%9C%A8%E9%A1%B5%E9%9D%A2%E7%BA%A7%E5%88%AB%E5%AE%9A%E4%B9%89%E7%9A%84%E5%B8%83%E5%B1%80%EF%BC%88%E5%A6%82%E6%9E%9C%E5%8F%AF%E7%94%A8%EF%BC%89%0A%20%20const%20getLayout%20%3D%20Component.getLayout%20%3F%3F%20((page)%20%3D%3E%20page)%0A%0A%20%20return%20getLayout(%3CComponent%20%7B...pageProps%7D%20%2F%3E)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-54",
       "sectionId": "s3",
-      "title": "每页布局",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/index.js\nimport Layout from '../components/layout'\nimport NestedLayout from '../components/nested-layout'\n\nexport default function Page() {\n  return (\n    /** Your content */\n  )\n}\n\nPage.getLayout = function getLayout(page) {\n  return (\n    <Layout>\n      <NestedLayout>{page}</NestedLayout>\n    </Layout>\n  )\n}\n\n// pages/_app.js\nexport default function MyApp({ Component, pageProps }) {\n  // 使用在页面级别定义的布局（如果可用）\n  const getLayout = Component.getLayout || ((page) => page)\n  return getLayout(<Component {...pageProps} />)\n}"
+      "title": "%E6%AF%8F%E9%A1%B5%E5%B8%83%E5%B1%80",
+      "body": "%60%60%60jsx%0A%2F%2F%20pages%2Findex.js%0Aimport%20Layout%20from%20'..%2Fcomponents%2Flayout'%0Aimport%20NestedLayout%20from%20'..%2Fcomponents%2Fnested-layout'%0A%0Aexport%20default%20function%20Page()%20%7B%0A%20%20return%20(%0A%20%20%20%20%2F**%20Your%20content%20*%2F%0A%20%20)%0A%7D%0A%0APage.getLayout%20%3D%20function%20getLayout(page)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CLayout%3E%0A%20%20%20%20%20%20%3CNestedLayout%3E%7Bpage%7D%3C%2FNestedLayout%3E%0A%20%20%20%20%3C%2FLayout%3E%0A%20%20)%0A%7D%0A%60%60%60%0A%0A%60%60%60jsx%0A%2F%2F%20pages%2F_app.js%0Aexport%20default%20function%20MyApp(%7B%20Component%2C%20pageProps%20%7D)%20%7B%0A%20%20%2F%2F%20%E4%BD%BF%E7%94%A8%E5%9C%A8%E9%A1%B5%E9%9D%A2%E7%BA%A7%E5%88%AB%E5%AE%9A%E4%B9%89%E7%9A%84%E5%B8%83%E5%B1%80%EF%BC%88%E5%A6%82%E6%9E%9C%E5%8F%AF%E7%94%A8%EF%BC%89%0A%20%20const%20getLayout%20%3D%20Component.getLayout%20%7C%7C%20((page)%20%3D%3E%20page)%0A%20%20return%20getLayout(%3CComponent%20%7B...pageProps%7D%20%2F%3E)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-55",
       "sectionId": "s3",
-      "title": "数据请求",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// components/layout.js\nimport useSWR from 'swr'\nimport Navbar from './navbar'\nimport Footer from './footer'\n\nexport default function Layout({ children }) {\n  const { data, error } = useSWR('/api/navigation', fetcher)\n  if (error) return <div>Failed to load</div>\n  if (!data) return <div>Loading...</div>\n  return (\n    <>\n      <Navbar links={data.links} />\n      <main>{children}</main>\n      <Footer />\n    </>\n  )\n}"
+      "title": "%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82",
+      "body": "%60%60%60jsx%0A%2F%2F%20components%2Flayout.js%0Aimport%20useSWR%20from%20'swr'%0Aimport%20Navbar%20from%20'.%2Fnavbar'%0Aimport%20Footer%20from%20'.%2Ffooter'%0A%0Aexport%20default%20function%20Layout(%7B%20children%20%7D)%20%7B%0A%20%20const%20%7B%20data%2C%20error%20%7D%20%3D%20useSWR('%2Fapi%2Fnavigation'%2C%20fetcher)%0A%20%20if%20(error)%20return%20%3Cdiv%3EFailed%20to%20load%3C%2Fdiv%3E%0A%20%20if%20(!data)%20return%20%3Cdiv%3ELoading...%3C%2Fdiv%3E%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CNavbar%20links%3D%7Bdata.links%7D%20%2F%3E%0A%20%20%20%20%20%20%3Cmain%3E%7Bchildren%7D%3C%2Fmain%3E%0A%20%20%20%20%20%20%3CFooter%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s4-56",
       "sectionId": "s4",
       "title": "%E6%9C%AC%E5%9C%B0%E5%9B%BE%E7%89%87",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Image%20from%20'next%2Fimage'%0Aimport%20profilePic%20from%20'..%2Fpublic%2Fme.png'%0A%0Afunction%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3Ch1%3EMy%20Homepage%3C%2Fh1%3E%0A%20%20%20%20%20%20%3CImage%0A%20%20%20%20%20%20%20%20src%3D%7BprofilePic%7D%0A%20%20%20%20%20%20%20%20alt%3D%22Picture%20of%20the%20author%22%0A%20%20%20%20%20%20%20%20%2F%2F%20width%3D%7B500%7D%20%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BE%9B%0A%20%20%20%20%20%20%20%20%2F%2F%20height%3D%7B500%7D%20%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BE%9B%0A%20%20%20%20%20%20%20%20%2F%2F%20blurDataURL%3D%22data%3A...%22%20%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BE%9B%0A%20%20%20%20%20%20%20%20%2F%2F%20placeholder%3D%22blur%22%20%2F%2F%20%E5%8A%A0%E8%BD%BD%E6%97%B6%E5%8F%AF%E9%80%89%E7%9A%84%E6%A8%A1%E7%B3%8A%E5%A4%84%E7%90%86%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%3Cp%3EWelcome%20to%20my%20homepage!%3C%2Fp%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D",
+      "body": "%60%60%60jsx%0Aimport%20Image%20from%20'next%2Fimage'%0Aimport%20profilePic%20from%20'..%2Fpublic%2Fme.png'%0A%0Afunction%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3Ch1%3EMy%20Homepage%3C%2Fh1%3E%0A%20%20%20%20%20%20%3CImage%0A%20%20%20%20%20%20%20%20src%3D%7BprofilePic%7D%0A%20%20%20%20%20%20%20%20alt%3D%22Picture%20of%20the%20author%22%0A%20%20%20%20%20%20%20%20%2F%2F%20width%3D%7B500%7D%20%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BE%9B%0A%20%20%20%20%20%20%20%20%2F%2F%20height%3D%7B500%7D%20%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BE%9B%0A%20%20%20%20%20%20%20%20%2F%2F%20blurDataURL%3D%22data%3A...%22%20%E8%87%AA%E5%8A%A8%E6%8F%90%E4%BE%9B%0A%20%20%20%20%20%20%20%20%2F%2F%20placeholder%3D%22blur%22%20%2F%2F%20%E5%8A%A0%E8%BD%BD%E6%97%B6%E5%8F%AF%E9%80%89%E7%9A%84%E6%A8%A1%E7%B3%8A%E5%A4%84%E7%90%86%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%3Cp%3EWelcome%20to%20my%20homepage!%3C%2Fp%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-57",
       "sectionId": "s4",
       "title": "%E8%BF%9C%E7%A8%8B%E5%9B%BE%E7%89%87",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Image%20from%20'next%2Fimage'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3Ch1%3EMy%20Homepage%3C%2Fh1%3E%0A%20%20%20%20%20%20%3CImage%0A%20%20%20%20%20%20%20%20src%3D%22%2Fme.png%22%0A%20%20%20%20%20%20%20%20alt%3D%22Picture%20of%20the%20author%22%0A%20%20%20%20%20%20%20%20width%3D%7B500%7D%0A%20%20%20%20%20%20%20%20height%3D%7B500%7D%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%3Cp%3EWelcome%20to%20my%20homepage!%3C%2Fp%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D",
+      "body": "%60%60%60jsx%0Aimport%20Image%20from%20'next%2Fimage'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3Ch1%3EMy%20Homepage%3C%2Fh1%3E%0A%20%20%20%20%20%20%3CImage%0A%20%20%20%20%20%20%20%20src%3D%22%2Fme.png%22%0A%20%20%20%20%20%20%20%20alt%3D%22Picture%20of%20the%20author%22%0A%20%20%20%20%20%20%20%20width%3D%7B500%7D%0A%20%20%20%20%20%20%20%20height%3D%7B500%7D%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%3Cp%3EWelcome%20to%20my%20homepage!%3C%2Fp%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60%0A%0A%E8%A6%81%E4%BD%BF%E7%94%A8%E8%BF%9C%E7%A8%8B%E5%9B%BE%E5%83%8F%EF%BC%8C%60src%60%20%E5%B1%9E%E6%80%A7%E5%BA%94%E8%AF%A5%E6%98%AF%E4%B8%80%E4%B8%AA%20%60URL%60%20%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%98%AF%E7%9B%B8%E5%AF%B9%E7%9A%84%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%98%AF%E7%BB%9D%E5%AF%B9%E7%9A%84",
       "encoded": true
-    },
-    {
-      "id": "s4-58",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "要使用远程图像，`src` 属性应该是一个 `URL` 字符串，可以是相对的也可以是绝对的"
     },
     {
       "id": "s4-59",
       "sectionId": "s4",
       "title": "Priority",
-      "kind": "text",
-      "body": "您应该将优先级属性添加到将成为每个页面的 [Largest Contentful Paint (LCP) 元素](https://web.dev/lcp/#what-elements-are-considered)的图像。 这样做允许 Next.js 专门确定要加载的图像的优先级（例如，通过预加载标签或优先级提示），从而显着提高 LCP"
-    },
-    {
-      "id": "s4-60",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Image%20from%20'next%2Fimage'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3Ch1%3EMy%20Homepage%3C%2Fh1%3E%0A%20%20%20%20%20%20%3CImage%0A%20%20%20%20%20%20%20%20src%3D%22%2Fme.png%22%0A%20%20%20%20%20%20%20%20alt%3D%22Picture%20of%20the%20author%22%0A%20%20%20%20%20%20%20%20width%3D%7B500%7D%0A%20%20%20%20%20%20%20%20height%3D%7B500%7D%0A%20%20%20%20%20%20%20%20priority%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%3Cp%3EWelcome%20to%20my%20homepage!%3C%2Fp%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D",
+      "body": "%E6%82%A8%E5%BA%94%E8%AF%A5%E5%B0%86%E4%BC%98%E5%85%88%E7%BA%A7%E5%B1%9E%E6%80%A7%E6%B7%BB%E5%8A%A0%E5%88%B0%E5%B0%86%E6%88%90%E4%B8%BA%E6%AF%8F%E4%B8%AA%E9%A1%B5%E9%9D%A2%E7%9A%84%20%5BLargest%20Contentful%20Paint%20(LCP)%20%E5%85%83%E7%B4%A0%5D(https%3A%2F%2Fweb.dev%2Flcp%2F%23what-elements-are-considered)%E7%9A%84%E5%9B%BE%E5%83%8F%E3%80%82%20%E8%BF%99%E6%A0%B7%E5%81%9A%E5%85%81%E8%AE%B8%20Next.js%20%E4%B8%93%E9%97%A8%E7%A1%AE%E5%AE%9A%E8%A6%81%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%9B%BE%E5%83%8F%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%88%E4%BE%8B%E5%A6%82%EF%BC%8C%E9%80%9A%E8%BF%87%E9%A2%84%E5%8A%A0%E8%BD%BD%E6%A0%87%E7%AD%BE%E6%88%96%E4%BC%98%E5%85%88%E7%BA%A7%E6%8F%90%E7%A4%BA%EF%BC%89%EF%BC%8C%E4%BB%8E%E8%80%8C%E6%98%BE%E7%9D%80%E6%8F%90%E9%AB%98%20LCP%0A%0A%60%60%60jsx%0Aimport%20Image%20from%20'next%2Fimage'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3Ch1%3EMy%20Homepage%3C%2Fh1%3E%0A%20%20%20%20%20%20%3CImage%0A%20%20%20%20%20%20%20%20src%3D%22%2Fme.png%22%0A%20%20%20%20%20%20%20%20alt%3D%22Picture%20of%20the%20author%22%0A%20%20%20%20%20%20%20%20width%3D%7B500%7D%0A%20%20%20%20%20%20%20%20height%3D%7B500%7D%0A%20%20%20%20%20%20%20%20priority%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%3Cp%3EWelcome%20to%20my%20homepage!%3C%2Fp%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-61",
       "sectionId": "s5",
-      "title": "Google 字体",
-      "kind": "text",
-      "body": "自动托管任何 Google 字体。 字体包含在部署中，并从与您的部署相同的域提供服务。 浏览器不会向 Google 发送任何请求"
-    },
-    {
-      "id": "s5-62",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/_app.js\nimport { Inter } from '@next/font/google'\n\n// 如果加载可变字体，则无需指定字体粗细\nconst inter = Inter({ subsets: ['latin'] })\n\nexport default function MyApp({\n  Component, pageProps\n}) {\n  return (\n    <main className={inter.className}>\n      <Component {...pageProps} />\n    </main>\n  )\n}"
+      "title": "Google%20%E5%AD%97%E4%BD%93",
+      "body": "%E8%87%AA%E5%8A%A8%E6%89%98%E7%AE%A1%E4%BB%BB%E4%BD%95%20Google%20%E5%AD%97%E4%BD%93%E3%80%82%20%E5%AD%97%E4%BD%93%E5%8C%85%E5%90%AB%E5%9C%A8%E9%83%A8%E7%BD%B2%E4%B8%AD%EF%BC%8C%E5%B9%B6%E4%BB%8E%E4%B8%8E%E6%82%A8%E7%9A%84%E9%83%A8%E7%BD%B2%E7%9B%B8%E5%90%8C%E7%9A%84%E5%9F%9F%E6%8F%90%E4%BE%9B%E6%9C%8D%E5%8A%A1%E3%80%82%20%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%8D%E4%BC%9A%E5%90%91%20Google%20%E5%8F%91%E9%80%81%E4%BB%BB%E4%BD%95%E8%AF%B7%E6%B1%82%0A%0A%60%60%60jsx%0A%2F%2F%20pages%2F_app.js%0Aimport%20%7B%20Inter%20%7D%20from%20'%40next%2Ffont%2Fgoogle'%0A%0A%2F%2F%20%E5%A6%82%E6%9E%9C%E5%8A%A0%E8%BD%BD%E5%8F%AF%E5%8F%98%E5%AD%97%E4%BD%93%EF%BC%8C%E5%88%99%E6%97%A0%E9%9C%80%E6%8C%87%E5%AE%9A%E5%AD%97%E4%BD%93%E7%B2%97%E7%BB%86%0Aconst%20inter%20%3D%20Inter(%7B%20subsets%3A%20%5B'latin'%5D%20%7D)%0A%0Aexport%20default%20function%20MyApp(%7B%0A%20%20Component%2C%20pageProps%0A%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cmain%20className%3D%7Binter.className%7D%3E%0A%20%20%20%20%20%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%20%20%20%20%3C%2Fmain%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s5-63",
       "sectionId": "s5",
-      "title": "指定粗细",
-      "kind": "text",
-      "body": "如果不能使用可变字体，则需要指定粗细："
-    },
-    {
-      "id": "s5-64",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "```jsx {5}\n// pages/_app.js\nimport { Roboto } from '@next/font/google'"
-    },
-    {
-      "id": "s5-65",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "const roboto = Roboto({\nweight: '400',\nsubsets: ['latin'],\n})"
-    },
-    {
-      "id": "s5-66",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "export default function MyApp({\nComponent, pageProps\n}) {\nreturn (\n<main className={roboto.className}>\n<Component {...pageProps} />\n</main>\n)\n}"
-    },
-    {
-      "id": "s5-67",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n### 数组指定多个 weight 或 style\n\n```jsx\nconst roboto = Roboto({\n  weight: ['400', '700'],\n  style: ['normal', 'italic'],\n  subsets: ['latin'],\n})"
+      "title": "%E6%8C%87%E5%AE%9A%E7%B2%97%E7%BB%86",
+      "body": "%E5%A6%82%E6%9E%9C%E4%B8%8D%E8%83%BD%E4%BD%BF%E7%94%A8%E5%8F%AF%E5%8F%98%E5%AD%97%E4%BD%93%EF%BC%8C%E5%88%99%E9%9C%80%E8%A6%81%E6%8C%87%E5%AE%9A%E7%B2%97%E7%BB%86%EF%BC%9A%0A%0A%60%60%60jsx%20%7B5%7D%0A%2F%2F%20pages%2F_app.js%0Aimport%20%7B%20Roboto%20%7D%20from%20'%40next%2Ffont%2Fgoogle'%0A%0Aconst%20roboto%20%3D%20Roboto(%7B%0Aweight%3A%20'400'%2C%0Asubsets%3A%20%5B'latin'%5D%2C%0A%7D)%0A%0Aexport%20default%20function%20MyApp(%7B%0AComponent%2C%20pageProps%0A%7D)%20%7B%0Areturn%20(%0A%3Cmain%20className%3D%7Broboto.className%7D%3E%0A%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%3C%2Fmain%3E%0A)%0A%7D%0A%0A%60%60%60%0A%0A%23%23%23%20%E6%95%B0%E7%BB%84%E6%8C%87%E5%AE%9A%E5%A4%9A%E4%B8%AA%20weight%20%E6%88%96%20style%0A%0A%60%60%60jsx%0Aconst%20roboto%20%3D%20Roboto(%7B%0A%20%20weight%3A%20%5B'400'%2C%20'700'%5D%2C%0A%20%20style%3A%20%5B'normal'%2C%20'italic'%5D%2C%0A%20%20subsets%3A%20%5B'latin'%5D%2C%0A%7D)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s5-68",
       "sectionId": "s5",
-      "title": "在 \\<head> 中应用字体",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/_app.js\nimport { Inter } from '@next/font/google'\nconst inter = Inter({ subsets: ['latin'] })\nexport default function MyApp({ Component, pageProps }) {\n  return (\n    <>\n      <style jsx global>{`\n        html {\n          font-family: ${inter.style.fontFamily};\n        }\n      `}</style>\n      <Component {...pageProps} />\n    </>\n  )\n}"
+      "title": "%E5%9C%A8%20%5C%3Chead%3E%20%E4%B8%AD%E5%BA%94%E7%94%A8%E5%AD%97%E4%BD%93",
+      "body": "%60%60%60jsx%0A%2F%2F%20pages%2F_app.js%0Aimport%20%7B%20Inter%20%7D%20from%20'%40next%2Ffont%2Fgoogle'%0Aconst%20inter%20%3D%20Inter(%7B%20subsets%3A%20%5B'latin'%5D%20%7D)%0Aexport%20default%20function%20MyApp(%7B%20Component%2C%20pageProps%20%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3Cstyle%20jsx%20global%3E%7B%60%0A%20%20%20%20%20%20%20%20html%20%7B%0A%20%20%20%20%20%20%20%20%20%20font-family%3A%20%24%7Binter.style.fontFamily%7D%3B%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%60%7D%3C%2Fstyle%3E%0A%20%20%20%20%20%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s5-69",
       "sectionId": "s5",
-      "title": "单页使用",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/index.js\nimport { Inter } from '@next/font/google'\n\nconst inter = Inter({ subsets: ['latin'] })\n\nexport default function Home() {\n  return (\n    <div className={inter.className}>\n      <p>Hello World</p>\n    </div>\n  )\n}"
+      "title": "%E5%8D%95%E9%A1%B5%E4%BD%BF%E7%94%A8",
+      "body": "%60%60%60jsx%0A%2F%2F%20pages%2Findex.js%0Aimport%20%7B%20Inter%20%7D%20from%20'%40next%2Ffont%2Fgoogle'%0A%0Aconst%20inter%20%3D%20Inter(%7B%20subsets%3A%20%5B'latin'%5D%20%7D)%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cdiv%20className%3D%7Binter.className%7D%3E%0A%20%20%20%20%20%20%3Cp%3EHello%20World%3C%2Fp%3E%0A%20%20%20%20%3C%2Fdiv%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s5-70",
       "sectionId": "s5",
-      "title": "指定一个子集",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/_app.js\nconst inter = Inter({ subsets: ['latin'] })"
-    },
-    {
-      "id": "s5-71",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "在 `next.config.js` 中全局使用所有字体"
-    },
-    {
-      "id": "s5-72",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "// next.config.js\nmodule.exports = {\n  experimental: {\n    fontLoaders: [\n      {\n        loader: '@next/font/google',\n        options: { subsets: ['latin'] }\n      },\n    ],\n  },\n}"
-    },
-    {
-      "id": "s5-73",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "如果两者都配置，则使用函数调用中的子集"
+      "title": "%E6%8C%87%E5%AE%9A%E4%B8%80%E4%B8%AA%E5%AD%90%E9%9B%86",
+      "body": "%60%60%60jsx%0A%2F%2F%20pages%2F_app.js%0Aconst%20inter%20%3D%20Inter(%7B%20subsets%3A%20%5B'latin'%5D%20%7D)%0A%60%60%60%0A%0A%E5%9C%A8%20%60next.config.js%60%20%E4%B8%AD%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8%E6%89%80%E6%9C%89%E5%AD%97%E4%BD%93%0A%0A%60%60%60js%0A%2F%2F%20next.config.js%0Amodule.exports%20%3D%20%7B%0A%20%20experimental%3A%20%7B%0A%20%20%20%20fontLoaders%3A%20%5B%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20loader%3A%20'%40next%2Ffont%2Fgoogle'%2C%0A%20%20%20%20%20%20%20%20options%3A%20%7B%20subsets%3A%20%5B'latin'%5D%20%7D%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%5D%2C%0A%20%20%7D%2C%0A%7D%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E4%B8%A4%E8%80%85%E9%83%BD%E9%85%8D%E7%BD%AE%EF%BC%8C%E5%88%99%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E4%B8%AD%E7%9A%84%E5%AD%90%E9%9B%86",
+      "encoded": true
     },
     {
       "id": "s5-74",
       "sectionId": "s5",
-      "title": "本地字体",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/_app.js\nimport localFont from '@next/font/local'\n\n// 字体文件可以位于“pages”内\nconst myFont = localFont({\n  src: './my-font.woff2'\n})\n\nexport default function MyApp({\n  Component, pageProps\n}) {\n  return (\n    <main className={myFont.className}>\n      <Component {...pageProps} />\n    </main>\n  )\n}"
-    },
-    {
-      "id": "s5-75",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "如果要为单个字体系列使用多个文件，`src` 可以是一个数组："
-    },
-    {
-      "id": "s5-76",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "const roboto = localFont({\n  src: [\n    {\n      path: './Roboto-Regular.woff2',\n      weight: '400',\n      style: 'normal',\n    },\n    {\n      path: './Roboto-Italic.woff2',\n      weight: '400',\n      style: 'italic',\n    },\n    {\n      path: './Roboto-Bold.woff2',\n      weight: '700',\n      style: 'normal',\n    },\n    {\n      path: './Roboto-BoldItalic.woff2',\n      weight: '700',\n      style: 'italic',\n    },\n  ],\n})"
+      "title": "%E6%9C%AC%E5%9C%B0%E5%AD%97%E4%BD%93",
+      "body": "%60%60%60jsx%0A%2F%2F%20pages%2F_app.js%0Aimport%20localFont%20from%20'%40next%2Ffont%2Flocal'%0A%0A%2F%2F%20%E5%AD%97%E4%BD%93%E6%96%87%E4%BB%B6%E5%8F%AF%E4%BB%A5%E4%BD%8D%E4%BA%8E%E2%80%9Cpages%E2%80%9D%E5%86%85%0Aconst%20myFont%20%3D%20localFont(%7B%0A%20%20src%3A%20'.%2Fmy-font.woff2'%0A%7D)%0A%0Aexport%20default%20function%20MyApp(%7B%0A%20%20Component%2C%20pageProps%0A%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cmain%20className%3D%7BmyFont.className%7D%3E%0A%20%20%20%20%20%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%20%20%20%20%3C%2Fmain%3E%0A%20%20)%0A%7D%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E8%A6%81%E4%B8%BA%E5%8D%95%E4%B8%AA%E5%AD%97%E4%BD%93%E7%B3%BB%E5%88%97%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%EF%BC%8C%60src%60%20%E5%8F%AF%E4%BB%A5%E6%98%AF%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%EF%BC%9A%0A%0A%60%60%60jsx%0Aconst%20roboto%20%3D%20localFont(%7B%0A%20%20src%3A%20%5B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20path%3A%20'.%2FRoboto-Regular.woff2'%2C%0A%20%20%20%20%20%20weight%3A%20'400'%2C%0A%20%20%20%20%20%20style%3A%20'normal'%2C%0A%20%20%20%20%7D%2C%0A%20%20%20%20%7B%0A%20%20%20%20%20%20path%3A%20'.%2FRoboto-Italic.woff2'%2C%0A%20%20%20%20%20%20weight%3A%20'400'%2C%0A%20%20%20%20%20%20style%3A%20'italic'%2C%0A%20%20%20%20%7D%2C%0A%20%20%20%20%7B%0A%20%20%20%20%20%20path%3A%20'.%2FRoboto-Bold.woff2'%2C%0A%20%20%20%20%20%20weight%3A%20'700'%2C%0A%20%20%20%20%20%20style%3A%20'normal'%2C%0A%20%20%20%20%7D%2C%0A%20%20%20%20%7B%0A%20%20%20%20%20%20path%3A%20'.%2FRoboto-BoldItalic.woff2'%2C%0A%20%20%20%20%20%20weight%3A%20'700'%2C%0A%20%20%20%20%20%20style%3A%20'italic'%2C%0A%20%20%20%20%7D%2C%0A%20%20%5D%2C%0A%7D)%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s5-77",
       "sectionId": "s5",
-      "title": "使用 Tailwind CSS",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/_app.js\nimport { Inter } from '@next/font/google'\nconst inter = Inter({\n  subsets: ['latin'],\n  variable: '--font-inter',\n});\nexport default function MyApp({ Component, pageProps }) {\n  return (\n    <main className={`${inter.variable} font-sans`}>\n      <Component {...pageProps} />\n    </main>\n  )\n}"
-    },
-    {
-      "id": "s5-78",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "最后，将 CSS 变量添加到您的 Tailwind CSS 配置中："
-    },
-    {
-      "id": "s5-79",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// tailwind.config.js\nconst { fontFamily } = require('tailwindcss/defaultTheme')\n\nmodule.exports = {\n  content: [\n    './pages/**/*.{js,ts,jsx,tsx}',\n    './components/**/*.{js,ts,jsx,tsx}',\n  ],\n  theme: {\n    extend: {\n      fontFamily: {\n        sans: ['var(--font-inter)', ...fontFamily.sans],\n      },\n    },\n  },\n  plugins: [],\n}"
+      "title": "%E4%BD%BF%E7%94%A8%20Tailwind%20CSS",
+      "body": "%60%60%60jsx%0A%2F%2F%20pages%2F_app.js%0Aimport%20%7B%20Inter%20%7D%20from%20'%40next%2Ffont%2Fgoogle'%0Aconst%20inter%20%3D%20Inter(%7B%0A%20%20subsets%3A%20%5B'latin'%5D%2C%0A%20%20variable%3A%20'--font-inter'%2C%0A%7D)%3B%0Aexport%20default%20function%20MyApp(%7B%20Component%2C%20pageProps%20%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cmain%20className%3D%7B%60%24%7Binter.variable%7D%20font-sans%60%7D%3E%0A%20%20%20%20%20%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%20%20%20%20%3C%2Fmain%3E%0A%20%20)%0A%7D%0A%60%60%60%0A%0A%E6%9C%80%E5%90%8E%EF%BC%8C%E5%B0%86%20CSS%20%E5%8F%98%E9%87%8F%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%82%A8%E7%9A%84%20Tailwind%20CSS%20%E9%85%8D%E7%BD%AE%E4%B8%AD%EF%BC%9A%0A%0A%60%60%60jsx%0A%2F%2F%20tailwind.config.js%0Aconst%20%7B%20fontFamily%20%7D%20%3D%20require('tailwindcss%2FdefaultTheme')%0A%0Amodule.exports%20%3D%20%7B%0A%20%20content%3A%20%5B%0A%20%20%20%20'.%2Fpages%2F**%2F*.%7Bjs%2Cts%2Cjsx%2Ctsx%7D'%2C%0A%20%20%20%20'.%2Fcomponents%2F**%2F*.%7Bjs%2Cts%2Cjsx%2Ctsx%7D'%2C%0A%20%20%5D%2C%0A%20%20theme%3A%20%7B%0A%20%20%20%20extend%3A%20%7B%0A%20%20%20%20%20%20fontFamily%3A%20%7B%0A%20%20%20%20%20%20%20%20sans%3A%20%5B'var(--font-inter)'%2C%20...fontFamily.sans%5D%2C%0A%20%20%20%20%20%20%7D%2C%0A%20%20%20%20%7D%2C%0A%20%20%7D%2C%0A%20%20plugins%3A%20%5B%5D%2C%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s6-80",
       "sectionId": "s6",
       "title": "%E9%A1%B5%E9%9D%A2%E8%84%9A%E6%9C%AC",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20Dashboard()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D",
+      "body": "%60%60%60jsx%0Aimport%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20Dashboard()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-81",
       "sectionId": "s6",
-      "title": "App 脚本",
-      "kind": "text",
-      "body": "要为所有路由加载第三方脚本，导入 `next/script` 并将脚本直接包含在 `pages/_app.js` 中"
-    },
-    {
-      "id": "s6-82",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20MyApp(%7B%0A%20%20Component%2C%20pageProps%0A%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D",
+      "title": "App%20%E8%84%9A%E6%9C%AC",
+      "body": "%E8%A6%81%E4%B8%BA%E6%89%80%E6%9C%89%E8%B7%AF%E7%94%B1%E5%8A%A0%E8%BD%BD%E7%AC%AC%E4%B8%89%E6%96%B9%E8%84%9A%E6%9C%AC%EF%BC%8C%E5%AF%BC%E5%85%A5%20%60next%2Fscript%60%20%E5%B9%B6%E5%B0%86%E8%84%9A%E6%9C%AC%E7%9B%B4%E6%8E%A5%E5%8C%85%E5%90%AB%E5%9C%A8%20%60pages%2F_app.js%60%20%E4%B8%AD%0A%0A%60%60%60jsx%0Aimport%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20MyApp(%7B%0A%20%20Component%2C%20pageProps%0A%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%20%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-83",
       "sectionId": "s6",
-      "title": "将脚本卸载到 Web Worker（实验性的）",
-      "kind": "text",
-      "body": "此策略仍处于试验阶段，只有在 `next.config.js` 中启用了 `nextScriptWorkers` 标志时才能使用："
-    },
-    {
-      "id": "s6-84",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "module.exports = {\n  experimental: {\n    nextScriptWorkers: true,\n  },\n}"
-    },
-    {
-      "id": "s6-85",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "text",
-      "body": "%E8%AE%BE%E7%BD%AE%E5%AE%8C%E6%88%90%E5%90%8E%EF%BC%8C%E5%AE%9A%E4%B9%89%20%60strategy%3D%22worker%22%60%20%E5%B0%86%E8%87%AA%E5%8A%A8%E5%9C%A8%E6%82%A8%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%AE%9E%E4%BE%8B%E5%8C%96%20%60Partytown%60%20%E5%B9%B6%E5%B0%86%E8%84%9A%E6%9C%AC%E5%8D%B8%E8%BD%BD%E5%88%B0%E7%BD%91%E7%BB%9C%E5%B7%A5%E4%BD%9C%E8%80%85",
-      "encoded": true
-    },
-    {
-      "id": "s6-86",
-      "sectionId": "s6",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%20%20strategy%3D%22worker%22%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D",
+      "title": "%E5%B0%86%E8%84%9A%E6%9C%AC%E5%8D%B8%E8%BD%BD%E5%88%B0%20Web%20Worker%EF%BC%88%E5%AE%9E%E9%AA%8C%E6%80%A7%E7%9A%84%EF%BC%89",
+      "body": "%E6%AD%A4%E7%AD%96%E7%95%A5%E4%BB%8D%E5%A4%84%E4%BA%8E%E8%AF%95%E9%AA%8C%E9%98%B6%E6%AE%B5%EF%BC%8C%E5%8F%AA%E6%9C%89%E5%9C%A8%20%60next.config.js%60%20%E4%B8%AD%E5%90%AF%E7%94%A8%E4%BA%86%20%60nextScriptWorkers%60%20%E6%A0%87%E5%BF%97%E6%97%B6%E6%89%8D%E8%83%BD%E4%BD%BF%E7%94%A8%EF%BC%9A%0A%0A%60%60%60js%0Amodule.exports%20%3D%20%7B%0A%20%20experimental%3A%20%7B%0A%20%20%20%20nextScriptWorkers%3A%20true%2C%0A%20%20%7D%2C%0A%7D%0A%60%60%60%0A%0A%E8%AE%BE%E7%BD%AE%E5%AE%8C%E6%88%90%E5%90%8E%EF%BC%8C%E5%AE%9A%E4%B9%89%20%60strategy%3D%22worker%22%60%20%E5%B0%86%E8%87%AA%E5%8A%A8%E5%9C%A8%E6%82%A8%E7%9A%84%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%AE%9E%E4%BE%8B%E5%8C%96%20%60Partytown%60%20%E5%B9%B6%E5%B0%86%E8%84%9A%E6%9C%AC%E5%8D%B8%E8%BD%BD%E5%88%B0%E7%BD%91%E7%BB%9C%E5%B7%A5%E4%BD%9C%E8%80%85%0A%0A%60%60%60jsx%0Aimport%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%20%20strategy%3D%22worker%22%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-87",
       "sectionId": "s6",
       "title": "%E5%85%B6%E4%BB%96%E5%B1%9E%E6%80%A7",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20Page()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%20%20id%3D%22example-script%22%0A%20%20%20%20%20%20%20%20nonce%3D%22XUENAJFW%22%0A%20%20%20%20%20%20%20%20data-test%3D%22script%22%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D",
+      "body": "%60%60%60jsx%0Aimport%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20Page()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%20%20id%3D%22example-script%22%0A%20%20%20%20%20%20%20%20nonce%3D%22XUENAJFW%22%0A%20%20%20%20%20%20%20%20data-test%3D%22script%22%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-88",
       "sectionId": "s6",
       "title": "%E5%86%85%E8%81%94%E8%84%9A%E6%9C%AC",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "%3CScript%20id%3D%22show-banner%22%3E%0A%20%20%7B%60document.getElementById('banner').classList.remove('hidden')%60%7D%0A%3C%2FScript%3E%0A%0A%3CScript%0A%20%20id%3D%22show-banner%22%0A%20%20dangerouslySetInnerHTML%3D%7B%7B%0A%20%20%20%20__html%3A%20%60document.getElementById('banner').classList.remove('hidden')%60%2C%0A%20%20%7D%7D%0A%2F%3E",
+      "body": "%60%60%60jsx%0A%3CScript%20id%3D%22show-banner%22%3E%0A%20%20%7B%60document.getElementById('banner').classList.remove('hidden')%60%7D%0A%3C%2FScript%3E%0A%60%60%60%0A%0A%60%60%60jsx%0A%3CScript%0A%20%20id%3D%22show-banner%22%0A%20%20dangerouslySetInnerHTML%3D%7B%7B%0A%20%20%20%20__html%3A%20%60document.getElementById('banner').classList.remove('hidden')%60%2C%0A%20%20%7D%7D%0A%2F%3E%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-89",
       "sectionId": "s6",
       "title": "%E6%89%A7%E8%A1%8C%E9%99%84%E5%8A%A0%E4%BB%A3%E7%A0%81",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20Page()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%20%20onLoad%3D%7B()%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20console.log('Script%20has%20loaded')%0A%20%20%20%20%20%20%20%20%7D%7D%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D",
+      "body": "%60%60%60jsx%0Aimport%20Script%20from%20'next%2Fscript'%0A%0Aexport%20default%20function%20Page()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3C%3E%0A%20%20%20%20%20%20%3CScript%0A%20%20%20%20%20%20%20%20src%3D%22https%3A%2F%2Fexample.com%2Fscript.js%22%0A%20%20%20%20%20%20%20%20onLoad%3D%7B()%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20console.log('Script%20has%20loaded')%0A%20%20%20%20%20%20%20%20%7D%7D%0A%20%20%20%20%20%20%2F%3E%0A%20%20%20%20%3C%2F%3E%0A%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-90",
       "sectionId": "s7",
       "title": "%E9%9B%86%E6%88%90%20ESLint",
-      "kind": "code",
-      "lang": "json",
-      "code": "%22scripts%22%3A%20%7B%0A%20%20%22lint%22%3A%20%22next%20lint%22%0A%7D",
+      "body": "%60%60%60json%0A%22scripts%22%3A%20%7B%0A%20%20%22lint%22%3A%20%22next%20lint%22%0A%7D%0A%60%60%60%0A%0A%E7%84%B6%E5%90%8E%E8%BF%90%E8%A1%8C%20%60npm%20run%20lint%60%20%E6%88%96%20%60yarn%20lint%60%EF%BC%9A%0A%0A%60%60%60shell%0Ayarn%20lint%0A%23%20%E4%BD%A0%E4%BC%9A%E7%9C%8B%E5%88%B0%E8%BF%99%E6%A0%B7%E7%9A%84%E6%8F%90%E7%A4%BA%EF%BC%9A%0A%23%0A%23%20%3F%20%E6%82%A8%E6%83%B3%E5%A6%82%E4%BD%95%E9%85%8D%E7%BD%AE%20ESLint%EF%BC%9F%0A%23%0A%23%20%E2%9D%AF%20%20%20%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%20%2B%20Core%20Web%20Vitals%20%E8%A7%84%E5%88%99%E9%9B%86%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89%0A%23%20%20%20%20%20%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%0A%23%20%20%20%20%20None%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s7-91",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "然后运行 `npm run lint` 或 `yarn lint`："
-    },
-    {
-      "id": "s7-92",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "shell",
-      "code": "yarn lint\n# 你会看到这样的提示：\n#\n# ? 您想如何配置 ESLint？\n#\n# ❯   基本配置 + Core Web Vitals 规则集（推荐）\n#     基本配置\n#     None"
     },
     {
       "id": "s7-93",
       "sectionId": "s7",
       "title": "Strict",
-      "kind": "text",
-      "body": "Strict 严格配置：包括 Next.js 的基本 ESLint 配置以及更严格的 [Core Web Vitals 规则集](https://nextjs.org/docs/basic-features/eslint#core-web-vitals)"
-    },
-    {
-      "id": "s7-94",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22extends%22%3A%20%22next%2Fcore-web-vitals%22%0A%7D",
+      "body": "Strict%20%E4%B8%A5%E6%A0%BC%E9%85%8D%E7%BD%AE%EF%BC%9A%E5%8C%85%E6%8B%AC%20Next.js%20%E7%9A%84%E5%9F%BA%E6%9C%AC%20ESLint%20%E9%85%8D%E7%BD%AE%E4%BB%A5%E5%8F%8A%E6%9B%B4%E4%B8%A5%E6%A0%BC%E7%9A%84%20%5BCore%20Web%20Vitals%20%E8%A7%84%E5%88%99%E9%9B%86%5D(https%3A%2F%2Fnextjs.org%2Fdocs%2Fbasic-features%2Feslint%23core-web-vitals)%0A%0A%60%60%60js%0A%7B%0A%20%20%22extends%22%3A%20%22next%2Fcore-web-vitals%22%0A%7D%0A%60%60%60%0A%0ABase%20%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE%EF%BC%9A%E5%8C%85%E6%8B%AC%20Next.js%20%E7%9A%84%E5%9F%BA%E6%9C%AC%20ESLint%20%E9%85%8D%E7%BD%AE%0A%0A%60%60%60js%0A%7B%0A%20%20%22extends%22%3A%20%22next%22%0A%7D%0A%60%60%60%0A%0A%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%B8%AD%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%8C%85%E5%90%AB%E6%89%80%E9%80%89%E9%85%8D%E7%BD%AE%E7%9A%84%20%60.eslintrc.json%60%20%E6%96%87%E4%BB%B6",
       "encoded": true
-    },
-    {
-      "id": "s7-95",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "Base 基础配置：包括 Next.js 的基本 ESLint 配置"
-    },
-    {
-      "id": "s7-96",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22extends%22%3A%20%22next%22%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s7-97",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "项目的根目录中创建一个包含所选配置的 `.eslintrc.json` 文件"
     },
     {
       "id": "s7-98",
       "sectionId": "s7",
       "title": "%E8%87%AA%E5%AE%9A%E4%B9%89%E8%AE%BE%E7%BD%AE",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22extends%22%3A%20%22next%22%2C%0A%20%20%22settings%22%3A%20%7B%0A%20%20%20%20%22next%22%3A%20%7B%0A%20%20%20%20%20%20%22rootDir%22%3A%20%22packages%2Fmy-app%2F%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D",
+      "body": "%60%60%60js%0A%7B%0A%20%20%22extends%22%3A%20%22next%22%2C%0A%20%20%22settings%22%3A%20%7B%0A%20%20%20%20%22next%22%3A%20%7B%0A%20%20%20%20%20%20%22rootDir%22%3A%20%22packages%2Fmy-app%2F%22%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%60rootDir%60%20%E5%8F%AF%E4%BB%A5%E6%98%AF%E8%B7%AF%E5%BE%84%EF%BC%88%E7%9B%B8%E5%AF%B9%E6%88%96%E7%BB%9D%E5%AF%B9%EF%BC%89%E3%80%81glob%EF%BC%88%E5%8D%B3%E2%80%9C%60packages%2F*%2F%60%E2%80%9D%EF%BC%89%E6%88%96%E8%B7%AF%E5%BE%84%E5%92%8C%2F%E6%88%96%20%60glob%60%20%E6%95%B0%E7%BB%84",
       "encoded": true
-    },
-    {
-      "id": "s7-99",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "`rootDir` 可以是路径（相对或绝对）、glob（即“`packages/*/`”）或路径和/或 `glob` 数组"
     },
     {
       "id": "s7-100",
       "sectionId": "s7",
-      "title": "对自定义目录和文件进行检查",
-      "kind": "code",
-      "lang": "js",
-      "code": "module.exports = {\n  eslint: {\n    dirs: ['pages', 'utils'],\n  },\n}"
-    },
-    {
-      "id": "s7-101",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "在生产构建期间（`next build`）仅在“`pages`”和“`utils`”目录上运行 `ESLint`，或者使用命令"
-    },
-    {
-      "id": "s7-102",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ next lint --dir pages --dir utils --file bar.js"
+      "title": "%E5%AF%B9%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E6%A3%80%E6%9F%A5",
+      "body": "%60%60%60js%0Amodule.exports%20%3D%20%7B%0A%20%20eslint%3A%20%7B%0A%20%20%20%20dirs%3A%20%5B'pages'%2C%20'utils'%5D%2C%0A%20%20%7D%2C%0A%7D%0A%60%60%60%0A%0A%E5%9C%A8%E7%94%9F%E4%BA%A7%E6%9E%84%E5%BB%BA%E6%9C%9F%E9%97%B4%EF%BC%88%60next%20build%60%EF%BC%89%E4%BB%85%E5%9C%A8%E2%80%9C%60pages%60%E2%80%9D%E5%92%8C%E2%80%9C%60utils%60%E2%80%9D%E7%9B%AE%E5%BD%95%E4%B8%8A%E8%BF%90%E8%A1%8C%20%60ESLint%60%EF%BC%8C%E6%88%96%E8%80%85%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%0A%0A%60%60%60bash%0A%24%20next%20lint%20--dir%20pages%20--dir%20utils%20--file%20bar.js%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s7-103",
       "sectionId": "s7",
-      "title": "禁用规则",
-      "kind": "text",
-      "body": "您可以使用 `.eslintrc` 中的 `rules` 属性直接更改它们："
-    },
-    {
-      "id": "s7-104",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22extends%22%3A%20%22next%22%2C%0A%20%20%22rules%22%3A%20%7B%0A%20%20%20%20%22react%2Fno-unescaped-entities%22%3A%20%22off%22%2C%0A%20%20%20%20%22%40next%2Fnext%2Fno-page-custom-font%22%3A%20%22off%22%0A%20%20%7D%0A%7D",
+      "title": "%E7%A6%81%E7%94%A8%E8%A7%84%E5%88%99",
+      "body": "%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20%60.eslintrc%60%20%E4%B8%AD%E7%9A%84%20%60rules%60%20%E5%B1%9E%E6%80%A7%E7%9B%B4%E6%8E%A5%E6%9B%B4%E6%94%B9%E5%AE%83%E4%BB%AC%EF%BC%9A%0A%0A%60%60%60js%0A%7B%0A%20%20%22extends%22%3A%20%22next%22%2C%0A%20%20%22rules%22%3A%20%7B%0A%20%20%20%20%22react%2Fno-unescaped-entities%22%3A%20%22off%22%2C%0A%20%20%20%20%22%40next%2Fnext%2Fno-page-custom-font%22%3A%20%22off%22%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E4%BF%AE%E6%94%B9%E6%88%96%E7%A6%81%E7%94%A8%E5%8F%97%E6%94%AF%E6%8C%81%E7%9A%84%E6%8F%92%E4%BB%B6%EF%BC%88%60react%60%E3%80%81%60react-hooks%60%E3%80%81%60next%60%EF%BC%89%E6%8F%90%E4%BE%9B%E7%9A%84%E4%BB%BB%E4%BD%95%E8%A7%84%E5%88%99",
       "encoded": true
-    },
-    {
-      "id": "s7-105",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "修改或禁用受支持的插件（`react`、`react-hooks`、`next`）提供的任何规则"
     },
     {
       "id": "s7-106",
       "sectionId": "s7",
       "title": "Core%20Web%20Vitals",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%0A%20%20%22extends%22%3A%20%22next%2Fcore-web-vitals%22%0A%7D",
+      "body": "%60%60%60js%0A%7B%0A%20%20%22extends%22%3A%20%22next%2Fcore-web-vitals%22%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-107",
       "sectionId": "s7",
       "title": "Prettier",
-      "kind": "code",
-      "lang": "bash",
-      "code": "npm%20install%20-S%20eslint-config-prettier%0A%23%20or%0Ayarn%20add%20--dev%20eslint-config-prettier%0A%0A%7B%0A%20%20%22extends%22%3A%20%5B%22next%22%2C%20%22prettier%22%5D%0A%7D",
+      "body": "%60%60%60bash%0Anpm%20install%20-S%20eslint-config-prettier%0A%23%20or%0Ayarn%20add%20--dev%20eslint-config-prettier%0A%60%60%60%0A%0A%60%60%60js%0A%7B%0A%20%20%22extends%22%3A%20%5B%22next%22%2C%20%22prettier%22%5D%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-108",
       "sectionId": "s7",
       "title": "lint-staged",
-      "kind": "code",
-      "lang": "js",
-      "code": "const path = require('path')\n\nconst buildEslintCommand = (filenames) =>\n  `next lint --fix --file ${filenames\n    .map((f) => path.relative(process.cwd(), f))\n    .join(' --file ')}`;\n\nmodule.exports = {\n  '*.{js,jsx,ts,tsx}': [buildEslintCommand],\n}"
-    },
-    {
-      "id": "s7-109",
-      "sectionId": "s7",
-      "title": "",
-      "kind": "text",
-      "body": "内容添加到项目根目录中的 `.lintstagedrc.js` 文件中，以指定 `--file` 标志"
+      "body": "%60%60%60js%0Aconst%20path%20%3D%20require('path')%0A%0Aconst%20buildEslintCommand%20%3D%20(filenames)%20%3D%3E%0A%20%20%60next%20lint%20--fix%20--file%20%24%7Bfilenames%0A%20%20%20%20.map((f)%20%3D%3E%20path.relative(process.cwd()%2C%20f))%0A%20%20%20%20.join('%20--file%20')%7D%60%3B%0A%0Amodule.exports%20%3D%20%7B%0A%20%20'*.%7Bjs%2Cjsx%2Cts%2Ctsx%7D'%3A%20%5BbuildEslintCommand%5D%2C%0A%7D%0A%60%60%60%0A%0A%E5%86%85%E5%AE%B9%E6%B7%BB%E5%8A%A0%E5%88%B0%E9%A1%B9%E7%9B%AE%E6%A0%B9%E7%9B%AE%E5%BD%95%E4%B8%AD%E7%9A%84%20%60.lintstagedrc.js%60%20%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%8C%E4%BB%A5%E6%8C%87%E5%AE%9A%20%60--file%60%20%E6%A0%87%E5%BF%97",
+      "encoded": true
     },
     {
       "id": "s8-110",
       "sectionId": "s8",
       "title": "create-next-app",
-      "kind": "code",
-      "lang": "bash",
-      "code": "npx create-next-app@latest --ts\n# or\nyarn create next-app --typescript\n# or\npnpm create next-app --ts"
+      "body": "```bash\nnpx create-next-app@latest --ts\n# or\nyarn create next-app --typescript\n# or\npnpm create next-app --ts\n```"
     },
     {
       "id": "s8-111",
       "sectionId": "s8",
-      "title": "静态生成和服务端渲染",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'\nexport const getStaticProps: GetStaticProps = async (context) => {\n  // ...\n}\nexport const getStaticPaths: GetStaticPaths = async () => {\n  // ...\n}\nexport const getServerSideProps: GetServerSideProps = async (context) => {\n  // ...\n}"
+      "title": "%E9%9D%99%E6%80%81%E7%94%9F%E6%88%90%E5%92%8C%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93",
+      "body": "%60%60%60tsx%0Aimport%20%7B%20GetStaticProps%2C%20GetStaticPaths%2C%20GetServerSideProps%20%7D%20from%20'next'%0Aexport%20const%20getStaticProps%3A%20GetStaticProps%20%3D%20async%20(context)%20%3D%3E%20%7B%0A%20%20%2F%2F%20...%0A%7D%0Aexport%20const%20getStaticPaths%3A%20GetStaticPaths%20%3D%20async%20()%20%3D%3E%20%7B%0A%20%20%2F%2F%20...%0A%7D%0Aexport%20const%20getServerSideProps%3A%20GetServerSideProps%20%3D%20async%20(context)%20%3D%3E%20%7B%0A%20%20%2F%2F%20...%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-112",
       "sectionId": "s8",
       "title": "现有项目添加 ts 配置",
-      "kind": "code",
-      "lang": "bash",
-      "code": "touch tsconfig.json"
-    },
-    {
-      "id": "s8-113",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "您还可以通过在 `next.config.js` 文件中设置 `typescript.tsconfigPath` 属性来提供 `tsconfig.json` 文件的相对路径"
+      "body": "```bash\ntouch tsconfig.json\n```\n\n您还可以通过在 `next.config.js` 文件中设置 `typescript.tsconfigPath` 属性来提供 `tsconfig.json` 文件的相对路径"
     },
     {
       "id": "s8-114",
       "sectionId": "s8",
-      "title": "API 路由",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "import type {\n  NextApiRequest, NextApiResponse\n} from 'next'\n\nexport default (\n  req: NextApiRequest,\n  res: NextApiResponse\n) => {\n  res.status(200).json({ name:'John Doe' })\n}"
-    },
-    {
-      "id": "s8-115",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "您还可以键入响应数据："
-    },
-    {
-      "id": "s8-116",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "import type {\n  NextApiRequest, NextApiResponse\n} from 'next'\n\ntype Data = {\n  name: string\n}\n\nexport default (\n  req: NextApiRequest,\n  res: NextApiResponse<Data>\n) => {\n  res.status(200).json({ name:'John Doe' })\n}"
+      "title": "API%20%E8%B7%AF%E7%94%B1",
+      "body": "%60%60%60tsx%0Aimport%20type%20%7B%0A%20%20NextApiRequest%2C%20NextApiResponse%0A%7D%20from%20'next'%0A%0Aexport%20default%20(%0A%20%20req%3A%20NextApiRequest%2C%0A%20%20res%3A%20NextApiResponse%0A)%20%3D%3E%20%7B%0A%20%20res.status(200).json(%7B%20name%3A'John%20Doe'%20%7D)%0A%7D%0A%60%60%60%0A%0A%E6%82%A8%E8%BF%98%E5%8F%AF%E4%BB%A5%E9%94%AE%E5%85%A5%E5%93%8D%E5%BA%94%E6%95%B0%E6%8D%AE%EF%BC%9A%0A%0A%60%60%60tsx%0Aimport%20type%20%7B%0A%20%20NextApiRequest%2C%20NextApiResponse%0A%7D%20from%20'next'%0A%0Atype%20Data%20%3D%20%7B%0A%20%20name%3A%20string%0A%7D%0A%0Aexport%20default%20(%0A%20%20req%3A%20NextApiRequest%2C%0A%20%20res%3A%20NextApiResponse%3CData%3E%0A)%20%3D%3E%20%7B%0A%20%20res.status(200).json(%7B%20name%3A'John%20Doe'%20%7D)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-117",
       "sectionId": "s8",
-      "title": "自定义应用",
-      "kind": "text",
-      "body": "使用内置类型 `AppProps` 并将文件名更改为 `./pages/_app.tsx`，如下所示："
-    },
-    {
-      "id": "s8-118",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "import type { AppProps } from 'next/app'\n\nexport default function MyApp({\n  Component, pageProps\n}: AppProps) {\n  return <Component {...pageProps} />\n}"
+      "title": "%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BA%94%E7%94%A8",
+      "body": "%E4%BD%BF%E7%94%A8%E5%86%85%E7%BD%AE%E7%B1%BB%E5%9E%8B%20%60AppProps%60%20%E5%B9%B6%E5%B0%86%E6%96%87%E4%BB%B6%E5%90%8D%E6%9B%B4%E6%94%B9%E4%B8%BA%20%60.%2Fpages%2F_app.tsx%60%EF%BC%8C%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA%EF%BC%9A%0A%0A%60%60%60tsx%0Aimport%20type%20%7B%20AppProps%20%7D%20from%20'next%2Fapp'%0A%0Aexport%20default%20function%20MyApp(%7B%0A%20%20Component%2C%20pageProps%0A%7D%3A%20AppProps)%20%7B%0A%20%20return%20%3CComponent%20%7B...pageProps%7D%20%2F%3E%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-119",
       "sectionId": "s8",
-      "title": "类型检查 next.config.js",
-      "kind": "code",
-      "lang": "tsx",
-      "code": "// @ts-check\n/**\n * @type {import('next').NextConfig}\n **/\nconst nextConfig = {\n  /* 配置选项在这里 */\n}\n\nmodule.exports = nextConfig"
+      "title": "%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%20next.config.js",
+      "body": "%60%60%60tsx%0A%2F%2F%20%40ts-check%0A%2F**%0A%20*%20%40type%20%7Bimport('next').NextConfig%7D%0A%20**%2F%0Aconst%20nextConfig%20%3D%20%7B%0A%20%20%2F*%20%E9%85%8D%E7%BD%AE%E9%80%89%E9%A1%B9%E5%9C%A8%E8%BF%99%E9%87%8C%20*%2F%0A%7D%0A%0Amodule.exports%20%3D%20nextConfig%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s8-120",
       "sectionId": "s8",
       "title": "忽略 TypeScript 错误",
-      "kind": "text",
-      "body": "```tsx {3}\nmodule.exports = {\ntypescript: {\nignoreBuildErrors: true,\n},\n}"
-    },
-    {
-      "id": "s8-121",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "\n危险地允许生产构建成功完成，即使您的项目有类型错误\n\n环境变量\n---\n\n### 加载环境变量\n\n将环境变量从 `.env.local` 加载到 `process.env` 中\n\n```ini\nDB_HOST=localhost\nDB_USER=myuser\nDB_PASS=mypassword"
-    },
-    {
-      "id": "s8-122",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "使用环境变量"
-    },
-    {
-      "id": "s8-123",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "// pages/index.js\nexport async function getStaticProps() {\n  const db = await myDB.connect({\n    host: process.env.DB_HOST,\n    username: process.env.DB_USER,\n    password: process.env.DB_PASS,\n  })\n  // ...\n}"
+      "body": "```tsx {3}\nmodule.exports = {\ntypescript: {\nignoreBuildErrors: true,\n},\n}\n\n```\n\n危险地允许生产构建成功完成，即使您的项目有类型错误\n\n环境变量\n---\n\n### 加载环境变量\n\n将环境变量从 `.env.local` 加载到 `process.env` 中\n\n```ini\nDB_HOST=localhost\nDB_USER=myuser\nDB_PASS=mypassword\n```\n\n使用环境变量\n\n```js\n// pages/index.js\nexport async function getStaticProps() {\n  const db = await myDB.connect({\n    host: process.env.DB_HOST,\n    username: process.env.DB_USER,\n    password: process.env.DB_PASS,\n  })\n  // ...\n}\n```"
     },
     {
       "id": "s8-124",
       "sectionId": "s8",
-      "title": "自动扩展 .env* 文件中的变量",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# .env\nHOSTNAME=localhost\nPORT=8080\nHOST=http://$HOSTNAME:$PORT"
-    },
-    {
-      "id": "s8-125",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "如果您尝试使用实际值中带有 `$` 的变量，则需要像这样对其进行转义：`\\$`"
-    },
-    {
-      "id": "s8-126",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20.env%0AA%3Dabc%0A%0A%23%20becomes%20%22preabc%22%0AWRONG%3Dpre%24A%0A%0A%23%20becomes%20%22pre%24A%22%0ACORRECT%3Dpre%5C%24A",
+      "title": "%E8%87%AA%E5%8A%A8%E6%89%A9%E5%B1%95%20.env*%20%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F",
+      "body": "%60%60%60bash%0A%23%20.env%0AHOSTNAME%3Dlocalhost%0APORT%3D8080%0AHOST%3Dhttp%3A%2F%2F%24HOSTNAME%3A%24PORT%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E6%82%A8%E5%B0%9D%E8%AF%95%E4%BD%BF%E7%94%A8%E5%AE%9E%E9%99%85%E5%80%BC%E4%B8%AD%E5%B8%A6%E6%9C%89%20%60%24%60%20%E7%9A%84%E5%8F%98%E9%87%8F%EF%BC%8C%E5%88%99%E9%9C%80%E8%A6%81%E5%83%8F%E8%BF%99%E6%A0%B7%E5%AF%B9%E5%85%B6%E8%BF%9B%E8%A1%8C%E8%BD%AC%E4%B9%89%EF%BC%9A%60%5C%24%60%0A%0A%60%60%60bash%0A%23%20.env%0AA%3Dabc%0A%0A%23%20becomes%20%22preabc%22%0AWRONG%3Dpre%24A%0A%0A%23%20becomes%20%22pre%24A%22%0ACORRECT%3Dpre%5C%24A%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s8-127",
       "sectionId": "s8",
-      "title": "向浏览器公开环境变量",
-      "kind": "text",
-      "body": "为了向浏览器公开变量，您必须在变量前加上 `NEXT_PUBLIC_` 前缀"
-    },
-    {
-      "id": "s8-128",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk"
-    },
-    {
-      "id": "s8-129",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "text",
-      "body": "`NEXT_PUBLIC_ANALYTICS_ID` 可以在此处使用，因为它的前缀是 `NEXT_PUBLIC_`"
-    },
-    {
-      "id": "s8-130",
-      "sectionId": "s8",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "// pages/index.js\nimport setupAnalyticsService from '../lib/my-analytics-service'\n\n//\n// 它将在构建时转换为 `setupAnalyticsService('abcdefghijk')`\nsetupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID)\n\nfunction HomePage() {\n  return <h1>Hello World</h1>\n}\n\nexport default HomePage"
+      "title": "%E5%90%91%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%AC%E5%BC%80%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F",
+      "body": "%E4%B8%BA%E4%BA%86%E5%90%91%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%AC%E5%BC%80%E5%8F%98%E9%87%8F%EF%BC%8C%E6%82%A8%E5%BF%85%E9%A1%BB%E5%9C%A8%E5%8F%98%E9%87%8F%E5%89%8D%E5%8A%A0%E4%B8%8A%20%60NEXT_PUBLIC_%60%20%E5%89%8D%E7%BC%80%0A%0A%60%60%60bash%0ANEXT_PUBLIC_ANALYTICS_ID%3Dabcdefghijk%0A%60%60%60%0A%0A%60NEXT_PUBLIC_ANALYTICS_ID%60%20%E5%8F%AF%E4%BB%A5%E5%9C%A8%E6%AD%A4%E5%A4%84%E4%BD%BF%E7%94%A8%EF%BC%8C%E5%9B%A0%E4%B8%BA%E5%AE%83%E7%9A%84%E5%89%8D%E7%BC%80%E6%98%AF%20%60NEXT_PUBLIC_%60%0A%0A%60%60%60jsx%0A%2F%2F%20pages%2Findex.js%0Aimport%20setupAnalyticsService%20from%20'..%2Flib%2Fmy-analytics-service'%0A%0A%2F%2F%0A%2F%2F%20%E5%AE%83%E5%B0%86%E5%9C%A8%E6%9E%84%E5%BB%BA%E6%97%B6%E8%BD%AC%E6%8D%A2%E4%B8%BA%20%60setupAnalyticsService('abcdefghijk')%60%0AsetupAnalyticsService(process.env.NEXT_PUBLIC_ANALYTICS_ID)%0A%0Afunction%20HomePage()%20%7B%0A%20%20return%20%3Ch1%3EHello%20World%3C%2Fh1%3E%0A%7D%0A%0Aexport%20default%20HomePage%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-131",
       "sectionId": "s9",
       "title": "介绍",
-      "kind": "text",
-      "body": "路由器将自动将名为 `index` 的文件路由到目录的根目录"
-    },
-    {
-      "id": "s9-132",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": ":-- | --\n:-- | --\n`pages/index.js` | <pur>`/`</pur>\n`pages/blog/index.js` | <pur>`/blog`</pur>"
-    },
-    {
-      "id": "s9-133",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "路由器支持嵌套文件。如果创建嵌套文件夹结构，文件将以同样的方式自动路由"
-    },
-    {
-      "id": "s9-134",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": ":-- | --\n:-- | --\n`pages/blog/first-post.js` | <pur>`/blog/first-post`</pur>\n`pages/dashboard/settings/username.js` | <pur>`/dashboard/settings/username`</pur>\n<!--rehype:className=style-list-->"
-    },
-    {
-      "id": "s9-135",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "动态路由"
-    },
-    {
-      "id": "s9-136",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": ":-- | --\n:-- | --\n`pages/blog/[slug].js` | <pur>`/blog/:slug`</pur> (<yel>`/blog/hello-world`</yel>)\n`pages/[username]/settings.js` | <pur>`/:username/settings`</pur> (<yel>`/foo/settings`</yel>)\n`pages/post/[...all].js` | <pur>`/post/*`</pur> (<yel>`/post/2020/id/title`</yel>)\n<!--rehype:className=style-list-->"
+      "body": "路由器将自动将名为 `index` 的文件路由到目录的根目录\n\n:-- | --\n:-- | --\n`pages/index.js` | <pur>`/`</pur>\n`pages/blog/index.js` | <pur>`/blog`</pur>\n\n路由器支持嵌套文件。如果创建嵌套文件夹结构，文件将以同样的方式自动路由\n\n:-- | --\n:-- | --\n`pages/blog/first-post.js` | <pur>`/blog/first-post`</pur>\n`pages/dashboard/settings/username.js` | <pur>`/dashboard/settings/username`</pur>\n<!--rehype:className=style-list-->\n\n动态路由\n\n:-- | --\n:-- | --\n`pages/blog/[slug].js` | <pur>`/blog/:slug`</pur> (<yel>`/blog/hello-world`</yel>)\n`pages/[username]/settings.js` | <pur>`/:username/settings`</pur> (<yel>`/foo/settings`</yel>)\n`pages/post/[...all].js` | <pur>`/post/*`</pur> (<yel>`/post/2020/id/title`</yel>)\n<!--rehype:className=style-list-->"
     },
     {
       "id": "s9-137",
       "sectionId": "s9",
-      "title": "具有动态路由的页面",
-      "kind": "text",
-      "body": "如果您创建一个名为 `pages/posts/[pid].js` 的文件，那么它可以在 `posts/1`、`posts/2` 等处访问"
-    },
-    {
-      "id": "s9-138",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import { useRouter } from 'next/router'\n\nconst Post = () => {\n  const router = useRouter()\n  const { pid } = router.query\n\n  return <p>Post: {pid}</p>\n}\n\nexport default Post"
-    },
-    {
-      "id": "s9-139",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "使用 `useRouter` 获取动态路由参数 `pid`"
+      "title": "%E5%85%B7%E6%9C%89%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E7%9A%84%E9%A1%B5%E9%9D%A2",
+      "body": "%E5%A6%82%E6%9E%9C%E6%82%A8%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20%60pages%2Fposts%2F%5Bpid%5D.js%60%20%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E9%82%A3%E4%B9%88%E5%AE%83%E5%8F%AF%E4%BB%A5%E5%9C%A8%20%60posts%2F1%60%E3%80%81%60posts%2F2%60%20%E7%AD%89%E5%A4%84%E8%AE%BF%E9%97%AE%0A%0A%60%60%60jsx%0Aimport%20%7B%20useRouter%20%7D%20from%20'next%2Frouter'%0A%0Aconst%20Post%20%3D%20()%20%3D%3E%20%7B%0A%20%20const%20router%20%3D%20useRouter()%0A%20%20const%20%7B%20pid%20%7D%20%3D%20router.query%0A%0A%20%20return%20%3Cp%3EPost%3A%20%7Bpid%7D%3C%2Fp%3E%0A%7D%0A%0Aexport%20default%20Post%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20%60useRouter%60%20%E8%8E%B7%E5%8F%96%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0%20%60pid%60",
+      "encoded": true
     },
     {
       "id": "s9-140",
       "sectionId": "s9",
       "title": "%E9%A1%B5%E9%9D%A2%E4%B9%8B%E9%97%B4%E7%9A%84%E9%93%BE%E6%8E%A5",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Link%20from%20'next%2Flink'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%3CLink%20href%3D%22%2F%22%3E%E9%A6%96%E9%A1%B5%3C%2FLink%3E%0A%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%3CLink%20href%3D%22%2Fabout%22%3E%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC%3C%2FLink%3E%0A%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%3CLink%20href%3D%22%2Fblog%2Fhello-world%22%3E%0A%20%20%20%20%20%20%20%20%20%20%E5%8D%9A%E6%96%87%0A%20%20%20%20%20%20%20%20%3C%2FLink%3E%0A%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%3C%2Ful%3E%0A%20%20)%0A%7D",
+      "body": "%60%60%60jsx%0Aimport%20Link%20from%20'next%2Flink'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cul%3E%0A%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%3CLink%20href%3D%22%2F%22%3E%E9%A6%96%E9%A1%B5%3C%2FLink%3E%0A%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%3CLink%20href%3D%22%2Fabout%22%3E%E5%85%B3%E4%BA%8E%E6%88%91%E4%BB%AC%3C%2FLink%3E%0A%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%20%20%3Cli%3E%0A%20%20%20%20%20%20%20%20%3CLink%20href%3D%22%2Fblog%2Fhello-world%22%3E%0A%20%20%20%20%20%20%20%20%20%20%E5%8D%9A%E6%96%87%0A%20%20%20%20%20%20%20%20%3C%2FLink%3E%0A%20%20%20%20%20%20%3C%2Fli%3E%0A%20%20%20%20%3C%2Ful%3E%0A%20%20)%0A%7D%0A%60%60%60%0A%0A%3A--%20%7C%20--%0A%3A--%20%7C%20--%0A%60%2F%60%20%7C%20%3Cpur%3E%60pages%2Findex.js%60%3C%2Fpur%3E%0A%60%2Fabout%60%20%7C%20%3Cpur%3E%60pages%2Fabout.js%60%3C%2Fpur%3E%0A%60%2Fblog%2Fhello-world%60%20%7C%20%3Cpur%3E%60pages%2Fblog%2F%5Bslug%5D.js%60%3C%2Fpur%3E",
       "encoded": true
-    },
-    {
-      "id": "s9-141",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": ":-- | --\n:-- | --\n`/` | <pur>`pages/index.js`</pur>\n`/about` | <pur>`pages/about.js`</pur>\n`/blog/hello-world` | <pur>`pages/blog/[slug].js`</pur>"
     },
     {
       "id": "s9-142",
       "sectionId": "s9",
-      "title": "链接到动态路径",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import Link from 'next/link'\n\nexport default function Posts({ posts }) {\n  return (\n    <Link href={`/blog/${encodeURIComponent(post.slug)}`}>\n      标题\n    </Link>\n  )\n}"
+      "title": "%E9%93%BE%E6%8E%A5%E5%88%B0%E5%8A%A8%E6%80%81%E8%B7%AF%E5%BE%84",
+      "body": "%60%60%60jsx%0Aimport%20Link%20from%20'next%2Flink'%0A%0Aexport%20default%20function%20Posts(%7B%20posts%20%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CLink%20href%3D%7B%60%2Fblog%2F%24%7BencodeURIComponent(post.slug)%7D%60%7D%3E%0A%20%20%20%20%20%20%E6%A0%87%E9%A2%98%0A%20%20%20%20%3C%2FLink%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-143",
       "sectionId": "s9",
-      "title": "URL 对象",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import Link from 'next/link'\n\nexport default function Posts({ posts }) {\n  return (\n    <Link\n      href={{\n        pathname: '/blog/[slug]',\n        query: { slug: posts.slug },\n      }}\n    >\n      标题\n    </Link>\n  )\n}"
+      "title": "URL%20%E5%AF%B9%E8%B1%A1",
+      "body": "%60%60%60jsx%0Aimport%20Link%20from%20'next%2Flink'%0A%0Aexport%20default%20function%20Posts(%7B%20posts%20%7D)%20%7B%0A%20%20return%20(%0A%20%20%20%20%3CLink%0A%20%20%20%20%20%20href%3D%7B%7B%0A%20%20%20%20%20%20%20%20pathname%3A%20'%2Fblog%2F%5Bslug%5D'%2C%0A%20%20%20%20%20%20%20%20query%3A%20%7B%20slug%3A%20posts.slug%20%7D%2C%0A%20%20%20%20%20%20%7D%7D%0A%20%20%20%20%3E%0A%20%20%20%20%20%20%E6%A0%87%E9%A2%98%0A%20%20%20%20%3C%2FLink%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-144",
       "sectionId": "s9",
-      "title": "动态路由",
-      "kind": "text",
-      "body": "考虑以下页面 `pages/post/[pid].js`："
-    },
-    {
-      "id": "s9-145",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import { useRouter } from 'next/router'\n\nconst Post = () => {\n  const router = useRouter()\n  const { pid } = router.query\n\n  return <p>Post: {pid}</p>\n}\n\nexport default Post"
-    },
-    {
-      "id": "s9-146",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "到动态路由的客户端导航由 `next/link` 处理"
-    },
-    {
-      "id": "s9-147",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import%20Link%20from%20'next%2Flink'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cdiv%3E%0A%20%20%20%20%20%20%3CLink%20href%3D%22%2Fpost%2Fabc%22%3E%0A%20%20%20%20%20%20%20%20%E8%BD%AC%E5%88%B0%20pages%2Fpost%2F%5Bpid%5D.js%0A%20%20%20%20%20%20%3C%2FLink%3E%0A%20%20%20%20%20%20%3CLink%20href%3D%22%2Fpost%2Fabc%3Ffoo%3Dbar%22%3E%0A%20%20%20%20%20%20%20%20%E4%B9%9F%E8%BD%AC%E5%88%B0%20pages%2Fpost%2F%5Bpid%5D.js%0A%20%20%20%20%20%20%3C%2FLink%3E%0A%20%20%20%20%20%20%3CLink%20href%3D%22%2Fpost%2Fabc%2Fa-comment%22%3E%0A%20%20%20%20%20%20%20%20%E8%BD%AC%E5%88%B0%20pages%2Fpost%2F%5Bpid%5D%2F%5Bcomment%5D.js%0A%20%20%20%20%20%20%3C%2FLink%3E%0A%20%20%20%20%3C%2Fdiv%3E%0A%20%20)%0A%7D",
+      "title": "%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1",
+      "body": "%E8%80%83%E8%99%91%E4%BB%A5%E4%B8%8B%E9%A1%B5%E9%9D%A2%20%60pages%2Fpost%2F%5Bpid%5D.js%60%EF%BC%9A%0A%0A%60%60%60jsx%0Aimport%20%7B%20useRouter%20%7D%20from%20'next%2Frouter'%0A%0Aconst%20Post%20%3D%20()%20%3D%3E%20%7B%0A%20%20const%20router%20%3D%20useRouter()%0A%20%20const%20%7B%20pid%20%7D%20%3D%20router.query%0A%0A%20%20return%20%3Cp%3EPost%3A%20%7Bpid%7D%3C%2Fp%3E%0A%7D%0A%0Aexport%20default%20Post%0A%60%60%60%0A%0A%E5%88%B0%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AF%BC%E8%88%AA%E7%94%B1%20%60next%2Flink%60%20%E5%A4%84%E7%90%86%0A%0A%60%60%60jsx%0Aimport%20Link%20from%20'next%2Flink'%0A%0Aexport%20default%20function%20Home()%20%7B%0A%20%20return%20(%0A%20%20%20%20%3Cdiv%3E%0A%20%20%20%20%20%20%3CLink%20href%3D%22%2Fpost%2Fabc%22%3E%0A%20%20%20%20%20%20%20%20%E8%BD%AC%E5%88%B0%20pages%2Fpost%2F%5Bpid%5D.js%0A%20%20%20%20%20%20%3C%2FLink%3E%0A%20%20%20%20%20%20%3CLink%20href%3D%22%2Fpost%2Fabc%3Ffoo%3Dbar%22%3E%0A%20%20%20%20%20%20%20%20%E4%B9%9F%E8%BD%AC%E5%88%B0%20pages%2Fpost%2F%5Bpid%5D.js%0A%20%20%20%20%20%20%3C%2FLink%3E%0A%20%20%20%20%20%20%3CLink%20href%3D%22%2Fpost%2Fabc%2Fa-comment%22%3E%0A%20%20%20%20%20%20%20%20%E8%BD%AC%E5%88%B0%20pages%2Fpost%2F%5Bpid%5D%2F%5Bcomment%5D.js%0A%20%20%20%20%20%20%3C%2FLink%3E%0A%20%20%20%20%3C%2Fdiv%3E%0A%20%20)%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-148",
       "sectionId": "s9",
-      "title": "多个动态路由",
-      "kind": "text",
-      "body": "工作方式相同。 页面 `pages/post/[pid]/[comment].js` 将匹配路由 `/post/abc/a-comment` 并且它的查询对象将是："
-    },
-    {
-      "id": "s9-149",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%7B%20%22pid%22%3A%20%22abc%22%2C%20%22comment%22%3A%20%22a-comment%22%20%7D",
+      "title": "%E5%A4%9A%E4%B8%AA%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1",
+      "body": "%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F%E7%9B%B8%E5%90%8C%E3%80%82%20%E9%A1%B5%E9%9D%A2%20%60pages%2Fpost%2F%5Bpid%5D%2F%5Bcomment%5D.js%60%20%E5%B0%86%E5%8C%B9%E9%85%8D%E8%B7%AF%E7%94%B1%20%60%2Fpost%2Fabc%2Fa-comment%60%20%E5%B9%B6%E4%B8%94%E5%AE%83%E7%9A%84%E6%9F%A5%E8%AF%A2%E5%AF%B9%E8%B1%A1%E5%B0%86%E6%98%AF%EF%BC%9A%0A%0A%60%60%60js%0A%7B%20%22pid%22%3A%20%22abc%22%2C%20%22comment%22%3A%20%22a-comment%22%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-150",
       "sectionId": "s9",
-      "title": "捕捉所有路由",
-      "kind": "text",
-      "body": "可以通过在括号内添加三个点 (`...`) 来扩展动态路由以捕获所有路径，`pages/post/[...slug].js` 匹配 `/post/a`，也匹配 `/post/a/b`、`/post/a/b/c` 等"
-    },
-    {
-      "id": "s9-151",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%2F%2F%20%2Fpost%2Fa%0A%7B%20%22slug%22%3A%20%5B%22a%22%5D%20%7D%0A%0A%2F%2F%20%2Fpost%2Fa%2Fb%0A%7B%20%22slug%22%3A%20%5B%22a%22%2C%20%22b%22%5D%20%7D",
+      "title": "%E6%8D%95%E6%8D%89%E6%89%80%E6%9C%89%E8%B7%AF%E7%94%B1",
+      "body": "%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E5%9C%A8%E6%8B%AC%E5%8F%B7%E5%86%85%E6%B7%BB%E5%8A%A0%E4%B8%89%E4%B8%AA%E7%82%B9%20(%60...%60)%20%E6%9D%A5%E6%89%A9%E5%B1%95%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E4%BB%A5%E6%8D%95%E8%8E%B7%E6%89%80%E6%9C%89%E8%B7%AF%E5%BE%84%EF%BC%8C%60pages%2Fpost%2F%5B...slug%5D.js%60%20%E5%8C%B9%E9%85%8D%20%60%2Fpost%2Fa%60%EF%BC%8C%E4%B9%9F%E5%8C%B9%E9%85%8D%20%60%2Fpost%2Fa%2Fb%60%E3%80%81%60%2Fpost%2Fa%2Fb%2Fc%60%20%E7%AD%89%0A%0A%60%60%60js%0A%2F%2F%20%2Fpost%2Fa%0A%7B%20%22slug%22%3A%20%5B%22a%22%5D%20%7D%0A%0A%2F%2F%20%2Fpost%2Fa%2Fb%0A%7B%20%22slug%22%3A%20%5B%22a%22%2C%20%22b%22%5D%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-152",
       "sectionId": "s9",
-      "title": "可选捕获所有路由",
-      "kind": "text",
-      "body": "使用 `[[...slug]]`，`pages/post/[[...slug]].js` 将匹配 `/post`、`/post/a`、`/post/a/b` 等"
-    },
-    {
-      "id": "s9-153",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "js",
-      "code": "%2F%2F%20GET%20%60%2Fpost%60%20(empty%20object)%0A%7B%20%7D%0A%2F%2F%20%60GET%20%2Fpost%2Fa%60%20(single-element%20array)%0A%7B%20%22slug%22%3A%20%5B%22a%22%5D%20%7D%0A%2F%2F%20%60GET%20%2Fpost%2Fa%2Fb%60%20(multi-element%20array)%0A%7B%20%22slug%22%3A%20%5B%22a%22%2C%20%22b%22%5D%20%7D",
+      "title": "%E5%8F%AF%E9%80%89%E6%8D%95%E8%8E%B7%E6%89%80%E6%9C%89%E8%B7%AF%E7%94%B1",
+      "body": "%E4%BD%BF%E7%94%A8%20%60%5B%5B...slug%5D%5D%60%EF%BC%8C%60pages%2Fpost%2F%5B%5B...slug%5D%5D.js%60%20%E5%B0%86%E5%8C%B9%E9%85%8D%20%60%2Fpost%60%E3%80%81%60%2Fpost%2Fa%60%E3%80%81%60%2Fpost%2Fa%2Fb%60%20%E7%AD%89%0A%0A%60%60%60js%0A%2F%2F%20GET%20%60%2Fpost%60%20(empty%20object)%0A%7B%20%7D%0A%2F%2F%20%60GET%20%2Fpost%2Fa%60%20(single-element%20array)%0A%7B%20%22slug%22%3A%20%5B%22a%22%5D%20%7D%0A%2F%2F%20%60GET%20%2Fpost%2Fa%2Fb%60%20(multi-element%20array)%0A%7B%20%22slug%22%3A%20%5B%22a%22%2C%20%22b%22%5D%20%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s9-154",
       "sectionId": "s9",
-      "title": "事件执行调整页面",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import { useRouter } from 'next/router'\n\nexport default function ReadMore() {\n  const router = useRouter()\n\n  return (\n    <button\n      onClick={() => router.push('/about')}\n    >\n      点击这里阅读更多\n    </button>\n  )\n}"
+      "title": "%E4%BA%8B%E4%BB%B6%E6%89%A7%E8%A1%8C%E8%B0%83%E6%95%B4%E9%A1%B5%E9%9D%A2",
+      "body": "%60%60%60jsx%0Aimport%20%7B%20useRouter%20%7D%20from%20'next%2Frouter'%0A%0Aexport%20default%20function%20ReadMore()%20%7B%0A%20%20const%20router%20%3D%20useRouter()%0A%0A%20%20return%20(%0A%20%20%20%20%3Cbutton%0A%20%20%20%20%20%20onClick%3D%7B()%20%3D%3E%20router.push('%2Fabout')%7D%0A%20%20%20%20%3E%0A%20%20%20%20%20%20%E7%82%B9%E5%87%BB%E8%BF%99%E9%87%8C%E9%98%85%E8%AF%BB%E6%9B%B4%E5%A4%9A%0A%20%20%20%20%3C%2Fbutton%3E%0A%20%20)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-155",
       "sectionId": "s9",
-      "title": "浅路由",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "import { useEffect } from 'react'\nimport { useRouter } from 'next/router'\n\n// 当前网址为“/”\nexport default function Page() {\n  const router = useRouter()\n\n  useEffect(() => {\n    // 始终在第一次渲染后进行导航\n    router.push('/?counter=10', undefined, { shallow: true })\n  }, [])\n\n  useEffect(() => {\n    // counter 变了！\n  }, [router.query.counter])\n}"
+      "title": "%E6%B5%85%E8%B7%AF%E7%94%B1",
+      "body": "%60%60%60jsx%0Aimport%20%7B%20useEffect%20%7D%20from%20'react'%0Aimport%20%7B%20useRouter%20%7D%20from%20'next%2Frouter'%0A%0A%2F%2F%20%E5%BD%93%E5%89%8D%E7%BD%91%E5%9D%80%E4%B8%BA%E2%80%9C%2F%E2%80%9D%0Aexport%20default%20function%20Page()%20%7B%0A%20%20const%20router%20%3D%20useRouter()%0A%0A%20%20useEffect(()%20%3D%3E%20%7B%0A%20%20%20%20%2F%2F%20%E5%A7%8B%E7%BB%88%E5%9C%A8%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%B8%B2%E6%9F%93%E5%90%8E%E8%BF%9B%E8%A1%8C%E5%AF%BC%E8%88%AA%0A%20%20%20%20router.push('%2F%3Fcounter%3D10'%2C%20undefined%2C%20%7B%20shallow%3A%20true%20%7D)%0A%20%20%7D%2C%20%5B%5D)%0A%0A%20%20useEffect(()%20%3D%3E%20%7B%0A%20%20%20%20%2F%2F%20counter%20%E5%8F%98%E4%BA%86%EF%BC%81%0A%20%20%7D%2C%20%5Brouter.query.counter%5D)%0A%7D%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s9-156",
       "sectionId": "s9",
-      "title": "注意事项",
-      "kind": "text",
-      "body": "浅路由仅适用于当前页面中的 URL 更改。 例如，假设我们有另一个名为 `pages/about.js` 的页面，并且您运行以下命令："
-    },
-    {
-      "id": "s9-157",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "code",
-      "lang": "jsx",
-      "code": "router.push('/?counter=10', '/about?counter=10', { shallow: true })"
-    },
-    {
-      "id": "s9-158",
-      "sectionId": "s9",
-      "title": "",
-      "kind": "text",
-      "body": "由于这是一个新页面，它会卸载当前页面，加载新页面并等待数据获取，即使我们要求进行浅层路由"
+      "title": "%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9",
+      "body": "%E6%B5%85%E8%B7%AF%E7%94%B1%E4%BB%85%E9%80%82%E7%94%A8%E4%BA%8E%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%E4%B8%AD%E7%9A%84%20URL%20%E6%9B%B4%E6%94%B9%E3%80%82%20%E4%BE%8B%E5%A6%82%EF%BC%8C%E5%81%87%E8%AE%BE%E6%88%91%E4%BB%AC%E6%9C%89%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BA%20%60pages%2Fabout.js%60%20%E7%9A%84%E9%A1%B5%E9%9D%A2%EF%BC%8C%E5%B9%B6%E4%B8%94%E6%82%A8%E8%BF%90%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%EF%BC%9A%0A%0A%60%60%60jsx%0Arouter.push('%2F%3Fcounter%3D10'%2C%20'%2Fabout%3Fcounter%3D10'%2C%20%7B%20shallow%3A%20true%20%7D)%0A%60%60%60%0A%0A%E7%94%B1%E4%BA%8E%E8%BF%99%E6%98%AF%E4%B8%80%E4%B8%AA%E6%96%B0%E9%A1%B5%E9%9D%A2%EF%BC%8C%E5%AE%83%E4%BC%9A%E5%8D%B8%E8%BD%BD%E5%BD%93%E5%89%8D%E9%A1%B5%E9%9D%A2%EF%BC%8C%E5%8A%A0%E8%BD%BD%E6%96%B0%E9%A1%B5%E9%9D%A2%E5%B9%B6%E7%AD%89%E5%BE%85%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%EF%BC%8C%E5%8D%B3%E4%BD%BF%E6%88%91%E4%BB%AC%E8%A6%81%E6%B1%82%E8%BF%9B%E8%A1%8C%E6%B5%85%E5%B1%82%E8%B7%AF%E7%94%B1",
+      "encoded": true
     },
     {
       "id": "s10-159",
       "sectionId": "s10",
       "title": "另见",
-      "kind": "text",
       "body": "• [Next.js 文档](https://nextjs.org/docs/getting-started)"
     }
   ],

@@ -50,1002 +50,425 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "本备忘清单是 [FFmpeg](https://ffmpeg.org/) 中常见视频处理操作的备忘清单"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "安装",
-      "kind": "text",
-      "body": "Linux"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "",
-      "code": "$ apt-get install ffmpeg\n$ yum install ffmpeg"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "MacOS"
-    },
-    {
-      "id": "s1-4",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ brew install ffmpeg"
+      "body": "Linux\n\n```\n$ apt-get install ffmpeg\n$ yum install ffmpeg\n```\n\nMacOS\n\n```bash\n$ brew install ffmpeg\n```"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
       "title": "示例",
-      "kind": "text",
-      "body": "mp4 转 avi:"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.mp4 output.avi"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "webm 转 mp4:"
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i movie.webm movie.mp4"
+      "body": "mp4 转 avi:\n\n```bash\n$ ffmpeg -i input.mp4 output.avi\n```\n\nwebm 转 mp4:\n\n```bash\n$ ffmpeg -i movie.webm movie.mp4\n```"
     },
     {
       "id": "s1-9",
       "sectionId": "s1",
       "title": "全局选项",
-      "kind": "text",
       "body": ":- | -\n:- | -\n`-y` | 覆盖输出文件\n`-n` | 不要覆盖输出文件"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "主要选项",
-      "kind": "text",
       "body": ":- | -\n:- | -\n`-f fmt` | 强制输入或输出文件格式\n`-i fName` | 输入文件名，未指定显示内容流的摘要\n`-c codecName` | 指定编解码器 [输入或输出]\n`-fs Nbytes` | 以 Nbytes 指定最大输出文件大小"
     },
     {
       "id": "s1-11",
       "sectionId": "s1",
       "title": "基础参数",
-      "kind": "text",
       "body": ":- | -\n:- | -\n`-codecs`             | 列出可用编码\n`-formats`            | 列出支持的格式\n`-protocols`          | 列出支持的协议\n`-i input.mp4`        | 指定输入文件\n`-c:v libx264`        | 指定视频编码\n`-c:a aac`            | 指定音频编码\n`-vcodec libx264`     | 旧写法\n`-acodec aac`         | 旧写法\n`-fs SIZE`            | 指定文件大小"
     },
     {
       "id": "s1-12",
       "sectionId": "s1",
       "title": "视频参数",
-      "kind": "text",
       "body": ":- | -\n:- | -\n`-b bRate` | 设置视频比特率(单位 kbit/s)\n`-fixaspect` | 固定纵横比\n`-bt tolerance` | 设置视频比特率容差(单位 kbit/s)\n`-maxrate bRate` | 设置最大视频比特率容差(单位 kbit/s)\n`-minrate bRate` | 设置最小视频比特率容差(单位 kbit/s)\n`-bufsize size` | 设置速率控制缓冲区大小(以 kByte 为单位)\n`-sameq` | 使用与源相同的视频质量(意味着 VBR)\n`-newvideo` | 将新的视频流添加到当前输出流\n`-aspect RATIO` | 纵横比(4:3、16:9 或 1.25)\n`-r RATE` | 每秒帧率\n`-s WIDTHxHEIGHT` | 帧大小\n`-vn` | 没有视频\n`-crf` | 指定编码的质量，数值越大压缩越高，一般范围是 18-28"
     },
     {
       "id": "s1-13",
       "sectionId": "s1",
       "title": "码率设置",
-      "kind": "code",
-      "lang": "bash",
-      "code": "-b:v 1M      # 视频比特率(1M = 1Mbit/s)\n-b:a 1M      # 音频比特率(1M = 1Mbit/s)"
+      "body": "```bash\n-b:v 1M      # 视频比特率(1M = 1Mbit/s)\n-b:a 1M      # 音频比特率(1M = 1Mbit/s)\n```"
     },
     {
       "id": "s1-14",
       "sectionId": "s1",
       "title": "尺寸规格",
-      "kind": "text",
       "body": ":- | - | - | -\n:- | - | - | -\n`K` 或 `k` | 103 | 1000 字节 | 千字节 Kilobytes\n`M` | 106 | 1000000 字节 | 兆字节 Megabytes\n`G` | 109 | 1000000000 | 千兆字节 Gigabytes\n`Ki` | 210 | 1024 | 千字节 Kibibyte\n`Mi` | 220 | 1048576 | 兆字节 Mebibyte\n`Gi` | 230 | 1073741824 | Gibibyte"
     },
     {
       "id": "s1-15",
       "sectionId": "s1",
-      "title": "音频参数",
-      "kind": "text",
-      "body": ":- | -\n:- | -\n`-ab bRate` | 设置音频比特率(单位 kbit/s)\n`-aframes N` | 设置要录制的音频帧数 [-frames:a 的别名]\n`-aq q` | 设置音频质量(特定于编解码器，VBR) [-q:a 的别名]\n`-an` | 禁用录音\n`-acodec codec` | 设置音频编解码器。[-codec:a 的别名] 使用 'copy' 复制流。\n`-vol` | 以 256 的倍数更改音频音量，其中 256 = 100%(正常)音量。例如 512 = 200%\n`-newaudio` | 将新的音频流添加到当前输出流\n`-alang code` | 设置当前音频流的 ISO 639 语言代码(3 个字母)\n`-ac nTract` | 指定立体声通道数（n个声道）。例如 nTract = 2 即2个声道"
+      "title": "%E9%9F%B3%E9%A2%91%E5%8F%82%E6%95%B0",
+      "body": "%3A-%20%7C%20-%0A%3A-%20%7C%20-%0A%60-ab%20bRate%60%20%7C%20%E8%AE%BE%E7%BD%AE%E9%9F%B3%E9%A2%91%E6%AF%94%E7%89%B9%E7%8E%87(%E5%8D%95%E4%BD%8D%20kbit%2Fs)%0A%60-aframes%20N%60%20%7C%20%E8%AE%BE%E7%BD%AE%E8%A6%81%E5%BD%95%E5%88%B6%E7%9A%84%E9%9F%B3%E9%A2%91%E5%B8%A7%E6%95%B0%20%5B-frames%3Aa%20%E7%9A%84%E5%88%AB%E5%90%8D%5D%0A%60-aq%20q%60%20%7C%20%E8%AE%BE%E7%BD%AE%E9%9F%B3%E9%A2%91%E8%B4%A8%E9%87%8F(%E7%89%B9%E5%AE%9A%E4%BA%8E%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%EF%BC%8CVBR)%20%5B-q%3Aa%20%E7%9A%84%E5%88%AB%E5%90%8D%5D%0A%60-an%60%20%7C%20%E7%A6%81%E7%94%A8%E5%BD%95%E9%9F%B3%0A%60-acodec%20codec%60%20%7C%20%E8%AE%BE%E7%BD%AE%E9%9F%B3%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%99%A8%E3%80%82%5B-codec%3Aa%20%E7%9A%84%E5%88%AB%E5%90%8D%5D%20%E4%BD%BF%E7%94%A8%20'copy'%20%E5%A4%8D%E5%88%B6%E6%B5%81%E3%80%82%0A%60-vol%60%20%7C%20%E4%BB%A5%20256%20%E7%9A%84%E5%80%8D%E6%95%B0%E6%9B%B4%E6%94%B9%E9%9F%B3%E9%A2%91%E9%9F%B3%E9%87%8F%EF%BC%8C%E5%85%B6%E4%B8%AD%20256%20%3D%20100%25(%E6%AD%A3%E5%B8%B8)%E9%9F%B3%E9%87%8F%E3%80%82%E4%BE%8B%E5%A6%82%20512%20%3D%20200%25%0A%60-newaudio%60%20%7C%20%E5%B0%86%E6%96%B0%E7%9A%84%E9%9F%B3%E9%A2%91%E6%B5%81%E6%B7%BB%E5%8A%A0%E5%88%B0%E5%BD%93%E5%89%8D%E8%BE%93%E5%87%BA%E6%B5%81%0A%60-alang%20code%60%20%7C%20%E8%AE%BE%E7%BD%AE%E5%BD%93%E5%89%8D%E9%9F%B3%E9%A2%91%E6%B5%81%E7%9A%84%20ISO%20639%20%E8%AF%AD%E8%A8%80%E4%BB%A3%E7%A0%81(3%20%E4%B8%AA%E5%AD%97%E6%AF%8D)%0A%60-ac%20nTract%60%20%7C%20%E6%8C%87%E5%AE%9A%E7%AB%8B%E4%BD%93%E5%A3%B0%E9%80%9A%E9%81%93%E6%95%B0%EF%BC%88n%E4%B8%AA%E5%A3%B0%E9%81%93%EF%BC%89%E3%80%82%E4%BE%8B%E5%A6%82%20nTract%20%3D%202%20%E5%8D%B32%E4%B8%AA%E5%A3%B0%E9%81%93",
+      "encoded": true
     },
     {
       "id": "s2-16",
       "sectionId": "s2",
       "title": "剪切视频部分",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 从1分45秒开始剪切2分35秒\n$ ffmpeg -i <input> -ss 00:01:45 -t 00:02:35 -vcodec copy -acodec copy <output>\n# 从1分45秒开始剪切到第4分20秒，与上一行等效\n$ ffmpeg -i <input> -ss 00:01:45 -to 00:04:20 -codec copy <output>\n$ ffmpeg -ss 00:00:30 -i orginalfile.mpg -t 00:00:05 -vcodec copy -acodec copy newfile.mpg\n# 从 4.5 秒开始的 5 秒长的视频\n$ ffmpeg -i in.mp4 -ss 4.5 -t 5 out.mp4"
+      "body": "```bash\n# 从1分45秒开始剪切2分35秒\n$ ffmpeg -i <input> -ss 00:01:45 -t 00:02:35 -vcodec copy -acodec copy <output>\n# 从1分45秒开始剪切到第4分20秒，与上一行等效\n$ ffmpeg -i <input> -ss 00:01:45 -to 00:04:20 -codec copy <output>\n$ ffmpeg -ss 00:00:30 -i orginalfile.mpg -t 00:00:05 -vcodec copy -acodec copy newfile.mpg\n# 从 4.5 秒开始的 5 秒长的视频\n$ ffmpeg -i in.mp4 -ss 4.5 -t 5 out.mp4\n```"
     },
     {
       "id": "s2-17",
       "sectionId": "s2",
       "title": "视频帧速率",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.avi -r 24 output.avi"
-    },
-    {
-      "id": "s2-18",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将输出文件的帧速率强制为 24 fps"
-    },
-    {
-      "id": "s2-19",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -r 1 -i input.m2v -r 24 output.avi"
-    },
-    {
-      "id": "s2-20",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将输入文件的帧速率(仅对原始格式有效)强制为 1 fps，将输出文件的帧速率强制为 24 fps"
+      "body": "```bash\n$ ffmpeg -i input.avi -r 24 output.avi\n```\n\n将输出文件的帧速率强制为 24 fps\n\n```bash\n$ ffmpeg -r 1 -i input.m2v -r 24 output.avi\n```\n\n将输入文件的帧速率(仅对原始格式有效)强制为 1 fps，将输出文件的帧速率强制为 24 fps"
     },
     {
       "id": "s2-21",
       "sectionId": "s2",
       "title": "H265 2-pass 编码",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -y -i <input> -c:v libx265 -b:v 2600k \\\n  -x265-params pass=1 \\\n  -an -f mp4 /dev/null && \\\n    ffmpeg -i <input> \\\n        -c:v libx265 -b:v 2600k \\\n        -x265-params pass=2 \\\n        -c:a aac -b:a 128k output.mp4"
-    },
-    {
-      "id": "s2-22",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "对于 `H265 2-pass` 编码，您需要组合 `2` 个 `ffmpeg` 调用"
+      "body": "```bash\n$ ffmpeg -y -i <input> -c:v libx265 -b:v 2600k \\\n  -x265-params pass=1 \\\n  -an -f mp4 /dev/null && \\\n    ffmpeg -i <input> \\\n        -c:v libx265 -b:v 2600k \\\n        -x265-params pass=2 \\\n        -c:a aac -b:a 128k output.mp4\n```\n\n对于 `H265 2-pass` 编码，您需要组合 `2` 个 `ffmpeg` 调用"
     },
     {
       "id": "s2-23",
       "sectionId": "s2",
       "title": "视频比特率设置",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.avi -b:v 64k -bufsize 64k output.avi"
-    },
-    {
-      "id": "s2-24",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "将输出文件的视频比特率设置为 64 kbit/s"
+      "body": "```bash\n$ ffmpeg -i input.avi -b:v 64k -bufsize 64k output.avi\n```\n\n将输出文件的视频比特率设置为 64 kbit/s"
     },
     {
       "id": "s2-25",
       "sectionId": "s2",
       "title": "固定旋转",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i <input> -c copy -metadata:s:v:0 rotate=90 <output>"
-    },
-    {
-      "id": "s2-26",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "不要为旋转重新编码，而是简单地为旋转角度添加一个视频元数据字段"
+      "body": "```bash\n$ ffmpeg -i <input> -c copy -metadata:s:v:0 rotate=90 <output>\n```\n\n不要为旋转重新编码，而是简单地为旋转角度添加一个视频元数据字段"
     },
     {
       "id": "s2-27",
       "sectionId": "s2",
       "title": "%E7%BC%A9%E6%94%BE%E5%88%B0%E7%89%B9%E5%AE%9A%E5%AE%BD%E5%BA%A6",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%20in.mp4%20-filter%3Av%20scale%3D%22538%3Atrunc(ow%2Fa%2F2)*2%22%20-c%3Aa%20copy%20out.mp4",
+      "body": "%60%60%60bash%0A%24%20ffmpeg%20-i%20in.mp4%20-filter%3Av%20scale%3D%22538%3Atrunc(ow%2Fa%2F2)*2%22%20-c%3Aa%20copy%20out.mp4%0A%60%60%60%0A%0A%E7%BB%99%E5%AE%9A%E6%89%80%E9%9C%80%E7%9A%84%E8%A7%86%E9%A2%91%E5%AE%BD%E5%BA%A6%EF%BC%8C%E4%BE%8B%E5%A6%82%20538%20%E5%83%8F%E7%B4%A0%EF%BC%8C%E6%82%A8%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8B%E6%96%B9%E6%B3%95%E5%B0%86%E8%A7%86%E9%A2%91%E8%B0%83%E6%95%B4%E4%B8%BA%E8%AF%A5%E5%AE%BD%E5%BA%A6%EF%BC%8C%E5%90%8C%E6%97%B6%E4%BF%9D%E6%8C%81%E5%AE%BD%E9%AB%98%E6%AF%94",
       "encoded": true
-    },
-    {
-      "id": "s2-28",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "给定所需的视频宽度，例如 538 像素，您可以使用以下方法将视频调整为该宽度，同时保持宽高比"
     },
     {
       "id": "s3-29",
       "sectionId": "s3",
       "title": "提取音频流",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i file.mp4 -vn -c copy output.aac"
-    },
-    {
-      "id": "s3-30",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "`-vn` (过滤视频)，使用 `-c copy`，不会重新解码和编码，加快速度。"
+      "body": "```bash\n$ ffmpeg -i file.mp4 -vn -c copy output.aac \n```\n\n`-vn` (过滤视频)，使用 `-c copy`，不会重新解码和编码，加快速度。"
     },
     {
       "id": "s3-31",
       "sectionId": "s3",
       "title": "提取视频流",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i file.mp4 -an -c copy output.mp4"
+      "body": "```bash\n$ ffmpeg -i file.mp4 -an -c copy output.mp4\n```"
     },
     {
       "id": "s3-32",
       "sectionId": "s3",
-      "title": "处理 id3 标签",
-      "kind": "text",
-      "body": "提取"
-    },
-    {
-      "id": "s3-33",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i file.mp3 -f ffmetadata metadata.txt"
-    },
-    {
-      "id": "s3-34",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "设置"
-    },
-    {
-      "id": "s3-35",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%20file.mp3%20-acodec%20copy%20-metadata%20title%3D%22%3Ctitle%3E%22%20-metadata%20artist%3D%22%3Cartist%3E%22%20-metadata%20album%3D%22%3Calbum%3E%22%20out.mp3",
+      "title": "%E5%A4%84%E7%90%86%20id3%20%E6%A0%87%E7%AD%BE",
+      "body": "%E6%8F%90%E5%8F%96%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%20file.mp3%20-f%20ffmetadata%20metadata.txt%0A%60%60%60%0A%0A%E8%AE%BE%E7%BD%AE%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%20file.mp3%20-acodec%20copy%20-metadata%20title%3D%22%3Ctitle%3E%22%20-metadata%20artist%3D%22%3Cartist%3E%22%20-metadata%20album%3D%22%3Calbum%3E%22%20out.mp3%0A%60%60%60%0A%0A%E6%9B%B4%E5%A4%9A%5B%E8%AF%B7%E6%9F%A5%E7%9C%8B%5D(https%3A%2F%2Fgist.github.com%2Feyecatchup%2F0757b3d8b989fe433979db2ea7d95a01)",
       "encoded": true
-    },
-    {
-      "id": "s3-36",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "更多[请查看](https://gist.github.com/eyecatchup/0757b3d8b989fe433979db2ea7d95a01)"
     },
     {
       "id": "s3-37",
       "sectionId": "s3",
       "title": "重新采样/转换音频",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i file.aac -acodec mp3 -ar 44100 -ab 128000 output.mp3"
+      "body": "```bash\n$ ffmpeg -i file.aac -acodec mp3 -ar 44100 -ab 128000 output.mp3\n```"
     },
     {
       "id": "s3-38",
       "sectionId": "s3",
       "title": "将输入文件转码为 DVD PAL 格式",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -y -threads 8 -i inFile -target pal-dvd -ac 2 -aspect 16:9 -acodec mp2 -ab 224000 -vf pad=0:­0:0:0 outFile"
+      "body": "```bash\n$ ffmpeg -y -threads 8 -i inFile -target pal-dvd -ac 2 -aspect 16:9 -acodec mp2 -ab 224000 -vf pad=0:­0:0:0 outFile\n```"
     },
     {
       "id": "s3-39",
       "sectionId": "s3",
       "title": "-map 命令",
-      "kind": "text",
-      "body": "`-map` 命令用于指定索引文件，以及索引文件中流类型和它的索引"
-    },
-    {
-      "id": "s3-40",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "-map index:stram_type:stream_index"
-    },
-    {
-      "id": "s3-41",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": ":- | -\n:- | -\n`input_file_index` | 输入的文件索引(从 0 开始)\n`stream_type` | 指定文件流的类型(a -> 音频，v -> 视频，s -> 字幕)\n`stream_index` | 指定流类型的索引(从 0 开始)"
-    },
-    {
-      "id": "s3-42",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将第一个输入文件的第二个音频拷贝到 out.mp3"
-    },
-    {
-      "id": "s3-43",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.mp4 -map 0:a:1 -c copy out.mp3"
-    },
-    {
-      "id": "s3-44",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将第一个输入文件的视频流和第二个输入文件的音频流拷贝到 out.mp4"
-    },
-    {
-      "id": "s3-45",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i i1.mp4 -i i2.mp4 -map 0:v -map 0:a -c copy out.mp4"
+      "body": "`-map` 命令用于指定索引文件，以及索引文件中流类型和它的索引\n\n```bash\n-map index:stram_type:stream_index\n```\n\n:- | -\n:- | -\n`input_file_index` | 输入的文件索引(从 0 开始)\n`stream_type` | 指定文件流的类型(a -> 音频，v -> 视频，s -> 字幕)\n`stream_index` | 指定流类型的索引(从 0 开始)\n\n将第一个输入文件的第二个音频拷贝到 out.mp3\n\n```bash\n$ ffmpeg -i input.mp4 -map 0:a:1 -c copy out.mp3\n```\n\n将第一个输入文件的视频流和第二个输入文件的音频流拷贝到 out.mp4\n\n```bash\n$ ffmpeg -i i1.mp4 -i i2.mp4 -map 0:v -map 0:a -c copy out.mp4\n```"
     },
     {
       "id": "s3-46",
       "sectionId": "s3",
       "title": "反向 -map 命令",
-      "kind": "text",
       "body": "反向的 map 命令（在 map 命令的参数前加负号）。例如，`-map -0:a:0`，忽略第一个文件中的第一个音频流。\n<!--rehype:className=wrap-text -->"
     },
     {
       "id": "s3-47",
       "sectionId": "s3",
       "title": "切换容器(转换类型)",
-      "kind": "text",
-      "body": "将容器从 `MKV` 更改为 `MP4`"
-    },
-    {
-      "id": "s3-48",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i file.mkv -acodec copy -vcodec copy file.mp4"
-    },
-    {
-      "id": "s3-49",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "要将视频从 `.mov` 更改为 `.mp4`"
-    },
-    {
-      "id": "s3-50",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i in.mov out.mp4"
+      "body": "将容器从 `MKV` 更改为 `MP4`\n\n```bash\n$ ffmpeg -i file.mkv -acodec copy -vcodec copy file.mp4\n```\n\n要将视频从 `.mov` 更改为 `.mp4`\n\n```bash\n$ ffmpeg -i in.mov out.mp4\n```"
     },
     {
       "id": "s3-51",
       "sectionId": "s3",
       "title": "音视频同步",
-      "kind": "text",
-      "body": "将音频延迟 3 秒"
-    },
-    {
-      "id": "s3-52",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.mov -itsoffset 3 -i input.mov -map 0:v -map 1:a -codec:a copy -codec:v copy output.mov"
-    },
-    {
-      "id": "s3-53",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将视频延迟 3 秒(即将音频提前 3 秒)"
-    },
-    {
-      "id": "s3-54",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.mov -itsoffset 3 -i input.mov -map 1:v -map 0:a -codec:a copy -codec:v copy output.mov"
+      "body": "将音频延迟 3 秒\n\n```bash\n$ ffmpeg -i input.mov -itsoffset 3 -i input.mov -map 0:v -map 1:a -codec:a copy -codec:v copy output.mov\n```\n\n将视频延迟 3 秒(即将音频提前 3 秒)\n\n```bash\n$ ffmpeg -i input.mov -itsoffset 3 -i input.mov -map 1:v -map 0:a -codec:a copy -codec:v copy output.mov\n```"
     },
     {
       "id": "s3-55",
       "sectionId": "s3",
       "title": "图片中的视频",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -f image2 -i image%d.jpg video.mp4"
-    },
-    {
-      "id": "s3-56",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "多个编号的图像 image1.jpg、image2.jpg... 像这样从它们创建一个视频"
+      "body": "```bash\n$ ffmpeg -f image2 -i image%d.jpg video.mp4\n```\n\n多个编号的图像 image1.jpg、image2.jpg... 像这样从它们创建一个视频"
     },
     {
       "id": "s3-57",
       "sectionId": "s3",
       "title": "将视频拆分为图像",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i video.mp4 image%d.jpg"
+      "body": "```bash\n$ ffmpeg -i video.mp4 image%d.jpg\n```"
     },
     {
       "id": "s3-58",
       "sectionId": "s3",
       "title": "%E5%BD%95%E5%B1%8F%20-%20%E6%9F%A5%E6%89%BE%E6%89%80%E6%9C%89%E5%8F%AF%E7%94%A8%E8%AE%BE%E5%A4%87",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-f%20avfoundation%20-list_devices%20true%20-i%20%22%22",
-      "encoded": true
-    },
-    {
-      "id": "s3-59",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "%3Cspan%20style%3D%22color%3Ared%22%3E%E4%B8%80%E5%AE%9A%E8%A6%81%E9%80%89%E6%8B%A9%E5%A5%BD%E8%AE%BE%E5%A4%87%EF%BC%8C%E6%A0%B9%E6%8D%AE%E8%AE%BE%E5%A4%87%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE%E3%80%82%3C%2Fsapn%3E",
+      "body": "%60%60%60bash%0A%24%20ffmpeg%20-f%20avfoundation%20-list_devices%20true%20-i%20%22%22%0A%60%60%60%0A%0A%3Cspan%20style%3D%22color%3Ared%22%3E%E4%B8%80%E5%AE%9A%E8%A6%81%E9%80%89%E6%8B%A9%E5%A5%BD%E8%AE%BE%E5%A4%87%EF%BC%8C%E6%A0%B9%E6%8D%AE%E8%AE%BE%E5%A4%87%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE%E3%80%82%3C%2Fsapn%3E",
       "encoded": true
     },
     {
       "id": "s3-60",
       "sectionId": "s3",
       "title": "windows 下录屏",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -hide_banner -loglevel error -stats -f gdigrab -framerate 60 \\\n-offset_x 0 -offset_y 0 -video_size 1920x1080 -draw_mouse 1 -i deskop \\\n-c:v libx264 -r 60 -preset ultrafast -pix_fmt yuv420p -y screen_record.mp4"
+      "body": "```bash\n$ ffmpeg -hide_banner -loglevel error -stats -f gdigrab -framerate 60 \\\n-offset_x 0 -offset_y 0 -video_size 1920x1080 -draw_mouse 1 -i deskop \\\n-c:v libx264 -r 60 -preset ultrafast -pix_fmt yuv420p -y screen_record.mp4\n```"
     },
     {
       "id": "s3-61",
       "sectionId": "s3",
       "title": "mac 下录屏",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -f avfoundation -i 1:0 -preset ultrafast out.mkv"
+      "body": "```bash\n$ ffmpeg -f avfoundation -i 1:0 -preset ultrafast out.mkv\n```"
     },
     {
       "id": "s3-62",
       "sectionId": "s3",
-      "title": "合并音频与图片",
-      "kind": "text",
-      "body": "合并多个音频，自定义背景图片，生成视频音乐"
-    },
-    {
-      "id": "s3-63",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20mylist.txt%20%3E%3E%3E%0Afile%20'1.mp3'%0Afile%20'2.mp3'%0Afile%20'3.mp3'%0A%0A%23%20OBS%3A%2046500%20%3D%2025%3A50%20minutes%20*%2060%20*%2030fps%0A%23%20echo%20%2200%3A25%3A50%22%20%7C%20awk%20-F%3A%20'%7B%20print%20((%241%20*%203600)%20%2B%20(%242%20*%2060)%20%2B%20%243)%20*%2030%20%7D'%0A%24%20ffmpeg%20-y%20-loop%201%20-i%20cover.jpg%20-f%20concat%20-i%20mylist.txt%20-c%3Av%20libx264%20-r%2030%20-pix_fmt%20yuv420p%20-vframes%2046500%20-c%3Aa%20aac%20-b%3Aa%20192k%20-strict%20experimental%20-shortest%20output.mp4",
+      "title": "%E5%90%88%E5%B9%B6%E9%9F%B3%E9%A2%91%E4%B8%8E%E5%9B%BE%E7%89%87",
+      "body": "%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E9%9F%B3%E9%A2%91%EF%BC%8C%E8%87%AA%E5%AE%9A%E4%B9%89%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87%EF%BC%8C%E7%94%9F%E6%88%90%E8%A7%86%E9%A2%91%E9%9F%B3%E4%B9%90%0A%0A%60%60%60bash%0A%23%20mylist.txt%20%3E%3E%3E%0Afile%20'1.mp3'%0Afile%20'2.mp3'%0Afile%20'3.mp3'%0A%0A%23%20OBS%3A%2046500%20%3D%2025%3A50%20minutes%20*%2060%20*%2030fps%0A%23%20echo%20%2200%3A25%3A50%22%20%7C%20awk%20-F%3A%20'%7B%20print%20((%241%20*%203600)%20%2B%20(%242%20*%2060)%20%2B%20%243)%20*%2030%20%7D'%0A%24%20ffmpeg%20-y%20-loop%201%20-i%20cover.jpg%20-f%20concat%20-i%20mylist.txt%20-c%3Av%20libx264%20-r%2030%20-pix_fmt%20yuv420p%20-vframes%2046500%20-c%3Aa%20aac%20-b%3Aa%20192k%20-strict%20experimental%20-shortest%20output.mp4%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-64",
       "sectionId": "s3",
       "title": "%E8%BD%AC%E6%8D%A2%E4%B8%BA%20Gif",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-ss%202%20-t%2028%20-i%20input.mp4%20-vf%20%22fps%3D10%2Cscale%3D1080%3A-1%3Aflags%3Dlanczos%2Csplit%5Bs0%5D%5Bs1%5D%3B%5Bs0%5Dpalettegen%5Bp%5D%3B%5Bs1%5D%5Bp%5Dpaletteuse%22%20-loop%200%20output.gif",
+      "body": "%60%60%60bash%0A%24%20ffmpeg%20-ss%202%20-t%2028%20-i%20input.mp4%20-vf%20%22fps%3D10%2Cscale%3D1080%3A-1%3Aflags%3Dlanczos%2Csplit%5Bs0%5D%5Bs1%5D%3B%5Bs0%5Dpalettegen%5Bp%5D%3B%5Bs1%5D%5Bp%5Dpaletteuse%22%20-loop%200%20output.gif%0A%60%60%60%0A%0A%E4%B8%8A%E9%9D%A2%E6%9C%89%E5%85%B3%E6%9B%B4%E5%A4%9A%E4%BF%A1%E6%81%AF%EF%BC%8C%E8%AF%B7%E5%8F%82%E9%98%85%20%5BStackOverflow%20%E9%97%AE%E9%A2%98%5D(https%3A%2F%2Fsuperuser.com%2Fa%2F556031)%0A%0A%60%60%60bash%0A%23%20%E8%BD%AC%E6%8D%A2%E4%B8%BA%20GIF%0A%24%20ffmpeg%20-i%20input.mov%20output.gif%0A%23%20%E4%BB%8E%20GIF%20%E8%BD%AC%E6%8D%A2%0A%24%20ffmpeg%20-i%20input.gif%20output.mov%0A%23%20%E5%9C%A8%E9%9D%9E%20GIF%20%E6%A0%BC%E5%BC%8F%E4%B9%8B%E9%97%B4%E8%BD%AC%E6%8D%A2%0A%24%20ffmpeg%20-i%20input.mov%20-codec%3Av%20copy%20-codec%3Aa%20copy%20output.mp4%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s3-65",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "上面有关更多信息，请参阅 [StackOverflow 问题](https://superuser.com/a/556031)"
-    },
-    {
-      "id": "s3-66",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 转换为 GIF\n$ ffmpeg -i input.mov output.gif\n# 从 GIF 转换\n$ ffmpeg -i input.gif output.mov\n# 在非 GIF 格式之间转换\n$ ffmpeg -i input.mov -codec:v copy -codec:a copy output.mp4"
     },
     {
       "id": "s3-67",
       "sectionId": "s3",
       "title": "转换为灰度",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -y -i inFile -flags gray outFile"
+      "body": "```bash\n$ ffmpeg -y -i inFile -flags gray outFile\n```"
     },
     {
       "id": "s3-68",
       "sectionId": "s3",
       "title": "字幕格式转换",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# srt -> ass\n$ ffmpeg -i subtitle.srt subtitle.ass\n# ass -> vtt\n$ ffmpeg -i subtitle.ass subtitle.vtt"
-    },
-    {
-      "id": "s3-69",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "srt、ass、vtt 等格式之间可以相互转换"
+      "body": "```bash\n# srt -> ass\n$ ffmpeg -i subtitle.srt subtitle.ass\n# ass -> vtt\n$ ffmpeg -i subtitle.ass subtitle.vtt\n```\n\nsrt、ass、vtt 等格式之间可以相互转换"
     },
     {
       "id": "s3-70",
       "sectionId": "s3",
-      "title": "字幕",
-      "kind": "text",
-      "body": "将字幕写入视频"
-    },
-    {
-      "id": "s3-71",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.mov -filter:v 'subtitles=subtitles.srt' -codec:a copy output.mov"
-    },
-    {
-      "id": "s3-72",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "将字幕写入视频，具有自定义字幕样式"
-    },
-    {
-      "id": "s3-73",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%20input.mov%20-filter%3Av%20%22subtitles%3Dsubtitles.srt%3Aforce_style%3D'FontName%3DMenlo%20Bold%2CFontsize%3D18'%22%20-codec%3Aa%20copy%20output.mov",
+      "title": "%E5%AD%97%E5%B9%95",
+      "body": "%E5%B0%86%E5%AD%97%E5%B9%95%E5%86%99%E5%85%A5%E8%A7%86%E9%A2%91%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%20input.mov%20-filter%3Av%20'subtitles%3Dsubtitles.srt'%20-codec%3Aa%20copy%20output.mov%0A%60%60%60%0A%0A%E5%B0%86%E5%AD%97%E5%B9%95%E5%86%99%E5%85%A5%E8%A7%86%E9%A2%91%EF%BC%8C%E5%85%B7%E6%9C%89%E8%87%AA%E5%AE%9A%E4%B9%89%E5%AD%97%E5%B9%95%E6%A0%B7%E5%BC%8F%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%20input.mov%20-filter%3Av%20%22subtitles%3Dsubtitles.srt%3Aforce_style%3D'FontName%3DMenlo%20Bold%2CFontsize%3D18'%22%20-codec%3Aa%20copy%20output.mov%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-74",
       "sectionId": "s3",
       "title": "制造 1 分钟的音频噪音",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -ar 48000 -t 60 -f s16le -acodec pcm_s16le -i /dev/u­random -ab 64K -f mp2 -acodec mp2 -y noise.mp2"
+      "body": "```bash\n$ ffmpeg -ar 48000 -t 60 -f s16le -acodec pcm_s16le -i /dev/u­random -ab 64K -f mp2 -acodec mp2 -y noise.mp2\n```"
     },
     {
       "id": "s3-75",
       "sectionId": "s3",
       "title": "从视频中提取图像",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i foo.avi -r 1 -s WxH -f image2 outFil­e%0­3d.png"
+      "body": "```bash\n$ ffmpeg -i foo.avi -r 1 -s WxH -f image2 outFil­e%0­3d.png\n```"
     },
     {
       "id": "s3-76",
       "sectionId": "s3",
-      "title": "音量",
-      "kind": "text",
-      "body": "将音量减半"
-    },
-    {
-      "id": "s3-77",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.mov -codec:v copy -filter:a 'volume=0.5' output.mov"
-    },
-    {
-      "id": "s3-78",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "音量加倍"
-    },
-    {
-      "id": "s3-79",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.mov -codec:v copy -filter:a 'volume=2' output.mov"
+      "title": "%E9%9F%B3%E9%87%8F",
+      "body": "%E5%B0%86%E9%9F%B3%E9%87%8F%E5%87%8F%E5%8D%8A%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%20input.mov%20-codec%3Av%20copy%20-filter%3Aa%20'volume%3D0.5'%20output.mov%0A%60%60%60%0A%0A%E9%9F%B3%E9%87%8F%E5%8A%A0%E5%80%8D%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%20input.mov%20-codec%3Av%20copy%20-filter%3Aa%20'volume%3D2'%20output.mov%0A%60%60%60",
+      "encoded": true
     },
     {
       "id": "s3-80",
       "sectionId": "s3",
       "title": "将图像文件转换为其他格式",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i foo012­2.png foo.tiff"
-    },
-    {
-      "id": "s3-81",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "pgm, ppm, pam, pgmyuv, jpeg, gif, png, tiff, sgi"
+      "body": "```bash\n$ ffmpeg -i foo012­2.png foo.tiff \n```\n\npgm, ppm, pam, pgmyuv, jpeg, gif, png, tiff, sgi"
     },
     {
       "id": "s3-82",
       "sectionId": "s3",
       "title": "将图像转换为 AVI 文件",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -f image2 -i foo-%0­3d.jpeg -r 12 -s WxH foo.avi"
+      "body": "```bash\n$ ffmpeg -f image2 -i foo-%0­3d.jpeg -r 12 -s WxH foo.avi\n```"
     },
     {
       "id": "s3-83",
       "sectionId": "s3",
       "title": "将 WAV 文件转换为 MP3",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i source­_so­ng.wav -vn -ar 44100 -ac 2 -ab 192 -f mp3 final_­son­g.mp3"
+      "body": "```bash\n$ ffmpeg -i source­_so­ng.wav -vn -ar 44100 -ac 2 -ab 192 -f mp3 final_­son­g.mp3\n```"
     },
     {
       "id": "s3-84",
       "sectionId": "s3",
       "title": "从视频中提取音频，将其转码为 MP3",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i source.avi -vn -ar 44100 -ac 2 -ab 192 -f mp3 sound.mp3"
+      "body": "```bash\n$ ffmpeg -i source.avi -vn -ar 44100 -ac 2 -ab 192 -f mp3 sound.mp3\n```"
     },
     {
       "id": "s3-85",
       "sectionId": "s3",
       "title": "将 .avi 转换为 .flv",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i source.avi -ab 56 -ar 44100 -b 200 -r 15 -s 320x240 -f flv output.flv"
+      "body": "```bash\n$ ffmpeg -i source.avi -ab 56 -ar 44100 -b 200 -r 15 -s 320x240 -f flv output.flv\n```"
     },
     {
       "id": "s3-86",
       "sectionId": "s3",
       "title": "%E5%B0%86%E5%9B%BE%E7%89%87%E9%99%84%E5%8A%A0%E5%88%B0%20mp3",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%20input.mp3%20-i%20cover.png%20-c%20copy%20-metad%C2%AData%3As%3Av%20title%3D%C2%AD%22%C2%ADAlbum%20cover%22%20-metad%C2%AData%3As%3Av%20commen%C2%ADt%3D%22Cover%20(Front%C2%AD)%22%20out.mp3",
+      "body": "%60%60%60bash%0A%24%20ffmpeg%20-i%20input.mp3%20-i%20cover.png%20-c%20copy%20-metad%C2%AData%3As%3Av%20title%3D%C2%AD%22%C2%ADAlbum%20cover%22%20-metad%C2%AData%3As%3Av%20commen%C2%ADt%3D%22Cover%20(Front%C2%AD)%22%20out.mp3%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s3-87",
       "sectionId": "s3",
       "title": "将视频与声音文件混合",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i song.wav -i source­_vi­deo.avi outvid­eo.mpg"
+      "body": "```bash\n$ ffmpeg -i song.wav -i source­_vi­deo.avi outvid­eo.mpg\n```"
     },
     {
       "id": "s3-88",
       "sectionId": "s3",
       "title": "编写带有 ID3v2.3 页眉和 ID3v1 页脚的 mp3",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i inFile -id3v2­_ve­rsion 3 -write­_id3v1 1 outFil­e.mp3"
+      "body": "```bash\n$ ffmpeg -i inFile -id3v2­_ve­rsion 3 -write­_id3v1 1 outFil­e.mp3\n```"
     },
     {
       "id": "s3-89",
       "sectionId": "s3",
       "title": "连接输入文件",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cat inFile1 inFile2 | ffmpeg -f mpeg -i - -vcodec copy -acodec copy outFil­e.mpg"
+      "body": "```bash\n$ cat inFile1 inFile2 | ffmpeg -f mpeg -i - -vcodec copy -acodec copy outFil­e.mpg\n```"
     },
     {
       "id": "s3-90",
       "sectionId": "s3",
       "title": "使用比特率和 mp3 音频的编解码器对剪辑进行编码",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i clip.avi -vcodec libxvid -b 800000 -acodec libmp3lame -ab 128 new-cl­ip.avi"
+      "body": "```bash\n$ ffmpeg -i clip.avi -vcodec libxvid -b 800000 -acodec libmp3lame -ab 128 new-cl­ip.avi\n```"
     },
     {
       "id": "s3-91",
       "sectionId": "s3",
       "title": "将音频流与来自不同文件的视频流合并",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i audioS.mp4 -i videoS.mp4 -c copy -map 0:a -map 1:v outFil­e.mp4"
+      "body": "```bash\n$ ffmpeg -i audioS.mp4 -i videoS.mp4 -c copy -map 0:a -map 1:v outFil­e.mp4\n```"
     },
     {
       "id": "s3-92",
       "sectionId": "s3",
-      "title": "合并视频",
-      "kind": "text",
-      "body": "合并相同规格(解码/分辨率/帧率)视频"
-    },
-    {
-      "id": "s3-93",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# mylist.txt >>>\nfile '1.mp4'\nfile '2.mp4'\nfile '3.mp4'\n\n# 这些文件是相对路径，如使用绝对路径需要添加 `-safe 0` 参数\n$ ffmpeg -f concat -i mylist.txt -c copy output.mp4"
-    },
-    {
-      "id": "s3-94",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "合并当前目录下所有视频"
-    },
-    {
-      "id": "s3-95",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-f%20concat%20-safe%200%20-i%20%3C(for%20f%20in%20.%2F*.mp4%3B%20do%20echo%20%22file%20'%24PWD%2F%24f'%22%3B%20done)%20-c%20copy%20output.mp4",
+      "title": "%E5%90%88%E5%B9%B6%E8%A7%86%E9%A2%91",
+      "body": "%E5%90%88%E5%B9%B6%E7%9B%B8%E5%90%8C%E8%A7%84%E6%A0%BC(%E8%A7%A3%E7%A0%81%2F%E5%88%86%E8%BE%A8%E7%8E%87%2F%E5%B8%A7%E7%8E%87)%E8%A7%86%E9%A2%91%0A%0A%60%60%60bash%0A%23%20mylist.txt%20%3E%3E%3E%0Afile%20'1.mp4'%0Afile%20'2.mp4'%0Afile%20'3.mp4'%0A%0A%23%20%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%E6%98%AF%E7%9B%B8%E5%AF%B9%E8%B7%AF%E5%BE%84%EF%BC%8C%E5%A6%82%E4%BD%BF%E7%94%A8%E7%BB%9D%E5%AF%B9%E8%B7%AF%E5%BE%84%E9%9C%80%E8%A6%81%E6%B7%BB%E5%8A%A0%20%60-safe%200%60%20%E5%8F%82%E6%95%B0%0A%24%20ffmpeg%20-f%20concat%20-i%20mylist.txt%20-c%20copy%20output.mp4%0A%60%60%60%0A%0A%E5%90%88%E5%B9%B6%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E4%B8%8B%E6%89%80%E6%9C%89%E8%A7%86%E9%A2%91%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-f%20concat%20-safe%200%20-i%20%3C(for%20f%20in%20.%2F*.mp4%3B%20do%20echo%20%22file%20'%24PWD%2F%24f'%22%3B%20done)%20-c%20copy%20output.mp4%0A%60%60%60%0A%0A%E5%90%88%E5%B9%B6%E4%B8%8D%E5%90%8C%E8%A7%84%E6%A0%BC%E8%A7%86%E9%A2%91%EF%BC%8C%E4%BF%9D%E8%AF%81%E8%A7%86%E9%A2%91%E4%B8%8D%E5%8F%98%E5%BD%A2%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%201.mp4%20-c%20copy%20-bsf%3Av%20h264_mp4toannexb%20-f%20mpegts%20tmp1.ts%0A%24%20ffmpeg%20-i%202.mp4%20-c%20copy%20-bsf%3Av%20h264_mp4toannexb%20-f%20mpegts%20tmp2.ts%0A%24%20ffmpeg%20-i%203.mp4%20-c%20copy%20-bsf%3Av%20h264_mp4toannexb%20-f%20mpegts%20tmp3.ts%0A%0A%24%20ffmpeg%20-threads%202%20-i%20%22concat%3Atmp1.ts%7Ctmp2.ts%7Ctmp3.ts%22%20%20-vf%20%22scale%3D720%3A1080%3Aforce_original_aspect_ratio%3Ddecrease%2Cpad%3D720%3A1080%3A(ow-iw)%2F2%3A(oh-ih)%2F2%22%20-pix_fmt%20yuvj420p%20-shortest%20-y%20output.mp4%0A%60%60%60%0A%0A%E5%90%88%E5%B9%B6%E4%B8%8D%E5%90%8C%E8%A7%A3%E7%A0%81%E8%A7%86%E9%A2%91%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%20input1.mp4%20-i%20input2.webm%20-i%20input3.mov%20%5C%0A-filter_complex%20%22%5B0%3Av%3A0%5D%5B0%3Aa%3A0%5D%5B1%3Av%3A0%5D%5B1%3Aa%3A0%5D%5B2%3Av%3A0%5D%5B2%3Aa%3A0%5Dconcat%3Dn%3D3%3Av%3D1%3Aa%3D1%5Boutv%5D%5Bouta%5D%22%20%5C%0A-map%20%22%5Boutv%5D%22%20-map%20%22%5Bouta%5D%22%20output.mkv%0A%60%60%60%0A%0A%E5%90%88%E5%B9%B6%E8%A7%86%E9%A2%91%E5%B9%B6%E9%87%8D%E6%96%B0%E7%BC%96%E7%A0%81%E9%9F%B3%E9%A2%91%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-f%20concat%20-i%20mylist.txt%20-c%3Av%20copy%20-c%3Aa%20flac%20-strict%20-2%20output.mp4%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s3-96",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "合并不同规格视频，保证视频不变形"
-    },
-    {
-      "id": "s3-97",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%201.mp4%20-c%20copy%20-bsf%3Av%20h264_mp4toannexb%20-f%20mpegts%20tmp1.ts%0A%24%20ffmpeg%20-i%202.mp4%20-c%20copy%20-bsf%3Av%20h264_mp4toannexb%20-f%20mpegts%20tmp2.ts%0A%24%20ffmpeg%20-i%203.mp4%20-c%20copy%20-bsf%3Av%20h264_mp4toannexb%20-f%20mpegts%20tmp3.ts%0A%0A%24%20ffmpeg%20-threads%202%20-i%20%22concat%3Atmp1.ts%7Ctmp2.ts%7Ctmp3.ts%22%20%20-vf%20%22scale%3D720%3A1080%3Aforce_original_aspect_ratio%3Ddecrease%2Cpad%3D720%3A1080%3A(ow-iw)%2F2%3A(oh-ih)%2F2%22%20-pix_fmt%20yuvj420p%20-shortest%20-y%20output.mp4",
-      "encoded": true
-    },
-    {
-      "id": "s3-98",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "合并不同解码视频"
-    },
-    {
-      "id": "s3-99",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%20input1.mp4%20-i%20input2.webm%20-i%20input3.mov%20%5C%0A-filter_complex%20%22%5B0%3Av%3A0%5D%5B0%3Aa%3A0%5D%5B1%3Av%3A0%5D%5B1%3Aa%3A0%5D%5B2%3Av%3A0%5D%5B2%3Aa%3A0%5Dconcat%3Dn%3D3%3Av%3D1%3Aa%3D1%5Boutv%5D%5Bouta%5D%22%20%5C%0A-map%20%22%5Boutv%5D%22%20-map%20%22%5Bouta%5D%22%20output.mkv",
-      "encoded": true
-    },
-    {
-      "id": "s3-100",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "合并视频并重新编码音频"
-    },
-    {
-      "id": "s3-101",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -f concat -i mylist.txt -c:v copy -c:a flac -strict -2 output.mp4"
     },
     {
       "id": "s4-102",
       "sectionId": "s4",
-      "title": "格式",
-      "kind": "text",
-      "body": "如果一个 fliter 有多个参数，需要使用 `,` 分隔"
-    },
-    {
-      "id": "s4-103",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%20test.avi%20-c%3Av%20libx264%20-vf%20%22scale%3D1024%3A-1%2Ctranspose%3D1%2Ccrop%3Diw%2F3%3Aih%2F3%22%20output.mp4",
+      "title": "%E6%A0%BC%E5%BC%8F",
+      "body": "%E5%A6%82%E6%9E%9C%E4%B8%80%E4%B8%AA%20fliter%20%E6%9C%89%E5%A4%9A%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%20%60%2C%60%20%E5%88%86%E9%9A%94%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%20test.avi%20-c%3Av%20libx264%20-vf%20%22scale%3D1024%3A-1%2Ctranspose%3D1%2Ccrop%3Diw%2F3%3Aih%2F3%22%20output.mp4%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-104",
       "sectionId": "s4",
       "title": "%E7%BC%A9%E6%94%BE",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%20input.mp4%20-vf%20%22scale%3D640%3A480%22%20out.mp4%0A%23%20-1%20%E2%86%92%20%E6%8C%87%E6%A0%B9%E6%8D%AE%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E5%B8%AE%E6%88%91%E4%BB%AC%E6%8E%A8%E6%96%AD%0A%24%20ffmpeg%20-i%20input.mp4%20-vf%20%22scale%3D720%3A-1%22%20out.mp4%0A%23%20%E5%AE%BD%E5%BA%A6%E5%92%8C%E9%AB%98%E5%BA%A6%0Affmpeg%20-i%20input.mp4%20-vf%20%22scale%3Dw%3D800%3Ah%3D600%22%20output.mp4%0A%23%20in_w%5Cin_h%20%E8%BE%93%E5%85%A5%E5%B0%BA%E5%AF%B8%0Affmpeg%20-i%20input.mkv%20-vf%20%22scale%3Dw%3D1%2F2*in_w%3Ah%3D1%2F2*in_h%22%20output.mkv",
+      "body": "%60%60%60bash%0A%24%20ffmpeg%20-i%20input.mp4%20-vf%20%22scale%3D640%3A480%22%20out.mp4%0A%23%20-1%20%E2%86%92%20%E6%8C%87%E6%A0%B9%E6%8D%AE%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E5%B8%AE%E6%88%91%E4%BB%AC%E6%8E%A8%E6%96%AD%0A%24%20ffmpeg%20-i%20input.mp4%20-vf%20%22scale%3D720%3A-1%22%20out.mp4%0A%23%20%E5%AE%BD%E5%BA%A6%E5%92%8C%E9%AB%98%E5%BA%A6%0Affmpeg%20-i%20input.mp4%20-vf%20%22scale%3Dw%3D800%3Ah%3D600%22%20output.mp4%0A%23%20in_w%5Cin_h%20%E8%BE%93%E5%85%A5%E5%B0%BA%E5%AF%B8%0Affmpeg%20-i%20input.mkv%20-vf%20%22scale%3Dw%3D1%2F2*in_w%3Ah%3D1%2F2*in_h%22%20output.mkv%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-105",
       "sectionId": "s4",
-      "title": "裁剪",
-      "kind": "text",
-      "body": "从左上角开始，复制 `x=0px` `y=0px` 的相应窗口来创建 `1280x720` 大小的输出视频"
-    },
-    {
-      "id": "s4-106",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "ffmpeg%20-i%20input.mp4%20-vf%20%22crop%3Dw%3D1280%3Ah%3D720%3Ax%3D0%3Ay%3D0%22%20output.mp4",
+      "title": "%E8%A3%81%E5%89%AA",
+      "body": "%E4%BB%8E%E5%B7%A6%E4%B8%8A%E8%A7%92%E5%BC%80%E5%A7%8B%EF%BC%8C%E5%A4%8D%E5%88%B6%20%60x%3D0px%60%20%60y%3D0px%60%20%E7%9A%84%E7%9B%B8%E5%BA%94%E7%AA%97%E5%8F%A3%E6%9D%A5%E5%88%9B%E5%BB%BA%20%601280x720%60%20%E5%A4%A7%E5%B0%8F%E7%9A%84%E8%BE%93%E5%87%BA%E8%A7%86%E9%A2%91%0A%0A%60%60%60bash%0Affmpeg%20-i%20input.mp4%20-vf%20%22crop%3Dw%3D1280%3Ah%3D720%3Ax%3D0%3Ay%3D0%22%20output.mp4%0A%60%60%60%0A%0A%E8%A3%81%E5%89%AA%E5%88%B0%E5%AE%BD%E5%BA%A6%20360%EF%BC%8C%E9%AB%98%E5%BA%A6%20640%EF%BC%8C%E4%BB%8E%E5%9D%90%E6%A0%87%20(10%2C%2020)%20%E5%BC%80%E5%A7%8B%0A%0A%60%60%60bash%0A%24%20ffmpeg%20-i%20input.mov%20-vf%20'crop%3D360%3A640%3A10%3A20'%20output.mov%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s4-107",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "裁剪到宽度 360，高度 640，从坐标 (10, 20) 开始"
-    },
-    {
-      "id": "s4-108",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i input.mov -vf 'crop=360:640:10:20' output.mov"
     },
     {
       "id": "s4-109",
       "sectionId": "s4",
       "title": "去除水印",
-      "kind": "text",
-      "body": "设置一个矩形覆盖区域 x=10:y=10:w=120:h=45"
-    },
-    {
-      "id": "s4-110",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# show=1 为可选参数，设置显示边框，方便调试用的\nffmpeg -i 1.mp4 -b:v 548k -vf delogo=x=10:y=10:w=120:h=45:show=1 output.mp4"
+      "body": "设置一个矩形覆盖区域 x=10:y=10:w=120:h=45\n\n```bash\n# show=1 为可选参数，设置显示边框，方便调试用的\nffmpeg -i 1.mp4 -b:v 548k -vf delogo=x=10:y=10:w=120:h=45:show=1 output.mp4\n```"
     },
     {
       "id": "s4-111",
       "sectionId": "s4",
       "title": "创建缩略图",
-      "kind": "text",
-      "body": "在 10 秒时创建一个缩略图"
-    },
-    {
-      "id": "s4-112",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -ss 10 -i <input file> -vframes 1 -vcodec png -an thumb.png"
-    },
-    {
-      "id": "s4-113",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "text",
-      "body": "例如，要每 `n` 秒创建一次缩略图，请使用 `-vf fps=1/n`"
-    },
-    {
-      "id": "s4-114",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ffmpeg -i <input file> -vf fps=1/60 thumbnails/thumb%03d.png"
+      "body": "在 10 秒时创建一个缩略图\n\n```bash\n$ ffmpeg -ss 10 -i <input file> -vframes 1 -vcodec png -an thumb.png\n```\n\n例如，要每 `n` 秒创建一次缩略图，请使用 `-vf fps=1/n`\n\n```bash\n$ ffmpeg -i <input file> -vf fps=1/60 thumbnails/thumb%03d.png\n```"
     },
     {
       "id": "s4-115",
       "sectionId": "s4",
-      "title": "添加水印",
-      "kind": "text",
-      "body": "在视频左上方 20,20 的位置插入 logo.png 图片"
-    },
-    {
-      "id": "s4-116",
-      "sectionId": "s4",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20-b%3Av%20548k%20%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0%EF%BC%8C%E8%AE%BE%E7%BD%AE%E8%A7%86%E9%A2%91%E6%AF%94%E7%89%B9%E7%8E%87%EF%BC%8C%E9%BB%98%E8%AE%A4%20200k%20%E6%9C%80%E5%A5%BD%E8%AE%BE%E7%BD%AE%E4%B8%8E%E5%8E%9F%E8%A7%86%E9%A2%91%E4%B8%80%E8%87%B4%0Affmpeg%20-i%201.mp4%20-acodec%20copy%20-b%3Av%20548k%20-vf%20%22movie%3Dlogo.png%5Bwatermark%5D%3B%5Bin%5D%5Bwatermark%5Doverlay%3D20%3A20%22%20output.mp4",
+      "title": "%E6%B7%BB%E5%8A%A0%E6%B0%B4%E5%8D%B0",
+      "body": "%E5%9C%A8%E8%A7%86%E9%A2%91%E5%B7%A6%E4%B8%8A%E6%96%B9%2020%2C20%20%E7%9A%84%E4%BD%8D%E7%BD%AE%E6%8F%92%E5%85%A5%20logo.png%20%E5%9B%BE%E7%89%87%0A%0A%60%60%60bash%0A%23%20-b%3Av%20548k%20%E5%8F%AF%E9%80%89%E5%8F%82%E6%95%B0%EF%BC%8C%E8%AE%BE%E7%BD%AE%E8%A7%86%E9%A2%91%E6%AF%94%E7%89%B9%E7%8E%87%EF%BC%8C%E9%BB%98%E8%AE%A4%20200k%20%E6%9C%80%E5%A5%BD%E8%AE%BE%E7%BD%AE%E4%B8%8E%E5%8E%9F%E8%A7%86%E9%A2%91%E4%B8%80%E8%87%B4%0Affmpeg%20-i%201.mp4%20-acodec%20copy%20-b%3Av%20548k%20-vf%20%22movie%3Dlogo.png%5Bwatermark%5D%3B%5Bin%5D%5Bwatermark%5Doverlay%3D20%3A20%22%20output.mp4%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-117",
       "sectionId": "s4",
       "title": "%E8%A7%86%E9%A2%91%E6%97%8B%E8%BD%AC",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20%E9%A1%BA%E6%97%B6%E9%92%88%E6%97%8B%E8%BD%AC%2090%0A%24%20ffmpeg%20-i%20input.avi%20-vf%20%22rotate%3D90*PI%2F180%22%20out.mp4%20%0A%23%20%E9%A1%BA%E6%97%B6%E9%92%88%E6%97%8B%E8%BD%AC%20180%EF%BC%8C%E7%BF%BB%E8%BD%AC%2090%0A%24%20ffmpeg%20-i%20input.mp4%20-vf%20%22rotate%3DPI%22%20out.mp4",
+      "body": "%60%60%60bash%0A%23%20%E9%A1%BA%E6%97%B6%E9%92%88%E6%97%8B%E8%BD%AC%2090%0A%24%20ffmpeg%20-i%20input.avi%20-vf%20%22rotate%3D90*PI%2F180%22%20out.mp4%20%0A%23%20%E9%A1%BA%E6%97%B6%E9%92%88%E6%97%8B%E8%BD%AC%20180%EF%BC%8C%E7%BF%BB%E8%BD%AC%2090%0A%24%20ffmpeg%20-i%20input.mp4%20-vf%20%22rotate%3DPI%22%20out.mp4%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-118",
       "sectionId": "s4",
       "title": "%E6%9B%B4%E6%94%B9%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E9%80%9F%E5%BA%A6",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20%E5%8A%A0%E9%80%9F%202%20%E5%80%8D%0A%24%20ffmpeg%20-i%20input.mkv%20-vf%20%22setpts%3D0.5*PTS%22%20output.mkv%20%0A%23%20%E5%87%8F%E9%80%9F%202%20%E5%80%8D%0A%24%20ffmpeg%20-i%20input.mp4%20-vf%20%22setpts%3D2*PTS%22%20output.mp4",
+      "body": "%60%60%60bash%0A%23%20%E5%8A%A0%E9%80%9F%202%20%E5%80%8D%0A%24%20ffmpeg%20-i%20input.mkv%20-vf%20%22setpts%3D0.5*PTS%22%20output.mkv%20%0A%23%20%E5%87%8F%E9%80%9F%202%20%E5%80%8D%0A%24%20ffmpeg%20-i%20input.mp4%20-vf%20%22setpts%3D2*PTS%22%20output.mp4%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s4-119",
       "sectionId": "s4",
       "title": "%E6%B7%BB%E5%8A%A0%E8%83%8C%E6%99%AF%E9%9F%B3%E4%B9%90",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20-t%2010%20%E6%96%87%E4%BB%B6%E6%97%B6%E9%95%BF%EF%BC%8C%E5%8D%95%E4%BD%8D%E4%B8%BA%E7%A7%92%EF%BC%8C%E5%BB%BA%E8%AE%AE%E5%8F%96%E5%80%BC%E5%8E%9F%E5%A7%8B%E8%A7%86%E9%A2%91%E6%80%BB%E6%97%B6%E9%95%BF%0A%24%20ffmpeg%20-i%201.mp4%20-i%20test.mp3%20%5C%0A%20%20-filter_complex%20%22%5B1%3Aa%5Daloop%3Dloop%3D-1%3Asize%3D2e%2B09%5Bout%5D%3B%5Bout%5D%5B0%3Aa%5Damix%22%20%5C%0A%20%20-t%2010%20out.mp4",
+      "body": "%60%60%60bash%0A%23%20-t%2010%20%E6%96%87%E4%BB%B6%E6%97%B6%E9%95%BF%EF%BC%8C%E5%8D%95%E4%BD%8D%E4%B8%BA%E7%A7%92%EF%BC%8C%E5%BB%BA%E8%AE%AE%E5%8F%96%E5%80%BC%E5%8E%9F%E5%A7%8B%E8%A7%86%E9%A2%91%E6%80%BB%E6%97%B6%E9%95%BF%0A%24%20ffmpeg%20-i%201.mp4%20-i%20test.mp3%20%5C%0A%20%20-filter_complex%20%22%5B1%3Aa%5Daloop%3Dloop%3D-1%3Asize%3D2e%2B09%5Bout%5D%3B%5Bout%5D%5B0%3Aa%5Damix%22%20%5C%0A%20%20-t%2010%20out.mp4%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-120",
       "sectionId": "s5",
       "title": "%E8%B0%83%E8%8A%82%E9%9F%B3%E9%87%8F",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20%E5%A2%9E%E5%A4%A7%E9%9F%B3%E9%87%8F%0A%24%20ffmpeg%20-i%20test.mp4%20-af%20%22volumn%3D1.5%22%20out.mp4",
+      "body": "%60%60%60bash%0A%23%20%E5%A2%9E%E5%A4%A7%E9%9F%B3%E9%87%8F%0A%24%20ffmpeg%20-i%20test.mp4%20-af%20%22volumn%3D1.5%22%20out.mp4%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-121",
       "sectionId": "s5",
       "title": "%E6%9B%B4%E6%94%B9%E9%9F%B3%E9%A2%91%E9%80%9F%E5%BA%A6",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%20input.wav%20-af%20%22atempo%3D0.75%22%20output.wav%20%0A%23%20%E5%8A%A0%E9%80%9F%204%20%E5%80%8D%0A%24%20ffmpeg%20-i%20input.mp3%20-af%20%22atempo%3D2.0%2Catempo%3D2.0%22%20ouutput.mp3",
+      "body": "%60%60%60bash%0A%24%20ffmpeg%20-i%20input.wav%20-af%20%22atempo%3D0.75%22%20output.wav%20%0A%23%20%E5%8A%A0%E9%80%9F%204%20%E5%80%8D%0A%24%20ffmpeg%20-i%20input.mp3%20-af%20%22atempo%3D2.0%2Catempo%3D2.0%22%20ouutput.mp3%0A%60%60%60%0A%0A%60atempo%60%20%E5%AE%83%E5%8F%AA%E6%8E%A5%E5%8F%97%C2%A0%600.5%60(%E5%8D%8A%E9%80%9F)%20%E5%88%B0%C2%A0%602%60%20(%E5%80%8D%E9%80%9F)%E4%B9%8B%E9%97%B4%E7%9A%84%E5%80%BC%E3%80%82%E4%B8%BA%E4%BA%86%E8%B6%8A%E8%BF%87%E8%BF%99%E4%B8%AA%E9%99%90%E5%88%B6%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E9%93%BE%E5%BC%8F%E4%BD%BF%E7%94%A8%E8%BF%99%E4%B8%AA%E8%BF%87%E6%BB%A4%E5%99%A8",
       "encoded": true
-    },
-    {
-      "id": "s5-122",
-      "sectionId": "s5",
-      "title": "",
-      "kind": "text",
-      "body": "`atempo` 它只接受 `0.5`(半速) 到 `2` (倍速)之间的值。为了越过这个限制，你可以链式使用这个过滤器"
     },
     {
       "id": "s5-123",
       "sectionId": "s5",
       "title": "%E7%BB%9F%E4%B8%80%E8%A7%86%E9%A2%91%E7%9A%84%E9%9F%B3%E9%87%8F",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%24%20ffmpeg%20-i%20test.mp4%20-af%20%22loudnorm%3DI%3D-5%3ALRA%3D1%22%20out.mp4",
+      "body": "%60%60%60bash%0A%24%20ffmpeg%20-i%20test.mp4%20-af%20%22loudnorm%3DI%3D-5%3ALRA%3D1%22%20out.mp4%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s5-124",
       "sectionId": "s5",
       "title": "%E9%87%8D%E6%96%B0%E6%98%A0%E5%B0%84%E9%80%9A%E9%81%93%E6%95%B0",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20%E4%BD%BF%E5%B7%A6%E5%8F%B3%E8%80%B3%E7%9A%84%E5%A3%B0%E9%9F%B3%E5%90%8C%E6%97%B6%E5%87%BA%E7%8E%B0%0A%24%20ffmpeg%20-i%20input.mp3%20-af%20%22channelmap%3D1-0%7C1-1%22%20output.mp3",
+      "body": "%60%60%60bash%0A%23%20%E4%BD%BF%E5%B7%A6%E5%8F%B3%E8%80%B3%E7%9A%84%E5%A3%B0%E9%9F%B3%E5%90%8C%E6%97%B6%E5%87%BA%E7%8E%B0%0A%24%20ffmpeg%20-i%20input.mp3%20-af%20%22channelmap%3D1-0%7C1-1%22%20output.mp3%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-125",
       "sectionId": "s6",
       "title": "%E6%8B%89%E6%B5%81",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20%E6%8B%89%E5%8F%96rtmp%E6%B5%81%E5%B9%B6%E5%AD%98%E5%82%A8%E5%88%B0%E6%9C%AC%E5%9C%B0%0A%24%20ffmpeg%20-i%20%22rtsp%3A%2F%2F127.0.0.1%2Ftest%22%20test.mp4",
+      "body": "%60%60%60bash%0A%23%20%E6%8B%89%E5%8F%96rtmp%E6%B5%81%E5%B9%B6%E5%AD%98%E5%82%A8%E5%88%B0%E6%9C%AC%E5%9C%B0%0A%24%20ffmpeg%20-i%20%22rtsp%3A%2F%2F127.0.0.1%2Ftest%22%20test.mp4%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s6-126",
       "sectionId": "s6",
       "title": "推流",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 推送test.mp4到远程\n$ ffmpeg -re -i test.mp4 -f flv rtmp://127.0.0.1/test"
+      "body": "```bash\n# 推送test.mp4到远程\n$ ffmpeg -re -i test.mp4 -f flv rtmp://127.0.0.1/test\n```"
     },
     {
       "id": "s6-127",
       "sectionId": "s6",
       "title": "%E8%BD%AC%E5%8F%91",
-      "kind": "code",
-      "lang": "bash",
-      "code": "%23%20%E6%8B%89%E5%8F%96%E6%B5%81%E5%B9%B6%E8%BD%AC%E5%8F%91%0A%24%20ffmpeg%20-i%20%22rtsp%3A%2F%2F127.0.0.1%2Ftest%22%20-f%20mpegts%20-codec%3Av%20mpeg1video%20http%3A%2F%2F127.0.0.1%2Fdemo",
+      "body": "%60%60%60bash%0A%23%20%E6%8B%89%E5%8F%96%E6%B5%81%E5%B9%B6%E8%BD%AC%E5%8F%91%0A%24%20ffmpeg%20-i%20%22rtsp%3A%2F%2F127.0.0.1%2Ftest%22%20-f%20mpegts%20-codec%3Av%20mpeg1video%20http%3A%2F%2F127.0.0.1%2Fdemo%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s7-128",
       "sectionId": "s7",
       "title": "另见",
-      "kind": "text",
       "body": "• [FFmpeg 官网地址](https://ffmpeg.org/) _(ffmpeg.org)_\n• [FFmpeg Cheat Sheet](https://lzone.de/cheat-sheet/ffmpeg) _(lzone.de)_\n• [FFmpeg Cheat Sheet](https://devhints.io/ffmpeg) _(devhints.io)_\n• [FFmpeg Cheat Sheet](https://github.com/yuanqing/ffmpeg-cheatsheet) _(github.com)_\n• [FFmpeg Cheat Sheet](https://cheatography.com/thetartankilt/cheat-sheets/ffmpeg/) _(cheatography.com)_"
     }
   ],

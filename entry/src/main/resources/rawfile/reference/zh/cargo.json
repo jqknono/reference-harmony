@@ -35,525 +35,137 @@
       "id": "intro-0",
       "sectionId": "intro",
       "title": "简介",
-      "kind": "text",
       "body": "此快速参考备忘清单 [Cargo](https://conan.io/) 提供了编译 [Rust](./rust.md) 常用命令和示例"
     },
     {
       "id": "s1-1",
       "sectionId": "s1",
       "title": "安装/升级 Rust 和 Cargo",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ curl -sSf https://static.rust-lang.org/rustup.sh | sh"
-    },
-    {
-      "id": "s1-2",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "在 Linux 和 macOS 系统上，这可以通过以上方命令完成"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• [Cargo 开源仓库](https://github.com/rust-lang/cargo) _(github.com)_\n• [Cargo 官网](https://doc.rust-lang.org/cargo) _(doc.rust-lang.org)_\n• [Cargo 官网(中文)](https://www.rustwiki.org.cn/zh-CN/cargo/index.html) _(rustwiki.org.cn)_\n• [Rust 社区的 crate 仓库](https://crates.io/) _(crates.io)_"
+      "body": "```bash\n$ curl -sSf https://static.rust-lang.org/rustup.sh | sh\n```\n\n在 Linux 和 macOS 系统上，这可以通过以上方命令完成\n\n• [Cargo 开源仓库](https://github.com/rust-lang/cargo) _(github.com)_\n• [Cargo 官网](https://doc.rust-lang.org/cargo) _(doc.rust-lang.org)_\n• [Cargo 官网(中文)](https://www.rustwiki.org.cn/zh-CN/cargo/index.html) _(rustwiki.org.cn)_\n• [Rust 社区的 crate 仓库](https://crates.io/) _(crates.io)_"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "命令说明",
-      "kind": "text",
       "body": ":- | :-\n:- | :-\n`cargo version` | 显示版本信息以确认 Cargo 已安装\n`cargo new` | 创建一个新项目\n`cargo test` | 在项目中运行单元测试\n`cargo check` | 快速编译项目，无需生成二进制文件来检查错误\n`cargo fmt` | 自动格式化代码\n`cargo build` | 编译一个项目\n`cargo run` | 一步编译和运行项目\n`cargo clippy --all-targets -- --D warnings` | Linter 检查错误\n`cargo tarpaulin --ignore-tests` | 检查代码覆盖率"
     },
     {
       "id": "s1-5",
       "sectionId": "s1",
-      "title": "切换源",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ touch ~/.cargo/config # 添加配置文件\n$ vim ~/.cargo/config   # 编辑配置文件"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "配置文件 `config` 内容"
-    },
-    {
-      "id": "s1-7",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "toml",
-      "code": "%5Bsource.crates-io%5D%0Aregistry%20%3D%20%22https%3A%2F%2Fgithub.com%2Frust-lang%2Fcrates.io-index%22%0Areplace-with%20%3D%20'tuna'%20%23%20%F0%9F%91%88%20%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E6%8F%90%E4%BA%A4%E5%8C%85%E6%B3%A8%E9%87%8A%E9%85%8D%E7%BD%AE%E6%BA%90%0A%0A%5Bsource.tuna%5D%0Aregistry%20%3D%20%22https%3A%2F%2Fmirrors.tuna.tsinghua.edu.cn%2Fgit%2Fcrates.io-index.git%22%0A%23%20registry%20%3D%20%22git%3A%2F%2Fmirrors.ustc.edu.cn%2Fcrates.io-index%22",
+      "title": "%E5%88%87%E6%8D%A2%E6%BA%90",
+      "body": "%60%60%60bash%0A%24%20touch%20~%2F.cargo%2Fconfig%20%23%20%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%0A%24%20vim%20~%2F.cargo%2Fconfig%20%20%20%23%20%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%0A%60%60%60%0A%0A%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%20%60config%60%20%E5%86%85%E5%AE%B9%0A%0A%60%60%60toml%0A%5Bsource.crates-io%5D%0Aregistry%20%3D%20%22https%3A%2F%2Fgithub.com%2Frust-lang%2Fcrates.io-index%22%0Areplace-with%20%3D%20'tuna'%20%23%20%F0%9F%91%88%20%E5%A6%82%E6%9E%9C%E9%9C%80%E8%A6%81%E6%8F%90%E4%BA%A4%E5%8C%85%E6%B3%A8%E9%87%8A%E9%85%8D%E7%BD%AE%E6%BA%90%0A%0A%5Bsource.tuna%5D%0Aregistry%20%3D%20%22https%3A%2F%2Fmirrors.tuna.tsinghua.edu.cn%2Fgit%2Fcrates.io-index.git%22%0A%23%20registry%20%3D%20%22git%3A%2F%2Fmirrors.ustc.edu.cn%2Fcrates.io-index%22%0A%60%60%60%0A%0A%F0%9F%92%A5%20%E6%B3%A8%E6%84%8F%E5%88%87%E6%8D%A2%E6%BA%90%E9%9C%80%E8%A6%81%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%9B%AE%E5%BD%95%0A%0A%60%60%60bash%0A%24%20rm%20-rf%20~%2F.cargo%2F.package-cache%20%20%20%23%20%E2%9A%A0%EF%B8%8F%20%E5%88%A0%E9%99%A4%E7%BC%93%E5%AD%98%E7%9B%AE%E5%BD%95%E5%86%85%E5%AE%B9%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-8",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "💥 注意切换源需要删除缓存目录"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ rm -rf ~/.cargo/.package-cache   # ⚠️ 删除缓存目录内容"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
-      "title": "创建新项目",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo new hello_world --bin"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "• `--bin` 正在制作一个二进制程序\n• `--lib` 正在创建一个库(lib)"
-    },
-    {
-      "id": "s1-12",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "得到如下目录:"
-    },
-    {
-      "id": "s1-13",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cd hello_world\n$ tree .\n.\n├── Cargo.toml\n└── src\n    └── main.rs"
-    },
-    {
-      "id": "s1-14",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "`Cargo.toml` 被称为一个 `manifest` 元清单，它包含了 `Cargo` 编译项目所需的所有元数据"
-    },
-    {
-      "id": "s1-15",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "toml",
-      "code": "%5Bpackage%5D%0Aname%20%3D%20%22hello_world%22%0Aversion%20%3D%20%220.1.0%22%0Aauthors%20%3D%20%5B%22Your%20Name%20%3Cyou%40example.com%3E%22%5D%0Aedition%20%3D%20%222018%22%0A%0A%5Bdependencies%5D",
+      "title": "%E5%88%9B%E5%BB%BA%E6%96%B0%E9%A1%B9%E7%9B%AE",
+      "body": "%60%60%60bash%0A%24%20cargo%20new%20hello_world%20--bin%0A%60%60%60%0A%0A%E2%80%A2%20%60--bin%60%20%E6%AD%A3%E5%9C%A8%E5%88%B6%E4%BD%9C%E4%B8%80%E4%B8%AA%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%A8%8B%E5%BA%8F%0A%E2%80%A2%20%60--lib%60%20%E6%AD%A3%E5%9C%A8%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%BA%93(lib)%0A%0A%E5%BE%97%E5%88%B0%E5%A6%82%E4%B8%8B%E7%9B%AE%E5%BD%95%3A%0A%0A%60%60%60bash%0A%24%20cd%20hello_world%0A%24%20tree%20.%0A.%0A%E2%94%9C%E2%94%80%E2%94%80%20Cargo.toml%0A%E2%94%94%E2%94%80%E2%94%80%20src%0A%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%20main.rs%0A%60%60%60%0A%0A%60Cargo.toml%60%20%E8%A2%AB%E7%A7%B0%E4%B8%BA%E4%B8%80%E4%B8%AA%20%60manifest%60%20%E5%85%83%E6%B8%85%E5%8D%95%EF%BC%8C%E5%AE%83%E5%8C%85%E5%90%AB%E4%BA%86%20%60Cargo%60%20%E7%BC%96%E8%AF%91%E9%A1%B9%E7%9B%AE%E6%89%80%E9%9C%80%E7%9A%84%E6%89%80%E6%9C%89%E5%85%83%E6%95%B0%E6%8D%AE%0A%0A%60%60%60toml%0A%5Bpackage%5D%0Aname%20%3D%20%22hello_world%22%0Aversion%20%3D%20%220.1.0%22%0Aauthors%20%3D%20%5B%22Your%20Name%20%3Cyou%40example.com%3E%22%5D%0Aedition%20%3D%20%222018%22%0A%0A%5Bdependencies%5D%0A%60%60%60%0A%0A%E5%85%A5%E5%8F%A3%E6%96%87%E4%BB%B6%20%60src%2Fmain.rs%60%0A%0A%60%60%60rust%0Afn%20main()%20%7B%0A%20%20%20%20println!(%22Hello%2C%20world!%22)%3B%0A%7D%0A%60%60%60%0A%0A%E8%BF%90%E8%A1%8C%E7%BC%96%E8%AF%91%E7%94%9F%E6%88%90%20%60hello_world%60%20%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%0A%0A%60%60%60bash%0A%24%20cargo%20build%0A%23%20%E6%96%87%E4%BB%B6%E6%94%BE%E5%85%A5%20%60target%2Frelease%60%20%E7%9B%AE%E5%BD%95%0A%24%20cargo%20build%20--release%0A%60%60%60%0A%0A%E7%84%B6%E5%90%8E%E8%BF%90%E8%A1%8C%E5%AE%83%3A%0A%0A%60%60%60bash%0A%24%20.%2Ftarget%2Fdebug%2Fhello_world%0AHello%2C%20world!%0A%60%60%60%0A%0A%E4%B9%9F%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%20%60cargo%20run%60%EF%BC%8C%E5%AE%83%E4%BC%9A%E8%87%AA%E8%A1%8C%60%E7%BC%96%E8%AF%91%60%E5%B9%B6%60%E8%BF%90%E8%A1%8C%60%E5%AE%83%3A%0A%0A%60%60%60bash%0A%24%20cargo%20run%0A%20%20%20Running%20%60target%2Fhello_world%60%0AHello%2C%20world!%0A%60%60%60",
       "encoded": true
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "入口文件 `src/main.rs`"
-    },
-    {
-      "id": "s1-17",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "rust",
-      "code": "fn%20main()%20%7B%0A%20%20%20%20println!(%22Hello%2C%20world!%22)%3B%0A%7D",
-      "encoded": true
-    },
-    {
-      "id": "s1-18",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "运行编译生成 `hello_world` 二进制文件"
-    },
-    {
-      "id": "s1-19",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo build\n# 文件放入 `target/release` 目录\n$ cargo build --release"
-    },
-    {
-      "id": "s1-20",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "然后运行它:"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ ./target/debug/hello_world\nHello, world!"
-    },
-    {
-      "id": "s1-22",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "也可以直接使用 `cargo run`，它会自行`编译`并`运行`它:"
-    },
-    {
-      "id": "s1-23",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo run\n   Running `target/hello_world`\nHello, world!"
     },
     {
       "id": "s1-24",
       "sectionId": "s1",
       "title": "%E6%9D%A5%E6%BA%90%E9%85%8D%E7%BD%AE",
-      "kind": "code",
-      "lang": "toml",
-      "code": "%23%20%60source%60%20%E8%A1%A8%E4%B8%8B%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%AD%98%E5%82%A8%E6%9C%89%E5%85%B3%E8%A6%81%E6%9B%B4%E6%8D%A2%E7%9A%84%E6%9D%A5%E6%BA%90%E5%90%8D%E7%A7%B0%0A%5Bsource%5D%0A%0A%23%20%E5%9C%A8%60source%60%20%E8%A1%A8%E6%A0%BC%E4%B9%8B%E4%B8%8B%E7%9A%84%EF%BC%8C%E5%8F%AF%E4%B8%BA%E4%B8%80%E5%AE%9A%E6%95%B0%E9%87%8F%E7%9A%84%E6%9C%89%E5%85%B3%E6%9D%A5%E6%BA%90%E5%90%8D%E7%A7%B0.%20%E7%A4%BA%E4%BE%8B%E4%B8%8B%E9%9D%A2%E5%B0%B1%EF%BC%8C%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%80%E4%B8%AA%E6%96%B0%E6%BA%90%EF%BC%8C%20%E5%8F%AB%20%60my-awesome-source%60%EF%BC%8C%E5%85%B6%E5%86%85%E5%AE%B9%E6%9D%A5%E8%87%AA%E6%9C%AC%E5%9C%B0%EF%BC%8C%60vendor%60%E7%9B%AE%E5%BD%95%20%EF%BC%8C%E5%85%B6%E7%9B%B8%E5%AF%B9%E4%BA%8E%E5%8C%85%E5%90%AB%20%60.cargo%2Fconfig%60%20%E6%96%87%E4%BB%B6%E7%9A%84%E7%9B%AE%E5%BD%95%0A%5Bsource.my-awesome-source%5D%0Adirectory%20%3D%20%22vendor%22%0A%0A%23%20Git%20sources%20%E4%B9%9F%E6%8C%87%E5%AE%9A%E4%B8%80%E4%B8%AA%20branch%2Ftag%2Frev%0Agit%20%3D%20%22https%3A%2F%2Fexample.com%2Fpath%2Fto%2Frepo%22%0A%23%20branch%20%3D%20%22master%22%0A%23%20tag%20%3D%20%22v1.0.1%22%0A%23%20rev%20%3D%20%22313f44e8%22%0A%0A%23%20crates.io%20%E9%BB%98%E8%AE%A4%E6%BA%90%20%E5%9C%A8%22crates-io%22%E5%90%8D%E7%A7%B0%E4%B8%8B%EF%BC%8C%E4%B8%94%E5%9C%A8%E8%BF%99%E9%87%8C%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8%20%60replace-with%60%20%E5%AD%97%E6%AE%B5%E6%8C%87%E6%98%8E%20%E9%BB%98%E8%AE%A4%E6%BA%90%E6%9B%B4%E6%8D%A2%E6%88%90%22my-awesome-source%22%E6%BA%90%0A%5Bsource.crates-io%5D%0Areplace-with%20%3D%20%22my-awesome-source%22",
+      "body": "%60%60%60toml%0A%23%20%60source%60%20%E8%A1%A8%E4%B8%8B%EF%BC%8C%E5%B0%B1%E6%98%AF%E5%AD%98%E5%82%A8%E6%9C%89%E5%85%B3%E8%A6%81%E6%9B%B4%E6%8D%A2%E7%9A%84%E6%9D%A5%E6%BA%90%E5%90%8D%E7%A7%B0%0A%5Bsource%5D%0A%0A%23%20%E5%9C%A8%60source%60%20%E8%A1%A8%E6%A0%BC%E4%B9%8B%E4%B8%8B%E7%9A%84%EF%BC%8C%E5%8F%AF%E4%B8%BA%E4%B8%80%E5%AE%9A%E6%95%B0%E9%87%8F%E7%9A%84%E6%9C%89%E5%85%B3%E6%9D%A5%E6%BA%90%E5%90%8D%E7%A7%B0.%20%E7%A4%BA%E4%BE%8B%E4%B8%8B%E9%9D%A2%E5%B0%B1%EF%BC%8C%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%80%E4%B8%AA%E6%96%B0%E6%BA%90%EF%BC%8C%20%E5%8F%AB%20%60my-awesome-source%60%EF%BC%8C%E5%85%B6%E5%86%85%E5%AE%B9%E6%9D%A5%E8%87%AA%E6%9C%AC%E5%9C%B0%EF%BC%8C%60vendor%60%E7%9B%AE%E5%BD%95%20%EF%BC%8C%E5%85%B6%E7%9B%B8%E5%AF%B9%E4%BA%8E%E5%8C%85%E5%90%AB%20%60.cargo%2Fconfig%60%20%E6%96%87%E4%BB%B6%E7%9A%84%E7%9B%AE%E5%BD%95%0A%5Bsource.my-awesome-source%5D%0Adirectory%20%3D%20%22vendor%22%0A%0A%23%20Git%20sources%20%E4%B9%9F%E6%8C%87%E5%AE%9A%E4%B8%80%E4%B8%AA%20branch%2Ftag%2Frev%0Agit%20%3D%20%22https%3A%2F%2Fexample.com%2Fpath%2Fto%2Frepo%22%0A%23%20branch%20%3D%20%22master%22%0A%23%20tag%20%3D%20%22v1.0.1%22%0A%23%20rev%20%3D%20%22313f44e8%22%0A%0A%23%20crates.io%20%E9%BB%98%E8%AE%A4%E6%BA%90%20%E5%9C%A8%22crates-io%22%E5%90%8D%E7%A7%B0%E4%B8%8B%EF%BC%8C%E4%B8%94%E5%9C%A8%E8%BF%99%E9%87%8C%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8%20%60replace-with%60%20%E5%AD%97%E6%AE%B5%E6%8C%87%E6%98%8E%20%E9%BB%98%E8%AE%A4%E6%BA%90%E6%9B%B4%E6%8D%A2%E6%88%90%22my-awesome-source%22%E6%BA%90%0A%5Bsource.crates-io%5D%0Areplace-with%20%3D%20%22my-awesome-source%22%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-25",
       "sectionId": "s1",
       "title": "编译测试",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 编译输出二进制文件，放入 `target/debug` 目录\n$ cargo build\n# 输出二进制文件，放入 `target/release` 目录\n$ cargo build --release\n$ cargo run      # 编译并运行"
+      "body": "```bash\n# 编译输出二进制文件，放入 `target/debug` 目录\n$ cargo build\n# 输出二进制文件，放入 `target/release` 目录\n$ cargo build --release\n$ cargo run      # 编译并运行\n```"
     },
     {
       "id": "s1-26",
       "sectionId": "s1",
       "title": "测试",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo test     # 运行你的所有测试\n# 指定函数过滤器\n$ cargo test test_foo # 开头是 test_foo 的函数都会运行，例如(test_foo_bar)\n# 指定特定模块中的测试函数(通常可以简写 cargo test foo::bar::tests::test_foo)\n$ cargo test --package rustt --lib -- foo::bar::tests::test_foo --exact --nocapture\n\n# 指定特定测试的模块(通常可以简写 cargo test foo::bar::tests)\n$ cargo test --package rustt --lib -- foo::bar::tests --nocapture"
+      "body": "```bash\n$ cargo test     # 运行你的所有测试\n# 指定函数过滤器\n$ cargo test test_foo # 开头是 test_foo 的函数都会运行，例如(test_foo_bar)\n# 指定特定模块中的测试函数(通常可以简写 cargo test foo::bar::tests::test_foo)\n$ cargo test --package rustt --lib -- foo::bar::tests::test_foo --exact --nocapture\n\n# 指定特定测试的模块(通常可以简写 cargo test foo::bar::tests)\n$ cargo test --package rustt --lib -- foo::bar::tests --nocapture\n```"
     },
     {
       "id": "s1-27",
       "sectionId": "s1",
       "title": "%E9%85%8D%E7%BD%AE%E7%9B%AE%E6%A0%87",
-      "kind": "code",
-      "lang": "toml",
-      "code": "%5Bpackage%5D%0A%23%20...%0A%5Blib%5D%0A%23%20%E7%94%9F%E6%88%90%E7%9B%AE%E6%A0%87%E4%B8%8E%E5%BA%93%E7%9A%84%E5%90%8D%E7%A7%B0.%20%E6%9C%AC%E8%AF%A5%E9%BB%98%E8%AE%A4%E6%98%AF%E5%8C%85%E5%90%8D%2C%20%E6%9B%BF%E6%8D%A2%E6%89%80%E6%9C%89%E7%A0%B4%E6%8A%98%E5%8F%B7%E4%B8%BA%20%E4%B8%8B%E5%88%92%E7%BA%BF.%20(Rust%20%60extern%20crate%60%20%E5%A3%B0%E6%98%8E%E4%BC%9A%E5%8F%82%E8%80%83%E8%AF%A5%E5%90%8D%EF%BC%9B%E5%9B%A0%E6%AD%A4%EF%BC%8C%E8%AF%A5%E5%80%BC%E5%BF%85%E9%A1%BB%E6%98%AF%E5%8F%AF%E7%94%A8%E7%9A%84%E6%9C%89%E6%95%88Rust%E6%A0%87%E8%AF%86%E7%AC%A6)%0Aname%20%3D%20%22foo%22%0A%23%20%E8%AF%A5%E5%AD%97%E6%AE%B5%EF%BC%8C%E6%8C%87%E5%90%91%20crate%20%E7%9A%84%E5%85%A5%E5%8F%A3(%E4%BD%8D%E7%BD%AE)%2C%20%E8%B7%AF%E5%BE%84%E7%9B%B8%E5%AF%B9%E4%BA%8E%20%60Cargo.toml%60.%0Apath%20%3D%20%22src%2Flib.rs%22%0A%23%20%E4%B8%80%E4%B8%AA%E7%BB%99%E7%9B%AE%E6%A0%87%E5%90%AF%E7%94%A8%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%20%E7%9A%84%20%E6%A0%87%E5%BF%97.%20%E4%BC%9A%E8%A2%AB%20%60cargo%20test%60%E4%BD%BF%E7%94%A8.%0Atest%20%3D%20true%0A%23%20%E4%B8%80%E4%B8%AA%E7%BB%99%E7%9B%AE%E6%A0%87%E5%90%AF%E7%94%A8%E6%96%87%E6%A1%A3%E6%B5%8B%E8%AF%95%20%E7%9A%84%20%E6%A0%87%E5%BF%97.%20%E5%8F%AA%E4%B8%8E%E5%BA%93%E7%9B%B8%E5%85%B3%2C%20%E4%B8%8D%E4%BC%9A%E5%BD%B1%E5%93%8D%E5%85%B6%E4%BB%96%E9%83%A8%E5%88%86%E3%80%82%E4%BC%9A%E8%A2%AB%20%60cargo%20test%60%E4%BD%BF%E7%94%A8.%0Adoctest%20%3D%20true%0A%23%20%E4%B8%80%E4%B8%AA%E7%BB%99%E7%9B%AE%E6%A0%87%E5%90%AF%E7%94%A8%E5%9F%BA%E5%87%86%20%E7%9A%84%20%E6%A0%87%E5%BF%97.%20%E4%BC%9A%E8%A2%AB%20%60cargo%20bench%60%E4%BD%BF%E7%94%A8.%0Abench%20%3D%20true%0A%23%20%E4%B8%80%E4%B8%AA%E7%BB%99%E7%9B%AE%E6%A0%87%E5%90%AF%E7%94%A8%E6%96%87%E6%A1%A3%20%E7%9A%84%20%E6%A0%87%E5%BF%97.%20%E4%BC%9A%E8%A2%AB%20%60cargo%20doc%60%E4%BD%BF%E7%94%A8.%0Adoc%20%3D%20true%0A%23%20%E8%8B%A5%E8%AF%A5%E7%9B%AE%E6%A0%87%E4%B8%BA%20%E7%BC%96%E8%AF%91%E5%99%A8%E6%89%A9%E5%B1%95%2C%20%E9%82%A3%E8%A6%81%E6%8A%8A%E8%AF%A5%E5%AD%97%E6%AE%B5%E8%AE%BE%E4%B8%BA%20true%EF%BC%8C%E4%BB%A5%E8%AE%A9%20Cargo%20%E6%AD%A3%E7%A1%AE%E7%BC%96%E8%AF%91%E5%92%8C%EF%BC%8C%E5%8F%AF%E7%94%A8%E4%BA%8E%E6%89%80%E6%9C%89%E4%BE%9D%E8%B5%96%E9%A1%B9.%0Aplugin%20%3D%20false%0A%23%20%E8%8B%A5%E8%AF%A5%E7%9B%AE%E6%A0%87%E4%B8%BA%20%22macros%201.1%22%20%E7%A8%8B%E5%BA%8F%E5%AE%8F%2C%20%E9%82%A3%E8%A6%81%E6%8A%8A%E8%AF%A5%E5%AD%97%E6%AE%B5%E8%AE%BE%E4%B8%BA%20true%0Aproc-macro%20%3D%20false%0A%23%20%E8%8B%A5%E8%AE%BE%E4%B8%BA%20false%2C%20%60cargo%20test%60%20%E4%BC%9A%E4%B8%BA%20rustc%20%E7%9C%81%E7%95%A5%20%60--test%60%20%E6%A0%87%E5%BF%97%2C%20%E8%BF%99%E9%98%BB%E6%AD%A2%E5%AE%83%E7%94%9F%E6%88%90%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%20%E8%BF%99%E5%9C%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%98%E5%9C%A8%EF%BC%8C%E6%9E%84%E5%BB%BA%E7%AE%A1%E7%90%86%E6%B5%8B%E8%AF%95%E8%BF%90%E8%A1%8C%E5%99%A8%E6%9C%AC%E8%BA%AB%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%9C%89%E7%94%A8.%0Aharness%20%3D%20true%0A%23%20%E8%8B%A5%E8%AE%BE%E7%BD%AE%E4%BA%86%EF%BC%8C%E9%82%A3%20%E7%9B%AE%E6%A0%87%E4%BC%9A%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E4%B8%8E%60%5Bpackage%5D%60%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E7%89%88%E6%9C%AC%2C%20%E4%B9%9F%E8%AE%B8%E6%98%AF%EF%BC%8C%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E5%BA%93%202018%E5%B9%B4%E7%89%88%E6%9C%AC%E6%88%96%EF%BC%8C%E7%BC%96%E8%AF%91%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%9A%842015%E5%B9%B4%E7%89%88%E6%9C%AC.%20%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%E6%89%80%E6%9C%89%E7%9B%AE%E6%A0%87%E9%83%BD%E4%BD%BF%E7%94%A8%60%5Bpackage%5D%60%E4%B8%AD%E6%8C%87%E5%AE%9A%E7%9A%84%E7%89%88%E6%9C%AC%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%AF%91%E3%80%82%0Aedition%20%3D%20'2015'",
+      "body": "%60%60%60toml%0A%5Bpackage%5D%0A%23%20...%0A%5Blib%5D%0A%23%20%E7%94%9F%E6%88%90%E7%9B%AE%E6%A0%87%E4%B8%8E%E5%BA%93%E7%9A%84%E5%90%8D%E7%A7%B0.%20%E6%9C%AC%E8%AF%A5%E9%BB%98%E8%AE%A4%E6%98%AF%E5%8C%85%E5%90%8D%2C%20%E6%9B%BF%E6%8D%A2%E6%89%80%E6%9C%89%E7%A0%B4%E6%8A%98%E5%8F%B7%E4%B8%BA%20%E4%B8%8B%E5%88%92%E7%BA%BF.%20(Rust%20%60extern%20crate%60%20%E5%A3%B0%E6%98%8E%E4%BC%9A%E5%8F%82%E8%80%83%E8%AF%A5%E5%90%8D%EF%BC%9B%E5%9B%A0%E6%AD%A4%EF%BC%8C%E8%AF%A5%E5%80%BC%E5%BF%85%E9%A1%BB%E6%98%AF%E5%8F%AF%E7%94%A8%E7%9A%84%E6%9C%89%E6%95%88Rust%E6%A0%87%E8%AF%86%E7%AC%A6)%0Aname%20%3D%20%22foo%22%0A%23%20%E8%AF%A5%E5%AD%97%E6%AE%B5%EF%BC%8C%E6%8C%87%E5%90%91%20crate%20%E7%9A%84%E5%85%A5%E5%8F%A3(%E4%BD%8D%E7%BD%AE)%2C%20%E8%B7%AF%E5%BE%84%E7%9B%B8%E5%AF%B9%E4%BA%8E%20%60Cargo.toml%60.%0Apath%20%3D%20%22src%2Flib.rs%22%0A%23%20%E4%B8%80%E4%B8%AA%E7%BB%99%E7%9B%AE%E6%A0%87%E5%90%AF%E7%94%A8%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%20%E7%9A%84%20%E6%A0%87%E5%BF%97.%20%E4%BC%9A%E8%A2%AB%20%60cargo%20test%60%E4%BD%BF%E7%94%A8.%0Atest%20%3D%20true%0A%23%20%E4%B8%80%E4%B8%AA%E7%BB%99%E7%9B%AE%E6%A0%87%E5%90%AF%E7%94%A8%E6%96%87%E6%A1%A3%E6%B5%8B%E8%AF%95%20%E7%9A%84%20%E6%A0%87%E5%BF%97.%20%E5%8F%AA%E4%B8%8E%E5%BA%93%E7%9B%B8%E5%85%B3%2C%20%E4%B8%8D%E4%BC%9A%E5%BD%B1%E5%93%8D%E5%85%B6%E4%BB%96%E9%83%A8%E5%88%86%E3%80%82%E4%BC%9A%E8%A2%AB%20%60cargo%20test%60%E4%BD%BF%E7%94%A8.%0Adoctest%20%3D%20true%0A%23%20%E4%B8%80%E4%B8%AA%E7%BB%99%E7%9B%AE%E6%A0%87%E5%90%AF%E7%94%A8%E5%9F%BA%E5%87%86%20%E7%9A%84%20%E6%A0%87%E5%BF%97.%20%E4%BC%9A%E8%A2%AB%20%60cargo%20bench%60%E4%BD%BF%E7%94%A8.%0Abench%20%3D%20true%0A%23%20%E4%B8%80%E4%B8%AA%E7%BB%99%E7%9B%AE%E6%A0%87%E5%90%AF%E7%94%A8%E6%96%87%E6%A1%A3%20%E7%9A%84%20%E6%A0%87%E5%BF%97.%20%E4%BC%9A%E8%A2%AB%20%60cargo%20doc%60%E4%BD%BF%E7%94%A8.%0Adoc%20%3D%20true%0A%23%20%E8%8B%A5%E8%AF%A5%E7%9B%AE%E6%A0%87%E4%B8%BA%20%E7%BC%96%E8%AF%91%E5%99%A8%E6%89%A9%E5%B1%95%2C%20%E9%82%A3%E8%A6%81%E6%8A%8A%E8%AF%A5%E5%AD%97%E6%AE%B5%E8%AE%BE%E4%B8%BA%20true%EF%BC%8C%E4%BB%A5%E8%AE%A9%20Cargo%20%E6%AD%A3%E7%A1%AE%E7%BC%96%E8%AF%91%E5%92%8C%EF%BC%8C%E5%8F%AF%E7%94%A8%E4%BA%8E%E6%89%80%E6%9C%89%E4%BE%9D%E8%B5%96%E9%A1%B9.%0Aplugin%20%3D%20false%0A%23%20%E8%8B%A5%E8%AF%A5%E7%9B%AE%E6%A0%87%E4%B8%BA%20%22macros%201.1%22%20%E7%A8%8B%E5%BA%8F%E5%AE%8F%2C%20%E9%82%A3%E8%A6%81%E6%8A%8A%E8%AF%A5%E5%AD%97%E6%AE%B5%E8%AE%BE%E4%B8%BA%20true%0Aproc-macro%20%3D%20false%0A%23%20%E8%8B%A5%E8%AE%BE%E4%B8%BA%20false%2C%20%60cargo%20test%60%20%E4%BC%9A%E4%B8%BA%20rustc%20%E7%9C%81%E7%95%A5%20%60--test%60%20%E6%A0%87%E5%BF%97%2C%20%E8%BF%99%E9%98%BB%E6%AD%A2%E5%AE%83%E7%94%9F%E6%88%90%E6%B5%8B%E8%AF%95%E5%B7%A5%E5%85%B7%20%E8%BF%99%E5%9C%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AD%98%E5%9C%A8%EF%BC%8C%E6%9E%84%E5%BB%BA%E7%AE%A1%E7%90%86%E6%B5%8B%E8%AF%95%E8%BF%90%E8%A1%8C%E5%99%A8%E6%9C%AC%E8%BA%AB%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B%EF%BC%8C%E6%9C%89%E7%94%A8.%0Aharness%20%3D%20true%0A%23%20%E8%8B%A5%E8%AE%BE%E7%BD%AE%E4%BA%86%EF%BC%8C%E9%82%A3%20%E7%9B%AE%E6%A0%87%E4%BC%9A%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E4%B8%8E%60%5Bpackage%5D%60%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%90%8C%E7%9A%84%E7%89%88%E6%9C%AC%2C%20%E4%B9%9F%E8%AE%B8%E6%98%AF%EF%BC%8C%E7%BC%96%E8%AF%91%E4%B8%80%E4%B8%AA%E5%BA%93%202018%E5%B9%B4%E7%89%88%E6%9C%AC%E6%88%96%EF%BC%8C%E7%BC%96%E8%AF%91%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%9A%842015%E5%B9%B4%E7%89%88%E6%9C%AC.%20%E9%BB%98%E8%AE%A4%E6%83%85%E5%86%B5%E4%B8%8B%E6%89%80%E6%9C%89%E7%9B%AE%E6%A0%87%E9%83%BD%E4%BD%BF%E7%94%A8%60%5Bpackage%5D%60%E4%B8%AD%E6%8C%87%E5%AE%9A%E7%9A%84%E7%89%88%E6%9C%AC%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%AF%91%E3%80%82%0Aedition%20%3D%20'2015'%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s1-28",
       "sectionId": "s1",
       "title": "项目目录",
-      "kind": "code",
-      "lang": "bash",
-      "code": ".\n├── Cargo.lock\n├── Cargo.toml\n├── benches     # 基准目录\n│   └── large-input.rs\n├── examples    # 示例\n│   └── simple.rs\n├── src         # 源代码\n│   ├── bin\n│   │   └── another_executable.rs\n│   ├── lib.rs  # 默认库\n│   └── main.rs # 入口文件\n└── tests       # 集成测试\n    └── some-integration-tests.rs"
+      "body": "```bash\n.\n├── Cargo.lock\n├── Cargo.toml\n├── benches     # 基准目录\n│   └── large-input.rs\n├── examples    # 示例\n│   └── simple.rs\n├── src         # 源代码\n│   ├── bin\n│   │   └── another_executable.rs\n│   ├── lib.rs  # 默认库\n│   └── main.rs # 入口文件\n└── tests       # 集成测试\n    └── some-integration-tests.rs\n```"
     },
     {
       "id": "s1-29",
       "sectionId": "s1",
       "title": "%E9%85%8D%E7%BD%AE",
-      "kind": "code",
-      "lang": "toml",
-      "code": "%23%20%E6%AF%8F%E4%B8%AA%E6%BA%90%E9%83%BD%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A1%A8%E6%A0%BC%EF%BC%8C%E5%90%8D%E7%A7%B0%E5%8D%B3%E6%98%AF%E8%A1%A8%E5%90%8D%0A%5Bsource.the-source-name%5D%0A%0A%23%20%E5%91%BD%E4%BB%A4%20%60the-source-name%60%20%E4%BC%9A%E8%A2%AB%20%60another-source%60%E5%8F%96%E4%BB%A3%0Areplace-with%20%3D%20%22another-source%22%0A%0A%23%20%E6%9C%89%E5%87%A0%E7%A7%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E6%BA%90%E5%AE%9A%E4%B9%89(%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%9C%89%E6%89%80%E6%8F%8F%E8%BF%B0)%0Aregistry%20%3D%20%22https%3A%2F%2Fexample.com%2Fpath%2Fto%2Findex%22%0Alocal-registry%20%3D%20%22path%2Fto%2Fregistry%22%0Adirectory%20%3D%20%22path%2Fto%2Fvendor%22",
+      "body": "%60%60%60toml%0A%23%20%E6%AF%8F%E4%B8%AA%E6%BA%90%E9%83%BD%E6%9C%89%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A1%A8%E6%A0%BC%EF%BC%8C%E5%90%8D%E7%A7%B0%E5%8D%B3%E6%98%AF%E8%A1%A8%E5%90%8D%0A%5Bsource.the-source-name%5D%0A%0A%23%20%E5%91%BD%E4%BB%A4%20%60the-source-name%60%20%E4%BC%9A%E8%A2%AB%20%60another-source%60%E5%8F%96%E4%BB%A3%0Areplace-with%20%3D%20%22another-source%22%0A%0A%23%20%E6%9C%89%E5%87%A0%E7%A7%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E6%BA%90%E5%AE%9A%E4%B9%89(%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%9C%89%E6%89%80%E6%8F%8F%E8%BF%B0)%0Aregistry%20%3D%20%22https%3A%2F%2Fexample.com%2Fpath%2Fto%2Findex%22%0Alocal-registry%20%3D%20%22path%2Fto%2Fregistry%22%0Adirectory%20%3D%20%22path%2Fto%2Fvendor%22%0A%60%60%60%0A%0A%E6%9B%B4%E6%8D%A2%E6%BA%90%E7%9A%84%E9%85%8D%E7%BD%AE%E9%80%9A%E8%BF%87%E5%AE%8C%E6%88%90%20%60.cargo%2Fconfig%60%EF%BC%8C%E4%B8%8A%E9%9D%A2%E6%98%AF%E5%85%A8%E5%A5%97%E5%8F%AF%E7%94%A8%E5%AD%97%E6%AE%B5",
       "encoded": true
-    },
-    {
-      "id": "s1-30",
-      "sectionId": "s1",
-      "title": "",
-      "kind": "text",
-      "body": "更换源的配置通过完成 `.cargo/config`，上面是全套可用字段"
     },
     {
       "id": "s2-31",
       "sectionId": "s2",
       "title": "init/new",
-      "kind": "text",
-      "body": "创建一个新的 `cargo` 包"
-    },
-    {
-      "id": "s2-32",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo init [options] [path]\n$ cargo new [options] [path]"
-    },
-    {
-      "id": "s2-33",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• `--bin` 创建具有二进制目标 (src/main.rs) 的包(默认行为)\n• `--lib` 使用库目标 (src/lib.rs) 创建一个包\n• `--edition edition` 指定要使用的 Rust 版本。默认值为 `2021`。可能的值：2015、2018、2021\n• `--name name` 设置包名。默认为目录名称\n• `--vcs vcs` 为给定的版本控制系统（git、hg、pijul 或fossil）初始化一个新的 VCS 存储库，或者根本不初始化任何版本控制（无）\n• `--registry registry` 限制仅发布到该注册表"
-    },
-    {
-      "id": "s2-34",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo new foo"
+      "body": "创建一个新的 `cargo` 包\n\n```bash\n$ cargo init [options] [path]\n$ cargo new [options] [path]\n```\n\n• `--bin` 创建具有二进制目标 (src/main.rs) 的包(默认行为)\n• `--lib` 使用库目标 (src/lib.rs) 创建一个包\n• `--edition edition` 指定要使用的 Rust 版本。默认值为 `2021`。可能的值：2015、2018、2021\n• `--name name` 设置包名。默认为目录名称\n• `--vcs vcs` 为给定的版本控制系统（git、hg、pijul 或fossil）初始化一个新的 VCS 存储库，或者根本不初始化任何版本控制（无）\n• `--registry registry` 限制仅发布到该注册表\n\n```bash\n$ cargo new foo\n```"
     },
     {
       "id": "s2-35",
       "sectionId": "s2",
       "title": "安装包",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 从 crates.io 安装或升级软件包：\n$ cargo install ripgrep\n# 在当前目录安装或重新安装包：\n$ cargo install --path .\n# 查看已安装包的列表：\n$ cargo install --list"
-    },
-    {
-      "id": "s2-36",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• `--vers version`\n• `--version version` 指定要安装的版本\n• `--git url` 用于安装指定 crate 的 Git URL\n• `--branch branch` 从 git 安装时要使用的分支\n• `--tag tag` 从 git 安装时使用的标记\n• `--rev sha` 从 git 安装时使用的特定提交\n• `--path path` 要安装的本地 crate 的文件系统路径\n• `--list` 列出所有已安装的软件包及其版本\n• `-f`, `--force` 强制覆盖现有的 crate 或二进制文件"
+      "body": "```bash\n# 从 crates.io 安装或升级软件包：\n$ cargo install ripgrep\n# 在当前目录安装或重新安装包：\n$ cargo install --path .\n# 查看已安装包的列表：\n$ cargo install --list\n```\n\n• `--vers version`\n• `--version version` 指定要安装的版本\n• `--git url` 用于安装指定 crate 的 Git URL\n• `--branch branch` 从 git 安装时要使用的分支\n• `--tag tag` 从 git 安装时使用的标记\n• `--rev sha` 从 git 安装时使用的特定提交\n• `--path path` 要安装的本地 crate 的文件系统路径\n• `--list` 列出所有已安装的软件包及其版本\n• `-f`, `--force` 强制覆盖现有的 crate 或二进制文件"
     },
     {
       "id": "s2-37",
       "sectionId": "s2",
       "title": "搜索包",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo search [options] [query...]"
-    },
-    {
-      "id": "s2-38",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• `--limit limit` 限制结果数量(默认值：10，最大值：100)\n• `--index index` 要使用的注册表索引的 URL\n• `--registry registry` 要使用的注册表的名称"
-    },
-    {
-      "id": "s2-39",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo search serde"
+      "body": "```bash\n$ cargo search [options] [query...]\n```\n\n• `--limit limit` 限制结果数量(默认值：10，最大值：100)\n• `--index index` 要使用的注册表索引的 URL\n• `--registry registry` 要使用的注册表的名称\n\n```bash\n$ cargo search serde\n```"
     },
     {
       "id": "s2-40",
       "sectionId": "s2",
       "title": "卸载包",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo uninstall [options] [spec...]"
-    },
-    {
-      "id": "s2-41",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "text",
-      "body": "• `-p`, `--package spec...` 要卸载的软件包\n• `--bin name...` 仅卸载二进制名称\n• `--root dir` 从中卸载软件包的目录"
-    },
-    {
-      "id": "s2-42",
-      "sectionId": "s2",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo uninstall ripgrep"
+      "body": "```bash\n$ cargo uninstall [options] [spec...]\n```\n\n• `-p`, `--package spec...` 要卸载的软件包\n• `--bin name...` 仅卸载二进制名称\n• `--root dir` 从中卸载软件包的目录\n\n```bash\n$ cargo uninstall ripgrep\n```"
     },
     {
       "id": "s3-43",
       "sectionId": "s3",
       "title": "登录",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo login [options] [token]"
-    },
-    {
-      "id": "s3-44",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": ":-|:-\n:-|:-\n`--registry` | 要使用的注册表的名称"
-    },
-    {
-      "id": "s3-45",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": ":-|:-\n:-|:-\n`-v`, `--verbose` | 启用更加详细的输出\n`-q`, `--quiet` | 不输出Cargo的日志信息\n`--color when` | 输出内容的颜色 `auto`, `always`, `never`"
+      "body": "```bash\n$ cargo login [options] [token]\n```\n\n:-|:-\n:-|:-\n`--registry` | 要使用的注册表的名称\n\n:-|:-\n:-|:-\n`-v`, `--verbose` | 启用更加详细的输出\n`-q`, `--quiet` | 不输出Cargo的日志信息\n`--color when` | 输出内容的颜色 `auto`, `always`, `never`"
     },
     {
       "id": "s3-46",
       "sectionId": "s3",
       "title": "所有者",
-      "kind": "code",
-      "lang": "bash",
-      "code": "# 列出包的所有者：\n$ cargo owner --list foo\n# 邀请所有者加入包：\n$ cargo owner --add username foo\n# 从包中删除所有者：\n$ cargo owner --remove username foo"
-    },
-    {
-      "id": "s3-47",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": ":-|:-\n:-|:-\n`--token token` | 身份验证时使用的 API 令牌\n`--index index` | 要使用的注册表索引的 URL"
+      "body": "```bash\n# 列出包的所有者：\n$ cargo owner --list foo\n# 邀请所有者加入包：\n$ cargo owner --add username foo\n# 从包中删除所有者：\n$ cargo owner --remove username foo\n```\n\n:-|:-\n:-|:-\n`--token token` | 身份验证时使用的 API 令牌\n`--index index` | 要使用的注册表索引的 URL"
     },
     {
       "id": "s3-48",
       "sectionId": "s3",
       "title": "打包 & 发布公共选项",
-      "kind": "text",
-      "body": "选择包"
-    },
-    {
-      "id": "s3-49",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• `-p spec...`, `--package spec...` Package 指定包\n• `--workspace` Package 工作区中的全体成员\n• `--exclude SPEC...` 排除指定包"
-    },
-    {
-      "id": "s3-50",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "编译选项"
-    },
-    {
-      "id": "s3-51",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• `--target triple` 为指定架构执行 Package\n• `--target-dir directory` 用于存放生成的工件以及中间文件的目录"
-    },
-    {
-      "id": "s3-52",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "特性选择"
-    },
-    {
-      "id": "s3-53",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• `--features features` 传递以空格或者逗号分隔的列表，其中给出要启用的特性\n• `--all-features` 为给定的包启用全部可用特性\n• `--no-default-features` 不启用给定包的default特性"
-    },
-    {
-      "id": "s3-54",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "清单选项"
-    },
-    {
-      "id": "s3-55",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• `--manifest-path path` 用于指定 Cargo.toml 文件的路径\n• `--frozen`, `--locked` 这两个选项用于保证Cargo.lock文件是最新的\n• `--offline` 禁止Cargo访问网络"
-    },
-    {
-      "id": "s3-56",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "混杂选项"
-    },
-    {
-      "id": "s3-57",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• `-j N`, `--jobs N` 要并行运行的作业数量"
+      "body": "选择包\n\n• `-p spec...`, `--package spec...` Package 指定包\n• `--workspace` Package 工作区中的全体成员\n• `--exclude SPEC...` 排除指定包\n\n编译选项\n\n• `--target triple` 为指定架构执行 Package\n• `--target-dir directory` 用于存放生成的工件以及中间文件的目录\n\n特性选择\n\n• `--features features` 传递以空格或者逗号分隔的列表，其中给出要启用的特性\n• `--all-features` 为给定的包启用全部可用特性\n• `--no-default-features` 不启用给定包的default特性\n\n清单选项\n\n• `--manifest-path path` 用于指定 Cargo.toml 文件的路径\n• `--frozen`, `--locked` 这两个选项用于保证Cargo.lock文件是最新的\n• `--offline` 禁止Cargo访问网络\n\n混杂选项\n\n• `-j N`, `--jobs N` 要并行运行的作业数量"
     },
     {
       "id": "s3-58",
       "sectionId": "s3",
       "title": "打包",
-      "kind": "text",
-      "body": "将本地包打包为可分发的压缩文件"
-    },
-    {
-      "id": "s3-59",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo package [options]"
-    },
-    {
-      "id": "s3-60",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• `-l`, `--list` 输出包中包含的文件(不实际进行打包)。\n• `--no-verify` 构建包时不进行校验。\n• `--no-metadata` 忽略 缺少可读的元信息(如描述信息或采用的授权协议) 时产生的警告。\n• `--allow-dirty` 允许打包 在版本控制系统中仍有未提交内容 的包。"
+      "body": "将本地包打包为可分发的压缩文件\n\n```bash\n$ cargo package [options]\n```\n\n• `-l`, `--list` 输出包中包含的文件(不实际进行打包)。\n• `--no-verify` 构建包时不进行校验。\n• `--no-metadata` 忽略 缺少可读的元信息(如描述信息或采用的授权协议) 时产生的警告。\n• `--allow-dirty` 允许打包 在版本控制系统中仍有未提交内容 的包。"
     },
     {
       "id": "s3-61",
       "sectionId": "s3",
       "title": "发布",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo publish [options]"
-    },
-    {
-      "id": "s3-62",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "发布选项"
-    },
-    {
-      "id": "s3-63",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• `--dry-run` 在不上传的情况下执行所有检查\n• `--token token` 身份验证时使用的 API 令牌\n• `--no-verify` 不要通过构建内容来验证内容\n• `--allow-dirty` 允许打包具有未提交的 VCS 更改的工作目录\n• `--index index` 要使用的注册表索引的 URL\n• `--registry registry` 要发布到的注册表的名称"
-    },
-    {
-      "id": "s3-64",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "打包选择"
-    },
-    {
-      "id": "s3-65",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• `-p spec`, `--package spec` 要发布的包"
+      "body": "```bash\n$ cargo publish [options]\n```\n\n发布选项\n\n• `--dry-run` 在不上传的情况下执行所有检查\n• `--token token` 身份验证时使用的 API 令牌\n• `--no-verify` 不要通过构建内容来验证内容\n• `--allow-dirty` 允许打包具有未提交的 VCS 更改的工作目录\n• `--index index` 要使用的注册表索引的 URL\n• `--registry registry` 要发布到的注册表的名称\n\n打包选择\n\n• `-p spec`, `--package spec` 要发布的包"
     },
     {
       "id": "s3-66",
       "sectionId": "s3",
       "title": "yank",
-      "kind": "text",
-      "body": "从服务器的索引中删除以前发布的 crate 版本"
-    },
-    {
-      "id": "s3-67",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ cargo yank --vers 1.0.7 foo"
-    },
-    {
-      "id": "s3-68",
-      "sectionId": "s3",
-      "title": "",
-      "kind": "text",
-      "body": "• `--vers version` 要 yank 或 un-yank 的版本\n• `--undo` 撤消 yank，将版本放回索引中\n• `--token token` 身份验证时使用的 API 令牌\n• `--index index` 要使用的注册表索引的 URL\n• `--registry registry` 要使用的注册表名称"
+      "body": "从服务器的索引中删除以前发布的 crate 版本\n\n```bash\n$ cargo yank --vers 1.0.7 foo\n```\n\n• `--vers version` 要 yank 或 un-yank 的版本\n• `--undo` 撤消 yank，将版本放回索引中\n• `--token token` 身份验证时使用的 API 令牌\n• `--index index` 要使用的注册表索引的 URL\n• `--registry registry` 要使用的注册表名称"
     },
     {
       "id": "s4-69",
       "sectionId": "s4",
       "title": "另见",
-      "kind": "text",
       "body": "• [The Cargo Book](https://doc.rust-lang.org/stable/cargo/) _(doc.rust-lang.org)_\n• [Cargo 手册 中文版](https://www.rustwiki.org.cn/zh-CN/cargo/index.html) _(rustwiki.org.cn)_"
     }
   ],
