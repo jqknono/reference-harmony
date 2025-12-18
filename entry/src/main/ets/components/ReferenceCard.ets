@@ -1,6 +1,7 @@
 import type { ReferenceCardData, ReferenceLang } from '../common/referenceModels';
 import type { AppThemeTokens } from '../common/appTheme';
 import { MarkdownView } from './MarkdownView';
+import { decodeIfEncoded } from '../common/encodedContent';
 
 @Component
 export struct ReferenceCard {
@@ -8,26 +9,43 @@ export struct ReferenceCard {
   @Prop lang: ReferenceLang;
   @Prop theme: AppThemeTokens;
 
-  @State private showBack: boolean = false;
-
   @Builder
   private Body(): void {
     if (this.card.kind === 'qa') {
-      MarkdownView({
-        markdown: this.showBack ? (this.card.back ?? '') : (this.card.front ?? ''),
-        fontSize: 15,
-        fontColor: this.showBack ? this.theme.qaBackTextColor : this.theme.qaFrontTextColor,
-        theme: this.theme,
-      });
+      Column({ space: 8 }) {
+        if (decodeIfEncoded(this.card.front, this.card.encoded).trim()) {
+          MarkdownView({
+            markdown: decodeIfEncoded(this.card.front, this.card.encoded),
+            inlineOnly: true,
+            fontSize: 15,
+            fontColor: this.theme.qaFrontTextColor,
+            fontWeight: FontWeight.Medium,
+            theme: this.theme,
+          });
+        }
+        if (decodeIfEncoded(this.card.back, this.card.encoded).trim()) {
+          MarkdownView({
+            markdown: decodeIfEncoded(this.card.back, this.card.encoded),
+            fontSize: 15,
+            fontColor: this.theme.qaBackTextColor,
+            theme: this.theme,
+          });
+        }
+      }
     } else if (this.card.kind === 'code') {
-      Text(this.card.code ?? '')
+      Text(decodeIfEncoded(this.card.code, this.card.encoded))
         .fontFamily('monospace')
         .fontSize(13)
         .fontColor(this.theme.markdown.codeTextColor)
         .maxLines(999)
         .textOverflow({ overflow: TextOverflow.Clip });
     } else {
-      MarkdownView({ markdown: this.card.body ?? '', fontSize: 15, fontColor: this.theme.textColor, theme: this.theme });
+      MarkdownView({
+        markdown: decodeIfEncoded(this.card.body, this.card.encoded),
+        fontSize: 15,
+        fontColor: this.theme.textColor,
+        theme: this.theme,
+      });
     }
   }
 
@@ -35,7 +53,7 @@ export struct ReferenceCard {
     Column({ space: 8 }) {
       Row() {
         MarkdownView({
-          markdown: this.card.title,
+          markdown: decodeIfEncoded(this.card.title, this.card.encoded),
           inlineOnly: true,
           fontSize: 16,
           fontColor: this.theme.titleColor,
@@ -43,12 +61,6 @@ export struct ReferenceCard {
           theme: this.theme,
         })
           .layoutWeight(1);
-
-        if (this.card.kind === 'qa') {
-          Text(this.showBack ? (this.lang === 'en' ? 'Back' : '背面') : (this.lang === 'en' ? 'Front' : '正面'))
-            .fontSize(12)
-            .fontColor(this.theme.mutedTextColor);
-        }
       }
 
       this.Body()
@@ -56,12 +68,6 @@ export struct ReferenceCard {
     .padding(14)
     .backgroundColor(this.theme.surfaceBackgroundColor)
     .borderRadius(14)
-    .shadow({ radius: 8, color: this.theme.shadowColor, offsetX: 0, offsetY: 2 })
-    .onClick(() => {
-      if (this.card.kind !== 'qa') {
-        return;
-      }
-      this.showBack = !this.showBack;
-    });
+    .shadow({ radius: 8, color: this.theme.shadowColor, offsetX: 0, offsetY: 2 });
   }
 }

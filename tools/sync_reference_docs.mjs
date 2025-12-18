@@ -92,6 +92,12 @@ function isFenceClose(line, marker) {
   return line.trim() === marker;
 }
 
+function isHorizontalRuleLine(line) {
+  const t = (line ?? '').trim();
+  if (!t) return false;
+  return /^(-{3,}|\*{3,}|_{3,})$/.test(t);
+}
+
 function isSetextUnderline(line, ch) {
   const t = line.trim();
   if (!t) return false;
@@ -265,10 +271,80 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
   let currentSectionId = 'intro';
   let currentSectionTitle = introTitle;
   let lastH3 = '';
+  let lastH4 = '';
+  let h3TitleUsed = false;
+  let h4TitleUsed = false;
   let consumedDocHeading = false;
 
+  const resetHeadingState = () => {
+    lastH3 = '';
+    lastH4 = '';
+    h3TitleUsed = false;
+    h4TitleUsed = false;
+  };
+
+  const setH3 = (titleText) => {
+    lastH3 = titleText;
+    lastH4 = '';
+    h3TitleUsed = false;
+    h4TitleUsed = false;
+  };
+
+  const setH4 = (titleText) => {
+    lastH4 = titleText;
+    h4TitleUsed = false;
+  };
+
+  const nextCardTitle = () => {
+    if (currentSectionId === 'intro') return currentSectionTitle;
+    if (lastH4 && lastH3 && !h3TitleUsed) {
+      h3TitleUsed = true;
+      h4TitleUsed = true;
+      return `${lastH3} - ${lastH4}`;
+    }
+    if (lastH4) {
+      if (!h4TitleUsed) {
+        h4TitleUsed = true;
+        return lastH4;
+      }
+      return '';
+    }
+    if (lastH3) {
+      if (!h3TitleUsed) {
+        h3TitleUsed = true;
+        return lastH3;
+      }
+      return '';
+    }
+    return currentSectionTitle;
+  };
+
   const pushCard = (card) => {
-    cards.push(card);
+    const allText = [
+      card.title ?? '',
+      card.body ?? '',
+      card.front ?? '',
+      card.back ?? '',
+      card.code ?? '',
+    ]
+      .join('\n');
+
+    const needsEncoding = allText.includes('"');
+    if (!needsEncoding) {
+      cards.push(card);
+      return;
+    }
+
+    const encodeIfText = (s) => (typeof s === 'string' ? encodeURIComponent(s) : s);
+    cards.push({
+      ...card,
+      encoded: true,
+      title: encodeIfText(card.title),
+      body: encodeIfText(card.body),
+      front: encodeIfText(card.front),
+      back: encodeIfText(card.back),
+      code: encodeIfText(card.code),
+    });
   };
 
   const intro = (frontmatter.intro ?? '').trim();
@@ -276,7 +352,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     pushCard({
       id: `${currentSectionId}-${cards.length}`,
       sectionId: currentSectionId,
-      title: currentSectionTitle,
+      title: nextCardTitle(),
       kind: 'text',
       body: intro,
     });
@@ -295,17 +371,18 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     if (debug && i % 20 === 0) console.log(`... at ${lang}/${id} i=${i} ${line.trim().slice(0, 60)}`);
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue; // e.g. "{.shortcuts}"
     if (/^\s*<!--/.test(line)) continue;
+    if (isHorizontalRuleLine(line)) continue;
 
     const setext = getSetextHeading(lines, i);
     if (setext) {
       if (setext.level === 1) {
         consumedDocHeading = true;
-        lastH3 = '';
+        resetHeadingState();
       } else {
         currentSectionTitle = cleanHeadingText(setext.text);
         currentSectionId = `s${sections.length}`;
         sections.push({ id: currentSectionId, title: currentSectionTitle, startIndex: cards.length });
-        lastH3 = '';
+        resetHeadingState();
       }
       i++; // skip underline
       continue;
@@ -316,14 +393,14 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       const hText = cleanHeadingText(h1[1].trim());
       if (!consumedDocHeading) {
         consumedDocHeading = true;
-        lastH3 = '';
+        resetHeadingState();
         continue;
       }
       // Some docs contain extra "# ..." headings for in-page anchors; treat them as section titles.
       currentSectionTitle = hText;
       currentSectionId = `s${sections.length}`;
       sections.push({ id: currentSectionId, title: currentSectionTitle, startIndex: cards.length });
-      lastH3 = '';
+      resetHeadingState();
       continue;
     }
 
@@ -332,68 +409,91 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       currentSectionTitle = cleanHeadingText(h2[1].trim());
       currentSectionId = `s${sections.length}`;
       sections.push({ id: currentSectionId, title: currentSectionTitle, startIndex: cards.length });
-      lastH3 = '';
+      resetHeadingState();
       continue;
     }
 
     const h3 = /^###\s+(.+)$/.exec(line);
     if (h3) {
-      lastH3 = cleanHeadingText(h3[1].trim());
+      setH3(cleanHeadingText(h3[1].trim()));
+      continue;
+    }
+
+    const h4 = /^####\s+(.+)$/.exec(line);
+    if (h4) {
+      setH4(cleanHeadingText(h4[1].trim()));
       continue;
     }
 
     const fence = parseFenceOpen(line);
     if (fence) {
-      const codeLang = fence.lang;
-      const buf = [];
-      i++;
-      let fenceLines = 0;
-      while (i < lines.length && !isFenceClose(lines[i], fence.marker)) {
-        buf.push(lines[i]);
-        i++;
-        fenceLines++;
-        if (debug && fenceLines % 5000 === 0) console.log(`... fence ${lang}/${id} lines=${fenceLines}`);
+      const codeParts = [];
+      let codeLang = fence.lang;
+
+      const skipBetweenFences = (l) =>
+        !l.trim() || /^\s*\{[.#][^}]+\}\s*$/.test(l) || /^\s*<!--/.test(l) || isHorizontalRuleLine(l);
+
+      while (i < lines.length) {
+        const openFence = parseFenceOpen(lines[i]);
+        if (!openFence) break;
+        codeLang = codeLang || openFence.lang;
+        const buf = [];
+        i++; // move into fence body
+        let fenceLines = 0;
+        while (i < lines.length && !isFenceClose(lines[i], openFence.marker)) {
+          buf.push(lines[i]);
+          i++;
+          fenceLines++;
+          if (debug && fenceLines % 5000 === 0) console.log(`... fence ${lang}/${id} lines=${fenceLines}`);
+        }
+        const code = buf.join('\n').trimEnd();
+        if (code) codeParts.push(code);
+
+        let j = i + 1;
+        while (j < lines.length && skipBetweenFences(lines[j])) j++;
+        const nextFence = j < lines.length ? parseFenceOpen(lines[j]) : undefined;
+        if (!nextFence) break;
+
+        i = j;
       }
-      const code = buf.join('\n').trimEnd();
-      if (code) {
+
+      const mergedCode = codeParts.join('\n\n').trimEnd();
+      if (mergedCode) {
         pushCard({
           id: `${currentSectionId}-${cards.length}`,
           sectionId: currentSectionId,
-          title: lastH3 || currentSectionTitle,
+          title: nextCardTitle(),
           kind: 'code',
           lang: codeLang,
-          code,
+          code: mergedCode,
         });
       }
       continue;
     }
 
-    // table
+    // table (keep as a single card; do not split into front/back)
     if (line.includes('|') && i + 1 < lines.length && isTableSeparatorLine(lines[i + 1])) {
+      const buf = [line.trimEnd(), lines[i + 1].trimEnd()];
       i += 2;
       let rows = 0;
       while (i < lines.length && lines[i].trim() && lines[i].includes('|')) {
-        const cols = splitTableRow(lines[i]);
-        if (cols.length >= 2) {
-          const key = cols[0];
-          const value = cols.slice(1).join(' | ').trim();
-          if (key && value) {
-            pushCard({
-              id: `${currentSectionId}-${cards.length}`,
-              sectionId: currentSectionId,
-              title: lastH3 || currentSectionTitle,
-              kind: 'qa',
-              front: key,
-              back: value,
-            });
-          }
-        }
+        buf.push(lines[i].trimEnd());
         i++;
         rows++;
         if (debug && rows % 5000 === 0) console.log(`... table ${lang}/${id} rows=${rows}`);
       }
       if (debug) console.log(`table: ${lang}/${id} rows=${rows}`);
       i--;
+      const body = buf.join('\n').trimEnd();
+      if (body) {
+        pushCard({
+          id: `${currentSectionId}-${cards.length}`,
+          sectionId: currentSectionId,
+          title: nextCardTitle(),
+          kind: 'text',
+          body,
+        });
+      }
       continue;
     }
 
@@ -413,7 +513,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
         pushCard({
           id: `${currentSectionId}-${cards.length}`,
           sectionId: currentSectionId,
-          title: lastH3 || currentSectionTitle,
+          title: nextCardTitle(),
           kind: 'text',
           body: text,
         });
@@ -431,6 +531,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
         if (/^#{1,6}\s+/.test(lines[i])) break;
         if (isListItem(lines[i])) break;
         if (parseFenceOpen(lines[i])) break;
+        if (isHorizontalRuleLine(lines[i])) break;
         if (!/^\s*\{[.#][^}]+\}\s*$/.test(lines[i])) buf.push(lines[i].trim());
         i++;
         paraLines++;
@@ -442,7 +543,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
         pushCard({
           id: `${currentSectionId}-${cards.length}`,
           sectionId: currentSectionId,
-          title: lastH3 || currentSectionTitle,
+          title: nextCardTitle(),
           kind: 'text',
           body: text,
         });

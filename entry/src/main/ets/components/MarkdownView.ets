@@ -378,7 +378,7 @@ export struct MarkdownView {
   @Prop fontSize: number = 15;
   @Prop fontColor: number = 0x222222;
   @Prop fontWeight: FontWeight = FontWeight.Normal;
-  @Prop theme: AppThemeTokens = getAppThemeTokens('reference');
+  @Prop theme: AppThemeTokens = getAppThemeTokens('light');
 
   private mdHeadingColor(): number {
     return this.theme.markdown.headingColor;

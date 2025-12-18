@@ -1,4 +1,4 @@
-export type AppThemeId = 'reference' | 'coo';
+export type AppThemeId = 'dark' | 'light';
 
 export interface MarkdownThemeTokens {
   headingColor: number;
@@ -41,8 +41,8 @@ export interface AppThemeTokens {
   markdown: MarkdownThemeTokens;
 }
 
-const REFERENCE_THEME: AppThemeTokens = {
-  id: 'reference',
+const LIGHT_THEME: AppThemeTokens = {
+  id: 'light',
 
   pageBackgroundColor: 0xf1f5f9,
   surfaceBackgroundColor: 0xffffff,
@@ -80,47 +80,46 @@ const REFERENCE_THEME: AppThemeTokens = {
   },
 };
 
-const COO_THEME: AppThemeTokens = {
-  id: 'coo',
+const DARK_THEME: AppThemeTokens = {
+  id: 'dark',
 
-  pageBackgroundColor: 0xf1f5f9,
-  surfaceBackgroundColor: 0xffffff,
-  surfaceMutedBackgroundColor: 0xf8fafc,
-  borderColor: 0xe2e8f0,
-  shadowColor: 0x14000000,
+  pageBackgroundColor: 0x0b1220,
+  surfaceBackgroundColor: 0x111827,
+  surfaceMutedBackgroundColor: 0x0f172a,
+  borderColor: 0x1f2937,
+  shadowColor: 0x40000000,
 
-  titleColor: 0x0f172a,
-  textColor: 0x334155,
-  mutedTextColor: 0x64748b,
-  dangerTextColor: 0xb91c1c,
+  titleColor: 0xe5e7eb,
+  textColor: 0xd1d5db,
+  mutedTextColor: 0x9ca3af,
+  dangerTextColor: 0xfca5a5,
 
-  accentColor: 0x6366f1,
-  accentTextOnColor: 0xffffff,
+  accentColor: 0x60a5fa,
+  accentTextOnColor: 0x0b1220,
 
-  chipBackgroundColor: 0xe2e8f0,
-  chipTextColor: 0x0f172a,
-  chipSelectedBackgroundColor: 0x6366f1,
+  chipBackgroundColor: 0x111827,
+  chipTextColor: 0xe5e7eb,
+  chipSelectedBackgroundColor: 0x2563eb,
   chipSelectedTextColor: 0xffffff,
 
-  avatarBackgroundColor: 0xe2e8f0,
-  avatarTextColor: 0x334155,
+  avatarBackgroundColor: 0x111827,
+  avatarTextColor: 0x9ca3af,
 
-  qaFrontTextColor: 0x334155,
-  qaBackTextColor: 0x0f172a,
+  qaFrontTextColor: 0xe5e7eb,
+  qaBackTextColor: 0xd1d5db,
 
   markdown: {
-    headingColor: 0x0f172a,
-    linkColor: 0x4f46e5,
-    codeTextColor: 0x334155,
-    codeBackgroundColor: 0xf8fafc,
-    tableHeaderBackgroundColor: 0xf8fafc,
-    tableCellBackgroundColor: 0xffffff,
-    tableBorderColor: 0xe2e8f0,
+    headingColor: 0xe5e7eb,
+    linkColor: 0x60a5fa,
+    codeTextColor: 0xe5e7eb,
+    codeBackgroundColor: 0x0f172a,
+    tableHeaderBackgroundColor: 0x0f172a,
+    tableCellBackgroundColor: 0x111827,
+    tableBorderColor: 0x1f2937,
   },
 };
 
 export function getAppThemeTokens(themeId: AppThemeId): AppThemeTokens {
-  if (themeId === 'coo') return COO_THEME;
-  return REFERENCE_THEME;
+  if (themeId === 'dark') return DARK_THEME;
+  return LIGHT_THEME;
 }
-

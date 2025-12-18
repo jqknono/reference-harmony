@@ -6,6 +6,7 @@ export interface ReferenceCardData {
   sectionId: string;
   title: string;
   kind: ReferenceCardKind;
+  encoded?: boolean;
   front?: string;
   back?: string;
   body?: string;

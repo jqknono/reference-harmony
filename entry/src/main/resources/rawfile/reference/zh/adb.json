@@ -17,7 +17,7 @@
     {
       "id": "s2",
       "title": "常见的 ADB 命令",
-      "startIndex": 27
+      "startIndex": 20
     }
   ],
   "cards": [
@@ -38,185 +38,137 @@
     {
       "id": "s1-2",
       "sectionId": "s1",
-      "title": "设备基础",
-      "kind": "text",
-      "body": "---"
-    },
-    {
-      "id": "s1-3",
-      "sectionId": "s1",
-      "title": "设备基础",
+      "title": "",
       "kind": "text",
       "body": "• `wait-for-device` 可以在 `adb` 之后指定，以确保该命令在设备连接后运行\n• `-s` 可用于在多个连接时将命令发送到特定设备"
     },
     {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "示例",
+      "kind": "code",
+      "lang": "bash",
+      "code": "$ adb wait-for-device devices\n List of devices attached\n somedevice-1234 device\n someotherdevice-1234 device\n\n$ adb -s somedevice-1234 root"
+    },
+    {
       "id": "s1-4",
-      "sectionId": "s1",
-      "title": "设备基础",
-      "kind": "text",
-      "body": "#### 示例"
-    },
-    {
-      "id": "s1-5",
-      "sectionId": "s1",
-      "title": "设备基础",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ adb wait-for-device devices\n List of devices attached\n somedevice-1234 device\n someotherdevice-1234 device"
-    },
-    {
-      "id": "s1-6",
-      "sectionId": "s1",
-      "title": "设备基础",
-      "kind": "code",
-      "lang": "bash",
-      "code": "$ adb -s somedevice-1234 root"
-    },
-    {
-      "id": "s1-7",
       "sectionId": "s1",
       "title": "Logcat",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`adb logcat`                         | 将日志消息打印到标准输出\n`adb logcat -g`                      | 显示当前日志缓冲区大小\n`adb logcat -G <size>`               | 设置缓冲区大小（K 或 M）\n`adb logcat -c`                      | 清除日志缓冲区\n`adb logcat *:V`                     | 启用所有日志消息（详细）\n`adb logcat -f <filename>`           | 将日志转储到指定文件\n<!--rehype:className=left-align code-nowrap-->"
     },
     {
-      "id": "s1-8",
+      "id": "s1-5",
       "sectionId": "s1",
-      "title": "Logcat",
-      "kind": "text",
-      "body": "#### 示例"
-    },
-    {
-      "id": "s1-9",
-      "sectionId": "s1",
-      "title": "Logcat",
+      "title": "示例",
       "kind": "code",
       "lang": "bash",
       "code": "$ adb logcat -G 16M\n$ adb logcat *:V > output.log"
     },
     {
-      "id": "s1-10",
+      "id": "s1-6",
       "sectionId": "s1",
-      "title": "Logcat",
-      "kind": "text",
-      "body": "#### 过滤日志输出"
-    },
-    {
-      "id": "s1-11",
-      "sectionId": "s1",
-      "title": "Logcat",
+      "title": "过滤日志输出",
       "kind": "text",
       "body": "• `V` 最详细的信息(最低优先级)\n• `D` 调试信息\n• `I` 普通信息\n• `W` 警告信息\n• `E` 错误信息\n• `F` 致命错误信息\n• `S` 静默(最高优先级)"
     },
     {
-      "id": "s1-12",
+      "id": "s1-7",
       "sectionId": "s1",
-      "title": "Logcat",
+      "title": "",
       "kind": "text",
       "body": "例如，要显示优先级不低于 `警告` 的所有标记的所有日志消息，可以使用以下命令："
     },
     {
-      "id": "s1-13",
+      "id": "s1-8",
       "sectionId": "s1",
-      "title": "Logcat",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ adb logcat *:W"
     },
     {
-      "id": "s1-14",
+      "id": "s1-9",
       "sectionId": "s1",
       "title": "文件管理",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`adb push <local> <remote>` | 将本地文件复制到远程设备\n`adb pull <remote> <local>` | 将远程设备文件复制到本地\n<!--rehype:className=left-align code-nowrap-->"
     },
     {
-      "id": "s1-15",
+      "id": "s1-10",
       "sectionId": "s1",
-      "title": "文件管理",
-      "kind": "text",
-      "body": "#### 示例"
-    },
-    {
-      "id": "s1-16",
-      "sectionId": "s1",
-      "title": "文件管理",
+      "title": "%E7%A4%BA%E4%BE%8B",
       "kind": "code",
       "lang": "bash",
-      "code": "$ echo \"This is a test\" > test.txt\n$ adb push  test.txt /sdcard/test.txt\n$ adb pull /sdcard/test.txt pulledTest.txt"
+      "code": "%24%20echo%20%22This%20is%20a%20test%22%20%3E%20test.txt%0A%24%20adb%20push%20%20test.txt%20%2Fsdcard%2Ftest.txt%0A%24%20adb%20pull%20%2Fsdcard%2Ftest.txt%20pulledTest.txt",
+      "encoded": true
     },
     {
-      "id": "s1-17",
+      "id": "s1-11",
       "sectionId": "s1",
       "title": "远程 Shell",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`adb shell <command>`                  | 在设备上运行指定的命令（大多数 Unix 命令在这里工作）\n`adb shell wm size`                    | 显示当前屏幕分辨率\n`adb shell wm size WxH`                | 将分辨率设置为 WxH\n`adb shell pm list packages`           | 列出所有已安装的应用包\n`adb shell pm list packages -3`        | 列出所有已安装的第三方的应用包\n`adb shell monkey -p app.package.name <count>` | 启动指定包名的应用程序, 并执行测试\n<!--rehype:className=style-list-arrow-->"
     },
     {
-      "id": "s1-18",
+      "id": "s1-12",
       "sectionId": "s1",
       "title": "包安装",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`adb install <apk>`          | 安装应用程序\n`adb install <path>`         | 从手机路径安装应用\n`adb install -r <path>`      | 从手机路径安装应用（允许覆盖安装）\n`adb uninstall <name>`       | 卸载应用程序\n<!--rehype:className=left-align code-nowrap-->"
     },
     {
-      "id": "s1-19",
+      "id": "s1-13",
       "sectionId": "s1",
       "title": "Paths",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`/data/data/<package>/databases` | 应用程序数据库\n`/data/data/<package>/shared_prefs/` | 共享偏好设置\n`/data/app` | 用户安装的 APK\n`/system/app` | 系统预装的 APK 文件\n`/mnt/asec` | 加密的应用程序（App2SD）\n`/mnt/emmc` | 内部 SD 卡\n`/mnt/sdcard` | 外部/内部 SD 卡\n`/mnt/sdcard/external_sd` | 外置 SD 卡\n<!--rehype:className=style-list-arrow-->"
     },
     {
-      "id": "s1-20",
+      "id": "s1-14",
       "sectionId": "s1",
-      "title": "Paths",
-      "kind": "text",
-      "body": "---"
-    },
-    {
-      "id": "s1-21",
-      "sectionId": "s1",
-      "title": "Paths",
+      "title": "",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`adb shell ls` | 列出目录内容\n`adb shell ls -s` | 每个文件的打印尺寸\n`adb shell ls -R` | 递归列出子目录\n<!--rehype:className=left-align code-nowrap-->"
     },
     {
-      "id": "s1-22",
+      "id": "s1-15",
       "sectionId": "s1",
       "title": "手机信息",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`adb get-statе` | 打印设备状态\n`adb get-serialno` | 获取设备的序列号\n`adb shell dumpsys iphonesybinfo` | 获取设备的 IMEI 信息\n`adb shell netstat` | 列出设备上的所有 TCP 连接\n`adb shell pwd` | 打印当前工作目录\n`adb shell dumpsys battery` | 获取设备电池状态\n`adb shell pm list features` |列出设备支持的所有功能\n`adb shell service list` | 列出设备上运行的所有服务\n`adb shell dumpsys activity <package>/<activity>` | 获取指定包和活动的信息\n`adb shell ps` | 打印设备上所有运行的进程状态\n`adb shell wm size` | 显示当前设备的屏幕分辨率\n`dumpsys window windows` \\| `grep -E 'mCurrentFocus\\|mFocusedApp'` | 打印当前应用程序的打开活动的信息\n<!--rehype:className=style-list-arrow-->"
     },
     {
-      "id": "s1-23",
+      "id": "s1-16",
       "sectionId": "s1",
       "title": "包信息",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`adb shell pm list packages` | 列出包名称\n`adb shell pm list packages -f` | 列出包名 + apks 的路径\n`adb shell pm list packages -3` | 列出第三方包名称\n`adb shell pm list packages -s` | 仅列出系统包\n`adb shell pm list packages -u` | 列出出包和未安装包\n`adb shell pm list packages -i` | 列出包名称 + 安装来源\n`adb shell pm list packages -e` | 列出启用的包\n`adb shell pm list packages -d` | 列出禁用的包\n`adb shell dumpsys package packages` | 列出所有应用程序的信息\n`adb shell dumpsys package <name>` | 列出一个包的信息\n`adb shell pm path <package>` | 列出 APK 文件的路径\n<!--rehype:className=style-list-arrow-->"
     },
     {
-      "id": "s1-24",
+      "id": "s1-17",
       "sectionId": "s1",
-      "title": "设备相关命令",
+      "title": "%E8%AE%BE%E5%A4%87%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4",
       "kind": "text",
-      "body": ":-- | --\n:-- | --\n`adb reboot recovery` | 重启设备进入恢复模式\n`adb reboot fastboot` | 重启设备进入恢复模式\n`adb shell screencap -p \"/path/to/screenshot.png\"` | 截图\n`adb shell screenrecord \"/path/to/record.mp4\"` | 录制设备屏幕\n`adb backup -apk -all -f backup.ab` | 备份设置和应用程序\n`adb backup -apk -shared -all -f backup.ab` | 备份设置、应用程序和共享存储\n`adb backup -apk -nosystem -all -f backup.ab` | 仅备份非系统应用程序\n`adb restore backup.ab` | 恢复以前的备份\n`adb shell am start -a android.intent.action.VIEW -d URL` | 打开网址\n`adb shell am start -t image/* -a android.intent.action.VIEW` | 打开画廊\n<!--rehype:className=code-nowrap left-align-->"
+      "body": "%3A--%20%7C%20--%0A%3A--%20%7C%20--%0A%60adb%20reboot%20recovery%60%20%7C%20%E9%87%8D%E5%90%AF%E8%AE%BE%E5%A4%87%E8%BF%9B%E5%85%A5%E6%81%A2%E5%A4%8D%E6%A8%A1%E5%BC%8F%0A%60adb%20reboot%20fastboot%60%20%7C%20%E9%87%8D%E5%90%AF%E8%AE%BE%E5%A4%87%E8%BF%9B%E5%85%A5%E6%81%A2%E5%A4%8D%E6%A8%A1%E5%BC%8F%0A%60adb%20shell%20screencap%20-p%20%22%2Fpath%2Fto%2Fscreenshot.png%22%60%20%7C%20%E6%88%AA%E5%9B%BE%0A%60adb%20shell%20screenrecord%20%22%2Fpath%2Fto%2Frecord.mp4%22%60%20%7C%20%E5%BD%95%E5%88%B6%E8%AE%BE%E5%A4%87%E5%B1%8F%E5%B9%95%0A%60adb%20backup%20-apk%20-all%20-f%20backup.ab%60%20%7C%20%E5%A4%87%E4%BB%BD%E8%AE%BE%E7%BD%AE%E5%92%8C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%0A%60adb%20backup%20-apk%20-shared%20-all%20-f%20backup.ab%60%20%7C%20%E5%A4%87%E4%BB%BD%E8%AE%BE%E7%BD%AE%E3%80%81%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E5%92%8C%E5%85%B1%E4%BA%AB%E5%AD%98%E5%82%A8%0A%60adb%20backup%20-apk%20-nosystem%20-all%20-f%20backup.ab%60%20%7C%20%E4%BB%85%E5%A4%87%E4%BB%BD%E9%9D%9E%E7%B3%BB%E7%BB%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%0A%60adb%20restore%20backup.ab%60%20%7C%20%E6%81%A2%E5%A4%8D%E4%BB%A5%E5%89%8D%E7%9A%84%E5%A4%87%E4%BB%BD%0A%60adb%20shell%20am%20start%20-a%20android.intent.action.VIEW%20-d%20URL%60%20%7C%20%E6%89%93%E5%BC%80%E7%BD%91%E5%9D%80%0A%60adb%20shell%20am%20start%20-t%20image%2F*%20-a%20android.intent.action.VIEW%60%20%7C%20%E6%89%93%E5%BC%80%E7%94%BB%E5%BB%8A%0A%3C!--rehype%3AclassName%3Dcode-nowrap%20left-align--%3E",
+      "encoded": true
     },
     {
-      "id": "s1-25",
+      "id": "s1-18",
       "sectionId": "s1",
       "title": "权限",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`adb shell permissions groups` | 列出所有已定义的权限组\n`adb shell list permissions -g -r` | 列出了所有权限的详细信息\n<!--rehype:className=style-list-arrow-->"
     },
     {
-      "id": "s1-26",
+      "id": "s1-19",
       "sectionId": "s1",
       "title": "Logs",
       "kind": "text",
       "body": ":-- | --\n:-- | --\n`adb logcat [options] [filter] [filter]` | 查看设备日志\n`adb bugreport` | 打印错误报告\n<!--rehype:className=style-list-arrow-->"
     },
     {
-      "id": "s2-27",
+      "id": "s2-20",
       "sectionId": "s2",
       "title": "将文件推送到 Android 设备的下载文件夹",
       "kind": "code",
@@ -224,7 +176,7 @@
       "code": "$ adb push example.apk /sdcard/Download/"
     },
     {
-      "id": "s2-28",
+      "id": "s2-21",
       "sectionId": "s2",
       "title": "列出所有已安装的包并获取完整路径",
       "kind": "code",
@@ -232,7 +184,7 @@
       "code": "$ adb shell pm list packages -f"
     },
     {
-      "id": "s2-29",
+      "id": "s2-22",
       "sectionId": "s2",
       "title": "从安卓设备中提取文件",
       "kind": "code",
@@ -240,7 +192,7 @@
       "code": "$ adb pull /sdcard/Download/example.apk"
     },
     {
-      "id": "s2-30",
+      "id": "s2-23",
       "sectionId": "s2",
       "title": "从主机安装 APK 到 Android 设备",
       "kind": "code",
@@ -248,7 +200,7 @@
       "code": "$ adb install example.apk"
     },
     {
-      "id": "s2-31",
+      "id": "s2-24",
       "sectionId": "s2",
       "title": "从 Android 设备存储安装 APK",
       "kind": "code",
@@ -256,7 +208,7 @@
       "code": "$ adb install /sdcard/Download/example.apk"
     },
     {
-      "id": "s2-32",
+      "id": "s2-25",
       "sectionId": "s2",
       "title": "设置网络代理",
       "kind": "code",
@@ -264,7 +216,7 @@
       "code": "$ adb shell settings put global http_proxy <address>:<port>"
     },
     {
-      "id": "s2-33",
+      "id": "s2-26",
       "sectionId": "s2",
       "title": "禁用网络代理",
       "kind": "code",
@@ -272,7 +224,7 @@
       "code": "$ adb shell settings put global http_proxy :0"
     },
     {
-      "id": "s2-34",
+      "id": "s2-27",
       "sectionId": "s2",
       "title": "显示连接的设备并指定一个设备进行 Shell",
       "kind": "code",
@@ -280,14 +232,14 @@
       "code": "$ adb devices\n$ adb -s 7f1c864e shell"
     },
     {
-      "id": "s2-35",
+      "id": "s2-28",
       "sectionId": "s2",
-      "title": "显示连接的设备并指定一个设备进行 Shell",
+      "title": "",
       "kind": "text",
       "body": "`7f1c864e` 是设备 `ID`"
     },
     {
-      "id": "s2-36",
+      "id": "s2-29",
       "sectionId": "s2",
       "title": "通过 IP 地址连接到设备",
       "kind": "code",
@@ -295,97 +247,97 @@
       "code": "$ adb connect 192.168.56.101:5555"
     },
     {
-      "id": "s2-37",
+      "id": "s2-30",
       "sectionId": "s2",
       "title": "通过 Wi-Fi 连接 ADB",
       "kind": "text",
       "body": "我们可以通过 `Wi-Fi` 或专门使用 `tcp` 连接使用 `adb`。 要通过 `Wi-Fi` 使用 `adb`，首先通过 `USB` 连接手机并启用 `USB` 调试。然后列出所有设备："
     },
     {
-      "id": "s2-38",
+      "id": "s2-31",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ adb devices\n# 这应该给出这样的输出：\n# device_id    device"
     },
     {
-      "id": "s2-39",
+      "id": "s2-32",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "text",
       "body": "现在检查 `Android` 设备的 `IP`："
     },
     {
-      "id": "s2-40",
+      "id": "s2-33",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ adb shell ifconfig\n# 输出:\n\nwlan0  Link encap:UNSPEC    Driver icnss\n       inet addr:XXX.XXX.X.XX  Bcast:XXX.XXX.X.XXX"
     },
     {
-      "id": "s2-41",
+      "id": "s2-34",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "text",
       "body": "记下 `inet addr` 后的 `IP` 地址。稍后要用。现在在某个端口重新启动 `tcpip`："
     },
     {
-      "id": "s2-42",
+      "id": "s2-35",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ adb tcpip $port"
     },
     {
-      "id": "s2-43",
+      "id": "s2-36",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "text",
       "body": "例如 5555："
     },
     {
-      "id": "s2-44",
+      "id": "s2-37",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ adb tcpip 5555"
     },
     {
-      "id": "s2-45",
+      "id": "s2-38",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "text",
       "body": "您现在可以断开 USB 线缆使用。 若要连接到设备请键入以下命令："
     },
     {
-      "id": "s2-46",
+      "id": "s2-39",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ adb connect $ip:$port"
     },
     {
-      "id": "s2-47",
+      "id": "s2-40",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "text",
       "body": "例如:"
     },
     {
-      "id": "s2-48",
+      "id": "s2-41",
       "sectionId": "s2",
-      "title": "通过 Wi-Fi 连接 ADB",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ adb connect 192.168.1.4:5555"
     },
     {
-      "id": "s2-49",
+      "id": "s2-42",
       "sectionId": "s2",
       "title": "将计算机上的 APK 文件安装到设备",
       "kind": "code",
@@ -393,7 +345,7 @@
       "code": "$ adb install /Users/dev/projects/myapp.apk"
     },
     {
-      "id": "s2-50",
+      "id": "s2-43",
       "sectionId": "s2",
       "title": "查找应用的 APK 路径",
       "kind": "code",
@@ -401,14 +353,14 @@
       "code": "$ adb shell pm path com.example.myapp"
     },
     {
-      "id": "s2-51",
+      "id": "s2-44",
       "sectionId": "s2",
-      "title": "查找应用的 APK 路径",
+      "title": "",
       "kind": "text",
       "body": "将 `com.example.myapp` 替换为您自己的应用程序包名称"
     },
     {
-      "id": "s2-52",
+      "id": "s2-45",
       "sectionId": "s2",
       "title": "通过名称查找应用的包名",
       "kind": "code",
@@ -416,7 +368,7 @@
       "code": "$ adb shell pm list packages | grep app_name"
     },
     {
-      "id": "s2-53",
+      "id": "s2-46",
       "sectionId": "s2",
       "title": "从设备提取 APK 到您的计算机",
       "kind": "code",
@@ -424,7 +376,7 @@
       "code": "$ adb pull /data/app/com.example.myapp.apk ./"
     },
     {
-      "id": "s2-54",
+      "id": "s2-47",
       "sectionId": "s2",
       "title": "将文件从计算机复制到设备",
       "kind": "code",
@@ -432,7 +384,7 @@
       "code": "$ adb push path/to/local/file /sdcard/foo.txt"
     },
     {
-      "id": "s2-55",
+      "id": "s2-48",
       "sectionId": "s2",
       "title": "滚动屏幕",
       "kind": "code",
@@ -440,22 +392,23 @@
       "code": "$ adb shell input swipe 300 300 500 1000 # 上\n$ adb shell input swipe 500 1000 300 300 # 下"
     },
     {
-      "id": "s2-56",
+      "id": "s2-49",
       "sectionId": "s2",
       "title": "发文本",
       "kind": "text",
       "body": "使用虚拟键盘发送文本："
     },
     {
-      "id": "s2-57",
+      "id": "s2-50",
       "sectionId": "s2",
-      "title": "发文本",
+      "title": "",
       "kind": "code",
       "lang": "bash",
-      "code": "$ adb shell input text \"Hello World\""
+      "code": "%24%20adb%20shell%20input%20text%20%22Hello%20World%22",
+      "encoded": true
     },
     {
-      "id": "s2-58",
+      "id": "s2-51",
       "sectionId": "s2",
       "title": "发送按键事件",
       "kind": "code",
@@ -463,22 +416,22 @@
       "code": "$ adb shell input keyevent 66\n# 66 是回车键码"
     },
     {
-      "id": "s2-59",
+      "id": "s2-52",
       "sectionId": "s2",
       "title": "发送点击",
       "kind": "text",
       "body": "点击屏幕："
     },
     {
-      "id": "s2-60",
+      "id": "s2-53",
       "sectionId": "s2",
-      "title": "发送点击",
+      "title": "",
       "kind": "code",
       "lang": "bash",
       "code": "$ adb shell input tap x y"
     },
     {
-      "id": "s2-61",
+      "id": "s2-54",
       "sectionId": "s2",
       "title": "查看包的日志",
       "kind": "code",
@@ -486,9 +439,9 @@
       "code": "$ adb shell 'logcat --pid=$(pidof -s <package_name>)'"
     },
     {
-      "id": "s2-62",
+      "id": "s2-55",
       "sectionId": "s2",
-      "title": "查看包的日志",
+      "title": "",
       "kind": "text",
       "body": "查看特定包的日志"
     }
