@@ -1,5 +1,6 @@
 import { getAppThemeTokens } from '../common/appTheme';
 import type { AppThemeTokens } from '../common/appTheme';
+import { openExternalLink } from '../common/openExternalLink';
 
 type MarkdownInlineKind = 'text' | 'bold' | 'italic' | 'code' | 'link';
 
@@ -151,47 +152,101 @@ function getTokensTextLength(tokens: Array<MarkdownInlineToken>): number {
   return len;
 }
 
-function computeColumnWidths(header: Array<Array<MarkdownInlineToken>>, rows: Array<Array<Array<MarkdownInlineToken>>>): Array<number> {
+function estimateTextWidth(text: string, fontSize: number): number {
+  let width = 0;
+  const chars = Array.from(text ?? '');
+  for (let i = 0; i < chars.length; i++) {
+    const ch = chars[i];
+    if (ch === ' ') {
+      width += fontSize * 0.35;
+      continue;
+    }
+
+    const code = ch.codePointAt(0) ?? 0;
+    const isWide = (
+      (code >= 0x1100 && code <= 0x115F) ||
+      (code >= 0x2E80 && code <= 0xA4CF) ||
+      (code >= 0xAC00 && code <= 0xD7A3) ||
+      (code >= 0xF900 && code <= 0xFAFF) ||
+      (code >= 0xFE10 && code <= 0xFE6F) ||
+      (code >= 0xFF01 && code <= 0xFF60) ||
+      (code >= 0xFFE0 && code <= 0xFFE6)
+    );
+    if (isWide) {
+      width += fontSize * 1;
+      continue;
+    }
+
+    const isDigit = ch >= '0' && ch <= '9';
+    if (isDigit) {
+      width += fontSize * 0.6;
+      continue;
+    }
+
+    const isUpper = ch >= 'A' && ch <= 'Z';
+    if (isUpper) {
+      width += fontSize * 0.75;
+      continue;
+    }
+
+    const isLower = ch >= 'a' && ch <= 'z';
+    if (isLower) {
+      width += fontSize * 0.6;
+      continue;
+    }
+
+    width += fontSize * 0.45;
+  }
+  return width;
+}
+
+function estimateTokensWidth(tokens: Array<MarkdownInlineToken>, fontSize: number): number {
+  let width = 0;
+  for (let i = 0; i < tokens.length; i++) {
+    width += estimateTextWidth(tokens[i].text, fontSize);
+  }
+  return width;
+}
+
+function computeColumnWidths(
+  header: Array<Array<MarkdownInlineToken>>,
+  rows: Array<Array<Array<MarkdownInlineToken>>>,
+  fontSize: number,
+  maxColumnWidth: number,
+): Array<number> {
   const colCount = header.length > 0 ? header.length : (rows.length > 0 ? rows[0].length : 0);
-  const maxLengths: Array<number> = [];
+  const maxContentWidths: Array<number> = [];
   for (let c = 0; c < colCount; c++) {
-    maxLengths.push(0);
+    maxContentWidths.push(0);
   }
 
   for (let c = 0; c < header.length; c++) {
-    const len = getTokensTextLength(header[c]);
-    if (len > maxLengths[c]) {
-      maxLengths[c] = len;
+    const w = estimateTokensWidth(header[c], fontSize);
+    if (w > maxContentWidths[c]) {
+      maxContentWidths[c] = w;
     }
   }
 
   for (let r = 0; r < rows.length; r++) {
     const row = rows[r];
     for (let c = 0; c < row.length && c < colCount; c++) {
-      const len = getTokensTextLength(row[c]);
-      if (len > maxLengths[c]) {
-        maxLengths[c] = len;
+      const w = estimateTokensWidth(row[c], fontSize);
+      if (w > maxContentWidths[c]) {
+        maxContentWidths[c] = w;
       }
     }
   }
 
   const widths: Array<number> = [];
+  const cellPaddingLR = fontSize * 1;
+  const maxW = maxColumnWidth > 0 ? maxColumnWidth : 0;
   for (let c = 0; c < colCount; c++) {
-    const charLen = maxLengths[c];
+    const estimated = maxContentWidths[c] + cellPaddingLR;
     // 每个字符约 8px 宽度（中文约 14px），加上 padding 16px
     // 短内容：最小 50px
     // 中等内容：按字符数计算
     // 长内容：最大 400px，让内容换行
-    const estimated = charLen * 10 + 16;
-    const minW = 50;
-    const maxW = 400;
-    if (estimated < minW) {
-      widths.push(minW);
-    } else if (estimated > maxW) {
-      widths.push(maxW);
-    } else {
-      widths.push(estimated);
-    }
+    widths.push(maxW > 0 && estimated > maxW ? maxW : estimated);
   }
 
   return widths;
@@ -211,6 +266,8 @@ function parseInlineTokens(text: string): Array<MarkdownInlineToken> {
   const tokens: Array<MarkdownInlineToken> = [];
   const len = text.length;
   let i = 0;
+
+  const urlRegex = /(https?:\/\/[^\s)]+|www\.[^\s)]+|[a-z0-9][a-z0-9.-]*\.[a-z]{2,}[^\s)]*)/ig;
 
   while (i < len) {
     const ch = text.charAt(i);
@@ -275,6 +332,34 @@ function parseInlineTokens(text: string): Array<MarkdownInlineToken> {
       continue;
     }
 
+    urlRegex.lastIndex = i;
+    const urlMatch = urlRegex.exec(text);
+    if (urlMatch && urlMatch.index >= i && urlMatch.index < nextSpecial) {
+      const urlStart = urlMatch.index;
+      if (urlStart > i) {
+        appendTextToken(tokens, text.substring(i, urlStart));
+      }
+
+      const raw = urlMatch[0];
+      let cleaned = raw;
+      while (cleaned.length > 0) {
+        const lastCh = cleaned.charAt(cleaned.length - 1);
+        const isTrailing = lastCh === '.' || lastCh === ',' || lastCh === ';' || lastCh === ':' || lastCh === '!' || lastCh === '?' || lastCh === ')' || lastCh === ']' || lastCh === '}';
+        if (!isTrailing) break;
+        cleaned = cleaned.substring(0, cleaned.length - 1);
+      }
+
+      if (cleaned) {
+        tokens.push({ kind: 'link', text: cleaned, url: cleaned });
+      }
+      if (cleaned.length < raw.length) {
+        appendTextToken(tokens, raw.substring(cleaned.length));
+      }
+
+      i = urlStart + raw.length;
+      continue;
+    }
+
     appendTextToken(tokens, text.substring(i, nextSpecial));
     i = nextSpecial;
   }
@@ -303,7 +388,7 @@ function stripHtmlComments(lines: Array<string>): Array<string> {
   return out;
 }
 
-function parseBlocks(markdown: string): Array<MarkdownBlock> {
+function parseBlocks(markdown: string, fontSize: number, maxTableColumnWidth: number): Array<MarkdownBlock> {
   const text = normalizeNewlines(markdown);
   const rawLines = stripHtmlComments(text.split('\n'));
   const blocks: Array<MarkdownBlock> = [];
@@ -386,7 +471,7 @@ function parseBlocks(markdown: string): Array<MarkdownBlock> {
           i += 1;
         }
 
-        const columnWidths = computeColumnWidths(header, rows);
+        const columnWidths = computeColumnWidths(header, rows, fontSize, maxTableColumnWidth);
         blocks.push({ kind: 'table', aligns, header, rows, columnWidths });
         continue;
       }
@@ -435,6 +520,19 @@ export struct MarkdownView {
   @Prop fontColor: number = 0x222222;
   @Prop fontWeight: FontWeight = FontWeight.Normal;
   @Prop theme: AppThemeTokens = getAppThemeTokens('light');
+  @Prop unboundedTableColumns: boolean = false;
+
+  private maxTableColumnWidth(): number {
+    return this.unboundedTableColumns ? 0 : this.fontSize * 30;
+  }
+
+  private tableCellMaxLines(): number {
+    return this.unboundedTableColumns ? 1 : 999;
+  }
+
+  private tableHeaderOverflow(): TextOverflow {
+    return this.unboundedTableColumns ? TextOverflow.Clip : TextOverflow.Ellipsis;
+  }
 
   private mdHeadingColor(): number {
     return this.theme.markdown.headingColor;
@@ -471,8 +569,19 @@ export struct MarkdownView {
     return TextAlign.Start;
   }
 
+  private openUrl(rawUrl: string | undefined): void {
+    openExternalLink(this.getUIContext().getHostContext(), rawUrl ?? '');
+  }
+
   @Builder
-  private InlineStyled(tokens: Array<MarkdownInlineToken>, color: number, weight: FontWeight, align: TextAlign): void {
+  private InlineStyled(
+    tokens: Array<MarkdownInlineToken>,
+    color: number,
+    weight: FontWeight,
+    align: TextAlign,
+    maxLines: number = 999,
+    overflow: TextOverflow = TextOverflow.Clip,
+  ): void {
     Text() {
       ForEach(tokens, (token: MarkdownInlineToken, index: number) => {
         if (token.kind === 'text') {
@@ -486,7 +595,8 @@ export struct MarkdownView {
         } else {
           Span(token.text)
             .fontColor(this.mdLinkColor())
-            .decoration({ type: TextDecorationType.Underline });
+            .decoration({ type: TextDecorationType.Underline })
+            .onClick(() => this.openUrl(token.url ?? token.text));
         }
       }, (_: MarkdownInlineToken, index: number) => `${index}`);
     }
@@ -495,8 +605,8 @@ export struct MarkdownView {
     .fontWeight(weight)
     .textAlign(align)
     .width('100%')
-    .maxLines(999)
-    .textOverflow({ overflow: TextOverflow.Clip });
+    .maxLines(maxLines)
+    .textOverflow({ overflow });
   }
 
   @Builder
@@ -516,17 +626,23 @@ export struct MarkdownView {
       if (this.inlineOnly) {
         this.Inline(parseInlineTokens(this.markdown ?? ''));
       } else {
-        ForEach(parseBlocks(this.markdown ?? ''), (block: MarkdownBlock, index: number) => {
+        ForEach(parseBlocks(this.markdown ?? '', this.fontSize, this.maxTableColumnWidth()), (block: MarkdownBlock, index: number) => {
           if (block.kind === 'codeblock') {
-            Text(block.code)
-              .fontFamily('monospace')
-              .fontSize(this.fontSize - 2)
-              .fontColor(this.mdCodeTextColor())
-              .backgroundColor(this.mdCodeBackgroundColor())
-              .borderRadius(10)
-              .padding(10)
-              .maxLines(999)
-              .textOverflow({ overflow: TextOverflow.Clip });
+            Scroll() {
+              Text(block.code)
+                .fontFamily('monospace')
+                .fontSize(this.fontSize - 2)
+                .fontColor(this.mdCodeTextColor())
+                .textAlign(TextAlign.Start)
+                .constraintSize({ minWidth: '100%' })
+                .maxLines(999);
+            }
+            .scrollable(ScrollDirection.Horizontal)
+            .scrollBar(BarState.Off)
+            .backgroundColor(this.mdCodeBackgroundColor())
+            .borderRadius(this.fontSize * 0.5)
+            .padding(this.fontSize * 0.6)
+            .width('100%');
           } else if (block.kind === 'heading') {
             Text() {
               ForEach(block.tokens, (t: MarkdownInlineToken, i2: number) => {
@@ -539,7 +655,10 @@ export struct MarkdownView {
                 } else if (t.kind === 'code') {
                   Span(t.text).fontFamily('monospace').fontColor(this.mdCodeTextColor());
                 } else {
-                  Span(t.text).fontColor(this.mdLinkColor()).decoration({ type: TextDecorationType.Underline });
+                  Span(t.text)
+                    .fontColor(this.mdLinkColor())
+                    .decoration({ type: TextDecorationType.Underline })
+                    .onClick(() => this.openUrl(t.url ?? t.text));
                 }
               }, (_: MarkdownInlineToken, i2: number) => `${index}:${i2}`);
             }
@@ -549,9 +668,9 @@ export struct MarkdownView {
             .maxLines(999)
             .textOverflow({ overflow: TextOverflow.Clip });
           } else if (block.kind === 'list') {
-            Column({ space: 4 }) {
+            Column({ space: this.fontSize * 0.2 }) {
               ForEach(block.items, (item: Array<MarkdownInlineToken>, itemIndex: number) => {
-                Row({ space: 8 }) {
+                Row({ space: this.fontSize * 0.5 }) {
                   Text(block.ordered ? `${itemIndex + 1}.` : '\u2022')
                     .fontSize(this.fontSize)
                     .fontColor(this.fontColor);
@@ -566,11 +685,18 @@ export struct MarkdownView {
                   Row({ space: 0 }) {
                     ForEach(block.header, (cell: Array<MarkdownInlineToken>, colIndex: number) => {
                       Column() {
-                        this.InlineStyled(cell, this.mdHeadingColor(), FontWeight.Bold, this.tableTextAlign(block.aligns, colIndex));
+                        this.InlineStyled(
+                          cell,
+                          this.mdHeadingColor(),
+                          FontWeight.Bold,
+                          this.tableTextAlign(block.aligns, colIndex),
+                          1,
+                          this.tableHeaderOverflow(),
+                        );
                       }
-                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : 60)
+                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : this.fontSize * 4)
                       .alignItems(HorizontalAlign.Start)
-                      .padding({ left: 8, right: 8, top: 6, bottom: 6 })
+                      .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
                       .backgroundColor(this.mdTableHeaderBackgroundColor())
                       .borderWidth(1)
                       .borderColor(this.mdTableBorderColor());
@@ -582,11 +708,18 @@ export struct MarkdownView {
                   Row({ space: 0 }) {
                     ForEach(row, (cell: Array<MarkdownInlineToken>, colIndex: number) => {
                       Column() {
-                        this.InlineStyled(cell, this.fontColor, FontWeight.Normal, this.tableTextAlign(block.aligns, colIndex));
+                        this.InlineStyled(
+                          cell,
+                          this.fontColor,
+                          FontWeight.Normal,
+                          this.tableTextAlign(block.aligns, colIndex),
+                          this.tableCellMaxLines(),
+                          TextOverflow.Clip,
+                        );
                       }
-                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : 60)
+                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : this.fontSize * 4)
                       .alignItems(HorizontalAlign.Start)
-                      .padding({ left: 8, right: 8, top: 6, bottom: 6 })
+                      .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
                       .backgroundColor(this.mdTableCellBackgroundColor())
                       .borderWidth(1)
                       .borderColor(this.mdTableBorderColor());

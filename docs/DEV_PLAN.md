@@ -1,4 +1,4 @@
-# 快速参考（Quick Reference）鸿蒙应用开发计划（MVP）
+# 开发速查（Quick Reference）鸿蒙应用开发计划（MVP）
 
 ## 目标
 - 支持中英双语文档：中文数据源 `https://github.com/jaywcjlove/reference/tree/main/docs`，英文数据源 `https://github.com/Fechin/reference/tree/main/source/_posts`。

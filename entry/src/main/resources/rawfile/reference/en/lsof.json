@@ -2,7 +2,6 @@
   "id": "lsof",
   "name": "Lsof",
   "title": "This quick reference cheat sheet provides various for using lsof command.",
-  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/lsof.svg",
   "sections": [
     {
       "id": "intro",
@@ -26,31 +25,55 @@
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Introduction",
-      "body": "**lsof** meaning `L`i`S`t `O`pen `F`iles is used to find out which files are open by which process\n\n```shell script\n$ lsof\n$ sudo lsof -u root\n\n```\n\n### Port-specific\n\n```shell script\n$ lsof -i :8080\n$ lsof -i :80 -i :22\n$ lsof -i TCP:22\n$ lsof -i TCP:1-1024\n$ lsof -i UDP\n$ lsof -i @192.168.1.5\n```"
+      "body": "**lsof** meaning `L`i`S`t `O`pen `F`iles is used to find out which files are open by which process\n\n```shell script\n$ lsof\n$ sudo lsof -u root\n```"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "Port-specific",
+      "body": "```shell script\n$ lsof -i :8080\n$ lsof -i :80 -i :22\n$ lsof -i TCP:22\n$ lsof -i TCP:1-1024\n$ lsof -i UDP\n$ lsof -i @192.168.1.5\n```"
     },
     {
       "id": "s1-4",
       "sectionId": "s1",
       "title": "Process-specific",
-      "body": "```shell script\n$ lsof -c mysql\n$ lsof -c java\n$ lsof -c ssh\n$ lsof -c nginx\n$ lsof -c ssh -c httpd\n\n```\n\n### User-specific\n\n```shell script\n$ lsof -u www-data\n$ lsof -u www-data -u ubuntu\n$ lsof -i -u ^root # Except certain user\n```"
+      "body": "```shell script\n$ lsof -c mysql\n$ lsof -c java\n$ lsof -c ssh\n$ lsof -c nginx\n$ lsof -c ssh -c httpd\n```"
+    },
+    {
+      "id": "s1-5",
+      "sectionId": "s1",
+      "title": "User-specific",
+      "body": "```shell script\n$ lsof -u www-data\n$ lsof -u www-data -u ubuntu\n$ lsof -i -u ^root # Except certain user\n```"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "Network-specific",
-      "body": "```shell script\n$ lsof -i 4   # IPv4 only\n$ lsof -i 6   # IPv6 only\n\n```\n\n### PID-specific\n\n```shell script\n$ lsof -p 1753\n$ lsof -p ^3  # Except certain pids\n```"
+      "body": "```shell script\n$ lsof -i 4   # IPv4 only\n$ lsof -i 6   # IPv6 only\n```"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "PID-specific",
+      "body": "```shell script\n$ lsof -p 1753\n$ lsof -p ^3  # Except certain pids\n```"
     },
     {
       "id": "s1-8",
       "sectionId": "s1",
       "title": "Filename-specific",
-      "body": "```shell script\n$ lsof /var/log/messages\n$ lsof /etc/passwd\n\n```\n\n### Directory-specific\n\n```shell script\n$ lsof +D /var/log # Within a directory\n```"
+      "body": "```shell script\n$ lsof /var/log/messages\n$ lsof /etc/passwd\n```"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "Directory-specific",
+      "body": "```shell script\n$ lsof +D /var/log # Within a directory\n```"
     },
     {
       "id": "s1-10",
       "sectionId": "s1",
       "title": "Kill",
-      "body": "```shell script\n$ kill -9 `lsof -t -u apache`\n$ kill -9 $(lsof -t -i :8080)\n\n```\n\n```"
+      "body": "```shell script\n$ kill -9 `lsof -t -u apache`\n$ kill -9 $(lsof -t -i :8080)\n```"
     }
   ],
   "source": {

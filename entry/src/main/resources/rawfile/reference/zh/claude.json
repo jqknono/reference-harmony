@@ -2,7 +2,7 @@
   "id": "claude",
   "name": "ClaudeCode 备忘清单",
   "title": "ClaudeCode 命令行开发工具快速参考备忘单。",
-  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/claude.svg",
+  "icon": "reference/icons/zh/claude.svg",
   "sections": [
     {
       "id": "intro",
@@ -31,8 +31,18 @@
     },
     {
       "id": "s5",
+      "title": "Hook 事件",
+      "startIndex": 17
+    },
+    {
+      "id": "s6",
+      "title": "Hook 输入",
+      "startIndex": 29
+    },
+    {
+      "id": "s7",
       "title": "另见",
-      "startIndex": 27
+      "startIndex": 43
     }
   ],
   "cards": [
@@ -129,40 +139,122 @@
       "id": "s4-15",
       "sectionId": "s4",
       "title": "%E9%A1%B9%E7%9B%AE%E7%89%B9%E5%AE%9A%E7%9A%84%20Hook%20%E8%84%9A%E6%9C%AC",
-      "body": "%60%60%60json%20%7B9%7D%0A%7B%0A%22hooks%22%3A%20%7B%0A%22PostToolUse%22%3A%20%5B%0A%7B%0A%22matcher%22%3A%20%22Write%7CEdit%22%2C%0A%22hooks%22%3A%20%5B%0A%7B%0A%22type%22%3A%20%22command%22%2C%0A%22command%22%3A%20%22%24CLAUDE_PROJECT_DIR%2F.claude%2Fhooks%2Fcheck-style.sh%22%0A%7D%0A%5D%0A%7D%0A%5D%0A%7D%0A%7D%0A%0A%60%60%60%0A%0A%E5%8F%AF%E9%80%9A%E8%BF%87%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%20%60CLAUDE_PROJECT_DIR%60%20%E5%BC%95%E7%94%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E8%84%9A%E6%9C%AC%EF%BC%8C%E7%A1%AE%E4%BF%9D%E6%97%A0%E8%AE%BA%20Claude%20%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E5%A6%82%E4%BD%95%E9%83%BD%E8%83%BD%E6%AD%A3%E5%B8%B8%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BB%85%E5%9C%A8%E7%94%9F%E6%88%90%20hook%20%E5%91%BD%E4%BB%A4%E6%97%B6%E5%8F%AF%E7%94%A8%EF%BC%89%0A%0AHook%20%E4%BA%8B%E4%BB%B6%0A---%0A%0A%23%23%23%20PreToolUse%0A%0A%23%23%23%23%20%E5%B8%B8%E8%A7%81%E5%8C%B9%E9%85%8D%E5%99%A8%0A%0A*%20%60Task%60%20-%20%E5%AD%90%E4%BB%A3%E7%90%86%E4%BB%BB%E5%8A%A1%EF%BC%88%E5%8F%82%E8%A7%81%5B%E5%AD%90%E4%BB%A3%E7%90%86%E6%96%87%E6%A1%A3%5D(https%3A%2F%2Fdocs.anthropic.com%2Fzh-CN%2Fdocs%2Fclaude-code%2Fsub-agents)%EF%BC%89%0A*%20%60Bash%60%20-%20Shell%20%E5%91%BD%E4%BB%A4%0A*%20%60Glob%60%20-%20%E6%96%87%E4%BB%B6%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%0A*%20%60Grep%60%20-%20%E5%86%85%E5%AE%B9%E6%90%9C%E7%B4%A2%0A*%20%60Read%60%20-%20%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96%0A*%20%60Edit%60%E3%80%81%60MultiEdit%60%20-%20%E6%96%87%E4%BB%B6%E7%BC%96%E8%BE%91%0A*%20%60Write%60%20-%20%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%0A*%20%60WebFetch%60%E3%80%81%60WebSearch%60%20-%20Web%20%E6%93%8D%E4%BD%9C%0A%0A%E5%9C%A8%20Claude%20%E5%88%9B%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%8F%82%E6%95%B0%E4%B9%8B%E5%90%8E%E3%80%81%E5%A4%84%E7%90%86%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%E4%B9%8B%E5%89%8D%E8%BF%90%E8%A1%8C%E3%80%82%0A%0A%23%23%23%20%E5%85%B6%E5%AE%83%20Hook%0A%0AHook%20%7C%20%E6%8F%8F%E8%BF%B0%0A---%20%7C%20---%0A%60PostToolUse%60%20%7C%20%E5%9C%A8%E5%B7%A5%E5%85%B7%E6%88%90%E5%8A%9F%E5%AE%8C%E6%88%90%E5%90%8E%E7%AB%8B%E5%8D%B3%E8%BF%90%E8%A1%8C%E3%80%82%0A%60UserPromptSubmit%60%20%7C%20%E5%BD%93%E7%94%A8%E6%88%B7%E6%8F%90%E4%BA%A4%E6%8F%90%E7%A4%BA%E6%97%B6%E3%80%81Claude%20%E5%A4%84%E7%90%86%E4%B9%8B%E5%89%8D%E8%BF%90%E8%A1%8C%E3%80%82%E8%BF%99%E5%85%81%E8%AE%B8%E6%82%A8%E6%A0%B9%E6%8D%AE%E6%8F%90%E7%A4%BA%2F%E5%AF%B9%E8%AF%9D%E6%B7%BB%E5%8A%A0%E9%A2%9D%E5%A4%96%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E3%80%81%E9%AA%8C%E8%AF%81%E6%8F%90%E7%A4%BA%E6%88%96%E9%98%BB%E6%AD%A2%E6%9F%90%E4%BA%9B%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8F%90%E7%A4%BA%E3%80%82%0A%60Stop%60%20%7C%20%E5%BD%93%E4%B8%BB%20Claude%20Code%20%E4%BB%A3%E7%90%86%E5%AE%8C%E6%88%90%E5%93%8D%E5%BA%94%E6%97%B6%E8%BF%90%E8%A1%8C%E3%80%82%E5%A6%82%E6%9E%9C%E5%81%9C%E6%AD%A2%E6%98%AF%E7%94%B1%E4%BA%8E%E7%94%A8%E6%88%B7%E4%B8%AD%E6%96%AD%E8%80%8C%E5%8F%91%E7%94%9F%E7%9A%84%EF%BC%8C%E5%88%99%E4%B8%8D%E4%BC%9A%E8%BF%90%E8%A1%8C%E3%80%82%0A%60SubagentStop%60%20%7C%20%E5%BD%93%20Claude%20Code%20%E5%AD%90%E4%BB%A3%E7%90%86%EF%BC%88Task%20%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8%EF%BC%89%E5%AE%8C%E6%88%90%E5%93%8D%E5%BA%94%E6%97%B6%E8%BF%90%E8%A1%8C%E3%80%82%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow%20square--%3E%0A%0A%23%23%23%20Notification%0A%0A%E5%BD%93%20Claude%20Code%20%E5%8F%91%E9%80%81%E9%80%9A%E7%9F%A5%E6%97%B6%E8%BF%90%E8%A1%8C%E3%80%82%E9%80%9A%E7%9F%A5%E5%9C%A8%E4%BB%A5%E4%B8%8B%E6%83%85%E5%86%B5%E4%B8%8B%E5%8F%91%E9%80%81%EF%BC%9A%0A%0AHook%20%7C%20%E6%8F%8F%E8%BF%B0%0A---%20%7C%20---%0AClaude%20%E9%9C%80%E8%A6%81%E6%82%A8%E7%9A%84%E6%9D%83%E9%99%90%E6%9D%A5%E4%BD%BF%E7%94%A8%E5%B7%A5%E5%85%B7%E3%80%82%20%7C%20%E7%A4%BA%E4%BE%8B%EF%BC%9A%E2%80%9CClaude%20needs%20your%20permission%20to%20use%20Bash%E2%80%9D%0A%E6%8F%90%E7%A4%BA%E8%BE%93%E5%85%A5%E5%B7%B2%E7%A9%BA%E9%97%B2%E8%87%B3%E5%B0%91%20%6060%60%20%E7%A7%92%E3%80%82%20%7C%20%E2%80%9CClaude%20is%20waiting%20for%20your%20input%E2%80%9D%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow%20square--%3E%0A%0A%23%23%23%20%E2%80%8BPreCompact%0A%0A%E5%9C%A8%20Claude%20Code%20%E5%8D%B3%E5%B0%86%E8%BF%90%E8%A1%8C%E5%8E%8B%E7%BC%A9%E6%93%8D%E4%BD%9C%E4%B9%8B%E5%89%8D%E8%BF%90%E8%A1%8C%E3%80%82%0A%0A%23%23%23%23%20%E5%8C%B9%E9%85%8D%E5%99%A8%0A%3C!--rehype%3Astyle%3Dtext-align%3Aleft%3B--%3E%0A%0AHook%20%7C%20%E6%8F%8F%E8%BF%B0%0A---%20%7C%20---%0A%60manual%60%20%7C%20%E4%BB%8E%20%60%2Fcompact%60%20%E8%B0%83%E7%94%A8%0A%60auto%60%20%7C%20%E4%BB%8E%E8%87%AA%E5%8A%A8%E5%8E%8B%E7%BC%A9%E8%B0%83%E7%94%A8%EF%BC%88%E7%94%B1%E4%BA%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AA%97%E5%8F%A3%E5%B7%B2%E6%BB%A1%EF%BC%89%0A%3C!--rehype%3AclassName%3Dstyle-list-arrow%20square--%3E%0A%0A%23%23%23%20SessionStart%0A%0A%E5%BD%93%20Claude%20Code%20%E5%90%AF%E5%8A%A8%E6%96%B0%E4%BC%9A%E8%AF%9D%E6%88%96%E6%81%A2%E5%A4%8D%E7%8E%B0%E6%9C%89%E4%BC%9A%E8%AF%9D%E6%97%B6%E8%BF%90%E8%A1%8C%EF%BC%88%E7%9B%AE%E5%89%8D%E7%A1%AE%E5%AE%9E%E4%BC%9A%E5%9C%A8%E5%BA%95%E5%B1%82%E5%90%AF%E5%8A%A8%E6%96%B0%E4%BC%9A%E8%AF%9D%EF%BC%89%0A%0A%23%23%23%23%20%E5%8C%B9%E9%85%8D%E5%99%A8%0A%3C!--rehype%3Astyle%3Dtext-align%3Aleft%3B--%3E%0A%0A*%20%60startup%60%20-%20%E4%BB%8E%E5%90%AF%E5%8A%A8%E8%B0%83%E7%94%A8%0A*%20%60resume%60%20-%20%E4%BB%8E%20%60--resume%60%E3%80%81%60--continue%60%20%E6%88%96%20%60%2Fresume%60%20%E8%B0%83%E7%94%A8%0A*%20%60clear%60%20-%20%E4%BB%8E%20%60%2Fclear%60%20%E8%B0%83%E7%94%A8%0A*%20%60compact%60%20-%20%E4%BB%8E%E8%87%AA%E5%8A%A8%E6%88%96%E6%89%8B%E5%8A%A8%E5%8E%8B%E7%BC%A9%E8%B0%83%E7%94%A8%E3%80%82%0A%0A%E5%AF%B9%E4%BA%8E%E5%8A%A0%E8%BD%BD%E5%BC%80%E5%8F%91%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%88%E5%A6%82%E7%8E%B0%E6%9C%89%E9%97%AE%E9%A2%98%E6%88%96%E4%BB%A3%E7%A0%81%E5%BA%93%E7%9A%84%E6%9C%80%E8%BF%91%E6%9B%B4%E6%94%B9%EF%BC%89%E5%BE%88%E6%9C%89%E7%94%A8%E3%80%82%0A%0A%23%23%23%20SessionEnd%0A%0A%23%23%23%23%20hook%20%E8%BE%93%E5%85%A5%E4%B8%AD%E7%9A%84%20reason%20%E5%AD%97%E6%AE%B5%E5%B0%86%E6%98%AF%E4%BB%A5%E4%B8%8B%E4%B9%8B%E4%B8%80%0A%3C!--rehype%3Astyle%3Dtext-align%3Aleft%3B--%3E%0A%0A*%20%60clear%60%20-%20%E4%BD%BF%E7%94%A8%20%2Fclear%20%E5%91%BD%E4%BB%A4%E6%B8%85%E9%99%A4%E4%BC%9A%E8%AF%9D%0A*%20%60logout%60%20-%20%E7%94%A8%E6%88%B7%E6%B3%A8%E9%94%80%0A*%20%60prompt_input_exit%60%20-%20%E7%94%A8%E6%88%B7%E5%9C%A8%E6%8F%90%E7%A4%BA%E8%BE%93%E5%85%A5%E5%8F%AF%E8%A7%81%E6%97%B6%E9%80%80%E5%87%BA%0A*%20%60other%60%20-%20%E5%85%B6%E4%BB%96%E9%80%80%E5%87%BA%E5%8E%9F%E5%9B%A0%0A%0A%E5%BD%93%20Claude%20Code%20%E4%BC%9A%E8%AF%9D%E7%BB%93%E6%9D%9F%E6%97%B6%E8%BF%90%E8%A1%8C%E3%80%82%E5%AF%B9%E4%BA%8E%E6%B8%85%E7%90%86%E4%BB%BB%E5%8A%A1%E3%80%81%E8%AE%B0%E5%BD%95%E4%BC%9A%E8%AF%9D%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF%E6%88%96%E4%BF%9D%E5%AD%98%E4%BC%9A%E8%AF%9D%E7%8A%B6%E6%80%81%E5%BE%88%E6%9C%89%E7%94%A8%E3%80%82%0A%0AHook%20%E8%BE%93%E5%85%A5%0A---%0A%0A%23%23%23%20%E7%A4%BA%E4%BE%8B%0A%0AHooks%20%E9%80%9A%E8%BF%87%20%60stdin%60%20%E6%8E%A5%E6%94%B6%E5%8C%85%E5%90%AB%E4%BC%9A%E8%AF%9D%E4%BF%A1%E6%81%AF%E5%92%8C%E4%BA%8B%E4%BB%B6%E7%89%B9%E5%AE%9A%E6%95%B0%E6%8D%AE%E7%9A%84%20JSON%20%E6%95%B0%E6%8D%AE%EF%BC%9A%0A%0A%60%60%60json%0A%7B%0A%20%20%2F%2F%20%E9%80%9A%E7%94%A8%E5%AD%97%E6%AE%B5%0A%20%20session_id%3A%20string%0A%20%20%2F%2F%20%E5%AF%B9%E8%AF%9D%20JSON%20%E7%9A%84%E8%B7%AF%E5%BE%84%0A%20%20transcript_path%3A%20string%20%20%0A%20%20%2F%2F%20%E8%B0%83%E7%94%A8%20hook%20%E6%97%B6%E7%9A%84%E5%BD%93%E5%89%8D%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95%0A%20%20cwd%3A%20string%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%0A%20%20%2F%2F%20%E4%BA%8B%E4%BB%B6%E7%89%B9%E5%AE%9A%E5%AD%97%E6%AE%B5%0A%20%20hook_event_name%3A%20string%0A%20%20...%0A%7D%0A%60%60%60",
+      "body": "%60%60%60json%20%7B9%7D%0A%7B%0A%20%20%22hooks%22%3A%20%7B%0A%20%20%20%20%22PostToolUse%22%3A%20%5B%0A%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%22matcher%22%3A%20%22Write%7CEdit%22%2C%0A%20%20%20%20%20%20%20%20%22hooks%22%3A%20%5B%0A%7B%0A%20%20%20%20%22type%22%3A%20%22command%22%2C%0A%20%20%20%20%22command%22%3A%20%22%24CLAUDE_PROJECT_DIR%2F.claude%2Fhooks%2Fcheck-style.sh%22%0A%7D%0A%20%20%20%20%20%20%20%20%5D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%5D%0A%20%20%7D%0A%7D%0A%60%60%60%0A%0A%E5%8F%AF%E9%80%9A%E8%BF%87%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%20%60CLAUDE_PROJECT_DIR%60%20%E5%BC%95%E7%94%A8%E9%A1%B9%E7%9B%AE%E4%B8%AD%E7%9A%84%E8%84%9A%E6%9C%AC%EF%BC%8C%E7%A1%AE%E4%BF%9D%E6%97%A0%E8%AE%BA%20Claude%20%E5%BD%93%E5%89%8D%E7%9B%AE%E5%BD%95%E5%A6%82%E4%BD%95%E9%83%BD%E8%83%BD%E6%AD%A3%E5%B8%B8%E4%BD%BF%E7%94%A8%EF%BC%88%E4%BB%85%E5%9C%A8%E7%94%9F%E6%88%90%20hook%20%E5%91%BD%E4%BB%A4%E6%97%B6%E5%8F%AF%E7%94%A8%EF%BC%89",
       "encoded": true
     },
     {
-      "id": "s4-17",
-      "sectionId": "s4",
-      "title": "PreToolUse%20%E8%BE%93%E5%85%A5",
-      "body": "%60tool_input%60%20%E7%9A%84%E7%A1%AE%E5%88%87%E6%A8%A1%E5%BC%8F%E5%8F%96%E5%86%B3%E4%BA%8E%E5%B7%A5%E5%85%B7%E3%80%82%0A%0A%60%60%60json%20%7B5%7D%0A%7B%0A%22session_id%22%3A%20%22abc123%22%2C%0A%22transcript_path%22%3A%20%22%2FUsers%2F...%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%22hook_event_name%22%3A%20%22PreToolUse%22%2C%0A%22tool_name%22%3A%20%22Write%22%2C%0A%22tool_input%22%3A%20%7B%0A%22file_path%22%3A%20%22%2Fpath%2Fto%2Ffile.txt%22%2C%0A%22content%22%3A%20%22file%20content%22%0A%7D%0A%7D%0A%0A%60%60%60%0A%0A%23%23%23%20PostToolUse%20%E8%BE%93%E5%85%A5%0A%0A%60tool_input%60%20%E5%92%8C%20%60tool_response%60%20%E7%9A%84%E7%A1%AE%E5%88%87%E6%A8%A1%E5%BC%8F%E5%8F%96%E5%86%B3%E4%BA%8E%E5%B7%A5%E5%85%B7%E3%80%82%0A%0A%60%60%60json%20%7B5%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22%2FUsers%2F...%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%20%20%22hook_event_name%22%3A%20%22PostToolUse%22%2C%0A%20%20%22tool_name%22%3A%20%22Write%22%2C%0A%20%20%22tool_input%22%3A%20%7B%0A%20%20%20%20%22file_path%22%3A%20%22%2Fpath%2Fto%2Ffile.txt%22%2C%0A%20%20%20%20%22content%22%3A%20%22file%20content%22%0A%20%20%7D%2C%0A%20%20%22tool_response%22%3A%20%7B%0A%20%20%20%20%22filePath%22%3A%20%22%2Fpath%2Fto%2Ffile.txt%22%2C%0A%20%20%20%20%22success%22%3A%20true%0A%20%20%7D%0A%7D%0A%60%60%60",
-      "encoded": true
+      "id": "s5-17",
+      "sectionId": "s5",
+      "title": "PreToolUse - 常见匹配器",
+      "body": "• `Task` - 子代理任务（参见[子代理文档](https://docs.anthropic.com/zh-CN/docs/claude-code/sub-agents)）\n• `Bash` - Shell 命令\n• `Glob` - 文件模式匹配\n• `Grep` - 内容搜索\n• `Read` - 文件读取\n• `Edit`、`MultiEdit` - 文件编辑\n• `Write` - 文件写入\n• `WebFetch`、`WebSearch` - Web 操作\n\n在 Claude 创建工具参数之后、处理工具调用之前运行。"
     },
     {
-      "id": "s4-20",
-      "sectionId": "s4",
-      "title": "Notification%20%E8%BE%93%E5%85%A5",
-      "body": "%60%60%60json%20%7B5%7D%0A%7B%0A%22session_id%22%3A%20%22abc123%22%2C%0A%22transcript_path%22%3A%20%22%2FUsers%2F...%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%22hook_event_name%22%3A%20%22Notification%22%2C%0A%22message%22%3A%20%22Task%20completed%20successfully%22%0A%7D%0A%0A%60%60%60%0A%0A%23%23%23%20UserPromptSubmit%20%E8%BE%93%E5%85%A5%0A%0A%60%60%60json%20%7B5%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22%2FUsers%2F...%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%20%20%22hook_event_name%22%3A%20%22UserPromptSubmit%22%2C%0A%20%20%22prompt%22%3A%20%22Write%20a%20function%20to%20calculate%20the%20factorial%20of%20a%20number%22%0A%7D%0A%60%60%60",
-      "encoded": true
+      "id": "s5-19",
+      "sectionId": "s5",
+      "title": "其它 Hook",
+      "body": "Hook | 描述\n--- | ---\n`PostToolUse` | 在工具成功完成后立即运行。\n`UserPromptSubmit` | 当用户提交提示时、Claude 处理之前运行。这允许您根据提示/对话添加额外的上下文、验证提示或阻止某些类型的提示。\n`Stop` | 当主 Claude Code 代理完成响应时运行。如果停止是由于用户中断而发生的，则不会运行。\n`SubagentStop` | 当 Claude Code 子代理（Task 工具调用）完成响应时运行。"
     },
     {
-      "id": "s4-22",
-      "sectionId": "s4",
-      "title": "Stop%20%E5%92%8C%20SubagentStop%20%E8%BE%93%E5%85%A5",
-      "body": "%60%60%60json%20%7B4%7D%0A%7B%0A%22session_id%22%3A%20%22abc123%22%2C%0A%22transcript_path%22%3A%20%22~%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%22hook_event_name%22%3A%20%22Stop%22%2C%0A%22stop_hook_active%22%3A%20true%0A%7D%0A%0A%60%60%60%0A%0A%E5%BD%93%20Claude%20Code%20%E5%B7%B2%E7%BB%8F%E5%9B%A0%E4%B8%BA%20%60stop%20hook%60%20%E8%80%8C%E7%BB%A7%E7%BB%AD%E6%97%B6%EF%BC%8C%60stop_hook_active%60%20%E4%B8%BA%20%60true%60%E3%80%82%E6%A3%80%E6%9F%A5%E6%AD%A4%E5%80%BC%E6%88%96%E5%A4%84%E7%90%86%E8%AE%B0%E5%BD%95%E4%BB%A5%E9%98%B2%E6%AD%A2%20Claude%20Code%20%E6%97%A0%E9%99%90%E8%BF%90%E8%A1%8C%E3%80%82%0A%0A%23%23%23%20PreCompact%20%E8%BE%93%E5%85%A5%0A%0A%60%60%60json%20%7B4%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22~%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22hook_event_name%22%3A%20%22PreCompact%22%2C%0A%20%20%22trigger%22%3A%20%22manual%22%2C%0A%20%20%22custom_instructions%22%3A%20%22%22%0A%7D%0A%60%60%60%0A%0A%E5%AF%B9%E4%BA%8E%20%60manual%60%EF%BC%8C%60custom_instructions%60%20%E6%9D%A5%E8%87%AA%E7%94%A8%E6%88%B7%E4%BC%A0%E9%80%92%E7%BB%99%20%60%2Fcompact%60%20%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82%E5%AF%B9%E4%BA%8E%20%60auto%60%EF%BC%8C%60custom_instructions%60%20%E4%B8%BA%E7%A9%BA%E3%80%82",
-      "encoded": true
+      "id": "s5-20",
+      "sectionId": "s5",
+      "title": "Notification",
+      "body": "当 Claude Code 发送通知时运行。通知在以下情况下发送：\n\nHook | 描述\n--- | ---\nClaude 需要您的权限来使用工具。 | 示例：“Claude needs your permission to use Bash”\n提示输入已空闲至少 `60` 秒。 | “Claude is waiting for your input”"
     },
     {
-      "id": "s4-25",
-      "sectionId": "s4",
-      "title": "SessionStart%20%E8%BE%93%E5%85%A5",
-      "body": "%60%60%60json%20%7B4%7D%0A%7B%0A%22session_id%22%3A%20%22abc123%22%2C%0A%22transcript_path%22%3A%20%22~%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%22hook_event_name%22%3A%20%22SessionStart%22%2C%0A%22source%22%3A%20%22startup%22%0A%7D%0A%0A%60%60%60%0A%0A%23%23%23%20SessionEnd%20%E8%BE%93%E5%85%A5%0A%0A%60%60%60json%20%7B5%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22~%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%20%20%22hook_event_name%22%3A%20%22SessionEnd%22%2C%0A%20%20%22reason%22%3A%20%22exit%22%0A%7D%0A%60%60%60",
-      "encoded": true
+      "id": "s5-22",
+      "sectionId": "s5",
+      "title": "​PreCompact",
+      "body": "在 Claude Code 即将运行压缩操作之前运行。"
+    },
+    {
+      "id": "s5-23",
+      "sectionId": "s5",
+      "title": "匹配器",
+      "body": "Hook | 描述\n--- | ---\n`manual` | 从 `/compact` 调用\n`auto` | 从自动压缩调用（由于上下文窗口已满）"
+    },
+    {
+      "id": "s5-24",
+      "sectionId": "s5",
+      "title": "SessionStart",
+      "body": "当 Claude Code 启动新会话或恢复现有会话时运行（目前确实会在底层启动新会话）"
+    },
+    {
+      "id": "s5-25",
+      "sectionId": "s5",
+      "title": "匹配器",
+      "body": "• `startup` - 从启动调用\n• `resume` - 从 `--resume`、`--continue` 或 `/resume` 调用\n• `clear` - 从 `/clear` 调用\n• `compact` - 从自动或手动压缩调用。\n\n对于加载开发上下文（如现有问题或代码库的最近更改）很有用。"
     },
     {
       "id": "s5-27",
       "sectionId": "s5",
+      "title": "SessionEnd - hook 输入中的 reason 字段将是以下之一",
+      "body": "• `clear` - 使用 /clear 命令清除会话\n• `logout` - 用户注销\n• `prompt_input_exit` - 用户在提示输入可见时退出\n• `other` - 其他退出原因\n\n当 Claude Code 会话结束时运行。对于清理任务、记录会话统计信息或保存会话状态很有用。"
+    },
+    {
+      "id": "s6-29",
+      "sectionId": "s6",
+      "title": "示例",
+      "body": "Hooks 通过 `stdin` 接收包含会话信息和事件特定数据的 JSON 数据：\n\n```json\n{\n  // 通用字段\n  session_id: string\n  // 对话 JSON 的路径\n  transcript_path: string  \n  // 调用 hook 时的当前工作目录\n  cwd: string              \n\n  // 事件特定字段\n  hook_event_name: string\n  ...\n}\n```"
+    },
+    {
+      "id": "s6-31",
+      "sectionId": "s6",
+      "title": "PreToolUse%20%E8%BE%93%E5%85%A5",
+      "body": "%60tool_input%60%20%E7%9A%84%E7%A1%AE%E5%88%87%E6%A8%A1%E5%BC%8F%E5%8F%96%E5%86%B3%E4%BA%8E%E5%B7%A5%E5%85%B7%E3%80%82%0A%0A%60%60%60json%20%7B5%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22%2FUsers%2F...%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%20%20%22hook_event_name%22%3A%20%22PreToolUse%22%2C%0A%20%20%22tool_name%22%3A%20%22Write%22%2C%0A%20%20%22tool_input%22%3A%20%7B%0A%20%20%20%20%22file_path%22%3A%20%22%2Fpath%2Fto%2Ffile.txt%22%2C%0A%20%20%20%20%22content%22%3A%20%22file%20content%22%0A%20%20%7D%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-33",
+      "sectionId": "s6",
+      "title": "PostToolUse%20%E8%BE%93%E5%85%A5",
+      "body": "%60tool_input%60%20%E5%92%8C%20%60tool_response%60%20%E7%9A%84%E7%A1%AE%E5%88%87%E6%A8%A1%E5%BC%8F%E5%8F%96%E5%86%B3%E4%BA%8E%E5%B7%A5%E5%85%B7%E3%80%82%0A%0A%60%60%60json%20%7B5%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22%2FUsers%2F...%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%20%20%22hook_event_name%22%3A%20%22PostToolUse%22%2C%0A%20%20%22tool_name%22%3A%20%22Write%22%2C%0A%20%20%22tool_input%22%3A%20%7B%0A%20%20%20%20%22file_path%22%3A%20%22%2Fpath%2Fto%2Ffile.txt%22%2C%0A%20%20%20%20%22content%22%3A%20%22file%20content%22%0A%20%20%7D%2C%0A%20%20%22tool_response%22%3A%20%7B%0A%20%20%20%20%22filePath%22%3A%20%22%2Fpath%2Fto%2Ffile.txt%22%2C%0A%20%20%20%20%22success%22%3A%20true%0A%20%20%7D%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-35",
+      "sectionId": "s6",
+      "title": "Notification%20%E8%BE%93%E5%85%A5",
+      "body": "%60%60%60json%20%7B5%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22%2FUsers%2F...%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%20%20%22hook_event_name%22%3A%20%22Notification%22%2C%0A%20%20%22message%22%3A%20%22Task%20completed%20successfully%22%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-36",
+      "sectionId": "s6",
+      "title": "UserPromptSubmit%20%E8%BE%93%E5%85%A5",
+      "body": "%60%60%60json%20%7B5%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22%2FUsers%2F...%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%20%20%22hook_event_name%22%3A%20%22UserPromptSubmit%22%2C%0A%20%20%22prompt%22%3A%20%22Write%20a%20function%20to%20calculate%20the%20factorial%20of%20a%20number%22%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-37",
+      "sectionId": "s6",
+      "title": "Stop%20%E5%92%8C%20SubagentStop%20%E8%BE%93%E5%85%A5",
+      "body": "%60%60%60json%20%7B4%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22~%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22hook_event_name%22%3A%20%22Stop%22%2C%0A%20%20%22stop_hook_active%22%3A%20true%0A%7D%0A%60%60%60%0A%0A%E5%BD%93%20Claude%20Code%20%E5%B7%B2%E7%BB%8F%E5%9B%A0%E4%B8%BA%20%60stop%20hook%60%20%E8%80%8C%E7%BB%A7%E7%BB%AD%E6%97%B6%EF%BC%8C%60stop_hook_active%60%20%E4%B8%BA%20%60true%60%E3%80%82%E6%A3%80%E6%9F%A5%E6%AD%A4%E5%80%BC%E6%88%96%E5%A4%84%E7%90%86%E8%AE%B0%E5%BD%95%E4%BB%A5%E9%98%B2%E6%AD%A2%20Claude%20Code%20%E6%97%A0%E9%99%90%E8%BF%90%E8%A1%8C%E3%80%82",
+      "encoded": true
+    },
+    {
+      "id": "s6-39",
+      "sectionId": "s6",
+      "title": "PreCompact%20%E8%BE%93%E5%85%A5",
+      "body": "%60%60%60json%20%7B4%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22~%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22hook_event_name%22%3A%20%22PreCompact%22%2C%0A%20%20%22trigger%22%3A%20%22manual%22%2C%0A%20%20%22custom_instructions%22%3A%20%22%22%0A%7D%0A%60%60%60%0A%0A%E5%AF%B9%E4%BA%8E%20%60manual%60%EF%BC%8C%60custom_instructions%60%20%E6%9D%A5%E8%87%AA%E7%94%A8%E6%88%B7%E4%BC%A0%E9%80%92%E7%BB%99%20%60%2Fcompact%60%20%E7%9A%84%E5%86%85%E5%AE%B9%E3%80%82%E5%AF%B9%E4%BA%8E%20%60auto%60%EF%BC%8C%60custom_instructions%60%20%E4%B8%BA%E7%A9%BA%E3%80%82",
+      "encoded": true
+    },
+    {
+      "id": "s6-41",
+      "sectionId": "s6",
+      "title": "SessionStart%20%E8%BE%93%E5%85%A5",
+      "body": "%60%60%60json%20%7B4%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22~%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22hook_event_name%22%3A%20%22SessionStart%22%2C%0A%20%20%22source%22%3A%20%22startup%22%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-42",
+      "sectionId": "s6",
+      "title": "SessionEnd%20%E8%BE%93%E5%85%A5",
+      "body": "%60%60%60json%20%7B5%7D%0A%7B%0A%20%20%22session_id%22%3A%20%22abc123%22%2C%0A%20%20%22transcript_path%22%3A%20%22~%2F.claude%2Fprojects%2F...%2F00893aaf-19fa-41d2-8238-13269b9b3ca0.jsonl%22%2C%0A%20%20%22cwd%22%3A%20%22%2FUsers%2F...%22%2C%0A%20%20%22hook_event_name%22%3A%20%22SessionEnd%22%2C%0A%20%20%22reason%22%3A%20%22exit%22%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s7-43",
+      "sectionId": "s7",
       "title": "另见",
       "body": "• [Claude 代码参考](https://docs.anthropic.com/zh-CN/docs/claude-code/cli-reference) _(docs.anthropic.com)_\n• [送你一张Claude Code速查表](https://mp.weixin.qq.com/s/LbQbzvXh49Qo22nArTv4Og) _(weixin.qq.com)_"
     }

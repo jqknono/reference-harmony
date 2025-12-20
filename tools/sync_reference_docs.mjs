@@ -83,14 +83,37 @@ function escapeRegExp(s) {
 }
 
 function parseFenceOpen(line) {
-  // Support ```lang, ~~~lang, and indented fences.
-  const m = /^\s*(`{3,}|~{3,})([A-Za-z0-9_+.-]+)?\s*$/.exec(line);
+  // Support ```lang {meta}, ~~~lang, and indented fences.
+  // Markdown info string can include extra tokens (e.g. "js {1,3}" / "html preview").
+  const m = /^\s*(`{3,}|~{3,})\s*([^\n]*)$/.exec(line);
   if (!m) return undefined;
-  return { marker: m[1], lang: (m[2] ?? '').trim() };
+  const info = String(m[2] ?? '').trim();
+  const lang = info.split(/\s+/)[0] ?? '';
+  return { marker: m[1], lang, info };
 }
 
 function isFenceClose(line, marker) {
-  return line.trim() === marker;
+  const t = String(line ?? '').trim();
+  if (!t) return false;
+  const ch = marker[0];
+  if (t.length < marker.length) return false;
+  for (let i = 0; i < t.length; i++) {
+    if (t[i] !== ch) return false;
+  }
+  return true;
+}
+
+function isRehypeIgnoreStart(line) {
+  return /^\s*<!--\s*rehype:ignore:start\s*-->\s*$/.test(line);
+}
+
+function isRehypeIgnoreEnd(line) {
+  return /^\s*<!--\s*rehype:ignore:end\s*-->\s*$/.test(line);
+}
+
+function isHtmlPreviewFence(fence) {
+  const info = String(fence?.info ?? '').trim().toLowerCase();
+  return /^html\s+preview(\s|$)/.test(info);
 }
 
 function isHorizontalRuleLine(line) {
@@ -187,10 +210,20 @@ function extractDocNameAndTitle(frontmatter, body, { id, lang }) {
   let title = '';
   let h1Index = -1;
   let h1IsSetext = false;
+  let rehypeIgnoreDepth = 0;
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (!line) continue;
+    if (isRehypeIgnoreStart(line)) {
+      rehypeIgnoreDepth++;
+      continue;
+    }
+    if (isRehypeIgnoreEnd(line)) {
+      if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
+      continue;
+    }
+    if (rehypeIgnoreDepth > 0) continue;
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
     if (/^\s*<!--/.test(line)) continue;
     const fence = parseFenceOpen(line);
@@ -220,6 +253,15 @@ function extractDocNameAndTitle(frontmatter, body, { id, lang }) {
   for (let i = start; i < lines.length; i++) {
     const line = lines[i];
     if (!line) continue;
+    if (isRehypeIgnoreStart(line)) {
+      rehypeIgnoreDepth++;
+      continue;
+    }
+    if (isRehypeIgnoreEnd(line)) {
+      if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
+      continue;
+    }
+    if (rehypeIgnoreDepth > 0) continue;
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
     if (/^\s*<!--/.test(line)) continue;
 
@@ -249,17 +291,50 @@ function extractDocNameAndTitle(frontmatter, body, { id, lang }) {
 function resolveIconUrl({ lang, id, ref }) {
   if (!id) return undefined;
   if (lang === 'zh') {
-    return `https://raw.githubusercontent.com/${SOURCES.zh.repo}/${ref}/assets/${id}.svg`;
+    return undefined;
   }
-  return `https://raw.githubusercontent.com/${SOURCES.en.repo}/${ref}/source/assets/icon/${id}.svg`;
+  return undefined;
 }
 
-function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, ref, debug }) {
+async function resolveLocalIconRawfilePath({ lang, id, source, outDir }) {
+  if (!id) return undefined;
+  const relIconPath = lang === 'zh'
+    ? path.join('assets', `${id}.svg`)
+    : path.join('source', 'assets', 'icon', `${id}.svg`);
+  const absIconPath = path.join(process.cwd(), source.submoduleDir, relIconPath);
+
+  const outRel = path.join('icons', lang, `${id}.svg`);
+  const outAbs = path.join(outDir, outRel);
+  const rawfilePath = `reference/icons/${lang}/${id}.svg`;
+
+  return pathExists(absIconPath).then(
+    (exists) => {
+      if (!exists) {
+        return pathExists(outAbs).then(
+          (outExists) => outExists ? rawfilePath : undefined,
+          (e) => Promise.reject(new Error(`检查 SVG 图标失败:${outAbs} (${String(e)})`)),
+        );
+      }
+      return fs.readFile(absIconPath, 'utf8').then(
+        (svgText) => fs.mkdir(path.dirname(outAbs), { recursive: true }).then(
+          () => fs.writeFile(outAbs, String(svgText ?? ''), 'utf8').then(
+            () => rawfilePath,
+            (e) => Promise.reject(new Error(`写入 SVG 图标失败:${outAbs} (${String(e)})`)),
+          ),
+          (e) => Promise.reject(new Error(`创建 SVG 图标目录失败:${path.dirname(outAbs)} (${String(e)})`)),
+        ),
+        (e) => Promise.reject(new Error(`读取 SVG 图标失败:${absIconPath} (${String(e)})`)),
+      );
+    },
+    (e) => Promise.reject(new Error(`检查 SVG 图标失败:${absIconPath} (${String(e)})`)),
+  );
+}
+
+function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, ref, icon, debug }) {
   const { frontmatter, body } = extractFrontmatter(markdown);
   const lines = body.replace(/\r\n/g, '\n').split('\n');
 
   const meta = extractDocNameAndTitle(frontmatter, body, { id, lang });
-  const icon = resolveIconUrl({ lang, id, ref });
   const title = meta.title;
   const name = meta.name;
   const introTitle = lang === 'en' ? 'Intro' : '简介';
@@ -351,6 +426,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
   const maxIterations = lines.length * 50 + 1000;
   let iter = 0;
   if (debug) console.log(`parse: ${lang}/${id} lines=${lines.length}`);
+  let rehypeIgnoreDepth = 0;
 
   for (let i = 0; i < lines.length; i++) {
     iter++;
@@ -359,6 +435,15 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     }
     const line = lines[i];
     if (debug && i % 20 === 0) console.log(`... at ${lang}/${id} i=${i} ${line.trim().slice(0, 60)}`);
+    if (isRehypeIgnoreStart(line)) {
+      rehypeIgnoreDepth++;
+      continue;
+    }
+    if (isRehypeIgnoreEnd(line)) {
+      if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
+      continue;
+    }
+    if (rehypeIgnoreDepth > 0) continue;
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue; // e.g. "{.shortcuts}"
     if (/^\s*<!--/.test(line)) continue;
     if (isHorizontalRuleLine(line)) continue;
@@ -417,10 +502,18 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
 
     const fence = parseFenceOpen(line);
     if (fence) {
+      if (isHtmlPreviewFence(fence)) {
+        i++;
+        while (i < lines.length && !isFenceClose(lines[i], fence.marker)) i++;
+        continue;
+      }
       const codeParts = [];
 
       const skipBetweenFences = (l) =>
-        !l.trim() || /^\s*\{[.#][^}]+\}\s*$/.test(l) || /^\s*<!--/.test(l) || isHorizontalRuleLine(l);
+        !l.trim()
+        || /^\s*\{[.#][^}]+\}\s*$/.test(l)
+        || isHorizontalRuleLine(l)
+        || (/^\s*<!--/.test(l) && !isRehypeIgnoreStart(l) && !isRehypeIgnoreEnd(l));
 
       while (i < lines.length) {
         const openFence = parseFenceOpen(lines[i]);
@@ -443,7 +536,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
         let j = i + 1;
         while (j < lines.length && skipBetweenFences(lines[j])) j++;
         const nextFence = j < lines.length ? parseFenceOpen(lines[j]) : undefined;
-        if (!nextFence) break;
+        if (!nextFence || isHtmlPreviewFence(nextFence)) break;
 
         i = j;
       }
@@ -700,6 +793,15 @@ async function main() {
     const langOutDir = path.join(outDir, lang);
     await fs.mkdir(langOutDir, { recursive: true });
 
+    const absSubmoduleRoot = path.join(process.cwd(), source.submoduleDir);
+    const hasSubmodule = await pathExists(absSubmoduleRoot);
+    if (!hasSubmodule) {
+      throw new Error(`缺少 submodule（用于本地 SVG 图标）：${absSubmoduleRoot}`);
+    }
+
+    /** @type {Map<string, string | undefined>} */
+    const iconCache = new Map();
+
     /** @type {{ id: string; name: string; title: string; icon?: string; file: string; sectionCount: number; cardCount: number }[]} */
     const manifestDocs = [];
 
@@ -722,7 +824,14 @@ async function main() {
         if (filter) console.log(`Processing: ${lang} ${id} (${rel})`);
         const md = await fs.readFile(doc.absPath, 'utf8');
         const sourcePath = `${source.docsDir.replace(/\\/g, '/')}/${rel}`;
-        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath, ref, debug: Boolean(filter) });
+        const cacheKey = `${lang}:${id}`;
+        const icon = iconCache.has(cacheKey)
+          ? iconCache.get(cacheKey)
+          : await resolveLocalIconRawfilePath({ lang, id, source, outDir }).then((v) => {
+            iconCache.set(cacheKey, v);
+            return v;
+          });
+        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath, ref, icon, debug: Boolean(filter) });
         if (filter) console.log(`Parsed: ${lang} ${id} sections=${parsed.sections.length} cards=${parsed.cards.length}`);
         const file = `reference/${lang}/${id}.json`;
 
@@ -751,7 +860,14 @@ async function main() {
         const id = safeIdFromPath(rel);
         if (filter) console.log(`Processing: ${lang} ${id} (${doc.path})`);
         const md = await githubText(doc.download_url);
-        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath: doc.path, ref, debug: Boolean(filter) });
+        const cacheKey = `${lang}:${id}`;
+        const icon = iconCache.has(cacheKey)
+          ? iconCache.get(cacheKey)
+          : await resolveLocalIconRawfilePath({ lang, id, source, outDir }).then((v) => {
+            iconCache.set(cacheKey, v);
+            return v;
+          });
+        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath: doc.path, ref, icon, debug: Boolean(filter) });
         if (filter) console.log(`Parsed: ${lang} ${id} sections=${parsed.sections.length} cards=${parsed.cards.length}`);
         const file = `reference/${lang}/${id}.json`;
 
@@ -789,12 +905,6 @@ async function main() {
     console.log(`OK: ${lang} ${manifestDocs.length} docs -> ${langOutDir}`);
   }
 
-  const manifestBundle = {
-    zh: manifestsByLang.get('zh') ?? null,
-    en: manifestsByLang.get('en') ?? null,
-  };
-  await fs.writeFile(path.join(outDir, 'manifest.json'), JSON.stringify(manifestBundle, null, 2), 'utf8');
-  console.log(`OK: manifest bundle -> ${path.join(outDir, 'manifest.json')}`);
 }
 
 main().then(

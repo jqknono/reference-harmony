@@ -2,7 +2,7 @@
   "id": "alan-ai",
   "name": "Alan AI",
   "title": "Alan AI",
-  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/alan-ai.svg",
+  "icon": "reference/icons/en/alan-ai.svg",
   "sections": [
     {
       "id": "intro",
@@ -17,7 +17,12 @@
     {
       "id": "s2",
       "title": "Client SDK",
-      "startIndex": 86
+      "startIndex": 113
+    },
+    {
+      "id": "s3",
+      "title": "Also see",
+      "startIndex": 144
     }
   ],
   "cards": [
@@ -31,74 +36,105 @@
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Intents%20%26%20patterns",
-      "body": "Define%20a%20voice%2Ftext%20command%20to%20play%20a%20response%0A%0A%60%60%60%7B.wrap%7D%0Aintent('pattern'%5B%2C%20'patternN'%5D%2C%20reply('pattern'))%0A%0A%60%60%60%0A%0ADefine%20a%20voice%2Ftext%20command%20to%20play%20a%20response%20or%20perform%20an%20action%0A%0A%60%60%60%7B.wrap%7D%0Aintent('pattern'%5B%2C%20'patternN'%5D%2C%20p%20%3D%3E%20%7B%20action%20%7D)%0A%60%60%60%0A%0ADefine%20alternatives%0A%0A%60%60%60%7B.wrap%7D%0Aintent('phrase1%7Cphrase2')%0A%0A%60%60%60%0A%0ADefine%20optional%20words%20and%20phrases%0A%0A%60%60%60%7B.wrap%7D%0Aintent('pattern%20(optional%20phrase%7C)')%0A%60%60%60",
+      "body": "Define%20a%20voice%2Ftext%20command%20to%20play%20a%20response%0A%0A%60%60%60%7B.wrap%7D%0Aintent('pattern'%5B%2C%20'patternN'%5D%2C%20reply('pattern'))%0A%60%60%60%0A%0ADefine%20a%20voice%2Ftext%20command%20to%20play%20a%20response%20or%20perform%20an%20action%0A%0A%60%60%60%7B.wrap%7D%0Aintent('pattern'%5B%2C%20'patternN'%5D%2C%20p%20%3D%3E%20%7B%20action%20%7D)%0A%60%60%60%0A%0ADefine%20alternatives%0A%0A%60%60%60%7B.wrap%7D%0Aintent('phrase1%7Cphrase2')%0A%60%60%60%0A%0ADefine%20optional%20words%20and%20phrases%0A%0A%60%60%60%7B.wrap%7D%0Aintent('pattern%20(optional%20phrase%7C)')%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s1-7",
+      "id": "s1-9",
       "sectionId": "s1",
       "title": "Response%20functions",
-      "body": "Play%20a%20response%20(in%20case%20of%20multiple%20patterns%2C%20a%20response%20is%20picked%20at%20random)%0A%0A%60%60%60%7B.wrap%7D%0Areply('pattern'%5B%2C%20'patternN'%5D)%0A%0A%60%60%60%0A%0APlay%20a%20response%0A%0A%60%60%60%7B.wrap%7D%0Ap.play('pattern')%0A%60%60%60%0A%0ADefine%20voice%20settings%20for%20the%20assistant%20reply%3A%20%60accent%20(en%2C%20fr%2C%20de%2C%20it%2C%20ru%2C%20es)%60%2C%20%60gender%20(male%2Ffemale)%60%2C%20%60voice%20type%60%2C%0A%60speaking%20pitch%60%2C%20%60speaking%20rate%60%0A%0A%60%60%60%7B.wrap%7D%0Ap.play(%5Bvoice(code%2C%20gender%2C%20type%2C%20pitch%2C%20rate)%2C%20%5D'pattern')%0A%0A%60%60%60%0A%0ADefine%20play%20options%3A%20%60force%3Atrue%60%20(execute%20if%20the%20button%20is%20inactive)%2C%20%60activate%3Atrue%60%20(activate%20the%20button%20before)%2C%0A%60deactivate%3Atrue%60%20(deactivate%20the%20button%20after)%0A%0A%60%60%60%7B.wrap%7D%0Ap.play('pattern'%5B%2C%20opts(options)%5D)%0A%60%60%60%0A%0ASend%20a%20command%20to%20the%20app%0A%0A%60%60%60%7B.wrap%7D%0Ap.play(%7Bcommand%3Adata%7D)%0A%0A%60%60%60%0A%0A%23%23%23%20User-defined%20slots%0A%0ADefine%20a%20static%20list%20of%20values%20expected%20in%20the%20input%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME%20value1%7Cvalue2)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0AProvide%20labels%20to%20classify%20or%20identify%20the%20slot%20values%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME%20value1~label1%7Cvalue2~label2)%20%3D%3E%20p.SLOTNAME.label%0A%0A%60%60%60%0A%0AEnable%20fuzzy%20matching%20to%20capture%20similar%20variants%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME~%20value1%7Cvalue2)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0AMake%20a%20slot%20optional%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME%20value1%7Cvalue2%7C)%0A%0A%60%60%60%0A%0ACapture%20several%20slot%20values%0A%0A%60%60%60%7B.wrap%7D%0Aintent('%24(SLOTNAME%20value1%7Cvalue2)%20and%20%24(SLOTNAME%20value1%7Cvalue2%20)')%20%3D%3E%20p.SLOTNAME_%20(array)%2C%20p.SLOTNAME_%5B0%5D.value%2C%20p.SLOTNAME_%5B1%5D.value%0A%60%60%60",
+      "body": "Play%20a%20response%20(in%20case%20of%20multiple%20patterns%2C%20a%20response%20is%20picked%20at%20random)%0A%0A%60%60%60%7B.wrap%7D%0Areply('pattern'%5B%2C%20'patternN'%5D)%0A%60%60%60%0A%0APlay%20a%20response%0A%0A%60%60%60%7B.wrap%7D%0Ap.play('pattern')%0A%60%60%60%0A%0ADefine%20voice%20settings%20for%20the%20assistant%20reply%3A%20%60accent%20(en%2C%20fr%2C%20de%2C%20it%2C%20ru%2C%20es)%60%2C%20%60gender%20(male%2Ffemale)%60%2C%20%60voice%20type%60%2C%0A%60speaking%20pitch%60%2C%20%60speaking%20rate%60%0A%0A%60%60%60%7B.wrap%7D%0Ap.play(%5Bvoice(code%2C%20gender%2C%20type%2C%20pitch%2C%20rate)%2C%20%5D'pattern')%0A%60%60%60%0A%0ADefine%20play%20options%3A%20%60force%3Atrue%60%20(execute%20if%20the%20button%20is%20inactive)%2C%20%60activate%3Atrue%60%20(activate%20the%20button%20before)%2C%0A%60deactivate%3Atrue%60%20(deactivate%20the%20button%20after)%0A%0A%60%60%60%7B.wrap%7D%0Ap.play('pattern'%5B%2C%20opts(options)%5D)%0A%60%60%60%0A%0ASend%20a%20command%20to%20the%20app%0A%0A%60%60%60%7B.wrap%7D%0Ap.play(%7Bcommand%3Adata%7D)%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s1-22",
+      "id": "s1-19",
+      "sectionId": "s1",
+      "title": "User-defined%20slots",
+      "body": "Define%20a%20static%20list%20of%20values%20expected%20in%20the%20input%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME%20value1%7Cvalue2)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0AProvide%20labels%20to%20classify%20or%20identify%20the%20slot%20values%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME%20value1~label1%7Cvalue2~label2)%20%3D%3E%20p.SLOTNAME.label%0A%60%60%60%0A%0AEnable%20fuzzy%20matching%20to%20capture%20similar%20variants%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME~%20value1%7Cvalue2)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0AMake%20a%20slot%20optional%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME%20value1%7Cvalue2%7C)%0A%60%60%60%0A%0ACapture%20several%20slot%20values%0A%0A%60%60%60%7B.wrap%7D%0Aintent('%24(SLOTNAME%20value1%7Cvalue2)%20and%20%24(SLOTNAME%20value1%7Cvalue2%20)')%20%3D%3E%20p.SLOTNAME_%20(array)%2C%20p.SLOTNAME_%5B0%5D.value%2C%20p.SLOTNAME_%5B1%5D.value%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-29",
       "sectionId": "s1",
       "title": "Predefined slots",
-      "body": "Capture date values\n\n```{.wrap}\n$(DATE) => p.DATE.value, p.DATE.moment, p.DATE.luxon\n\n```\n\nCapture time values\n\n```{.wrap}\n$(TIME) => p.TIME.value, p.TIME.moment\n```\n\nCapture cardinal numbers\n\n```{.wrap}\n$(NUMBER) => p.NUMBER.value, p.NUMBER.number\n\n```\n\nCapture ordinal numbers\n\n```{.wrap}\n$(ORDINAL) => p.ORDINAL.value, p.ORDINAL.number\n```\n\nCapture locations\n\n```{.wrap}\n$(LOC) => p.LOC.value\n\n```\n\nCapture names\n\n```{.wrap}\n$(NAME) => p.NAME.value\n```"
-    },
-    {
-      "id": "s1-31",
-      "sectionId": "s1",
-      "title": "Dynamic%20slots",
-      "body": "Define%20a%20dynamic%20slot%20at%20the%20project%20level%0A%0A%60%60%60%7B.wrap%7D%0Aproject.name%20%3D%20%7Ben%3A%20%22value1%7Cvalue2%7Cvalue3%22%7D%0A%24(SLOTNAME%20p%3Aname)%20%3D%3E%20p.SLOTNAME.value%0A%0A%60%60%60%0A%0ADefine%20a%20dynamic%20slot%20at%20the%20dialog%20session%20level%0A%0A%60%60%60%7B.wrap%7D%0Ap.userData.name%20%3D%20%7Ben%3A%20%22value1%7Cvalue2%7Cvalue3%22%7D%0A%24(SLOTNAME%20u%3Aname)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0AGet%20data%20for%20a%20dynamic%20slot%20with%20the%20visual%20state%0A%0A%60%60%60%7B.wrap%7D%0Alet%20name%20%3D%20%5B%22value1%7Cvalue2%7Cvalue3%22%5D%0Ap.visual.data%20%3D%20%7Ben%3A%20name%7D%3B%0A%24(SLOTNAME%20v%3Aname)%20%3D%3E%20p.SLOTNAME.value%0A%0A%60%60%60%0A%0ADefine%20a%20dynamic%20slot%20in%20a%20short%20form%0A%0A%60%60%60%7B.wrap%7D%0Aproject.name%20%3D%20%7Ben%3A%20%22value1%7Cvalue2%7Cvalue3%22%7D%0A%24(p%3Aname)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0ADefine%20labels%20for%20dynamic%20slots%3A%20see%20%5BUser-defined%20slots%5D(%23user-defined-slots).%0A%0AEnable%20fuzzy%20matching%20for%20dynamic%20slots%3A%20see%20%5BUser-defined%20slots%5D(%23user-defined-slots).%0A%0AMake%20a%20dynamic%20slot%20optional%3A%20see%20%5BUser-defined%20slots%5D(%23user-defined-slots).%0A%0ACapture%20several%20slot%20values%3A%20see%20%5BUser-defined%20slots%5D(%23user-defined-slots).",
-      "encoded": true
+      "body": "Capture date values\n\n```{.wrap}\n$(DATE) => p.DATE.value, p.DATE.moment, p.DATE.luxon\n```\n\nCapture time values\n\n```{.wrap}\n$(TIME) => p.TIME.value, p.TIME.moment\n```\n\nCapture cardinal numbers\n\n```{.wrap}\n$(NUMBER) => p.NUMBER.value, p.NUMBER.number\n```\n\nCapture ordinal numbers\n\n```{.wrap}\n$(ORDINAL) => p.ORDINAL.value, p.ORDINAL.number\n```\n\nCapture locations\n\n```{.wrap}\n$(LOC) => p.LOC.value\n```\n\nCapture names\n\n```{.wrap}\n$(NAME) => p.NAME.value\n```"
     },
     {
       "id": "s1-41",
       "sectionId": "s1",
-      "title": "RegEx%20slots",
-      "body": "Capture%20digit%20and%2For%20letter%20combination%0A%0A%60%60%60%7B.wrap%7D%0Aconst%20reg%20%3D%20%22(%5BA-Za-z%5D%7B1%7D%5C%5Cs%3F)%7B6%7D%22%0A%24(SLOTNAME*%20%24%7Breg%7D)%20%3D%3E%20p.SLOTNAME.value%0A%0A%60%60%60%0A%0ACapture%20any%20user%E2%80%99s%20input%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME*%20.%2B)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60",
+      "title": "Dynamic%20slots",
+      "body": "Define%20a%20dynamic%20slot%20at%20the%20project%20level%0A%0A%60%60%60%7B.wrap%7D%0Aproject.name%20%3D%20%7Ben%3A%20%22value1%7Cvalue2%7Cvalue3%22%7D%0A%24(SLOTNAME%20p%3Aname)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0ADefine%20a%20dynamic%20slot%20at%20the%20dialog%20session%20level%0A%0A%60%60%60%7B.wrap%7D%0Ap.userData.name%20%3D%20%7Ben%3A%20%22value1%7Cvalue2%7Cvalue3%22%7D%0A%24(SLOTNAME%20u%3Aname)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0AGet%20data%20for%20a%20dynamic%20slot%20with%20the%20visual%20state%0A%0A%60%60%60%7B.wrap%7D%0Alet%20name%20%3D%20%5B%22value1%7Cvalue2%7Cvalue3%22%5D%0Ap.visual.data%20%3D%20%7Ben%3A%20name%7D%3B%0A%24(SLOTNAME%20v%3Aname)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0ADefine%20a%20dynamic%20slot%20in%20a%20short%20form%0A%0A%60%60%60%7B.wrap%7D%0Aproject.name%20%3D%20%7Ben%3A%20%22value1%7Cvalue2%7Cvalue3%22%7D%0A%24(p%3Aname)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0ADefine%20labels%20for%20dynamic%20slots%3A%20see%20%5BUser-defined%20slots%5D(%23user-defined-slots).%0A%0AEnable%20fuzzy%20matching%20for%20dynamic%20slots%3A%20see%20%5BUser-defined%20slots%5D(%23user-defined-slots).%0A%0AMake%20a%20dynamic%20slot%20optional%3A%20see%20%5BUser-defined%20slots%5D(%23user-defined-slots).%0A%0ACapture%20several%20slot%20values%3A%20see%20%5BUser-defined%20slots%5D(%23user-defined-slots).",
       "encoded": true
     },
     {
-      "id": "s1-44",
+      "id": "s1-53",
+      "sectionId": "s1",
+      "title": "RegEx%20slots",
+      "body": "Capture%20digit%20and%2For%20letter%20combination%0A%0A%60%60%60%7B.wrap%7D%0Aconst%20reg%20%3D%20%22(%5BA-Za-z%5D%7B1%7D%5C%5Cs%3F)%7B6%7D%22%0A%24(SLOTNAME*%20%24%7Breg%7D)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60%0A%0ACapture%20any%20user%E2%80%99s%20input%0A%0A%60%60%60%7B.wrap%7D%0A%24(SLOTNAME*%20.%2B)%20%3D%3E%20p.SLOTNAME.value%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-57",
       "sectionId": "s1",
       "title": "Contexts",
-      "body": "Define%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Alet%20contextName%20%3D%20context(()%20%3D%3E%20%7B%20action%20%7D)%0A%0A%60%60%60%0A%0AActivate%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Aintent('pattern'%2C%20p%20%3D%3E%20%7B...%2C%20p.then(contextName)%7D%0A%60%60%60%0A%0APass%20data%20to%20the%20context%0A%0A%60%60%60%7B.wrap%7D%0Ap.then(contextName%2C%20state%3A%20%7Bdata%3AyourData%7D)%20%3D%3E%20p.state.data%0A%0A%60%60%60%0A%0AResolve%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Ap.resolve(%5Bdata%3AyourData%5D)%0A%60%60%60%0A%0AReset%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Ap.resetContext()%0A%0A%60%60%60%0A%0ADefine%20intents%20to%20be%20matched%20at%20any%20time%20without%20switching%20the%20current%20context%0A%0A%60%60%60%7B.wrap%7D%0Aintent(noctx%2C%20'pattern'%2C%20...)%20or%20noContext(()%20%3D%3E%20%7Bintent(...)%7D)%0A%60%60%60%0A%0APlay%20a%20prompt%20for%20an%20expected%20input%0A%0A%60%60%60%7B.wrap%7D%0Afallback('pattern1'%5B%2C%20'patternN'%5D)%0A%0A%60%60%60%0A%0ATitle%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Atitle('contextName')%0A%60%60%60",
+      "body": "Define%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Alet%20contextName%20%3D%20context(()%20%3D%3E%20%7B%20action%20%7D)%0A%60%60%60%0A%0AActivate%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Aintent('pattern'%2C%20p%20%3D%3E%20%7B...%2C%20p.then(contextName)%7D%0A%60%60%60%0A%0APass%20data%20to%20the%20context%0A%0A%60%60%60%7B.wrap%7D%0Ap.then(contextName%2C%20state%3A%20%7Bdata%3AyourData%7D)%20%3D%3E%20p.state.data%0A%60%60%60%0A%0AResolve%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Ap.resolve(%5Bdata%3AyourData%5D)%0A%60%60%60%0A%0AReset%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Ap.resetContext()%0A%60%60%60%0A%0ADefine%20intents%20to%20be%20matched%20at%20any%20time%20without%20switching%20the%20current%20context%0A%0A%60%60%60%7B.wrap%7D%0Aintent(noctx%2C%20'pattern'%2C%20...)%20or%20noContext(()%20%3D%3E%20%7Bintent(...)%7D)%0A%60%60%60%0A%0APlay%20a%20prompt%20for%20an%20expected%20input%0A%0A%60%60%60%7B.wrap%7D%0Afallback('pattern1'%5B%2C%20'patternN'%5D)%0A%60%60%60%0A%0ATitle%20a%20context%0A%0A%60%60%60%7B.wrap%7D%0Atitle('contextName')%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s1-56",
+      "id": "s1-73",
       "sectionId": "s1",
       "title": "Predefined objects",
-      "body": "Store static device- and user-specific data passed from the client app\n\n```{.wrap}\nauthData.data => p.authData.data\n\n```\n\nStore state data to be available globally at the project scope\n\n```{.wrap}\nproject.info = {data:yourData} => project.info.data\n```\n\nStore the intent match score\n\n```{.wrap}\np.score\n\n```\n\nStore data to be passed between contexts\n\n```{.wrap}\np.state.data\n```\n\nStore visual context data to be passed from the client app with `setVisualState()`\n\n```{.wrap}\np.visual.data\n\n```\n\nStore user-specific state data to be accessible during the dialog session\n\n```{.wrap}\np.userData.data\n```"
+      "body": "Store static device- and user-specific data passed from the client app\n\n```{.wrap}\nauthData.data => p.authData.data\n```\n\nStore state data to be available globally at the project scope\n\n```{.wrap}\nproject.info = {data:yourData} => project.info.data\n```\n\nStore the intent match score\n\n```{.wrap}\np.score\n```\n\nStore data to be passed between contexts\n\n```{.wrap}\np.state.data\n```\n\nStore visual context data to be passed from the client app with `setVisualState()`\n\n```{.wrap}\np.visual.data\n```\n\nStore user-specific state data to be accessible during the dialog session\n\n```{.wrap}\np.userData.data\n```"
     },
     {
-      "id": "s1-65",
+      "id": "s1-85",
       "sectionId": "s1",
       "title": "Predefined callbacks",
-      "body": "Define actions to be performed when the script is saved and dialog model is built\n\n```{.wrap}\nonCreateProject(() => { action })\n\n```\n\nDefine actions to be performed when the dialog session starts\n\n```{.wrap}\nonCreateUser((p) => { action })\n```\n\nDefine actions to be performed when the dialog session ends\n\n```{.wrap}\nonCleanupUser((p) => { action })\n\n```\n\nDefine actions to be performed when the visual state is set\n\n```{.wrap}\nonVisualState((p, s) => { action })\n```\n\nDefine actions to be performed when a user event is triggered in the client app: `buttonReady`, `buttonClicked`,\n`micPermissionPrompt`, `micAllowed`, `firstActivate`, `showPopup`, `popupCloseClicked`, `recognized`\n\n```{.wrap}\nonUserEvent((p, e) => { action })\n\n```\n\nDefine actions to be performed when a context is activated\n\n```{.wrap}\nonEnter((p) => { action })\n```"
+      "body": "Define actions to be performed when the script is saved and dialog model is built\n\n```{.wrap}\nonCreateProject(() => { action })\n```\n\nDefine actions to be performed when the dialog session starts\n\n```{.wrap}\nonCreateUser((p) => { action })\n```\n\nDefine actions to be performed when the dialog session ends\n\n```{.wrap}\nonCleanupUser((p) => { action })\n```\n\nDefine actions to be performed when the visual state is set\n\n```{.wrap}\nonVisualState((p, s) => { action })\n```\n\nDefine actions to be performed when a user event is triggered in the client app: `buttonReady`, `buttonClicked`,\n`micPermissionPrompt`, `micAllowed`, `firstActivate`, `showPopup`, `popupCloseClicked`, `recognized`\n\n```{.wrap}\nonUserEvent((p, e) => { action })\n```\n\nDefine actions to be performed when a context is activated\n\n```{.wrap}\nonEnter((p) => { action })\n```"
     },
     {
-      "id": "s1-74",
+      "id": "s1-97",
       "sectionId": "s1",
       "title": "Q%26A%20service",
-      "body": "Define%20a%20URL%20of%20a%20resource%20to%20be%20indexed%0A%0A%60%60%60%7B.wrap%7D%0Acorpus(%7Burl%3A%20url%2C%20depth%3A%20depthLevel%7D)%0A%0A%60%60%60%0A%0ADefine%20text%20corpus%20to%20be%20used%20by%20the%20assistant%20in%20the%20dialog%0A%0A%60%60%60%7B.wrap%7D%0Acorpus('text')%0A%60%60%60",
+      "body": "Define%20a%20URL%20of%20a%20resource%20to%20be%20indexed%0A%0A%60%60%60%7B.wrap%7D%0Acorpus(%7Burl%3A%20url%2C%20depth%3A%20depthLevel%7D)%0A%60%60%60%0A%0ADefine%20text%20corpus%20to%20be%20used%20by%20the%20assistant%20in%20the%20dialog%0A%0A%60%60%60%7B.wrap%7D%0Acorpus('text')%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s1-77",
+      "id": "s1-101",
       "sectionId": "s1",
-      "title": "Built-in%20JS%20libraries",
-      "body": "Make%20API%20calls%0A%0A%60%60%60%7B.wrap%7D%0Aaxios%2C%20request%0A%0A%60%60%60%0A%0AWork%20with%20time%0A%0A%60%60%60%7B.wrap%7D%0Amoment-timezone%2C%20luxon%0A%60%60%60%0A%0AWork%20with%20arrays%2C%20numbers%2C%20objects%2C%20strings%20and%20so%20on%0A%0A%60%60%60%7B.wrap%7D%0Alodash%0A%0A%60%60%60%0A%0A%23%23%23%20Other%0A%0AProvide%20a%20list%20of%20hints%20to%20help%20recognize%20specific%20terms%0A%0A%60%60%60%7B.wrap%7D%0ArecognitionHints('hint'%5B%2C%20'hintN'%5D)%0A%60%60%60%0A%0AWrite%20info%20messages%20to%20Alan%20Studio%20logs%0A%0A%60%60%60%7B.wrap%7D%0Aconsole.log(data)%0A%0A%60%60%60%0A%0AWrite%20error%20messages%20to%20Alan%20Studio%20logs%0A%0A%60%60%60%7B.wrap%7D%0Aconsole.error(data)%0A%60%60%60",
+      "title": "Built-in JS libraries",
+      "body": "Make API calls\n\n```{.wrap}\naxios, request\n```\n\nWork with time\n\n```{.wrap}\nmoment-timezone, luxon\n```\n\nWork with arrays, numbers, objects, strings and so on\n\n```{.wrap}\nlodash\n```"
+    },
+    {
+      "id": "s1-107",
+      "sectionId": "s1",
+      "title": "Other",
+      "body": "Provide%20a%20list%20of%20hints%20to%20help%20recognize%20specific%20terms%0A%0A%60%60%60%7B.wrap%7D%0ArecognitionHints('hint'%5B%2C%20'hintN'%5D)%0A%60%60%60%0A%0AWrite%20info%20messages%20to%20Alan%20Studio%20logs%0A%0A%60%60%60%7B.wrap%7D%0Aconsole.log(data)%0A%60%60%60%0A%0AWrite%20error%20messages%20to%20Alan%20Studio%20logs%0A%0A%60%60%60%7B.wrap%7D%0Aconsole.error(data)%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s2-86",
+      "id": "s2-113",
       "sectionId": "s2",
       "title": "Client API methods",
-      "body": "Send information about the visual state from the client app to the dialog script\n\n```{.wrap}\nsetVisualState(visualStateData:object)\n\n```\n\nSend data or perform actions without a voice/text command\n\n```{.wrap}\nprojectAPI.method = function(p, param, callback) {\n  p.userData.data = param.data;\n  callback();\n};\n\ncallProjectApi(method:string, data:object, callback:function)\n```\n\nPlay a text message in the client app\n\n```{.wrap}\nplayText(text:string)\n\n```\n\nSend a text message to Alan as the user’s input\n\n```{.wrap}\nsendText(text:string)\n```\n\nExecute a command in the client app\n\n```{.wrap}\nplayCommand(command:object)\n\n```\n\n### Client API methods (continued)\n\nActivate the Alan button programmatically\n\n```{.wrap}\nactivate()\n```\n\nDeactivate the Alan button programmatically\n\n```{.wrap}\ndeactivate()\n\n```\n\nCheck the Alan button state\n\n```{.wrap}\nisActive()\n```\n\nRemove the Alan button from the parent element, page (supported on Web, Ionic)\n\n```{.wrap}\nremove()\n\n```\n\nCheck the state of the wake word (supported on iOS, Android)\n\n```{.wrap}\ngetWakewordEnabled()\n```\n\nSet the state of the wake word (supported on iOS, Android)\n\n```{.wrap}\nsetWakewordEnabled(enabled:boolean)\n\n```\n\n### Handlers\n\n// Examples are provided for the Web platform\n\nHandle commands sent from the dialog script to the client app\n\n```{.wrap}\nonCommand: function (commandData) { action }\n```\n\nHandle Alan button state changes\n\n```{.wrap}\nonButtonState: function (e) { action }\n\n```\n\nHandle connection status to the virtual assistant project in the Alan Cloud\n\n```{.wrap}\nonConnectionStatus: function (e) { action }\n```\n\nHandle events received from Alan\n\n```{.wrap}\nonEvent: function (e) { action }\n\n```\n\n## Also see\n\n- [Alan AI website](https://alan.app)\n- [About the Alan Platform](https://alan.app/platform)\n- [Alan AI documentation](https://alan.app/docs)\n\n```"
+      "body": "Send information about the visual state from the client app to the dialog script\n\n```{.wrap}\nsetVisualState(visualStateData:object)\n```\n\nSend data or perform actions without a voice/text command\n\n```{.wrap}\nprojectAPI.method = function(p, param, callback) {\n  p.userData.data = param.data;\n  callback();\n};\n\ncallProjectApi(method:string, data:object, callback:function)\n```\n\nPlay a text message in the client app\n\n```{.wrap}\nplayText(text:string)\n```\n\nSend a text message to Alan as the user’s input\n\n```{.wrap}\nsendText(text:string)\n```\n\nExecute a command in the client app\n\n```{.wrap}\nplayCommand(command:object)\n```"
+    },
+    {
+      "id": "s2-123",
+      "sectionId": "s2",
+      "title": "Client API methods (continued)",
+      "body": "Activate the Alan button programmatically\n\n```{.wrap}\nactivate()\n```\n\nDeactivate the Alan button programmatically\n\n```{.wrap}\ndeactivate()\n```\n\nCheck the Alan button state\n\n```{.wrap}\nisActive()\n```\n\nRemove the Alan button from the parent element, page (supported on Web, Ionic)\n\n```{.wrap}\nremove()\n```\n\nCheck the state of the wake word (supported on iOS, Android)\n\n```{.wrap}\ngetWakewordEnabled()\n```\n\nSet the state of the wake word (supported on iOS, Android)\n\n```{.wrap}\nsetWakewordEnabled(enabled:boolean)\n```"
+    },
+    {
+      "id": "s2-135",
+      "sectionId": "s2",
+      "title": "Handlers",
+      "body": "// Examples are provided for the Web platform\n\nHandle commands sent from the dialog script to the client app\n\n```{.wrap}\nonCommand: function (commandData) { action }\n```\n\nHandle Alan button state changes\n\n```{.wrap}\nonButtonState: function (e) { action }\n```\n\nHandle connection status to the virtual assistant project in the Alan Cloud\n\n```{.wrap}\nonConnectionStatus: function (e) { action }\n```\n\nHandle events received from Alan\n\n```{.wrap}\nonEvent: function (e) { action }\n```"
+    },
+    {
+      "id": "s3-144",
+      "sectionId": "s3",
+      "title": "Also see",
+      "body": "• [Alan AI website](https://alan.app)\n• [About the Alan Platform](https://alan.app/platform)\n• [Alan AI documentation](https://alan.app/docs)"
     }
   ],
   "source": {

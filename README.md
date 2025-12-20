@@ -1,0 +1,110 @@
+# 开发速查（Quick Reference）- HarmonyOS App
+
+开源地址: https://github.com/jqknono/reference-harmony
+
+一个将上游「速查表/备忘清单」Markdown 预处理为离线卡片数据，并在 HarmonyOS 上以更适合手机阅读的方式展示的示例工程。
+
+## 应用介绍
+
+### 应用一句话简介（17个字以内，用于小编推荐）
+
+离线速查表，随查随用
+
+### 应用介绍（面向普通用户，用于应用商店介绍）
+
+一款随身速查应用，汇集常用工作主题的要点、代码示例与问答卡片，方便你在学习、工作或临时需要时快速查到答案。支持关键词搜索、章节快速跳转；提供中英文与深色/浅色主题，离线也能使用。
+
+- 主题速查：按目录浏览与搜索，快速定位所需内容。
+- 快速检索：支持文档内搜索与章节跳转，查找更高效。
+- 离线可用：内容内置，弱网/无网也能查看。
+- 个性阅读：支持中英文切换与深色/浅色主题。
+
+## 功能
+
+- **目录（Catalog）**：按文档列表浏览与搜索，显示章节数/卡片数。
+- **阅读（List）**：按章节分组展示卡片（`text` / `code` / `qa`），支持文档内搜索与章节快速跳转（Chip 导航、TOC 面板）。
+- **设置（Settings）**：语言（`zh`/`en`）与主题（`dark`/`light`），使用 Preferences 持久化。
+- **离线数据**：运行时从 `rawfile` 读取 JSON 渲染，不依赖在线接口。
+
+## 数据来源与生成
+
+工程将上游 Markdown 转为如下离线资源：
+
+- `entry/src/main/resources/rawfile/reference/{zh|en}/*.json`
+- `entry/src/main/resources/rawfile/reference/{zh|en}/manifest.json`
+- `entry/src/main/resources/rawfile/reference/manifest.json`（`zh/en` 打包后的 bundle）
+
+同步/生成脚本：`tools/sync_reference_docs.mjs`
+
+### 推荐（使用 submodule，本地生成）
+
+```bash
+git submodule update --init --recursive
+node tools/sync_reference_docs.mjs --mode=local
+```
+
+### 可选（无 submodule，走 GitHub API）
+
+```bash
+node tools/sync_reference_docs.mjs --mode=github
+```
+
+常用参数：
+
+- `--langs=zh,en`：选择生成语言
+- `--zh-ref=main` / `--en-ref=main`：指定上游分支/Tag
+- `--limit=20`：仅生成前 N 个文档（便于调试）
+- `--filter=keyword`：仅处理路径包含关键字的文档
+- `--concurrency=8`：并发数
+
+> 如果 App 提示 “加载 manifest 失败”，通常是 `rawfile/reference/**` 未生成或不完整，先运行上述脚本。
+
+## 构建与运行
+
+### 使用 DevEco Studio（推荐）
+
+1. 用 DevEco Studio 打开工程目录（本仓库根目录）。
+2. 确认已配置 HarmonyOS SDK（本工程 `modelVersion` 为 `6.0.1`，对应 API 21）。
+3. 运行 `tools/sync_reference_docs.mjs` 生成/更新离线数据（可选，仓库已包含一份示例数据）。
+4. 选择设备/模拟器后运行。
+
+### 命令行构建（用于验证/CI）
+
+仓库约束要求：每次修改 `.ets/.ts/.js/.mjs` 后必须验证编译通过。编译命令如下（按本机 DevEco 安装路径调整）：
+
+```powershell
+"C:\Program Files\Huawei\DevEco Studio\tools\node\node.exe" "C:\Program Files\Huawei\DevEco Studio\tools\hvigor\bin\hvigorw.js" clean --mode module -p product=default assembleHap --analyze=normal --parallel --incremental --daemon
+```
+
+## 工程结构
+
+- `AppScope/`：应用级配置（`app.json5`、应用资源等）
+- `entry/`：Stage 模型入口模块
+  - `entry/src/main/ets/pages/Index.ets`：主页面（Tabs：Catalog / List / Settings）
+  - `entry/src/main/ets/common/referenceRepository.ets`：从 `rawfile` 读取并解析 JSON
+  - `entry/src/main/ets/common/referenceModels.ets`：数据结构（manifest / doc / card）
+  - `entry/src/main/ets/components/ReferenceCard.ets`：卡片渲染
+  - `entry/src/main/resources/rawfile/reference/`：离线数据（由脚本生成）
+- `tools/sync_reference_docs.mjs`：同步上游 Markdown 并生成离线 JSON
+- `submodules/`：上游数据源仓库（可选但推荐）
+  - `submodules/jaywcjlove-reference`：中文数据源
+  - `submodules/fechin-reference`：英文数据源
+- `docs/DEV_PLAN.md`：实现思路与迭代计划
+
+## 开发约束（重要）
+
+- 禁止在本仓库的**源代码**（`.ets/.ts/.js/.mjs`，包含工具脚本）中使用 `try/catch/finally` 语句块。
+- 处理异常请使用返回结果类型或 Promise 的双参数 `then(onFulfilled, onRejected)` 链路/显式 `throw`。
+- 如需补充上下文，请在同一执行路径直接构造 `Error` 并抛出（或拒绝 Promise），不要借助 `try/catch` 包裹。
+
+## 常见问题
+
+- **`hvigor/ohpm` 命令行工具启动报错**（`Class extends value undefined...`）：见 `docs/DEV_PLAN.md` 的 “命令行工具依赖冲突” 说明。
+- **GitHub API 受限/拉取慢**：优先使用 `git submodule update --init --recursive` 并 `--mode=local`。
+
+## 致谢与说明
+
+离线数据来源：
+
+- 中文：`jaywcjlove/reference`（MIT License，详见 `submodules/jaywcjlove-reference/LICENSE`）
+- 英文：`Fechin/reference`（GPL-3.0，详见 `submodules/fechin-reference/LICENSE`）

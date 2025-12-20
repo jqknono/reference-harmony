@@ -2,7 +2,7 @@
   "id": "django",
   "name": "Django",
   "title": "A Django cheat sheet.",
-  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/django.svg",
+  "icon": "reference/icons/en/django.svg",
   "sections": [
     {
       "id": "intro",
@@ -539,7 +539,7 @@
       "id": "s20-171",
       "sectionId": "s20",
       "title": "Step 7 — Creating systemd Socket and Service Files for Gunicorn You have tested tha",
-      "body": "```bash\nsudo nano /etc/systemd/system/gunicorn.socket\n```\n\n• Inside, you will create a `[Unit]` section to describe the socket, a `[Socket]` section to define the socket location,\n\nand an `[Install]` section to make sure the socket is created at the right time:\n\n```bash /etc/systemd/system/gunicorn.socket\n[Unit]\nDescription=gunicorn socket\n\n[Socket]\nListenStream=/run/gunicorn.sock\n\n[Install]\nWantedBy=sockets.target\n\n```\n\n- Save and close the file when you are finished.\n- Next, create and open a systemd service file for Gunicorn with sudo privileges in your text editor. The service\n  filename should match the socket filename with the exception of the extension:\n\n```bash\nsudo nano /etc/systemd/system/gunicorn.service\n```\n\n```bash\n[Unit]\nDescription=gunicorn daemon\nRequires=gunicorn.socket\nAfter=network.target\n\n[Service]\nUser=sammy\nGroup=www-data\nWorkingDirectory=/home/sammy/myprojectdir\nExecStart=/home/sammy/myprojectdir/myprojectenv/bin/gunicorn \\\n          --access-logfile - \\\n          --workers 3 \\\n          --bind unix:/run/gunicorn.sock \\\n          myproject.wsgi:application\n\n[Install]\nWantedBy=multi-user.target\n```\n\n• You can now start and enable the Gunicorn socket. This will create the socket file at /run/gunicorn.sock now and at\n\nboot. When a connection is made to that socket, systemd will automatically start the gunicorn.service to handle it\n\n```bash\nsudo systemctl start gunicorn.socket\nsudo systemctl enable gunicorn.socket\n```"
+      "body": "```bash\nsudo nano /etc/systemd/system/gunicorn.socket\n```\n\n• Inside, you will create a `[Unit]` section to describe the socket, a `[Socket]` section to define the socket location,\n\nand an `[Install]` section to make sure the socket is created at the right time:\n\n```bash /etc/systemd/system/gunicorn.socket\n[Unit]\nDescription=gunicorn socket\n\n[Socket]\nListenStream=/run/gunicorn.sock\n\n[Install]\nWantedBy=sockets.target\n```\n\n• Save and close the file when you are finished.\n• Next, create and open a systemd service file for Gunicorn with sudo privileges in your text editor. The service\n\nfilename should match the socket filename with the exception of the extension:\n\n```bash\nsudo nano /etc/systemd/system/gunicorn.service\n```\n\n```bash\n[Unit]\nDescription=gunicorn daemon\nRequires=gunicorn.socket\nAfter=network.target\n\n[Service]\nUser=sammy\nGroup=www-data\nWorkingDirectory=/home/sammy/myprojectdir\nExecStart=/home/sammy/myprojectdir/myprojectenv/bin/gunicorn \\\n          --access-logfile - \\\n          --workers 3 \\\n          --bind unix:/run/gunicorn.sock \\\n          myproject.wsgi:application\n\n[Install]\nWantedBy=multi-user.target\n```\n\n• You can now start and enable the Gunicorn socket. This will create the socket file at /run/gunicorn.sock now and at\n\nboot. When a connection is made to that socket, systemd will automatically start the gunicorn.service to handle it\n\n```bash\nsudo systemctl start gunicorn.socket\nsudo systemctl enable gunicorn.socket\n```"
     },
     {
       "id": "s20-181",

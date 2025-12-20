@@ -2,7 +2,6 @@
   "id": "ssh",
   "name": "SSH",
   "title": "This quick reference cheat sheet provides various for using SSH.",
-  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/ssh.svg",
   "sections": [
     {
       "id": "intro",
@@ -16,8 +15,18 @@
     },
     {
       "id": "s2",
+      "title": "SSH keygen",
+      "startIndex": 40
+    },
+    {
+      "id": "s3",
+      "title": "SSH Tunneling",
+      "startIndex": 59
+    },
+    {
+      "id": "s4",
       "title": "Also see",
-      "startIndex": 50
+      "startIndex": 66
     }
   ],
   "cards": [
@@ -31,73 +40,121 @@
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Connecting",
-      "body": "Connect%20to%20a%20server%20(default%20port%2022)%0A%0A%60%60%60shell%20script%0A%24%20ssh%20root%40192.168.1.5%0A%0A%60%60%60%0A%0AConnect%20on%20a%20specific%20port%0A%0A%60%60%60shell%20script%0A%24%20ssh%20root%40192.168.1.5%20-p%206222%0A%60%60%60%0A%0AConnect%20via%20pem%20file%20(0400%20permissions)%0A%0A%60%60%60shell%20script%0A%24%20ssh%20-i%20%2Fpath%2Ffile.pem%20root%40192.168.1.5%0A%0A%60%60%60%0A%0ASee%3A%20%5BSSH%20Permissions%5D(%2Fchmod%23ssh-permissions)%0A%0A%23%23%23%20Executing%0A%0AExecutes%20remote%20command%0A%0A%60%60%60shell%20script%0A%24%20ssh%20root%40192.168.1.5%20'ls%20-l'%0A%60%60%60%0A%0AInvoke%20a%20local%20script%0A%0A%60%60%60shell%20script%0A%24%20ssh%20root%40192.168.1.5%20bash%20%3C%20script.sh%0A%0A%60%60%60%0A%0ACompresses%20and%20downloads%20from%20a%20server%0A%0A%60%60%60shell%20script%20%7B.wrap%7D%0A%24%20ssh%20root%40192.168.1.5%20%22tar%20cvzf%20-%20~%2Fsource%22%20%3E%20output.tgz%0A%60%60%60",
+      "body": "Connect to a server (default port 22)\n\n```shell script\n$ ssh root@192.168.1.5\n```\n\nConnect on a specific port\n\n```shell script\n$ ssh root@192.168.1.5 -p 6222\n```\n\nConnect via pem file (0400 permissions)\n\n```shell script\n$ ssh -i /path/file.pem root@192.168.1.5\n```\n\nSee: [SSH Permissions](/chmod#ssh-permissions)"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "Executing",
+      "body": "Executes%20remote%20command%0A%0A%60%60%60shell%20script%0A%24%20ssh%20root%40192.168.1.5%20'ls%20-l'%0A%60%60%60%0A%0AInvoke%20a%20local%20script%0A%0A%60%60%60shell%20script%0A%24%20ssh%20root%40192.168.1.5%20bash%20%3C%20script.sh%0A%60%60%60%0A%0ACompresses%20and%20downloads%20from%20a%20server%0A%0A%60%60%60shell%20script%20%7B.wrap%7D%0A%24%20ssh%20root%40192.168.1.5%20%22tar%20cvzf%20-%20~%2Fsource%22%20%3E%20output.tgz%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s1-10",
+      "id": "s1-14",
       "sectionId": "s1",
       "title": "SCP",
-      "body": "Copies from remote to local\n\n```shell script\n$ scp user@server:/dir/file.ext dest/\n\n```\n\nCopies between two servers\n\n```shell script\n$ scp user@server:/file user@server:/dir\n```\n\nCopies from local to remote\n\n```shell script\n$ scp dest/file.ext user@server:/dir\n\n```\n\nCopies a whole folder\n\n```shell script\n$ scp -r user@server:/dir dest/\n```\n\nCopies all files from a folder\n\n```shell script\n$ scp user@server:/dir/* dest/\n\n```\n\nCopies from a server folder to the current folder\n\n```shell script\n$ scp user@server:/dir/* .\n```"
+      "body": "Copies from remote to local\n\n```shell script\n$ scp user@server:/dir/file.ext dest/\n```\n\nCopies between two servers\n\n```shell script\n$ scp user@server:/file user@server:/dir\n```\n\nCopies from local to remote\n\n```shell script\n$ scp dest/file.ext user@server:/dir\n```\n\nCopies a whole folder\n\n```shell script\n$ scp -r user@server:/dir dest/\n```\n\nCopies all files from a folder\n\n```shell script\n$ scp user@server:/dir/* dest/\n```\n\nCopies from a server folder to the current folder\n\n```shell script\n$ scp user@server:/dir/* .\n```"
     },
     {
-      "id": "s1-19",
+      "id": "s1-26",
       "sectionId": "s1",
       "title": "Config location",
       "body": "| File Path                | Description          |\n| ------------------------ | -------------------- |\n| `/etc/ssh/ssh_config`    | System-wide config   |\n| `~/.ssh/config`          | User-specific config |\n| `~/.ssh/id_{type}`       | Private key          |\n| `~/.ssh/id_{type}.pub`   | Public key           |\n| `~/.ssh/known_hosts`     | Known Servers        |\n| `~/.ssh/authorized_keys` | Authorized login key |"
     },
     {
-      "id": "s1-20",
+      "id": "s1-27",
       "sectionId": "s1",
       "title": "SCP Options",
       "body": "| Options       | Description                                    |\n| ------------- | ---------------------------------------------- |\n| scp `-r`      | <yel>R</yel>ecursively copy entire directories |\n| scp `-C`      | <yel>C</yel>ompresses data                     |\n| scp `-v`      | Prints <yel>v</yel>erbose info                 |\n| scp `-P` 8080 | Uses a specific <yel>P</yel>ort                |\n| scp `-B`      | <yel>B</yel>atch mode _(Prevents password)_    |\n| scp `-p`      | <yel>P</yel>reserves times and modes           |"
     },
     {
-      "id": "s1-21",
+      "id": "s1-28",
       "sectionId": "s1",
       "title": "Config sample",
-      "body": "```toml\nHost server1\n    HostName 192.168.1.5\n    User root\n    Port 22\n    IdentityFile ~/.ssh/server1.key\n```\n\nLaunch by alias\n\n```shell script\n$ ssh server1\n\n```\n\nSee: Full [Config Options](https://linux.die.net/man/5/ssh_config)\n\n### ProxyJump\n\n```shell script\n$ ssh -J proxy_host1 remote_host2\n```\n\n```shell script {.wrap}\n$ ssh -J user@proxy_host1 user@remote_host2\n\n```\n\nMultiple jumps\n\n```shell script {.wrap}\n$ ssh -J user@proxy_host1:port1,user@proxy_host2:port2 user@remote_host3\n```"
+      "body": "```toml\nHost server1\n    HostName 192.168.1.5\n    User root\n    Port 22\n    IdentityFile ~/.ssh/server1.key\n```\n\nLaunch by alias\n\n```shell script\n$ ssh server1\n```\n\nSee: Full [Config Options](https://linux.die.net/man/5/ssh_config)"
     },
     {
-      "id": "s1-27",
+      "id": "s1-32",
+      "sectionId": "s1",
+      "title": "ProxyJump",
+      "body": "```shell script\n$ ssh -J proxy_host1 remote_host2\n```\n\n```shell script {.wrap}\n$ ssh -J user@proxy_host1 user@remote_host2\n```\n\nMultiple jumps\n\n```shell script {.wrap}\n$ ssh -J user@proxy_host1:port1,user@proxy_host2:port2 user@remote_host3\n```"
+    },
+    {
+      "id": "s1-35",
       "sectionId": "s1",
       "title": "ssh-copy-id",
-      "body": "%60%60%60shell%20script%20%7B.wrap%7D%0A%24%20ssh-copy-id%20user%40server%0A%0A%60%60%60%0A%0ACopy%20to%20alias%20server%0A%0A%60%60%60shell%20script%20%7B.wrap%7D%0A%24%20ssh-copy-id%20server1%0A%60%60%60%0A%0ACopy%20specific%20key%0A%0A%60%60%60shell%20script%20%7B.wrap%7D%0A%24%20ssh-copy-id%20-i%20~%2F.ssh%2Fid_rsa.pub%20user%40server%0A%0A%60%60%60%0A%0A%23%23%20SSH%20keygen%20%7B.cols-5%7D%0A%0A%23%23%23%20ssh-keygen%20%7B.col-span-2%7D%0A%0A%60%60%60shell%20script%0A%24%20ssh-keygen%20-t%20rsa%20-b%204096%20-C%20%22your%40mail.com%22%0A%60%60%60%0A%0A%7C%20-%20%20%20%7C%20-%20%20%20%20%7C%20-%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20---%20%7C%20----%20%7C%20-----------------------------%20%7C%0A%7C%20%20%20%20%20%7C%20%60-t%60%20%7C%20%5BType%5D(%23key-type)%20of%20key%20%20%20%20%20%20%7C%0A%7C%20%20%20%20%20%7C%20%60-b%60%20%7C%20The%20number%20of%20bits%20in%20the%20key%20%7C%0A%7C%20%20%20%20%20%7C%20%60-C%60%20%7C%20Provides%20a%20new%20comment%20%20%20%20%20%20%20%20%7C%0A%0AGenerate%20an%20RSA%204096%20bit%20key%20with%20email%20as%20a%20comment",
+      "body": "```shell script {.wrap}\n$ ssh-copy-id user@server\n```\n\nCopy to alias server\n\n```shell script {.wrap}\n$ ssh-copy-id server1\n```\n\nCopy specific key\n\n```shell script {.wrap}\n$ ssh-copy-id -i ~/.ssh/id_rsa.pub user@server\n```"
+    },
+    {
+      "id": "s2-40",
+      "sectionId": "s2",
+      "title": "ssh-keygen",
+      "body": "%60%60%60shell%20script%0A%24%20ssh-keygen%20-t%20rsa%20-b%204096%20-C%20%22your%40mail.com%22%0A%60%60%60%0A%0A%7C%20-%20%20%20%7C%20-%20%20%20%20%7C%20-%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20---%20%7C%20----%20%7C%20-----------------------------%20%7C%0A%7C%20%20%20%20%20%7C%20%60-t%60%20%7C%20%5BType%5D(%23key-type)%20of%20key%20%20%20%20%20%20%7C%0A%7C%20%20%20%20%20%7C%20%60-b%60%20%7C%20The%20number%20of%20bits%20in%20the%20key%20%7C%0A%7C%20%20%20%20%20%7C%20%60-C%60%20%7C%20Provides%20a%20new%20comment%20%20%20%20%20%20%20%20%7C%0A%0AGenerate%20an%20RSA%204096%20bit%20key%20with%20email%20as%20a%20comment",
       "encoded": true
     },
     {
-      "id": "s1-34",
-      "sectionId": "s1",
+      "id": "s2-43",
+      "sectionId": "s2",
       "title": "Generate",
-      "body": "Generate a key interactively\n\n```shell script\n$ ssh-keygen\n\n```\n\nSpecify filename\n\n```shell script\n$ ssh-keygen -f ~/.ssh/filename\n```\n\nGenerate public key from private key\n\n```shell script\n$ ssh-keygen -y -f private.key > public.pub\n\n```\n\nChange comment\n\n```shell script\n$ ssh-keygen -c -f ~/.ssh/id_rsa\n```\n\nChange private key passphrase\n\n```shell script\n$ ssh-keygen -p -f ~/.ssh/id_rsa\n\n```\n\n### Key type\n\n- rsa\n- ed25519\n- dsa\n- ecdsa\n\n### known_hosts {.col-span-2}\n\nSearch from known_hosts\n\n```shell script\n$ ssh-keygen -F <ip/hostname>\n```\n\nRemove from known_hosts\n\n```shell script\n$ ssh-keygen -R <ip/hostname>\n\n```\n\n### Key format\n\n- PEM\n- PKCS8\n\n## SSH Tunneling\n\n### SSH Tunnel Options {.row-span-2}\n\n| Option | Description                                            |\n| ------ | :----------------------------------------------------- |\n| `-L`   | Local port forwarding                                  |\n| `-R`   | Remote port forwarding                                 |\n| `-D`   | Dynamic port forwarding                                |\n| `-f`   | Run in background                                      |\n| `-N`   | Do not execute a remote command                        |\n| `-g`   | Allow remote hosts to connect to local forwarded ports |\n\n{.left-text}\n\nmore details on flag above with `man ssh`\n\n### Local Port Forwarding {.col-span-2}\n\n```bash\n# Forward a local port to a remote server\nssh -L local_port:remote_host:remote_port user@ssh_server\n\n# Example: Forward local port 8080 to remote port 80 on example.com\nssh -L 8080:example.com:80 user@ssh_server\n```"
+      "body": "Generate a key interactively\n\n```shell script\n$ ssh-keygen\n```\n\nSpecify filename\n\n```shell script\n$ ssh-keygen -f ~/.ssh/filename\n```\n\nGenerate public key from private key\n\n```shell script\n$ ssh-keygen -y -f private.key > public.pub\n```\n\nChange comment\n\n```shell script\n$ ssh-keygen -c -f ~/.ssh/id_rsa\n```\n\nChange private key passphrase\n\n```shell script\n$ ssh-keygen -p -f ~/.ssh/id_rsa\n```"
     },
     {
-      "id": "s1-46",
-      "sectionId": "s1",
+      "id": "s2-53",
+      "sectionId": "s2",
+      "title": "Key type",
+      "body": "• rsa\n• ed25519\n• dsa\n• ecdsa"
+    },
+    {
+      "id": "s2-54",
+      "sectionId": "s2",
+      "title": "known_hosts",
+      "body": "Search from known_hosts\n\n```shell script\n$ ssh-keygen -F <ip/hostname>\n```\n\nRemove from known_hosts\n\n```shell script\n$ ssh-keygen -R <ip/hostname>\n```"
+    },
+    {
+      "id": "s2-58",
+      "sectionId": "s2",
+      "title": "Key format",
+      "body": "• PEM\n• PKCS8"
+    },
+    {
+      "id": "s3-59",
+      "sectionId": "s3",
+      "title": "SSH Tunnel Options",
+      "body": "| Option | Description                                            |\n| ------ | :----------------------------------------------------- |\n| `-L`   | Local port forwarding                                  |\n| `-R`   | Remote port forwarding                                 |\n| `-D`   | Dynamic port forwarding                                |\n| `-f`   | Run in background                                      |\n| `-N`   | Do not execute a remote command                        |\n| `-g`   | Allow remote hosts to connect to local forwarded ports |\n\nmore details on flag above with `man ssh`"
+    },
+    {
+      "id": "s3-61",
+      "sectionId": "s3",
+      "title": "Local Port Forwarding",
+      "body": "```bash\n# Forward a local port to a remote server\nssh -L local_port:remote_host:remote_port user@ssh_server\n\n# Example: Forward local port 8080 to remote port 80 on example.com\nssh -L 8080:example.com:80 user@ssh_server\n```"
+    },
+    {
+      "id": "s3-62",
+      "sectionId": "s3",
       "title": "Dynamic Port Forwarding",
       "body": "```bash\n# Create a SOCKS proxy on a local port\nssh -D local_port user@ssh_server\n\n# Create a SOCKS proxy on local port 1080 in the background\nssh -f -N -D 1080 user@ssh_server\n```"
     },
     {
-      "id": "s1-47",
-      "sectionId": "s1",
+      "id": "s3-63",
+      "sectionId": "s3",
       "title": "Background Tunnel",
       "body": "```bash\n# Create a local port forwarding tunnel in the background\nssh -f -N -L local_port:remote_host:remote_port user@ssh_server\n```"
     },
     {
-      "id": "s1-48",
-      "sectionId": "s1",
+      "id": "s3-64",
+      "sectionId": "s3",
       "title": "Multiple Tunnels",
       "body": "```bash\n# Create multiple tunnels in a single SSH command\nssh -L 8080:example.com:80 -L 3306:db.example.com:3306 user@ssh_server\n```"
     },
     {
-      "id": "s1-49",
-      "sectionId": "s1",
+      "id": "s3-65",
+      "sectionId": "s3",
       "title": "Combining Options",
       "body": "```bash\n# In background, no command, allow remote host, local port forward, identity_file\nssh -f -N -g -L 8080:example.com:80 -i ~/.ssh/custom_key user@ssh_server\n```"
     },
     {
-      "id": "s2-50",
-      "sectionId": "s2",
+      "id": "s4-66",
+      "sectionId": "s4",
       "title": "Also see",
       "body": "• [OpenSSH Config File Examples](https://www.cyberciti.biz/faq/create-ssh-config-file-on-linux-unix/) _(cyberciti.biz)_\n• [ssh_config](https://linux.die.net/man/5/ssh_config) _(linux.die.net)_\n• [man-ssh](https://man7.org/linux/man-pages/man1/ssh.1.html)"
     }

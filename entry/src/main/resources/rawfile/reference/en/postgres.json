@@ -2,7 +2,7 @@
   "id": "postgres",
   "name": "PostgreSQL",
   "title": "The [PostgreSQL](https://www.postgresql.org/docs/current/) cheat sheet provides you with the common PostgreSQL commands and statements.",
-  "icon": "https://raw.githubusercontent.com/Fechin/reference/main/source/assets/icon/postgres.svg",
+  "icon": "reference/icons/en/postgres.svg",
   "sections": [
     {
       "id": "intro",
@@ -17,22 +17,22 @@
     {
       "id": "s2",
       "title": "PostgreSQL Working",
-      "startIndex": 10
+      "startIndex": 12
     },
     {
       "id": "s3",
       "title": "PostgreSQL Commands",
-      "startIndex": 90
+      "startIndex": 116
     },
     {
       "id": "s4",
       "title": "Miscellaneous",
-      "startIndex": 100
+      "startIndex": 126
     },
     {
       "id": "s5",
       "title": "Also see",
-      "startIndex": 120
+      "startIndex": 151
     }
   ],
   "cards": [
@@ -46,123 +46,160 @@
       "id": "s1-1",
       "sectionId": "s1",
       "title": "Getting started",
-      "body": "Switch and connect\n\n```shell script\n$ sudo -u postgres psql\n\n```\n\nList all databases\n\n```shell script\npostgres=# \\l\n```\n\nConnect to the database named postgres\n\n```shell script\npostgres=# \\c postgres\n\n```\n\nDisconnect\n\n```shell script\npostgres=# \\q\npostgres=# \\!\n```"
+      "body": "Switch and connect\n\n```shell script\n$ sudo -u postgres psql\n```\n\nList all databases\n\n```shell script\npostgres=# \\l\n```\n\nConnect to the database named postgres\n\n```shell script\npostgres=# \\c postgres\n```\n\nDisconnect\n\n```shell script\npostgres=# \\q\npostgres=# \\!\n```"
     },
     {
-      "id": "s1-7",
+      "id": "s1-9",
       "sectionId": "s1",
       "title": "psql%20commands",
       "body": "%7C%20Option%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Example%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Description%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20-------------------%20%7C%20--------------------------------------------%20%7C%20%3A-----------------------------%20%7C%0A%7C%20%60%5B-d%5D%20%3Cdatabase%3E%60%20%20%20%7C%20psql%20-d%20mydb%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Connecting%20to%20database%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60-U%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-U%20john%20mydb%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Connecting%20as%20a%20specific%20user%20%20%7C%0A%7C%20%60-h%60%20%60-p%60%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-h%20localhost%20-p%205432%20mydb%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Connecting%20to%20a%20host%2Fport%20%20%20%20%20%20%7C%0A%7C%20%60-U%60%20%60-h%60%20%60-p%60%20%60-d%60%20%7C%20psql%20-U%20admin%20-h%20192.168.1.5%20-p%202506%20-d%20mydb%20%7C%20Connect%20remote%20PostgreSQL%20%20%20%20%20%20%7C%0A%7C%20%60-W%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-W%20mydb%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Force%20password%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60-c%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-c%20'%5Cc%20postgres'%20-c%20'%5Cdt'%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Execute%20a%20SQL%20query%20or%20command%20%7C%0A%7C%20%60-H%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-c%20%22%5Cl%2B%22%20-H%20postgres%20%3E%20database.html%20%20%20%20%7C%20Generate%20HTML%20report%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60-l%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-l%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20List%20all%20databases%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%0A%7C%20%60-f%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20mydb%20-f%20file.sql%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Execute%20commands%20from%20a%20file%20%20%20%7C%0A%7C%20%60-V%60%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20psql%20-V%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7C%20Print%20the%20psql%20version%20%20%20%20%20%20%20%20%20%7C",
       "encoded": true
     },
     {
-      "id": "s1-8",
+      "id": "s1-10",
       "sectionId": "s1",
       "title": "Getting help",
       "body": "| -           | -                              |\n| ----------- | :----------------------------- |\n| `\\h`        | Help on syntax of SQL commands |\n| `\\h` DELETE | DELETE SQL statement syntax    |\n| `\\?`        | List of PostgreSQL command     |\n\nRun in PostgreSQL console"
     },
     {
-      "id": "s2-10",
+      "id": "s2-12",
       "sectionId": "s2",
       "title": "Recon",
-      "body": "Show%20version%0A%0A%60%60%60%0ASHOW%20SERVER_VERSION%3B%0A%60%60%60%0A%0AShow%20system%20status%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cconninfo%0A%0A%60%60%60%0A%0AShow%20environmental%20variables%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASHOW%20ALL%3B%0A%60%60%60%0A%0AList%20users%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20rolname%20FROM%20pg_roles%3B%0A%0A%60%60%60%0A%0AShow%20current%20user%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20current_user%3B%0A%60%60%60%0A%0AShow%20current%20user's%20permissions%0A%0A%60%60%60%0A%5Cdu%0A%60%60%60%0A%0AShow%20current%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20current_database()%3B%0A%0A%60%60%60%0A%0AShow%20all%20tables%20in%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdt%0A%60%60%60%0A%0AList%20functions%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdf%20%3Cschema%3E%0A%0A%60%60%60%0A%0A%23%23%23%20Databases%0A%0AList%20databases%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cl%0A%60%60%60%0A%0AConnect%20to%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cc%20%3Cdatabase_name%3E%0A%0A%60%60%60%0A%0AShow%20current%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20current_database()%3B%0A%60%60%60%0A%0A%5BCreate%20database%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createdatabase.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20DATABASE%20%3Cdatabase_name%3E%20WITH%20OWNER%20%3Cusername%3E%3B%0A%0A%60%60%60%0A%0A%5BDrop%20database%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-dropdatabase.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20DATABASE%20IF%20EXISTS%20%3Cdatabase_name%3E%3B%0A%60%60%60%0A%0A%5BRename%20database%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-alterdatabase.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20DATABASE%20%3Cold_name%3E%20RENAME%20TO%20%3Cnew_name%3E%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Tables%0A%0AList%20tables%2C%20in%20current%20db%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdt%0A%0ASELECT%20table_schema%2Ctable_name%20FROM%20information_schema.tables%20ORDER%20BY%20table_schema%2Ctable_name%3B%0A%60%60%60%0A%0AList%20tables%2C%20globally%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdt%20*.*.%0A%0ASELECT%20*%20FROM%20pg_catalog.pg_tables%0A%0A%60%60%60%0A%0AList%20table%20schema%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cd%20%3Ctable_name%3E%0A%5Cd%2B%20%3Ctable_name%3E%0A%0ASELECT%20column_name%2C%20data_type%2C%20character_maximum_length%0AFROM%20INFORMATION_SCHEMA.COLUMNS%0AWHERE%20table_name%20%3D%20'%3Ctable_name%3E'%3B%0A%60%60%60%0A%0A%5BCreate%20table%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createtable.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20TABLE%20%3Ctable_name%3E(%0A%3Ccolumn_name%3E%20%3Ccolumn_type%3E%2C%0A%3Ccolumn_name%3E%20%3Ccolumn_type%3E%0A)%3B%0A%0A%60%60%60%0A%0ACreate%20table%2C%20with%20an%20auto-incrementing%20primary%20key%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20TABLE%20%3Ctable_name%3E%20(%0A%20%20%3Ccolumn_name%3E%20SERIAL%20PRIMARY%20KEY%0A)%3B%0A%60%60%60%0A%0A%5BDelete%20table%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-droptable.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20TABLE%20IF%20EXISTS%20%3Ctable_name%3E%20CASCADE%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Permissions%0A%0ABecome%20the%20postgres%20user%2C%20if%20you%20have%20permission%20errors%0A%0A%60%60%60shell%0Asudo%20su%20-%20postgres%0Apsql%0A%60%60%60%0A%0A%5BGrant%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-grant.html)%20all%20permissions%20on%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20ALL%20PRIVILEGES%20ON%20DATABASE%20%3Cdb_name%3E%20TO%20%3Cuser_name%3E%3B%0A%0A%60%60%60%0A%0AGrant%20connection%20permissions%20on%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20CONNECT%20ON%20DATABASE%20%3Cdb_name%3E%20TO%20%3Cuser_name%3E%3B%0A%60%60%60%0A%0AGrant%20permissions%20on%20schema%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20USAGE%20ON%20SCHEMA%20public%20TO%20%3Cuser_name%3E%3B%0A%0A%60%60%60%0A%0AGrant%20permissions%20to%20functions%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20EXECUTE%20ON%20ALL%20FUNCTIONS%20IN%20SCHEMA%20public%20TO%20%3Cuser_name%3E%3B%0A%60%60%60%0A%0AGrant%20permissions%20to%20select%2C%20update%2C%20insert%2C%20delete%2C%20on%20a%20all%20tables%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20SELECT%2C%20UPDATE%2C%20INSERT%20ON%20ALL%20TABLES%20IN%20SCHEMA%20public%20TO%20%3Cuser_name%3E%3B%0A%0A%60%60%60%0A%0AGrant%20permissions%2C%20on%20a%20table%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20SELECT%2C%20UPDATE%2C%20INSERT%20ON%20%3Ctable_name%3E%20TO%20%3Cuser_name%3E%3B%0A%60%60%60%0A%0AGrant%20permissions%2C%20to%20select%2C%20on%20a%20table%0A%0A%60%60%60sql%20%7B.wrap%7D%0AGRANT%20SELECT%20ON%20ALL%20TABLES%20IN%20SCHEMA%20public%20TO%20%3Cuser_name%3E%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Columns%0A%0A%5BAdd%20column%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-altertable.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20TABLE%20%3Ctable_name%3E%20IF%20EXISTS%0AADD%20%3Ccolumn_name%3E%20%3Cdata_type%3E%20%5B%3Cconstraints%3E%5D%3B%0A%60%60%60%0A%0AUpdate%20column%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20TABLE%20%3Ctable_name%3E%20IF%20EXISTS%0AALTER%20%3Ccolumn_name%3E%20TYPE%20%3Cdata_type%3E%20%5B%3Cconstraints%3E%5D%3B%0A%0A%60%60%60%0A%0ADelete%20column%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20TABLE%20%3Ctable_name%3E%20IF%20EXISTS%0ADROP%20%3Ccolumn_name%3E%3B%0A%60%60%60%0A%0AUpdate%20column%20to%20be%20an%20auto-incrementing%20primary%20key%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20TABLE%20%3Ctable_name%3E%0AADD%20COLUMN%20%3Ccolumn_name%3E%20SERIAL%20PRIMARY%20KEY%3B%0A%0A%60%60%60%0A%0AInsert%20into%20a%20table%2C%20with%20an%20auto-incrementing%20primary%20key%0A%0A%60%60%60sql%20%7B.wrap%7D%0AINSERT%20INTO%20%3Ctable_name%3E%0AVALUES%20(DEFAULT%2C%20%3Cvalue1%3E)%3B%0A%0A%0AINSERT%20INTO%20%3Ctable_name%3E%20(%3Ccolumn1_name%3E%2C%3Ccolumn2_name%3E)%0AVALUES%20(%20%3Cvalue1%3E%2C%3Cvalue2%3E%20)%3B%0A%60%60%60",
+      "body": "Show%20version%0A%0A%60%60%60%0ASHOW%20SERVER_VERSION%3B%0A%60%60%60%0A%0AShow%20system%20status%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cconninfo%0A%60%60%60%0A%0AShow%20environmental%20variables%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASHOW%20ALL%3B%0A%60%60%60%0A%0AList%20users%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20rolname%20FROM%20pg_roles%3B%0A%60%60%60%0A%0AShow%20current%20user%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20current_user%3B%0A%60%60%60%0A%0AShow%20current%20user's%20permissions%0A%0A%60%60%60%0A%5Cdu%0A%60%60%60%0A%0AShow%20current%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20current_database()%3B%0A%60%60%60%0A%0AShow%20all%20tables%20in%20database%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdt%0A%60%60%60%0A%0AList%20functions%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdf%20%3Cschema%3E%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s2-63",
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "Databases",
+      "body": "List databases\n\n```sql {.wrap}\n\\l\n```\n\nConnect to database\n\n```sql {.wrap}\n\\c <database_name>\n```\n\nShow current database\n\n```sql {.wrap}\nSELECT current_database();\n```\n\n[Create database](http://www.postgresql.org/docs/current/static/sql-createdatabase.html)\n\n```sql {.wrap}\nCREATE DATABASE <database_name> WITH OWNER <username>;\n```\n\n[Drop database](http://www.postgresql.org/docs/current/static/sql-dropdatabase.html)\n\n```sql {.wrap}\nDROP DATABASE IF EXISTS <database_name>;\n```\n\n[Rename database](http://www.postgresql.org/docs/current/static/sql-alterdatabase.html)\n\n```sql {.wrap}\nALTER DATABASE <old_name> RENAME TO <new_name>;\n```"
+    },
+    {
+      "id": "s2-42",
+      "sectionId": "s2",
+      "title": "Tables",
+      "body": "List%20tables%2C%20in%20current%20db%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdt%0A%0ASELECT%20table_schema%2Ctable_name%20FROM%20information_schema.tables%20ORDER%20BY%20table_schema%2Ctable_name%3B%0A%60%60%60%0A%0AList%20tables%2C%20globally%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdt%20*.*.%0A%0ASELECT%20*%20FROM%20pg_catalog.pg_tables%0A%60%60%60%0A%0AList%20table%20schema%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cd%20%3Ctable_name%3E%0A%5Cd%2B%20%3Ctable_name%3E%0A%0ASELECT%20column_name%2C%20data_type%2C%20character_maximum_length%0AFROM%20INFORMATION_SCHEMA.COLUMNS%0AWHERE%20table_name%20%3D%20'%3Ctable_name%3E'%3B%0A%60%60%60%0A%0A%5BCreate%20table%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createtable.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20TABLE%20%3Ctable_name%3E(%0A%20%20%3Ccolumn_name%3E%20%3Ccolumn_type%3E%2C%0A%20%20%3Ccolumn_name%3E%20%3Ccolumn_type%3E%0A)%3B%0A%60%60%60%0A%0ACreate%20table%2C%20with%20an%20auto-incrementing%20primary%20key%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20TABLE%20%3Ctable_name%3E%20(%0A%20%20%3Ccolumn_name%3E%20SERIAL%20PRIMARY%20KEY%0A)%3B%0A%60%60%60%0A%0A%5BDelete%20table%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-droptable.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20TABLE%20IF%20EXISTS%20%3Ctable_name%3E%20CASCADE%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-54",
+      "sectionId": "s2",
+      "title": "Permissions",
+      "body": "Become the postgres user, if you have permission errors\n\n```shell\nsudo su - postgres\npsql\n```\n\n[Grant](http://www.postgresql.org/docs/current/static/sql-grant.html) all permissions on database\n\n```sql {.wrap}\nGRANT ALL PRIVILEGES ON DATABASE <db_name> TO <user_name>;\n```\n\nGrant connection permissions on database\n\n```sql {.wrap}\nGRANT CONNECT ON DATABASE <db_name> TO <user_name>;\n```\n\nGrant permissions on schema\n\n```sql {.wrap}\nGRANT USAGE ON SCHEMA public TO <user_name>;\n```\n\nGrant permissions to functions\n\n```sql {.wrap}\nGRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO <user_name>;\n```\n\nGrant permissions to select, update, insert, delete, on a all tables\n\n```sql {.wrap}\nGRANT SELECT, UPDATE, INSERT ON ALL TABLES IN SCHEMA public TO <user_name>;\n```\n\nGrant permissions, on a table\n\n```sql {.wrap}\nGRANT SELECT, UPDATE, INSERT ON <table_name> TO <user_name>;\n```\n\nGrant permissions, to select, on a table\n\n```sql {.wrap}\nGRANT SELECT ON ALL TABLES IN SCHEMA public TO <user_name>;\n```"
+    },
+    {
+      "id": "s2-70",
+      "sectionId": "s2",
+      "title": "Columns",
+      "body": "[Add column](http://www.postgresql.org/docs/current/static/sql-altertable.html)\n\n```sql {.wrap}\nALTER TABLE <table_name> IF EXISTS\nADD <column_name> <data_type> [<constraints>];\n```\n\nUpdate column\n\n```sql {.wrap}\nALTER TABLE <table_name> IF EXISTS\nALTER <column_name> TYPE <data_type> [<constraints>];\n```\n\nDelete column\n\n```sql {.wrap}\nALTER TABLE <table_name> IF EXISTS\nDROP <column_name>;\n```\n\nUpdate column to be an auto-incrementing primary key\n\n```sql {.wrap}\nALTER TABLE <table_name>\nADD COLUMN <column_name> SERIAL PRIMARY KEY;\n```\n\nInsert into a table, with an auto-incrementing primary key\n\n```sql {.wrap}\nINSERT INTO <table_name>\nVALUES (DEFAULT, <value1>);\n\n\nINSERT INTO <table_name> (<column1_name>,<column2_name>)\nVALUES ( <value1>,<value2> );\n```"
+    },
+    {
+      "id": "s2-80",
       "sectionId": "s2",
       "title": "Data",
-      "body": "%5BSelect%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-select.html)%20all%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20*%20FROM%20%3Ctable_name%3E%3B%0A%0A%60%60%60%0A%0ARead%20one%20row%20of%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20*%20FROM%20%3Ctable_name%3E%20LIMIT%201%3B%0A%60%60%60%0A%0ASearch%20for%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20*%20FROM%20%3Ctable_name%3E%20WHERE%20%3Ccolumn_name%3E%20%3D%20%3Cvalue%3E%3B%0A%0A%60%60%60%0A%0A%5BInsert%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-insert.html)%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0AINSERT%20INTO%20%3Ctable_name%3E%20VALUES(%20%3Cvalue_1%3E%2C%20%3Cvalue_2%3E%20)%3B%0A%60%60%60%0A%0A%5BUpdate%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-update.html)%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0AUPDATE%20%3Ctable_name%3E%0ASET%20%3Ccolumn_1%3E%20%3D%20%3Cvalue_1%3E%2C%20%3Ccolumn_2%3E%20%3D%20%3Cvalue_2%3E%0AWHERE%20%3Ccolumn_1%3E%20%3D%20%3Cvalue%3E%3B%0A%0A%60%60%60%0A%0A%5BDelete%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-delete.html)%20all%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADELETE%20FROM%20%3Ctable_name%3E%3B%0A%60%60%60%0A%0ADelete%20specific%20data%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADELETE%20FROM%20%3Ctable_name%3E%0AWHERE%20%3Ccolumn_name%3E%20%3D%20%3Cvalue%3E%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Users%0A%0AList%20roles%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20rolname%20FROM%20pg_roles%3B%0A%60%60%60%0A%0A%5BCreate%20user%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createuser.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20USER%20%3Cuser_name%3E%20WITH%20PASSWORD%20'%3Cpassword%3E'%3B%0A%0A%60%60%60%0A%0A%5BDrop%20user%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-dropuser.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20USER%20IF%20EXISTS%20%3Cuser_name%3E%3B%0A%60%60%60%0A%0A%5BAlter%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-alterrole.html)%20user%20password%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20ROLE%20%3Cuser_name%3E%20WITH%20PASSWORD%20'%3Cpassword%3E'%3B%0A%0A%60%60%60%0A%0A%23%23%23%20Schema%0A%0AList%20schemas%0A%0A%60%60%60sql%20%7B.wrap%7D%0A%5Cdn%0A%0ASELECT%20schema_name%20FROM%20information_schema.schemata%3B%0A%0ASELECT%20nspname%20FROM%20pg_catalog.pg_namespace%3B%0A%60%60%60%0A%0A%5BCreate%20schema%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createschema.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20SCHEMA%20IF%20NOT%20EXISTS%20%3Cschema_name%3E%3B%0A%0A%60%60%60%0A%0A%5BDrop%20schema%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-dropschema.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20SCHEMA%20IF%20EXISTS%20%3Cschema_name%3E%20CASCADE%3B%0A%60%60%60",
+      "body": "[Select](http://www.postgresql.org/docs/current/static/sql-select.html) all data\n\n```sql {.wrap}\nSELECT * FROM <table_name>;\n```\n\nRead one row of data\n\n```sql {.wrap}\nSELECT * FROM <table_name> LIMIT 1;\n```\n\nSearch for data\n\n```sql {.wrap}\nSELECT * FROM <table_name> WHERE <column_name> = <value>;\n```\n\n[Insert](http://www.postgresql.org/docs/current/static/sql-insert.html) data\n\n```sql {.wrap}\nINSERT INTO <table_name> VALUES( <value_1>, <value_2> );\n```\n\n[Update](http://www.postgresql.org/docs/current/static/sql-update.html) data\n\n```sql {.wrap}\nUPDATE <table_name>\nSET <column_1> = <value_1>, <column_2> = <value_2>\nWHERE <column_1> = <value>;\n```\n\n[Delete](http://www.postgresql.org/docs/current/static/sql-delete.html) all data\n\n```sql {.wrap}\nDELETE FROM <table_name>;\n```\n\nDelete specific data\n\n```sql {.wrap}\nDELETE FROM <table_name>\nWHERE <column_name> = <value>;\n```"
+    },
+    {
+      "id": "s2-94",
+      "sectionId": "s2",
+      "title": "Users",
+      "body": "List%20roles%0A%0A%60%60%60sql%20%7B.wrap%7D%0ASELECT%20rolname%20FROM%20pg_roles%3B%0A%60%60%60%0A%0A%5BCreate%20user%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-createuser.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ACREATE%20USER%20%3Cuser_name%3E%20WITH%20PASSWORD%20'%3Cpassword%3E'%3B%0A%60%60%60%0A%0A%5BDrop%20user%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-dropuser.html)%0A%0A%60%60%60sql%20%7B.wrap%7D%0ADROP%20USER%20IF%20EXISTS%20%3Cuser_name%3E%3B%0A%60%60%60%0A%0A%5BAlter%5D(http%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fstatic%2Fsql-alterrole.html)%20user%20password%0A%0A%60%60%60sql%20%7B.wrap%7D%0AALTER%20ROLE%20%3Cuser_name%3E%20WITH%20PASSWORD%20'%3Cpassword%3E'%3B%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s2-84",
+      "id": "s2-102",
       "sectionId": "s2",
-      "title": "Dates",
-      "body": "Show [current date](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) YYYY-MM-DD\n\n```sql {.wrap}\nSELECT current_date;\n\n```\n\nCalculate\n[age](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=age%20(%20timestamp%2C%20timestamp%20)%20%E2%86%92%20interval>)\nbetween two dates\n\n```sql {.wrap}\nSELECT age(timestamp, timestamp);\n```\n\nShow [current time](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) with time\nzone\n\n```sql {.wrap}\nSELECT current_time;\n\n```\n\n[Make](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=make_date%20(%20year%20int%2C%20month%20int%2C%20day%20int%20)%20%E2%86%92%20date>)\ndates using integers\n\n```sql {.wrap}\nSELECT make_date(2021,03,25);\n```"
+      "title": "Schema",
+      "body": "List schemas\n\n```sql {.wrap}\n\\dn\n\nSELECT schema_name FROM information_schema.schemata;\n\nSELECT nspname FROM pg_catalog.pg_namespace;\n```\n\n[Create schema](http://www.postgresql.org/docs/current/static/sql-createschema.html)\n\n```sql {.wrap}\nCREATE SCHEMA IF NOT EXISTS <schema_name>;\n```\n\n[Drop schema](http://www.postgresql.org/docs/current/static/sql-dropschema.html)\n\n```sql {.wrap}\nDROP SCHEMA IF EXISTS <schema_name> CASCADE;\n```"
     },
     {
-      "id": "s3-90",
+      "id": "s2-108",
+      "sectionId": "s2",
+      "title": "Dates",
+      "body": "Show [current date](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) YYYY-MM-DD\n\n```sql {.wrap}\nSELECT current_date;\n```\n\nCalculate\n[age](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=age%20(%20timestamp%2C%20timestamp%20)%20%E2%86%92%20interval>)\nbetween two dates\n\n```sql {.wrap}\nSELECT age(timestamp, timestamp);\n```\n\nShow [current time](https://www.postgresql.org/docs/15/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT) with time\nzone\n\n```sql {.wrap}\nSELECT current_time;\n```\n\n[Make](<https://www.postgresql.org/docs/15/functions-datetime.html#:~:text=make_date%20(%20year%20int%2C%20month%20int%2C%20day%20int%20)%20%E2%86%92%20date>)\ndates using integers\n\n```sql {.wrap}\nSELECT make_date(2021,03,25);\n```"
+    },
+    {
+      "id": "s3-116",
       "sectionId": "s3",
       "title": "Tables",
       "body": "| -                | -                               |\n| ---------------- | :------------------------------ |\n| `\\d <table>`     | Describe table                  |\n| `\\d+ <table>`    | Describe table with details     |\n| `\\dt`            | List tables from current schema |\n| `\\dt *.*`        | List tables from all schemas    |\n| `\\dt <schema>.*` | List tables for a schema        |\n| `\\dp`            | List table access privileges    |\n| `\\det[+]`        | List foreign tables             |"
     },
     {
-      "id": "s3-91",
+      "id": "s3-117",
       "sectionId": "s3",
       "title": "Query buffer",
       "body": "| -            | -                                  |\n| ------------ | :--------------------------------- |\n| `\\e [FILE]`  | Edit the query buffer (or file)    |\n| `\\ef [FUNC]` | Edit function definition           |\n| `\\p`         | Show the contents                  |\n| `\\r`         | Reset (clear) the query buffer     |\n| `\\s [FILE]`  | Display history or save it to file |\n| `\\w FILE`    | Write query buffer to file         |"
     },
     {
-      "id": "s3-92",
+      "id": "s3-118",
       "sectionId": "s3",
       "title": "Informational",
       "body": "| -               | -                               |\n| --------------- | :------------------------------ |\n| `\\l[+]`         | List all databases              |\n| `\\dn[S+]`       | List schemas                    |\n| `\\di[S+]`       | List indexes                    |\n| `\\du[+]`        | List roles                      |\n| `\\ds[S+]`       | List sequences                  |\n| `\\df[antw][S+]` | List functions                  |\n| `\\deu[+]`       | List user mappings              |\n| `\\dv[S+]`       | List views                      |\n| `\\dl`           | List large objects              |\n| `\\dT[S+]`       | List data types                 |\n| `\\da[S]`        | List aggregates                 |\n| `\\db[+]`        | List tablespaces                |\n| `\\dc[S+]`       | List conversions                |\n| `\\dC[+]`        | List casts                      |\n| `\\ddp`          | List default privileges         |\n| `\\dd[S]`        | Show object descriptions        |\n| `\\dD[S+]`       | List domains                    |\n| `\\des[+]`       | List foreign servers            |\n| `\\dew[+]`       | List foreign-data wrappers      |\n| `\\dF[+]`        | List text search configurations |\n| `\\dFd[+]`       | List text search dictionaries   |\n| `\\dFp[+]`       | List text search parsers        |\n| `\\dFt[+]`       | List text search templates      |\n| `\\dL[S+]`       | List procedural languages       |\n| `\\do[S]`        | List operators                  |\n| `\\dO[S+]`       | List collations                 |\n| `\\drds`         | List per-database role settings |\n| `\\dx[+]`        | List extensions                 |\n\n`S`: show system objects, `+`: additional detail"
     },
     {
-      "id": "s3-94",
+      "id": "s3-120",
       "sectionId": "s3",
       "title": "Connection",
       "body": "| -                      | -                           |\n| ---------------------- | :-------------------------- |\n| `\\c [DBNAME]`          | Connect to new database     |\n| `\\encoding [ENCODING]` | Show or set client encoding |\n| `\\password [USER]`     | Change the password         |\n| `\\conninfo`            | Display information         |"
     },
     {
-      "id": "s3-95",
+      "id": "s3-121",
       "sectionId": "s3",
       "title": "Formatting",
       "body": "| -                         | -                                          |\n| ------------------------- | :----------------------------------------- |\n| `\\a`                      | Toggle between unaligned and aligned       |\n| `\\C [STRING]`             | Set table title, or unset if none          |\n| `\\f [STRING]`             | Show or set field separator for unaligned  |\n| `\\H`                      | Toggle HTML output mode                    |\n| <code>\\t [on\\|off]</code> | Show only rows                             |\n| `\\T [STRING]`             | Set or unset HTML \\<table\\> tag attributes |\n| <code>\\x [on\\|off]</code> | Toggle expanded output                     |"
     },
     {
-      "id": "s3-96",
+      "id": "s3-122",
       "sectionId": "s3",
       "title": "Input/Output",
       "body": "| -                 | -                                                              |\n| ----------------- | :------------------------------------------------------------- |\n| `\\copy ...`       | Import/export table<br> _See also:_ [copy](#import-export-csv) |\n| `\\echo [STRING]`  | Print string                                                   |\n| `\\i FILE`         | Execute file                                                   |\n| `\\o [FILE]`       | Export all results to file                                     |\n| `\\qecho [STRING]` | String to output stream                                        |"
     },
     {
-      "id": "s3-97",
+      "id": "s3-123",
       "sectionId": "s3",
       "title": "Variables",
       "body": "| -                     | -                                             |\n| --------------------- | :-------------------------------------------- |\n| `\\prompt [TEXT] NAME` | Set variable                                  |\n| `\\set [NAME [VALUE]]` | Set variable _(or list all if no parameters)_ |\n| `\\unset NAME`         | Delete variable                               |"
     },
     {
-      "id": "s3-98",
+      "id": "s3-124",
       "sectionId": "s3",
       "title": "Misc",
       "body": "| -                              | -                    |\n| ------------------------------ | :------------------- |\n| `\\cd [DIR]`                    | Change the directory |\n| <code>\\timing [on\\|off]</code> | Toggle timing        |\n| `\\! [COMMAND]`                 | Execute in shell     |\n| `\\! ls -l`                     | List all in shell    |"
     },
     {
-      "id": "s3-99",
+      "id": "s3-125",
       "sectionId": "s3",
       "title": "Large Objects",
       "body": "• `\\lo_export LOBOID FILE`\n• `\\lo_import FILE [COMMENT]`\n• `\\lo_list`\n• `\\lo_unlink LOBOID`"
     },
     {
-      "id": "s4-100",
+      "id": "s4-126",
       "sectionId": "s4",
       "title": "Backup",
-      "body": "Use pg_dumpall to backup all databases\n\n```shell script\n$ pg_dumpall -U postgres > all.sql\n\n```\n\nUse pg_dump to backup a database\n\n```shell script\n$ pg_dump -d mydb -f mydb_backup.sql\n```\n\n| -    | -                                              |\n| ---- | :--------------------------------------------- |\n| `-a` | Dump only the data, not the schema             |\n| `-s` | Dump only the schema, no data                  |\n| `-c` | Drop database before recreating                |\n| `-C` | Create database before restoring               |\n| `-t` | Dump the named table(s) only                   |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar) |\n\nUse `pg_dump -?` to get the full list of options"
+      "body": "Use pg_dumpall to backup all databases\n\n```shell script\n$ pg_dumpall -U postgres > all.sql\n```\n\nUse pg_dump to backup a database\n\n```shell script\n$ pg_dump -d mydb -f mydb_backup.sql\n```\n\n| -    | -                                              |\n| ---- | :--------------------------------------------- |\n| `-a` | Dump only the data, not the schema             |\n| `-s` | Dump only the schema, no data                  |\n| `-c` | Drop database before recreating                |\n| `-C` | Create database before restoring               |\n| `-t` | Dump the named table(s) only                   |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar) |\n\nUse `pg_dump -?` to get the full list of options"
     },
     {
-      "id": "s4-105",
+      "id": "s4-132",
       "sectionId": "s4",
       "title": "Restore",
-      "body": "Restore a database with psql\n\n```shell script\n$ psql -U user mydb < mydb_backup.sql\n\n```\n\nRestore a database with pg_restore\n\n```shell script\n$ pg_restore -d mydb mydb_backup.sql -c\n```\n\n| -    | -                                                                            |\n| ---- | :--------------------------------------------------------------------------- |\n| `-U` | Specify a database user                                                      |\n| `-c` | Drop database before recreating                                              |\n| `-C` | Create database before restoring                                             |\n| `-e` | Exit if an error has encountered                                             |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar, `p`: plain text sql(default)) |\n\nUse `pg_restore -?` to get the full list of options"
+      "body": "Restore a database with psql\n\n```shell script\n$ psql -U user mydb < mydb_backup.sql\n```\n\nRestore a database with pg_restore\n\n```shell script\n$ pg_restore -d mydb mydb_backup.sql -c\n```\n\n| -    | -                                                                            |\n| ---- | :--------------------------------------------------------------------------- |\n| `-U` | Specify a database user                                                      |\n| `-c` | Drop database before recreating                                              |\n| `-C` | Create database before restoring                                             |\n| `-e` | Exit if an error has encountered                                             |\n| `-F` | Format (`c`: custom, `d`: directory, `t`: tar, `p`: plain text sql(default)) |\n\nUse `pg_restore -?` to get the full list of options"
     },
     {
-      "id": "s4-110",
+      "id": "s4-138",
       "sectionId": "s4",
       "title": "Remote%20access",
-      "body": "Get%20location%20of%20postgresql.conf%0A%0A%60%60%60shell%20script%0A%24%20psql%20-U%20postgres%20-c%20'SHOW%20config_file'%0A%0A%60%60%60%0A%0AAppend%20to%20postgresql.conf%0A%0A%60%60%60shell%20script%0Alisten_addresses%20%3D%20'*'%0A%60%60%60%0A%0AAppend%20to%20pg_hba.conf%20(Same%20location%20as%20postgresql.conf)%0A%0A%60%60%60shell%20script%0Ahost%20%20all%20%20all%20%200.0.0.0%2F0%20%20md5%0Ahost%20%20all%20%20all%20%20%3A%3A%2F0%20%20%20%20%20%20%20md5%0A%0A%60%60%60%0A%0ARestart%20PostgreSQL%20server%0A%0A%60%60%60shell%20script%0A%24%20sudo%20systemctl%20restart%20postgresql%0A%60%60%60",
+      "body": "Get%20location%20of%20postgresql.conf%0A%0A%60%60%60shell%20script%0A%24%20psql%20-U%20postgres%20-c%20'SHOW%20config_file'%0A%60%60%60%0A%0AAppend%20to%20postgresql.conf%0A%0A%60%60%60shell%20script%0Alisten_addresses%20%3D%20'*'%0A%60%60%60%0A%0AAppend%20to%20pg_hba.conf%20(Same%20location%20as%20postgresql.conf)%0A%0A%60%60%60shell%20script%0Ahost%20%20all%20%20all%20%200.0.0.0%2F0%20%20md5%0Ahost%20%20all%20%20all%20%20%3A%3A%2F0%20%20%20%20%20%20%20md5%0A%60%60%60%0A%0ARestart%20PostgreSQL%20server%0A%0A%60%60%60shell%20script%0A%24%20sudo%20systemctl%20restart%20postgresql%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s4-116",
+      "id": "s4-146",
       "sectionId": "s4",
       "title": "Import%2FExport%20CSV",
-      "body": "Export%20table%20into%20CSV%20file%0A%0A%60%60%60shell%20script%0A%5Ccopy%20table%20TO%20'%3Cpath%3E'%20CSV%0A%5Ccopy%20table(col1%2Ccol1)%20TO%20'%3Cpath%3E'%20CSV%0A%5Ccopy%20(SELECT...)%20TO%20'%3Cpath%3E'%20CSV%0A%0A%60%60%60%0A%0AImport%20CSV%20file%20into%20table%0A%0A%60%60%60shell%20script%0A%5Ccopy%20table%20FROM%20'%3Cpath%3E'%20CSV%0A%5Ccopy%20table(col1%2Ccol1)%20FROM%20'%3Cpath%3E'%20CSV%0A%60%60%60%0A%0ASee%20also%3A%20%5BCopy%5D(https%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fsql-copy.html)",
+      "body": "Export%20table%20into%20CSV%20file%0A%0A%60%60%60shell%20script%0A%5Ccopy%20table%20TO%20'%3Cpath%3E'%20CSV%0A%5Ccopy%20table(col1%2Ccol1)%20TO%20'%3Cpath%3E'%20CSV%0A%5Ccopy%20(SELECT...)%20TO%20'%3Cpath%3E'%20CSV%0A%60%60%60%0A%0AImport%20CSV%20file%20into%20table%0A%0A%60%60%60shell%20script%0A%5Ccopy%20table%20FROM%20'%3Cpath%3E'%20CSV%0A%5Ccopy%20table(col1%2Ccol1)%20FROM%20'%3Cpath%3E'%20CSV%0A%60%60%60%0A%0ASee%20also%3A%20%5BCopy%5D(https%3A%2F%2Fwww.postgresql.org%2Fdocs%2Fcurrent%2Fsql-copy.html)",
       "encoded": true
     },
     {
-      "id": "s5-120",
+      "id": "s5-151",
       "sectionId": "s5",
       "title": "Also see",
       "body": "• [Posgres-cheatsheet](https://gist.github.com/apolloclark/ea5466d5929e63043dcf#posgres-cheatsheet) _(gist.github.com)_"

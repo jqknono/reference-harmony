@@ -2,7 +2,7 @@
   "id": "golang",
   "name": "Golang 备忘清单",
   "title": "该备忘单提供了帮助您使用 [Golang](https://golang.org) 的基本语法和方法。",
-  "icon": "https://raw.githubusercontent.com/jaywcjlove/reference/main/assets/golang.svg",
+  "icon": "reference/icons/zh/golang.svg",
   "sections": [
     {
       "id": "intro",
@@ -71,18 +71,23 @@
     },
     {
       "id": "s13",
-      "title": "杂项",
-      "startIndex": 135
+      "title": "Golang 泛型 (Go version >= 1.18)",
+      "startIndex": 107
     },
     {
       "id": "s14",
-      "title": "Go 命令",
-      "startIndex": 137
+      "title": "杂项",
+      "startIndex": 131
     },
     {
       "id": "s15",
+      "title": "Go 命令",
+      "startIndex": 133
+    },
+    {
+      "id": "s16",
       "title": "另见",
-      "startIndex": 140
+      "startIndex": 136
     }
   ],
   "cards": [
@@ -498,63 +503,114 @@
       "id": "s12-100",
       "sectionId": "s12",
       "title": "%E5%B5%8C%E5%85%A5%E4%B8%BAstring",
-      "body": "%60%60%60%20go%0Apackage%20main%0A%0Aimport%20(%0A_%20%22embed%22%0A%22fmt%22%0A)%0A%0A%2F%2Fgo%3Aembed%20version.txt%0Avar%20version%20string%0A%0Afunc%20main()%20%7B%0Afmt.Printf(%22version%20%25q%5Cn%22%2C%20version)%0A%7D%0A%0A%60%60%60%0A%0A%23%23%23%20%E5%B5%8C%E5%85%A5%E4%B8%BA%5B%5Dbyte%0A%0A%60%60%60%20go%0Apackage%20main%0Aimport%20(%0A%20%20%20%20_%20%22embed%22%0A%20%20%20%20%22fmt%22%0A)%0A%0A%2F%2Fgo%3Aembed%20version.txt%0Avar%20versionByte%20%5B%5Dbyte%0A%0Afunc%20main()%20%7B%0A%20%20%20%20fmt.Printf(%22version%20%25q%5Cn%22%2C%20string(versionByte))%0A%7D%0A%60%60%60",
+      "body": "%60%60%60%20go%0Apackage%20main%0A%0Aimport%20(%0A%20%20%20%20_%20%22embed%22%0A%20%20%20%20%22fmt%22%0A)%0A%0A%2F%2Fgo%3Aembed%20version.txt%0Avar%20version%20string%0A%0Afunc%20main()%20%7B%0A%20%20%20%20fmt.Printf(%22version%20%25q%5Cn%22%2C%20version)%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-101",
+      "sectionId": "s12",
+      "title": "%E5%B5%8C%E5%85%A5%E4%B8%BA%5B%5Dbyte",
+      "body": "%60%60%60%20go%0Apackage%20main%0Aimport%20(%0A%20%20%20%20_%20%22embed%22%0A%20%20%20%20%22fmt%22%0A)%0A%0A%2F%2Fgo%3Aembed%20version.txt%0Avar%20versionByte%20%5B%5Dbyte%0A%0Afunc%20main()%20%7B%0A%20%20%20%20fmt.Printf(%22version%20%25q%5Cn%22%2C%20string(versionByte))%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-102",
+      "sectionId": "s12",
+      "title": "%E5%B5%8C%E5%85%A5%E4%B8%BAembed.FS",
+      "body": "%60%60%60%20go%0A%2F%2Fgo%3Aembed%20hello.txt%0Avar%20f%20embed.FS%0Afunc%20main()%20%7B%0A%20%20data%2C%20_%20%3A%3D%20f.ReadFile(%22hello.txt%22)%0A%20%20fmt.Println(string(data))%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-103",
+      "sectionId": "s12",
+      "title": "%E5%B5%8C%E5%85%A5%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6",
+      "body": "%60%60%60%20go%0A%2F%2Fgo%3Aembed%20hello.txt%0A%2F%2Fgo%3Aembed%20hello2.txt%0Avar%20f%20embed.FS%0Afunc%20main()%20%7B%0A%20%20data%2C%20_%20%3A%3D%20f.ReadFile(%22hello.txt%22)%0A%20%20fmt.Println(string(data))%0A%20%20data%2C%20_%20%3D%20f.ReadFile(%22hello2.txt%22)%0A%20%20fmt.Println(string(data))%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-104",
+      "sectionId": "s12",
+      "title": "%E5%B5%8C%E5%85%A5%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6",
+      "body": "%60%60%60%20go%0A%2F%2Fgo%3Aembed%20p%2Fhello.txt%20p%2Fhello2.txt%0Avar%20f%20embed.FS%0Afunc%20main()%20%7B%0A%20%20data%2C%20_%20%3A%3D%20f.ReadFile(%22p%2Fhello.txt%22)%0A%20%20fmt.Println(string(data))%0A%20%20data%2C%20_%20%3D%20f.ReadFile(%22p%2Fhello2.txt%22)%0A%20%20fmt.Println(string(data))%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
       "id": "s12-105",
       "sectionId": "s12",
-      "title": "%E5%B5%8C%E5%85%A5%E4%B8%BAembed.FS",
-      "body": "%60%60%60%20go%0A%2F%2Fgo%3Aembed%20hello.txt%0Avar%20f%20embed.FS%0Afunc%20main()%20%7B%0Adata%2C%20_%20%3A%3D%20f.ReadFile(%22hello.txt%22)%0Afmt.Println(string(data))%0A%7D%0A%0A%60%60%60%0A%0A%23%23%23%20%E5%B5%8C%E5%85%A5%E5%A4%9A%E4%B8%AA%E6%96%87%E4%BB%B6%0A%0A%60%60%60%20go%0A%2F%2Fgo%3Aembed%20hello.txt%0A%2F%2Fgo%3Aembed%20hello2.txt%0Avar%20f%20embed.FS%0Afunc%20main()%20%7B%0A%20%20data%2C%20_%20%3A%3D%20f.ReadFile(%22hello.txt%22)%0A%20%20fmt.Println(string(data))%0A%20%20data%2C%20_%20%3D%20f.ReadFile(%22hello2.txt%22)%0A%20%20fmt.Println(string(data))%0A%7D%0A%60%60%60",
-      "encoded": true
+      "title": "同一个文件嵌入为多个变量",
+      "body": "``` go\n//go:embed hello.txt\nvar s string\n//go:embed hello.txt\nvar s2 string\nfunc main() {\n  fmt.Println(s)\n  fmt.Println(s2)\n}\n```"
     },
     {
-      "id": "s12-107",
-      "sectionId": "s12",
-      "title": "%E5%B5%8C%E5%85%A5%E5%AD%90%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%E7%9A%84%E6%96%87%E4%BB%B6",
-      "body": "%60%60%60%20go%0A%2F%2Fgo%3Aembed%20p%2Fhello.txt%20p%2Fhello2.txt%0Avar%20f%20embed.FS%0Afunc%20main()%20%7B%0Adata%2C%20_%20%3A%3D%20f.ReadFile(%22p%2Fhello.txt%22)%0Afmt.Println(string(data))%0Adata%2C%20_%20%3D%20f.ReadFile(%22p%2Fhello2.txt%22)%0Afmt.Println(string(data))%0A%7D%0A%0A%60%60%60%0A%0A%23%23%23%20%E5%90%8C%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%B5%8C%E5%85%A5%E4%B8%BA%E5%A4%9A%E4%B8%AA%E5%8F%98%E9%87%8F%0A%0A%60%60%60%20go%0A%2F%2Fgo%3Aembed%20hello.txt%0Avar%20s%20string%0A%2F%2Fgo%3Aembed%20hello.txt%0Avar%20s2%20string%0Afunc%20main()%20%7B%0A%20%20fmt.Println(s)%0A%20%20fmt.Println(s2)%0A%7D%0A%60%60%60",
-      "encoded": true
-    },
-    {
-      "id": "s12-109",
+      "id": "s12-106",
       "sectionId": "s12",
       "title": "%E5%8C%B9%E9%85%8D%E6%A8%A1%E5%BC%8F",
-      "body": "%60%60%60%20go%0A%2F%2Fgo%3Aembed%20p%2F*%0Avar%20f%20embed.FS%0Afunc%20main()%20%7B%0Adata%2C%20_%20%3A%3D%20f.ReadFile(%22p%2F.hello.txt%22)%0Afmt.Println(string(data))%0Adata%2C%20_%20%3D%20f.ReadFile(%22p%2Fq%2F.hi.txt%22)%20%2F%2F%20%E6%B2%A1%E6%9C%89%E5%B5%8C%E5%85%A5%20p%2Fq%2F.hi.txt%0Afmt.Println(string(data))%0A%7D%0A%0A%60%60%60%0A%0AGolang%20%E6%B3%9B%E5%9E%8B%20(Go%20version%20%3E%3D%201.18)%0A-------------%0A%0A%23%23%23%20%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B%0A%3C!--rehype%3Awrap-class%3Drow-span-1--%3E%0A%0A%60%60%60text%0Atype%20S%5BT%20int%7Cfloat32%7Cfloat64%20%5D%20%5B%5DT%0A%20%20%20%20%20%20%20%E2%94%AC%20%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20%0A%20%20%20%20%20%20%20%E2%94%86%20%20%20%20%20%20%20%20%20%20%E2%95%B0%E2%94%80%E2%94%80%E2%94%80%202.%20%E7%B1%BB%E5%9E%8B%E7%BA%A6%E6%9D%9F%0A%20%20%20%20%20%20%20%E2%95%B0%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%201.%20%E7%B1%BB%E5%9E%8B%E5%BD%A2%E5%8F%82%0A%60%60%60%0A%0A%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%B1%BB%E5%9E%8B%E5%AE%9E%E5%8F%82%20int%20%E6%88%96%20string%20%E5%AE%9E%E4%BE%8B%E5%8C%96%0A%0A%60%60%60%20go%0Atype%20MyMap%5BK%20int%7Cstring%2C%20V%20float32%20%7C%20float64%5D%20map%5BK%5DV%0A%0Avar%20a%20MyMap%5Bstring%2C%20float64%5D%20%3D%20map%5Bstring%5Dfloat64%7B%0A%22jack_score%22%3A%209.6%2C%0A%22bob_score%22%3A%20%208.4%2C%0A%7D%0A%0A%60%60%60%0A%3C!--rehype%3AclassName%3Dwrap-text%20--%3E%0A-%20**%E5%8C%BF%E5%90%8D%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8D%E6%94%AF%E6%8C%81%E6%B3%9B%E5%9E%8B**%3C!--rehype%3Astyle%3Dcolor%3A%20%23b43c29%3B--%3E%0A-%20**%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E4%B8%8D%E6%94%AF%E6%8C%81%E6%B3%9B%E5%9E%8B**%3C!--rehype%3Astyle%3Dcolor%3A%20%23b43c29%3B--%3E%0A%0A%23%23%23%20%E6%B3%9B%E5%9E%8B%E5%87%BD%E6%95%B0%0A%3C!--rehype%3Awrap-class%3Drow-span-1--%3E%0A%0A%E4%BB%BB%E6%84%8F%E7%B1%BB%E5%9E%8B%0A%0A%60%60%60%20go%0Afunc%20Add%5BT%20any%5D(a%2Cb%20T)%20T%20%7B%0A%20%20%20%20return%20%20a%2Bb%0A%7D%0A%60%60%60%0A%0A%E5%AF%B9%E7%B1%BB%E5%9E%8B%E8%BF%9B%E8%A1%8C%E7%BA%A6%E6%9D%9F%0A%0A%60%60%60%20go%0Afunc%20Add%5BT%20string%20%7C%20int%20%7C%20int8%5D(a%2Cb%20T)%20T%20%7B%0Areturn%20%20a%2Bb%0A%7D%0A%0A%60%60%60%0A%0A%E7%B1%BB%E5%9E%8B%E5%B5%8C%E5%A5%97%0A%0A%60%60%60%20go%0Atype%20WowStruct%5BT%20int%20%7C%20float32%2C%20S%20%5B%5DT%5D%20struct%20%7B%0A%20%20%20%20Data%20%20%20%20%20S%0A%20%20%20%20MaxValue%20T%0A%20%20%20%20MinValue%20T%0A%7D%0A%0Avar%20ws%20WowStruct%5Bint%2C%20%5B%5Dint%5D%20%20%0A%60%60%60%0A%0A%E6%B3%9B%E5%9E%8B%E5%87%BD%E6%95%B0%E4%B8%AD%E8%BF%9B%E8%A1%8C%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E%20(go%20version%20%3E%3D%201.20)%0A%0A%60%60%60%20go%0Afunc%20F%5BT1%20any%5D()%20%7B%0Atype%20x%20struct%7B%7D%0Atype%20y%20%3D%20x%0A%7D%0A%0A%60%60%60%0A%0A%23%23%23%20%E6%B3%9B%E5%9E%8B%E7%BA%A6%E6%9D%9F%0A%3C!--rehype%3Awrap-class%3Drow-span-2--%3E%0A%0A%E9%80%9A%E8%BF%87%E6%8E%A5%E5%8F%A3%E5%AE%9E%E7%8E%B0%0A%0A%60%60%60%20go%0Atype%20Addable%20interface%7B%0A%20%20%20%20type%20int%2C%20int8%2C%20int16%2C%20int32%2C%20int64%2C%20uint%2C%20uint8%2C%20uint16%2C%20uint32%2C%20uint64%2C%20uintptr%2C%20float32%2C%20float64%2C%20complex64%2C%20complex128%2C%20string%20%0A%7D%0A%0Afunc%20Add%5BT%20Addable%5D(a%2Cb%20T)%20T%20%7B%0A%20%20%20%20return%20%20a%2Bb%0A%7D%0A%60%60%60%0A%0A%E4%BD%BF%E7%94%A8%20~%20%E7%AC%A6%E5%8F%B7%0A%0A%60%60%60%20go%0Atype%20Int%20interface%20%7B%0A~int%20%7C%20~int8%20%7C%20~int16%20%7C%20~int32%20%7C%20~int64%0A%7D%0A%0Atype%20Uint%20interface%20%7B%0A~uint%20%7C%20~uint8%20%7C%20~uint16%20%7C%20~uint32%0A%7D%0Atype%20Float%20interface%20%7B%0A~float32%20%7C%20~float64%0A%7D%0A%0Atype%20Slice%5BT%20Int%20%7C%20Uint%20%7C%20Float%5D%20%5B%5DT%0A%0Avar%20s%20Slice%5Bint%5D%20%2F%2F%20%E6%AD%A3%E7%A1%AE%0A%0Atype%20MyInt%20int%0Avar%20s2%20Slice%5BMyInt%5D%20%20%2F%2F%20MyInt%E5%BA%95%E5%B1%82%E7%B1%BB%E5%9E%8B%E6%98%AFint%EF%BC%8C%E6%89%80%E4%BB%A5%E5%8F%AF%E4%BB%A5%E7%94%A8%E4%BA%8E%E5%AE%9E%E4%BE%8B%E5%8C%96%0A%0Atype%20MyMyInt%20MyInt%0Avar%20s3%20Slice%5BMyMyInt%5D%20%20%2F%2F%20%E6%AD%A3%E7%A1%AE%E3%80%82MyMyInt%20%E8%99%BD%E7%84%B6%E5%9F%BA%E4%BA%8E%20MyInt%20%EF%BC%8C%E4%BD%86%E5%BA%95%E5%B1%82%E7%B1%BB%E5%9E%8B%E4%B9%9F%E6%98%AFint%EF%BC%8C%E6%89%80%E4%BB%A5%E4%B9%9F%E8%83%BD%E7%94%A8%E4%BA%8E%E5%AE%9E%E4%BE%8B%E5%8C%96%0A%0Atype%20MyFloat32%20float32%20%20%2F%2F%20%E6%AD%A3%E7%A1%AE%0Avar%20s4%20Slice%5BMyFloat32%5D%0A%0A%60%60%60%0A%3C!--rehype%3AclassName%3Dwrap-text%20--%3E%0A%0A%E4%BD%BF%E7%94%A8%20~%20%E6%97%B6%E7%9A%84%E9%99%90%E5%88%B6%EF%BC%9A%0A%3C!--rehype%3Astyle%3Dcolor%3A%20%23b43c29%3B--%3E%0A1.%20~%E5%90%8E%E9%9D%A2%E7%9A%84%E7%B1%BB%E5%9E%8B%E4%B8%8D%E8%83%BD%E4%B8%BA%E6%8E%A5%E5%8F%A3%0A2.%20~%E5%90%8E%E9%9D%A2%E7%9A%84%E7%B1%BB%E5%9E%8B%E5%BF%85%E9%A1%BB%E4%B8%BA%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B%0A%3C!--rehype%3Astyle%3Dcolor%3A%20%23b43c29%3B--%3E%0A%0A%23%23%23%20%E6%B3%9B%E5%9E%8B%20Receiver%0A%3C!--rehype%3Awrap-class%3Drow-span-1--%3E%0A%0A%E5%AE%9A%E4%B9%89%E6%99%AE%E9%80%9A%E7%B1%BB%E5%9E%8B%E6%94%AF%E6%8C%81%E6%B3%9B%E5%9E%8B%0A%0A%60%60%60%20go%0Atype%20MySlice%5BT%20int%20%7C%20float32%5D%20%5B%5DT%0A%0Afunc%20(s%20MySlice%5BT%5D)%20Sum()%20T%20%7B%0A%20%20%20%20var%20sum%20T%0A%20%20%20%20for%20_%2C%20value%20%3A%3D%20range%20s%20%7B%0A%20%20%20%20%20%20%20%20sum%20%2B%3D%20value%0A%20%20%20%20%7D%0A%20%20%20%20return%20sum%0A%7D%0A%60%60%60%0A%0A%E7%BB%93%E6%9E%84%E4%BD%93%E6%94%AF%E6%8C%81%E6%B3%9B%E5%9E%8B%0A%0A%60%60%60%20go%0Atype%20A%5BT%20int%20%7C%20float32%20%7C%20float64%5D%20struct%20%7B%0A%7D%0A%0Afunc%20(receiver%20A%5BT%5D)%20Add(a%20T%2C%20b%20T)%20T%20%7B%0Areturn%20a%20%2B%20b%0A%7D%0A%0A%60%60%60%0A%3C!--rehype%3AclassName%3Dwrap-text%20--%3E%0A%0A%23%23%23%20%E6%B3%9B%E5%9E%8B%E6%8E%A5%E5%8F%A3%0A%3C!--rehype%3Awrap-class%3Drow-span-1--%3E%0A%0A%60%60%60%20go%0Atype%20Uint%20interface%20%7B%20%2F%2F%20%E6%8E%A5%E5%8F%A3%20Uint%20%E4%B8%AD%E6%9C%89%E7%B1%BB%E5%9E%8B%EF%BC%8C%E6%89%80%E4%BB%A5%E6%98%AF%E4%B8%80%E8%88%AC%E6%8E%A5%E5%8F%A3%0A%20%20%20%20~uint%20%7C%20~uint8%20%7C%20~uint16%20%7C%20~uint32%20%7C%20~uint64%0A%7D%0A%0Atype%20ReadWriter%20interface%20%7B%20%20%2F%2F%20ReadWriter%20%E6%8E%A5%E5%8F%A3%E6%97%A2%E6%9C%89%E6%96%B9%E6%B3%95%E4%B9%9F%E6%9C%89%E7%B1%BB%E5%9E%8B%EF%BC%8C%E6%89%80%E4%BB%A5%E6%98%AF%E4%B8%80%E8%88%AC%E6%8E%A5%E5%8F%A3%0A%20%20%20%20~string%20%7C%20~%5B%5Drune%0A%0A%20%20%20%20Read(p%20%5B%5Dbyte)%20(n%20int%2C%20err%20error)%0A%20%20%20%20Write(p%20%5B%5Dbyte)%20(n%20int%2C%20err%20error)%0A%7D%0A%60%60%60%0A%0A%E4%B8%80%E8%88%AC%E6%8E%A5%E5%8F%A3%E7%B1%BB%E5%9E%8B%E4%B8%8D%E8%83%BD%E7%94%A8%E6%9D%A5%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%EF%BC%8C%E5%8F%AA%E8%83%BD%E7%94%A8%E4%BA%8E%E6%B3%9B%E5%9E%8B%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%BA%A6%E6%9D%9F%E4%B8%AD%0A%3C!--rehype%3Astyle%3Dcolor%3A%20%23b43c29%3B--%3E",
+      "body": "%60%60%60%20go%0A%2F%2Fgo%3Aembed%20p%2F*%0Avar%20f%20embed.FS%0Afunc%20main()%20%7B%0A%20%20data%2C%20_%20%3A%3D%20f.ReadFile(%22p%2F.hello.txt%22)%0A%20%20fmt.Println(string(data))%0A%20%20data%2C%20_%20%3D%20f.ReadFile(%22p%2Fq%2F.hi.txt%22)%20%2F%2F%20%E6%B2%A1%E6%9C%89%E5%B5%8C%E5%85%A5%20p%2Fq%2F.hi.txt%0A%20%20fmt.Println(string(data))%0A%7D%0A%60%60%60",
       "encoded": true
     },
     {
-      "id": "s13-135",
+      "id": "s13-107",
       "sectionId": "s13",
+      "title": "%E6%B3%9B%E5%9E%8B%E7%B1%BB%E5%9E%8B",
+      "body": "%60%60%60text%0Atype%20S%5BT%20int%7Cfloat32%7Cfloat64%20%5D%20%5B%5DT%0A%20%20%20%20%20%20%20%E2%94%AC%20%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20%0A%20%20%20%20%20%20%20%E2%94%86%20%20%20%20%20%20%20%20%20%20%E2%95%B0%E2%94%80%E2%94%80%E2%94%80%202.%20%E7%B1%BB%E5%9E%8B%E7%BA%A6%E6%9D%9F%0A%20%20%20%20%20%20%20%E2%95%B0%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%201.%20%E7%B1%BB%E5%9E%8B%E5%BD%A2%E5%8F%82%0A%60%60%60%0A%0A%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E7%B1%BB%E5%9E%8B%E5%AE%9E%E5%8F%82%20int%20%E6%88%96%20string%20%E5%AE%9E%E4%BE%8B%E5%8C%96%0A%0A%60%60%60%20go%0Atype%20MyMap%5BK%20int%7Cstring%2C%20V%20float32%20%7C%20float64%5D%20map%5BK%5DV%0A%0Avar%20a%20MyMap%5Bstring%2C%20float64%5D%20%3D%20map%5Bstring%5Dfloat64%7B%0A%20%20%20%20%22jack_score%22%3A%209.6%2C%0A%20%20%20%20%22bob_score%22%3A%20%208.4%2C%0A%7D%0A%60%60%60%0A%0A%E2%80%A2%20**%E5%8C%BF%E5%90%8D%E7%BB%93%E6%9E%84%E4%BD%93%E4%B8%8D%E6%94%AF%E6%8C%81%E6%B3%9B%E5%9E%8B**%3C!--rehype%3Astyle%3Dcolor%3A%20%23b43c29%3B--%3E%0A%E2%80%A2%20**%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E4%B8%8D%E6%94%AF%E6%8C%81%E6%B3%9B%E5%9E%8B**%3C!--rehype%3Astyle%3Dcolor%3A%20%23b43c29%3B--%3E",
+      "encoded": true
+    },
+    {
+      "id": "s13-111",
+      "sectionId": "s13",
+      "title": "泛型函数",
+      "body": "任意类型\n\n``` go\nfunc Add[T any](a,b T) T {\n    return  a+b\n}\n```\n\n对类型进行约束\n\n``` go\nfunc Add[T string | int | int8](a,b T) T {\n    return  a+b\n}\n```\n\n类型嵌套\n\n``` go\ntype WowStruct[T int | float32, S []T] struct {\n    Data     S\n    MaxValue T\n    MinValue T\n}\n\nvar ws WowStruct[int, []int]  \n```\n\n泛型函数中进行类型声明 (go version >= 1.20)\n\n``` go\nfunc F[T1 any]() {\n    type x struct{} \n    type y = x      \n}\n```"
+    },
+    {
+      "id": "s13-119",
+      "sectionId": "s13",
+      "title": "泛型约束",
+      "body": "通过接口实现\n\n``` go\ntype Addable interface{\n    type int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64, uintptr, float32, float64, complex64, complex128, string \n}\n\nfunc Add[T Addable](a,b T) T {\n    return  a+b\n}\n```\n\n使用 ~ 符号\n\n``` go\ntype Int interface {\n    ~int | ~int8 | ~int16 | ~int32 | ~int64\n}\n\ntype Uint interface {\n    ~uint | ~uint8 | ~uint16 | ~uint32\n}\ntype Float interface {\n    ~float32 | ~float64\n}\n\ntype Slice[T Int | Uint | Float] []T \n\nvar s Slice[int] // 正确\n\ntype MyInt int\nvar s2 Slice[MyInt]  // MyInt底层类型是int，所以可以用于实例化\n\ntype MyMyInt MyInt\nvar s3 Slice[MyMyInt]  // 正确。MyMyInt 虽然基于 MyInt ，但底层类型也是int，所以也能用于实例化\n\ntype MyFloat32 float32  // 正确\nvar s4 Slice[MyFloat32]\n```\n\n使用 ~ 时的限制：\n<!--rehype:style=color: #b43c29;-->\n\n• ~后面的类型不能为接口\n• ~后面的类型必须为基本类型"
+    },
+    {
+      "id": "s13-125",
+      "sectionId": "s13",
+      "title": "泛型 Receiver",
+      "body": "定义普通类型支持泛型\n\n``` go\ntype MySlice[T int | float32] []T\n\nfunc (s MySlice[T]) Sum() T {\n    var sum T\n    for _, value := range s {\n        sum += value\n    }\n    return sum\n}\n```\n\n结构体支持泛型\n\n``` go\ntype A[T int | float32 | float64] struct {\n}\n\nfunc (receiver A[T]) Add(a T, b T) T {\n    return a + b\n}\n\n```"
+    },
+    {
+      "id": "s13-129",
+      "sectionId": "s13",
+      "title": "泛型接口",
+      "body": "``` go\ntype Uint interface { // 接口 Uint 中有类型，所以是一般接口\n    ~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64\n}\n\ntype ReadWriter interface {  // ReadWriter 接口既有方法也有类型，所以是一般接口\n    ~string | ~[]rune\n\n    Read(p []byte) (n int, err error)\n    Write(p []byte) (n int, err error)\n}\n```\n\n一般接口类型不能用来定义变量，只能用于泛型的类型约束中\n<!--rehype:style=color: #b43c29;-->"
+    },
+    {
+      "id": "s14-131",
+      "sectionId": "s14",
       "title": "关键字(Keywords)",
       "body": "• break\n• default\n• func\n• interface\n• select\n• case\n• defer\n• go\n• map\n• struct\n• chan\n• else\n• goto\n• package\n• switch\n• const\n• fallthrough\n• if\n• range\n• type\n• continue\n• for\n• import\n• return\n• var"
     },
     {
-      "id": "s13-136",
-      "sectionId": "s13",
+      "id": "s14-132",
+      "sectionId": "s14",
       "title": "运算符和标点符号",
       "body": "|     |      |       |       |        |      |       |     |     |\n| --- | ---- | ----- | ----- | ------ | ---- | ----- | --- | --- |\n| `+` | `&`  | `+=`  | `&=`  | `&&`   | `==` | `!=`  | `(` | `)` |\n| `-` | `\\|` | `-=`  | `\\|=` | `\\|\\|` | `<`  | `<=`  | `[` | `]` |\n| `*` | `^`  | `*=`  | `^=`  | `<-`   | `>`  | `>=`  | `{` | `}` |\n| `/` | `<<` | `/=`  | `<<=` | `++`   | `=`  | `:=`  | `,` | `;` |\n| `%` | `>>` | `%=`  | `>>=` | `--`   | `!`  | `...` | `.` | `:` |\n|     | `&^` | `&^=` |       |        |      |       |     |     |"
     },
     {
-      "id": "s14-137",
-      "sectionId": "s14",
+      "id": "s15-133",
+      "sectionId": "s15",
       "title": "Go 编译器命令",
       "body": ":- | --\n:- | --\n`go command [参数]`  | go 命令 [参数]\n`go build`          | 编译包和依赖包\n`go clean`          | 移除对象和缓存文件\n`go doc`            | 显示包的文档\n`go env`            | 打印go的环境变量信息\n`go bug`            | 报告bug\n`go fix`            | 更新包使用新的api\n`go fmt`            | 格式规范化代码\n`go generate`       | 通过处理资源生成go文件\n`go get`            | 下载并安装包及其依赖\n`go install`        | 编译和安装包及其依赖\n`go list`           | 列出所有包\n`go run`            | 编译和运行go程序\n`go test`           | 测试\n`go tool`           | 运行给定的go工具\n`go version`        | 显示go当前版本\n`go vet`            | 发现代码中可能的错误"
     },
     {
-      "id": "s14-138",
-      "sectionId": "s14",
+      "id": "s15-134",
+      "sectionId": "s15",
       "title": "ENV",
       "body": ":- | --\n:- | --\n`GOOS`         | 编译系统\n`GOARCH`       | 编译arch\n`GO111MODULE`  | gomod开关\n`GOPROXY`      | go代理 <https://goproxy.io>  <https://goproxy.cn>  <https://mirrors.aliyun.com/goproxy/>\n`GOSSAFUNC`    | 生成 `SSA.html` 文件，展示代码优化的每一步 `GOSSAFUNC=func_name go build`\n<!--rehype:className=style-list-arrow-->"
     },
     {
-      "id": "s14-139",
-      "sectionId": "s14",
+      "id": "s15-135",
+      "sectionId": "s15",
       "title": "Module",
       "body": ":- | --\n:- | --\n`go mod init`         | 初始化当前文件夹，创建go.mod文件\n`go mod download`     | 下载依赖的module到本地\n`go mod tidy`         | 增加缺少的module，删除无用的module\n`go mod vendor`       | 将依赖复制到vendor下\n文件 `go.mod`          |  依赖列表和版本约束\n文件 `go.sum`          |  记录 `module` 文件 `hash` 值，用于安全校验\n<!--rehype:className=style-list-arrow-->"
     },
     {
-      "id": "s15-140",
-      "sectionId": "s15",
+      "id": "s16-136",
+      "sectionId": "s16",
       "title": "另见",
       "body": "• [Devhints](https://devhints.io/go) *(devhints.io)*\n• [A tour of Go](https://tour.golang.org/welcome/1) *(tour.golang.org)*\n• [Golang wiki](https://github.com/golang/go/wiki/) *(github.com)*\n• [Effective Go](https://golang.org/doc/effective_go.html) *(golang.org)*\n• [Go by Example](https://gobyexample.com/) *(gobyexample.com)*\n• [Awesome Go](https://awesome-go.com/) *(awesome-go.com)*\n• [JustForFunc Youtube](https://www.youtube.com/channel/UC_BzFbxG2za3bp5NRRRXJSw) *(youtube.com)*\n• [Style Guide](https://github.com/golang/go/wiki/CodeReviewComments) *(github.com)*"
     }

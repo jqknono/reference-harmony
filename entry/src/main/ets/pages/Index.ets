@@ -1,10 +1,12 @@
 import preferences from '@ohos.data.preferences';
+import { window } from '@kit.ArkUI';
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
 import { getAppThemeTokens } from '../common/appTheme';
 import type { AppThemeId, AppThemeTokens } from '../common/appTheme';
 import { decodeIfEncoded } from '../common/encodedContent';
 import { ReferenceCard } from '../components/ReferenceCard';
+import { openExternalLink } from '../common/openExternalLink';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
@@ -25,8 +27,12 @@ struct Index {
   @State private theme: AppThemeTokens = getAppThemeTokens('dark');
 
   @State private docs: Array<ReferenceDocSummary> = [];
+  @State private zhDocCount: number = -1;
+  @State private enDocCount: number = -1;
   @State private selectedDoc: ReferenceDoc | undefined = undefined;
   @State private selectedDocId: string = '';
+  @State private selectedDocIcon: string = '';
+  @State private selectedDocAvatarVersion: number = 0;
   @State private sectionCards: Array<SectionWithCards> = [];
   @State private searchQuery: string = '';
   @State private searchSectionCards: Array<SectionWithCards> = [];
@@ -44,13 +50,80 @@ struct Index {
   private listSectionNavScroller: Scroller = new Scroller();
   private listCardNavScroller: Scroller = new Scroller();
   private repository: ReferenceRepository | undefined = undefined;
+  private openDocRequestId: number = 0;
+  @State private fontSize: number = 15;
+  @State private autoRotateLandscape: boolean = false;
+  @State private isLandscape: boolean = false;
+
+  private lengthToNumber(value: Length): number {
+    if (typeof value === 'number') return value;
+    const parsed: number = Number.parseFloat(String(value));
+    return Number.isFinite(parsed) ? parsed : 0;
+  }
+
+  private landscapeSideMargin(): number {
+    return this.isLandscape ? this.fontSize * 1.5 : 0;
+  }
+
+  private toHexColorString(color: number): string {
+    const value: number = color >>> 0;
+    const hex: string = value.toString(16);
+    const normalized: string = (hex.length <= 6 ? hex.padStart(6, '0') : hex.padStart(8, '0'));
+    return `#${normalized}`;
+  }
+
+  private applySystemBarTheme(): void {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+
+    const backgroundColor: string = this.toHexColorString(this.theme.pageBackgroundColor);
+    const lightIcon: boolean = this.themeId === 'dark';
+    const properties: window.SystemBarProperties = {
+      statusBarColor: backgroundColor,
+      navigationBarColor: backgroundColor,
+      isStatusBarLightIcon: lightIcon,
+      isNavigationBarLightIcon: lightIcon,
+    };
+
+    Promise.resolve()
+      .then((): Promise<window.Window> => window.getLastWindow(host))
+      .then(
+        (w: window.Window): void => {
+          w.setWindowSystemBarProperties(properties).then(
+            (): void => undefined,
+            (): void => undefined,
+          );
+          Promise.resolve()
+            .then((): void => w.setWindowBackgroundColor(backgroundColor))
+            .then(
+              (): void => undefined,
+              (): void => undefined,
+            );
+        },
+        (): void => undefined,
+      );
+  }
+
+  private updateLandscapeFromArea(area: Area): void {
+    const width: number = this.lengthToNumber(area.width);
+    const height: number = this.lengthToNumber(area.height);
+    const next: boolean = height > 0 && width > height;
+    if (this.isLandscape !== next) {
+      this.isLandscape = next;
+      this.applySystemBarTheme();
+    }
+  }
 
   private t(zh: string, en: string): string {
     return this.lang === 'en' ? en : zh;
   }
 
   private iconKey(docId: string, icon: string | undefined): string {
-    return icon ? `${docId}:${icon}` : docId;
+    if (!icon) return docId;
+    const trimmed = icon.trim();
+    if (!trimmed) return docId;
+    if (trimmed.startsWith('data:')) return docId;
+    return `${docId}:${trimmed}`;
   }
 
   private hasIconError(iconKey: string): boolean {
@@ -66,6 +139,32 @@ struct Index {
     this.iconErrorKeys = next;
   }
 
+  private isRemoteIcon(icon: string | undefined): boolean {
+    const s: string = (icon ?? '').trim().toLowerCase();
+    return s.startsWith('http://') || s.startsWith('https://');
+  }
+
+  private trimmedIcon(icon: string | undefined): string {
+    return (icon ?? '').trim();
+  }
+
+  private isRawfileIcon(icon: string | undefined): boolean {
+    const s = this.trimmedIcon(icon);
+    return s.startsWith('reference/');
+  }
+
+  private isSvgIcon(icon: string | undefined): boolean {
+    const s: string = this.trimmedIcon(icon).toLowerCase();
+    return s.endsWith('.svg');
+  }
+
+  private canShowLocalIcon(docId: string, icon: string | undefined): boolean {
+    const s = this.trimmedIcon(icon);
+    if (!s) return false;
+    if (this.isRemoteIcon(s)) return false;
+    return !this.hasIconError(this.iconKey(docId, s));
+  }
+
   private getAvatarText(label: string): string {
     const trimmed: string = (label ?? '').trim();
     if (!trimmed) return '?';
@@ -79,19 +178,52 @@ struct Index {
 
   @Builder
   private DocAvatar(docId: string, label: string, icon: string | undefined, size: number, radius: number): void {
-    if (icon && !this.hasIconError(this.iconKey(docId, icon))) {
-      Image(icon)
-        .width(size)
-        .height(size)
-        .borderRadius(radius)
-        .backgroundColor(this.theme.avatarBackgroundColor)
-        .onError(() => this.markIconError(this.iconKey(docId, icon)));
+    if (this.canShowLocalIcon(docId, icon)) {
+      if (this.isRawfileIcon(icon)) {
+        if (this.isSvgIcon(icon)) {
+          ForEach([this.iconKey(docId, this.trimmedIcon(icon))], (_: string) => {
+            Image($rawfile(this.trimmedIcon(icon)))
+              .width(size)
+              .height(size)
+              .syncLoad(true)
+              .fillColor(this.theme.avatarTextColor)
+              .onError(() => this.markIconError(this.iconKey(docId, this.trimmedIcon(icon))));
+          }, (k: string) => k);
+        } else {
+          ForEach([this.iconKey(docId, this.trimmedIcon(icon))], (_: string) => {
+            Image($rawfile(this.trimmedIcon(icon)))
+              .width(size)
+              .height(size)
+              .syncLoad(true)
+              .onError(() => this.markIconError(this.iconKey(docId, this.trimmedIcon(icon))));
+          }, (k: string) => k);
+        }
+      } else {
+        if (this.isSvgIcon(icon)) {
+          ForEach([this.iconKey(docId, this.trimmedIcon(icon))], (_: string) => {
+            Image(this.trimmedIcon(icon))
+              .width(size)
+              .height(size)
+              .syncLoad(true)
+              .fillColor(this.theme.avatarTextColor)
+              .onError(() => this.markIconError(this.iconKey(docId, this.trimmedIcon(icon))));
+          }, (k: string) => k);
+        } else {
+          ForEach([this.iconKey(docId, this.trimmedIcon(icon))], (_: string) => {
+            Image(this.trimmedIcon(icon))
+              .width(size)
+              .height(size)
+              .syncLoad(true)
+              .onError(() => this.markIconError(this.iconKey(docId, this.trimmedIcon(icon))));
+          }, (k: string) => k);
+        }
+      }
     } else {
       Text(this.getAvatarText(label))
         .width(size)
         .height(size)
         .textAlign(TextAlign.Center)
-        .fontSize(Math.floor(size * 0.42))
+        .fontSize(Math.floor(size * 0.4))
         .fontColor(this.theme.avatarTextColor)
         .backgroundColor(this.theme.avatarBackgroundColor)
         .borderRadius(radius);
@@ -170,6 +302,63 @@ struct Index {
     await Promise.resolve()
       .then((): Promise<void> => prefs.flush())
       .then((): void => undefined, (): void => undefined);
+  }
+
+  private async loadAutoRotateLandscapeSetting(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) {
+      this.autoRotateLandscape = false;
+      return;
+    }
+    const saved: boolean = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get('autoRotateLandscape', false))
+      .then(
+        (value: ValueType): boolean => {
+          if (typeof value === 'boolean') return value;
+          if (typeof value === 'number') return value !== 0;
+          if (typeof value === 'string') return value === 'true' || value === '1';
+          return Boolean(value);
+        },
+        (): boolean => false,
+      );
+    this.autoRotateLandscape = saved;
+  }
+
+  private async saveAutoRotateLandscapeSetting(next: boolean): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put('autoRotateLandscape', next))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  private applyAutoRotateLandscapeSetting(enabled: boolean): void {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    Promise.resolve()
+      .then((): Promise<window.Window> => window.getLastWindow(host))
+      .then((w: window.Window): Promise<void> => w.setPreferredOrientation(
+        enabled ? window.Orientation.AUTO_ROTATION_RESTRICTED : window.Orientation.PORTRAIT,
+      ))
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  private async switchAutoRotateLandscape(next: boolean): Promise<void> {
+    if (this.autoRotateLandscape === next) return;
+    this.autoRotateLandscape = next;
+    this.applyAutoRotateLandscapeSetting(next);
+    await this.saveAutoRotateLandscapeSetting(next);
   }
 
   private async ensureRepository(): Promise<ReferenceRepository | undefined> {
@@ -325,6 +514,8 @@ struct Index {
   }
 
   private async openDoc(docId: string, switchToReadTab: boolean = true): Promise<void> {
+    this.openDocRequestId++;
+    const requestId = this.openDocRequestId;
     const repo = await this.ensureRepository();
     if (!repo) {
       return;
@@ -332,21 +523,38 @@ struct Index {
 
     this.loading = true;
     this.errorText = '';
+    this.selectedDocIcon = '';
     await repo.getDocByLang(this.lang, docId).then(
       (doc: ReferenceDoc): void => {
+        if (requestId !== this.openDocRequestId) return;
+        if (!doc.icon) {
+          const summary = this.docs.find((d: ReferenceDocSummary): boolean => d.id === docId);
+          if (summary?.icon) {
+            doc.icon = summary.icon;
+          }
+        }
+        this.selectedDocIcon = doc.icon ?? '';
         this.selectedDoc = doc;
         this.selectedDocId = docId;
+        this.selectedDocAvatarVersion = requestId;
         this.rebuildSectionCards(doc);
         this.rebuildSearchResults();
+        this.listScroller.scrollToIndex(0);
         if (switchToReadTab) {
-          this.tabsController.changeIndex(1);
+          this.currentTabIndex = 1;
+          if (!this.isLandscape) {
+            this.tabsController.changeIndex(1);
+          }
         }
       },
       (e: Error | string): void => {
+        if (requestId !== this.openDocRequestId) return;
         this.errorText = this.t(`加载文档失败：${String(e)}`, `Failed to load doc: ${String(e)}`);
       },
     );
-    this.loading = false;
+    if (requestId === this.openDocRequestId) {
+      this.loading = false;
+    }
   }
 
   private async switchLang(next: ReferenceLang): Promise<void> {
@@ -355,17 +563,23 @@ struct Index {
     await this.saveLangSetting(next);
     this.selectedDoc = undefined;
     this.selectedDocId = '';
+    this.selectedDocIcon = '';
     this.sectionCards = [];
     this.searchQuery = '';
     this.searchSectionCards = [];
     this.searchResultCount = 0;
-    await this.loadManifest(false);
+    this.catalogSearchQuery = '';
+    this.catalogSearchResults = [];
+    this.iconErrorKeys = [];
+    await this.loadManifest(true);
+    await this.loadManifestCounts();
   }
 
   private async switchTheme(next: AppThemeId): Promise<void> {
     if (this.themeId === next) return;
     this.themeId = next;
     this.theme = getAppThemeTokens(next);
+    this.applySystemBarTheme();
     await this.saveThemeSetting(next);
   }
 
@@ -402,33 +616,81 @@ struct Index {
     this.loading = false;
   }
 
+  private formatDocCount(count: number): string {
+    if (!Number.isFinite(count) || count < 0) return this.t('未知', 'N/A');
+    return `${Math.floor(count)}`;
+  }
+
+  private async loadManifestCounts(): Promise<void> {
+    const repo = await this.ensureRepository();
+    if (!repo) return;
+
+    const zh = repo.getManifestByLang('zh').then(
+      (manifest: ReferenceManifest): number => (manifest.docs ?? []).length,
+      (): number => -1,
+    );
+    const en = repo.getManifestByLang('en').then(
+      (manifest: ReferenceManifest): number => (manifest.docs ?? []).length,
+      (): number => -1,
+    );
+
+    await Promise.all([zh, en]).then(
+      (counts: Array<number>): void => {
+        this.zhDocCount = counts.length > 0 ? counts[0] : -1;
+        this.enDocCount = counts.length > 1 ? counts[1] : -1;
+      },
+      (): void => {
+        this.zhDocCount = -1;
+        this.enDocCount = -1;
+      },
+    );
+  }
+
   async aboutToAppear(): Promise<void> {
     await this.loadThemeSetting();
+    this.applySystemBarTheme();
     await this.loadLangSetting();
+    await this.loadAutoRotateLandscapeSetting();
+    this.applyAutoRotateLandscapeSetting(this.autoRotateLandscape);
     await this.loadManifest();
+    await this.loadManifestCounts();
+  }
+
+  onBackPress(): boolean {
+    if (this.showTocPanel) {
+      this.showTocPanel = false;
+      return true;
+    }
+    if (this.currentTabIndex !== 0) {
+      this.currentTabIndex = 0;
+      this.tabsController.changeIndex(0);
+      return true;
+    }
+    return true;
   }
 
   @Builder
   private DocListTab(): void {
-    Column({ space: 10 }) {
-      Text(this.t('快速参考', 'Quick Reference'))
+    Column({ space: this.fontSize * 0.6 }) {
+      Text(this.t('开发速查', 'Quick Reference'))
         .fontSize(22)
         .fontWeight(FontWeight.Bold)
         .fontColor(this.theme.titleColor);
 
-      Row({ space: 10 }) {
+      if (!this.isLandscape) {
+        Row({ space: this.fontSize * 0.6 }) {
         TextInput({
           text: this.catalogSearchQuery,
           placeholder: this.t('搜索文档…', 'Search docs…'),
         })
           .layoutWeight(1)
-          .fontSize(15)
+          .fontSize(this.fontSize)
           .fontColor(this.theme.titleColor)
           .placeholderColor(this.theme.mutedTextColor)
           .backgroundColor(this.theme.surfaceBackgroundColor)
           .border({ width: 1, color: this.theme.borderColor })
-          .borderRadius(12)
-          .padding({ left: 12, right: 12, top: 10, bottom: 10 })
+          .borderRadius(this.fontSize * 0.8)
+          .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 })
           .onChange((value: string) => {
             this.catalogSearchQuery = value;
             this.rebuildCatalogSearchResults();
@@ -436,16 +698,17 @@ struct Index {
 
         if (this.catalogSearchQuery.trim()) {
           Text(this.t('清除', 'Clear'))
-            .fontSize(12)
+            .fontSize(this.fontSize * 0.8)
             .fontColor(this.theme.mutedTextColor)
-            .padding({ left: 10, right: 10, top: 8, bottom: 8 })
+            .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
             .backgroundColor(this.theme.surfaceBackgroundColor)
             .border({ width: 1, color: this.theme.borderColor })
-            .borderRadius(12)
+            .borderRadius(this.fontSize * 0.8)
             .onClick(() => {
               this.catalogSearchQuery = '';
               this.catalogSearchResults = [];
             });
+        }
         }
       }
 
@@ -464,38 +727,38 @@ struct Index {
       List() {
         ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.docs, (doc: ReferenceDocSummary) => {
           ListItem() {
-            Row({ space: 12 }) {
-              this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, 34, 10);
+            Row({ space: this.fontSize * 0.8 }) {
+              this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, this.fontSize * 2.5, 0);
 
-              Column({ space: 4 }) {
-                Text(doc.name || doc.id).fontSize(16).fontColor(this.theme.titleColor);
+              Column({ space: this.fontSize * 0.2 }) {
+                Text(doc.name || doc.id).fontSize(this.fontSize * 1).fontColor(this.theme.titleColor);
 
                 if (doc.title && doc.title !== doc.name) {
                   Text(doc.title)
-                    .fontSize(12)
+                    .fontSize(this.fontSize * 0.8)
                     .fontColor(this.theme.mutedTextColor)
                     .maxLines(2);
                 }
 
                 Text(this.t(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`, `${doc.sectionCount} sections · ${doc.cardCount} cards`))
-                  .fontSize(12)
+                  .fontSize(this.fontSize * 0.8)
                   .fontColor(this.theme.mutedTextColor);
               }.layoutWeight(1);
 
-              Text(this.t('打开', 'Open')).fontSize(12).fontColor(this.theme.accentColor);
+              Text(this.t('打开', 'Open')).fontSize(this.fontSize * 0.8).fontColor(this.theme.accentColor);
             }
-            .padding(14)
+            .padding(this.fontSize * 1)
             .backgroundColor(this.theme.surfaceBackgroundColor)
-            .borderRadius(12)
+            .borderRadius(this.fontSize * 0.8)
             .onClick(() => this.openDoc(doc.id, true));
           }
-          .margin({ bottom: 10 });
-        }, (doc: ReferenceDocSummary) => doc.id);
+          .margin({ bottom: this.fontSize * 0.6 });
+        }, (doc: ReferenceDocSummary) => `${this.lang}:${doc.id}`);
       }
       .layoutWeight(1)
       .divider({ strokeWidth: 0 });
     }
-    .padding(16)
+    .padding(this.fontSize * 1)
     .height('100%')
     .width('100%')
     .backgroundColor(this.theme.pageBackgroundColor);
@@ -503,53 +766,55 @@ struct Index {
 
   @Builder
   private ReadTab(): void {
-    Column({ space: 10 }) {
-      Row({ space: 10 }) {
+    Column({ space: this.fontSize * 0.6 }) {
+      Row({ space: this.fontSize * 0.6 }) {
         if (this.selectedDoc) {
-          this.DocAvatar(
-            this.selectedDocId,
-            this.selectedDoc.name || this.selectedDoc.title || this.selectedDocId,
-            this.selectedDoc.icon,
-            28,
-            8,
-          );
+          ForEach([this.selectedDocAvatarVersion], (_: number) => {
+            this.DocAvatar(
+              this.selectedDocId,
+              this.selectedDoc?.name || this.selectedDoc?.title || this.selectedDocId,
+              this.selectedDocIcon || undefined,
+              this.fontSize * 1.5,
+              0,
+            );
+          }, (k: number) => `${k}`);
         }
 
-        Column({ space: 2 }) {
+        Column({ space: this.fontSize * 0.1 }) {
           Text(this.selectedDoc ? (this.selectedDoc.name || this.selectedDoc.title) : this.t('未选择', 'No selection'))
-            .fontSize(18)
+            .fontSize(this.fontSize * 1.2)
             .fontWeight(FontWeight.Bold)
             .fontColor(this.theme.titleColor);
 
           if (this.selectedDoc && this.selectedDoc.title && this.selectedDoc.title !== this.selectedDoc.name) {
-            Text(this.selectedDoc.title).fontSize(12).fontColor(this.theme.mutedTextColor).maxLines(2);
+            Text(this.selectedDoc.title).fontSize(this.fontSize * 0.8).fontColor(this.theme.mutedTextColor).maxLines(2);
           }
         }
         .layoutWeight(1);
 
         Text(this.t('目录', 'TOC'))
-          .fontSize(12)
+          .fontSize(this.fontSize * 1)
           .fontColor(this.theme.accentColor)
           .onClick(() => {
             this.showTocPanel = true;
           });
       }
-      .padding({ left: 16, right: 16, top: 14, bottom: 6 });
+      .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
 
-      if (this.selectedDoc) {
-        Row({ space: 10 }) {
+      if (this.selectedDoc && !this.isLandscape) {
+        Row({ space: this.fontSize * 0.6 }) {
           TextInput({
             text: this.searchQuery,
             placeholder: this.t('搜索当前文档…', 'Search current doc…'),
           })
             .layoutWeight(1)
-            .fontSize(14)
+            .fontSize(this.fontSize * 1)
             .fontColor(this.theme.titleColor)
             .placeholderColor(this.theme.mutedTextColor)
             .backgroundColor(this.theme.surfaceBackgroundColor)
             .border({ width: 1, color: this.theme.borderColor })
-            .borderRadius(12)
-            .padding({ left: 12, right: 12, top: 8, bottom: 8 })
+            .borderRadius(this.fontSize * 0.8)
+            .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
             .onChange((value: string) => {
               this.searchQuery = value;
               this.rebuildSearchResults();
@@ -557,58 +822,64 @@ struct Index {
 
           if (this.searchQuery.trim()) {
             Text(this.t('清除', 'Clear'))
-              .fontSize(12)
+              .fontSize(this.fontSize * 0.8)
               .fontColor(this.theme.mutedTextColor)
-              .padding({ left: 10, right: 10, top: 6, bottom: 6 })
+              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
               .backgroundColor(this.theme.surfaceBackgroundColor)
               .border({ width: 1, color: this.theme.borderColor })
-              .borderRadius(12)
+              .borderRadius(this.fontSize * 0.8)
               .onClick(() => {
                 this.searchQuery = '';
                 this.rebuildSearchResults();
               });
           }
         }
-        .padding({ left: 16, right: 16 });
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
       }
 
       if (this.loading) {
-        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor).padding({ left: 16, right: 16 });
+        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor).padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
       }
 
       if (this.errorText) {
-        Text(this.errorText).fontColor(this.theme.dangerTextColor).padding({ left: 16, right: 16 }).maxLines(6);
+        Text(this.errorText).fontColor(this.theme.dangerTextColor).padding({ left: this.fontSize * 1, right: this.fontSize * 1 }).maxLines(6);
       }
 
       if (!this.selectedDoc) {
-        Text(this.t('请先在"目录"中打开一个文档', 'Open a doc in "Catalog" first.')).fontColor(this.theme.mutedTextColor).padding({ left: 16, right: 16 });
+        Text(this.t('请先在"目录"中打开一个文档', 'Open a doc in "Catalog" first.')).fontColor(this.theme.mutedTextColor).padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
       }
 
       if (this.searchQuery.trim()) {
         if (this.searchResultCount === 0) {
-          Text(this.t('没有匹配结果', 'No results.')).fontColor(this.theme.mutedTextColor).padding({ left: 16, right: 16 });
+          Text(this.t('没有匹配结果', 'No results.')).fontColor(this.theme.mutedTextColor).padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
         } else {
           Text(this.t(`${this.searchResultCount} 条结果`, `${this.searchResultCount} results`))
-            .fontSize(12)
+            .fontSize(this.fontSize * 0.8)
             .fontColor(this.theme.mutedTextColor)
-            .padding({ left: 16, right: 16 });
+            .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
         }
 
         List({ scroller: this.listSearchScroller }) {
           ForEach(this.searchSectionCards, (group: SectionWithCards, groupIndex: number) => {
             ListItemGroup() {
               ListItem() {
-                Text(`${group.section.title} (${group.cards.length})`)
-                  .fontSize(14)
-                  .fontWeight(FontWeight.Medium)
-                  .fontColor(this.theme.textColor)
-                  .padding({ left: 16, right: 16, top: 12, bottom: 4 });
+                Row({ space: this.fontSize * 0.4 }) {
+                  Text('#')
+                    .fontSize(this.fontSize * 1)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor(this.theme.sectionTitleColor);
+                  Text(`${group.section.title} (${group.cards.length})`)
+                    .fontSize(this.fontSize)
+                    .fontWeight(FontWeight.Medium)
+                    .fontColor(this.theme.sectionTitleColor);
+                }
+                .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
               }
 
               ForEach(group.cards, (card: ReferenceCardData) => {
                 ListItem() {
-                  ReferenceCard({ card, lang: this.lang, theme: this.theme })
-                    .margin({ left: 16, right: 16, top: 8, bottom: 8 });
+                  ReferenceCard({ card, lang: this.lang, theme: this.theme, fontSize: this.fontSize, unboundedTableColumns: this.isLandscape })
+                    .margin({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 });
                 }
               }, (card: ReferenceCardData) => `${this.selectedDocId}:search:${card.id}`);
             }
@@ -620,39 +891,39 @@ struct Index {
         if (this.searchSectionCards.length > 0) {
           Column() {
             Scroll(this.listSectionNavScroller) {
-              Row({ space: 8 }) {
+              Row({ space: this.fontSize * 0.5 }) {
                 ForEach(this.searchSectionCards, (group: SectionWithCards, groupIndex: number) => {
                   Text(group.section.title)
-                    .fontSize(12)
+                    .fontSize(this.fontSize * 0.8)
                     .fontColor(this.searchNavSectionIndex === groupIndex ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-                    .padding({ left: 10, right: 10, top: 8, bottom: 8 })
+                    .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
                     .backgroundColor(this.searchNavSectionIndex === groupIndex ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-                    .borderRadius(999)
+                    .borderRadius(this.fontSize * 66)
                     .onClick(() => {
                       this.searchNavSectionIndex = groupIndex;
                       this.listSearchScroller.scrollToItemInGroup(groupIndex, 0, true, ScrollAlign.START);
                     });
                 }, (group: SectionWithCards) => `${this.selectedDocId}:search:nav:${group.section.id}:${this.searchNavSectionIndex}`);
               }
-              .padding({ left: 12, right: 12, top: 8, bottom: 4 });
+              .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.5, bottom: this.fontSize * 0.2 });
             }
             .scrollable(ScrollDirection.Horizontal)
             .scrollBar(BarState.Off);
 
             Scroll(this.listCardNavScroller) {
-              Row({ space: 6 }) {
+              Row({ space: this.fontSize * 0.4 }) {
                 ForEach(
                   this.searchSectionCards[this.searchNavSectionIndex]?.cards ?? [],
                   (card: ReferenceCardData, cardIndex: number) => {
                     Text(this.getTocCardTitle(card))
-                      .fontSize(11)
+                      .fontSize(this.fontSize * 0.8)
                       .fontColor(this.theme.mutedTextColor)
                       .maxLines(1)
                       .textOverflow({ overflow: TextOverflow.Ellipsis })
-                      .constraintSize({ maxWidth: 120 })
-                      .padding({ left: 8, right: 8, top: 6, bottom: 6 })
+                      .constraintSize({ maxWidth: this.fontSize * 8 })
+                      .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
                       .backgroundColor(this.theme.chipBackgroundColor)
-                      .borderRadius(6)
+                      .borderRadius(this.fontSize * 0.4)
                       .onClick(() => {
                         this.listSearchScroller.scrollToItemInGroup(this.searchNavSectionIndex, cardIndex + 1, true, ScrollAlign.START);
                       });
@@ -660,7 +931,7 @@ struct Index {
                   (card: ReferenceCardData) => `${this.selectedDocId}:search:cardnav:${card.id}`
                 );
               }
-              .padding({ left: 12, right: 12, top: 4, bottom: 8 });
+              .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.2, bottom: this.fontSize * 0.5 });
             }
             .scrollable(ScrollDirection.Horizontal)
             .scrollBar(BarState.Off);
@@ -672,17 +943,23 @@ struct Index {
           ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
             ListItemGroup() {
               ListItem() {
-                Text(group.section.title)
-                  .fontSize(14)
-                  .fontWeight(FontWeight.Medium)
-                  .fontColor(this.theme.textColor)
-                  .padding({ left: 16, right: 16, top: 12, bottom: 4 });
+                Row({ space: this.fontSize * 0.4 }) {
+                  Text('#')
+                    .fontSize(this.fontSize * 1)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor(this.theme.sectionTitleColor);
+                  Text(group.section.title)
+                    .fontSize(this.fontSize)
+                    .fontWeight(FontWeight.Medium)
+                    .fontColor(this.theme.sectionTitleColor);
+                }
+                .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
               }
 
               ForEach(group.cards, (card: ReferenceCardData, cardIndex: number) => {
                 ListItem() {
-                  ReferenceCard({ card, lang: this.lang, theme: this.theme })
-                    .margin({ left: 16, right: 16, top: 8, bottom: 8 });
+                  ReferenceCard({ card, lang: this.lang, theme: this.theme, fontSize: this.fontSize, unboundedTableColumns: this.isLandscape })
+                    .margin({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 });
                 }
               }, (card: ReferenceCardData) => `${this.selectedDocId}:${card.id}`);
             }
@@ -721,39 +998,45 @@ struct Index {
       Column() {
         Row() {
           Text(this.t('目录', 'Table of Contents'))
-            .fontSize(18)
+            .fontSize(this.fontSize * 1.2)
             .fontWeight(FontWeight.Bold)
             .fontColor(this.theme.titleColor);
           Blank();
           Text(this.t('关闭', 'Close'))
-            .fontSize(14)
+            .fontSize(this.fontSize * 1)
             .fontColor(this.theme.accentColor)
             .onClick(() => {
               this.showTocPanel = false;
             });
         }
         .width('100%')
-        .padding({ left: 16, right: 16, top: 16, bottom: 12 });
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.8 });
 
         List() {
           ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
             ListItemGroup() {
               ListItem() {
-                Text(group.section.title)
-                  .fontSize(14)
-                  .fontWeight(FontWeight.Medium)
-                  .fontColor(this.theme.accentColor)
-                  .padding({ left: 16, right: 16, top: 12, bottom: 6 });
+                Row({ space: this.fontSize * 0.4 }) {
+                  Text('#')
+                    .fontSize(this.fontSize)
+                    .fontWeight(FontWeight.Bold)
+                    .fontColor(this.theme.sectionTitleColor);
+                  Text(group.section.title)
+                    .fontSize(this.fontSize * 1)
+                    .fontWeight(FontWeight.Medium)
+                    .fontColor(this.theme.sectionTitleColor);
+                }
+                .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.8, bottom: this.fontSize * 0.4 });
               }
 
               ForEach(group.cards, (card: ReferenceCardData, cardIndex: number) => {
                 ListItem() {
                   Text(this.getTocCardTitle(card))
-                    .fontSize(13)
+                    .fontSize(this.fontSize * 0.8)
                     .fontColor(this.theme.textColor)
                     .maxLines(1)
                     .textOverflow({ overflow: TextOverflow.Ellipsis })
-                    .padding({ left: 24, right: 16, top: 8, bottom: 8 })
+                    .padding({ left: this.fontSize * 1.87, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
                     .width('100%')
                     .onClick(() => {
                       this.showTocPanel = false;
@@ -771,7 +1054,7 @@ struct Index {
       .width('100%')
       .height('70%')
       .backgroundColor(this.theme.surfaceBackgroundColor)
-      .borderRadius({ topLeft: 16, topRight: 16 });
+      .borderRadius({ topLeft: this.fontSize * 1, topRight: this.fontSize * 1 });
     }
     .width('100%')
     .height('100%')
@@ -784,50 +1067,118 @@ struct Index {
 
   @Builder
   private SettingsTab(): void {
-    Column({ space: 10 }) {
-      Text(this.t('设置', 'Settings')).fontSize(22).fontWeight(FontWeight.Bold).fontColor(this.theme.titleColor);
+    Column({ space: this.fontSize * 0.8 }) {
+      Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.47).fontWeight(FontWeight.Bold).fontColor(this.theme.titleColor);
 
-      Row({ space: 10 }) {
-        Text(this.t('语言', 'Language')).fontColor(this.theme.mutedTextColor);
-        Text(this.t('中文', '中文'))
-          .fontSize(12)
-          .fontColor(this.lang === 'zh' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-          .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-          .backgroundColor(this.lang === 'zh' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-          .borderRadius(999)
-          .onClick(() => this.switchLang('zh'));
-        Text('English')
-          .fontSize(12)
-          .fontColor(this.lang === 'en' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-          .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-          .backgroundColor(this.lang === 'en' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-          .borderRadius(999)
-          .onClick(() => this.switchLang('en'));
+      Column({ space: 0 }) {
+        Row() {
+          Text(this.t('自动横屏', 'Auto rotate'))
+            .fontColor(this.theme.mutedTextColor)
+            .fontSize(this.fontSize * 1);
+          Toggle({ type: ToggleType.Switch, isOn: this.autoRotateLandscape })
+            .selectedColor(this.theme.accentColor)
+            .onChange((isOn: boolean) => this.switchAutoRotateLandscape(isOn));
+        }
+        .width('100%')
+        .alignItems(VerticalAlign.Center)
+        .justifyContent(FlexAlign.SpaceBetween)
+        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
+
+        Divider()
+          .color(this.theme.borderColor)
+          .strokeWidth(this.fontSize * 0.07);
+
+        Row() {
+          Text(this.t('语言', 'Language'))
+            .fontColor(this.theme.mutedTextColor)
+            .fontSize(this.fontSize * 1);
+
+          Row({ space: this.fontSize * 0.6 }) {
+            Text(this.t('中文', '中文'))
+              .fontSize(this.fontSize * 0.8)
+              .fontColor(this.lang === 'zh' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+              .backgroundColor(this.lang === 'zh' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+              .borderRadius(this.fontSize * 66)
+              .onClick(() => this.switchLang('zh'));
+            Text('English')
+              .fontSize(this.fontSize * 0.8)
+              .fontColor(this.lang === 'en' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+              .backgroundColor(this.lang === 'en' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+              .borderRadius(this.fontSize * 66)
+              .onClick(() => this.switchLang('en'));
+          }
+        }
+        .width('100%')
+        .alignItems(VerticalAlign.Center)
+        .justifyContent(FlexAlign.SpaceBetween)
+        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
+
+        Divider()
+          .color(this.theme.borderColor)
+          .strokeWidth(this.fontSize * 0.07);
+
+        Row() {
+          Text(this.t('主题', 'Theme'))
+            .fontColor(this.theme.mutedTextColor)
+            .fontSize(this.fontSize * 1);
+
+          Row({ space: this.fontSize * 0.6 }) {
+            Text(this.t('暗黑', 'Dark'))
+              .fontSize(this.fontSize * 0.8)
+              .fontColor(this.themeId === 'dark' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+              .backgroundColor(this.themeId === 'dark' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+              .borderRadius(this.fontSize * 66)
+              .onClick(() => this.switchTheme('dark'));
+            Text(this.t('明亮', 'Light'))
+              .fontSize(this.fontSize * 0.8)
+              .fontColor(this.themeId === 'light' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+              .backgroundColor(this.themeId === 'light' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+              .borderRadius(this.fontSize * 66)
+              .onClick(() => this.switchTheme('light'));
+          }
+        }
+        .width('100%')
+        .alignItems(VerticalAlign.Center)
+        .justifyContent(FlexAlign.SpaceBetween)
+        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
       }
+      .width('100%')
+      .backgroundColor(this.theme.surfaceBackgroundColor)
+      .borderRadius(this.fontSize * 0.8)
+      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
 
-      Row({ space: 10 }) {
-        Text(this.t('主题', 'Theme')).fontColor(this.theme.mutedTextColor);
-        Text(this.t('暗黑', 'Dark'))
-          .fontSize(12)
-          .fontColor(this.themeId === 'dark' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-          .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-          .backgroundColor(this.themeId === 'dark' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-          .borderRadius(999)
-          .onClick(() => this.switchTheme('dark'));
-        Text(this.t('明亮', 'Light'))
-          .fontSize(12)
-          .fontColor(this.themeId === 'light' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-          .padding({ left: 10, right: 10, top: 6, bottom: 6 })
-          .backgroundColor(this.themeId === 'light' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-          .borderRadius(999)
-          .onClick(() => this.switchTheme('light'));
+      Row() {
+        Text(this.t('开源地址：', 'Open Source: '))
+          .fontColor(this.theme.mutedTextColor)
+          .fontSize(this.fontSize * 1);
+        Text('github.com/jqknono/reference-harmony')
+          .fontColor(this.theme.accentColor)
+          .fontSize(this.fontSize * 1)
+          .decoration({ type: TextDecorationType.Underline })
+          .onClick(() => openExternalLink(this.getUIContext().getHostContext(), 'github.com/jqknono/reference-harmony'));
       }
+      .width('100%')
+      .alignItems(VerticalAlign.Center)
+      .justifyContent(FlexAlign.SpaceBetween)
+      .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
+      .backgroundColor(this.theme.surfaceBackgroundColor)
+      .borderRadius(this.fontSize * 0.8)
+      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
 
-      Text(this.t('中文数据源：jaywcjlove/reference/docs', 'ZH source: jaywcjlove/reference/docs')).fontColor(this.theme.mutedTextColor);
-      Text(this.t('英文数据源：Fechin/reference/source/_posts', 'EN source: Fechin/reference/source/_posts')).fontColor(this.theme.mutedTextColor);
-      Text(this.t('同步脚本：tools/sync_reference_docs.mjs', 'Sync script: tools/sync_reference_docs.mjs')).fontColor(this.theme.mutedTextColor);
+      Column({ space: this.fontSize * 0.2 }) {
+        Text(this.t(`中文备忘清单：${this.formatDocCount(this.zhDocCount)}`, `ZH cheat sheets: ${this.formatDocCount(this.zhDocCount)}`))
+          .fontColor(this.theme.mutedTextColor)
+          .fontSize(this.fontSize * 1);
+        Text(this.t(`英文备忘清单：${this.formatDocCount(this.enDocCount)}`, `EN cheat sheets: ${this.formatDocCount(this.enDocCount)}`))
+          .fontColor(this.theme.mutedTextColor)
+          .fontSize(this.fontSize * 1);
+      }
     }
-    .padding(16)
+    .padding(this.fontSize * 1)
     .height('100%')
     .width('100%')
     .backgroundColor(this.theme.pageBackgroundColor);
@@ -835,7 +1186,7 @@ struct Index {
 
   private getTabLabel(index: number): string {
     if (index === 0) return this.t('目录', 'Catalog');
-    if (index === 1) return this.t('清单', 'List');
+    if (index === 1) return this.t('备忘清单', 'Cheatsheet');
     return this.t('设置', 'Settings');
   }
 
@@ -843,41 +1194,61 @@ struct Index {
   private TabBarItem(index: number): void {
     Column() {
       Text(this.getTabLabel(index))
-        .fontSize(13)
+        .fontSize(this.fontSize * 1)
         .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
         .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
     }
-    .padding({ top: 8, bottom: 8, left: 16, right: 16 });
+    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0.2, left: this.fontSize * 1, right: this.fontSize * 1 });
+  }
+
+  @Builder
+  private CurrentTabContent(): void {
+    if (this.currentTabIndex === 0) {
+      this.DocListTab();
+    } else if (this.currentTabIndex === 1) {
+      this.ReadTab();
+    } else {
+      this.SettingsTab();
+    }
   }
 
   build() {
     Stack() {
-      Tabs({ barPosition: BarPosition.End, index: this.currentTabIndex, controller: this.tabsController }) {
-        TabContent() {
-          this.DocListTab();
-        }
-        .tabBar(this.TabBarItem(0));
+      if (this.isLandscape) {
+        this.CurrentTabContent();
+      } else {
+        Tabs({ barPosition: BarPosition.End, index: this.currentTabIndex, controller: this.tabsController }) {
+          TabContent() {
+            this.DocListTab();
+          }
+          .tabBar(this.TabBarItem(0));
 
-        TabContent() {
-          this.ReadTab();
-        }
-        .tabBar(this.TabBarItem(1));
+          TabContent() {
+            this.ReadTab();
+          }
+          .tabBar(this.TabBarItem(1));
 
-        TabContent() {
-          this.SettingsTab();
+          TabContent() {
+            this.SettingsTab();
+          }
+          .tabBar(this.TabBarItem(2));
         }
-        .tabBar(this.TabBarItem(2));
+        .scrollable(false)
+        .barBackgroundColor(this.theme.surfaceBackgroundColor)
+        .onChange((index: number) => {
+          this.currentTabIndex = index;
+        });
       }
-      .scrollable(false)
-      .barBackgroundColor(this.theme.surfaceBackgroundColor)
-      .onChange((index: number) => {
-        this.currentTabIndex = index;
-      });
 
       if (this.showTocPanel) {
         this.TocPanel();
       }
     }
+    .backgroundColor(this.theme.pageBackgroundColor)
+    .onAreaChange((_: Area, area: Area) => {
+      this.updateLandscapeFromArea(area);
+    })
+    .padding({ left: this.landscapeSideMargin(), right: this.landscapeSideMargin() })
     .width('100%')
     .height('100%');
   }
