@@ -1,0 +1,79 @@
+name: Create Tag on versionName Change
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'AppScope/app.json5'
+
+permissions:
+  contents: write
+
+jobs:
+  tag-on-version-change:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Read current versionName
+        id: current
+        run: |
+          current_version=$(grep '"versionName"' AppScope/app.json5 | head -n 1 | sed -E 's/.*"versionName": *"([^"]*)".*/\1/')
+          if [ -z "$current_version" ]; then
+            echo "versionName not found in AppScope/app.json5"
+            exit 1
+          fi
+          echo "current_version=$current_version" >> "$GITHUB_OUTPUT"
+
+      - name: Read previous versionName
+        id: previous
+        run: |
+          if git show HEAD^:AppScope/app.json5 > /tmp/prev_app.json5 2>/dev/null; then
+            previous_version=$(grep '"versionName"' /tmp/prev_app.json5 | head -n 1 | sed -E 's/.*"versionName": *"([^"]*)".*/\1/')
+          else
+            previous_version=""
+          fi
+          echo "previous_version=$previous_version" >> "$GITHUB_OUTPUT"
+
+      - name: Decide whether to create tag
+        id: decide
+        run: |
+          current_version="${{ steps.current.outputs.current_version }}"
+          previous_version="${{ steps.previous.outputs.previous_version }}"
+
+          echo "Current versionName: $current_version"
+          echo "Previous versionName: $previous_version"
+
+          if [ "$current_version" = "$previous_version" ]; then
+            echo "versionName did not change, skip tagging."
+            echo "should_tag=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if git rev-parse "refs/tags/$current_version" >/dev/null 2>&1; then
+            echo "Tag '$current_version' already exists, skip tagging."
+            echo "should_tag=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "versionName changed and tag does not exist, will create tag."
+          echo "should_tag=true" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        if: steps.decide.outputs.should_tag == 'true'
+        run: |
+          current_version="${{ steps.current.outputs.current_version }}"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git tag "$current_version"
+          git push origin "refs/tags/$current_version"
+
+
