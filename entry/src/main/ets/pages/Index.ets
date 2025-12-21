@@ -573,6 +573,7 @@ struct Index {
     if (this.lang === next) return;
     this.lang = next;
     await this.saveLangSetting(next);
+    this.docs = [];
     this.selectedDoc = undefined;
     this.selectedDocId = '';
     this.selectedDocIcon = '';
@@ -601,10 +602,15 @@ struct Index {
       return;
     }
 
+    const targetLang: ReferenceLang = this.lang;
+
     this.loading = true;
     this.errorText = '';
-      await repo.getManifestByLang(this.lang).then(
-        async (manifest: ReferenceManifest): Promise<void> => {
+    await repo.getManifestByLang(targetLang).then(
+      async (manifest: ReferenceManifest): Promise<void> => {
+        if (this.lang !== targetLang) {
+          return;
+        }
         this.docs = (manifest.docs ?? []).map((doc: ReferenceDocSummary): ReferenceDocSummary => ({
           id: doc.id,
           name: doc.name || doc.title || doc.id,
@@ -619,13 +625,18 @@ struct Index {
         }
       },
       (e: Error | string): void => {
+        if (this.lang !== targetLang) {
+          return;
+        }
         this.errorText = this.t(
           `加载 manifest 失败：${String(e)}\n\n请先运行 tools/sync_reference_docs.mjs 生成 rawfile 数据。`,
           `Failed to load manifest: ${String(e)}\n\nRun tools/sync_reference_docs.mjs to generate rawfile data.`,
         );
       },
     );
-    this.loading = false;
+    if (this.lang === targetLang) {
+      this.loading = false;
+    }
   }
 
   private formatDocCount(count: number): string {
