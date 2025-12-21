@@ -52,7 +52,7 @@ struct Index {
   private repository: ReferenceRepository | undefined = undefined;
   private openDocRequestId: number = 0;
   @State private fontSize: number = 15;
-  @State private autoRotateLandscape: boolean = false;
+  @State private orientationMode: 'portrait' | 'landscape' | 'auto' = 'portrait';
   @State private isLandscape: boolean = false;
 
   private lengthToNumber(value: Length): number {
@@ -63,6 +63,13 @@ struct Index {
 
   private landscapeSideMargin(): number {
     return this.isLandscape ? this.fontSize * 1.5 : 0;
+  }
+
+  private tabPadding(): Padding {
+    const base: number = this.fontSize * 1;
+    return this.isLandscape
+      ? { left: base, right: base, top: base, bottom: 0 }
+      : { left: base, right: base, top: base, bottom: base };
   }
 
   private toHexColorString(color: number): string {
@@ -304,31 +311,30 @@ struct Index {
       .then((): void => undefined, (): void => undefined);
   }
 
-  private async loadAutoRotateLandscapeSetting(): Promise<void> {
+  private async loadOrientationModeSetting(): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const prefs: Preferences | undefined = await Promise.resolve()
       .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
       .then((p: Preferences): Preferences => p, (): undefined => undefined);
     if (!prefs) {
-      this.autoRotateLandscape = false;
+      this.orientationMode = 'portrait';
       return;
     }
-    const saved: boolean = await Promise.resolve()
-      .then((): Promise<ValueType> => prefs.get('autoRotateLandscape', false))
+    const saved: string = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get('orientationMode', 'portrait'))
       .then(
-        (value: ValueType): boolean => {
-          if (typeof value === 'boolean') return value;
-          if (typeof value === 'number') return value !== 0;
-          if (typeof value === 'string') return value === 'true' || value === '1';
-          return Boolean(value);
-        },
-        (): boolean => false,
+        (value: ValueType): string => (typeof value === 'string' ? value : String(value)),
+        (): string => 'portrait',
       );
-    this.autoRotateLandscape = saved;
+    if (saved === 'landscape' || saved === 'auto') {
+      this.orientationMode = saved;
+    } else {
+      this.orientationMode = 'portrait';
+    }
   }
 
-  private async saveAutoRotateLandscapeSetting(next: boolean): Promise<void> {
+  private async saveOrientationModeSetting(next: 'portrait' | 'landscape' | 'auto'): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const prefs: Preferences | undefined = await Promise.resolve()
@@ -336,29 +342,35 @@ struct Index {
       .then((p: Preferences): Preferences => p, (): undefined => undefined);
     if (!prefs) return;
     await Promise.resolve()
-      .then((): Promise<void> => prefs.put('autoRotateLandscape', next))
+      .then((): Promise<void> => prefs.put('orientationMode', next))
       .then((): void => undefined, (): void => undefined);
     await Promise.resolve()
       .then((): Promise<void> => prefs.flush())
       .then((): void => undefined, (): void => undefined);
   }
 
-  private applyAutoRotateLandscapeSetting(enabled: boolean): void {
+  private applyOrientationModeSetting(mode: 'portrait' | 'landscape' | 'auto'): void {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
+    let orientation: window.Orientation;
+    if (mode === 'landscape') {
+      orientation = window.Orientation.LANDSCAPE;
+    } else if (mode === 'auto') {
+      orientation = window.Orientation.AUTO_ROTATION_RESTRICTED;
+    } else {
+      orientation = window.Orientation.PORTRAIT;
+    }
     Promise.resolve()
       .then((): Promise<window.Window> => window.getLastWindow(host))
-      .then((w: window.Window): Promise<void> => w.setPreferredOrientation(
-        enabled ? window.Orientation.AUTO_ROTATION_RESTRICTED : window.Orientation.PORTRAIT,
-      ))
+      .then((w: window.Window): Promise<void> => w.setPreferredOrientation(orientation))
       .then((): void => undefined, (): void => undefined);
   }
 
-  private async switchAutoRotateLandscape(next: boolean): Promise<void> {
-    if (this.autoRotateLandscape === next) return;
-    this.autoRotateLandscape = next;
-    this.applyAutoRotateLandscapeSetting(next);
-    await this.saveAutoRotateLandscapeSetting(next);
+  private async switchOrientationMode(next: 'portrait' | 'landscape' | 'auto'): Promise<void> {
+    if (this.orientationMode === next) return;
+    this.orientationMode = next;
+    this.applyOrientationModeSetting(next);
+    await this.saveOrientationModeSetting(next);
   }
 
   private async ensureRepository(): Promise<ReferenceRepository | undefined> {
@@ -650,8 +662,8 @@ struct Index {
     await this.loadThemeSetting();
     this.applySystemBarTheme();
     await this.loadLangSetting();
-    await this.loadAutoRotateLandscapeSetting();
-    this.applyAutoRotateLandscapeSetting(this.autoRotateLandscape);
+    await this.loadOrientationModeSetting();
+    this.applyOrientationModeSetting(this.orientationMode);
     await this.loadManifest();
     await this.loadManifestCounts();
   }
@@ -758,7 +770,7 @@ struct Index {
       .layoutWeight(1)
       .divider({ strokeWidth: 0 });
     }
-    .padding(this.fontSize * 1)
+    .padding(this.tabPadding())
     .height('100%')
     .width('100%')
     .backgroundColor(this.theme.pageBackgroundColor);
@@ -1072,12 +1084,33 @@ struct Index {
 
       Column({ space: 0 }) {
         Row() {
-          Text(this.t('自动横屏', 'Auto rotate'))
+          Text(this.t('屏幕方向', 'Orientation'))
             .fontColor(this.theme.mutedTextColor)
             .fontSize(this.fontSize * 1);
-          Toggle({ type: ToggleType.Switch, isOn: this.autoRotateLandscape })
-            .selectedColor(this.theme.accentColor)
-            .onChange((isOn: boolean) => this.switchAutoRotateLandscape(isOn));
+
+          Row({ space: this.fontSize * 0.6 }) {
+            Text(this.t('竖屏', 'Portrait'))
+              .fontSize(this.fontSize * 0.8)
+              .fontColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+              .backgroundColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+              .borderRadius(this.fontSize * 66)
+              .onClick(() => this.switchOrientationMode('portrait'));
+            Text(this.t('横屏', 'Landscape'))
+              .fontSize(this.fontSize * 0.8)
+              .fontColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+              .backgroundColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+              .borderRadius(this.fontSize * 66)
+              .onClick(() => this.switchOrientationMode('landscape'));
+            Text(this.t('自动', 'Auto'))
+              .fontSize(this.fontSize * 0.8)
+              .fontColor(this.orientationMode === 'auto' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+              .backgroundColor(this.orientationMode === 'auto' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+              .borderRadius(this.fontSize * 66)
+              .onClick(() => this.switchOrientationMode('auto'));
+          }
         }
         .width('100%')
         .alignItems(VerticalAlign.Center)
@@ -1167,7 +1200,7 @@ struct Index {
       .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
       .backgroundColor(this.theme.surfaceBackgroundColor)
       .borderRadius(this.fontSize * 0.8)
-      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+      .border({ width: this.fontSize * 0.1, color: this.theme.borderColor });
 
       Column({ space: this.fontSize * 0.2 }) {
         Text(this.t(`中文备忘清单：${this.formatDocCount(this.zhDocCount)}`, `ZH cheat sheets: ${this.formatDocCount(this.zhDocCount)}`))
@@ -1178,7 +1211,7 @@ struct Index {
           .fontSize(this.fontSize * 1);
       }
     }
-    .padding(this.fontSize * 1)
+    .padding(this.tabPadding())
     .height('100%')
     .width('100%')
     .backgroundColor(this.theme.pageBackgroundColor);
@@ -1198,7 +1231,7 @@ struct Index {
         .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
         .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
     }
-    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0.2, left: this.fontSize * 1, right: this.fontSize * 1 });
+    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0, left: this.fontSize * 1, right: this.fontSize * 1 });
   }
 
   @Builder

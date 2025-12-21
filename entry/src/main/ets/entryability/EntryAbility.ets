@@ -5,29 +5,40 @@ import { window } from '@kit.ArkUI';
 
 const DOMAIN = 0x0000;
 
+type OrientationMode = 'portrait' | 'landscape' | 'auto';
+
 export default class EntryAbility extends UIAbility {
   private applyPreferredOrientation(windowStage: window.WindowStage): void {
     const setting = Promise.resolve()
       .then((): Promise<preferences.Preferences> => preferences.getPreferences(this.context, 'settings'))
       .then(
-        (prefs: preferences.Preferences): Promise<preferences.ValueType> => prefs.get('autoRotateLandscape', false),
-        (): Promise<preferences.ValueType> => Promise.resolve(false),
+        (prefs: preferences.Preferences): Promise<preferences.ValueType> => prefs.get('orientationMode', 'portrait'),
+        (): Promise<preferences.ValueType> => Promise.resolve('portrait'),
       )
       .then(
-        (value: preferences.ValueType): boolean => {
-          if (typeof value === 'boolean') return value;
-          if (typeof value === 'number') return value !== 0;
-          if (typeof value === 'string') return value === 'true' || value === '1';
-          return Boolean(value);
+        (value: preferences.ValueType): OrientationMode => {
+          const s: string = typeof value === 'string' ? value : String(value);
+          if (s === 'landscape' || s === 'auto') return s;
+          return 'portrait';
         },
-        (): boolean => false,
+        (): OrientationMode => 'portrait',
       );
 
-    Promise.all([setting, windowStage.getMainWindow()]).then(
-      (values: Array<boolean | window.Window>): void => {
-        const enabled: boolean = (values[0] as boolean) ?? false;
+    const mainWindow = Promise.resolve().then((): Promise<window.Window> => windowStage.getMainWindow());
+
+    Promise.all([setting, mainWindow]).then(
+      (values: Array<OrientationMode | window.Window>): void => {
+        const mode: OrientationMode = (values[0] as OrientationMode) ?? 'portrait';
         const w: window.Window = values[1] as window.Window;
-        w.setPreferredOrientation(enabled ? window.Orientation.AUTO_ROTATION_RESTRICTED : window.Orientation.PORTRAIT).then(
+        let orientation: window.Orientation;
+        if (mode === 'landscape') {
+          orientation = window.Orientation.LANDSCAPE;
+        } else if (mode === 'auto') {
+          orientation = window.Orientation.AUTO_ROTATION_RESTRICTED;
+        } else {
+          orientation = window.Orientation.PORTRAIT;
+        }
+        w.setPreferredOrientation(orientation).then(
           (): void => undefined,
           (err: Error | string): void => {
             hilog.error(DOMAIN, 'testTag', 'Failed to set preferred orientation. Cause: %{public}s', JSON.stringify(err));
