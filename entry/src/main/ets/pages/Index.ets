@@ -42,6 +42,8 @@ struct Index {
   @State private catalogSearchResults: Array<ReferenceDocSummary> = [];
   @State private showTocPanel: boolean = false;
   @State private searchNavSectionIndex: number = 0;
+  @State private pendingTocScrollGroupIndex: number = -1;
+  @State private pendingTocScrollItemIndex: number = -1;
 
   private tabsController: TabsController = new TabsController();
   private listScroller: ListScroller = new ListScroller();
@@ -551,7 +553,6 @@ struct Index {
         this.selectedDocAvatarVersion = requestId;
         this.rebuildSectionCards(doc);
         this.rebuildSearchResults();
-        this.listScroller.scrollToIndex(0);
         if (switchToReadTab) {
           this.currentTabIndex = 1;
           if (!this.isLandscape) {
@@ -684,7 +685,7 @@ struct Index {
       this.showTocPanel = false;
       return true;
     }
-    if (this.currentTabIndex !== 0) {
+    if (!this.isLandscape && this.currentTabIndex !== 0) {
       this.currentTabIndex = 0;
       this.tabsController.changeIndex(0);
       return true;
@@ -989,7 +990,16 @@ struct Index {
           }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
         }
         .layoutWeight(1)
-        .divider({ strokeWidth: 0 });
+        .divider({ strokeWidth: 0 })
+        .onAppear(() => {
+          if (this.pendingTocScrollGroupIndex >= 0 && this.pendingTocScrollItemIndex >= 0) {
+            const groupIndex: number = this.pendingTocScrollGroupIndex;
+            const itemIndex: number = this.pendingTocScrollItemIndex;
+            this.pendingTocScrollGroupIndex = -1;
+            this.pendingTocScrollItemIndex = -1;
+            this.listScroller.scrollToItemInGroup(groupIndex, itemIndex, true, ScrollAlign.START);
+          }
+        });
       }
     }
     .height('100%')
@@ -1063,8 +1073,14 @@ struct Index {
                     .width('100%')
                     .onClick(() => {
                       this.showTocPanel = false;
-                      this.searchQuery = '';
-                      this.listScroller.scrollToItemInGroup(groupIndex, cardIndex + 1, true, ScrollAlign.START);
+                      const hasSearch: boolean = !!this.searchQuery.trim();
+                      if (hasSearch) {
+                        this.searchQuery = '';
+                        this.pendingTocScrollGroupIndex = groupIndex;
+                        this.pendingTocScrollItemIndex = cardIndex + 1;
+                      } else {
+                        this.listScroller.scrollToItemInGroup(groupIndex, cardIndex + 1, true, ScrollAlign.START);
+                      }
                     });
                 }
               }, (card: ReferenceCardData) => `toc:${this.selectedDocId}:${card.id}`);
