@@ -1,4 +1,5 @@
 import preferences from '@ohos.data.preferences';
+import pasteboard from '@ohos.pasteboard';
 import { window } from '@kit.ArkUI';
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
@@ -12,6 +13,8 @@ import type { QuizQuestion, QuizAnswer, QuizSession, QuizRecord, QuizOption } fr
 import { generateQuizSessionId } from '../common/quizModels';
 import { extractQuestionsFromDoc, selectRandomQuestions, calculateScore } from '../common/quizUtils';
 import { QuizRepository } from '../common/quizRepository';
+import { OnlineMdRepository } from '../common/onlineMdRepository';
+import type { OnlineMdLink } from '../common/onlineMdModels';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
@@ -77,6 +80,17 @@ struct Index {
   @State private quizRecord: QuizRecord | null = null;
   @State private quizAvailableCount: number = 0;
   private quizRepository: QuizRepository = new QuizRepository();
+
+  // 在线 MD 相关状态
+  @State private onlineMdLinks: Array<OnlineMdLink> = [];
+  @State private onlineMdInputUrl: string = '';
+  @State private onlineMdParsing: boolean = false;
+  @State private onlineMdParseResult: string = '';
+  @State private onlineMdDocs: Array<ReferenceDocSummary> = [];
+  @State private onlineMdCopySuccess: boolean = false;
+  private onlineMdRepository: OnlineMdRepository = new OnlineMdRepository();
+  private onlineMdDocCache: Map<string, ReferenceDoc> = new Map<string, ReferenceDoc>();
+  private onlineMdCopyTimer: number = -1;
 
   private lengthToNumber(value: Length): number {
     if (typeof value === 'number') return value;
@@ -685,6 +699,49 @@ struct Index {
     }
   }
 
+  private async openDocAndQuiz(docId: string): Promise<void> {
+    this.openDocRequestId++;
+    const requestId = this.openDocRequestId;
+    const repo = await this.ensureRepository();
+    if (!repo) {
+      return;
+    }
+
+    this.loading = true;
+    this.errorText = '';
+    this.selectedDocIcon = '';
+    await repo.getDocByLang(this.lang, docId).then(
+      (doc: ReferenceDoc): void => {
+        if (requestId !== this.openDocRequestId) return;
+        if (!doc.icon) {
+          const summary = this.docs.find((d: ReferenceDocSummary): boolean => d.id === docId);
+          if (summary?.icon) {
+            doc.icon = summary.icon;
+          }
+        }
+        this.selectedDocIcon = doc.icon ?? '';
+        this.selectedDoc = doc;
+        this.selectedDocId = docId;
+        this.selectedDocAvatarVersion = requestId;
+        this.rebuildSectionCards(doc);
+        this.rebuildSearchResults();
+        this.updateQuizAvailableCount();
+        // 跳转到测验标签页
+        this.currentTabIndex = 2;
+        if (!this.isLandscape) {
+          this.tabsController.changeIndex(2);
+        }
+      },
+      (e: Error | string): void => {
+        if (requestId !== this.openDocRequestId) return;
+        this.errorText = this.t(`加载文档失败：${String(e)}`, `Failed to load doc: ${String(e)}`);
+      },
+    );
+    if (requestId === this.openDocRequestId) {
+      this.loading = false;
+    }
+  }
+
   private async switchLang(next: ReferenceLang): Promise<void> {
     if (this.lang === next) return;
     this.lang = next;
@@ -796,12 +853,179 @@ struct Index {
     await this.loadManifest();
     await this.loadManifestCounts();
     await this.loadQuizRecord();
+    await this.loadOnlineMdLinks();
   }
 
   private async loadQuizRecord(): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     this.quizRecord = await this.quizRepository.getQuizRecord(host);
+  }
+
+  private async loadOnlineMdLinks(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    this.onlineMdLinks = await this.onlineMdRepository.getLinks(host);
+    await this.rebuildOnlineMdDocs();
+  }
+
+  private async rebuildOnlineMdDocs(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+
+    const summaries: Array<ReferenceDocSummary> = [];
+    for (let i = 0; i < this.onlineMdLinks.length; i++) {
+      const link = this.onlineMdLinks[i];
+      const cachedDoc = await this.onlineMdRepository.getDocFromCache(host, link.id);
+      if (cachedDoc) {
+        this.onlineMdDocCache.set(link.id, cachedDoc);
+        summaries.push({
+          id: link.id,
+          name: link.name || cachedDoc.name,
+          title: cachedDoc.title,
+          file: `online:${link.url}`,
+          sectionCount: cachedDoc.sections.length,
+          cardCount: cachedDoc.cards.length,
+        });
+      }
+    }
+    this.onlineMdDocs = summaries;
+  }
+
+  private async parseAndAddOnlineMd(): Promise<void> {
+    const url = this.onlineMdInputUrl.trim();
+    if (!url) {
+      this.onlineMdParseResult = this.t('请输入 URL', 'Please enter a URL');
+      return;
+    }
+
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      this.onlineMdParseResult = this.t('URL 必须以 http:// 或 https:// 开头', 'URL must start with http:// or https://');
+      return;
+    }
+
+    this.onlineMdParsing = true;
+    this.onlineMdParseResult = '';
+
+    const result = await this.onlineMdRepository.fetchAndParse(url);
+
+    if (!result.success) {
+      this.onlineMdParsing = false;
+      this.onlineMdParseResult = this.t(`解析失败：${result.error}`, `Parse failed: ${result.error}`);
+      return;
+    }
+
+    const host = this.getUIContext().getHostContext();
+    if (!host) {
+      this.onlineMdParsing = false;
+      this.onlineMdParseResult = this.t('无法获取上下文', 'Failed to get context');
+      return;
+    }
+
+    const doc = result.doc;
+    if (!doc) {
+      this.onlineMdParsing = false;
+      this.onlineMdParseResult = this.t('解析结果为空', 'Parse result is empty');
+      return;
+    }
+
+    const newLink = await this.onlineMdRepository.addLink(host, url, doc.name);
+    await this.onlineMdRepository.saveDocToCache(host, newLink.id, doc);
+    this.onlineMdDocCache.set(newLink.id, doc);
+
+    this.onlineMdLinks = await this.onlineMdRepository.getLinks(host);
+    await this.rebuildOnlineMdDocs();
+
+    this.onlineMdParsing = false;
+    this.onlineMdInputUrl = '';
+    this.onlineMdParseResult = this.t(
+      `解析成功：${doc.name}（${doc.sections.length} 章节，${doc.cards.length} 卡片）`,
+      `Parse success: ${doc.name} (${doc.sections.length} sections, ${doc.cards.length} cards)`
+    );
+  }
+
+  private async removeOnlineMd(linkId: string): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+
+    await this.onlineMdRepository.removeLink(host, linkId);
+    await this.onlineMdRepository.deleteDocCache(host, linkId);
+    this.onlineMdDocCache.delete(linkId);
+
+    this.onlineMdLinks = await this.onlineMdRepository.getLinks(host);
+    await this.rebuildOnlineMdDocs();
+  }
+
+  private copyOnlineMdUrl(url: string): void {
+    const pasteboardData = pasteboard.createData(pasteboard.MIMETYPE_TEXT_PLAIN, url);
+    const systemPasteboard = pasteboard.getSystemPasteboard();
+    Promise.resolve()
+      .then((): Promise<void> => systemPasteboard.setData(pasteboardData))
+      .then((): void => {
+        if (this.onlineMdCopyTimer !== -1) {
+          clearTimeout(this.onlineMdCopyTimer);
+        }
+        this.onlineMdCopySuccess = true;
+        this.onlineMdCopyTimer = setTimeout(() => {
+          this.onlineMdCopySuccess = false;
+          this.onlineMdCopyTimer = -1;
+        }, 3000);
+      }, (): void => undefined);
+  }
+
+  private isOnlineDoc(docId: string): boolean {
+    return docId.startsWith('online_');
+  }
+
+  private async openOnlineDoc(linkId: string): Promise<void> {
+    const doc = this.onlineMdDocCache.get(linkId);
+    if (!doc) {
+      const host = this.getUIContext().getHostContext();
+      if (!host) return;
+      const cachedDoc = await this.onlineMdRepository.getDocFromCache(host, linkId);
+      if (!cachedDoc) return;
+      this.onlineMdDocCache.set(linkId, cachedDoc);
+      this.selectedDoc = cachedDoc;
+    } else {
+      this.selectedDoc = doc;
+    }
+
+    this.selectedDocId = linkId;
+    this.selectedDocIcon = '';
+    this.selectedDocAvatarVersion = this.openDocRequestId++;
+    this.rebuildSectionCards(this.selectedDoc);
+    this.rebuildSearchResults();
+    this.updateQuizAvailableCount();
+    this.currentTabIndex = 1;
+    if (!this.isLandscape) {
+      this.tabsController.changeIndex(1);
+    }
+  }
+
+  private async openOnlineDocAndQuiz(linkId: string): Promise<void> {
+    const doc = this.onlineMdDocCache.get(linkId);
+    if (!doc) {
+      const host = this.getUIContext().getHostContext();
+      if (!host) return;
+      const cachedDoc = await this.onlineMdRepository.getDocFromCache(host, linkId);
+      if (!cachedDoc) return;
+      this.onlineMdDocCache.set(linkId, cachedDoc);
+      this.selectedDoc = cachedDoc;
+    } else {
+      this.selectedDoc = doc;
+    }
+
+    this.selectedDocId = linkId;
+    this.selectedDocIcon = '';
+    this.selectedDocAvatarVersion = this.openDocRequestId++;
+    this.rebuildSectionCards(this.selectedDoc);
+    this.rebuildSearchResults();
+    this.updateQuizAvailableCount();
+    // 跳转到测验标签页
+    this.currentTabIndex = 2;
+    if (!this.isLandscape) {
+      this.tabsController.changeIndex(2);
+    }
   }
 
   private updateQuizAvailableCount(): void {
@@ -882,6 +1106,7 @@ struct Index {
     const session: QuizSession = {
       id: generateQuizSessionId(),
       docId: this.selectedDoc.id,
+      docName: this.selectedDoc.name,
       docTitle: this.selectedDoc.title || this.selectedDoc.name,
       startTime: this.quizStartTime,
       endTime: Date.now(),
@@ -969,11 +1194,92 @@ struct Index {
         Text(this.errorText).fontColor(this.theme.dangerTextColor).maxLines(6);
       }
 
-      if (this.catalogSearchQuery.trim() && this.catalogSearchResults.length === 0) {
+      if (this.catalogSearchQuery.trim() && this.catalogSearchResults.length === 0 && this.onlineMdDocs.length === 0) {
         Text(this.t('没有匹配的文档', 'No matching docs.')).fontColor(this.theme.mutedTextColor);
       }
 
       List() {
+        // 在线文档列表
+        if (this.onlineMdDocs.length > 0 && !this.catalogSearchQuery.trim()) {
+          ForEach(this.onlineMdDocs, (doc: ReferenceDocSummary) => {
+            ListItem() {
+              Stack({ alignContent: Alignment.TopStart }) {
+                Row({ space: this.fontSize * 0.8 }) {
+                  this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, this.fontSize * 2.5, 0);
+
+                  Column({ space: this.fontSize * 0.2 }) {
+                    Text(doc.name || doc.id).fontSize(this.fontSize * 1).fontColor(this.theme.titleColor);
+
+                    if (doc.title && doc.title !== doc.name) {
+                      Text(doc.title)
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.mutedTextColor)
+                        .maxLines(2);
+                    }
+
+                    Text(this.t(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`, `${doc.sectionCount} sections · ${doc.cardCount} cards`))
+                      .fontSize(this.fontSize * 0.8)
+                      .fontColor(this.theme.mutedTextColor);
+                  }.layoutWeight(1);
+
+                  if (this.isLandscape) {
+                    // 横屏：左右摆放
+                    Row({ space: this.fontSize * 0.8 }) {
+                      Text(this.t('打开', 'Open'))
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.accentColor)
+                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                        .border({ width: 1, color: this.theme.accentColor })
+                        .borderRadius(this.fontSize * 0.4)
+                        .onClick(() => this.openOnlineDoc(doc.id));
+                      Text(this.t('测验', 'Quiz'))
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.accentColor)
+                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                        .border({ width: 1, color: this.theme.accentColor })
+                        .borderRadius(this.fontSize * 0.4)
+                        .onClick(() => this.openOnlineDocAndQuiz(doc.id));
+                    }
+                  } else {
+                    // 竖屏：上下堆叠
+                    Column({ space: this.fontSize * 0.5 }) {
+                      Text(this.t('打开', 'Open'))
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.accentColor)
+                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                        .border({ width: 1, color: this.theme.accentColor })
+                        .borderRadius(this.fontSize * 0.4)
+                        .onClick(() => this.openOnlineDoc(doc.id));
+                      Text(this.t('测验', 'Quiz'))
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.accentColor)
+                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                        .border({ width: 1, color: this.theme.accentColor })
+                        .borderRadius(this.fontSize * 0.4)
+                        .onClick(() => this.openOnlineDocAndQuiz(doc.id));
+                    }
+                    .alignItems(HorizontalAlign.End);
+                  }
+                }
+                .padding(this.fontSize * 1)
+                .width('100%');
+
+                // 在线标记 - 左上角
+                Text(this.t('在线', 'Online'))
+                  .fontSize(this.fontSize * 0.65)
+                  .fontColor(0xffffffff)
+                  .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                  .backgroundColor(this.theme.accentColor)
+                  .borderRadius({ topLeft: this.fontSize * 0.7, bottomRight: this.fontSize * 0.4 });
+              }
+              .backgroundColor(this.theme.surfaceBackgroundColor)
+              .borderRadius(this.fontSize * 0.8);
+            }
+            .margin({ bottom: this.fontSize * 0.6 });
+          }, (doc: ReferenceDocSummary) => `online:${doc.id}`);
+        }
+
+        // 离线文档列表
         ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.docs, (doc: ReferenceDocSummary) => {
           ListItem() {
             Row({ space: this.fontSize * 0.8 }) {
@@ -994,12 +1300,48 @@ struct Index {
                   .fontColor(this.theme.mutedTextColor);
               }.layoutWeight(1);
 
-              Text(this.t('打开', 'Open')).fontSize(this.fontSize * 0.8).fontColor(this.theme.accentColor);
+              if (this.isLandscape) {
+                // 横屏：左右摆放
+                Row({ space: this.fontSize * 0.8 }) {
+                  Text(this.t('打开', 'Open'))
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.theme.accentColor)
+                    .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                    .border({ width: 1, color: this.theme.accentColor })
+                    .borderRadius(this.fontSize * 0.4)
+                    .onClick(() => this.openDoc(doc.id, true));
+                  Text(this.t('测验', 'Quiz'))
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.theme.accentColor)
+                    .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                    .border({ width: 1, color: this.theme.accentColor })
+                    .borderRadius(this.fontSize * 0.4)
+                    .onClick(() => this.openDocAndQuiz(doc.id));
+                }
+              } else {
+                // 竖屏：上下堆叠
+                Column({ space: this.fontSize * 0.5 }) {
+                  Text(this.t('打开', 'Open'))
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.theme.accentColor)
+                    .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                    .border({ width: 1, color: this.theme.accentColor })
+                    .borderRadius(this.fontSize * 0.4)
+                    .onClick(() => this.openDoc(doc.id, true));
+                  Text(this.t('测验', 'Quiz'))
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.theme.accentColor)
+                    .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                    .border({ width: 1, color: this.theme.accentColor })
+                    .borderRadius(this.fontSize * 0.4)
+                    .onClick(() => this.openDocAndQuiz(doc.id));
+                }
+                .alignItems(HorizontalAlign.End);
+              }
             }
             .padding(this.fontSize * 1)
             .backgroundColor(this.theme.surfaceBackgroundColor)
-            .borderRadius(this.fontSize * 0.8)
-            .onClick(() => this.openDoc(doc.id, true));
+            .borderRadius(this.fontSize * 0.8);
           }
           .margin({ bottom: this.fontSize * 0.6 });
         }, (doc: ReferenceDocSummary) => `${this.lang}:${doc.id}`);
@@ -1331,32 +1673,33 @@ struct Index {
 
   @Builder
   private SettingsTab(): void {
-    Column({ space: this.fontSize * 0.8 }) {
-      Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.47).fontWeight(FontWeight.Bold).fontColor(this.theme.titleColor);
+    Scroll() {
+      Column({ space: this.fontSize * 0.8 }) {
+        Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.25).fontWeight(FontWeight.Bold).fontColor(this.theme.titleColor);
 
       Column({ space: 0 }) {
         Row() {
           Text(this.t('屏幕方向', 'Orientation'))
             .fontColor(this.theme.mutedTextColor)
-            .fontSize(this.fontSize * 1);
+            .fontSize(this.fontSize * 0.95);
 
           Row({ space: this.fontSize * 0.6 }) {
             Text(this.t('竖屏', 'Portrait'))
-              .fontSize(this.fontSize * 0.8)
+              .fontSize(this.fontSize * 0.85)
               .fontColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
               .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
               .backgroundColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
               .borderRadius(this.fontSize * 66)
               .onClick(() => this.switchOrientationMode('portrait'));
             Text(this.t('横屏', 'Landscape'))
-              .fontSize(this.fontSize * 0.8)
+              .fontSize(this.fontSize * 0.85)
               .fontColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
               .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
               .backgroundColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
               .borderRadius(this.fontSize * 66)
               .onClick(() => this.switchOrientationMode('landscape'));
             Text(this.t('自动', 'Auto'))
-              .fontSize(this.fontSize * 0.8)
+              .fontSize(this.fontSize * 0.85)
               .fontColor(this.orientationMode === 'auto' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
               .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
               .backgroundColor(this.orientationMode === 'auto' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
@@ -1376,18 +1719,18 @@ struct Index {
         Row() {
           Text(this.t('语言', 'Language'))
             .fontColor(this.theme.mutedTextColor)
-            .fontSize(this.fontSize * 1);
+            .fontSize(this.fontSize * 0.95);
 
           Row({ space: this.fontSize * 0.6 }) {
             Text(this.t('中文', '中文'))
-              .fontSize(this.fontSize * 0.8)
+              .fontSize(this.fontSize * 0.85)
               .fontColor(this.lang === 'zh' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
               .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
               .backgroundColor(this.lang === 'zh' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
               .borderRadius(this.fontSize * 66)
               .onClick(() => this.switchLang('zh'));
             Text('English')
-              .fontSize(this.fontSize * 0.8)
+              .fontSize(this.fontSize * 0.85)
               .fontColor(this.lang === 'en' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
               .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
               .backgroundColor(this.lang === 'en' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
@@ -1407,18 +1750,18 @@ struct Index {
         Row() {
           Text(this.t('主题', 'Theme'))
             .fontColor(this.theme.mutedTextColor)
-            .fontSize(this.fontSize * 1);
+            .fontSize(this.fontSize * 0.95);
 
           Row({ space: this.fontSize * 0.6 }) {
             Text(this.t('暗黑', 'Dark'))
-              .fontSize(this.fontSize * 0.8)
+              .fontSize(this.fontSize * 0.85)
               .fontColor(this.themeId === 'dark' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
               .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
               .backgroundColor(this.themeId === 'dark' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
               .borderRadius(this.fontSize * 66)
               .onClick(() => this.switchTheme('dark'));
             Text(this.t('明亮', 'Light'))
-              .fontSize(this.fontSize * 0.8)
+              .fontSize(this.fontSize * 0.85)
               .fontColor(this.themeId === 'light' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
               .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
               .backgroundColor(this.themeId === 'light' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
@@ -1441,10 +1784,10 @@ struct Index {
           Column({ space: this.fontSize * 0.2 }) {
             Text(this.t('艾宾浩斯记忆提醒', 'Ebbinghaus Memory Reminder'))
               .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 1);
+              .fontSize(this.fontSize * 0.95);
             Text(EbbinghausReminderManager.getIntervalDescription(this.lang))
               .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.7)
+              .fontSize(this.fontSize * 0.75)
               .opacity(0.7);
           }
           .layoutWeight(1)
@@ -1470,13 +1813,13 @@ struct Index {
               `Active reminders: ${this.ebbinghausActiveCount}`
             ))
               .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.8);
+              .fontSize(this.fontSize * 0.85);
             Text(this.t(
               '开启后将在学习后的关键时间点发送通知，帮助您根据记忆曲线进行复习。',
               'When enabled, notifications will be sent at key time points after learning to help you review according to the memory curve.'
             ))
               .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.75)
+              .fontSize(this.fontSize * 0.8)
               .opacity(0.7);
           }
           .width('100%')
@@ -1494,13 +1837,13 @@ struct Index {
           Column({ space: this.fontSize * 0.2 }) {
             Text(this.t('学习模式', 'Learning Mode'))
               .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 1);
+              .fontSize(this.fontSize * 0.95);
             Text(this.t(
               '表格仅显示首个非空列，其余内容用 * 隐藏，便于自测记忆',
               'Tables show only the first non-empty column, hiding rest with * for self-testing'
             ))
               .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.7)
+              .fontSize(this.fontSize * 0.75)
               .opacity(0.7);
           }
           .layoutWeight(1)
@@ -1520,13 +1863,140 @@ struct Index {
       .borderRadius(this.fontSize * 0.8)
       .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
 
+      // 在线 Markdown 链接管理
+      Column({ space: 0 }) {
+        Row() {
+          Column({ space: this.fontSize * 0.2 }) {
+            Text(this.t('添加在线 Markdown', 'Add Online Markdown'))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.95);
+            Text(this.t(
+              '输入 MD 文件链接，解析后可在目录中查看',
+              'Enter MD file link, parsed content will appear in catalog'
+            ))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.75)
+              .opacity(0.7);
+          }
+          .layoutWeight(1)
+          .alignItems(HorizontalAlign.Start);
+        }
+        .width('100%')
+        .alignItems(VerticalAlign.Center)
+        .justifyContent(FlexAlign.SpaceBetween)
+        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.5 });
+
+        Row({ space: this.fontSize * 0.5 }) {
+          TextInput({
+            text: this.onlineMdInputUrl,
+            placeholder: this.t('输入 Markdown URL...', 'Enter Markdown URL...'),
+          })
+            .layoutWeight(1)
+            .fontSize(this.fontSize * 0.8)
+            .placeholderFont({ size: this.fontSize * 0.8 })
+            .fontColor(this.theme.titleColor)
+            .placeholderColor(this.theme.mutedTextColor)
+            .backgroundColor(this.theme.pageBackgroundColor)
+            .border({ width: 1, color: this.theme.borderColor })
+            .borderRadius(this.fontSize * 0.5)
+            .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+            .onChange((value: string) => {
+              this.onlineMdInputUrl = value;
+            });
+
+          Text(this.onlineMdParsing ? this.t('解析中...', 'Parsing...') : this.t('添加', 'Add'))
+            .fontSize(this.fontSize * 0.85)
+            .fontColor(this.onlineMdParsing ? this.theme.mutedTextColor : this.theme.chipSelectedTextColor)
+            .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+            .backgroundColor(this.onlineMdParsing ? this.theme.chipBackgroundColor : this.theme.chipSelectedBackgroundColor)
+            .borderRadius(this.fontSize * 66)
+            .onClick(() => {
+              if (!this.onlineMdParsing) {
+                this.parseAndAddOnlineMd();
+              }
+            });
+        }
+        .width('100%')
+        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, bottom: this.fontSize * 0.5 });
+
+        if (this.onlineMdParseResult) {
+          Text(this.onlineMdParseResult)
+            .fontSize(this.fontSize * 0.85)
+            .fontColor(this.onlineMdParseResult.includes(this.t('成功', 'success')) ? this.theme.accentColor : this.theme.dangerTextColor)
+            .width('100%')
+            .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, bottom: this.fontSize * 0.5 });
+        }
+
+        if (this.onlineMdLinks.length > 0) {
+          Divider()
+            .color(this.theme.borderColor)
+            .strokeWidth(this.fontSize * 0.07);
+
+          Column({ space: this.fontSize * 0.3 }) {
+            Row({ space: this.fontSize * 0.5 }) {
+              Text(this.t(`已添加 ${this.onlineMdLinks.length} 个链接`, `${this.onlineMdLinks.length} links added`))
+                .fontSize(this.fontSize * 0.85)
+                .fontColor(this.theme.mutedTextColor);
+              Text(this.t('（点击链接复制）', '(click link to copy)'))
+                .fontSize(this.fontSize * 0.75)
+                .fontColor(this.theme.mutedTextColor)
+                .opacity(0.7);
+              if (this.onlineMdCopySuccess) {
+                Text(this.t('复制成功', 'Copied'))
+                  .fontSize(this.fontSize * 0.75)
+                  .fontColor(this.theme.accentColor)
+                  .fontWeight(FontWeight.Medium);
+              }
+            }
+            .width('100%')
+            .alignItems(VerticalAlign.Center);
+
+            ForEach(this.onlineMdLinks, (link: OnlineMdLink) => {
+              Row({ space: this.fontSize * 0.5 }) {
+                Column({ space: this.fontSize * 0.1 }) {
+                  Text(link.name)
+                    .fontSize(this.fontSize * 0.9)
+                    .fontColor(this.theme.titleColor)
+                    .maxLines(1)
+                    .textOverflow({ overflow: TextOverflow.Ellipsis });
+                  Text(link.url)
+                    .fontSize(this.fontSize * 0.75)
+                    .fontColor(this.theme.accentColor)
+                    .maxLines(1)
+                    .textOverflow({ overflow: TextOverflow.Ellipsis })
+                    .decoration({ type: TextDecorationType.Underline });
+                }
+                .layoutWeight(1)
+                .alignItems(HorizontalAlign.Start)
+                .onClick(() => this.copyOnlineMdUrl(link.url));
+
+                Text(this.t('删除', 'Delete'))
+                  .fontSize(this.fontSize * 0.8)
+                  .fontColor(this.theme.dangerTextColor)
+                  .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 })
+                  .onClick(() => this.removeOnlineMd(link.id));
+              }
+              .width('100%')
+              .padding({ top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 });
+            }, (link: OnlineMdLink) => link.id);
+          }
+          .width('100%')
+          .alignItems(HorizontalAlign.Start)
+          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.5, bottom: this.fontSize * 0.7 });
+        }
+      }
+      .width('100%')
+      .backgroundColor(this.theme.surfaceBackgroundColor)
+      .borderRadius(this.fontSize * 0.8)
+      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+
       Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
         Text(this.t('开源地址：', 'Open Source: '))
           .fontColor(this.theme.mutedTextColor)
-          .fontSize(this.fontSize * 1);
+          .fontSize(this.fontSize * 0.9);
         Text('github.com/jqknono/reference-harmony')
           .fontColor(this.theme.accentColor)
-          .fontSize(this.fontSize * 1)
+          .fontSize(this.fontSize * 0.9)
           .decoration({ type: TextDecorationType.Underline })
           .onClick(() => openExternalLink(this.getUIContext().getHostContext(), 'github.com/jqknono/reference-harmony'));
       }
@@ -1539,15 +2009,19 @@ struct Index {
       Column({ space: this.fontSize * 0.2 }) {
         Text(this.t(`中文备忘清单：${this.formatDocCount(this.zhDocCount)}`, `ZH cheat sheets: ${this.formatDocCount(this.zhDocCount)}`))
           .fontColor(this.theme.mutedTextColor)
-          .fontSize(this.fontSize * 1);
+          .fontSize(this.fontSize * 0.85);
         Text(this.t(`英文备忘清单：${this.formatDocCount(this.enDocCount)}`, `EN cheat sheets: ${this.formatDocCount(this.enDocCount)}`))
           .fontColor(this.theme.mutedTextColor)
-          .fontSize(this.fontSize * 1);
+          .fontSize(this.fontSize * 0.85);
       }
+      }
+      .padding(this.tabPadding())
+      .width('100%')
     }
-    .padding(this.tabPadding())
+    .align(Alignment.Top)
     .height('100%')
     .width('100%')
+    .scrollBar(BarState.Auto)
     .backgroundColor(this.theme.pageBackgroundColor);
   }
 
@@ -1722,7 +2196,7 @@ struct Index {
                 ListItem() {
                   Row() {
                     Column({ space: this.fontSize * 0.15 }) {
-                      Text(session.docTitle)
+                      Text(session.docName || session.docTitle)
                         .fontSize(this.fontSize * 0.9)
                         .fontColor(this.theme.titleColor)
                         .maxLines(1)
@@ -2025,7 +2499,7 @@ struct Index {
       .justifyContent(FlexAlign.Center)
       .padding({ left: this.fontSize * 1, right: this.fontSize * 1, bottom: this.fontSize * 1 });
     }
-    .height('100%')
+    .layoutWeight(1)
     .width('100%');
   }
 

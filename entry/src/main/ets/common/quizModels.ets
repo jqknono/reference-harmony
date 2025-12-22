@@ -25,6 +25,7 @@ export interface QuizAnswer {
 export interface QuizSession {
   id: string;
   docId: string;
+  docName: string;
   docTitle: string;
   startTime: number;
   endTime: number;
