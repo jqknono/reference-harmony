@@ -42,7 +42,7 @@ function makeCardMargin(fontSize: number): CardMargin {
 }
 
 const DEFAULT_ONLINE_MD_LINK_ID: string = 'online_default_quickreference';
-const DEFAULT_ONLINE_MD_URL: string = 'https://raw.githubusercontent.com/jaywcjlove/reference/refs/heads/main/docs/quickreference.md';
+const DEFAULT_ONLINE_MD_URL: string = 'https://reference.jqknono.com/mds/zh/quickreference.md';
 const DEFAULT_ONLINE_MD_NAME: string = 'Quick Reference 备忘清单';
 
 @Entry
@@ -106,9 +106,9 @@ struct Index {
 
   // 在线 MD 相关状态
   @State private onlineMdLinks: Array<OnlineMdLink> = [];
-  private onlineMdInputUrl: string = '';
-  private onlineMdParsing: boolean = false;
-  private onlineMdParseResult: string = '';
+  @State private onlineMdInputUrl: string = '';
+  @State private onlineMdParsing: boolean = false;
+  @State private onlineMdParseResult: string = '';
   @State private onlineMdDocs: Array<ReferenceDocSummary> = [];
   @State private onlineMdCopySuccess: boolean = false;
   private onlineMdRepository: OnlineMdRepository = new OnlineMdRepository();

@@ -18,6 +18,19 @@ export interface ParseResult {
   error?: string;
 }
 
+function looksLikeHtmlDocument(text: string): boolean {
+  const t = String(text ?? '').trimStart();
+  if (!t) return false;
+  // 强特征：HTML 文档声明/根元素。用于拦截 GitHub blob 等返回的网页内容。
+  if (/^<!doctype\s+html/i.test(t)) return true;
+  if (/^<html(\s|>)/i.test(t)) return true;
+  // 兼容某些站点没有 doctype，但有 head/meta/title 等结构
+  if (/^<head(\s|>)/i.test(t)) return true;
+  if (/^<meta(\s|>)/i.test(t)) return true;
+  if (/^<title(\s|>)/i.test(t)) return true;
+  return false;
+}
+
 function stripUrlQueryAndFragment(rawUrl: string): string {
   const s = (rawUrl ?? '').trim();
   if (!s) return '';
@@ -781,6 +794,17 @@ export class OnlineMdRepository {
             error: '获取的内容为空',
           };
           return emptyResult;
+        }
+
+        if (looksLikeHtmlDocument(markdown)) {
+          const hint = url.includes('github.com') && url.includes('/blob/')
+            ? '看起来你使用的是 GitHub 的 blob 页面链接，请改用 raw 直链（raw.githubusercontent.com）'
+            : '返回内容疑似网页 HTML，请确认链接指向的是原始 .md 文件内容（raw 直链）';
+          const htmlResult: ParseResult = {
+            success: false,
+            error: hint,
+          };
+          return htmlResult;
         }
 
         const id = this.extractIdFromUrl(url);
