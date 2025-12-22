@@ -2,8 +2,32 @@ import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import preferences from '@ohos.data.preferences';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
+import { saveLaunchParams, LaunchParams } from '../common/launchParamsStore';
 
 const DOMAIN = 0x0000;
+const LAUNCH_ACTION_KEY: string = 'launchAction';
+const LAUNCH_RECENT_DOC_ID_KEY: string = 'recentDocId';
+
+function extractLaunchParams(want: Want): void {
+  const params = want?.parameters;
+  if (!params) {
+    saveLaunchParams(undefined);
+    return;
+  }
+  const actionValue = params[LAUNCH_ACTION_KEY];
+  const docIdValue = params[LAUNCH_RECENT_DOC_ID_KEY];
+  const launchAction: string = typeof actionValue === 'string' ? actionValue : '';
+  const recentDocId: string = typeof docIdValue === 'string' ? docIdValue : '';
+  if (launchAction.length === 0 && recentDocId.length === 0) {
+    saveLaunchParams(undefined);
+    return;
+  }
+  const result: LaunchParams = {
+    launchAction: launchAction,
+    recentDocId: recentDocId,
+  };
+  saveLaunchParams(result);
+}
 
 type OrientationMode = 'portrait' | 'landscape' | 'auto';
 
@@ -53,6 +77,12 @@ export default class EntryAbility extends UIAbility {
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
+    extractLaunchParams(want);
+  }
+
+  onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onNewWant');
+    extractLaunchParams(want);
   }
 
   onDestroy(): void {

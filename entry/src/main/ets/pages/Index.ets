@@ -1,6 +1,7 @@
 import preferences from '@ohos.data.preferences';
 import pasteboard from '@ohos.pasteboard';
 import { window } from '@kit.ArkUI';
+import type common from '@ohos.app.ability.common';
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
 import { getAppThemeTokens } from '../common/appTheme';
@@ -15,6 +16,8 @@ import { extractQuestionsFromDoc, selectRandomQuestions, calculateScore } from '
 import { QuizRepository } from '../common/quizRepository';
 import { OnlineMdRepository } from '../common/onlineMdRepository';
 import type { OnlineMdLink } from '../common/onlineMdModels';
+import { peekLaunchParams, takeLaunchParams } from '../common/launchParamsStore';
+import type { LaunchParams } from '../common/launchParamsStore';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
@@ -44,6 +47,7 @@ function makeCardMargin(fontSize: number): CardMargin {
 const DEFAULT_ONLINE_MD_LINK_ID: string = 'online_default_quickreference';
 const DEFAULT_ONLINE_MD_URL: string = 'https://reference.jqknono.com/mds/zh/quickreference.md';
 const DEFAULT_ONLINE_MD_NAME: string = 'Quick Reference 备忘清单';
+const LAUNCH_ACTION_OPEN_RECENT_DOCS: string = 'openRecentDocs';
 
 @Entry
 @Component
@@ -89,6 +93,7 @@ struct Index {
   @State private isLandscape: boolean = false;
   @State private ebbinghausReminderEnabled: boolean = false;
   @State private ebbinghausActiveCount: number = 0;
+  @State private ebbinghausDebugMode: boolean = true;
   @State private learningModeEnabled: boolean = false;
 
   // 测验相关状态
@@ -115,6 +120,11 @@ struct Index {
   private onlineMdDocCache: Map<string, ReferenceDoc> = new Map<string, ReferenceDoc>();
   private onlineMdCopyTimer: number = -1;
 
+  // 收藏与最近阅读
+  @State private favoriteDocIds: Array<string> = [];
+  @State private recentDocIds: Array<string> = [];
+  private readonly RECENT_DOC_MAX_COUNT: number = 5;
+
   private lengthToNumber(value: Length): number {
     if (typeof value === 'number') return value;
     const parsed: number = Number.parseFloat(String(value));
@@ -125,6 +135,29 @@ struct Index {
     this.catalogSearchInputController.stopEditing();
     this.docSearchInputController.stopEditing();
     this.getUIContext().getFocusController().clearFocus();
+  }
+
+  private async consumeNotificationLaunchIfAny(): Promise<void> {
+    const params: LaunchParams | undefined = takeLaunchParams();
+    if (!params) return;
+    const action: string = params.launchAction;
+    if (action !== LAUNCH_ACTION_OPEN_RECENT_DOCS) return;
+
+    const docId: string = params.recentDocId.trim();
+    if (docId.length > 0) {
+      if (this.isOnlineDoc(docId)) {
+        await this.openOnlineDoc(docId);
+      } else {
+        await this.openDoc(docId, true);
+      }
+      return;
+    }
+
+    // 仅打开 App：回到目录页（最近阅读会在目录中分组展示）
+    this.currentTabIndex = 0;
+    if (!this.isLandscape) {
+      this.tabsController.changeIndex(0);
+    }
   }
 
   private landscapeSideMargin(): number {
@@ -424,6 +457,7 @@ struct Index {
       );
     this.ebbinghausReminderEnabled = saved;
     await EbbinghausReminderManager.hydrate(host);
+    await EbbinghausReminderManager.syncActiveReminders(host);
     this.refreshEbbinghausActiveCount();
   }
 
@@ -486,20 +520,183 @@ struct Index {
     await this.saveLearningModeSetting(enabled);
   }
 
-  private async toggleEbbinghausReminder(enabled: boolean): Promise<void> {
-    if (this.ebbinghausReminderEnabled === enabled) return;
-    this.ebbinghausReminderEnabled = enabled;
-    await this.saveEbbinghausReminderSetting(enabled);
-
+  private async loadFavoriteAndRecentDocs(): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
-    if (enabled) {
-      await EbbinghausReminderManager.cancelAllReminders(host);
-      await EbbinghausReminderManager.publishReminders(host, this.lang);
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+
+    const favoriteStr: string = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get('favoriteDocIds', '[]'))
+      .then((v: ValueType): string => typeof v === 'string' ? v : '[]', (): string => '[]');
+    const recentStr: string = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get('recentDocIds', '[]'))
+      .then((v: ValueType): string => typeof v === 'string' ? v : '[]', (): string => '[]');
+
+    const parsedFavorites: Array<string> = JSON.parse(favoriteStr) as Array<string>;
+    const parsedRecent: Array<string> = JSON.parse(recentStr) as Array<string>;
+    this.favoriteDocIds = parsedFavorites;
+    this.recentDocIds = parsedRecent;
+  }
+
+  private async saveFavoriteDocIds(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put('favoriteDocIds', JSON.stringify(this.favoriteDocIds)))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  private async saveRecentDocIds(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put('recentDocIds', JSON.stringify(this.recentDocIds)))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  private isDocFavorite(docId: string): boolean {
+    return this.favoriteDocIds.indexOf(docId) >= 0;
+  }
+
+  private async toggleDocFavorite(docId: string): Promise<void> {
+    const index = this.favoriteDocIds.indexOf(docId);
+    if (index >= 0) {
+      const next = this.favoriteDocIds.slice();
+      next.splice(index, 1);
+      this.favoriteDocIds = next;
     } else {
-      await EbbinghausReminderManager.cancelAllReminders(host);
+      this.favoriteDocIds = [docId, ...this.favoriteDocIds];
     }
+    await this.saveFavoriteDocIds();
+  }
+
+  private isDocRecent(docId: string): boolean {
+    return this.recentDocIds.indexOf(docId) >= 0;
+  }
+
+  private async addToRecentDocs(docId: string): Promise<void> {
+    const next = this.recentDocIds.filter((id: string): boolean => id !== docId);
+    next.unshift(docId);
+    if (next.length > this.RECENT_DOC_MAX_COUNT) {
+      next.splice(this.RECENT_DOC_MAX_COUNT);
+    }
+    this.recentDocIds = next;
+    await this.saveRecentDocIds();
+    if (this.ebbinghausReminderEnabled) {
+      await this.refreshRecentDocsSystemNotification();
+    }
+  }
+
+  private getRecentDocsForSystemNotification(maxCount: number): Array<ReferenceDocSummary> {
+    const byId: Map<string, ReferenceDocSummary> = new Map<string, ReferenceDocSummary>();
+    for (let i = 0; i < this.docs.length; i++) {
+      const doc = this.docs[i];
+      byId.set(doc.id, doc);
+    }
+    for (let i = 0; i < this.onlineMdDocs.length; i++) {
+      const doc = this.onlineMdDocs[i];
+      byId.set(doc.id, doc);
+    }
+
+    const result: Array<ReferenceDocSummary> = [];
+    for (let i = 0; i < this.recentDocIds.length; i++) {
+      if (result.length >= maxCount) break;
+      const id: string = this.recentDocIds[i];
+      const doc = byId.get(id);
+      if (doc) result.push(doc);
+    }
+    return result;
+  }
+
+  private async refreshRecentDocsSystemNotification(): Promise<void> {
+    const recentDocs: Array<ReferenceDocSummary> = this.getRecentDocsForSystemNotification(3);
+    await EbbinghausReminderManager.publishRecentDocsNotification(this.lang, recentDocs);
+  }
+
+  private async toggleEbbinghausReminder(enabled: boolean): Promise<void> {
+    if (this.ebbinghausReminderEnabled === enabled) return;
+
+    const host = this.getUIContext().getHostContext() as common.UIAbilityContext;
+    if (!host) return;
+
+    if (enabled) {
+      // 检查通知权限
+      const isNotificationEnabled: boolean = await EbbinghausReminderManager.isNotificationEnabled();
+      if (!isNotificationEnabled) {
+        // 请求用户开启通知权限
+        await EbbinghausReminderManager.requestEnableNotification(host);
+        const enabledAfterRequest: boolean = await EbbinghausReminderManager.isNotificationEnabled();
+        if (!enabledAfterRequest) {
+          this.errorText = this.t(
+            '未开启通知权限，无法启用复习提醒。请在系统设置中为本应用开启通知权限。',
+            'Notifications are disabled. Please enable notifications for this app in system settings.',
+          );
+          return;
+        }
+      }
+      this.errorText = '';
+      this.ebbinghausReminderEnabled = enabled;
+      await this.saveEbbinghausReminderSetting(enabled);
+      await EbbinghausReminderManager.cancelAllReminders(host);
+      const ids: number[] = await EbbinghausReminderManager.publishReminders(host, this.lang, this.ebbinghausDebugMode);
+      if (ids.length === 0) {
+        const reason: string = EbbinghausReminderManager.getLastReminderPublishErrorText();
+        this.errorText = this.t(
+          `提醒发布失败${reason ? `（${reason}）` : ''}。请检查：系统通知是否已开启、是否限制后台活动。`,
+          `Failed to publish reminders${reason ? ` (${reason})` : ''}. Please check notification settings and background restrictions.`,
+        );
+        return;
+      }
+      // 提示用户当前使用的是系统级提醒还是本地定时器
+      if (!EbbinghausReminderManager.isUsingSystemReminder()) {
+        this.errorText = this.t(
+          '已降级为本地定时器模式：应用被杀死后将无法触发通知。',
+          'Degraded to local timer mode: notifications will not trigger if the app is killed.',
+        );
+      } else {
+        this.errorText = '';
+      }
+      await this.refreshRecentDocsSystemNotification();
+    } else {
+      this.ebbinghausReminderEnabled = enabled;
+      await this.saveEbbinghausReminderSetting(enabled);
+      await EbbinghausReminderManager.cancelAllReminders(host);
+      await EbbinghausReminderManager.cancelRecentDocsNotification();
+    }
+    await EbbinghausReminderManager.syncActiveReminders(host);
     this.refreshEbbinghausActiveCount();
+  }
+
+  private async toggleEbbinghausDebugMode(enabled: boolean): Promise<void> {
+    if (this.ebbinghausDebugMode === enabled) return;
+    this.ebbinghausDebugMode = enabled;
+
+    // 如果提醒功能已开启，需要重新发布提醒
+    if (this.ebbinghausReminderEnabled) {
+      const host = this.getUIContext().getHostContext();
+      if (!host) return;
+      await EbbinghausReminderManager.cancelAllReminders(host);
+      await EbbinghausReminderManager.publishReminders(host, this.lang, enabled);
+      await EbbinghausReminderManager.syncActiveReminders(host);
+      this.refreshEbbinghausActiveCount();
+    }
   }
 
   private async ensureRepository(): Promise<ReferenceRepository | undefined> {
@@ -693,8 +890,52 @@ struct Index {
     for (let i = 0; i < this.onlineMdDocs.length; i++) {
       merged.push(this.onlineMdDocs[i]);
     }
-    merged.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => this.compareCatalogDocs(a, b));
-    return merged;
+
+    // 分组：收藏、最近阅读、其他
+    const favorites: Array<ReferenceDocSummary> = [];
+    const recent: Array<ReferenceDocSummary> = [];
+    const others: Array<ReferenceDocSummary> = [];
+
+    for (let i = 0; i < merged.length; i++) {
+      const doc = merged[i];
+      if (this.isDocFavorite(doc.id)) {
+        favorites.push(doc);
+      } else if (this.isDocRecent(doc.id)) {
+        recent.push(doc);
+      } else {
+        others.push(doc);
+      }
+    }
+
+    // 收藏按收藏顺序排序（最新收藏在前）
+    favorites.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => {
+      const ai = this.favoriteDocIds.indexOf(a.id);
+      const bi = this.favoriteDocIds.indexOf(b.id);
+      return ai - bi;
+    });
+
+    // 最近阅读按阅读顺序排序（最新阅读在前）
+    recent.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => {
+      const ai = this.recentDocIds.indexOf(a.id);
+      const bi = this.recentDocIds.indexOf(b.id);
+      return ai - bi;
+    });
+
+    // 其他按字典序排序
+    others.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => this.compareCatalogDocs(a, b));
+
+    // 合并：收藏 + 最近阅读 + 其他
+    const result: Array<ReferenceDocSummary> = [];
+    for (let i = 0; i < favorites.length; i++) {
+      result.push(favorites[i]);
+    }
+    for (let i = 0; i < recent.length; i++) {
+      result.push(recent[i]);
+    }
+    for (let i = 0; i < others.length; i++) {
+      result.push(others[i]);
+    }
+    return result;
   }
 
   private async openDoc(docId: string, switchToReadTab: boolean = true): Promise<void> {
@@ -724,6 +965,10 @@ struct Index {
         this.rebuildSectionCards(doc);
         this.rebuildSearchResults();
         this.updateQuizAvailableCount();
+        this.addToRecentDocs(docId);
+        // 滚动到页面顶部
+        this.listScroller.scrollToIndex(0);
+        this.listSearchScroller.scrollToIndex(0);
         if (switchToReadTab) {
           this.currentTabIndex = 1;
           if (!this.isLandscape) {
@@ -768,6 +1013,10 @@ struct Index {
         this.rebuildSectionCards(doc);
         this.rebuildSearchResults();
         this.updateQuizAvailableCount();
+        this.addToRecentDocs(docId);
+        // 滚动到页面顶部
+        this.listScroller.scrollToIndex(0);
+        this.listSearchScroller.scrollToIndex(0);
         // 跳转到测验标签页
         this.currentTabIndex = 2;
         if (!this.isLandscape) {
@@ -885,15 +1134,21 @@ struct Index {
   }
 
   async aboutToAppear(): Promise<void> {
+    const launchParams: LaunchParams | undefined = peekLaunchParams();
+    const launchAction: string = launchParams?.launchAction ?? '';
+    const skipAutoOpenFirst: boolean = launchAction === LAUNCH_ACTION_OPEN_RECENT_DOCS;
+
     await this.loadThemeSetting();
     await this.loadLangSetting();
     await this.loadOrientationModeSetting();
     await this.loadEbbinghausReminderSetting();
     await this.loadLearningModeSetting();
-    await this.loadManifest();
+    await this.loadFavoriteAndRecentDocs();
+    await this.loadManifest(!skipAutoOpenFirst);
     await this.loadManifestCounts();
     await this.loadQuizRecord();
     await this.loadOnlineMdLinks();
+    await this.consumeNotificationLaunchIfAny();
   }
 
   private async loadQuizRecord(): Promise<void> {
@@ -1128,6 +1383,7 @@ struct Index {
     this.rebuildSectionCards(doc);
     this.rebuildSearchResults();
     this.updateQuizAvailableCount();
+    this.addToRecentDocs(linkId);
     this.currentTabIndex = 1;
     if (!this.isLandscape) {
       this.tabsController.changeIndex(1);
@@ -1157,6 +1413,7 @@ struct Index {
     this.rebuildSectionCards(doc);
     this.rebuildSearchResults();
     this.updateQuizAvailableCount();
+    this.addToRecentDocs(linkId);
     // 跳转到测验标签页
     this.currentTabIndex = 2;
     if (!this.isLandscape) {
@@ -1345,7 +1602,10 @@ struct Index {
           ListItem() {
             Stack({ alignContent: Alignment.TopStart }) {
               Row({ space: this.fontSize * 0.8 }) {
-                this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, this.fontSize * 2.5, 0);
+                Column() {
+                  this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, this.fontSize * 2.5, 0);
+                }
+                .onClick(() => this.isOnlineDoc(doc.id) ? this.openOnlineDoc(doc.id) : this.openDoc(doc.id, true))
 
                 Column({ space: this.fontSize * 0.2 }) {
                   Text(doc.name || doc.id).fontSize(this.fontSize * 1).fontColor(this.theme.titleColor);
@@ -1404,26 +1664,60 @@ struct Index {
               .padding(this.fontSize * 1)
               .width('100%');
 
-              if (this.isOnlineDoc(doc.id)) {
-                // 在线标记 - 左上角
-                Text(this.t('在线', 'Online'))
-                  .fontSize(this.fontSize * 0.65)
-                  .fontColor(0xffffffff)
-                  .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
-                  .backgroundColor(this.theme.accentColor)
-                  .borderRadius({
-                    topLeft: this.fontSize * 0.7,
-                    topRight: this.fontSize * 0,
-                    bottomLeft: this.fontSize * 0,
-                    bottomRight: this.fontSize * 0.4
-                  });
+              // 标记行 - 左上角
+              Row({ space: this.fontSize * 0.3 }) {
+                if (this.isDocFavorite(doc.id)) {
+                  Text(this.t('收藏', 'Fav'))
+                    .fontSize(this.fontSize * 0.65)
+                    .fontColor(0xffffffff)
+                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                    .backgroundColor(0xffF59E0B)
+                    .borderRadius({
+                      topLeft: this.fontSize * 0.7,
+                      topRight: this.fontSize * 0.4,
+                      bottomLeft: this.fontSize * 0,
+                      bottomRight: this.fontSize * 0.4
+                    });
+                }
+                if (this.isDocRecent(doc.id) && !this.isDocFavorite(doc.id)) {
+                  Text(this.t('最近', 'Recent'))
+                    .fontSize(this.fontSize * 0.65)
+                    .fontColor(0xffffffff)
+                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                    .backgroundColor(0xff10B981)
+                    .borderRadius({
+                      topLeft: this.fontSize * 0.7,
+                      topRight: this.fontSize * 0.4,
+                      bottomLeft: this.fontSize * 0,
+                      bottomRight: this.fontSize * 0.4
+                    });
+                }
+                if (this.isOnlineDoc(doc.id)) {
+                  Text(this.t('在线', 'Online'))
+                    .fontSize(this.fontSize * 0.65)
+                    .fontColor(0xffffffff)
+                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                    .backgroundColor(this.theme.accentColor)
+                    .borderRadius({
+                      topLeft: this.fontSize * 0.7,
+                      topRight: this.fontSize * 0.4,
+                      bottomLeft: this.fontSize * 0,
+                      bottomRight: this.fontSize * 0.4
+                    });
+                }
               }
             }
             .backgroundColor(this.theme.surfaceBackgroundColor)
             .borderRadius(this.fontSize * 0.8);
           }
           .margin({ bottom: this.fontSize * 0.6 });
-        }, (doc: ReferenceDocSummary) => this.isOnlineDoc(doc.id) ? `online:${doc.id}` : `${this.lang}:${doc.id}`);
+        }, (doc: ReferenceDocSummary) => {
+          const favKey = this.isDocFavorite(doc.id) ? 'fav' : '';
+          const recentKey = this.isDocRecent(doc.id) ? 'recent' : '';
+          return this.isOnlineDoc(doc.id)
+            ? `online:${doc.id}:${favKey}:${recentKey}`
+            : `${this.lang}:${doc.id}:${favKey}:${recentKey}`;
+        });
       }
       .layoutWeight(1)
       .divider({ strokeWidth: 0 });
@@ -1461,6 +1755,15 @@ struct Index {
           }
         }
         .layoutWeight(1);
+
+        if (this.selectedDocId) {
+          Text(this.isDocFavorite(this.selectedDocId) ? '★' : '☆')
+            .fontSize(this.fontSize * 1.5)
+            .fontColor(this.isDocFavorite(this.selectedDocId) ? 0xffF59E0B : this.theme.mutedTextColor)
+            .onClick(() => {
+              this.toggleDocFavorite(this.selectedDocId);
+            });
+        }
 
         Text(this.t('目录', 'TOC'))
           .fontSize(this.fontSize * 1)
@@ -1891,7 +2194,7 @@ struct Index {
             Text(this.t('艾宾浩斯记忆提醒', 'Ebbinghaus Memory Reminder'))
               .fontColor(this.theme.mutedTextColor)
               .fontSize(this.fontSize * 0.95);
-            Text(EbbinghausReminderManager.getIntervalDescription(this.lang))
+            Text(EbbinghausReminderManager.getIntervalDescription(this.lang, this.ebbinghausDebugMode))
               .fontColor(this.theme.mutedTextColor)
               .fontSize(this.fontSize * 0.75)
               .opacity(0.7);
@@ -1927,6 +2230,24 @@ struct Index {
               .fontColor(this.theme.mutedTextColor)
               .fontSize(this.fontSize * 0.8)
               .opacity(0.7);
+
+            Divider()
+              .color(this.theme.borderColor)
+              .strokeWidth(this.fontSize * 0.07)
+              .margin({ top: this.fontSize * 0.3 });
+
+            Row() {
+              Text(this.t('调试模式（每20秒通知）', 'Debug Mode (notify every 20s)'))
+                .fontColor(this.ebbinghausDebugMode ? this.theme.accentColor : this.theme.mutedTextColor)
+                .fontSize(this.fontSize * 0.85);
+              Toggle({ type: ToggleType.Switch, isOn: this.ebbinghausDebugMode })
+                .selectedColor(this.theme.accentColor)
+                .onChange((isOn: boolean) => this.toggleEbbinghausDebugMode(isOn));
+            }
+            .width('100%')
+            .alignItems(VerticalAlign.Center)
+            .justifyContent(FlexAlign.SpaceBetween)
+            .margin({ top: this.fontSize * 0.3 });
           }
           .width('100%')
           .alignItems(HorizontalAlign.Start)
@@ -2622,11 +2943,14 @@ struct Index {
   private TabBarItem(index: number): void {
     Column() {
       Text(this.getTabLabel(index))
-        .fontSize(this.fontSize * 1)
+        .fontSize(this.fontSize * 0.85)
+        .maxLines(1)
+        .textOverflow({ overflow: TextOverflow.Ellipsis })
+        .textAlign(TextAlign.Center)
         .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
         .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
     }
-    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0, left: this.fontSize * 1, right: this.fontSize * 1 });
+    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0, left: this.fontSize * 0.5, right: this.fontSize * 0.5 });
   }
 
   @Builder

@@ -17,3 +17,4 @@ export function generateOnlineMdId(): string {
   return `online_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
 }
 
+

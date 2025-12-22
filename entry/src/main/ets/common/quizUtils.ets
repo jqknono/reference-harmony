@@ -195,8 +195,21 @@ function generateQuestionsFromTable(
 
   if (col0Values.length < 2) return questions;
 
-  const header0 = stripMarkdownFormatting(table.headers[0]) || '项目';
-  const header1 = stripMarkdownFormatting(table.headers[1]) || '描述';
+  // 判断表头是否有效（非空且不是仅由 "-" 组成）
+  const isValidHeader = (h: string): boolean => {
+    if (!h) return false;
+    // 检查是否仅由 "-" 和空格组成
+    for (let i = 0; i < h.length; i++) {
+      const ch = h.charAt(i);
+      if (ch !== '-' && ch !== ' ') return true;
+    }
+    return false;
+  };
+
+  const rawHeader0 = stripMarkdownFormatting(table.headers[0]);
+  const rawHeader1 = stripMarkdownFormatting(table.headers[1]);
+  const header0 = isValidHeader(rawHeader0) ? rawHeader0 : '项目';
+  const header1 = isValidHeader(rawHeader1) ? rawHeader1 : '含义';
 
   // 生成题目：给出第一列的值，问第二列是什么
   for (let i = 0; i < col0Values.length && questions.length < 10; i++) {
