@@ -1,6 +1,6 @@
 # Engineering guardrails
 
-- 每次修改 `.ets` 后必须验证编译通过, 这是编译命令: `cd "F:\code\reference-harmony" ; & "C:\Program Files\Huawei\DevEco Studio\tools\node\node.exe" "C:\Program Files\Huawei\DevEco Studio\tools\hvigor\bin\hvigorw.js" clean --mode module -p product=default assembleHap --analyze=normal --parallel --incremental --daemon`
+- 每次修改 `.ets` 后需验证编译通过, 这是编译命令: `cd "F:\code\reference-harmony" ; & "C:\Program Files\Huawei\DevEco Studio\tools\node\node.exe" "C:\Program Files\Huawei\DevEco Studio\tools\hvigor\bin\hvigorw.js" clean --mode module -p product=default assembleHap --analyze=normal --parallel --incremental --daemon --debug`
 
 # UI 布局约束
 

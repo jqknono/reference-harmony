@@ -521,6 +521,7 @@ export struct MarkdownView {
   @Prop fontWeight: FontWeight = FontWeight.Normal;
   @Prop theme: AppThemeTokens = getAppThemeTokens('light');
   @Prop unboundedTableColumns: boolean = false;
+  @Prop learningMode: boolean = false;
 
   private maxTableColumnWidth(): number {
     return this.unboundedTableColumns ? 0 : this.fontSize * 30;
@@ -567,6 +568,42 @@ export struct MarkdownView {
     if (key === 'center') return TextAlign.Center;
     if (key === 'end') return TextAlign.End;
     return TextAlign.Start;
+  }
+
+  private isCellEmpty(tokens: Array<MarkdownInlineToken>): boolean {
+    for (let i = 0; i < tokens.length; i++) {
+      if (tokens[i].text.trim().length > 0) return false;
+    }
+    return true;
+  }
+
+  private findFirstNonEmptyColIndex(row: Array<Array<MarkdownInlineToken>>): number {
+    for (let i = 0; i < row.length; i++) {
+      if (!this.isCellEmpty(row[i])) return i;
+    }
+    return -1;
+  }
+
+  private maskCellContent(tokens: Array<MarkdownInlineToken>): Array<MarkdownInlineToken> {
+    let totalLength: number = 0;
+    for (let i = 0; i < tokens.length; i++) {
+      totalLength += tokens[i].text.length;
+    }
+    const maskLength: number = Math.max(1, Math.min(totalLength, 8));
+    const masked: Array<MarkdownInlineToken> = [{ kind: 'text', text: '*'.repeat(maskLength) }];
+    return masked;
+  }
+
+  private getCellDisplayTokens(
+    row: Array<Array<MarkdownInlineToken>>,
+    colIndex: number
+  ): Array<MarkdownInlineToken> {
+    const cell: Array<MarkdownInlineToken> = row[colIndex];
+    if (!this.learningMode) return cell;
+    if (this.isCellEmpty(cell)) return cell;
+    const firstNonEmptyCol: number = this.findFirstNonEmptyColIndex(row);
+    if (colIndex === firstNonEmptyCol) return cell;
+    return this.maskCellContent(cell);
   }
 
   private openUrl(rawUrl: string | undefined): void {
@@ -709,7 +746,7 @@ export struct MarkdownView {
                     ForEach(row, (cell: Array<MarkdownInlineToken>, colIndex: number) => {
                       Column() {
                         this.InlineStyled(
-                          cell,
+                          this.getCellDisplayTokens(row, colIndex),
                           this.fontColor,
                           FontWeight.Normal,
                           this.tableTextAlign(block.aligns, colIndex),
@@ -723,7 +760,7 @@ export struct MarkdownView {
                       .backgroundColor(this.mdTableCellBackgroundColor())
                       .borderWidth(1)
                       .borderColor(this.mdTableBorderColor());
-                    }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:${rowIndex}:${colIndex}`);
+                    }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:${rowIndex}:${colIndex}:${this.learningMode}`);
                   }
                 }, (_: Array<Array<MarkdownInlineToken>>, rowIndex: number) => `${index}:r:${rowIndex}`);
               }

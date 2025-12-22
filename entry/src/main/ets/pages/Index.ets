@@ -8,6 +8,10 @@ import { decodeIfEncoded } from '../common/encodedContent';
 import { ReferenceCard } from '../components/ReferenceCard';
 import { openExternalLink } from '../common/openExternalLink';
 import { EbbinghausReminderManager } from '../common/ebinghausReminder';
+import type { QuizQuestion, QuizAnswer, QuizSession, QuizRecord, QuizOption } from '../common/quizModels';
+import { generateQuizSessionId } from '../common/quizModels';
+import { extractQuestionsFromDoc, selectRandomQuestions, calculateScore } from '../common/quizUtils';
+import { QuizRepository } from '../common/quizRepository';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
@@ -59,6 +63,20 @@ struct Index {
   @State private isLandscape: boolean = false;
   @State private ebbinghausReminderEnabled: boolean = false;
   @State private ebbinghausActiveCount: number = 0;
+  @State private learningModeEnabled: boolean = false;
+
+  // 测验相关状态
+  @State private quizMode: 'idle' | 'selecting' | 'answering' | 'result' = 'idle';
+  @State private quizQuestions: Array<QuizQuestion> = [];
+  @State private quizCurrentIndex: number = 0;
+  @State private quizAnswers: Array<QuizAnswer> = [];
+  @State private quizSelectedOptionIndex: number = -1;
+  @State private quizShowAnswer: boolean = false;
+  @State private quizStartTime: number = 0;
+  @State private quizQuestionStartTime: number = 0;
+  @State private quizRecord: QuizRecord | null = null;
+  @State private quizAvailableCount: number = 0;
+  private quizRepository: QuizRepository = new QuizRepository();
 
   private lengthToNumber(value: Length): number {
     if (typeof value === 'number') return value;
@@ -417,6 +435,46 @@ struct Index {
     this.ebbinghausActiveCount = EbbinghausReminderManager.getActiveReminderCount();
   }
 
+  private async loadLearningModeSetting(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) {
+      this.learningModeEnabled = false;
+      return;
+    }
+    const saved: boolean = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get('learningMode', false))
+      .then(
+        (value: ValueType): boolean => value === true || value === 'true',
+        (): boolean => false,
+      );
+    this.learningModeEnabled = saved;
+  }
+
+  private async saveLearningModeSetting(enabled: boolean): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put('learningMode', enabled))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  private async toggleLearningMode(enabled: boolean): Promise<void> {
+    if (this.learningModeEnabled === enabled) return;
+    this.learningModeEnabled = enabled;
+    await this.saveLearningModeSetting(enabled);
+  }
+
   private async toggleEbbinghausReminder(enabled: boolean): Promise<void> {
     if (this.ebbinghausReminderEnabled === enabled) return;
     this.ebbinghausReminderEnabled = enabled;
@@ -609,6 +667,7 @@ struct Index {
         this.selectedDocAvatarVersion = requestId;
         this.rebuildSectionCards(doc);
         this.rebuildSearchResults();
+        this.updateQuizAvailableCount();
         if (switchToReadTab) {
           this.currentTabIndex = 1;
           if (!this.isLandscape) {
@@ -733,8 +792,117 @@ struct Index {
     await this.loadOrientationModeSetting();
     this.applyOrientationModeSetting(this.orientationMode);
     await this.loadEbbinghausReminderSetting();
+    await this.loadLearningModeSetting();
     await this.loadManifest();
     await this.loadManifestCounts();
+    await this.loadQuizRecord();
+  }
+
+  private async loadQuizRecord(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    this.quizRecord = await this.quizRepository.getQuizRecord(host);
+  }
+
+  private updateQuizAvailableCount(): void {
+    if (!this.selectedDoc) {
+      this.quizAvailableCount = 0;
+      return;
+    }
+    const questions = extractQuestionsFromDoc(this.selectedDoc);
+    this.quizAvailableCount = questions.length;
+  }
+
+  private async startQuiz(questionCount: number): Promise<void> {
+    if (!this.selectedDoc) return;
+
+    const allQuestions = extractQuestionsFromDoc(this.selectedDoc);
+    if (allQuestions.length === 0) return;
+
+    const selected = selectRandomQuestions(allQuestions, questionCount);
+    this.quizQuestions = selected;
+    this.quizCurrentIndex = 0;
+    this.quizAnswers = [];
+    this.quizSelectedOptionIndex = -1;
+    this.quizShowAnswer = false;
+    this.quizStartTime = Date.now();
+    this.quizQuestionStartTime = Date.now();
+    this.quizMode = 'answering';
+  }
+
+  private selectQuizOption(index: number): void {
+    if (this.quizShowAnswer) return;
+    this.quizSelectedOptionIndex = index;
+  }
+
+  private confirmQuizAnswer(): void {
+    if (this.quizSelectedOptionIndex < 0) return;
+    if (this.quizShowAnswer) return;
+
+    const question = this.quizQuestions[this.quizCurrentIndex];
+    const isCorrect = this.quizSelectedOptionIndex === question.correctIndex;
+    const answerTime = Date.now() - this.quizQuestionStartTime;
+
+    const answer: QuizAnswer = {
+      questionId: question.id,
+      selectedIndex: this.quizSelectedOptionIndex,
+      isCorrect,
+      answerTime,
+    };
+    this.quizAnswers.push(answer);
+    this.quizShowAnswer = true;
+  }
+
+  private nextQuizQuestion(): void {
+    if (this.quizCurrentIndex + 1 >= this.quizQuestions.length) {
+      this.finishQuiz();
+      return;
+    }
+
+    this.quizCurrentIndex += 1;
+    this.quizSelectedOptionIndex = -1;
+    this.quizShowAnswer = false;
+    this.quizQuestionStartTime = Date.now();
+  }
+
+  private async finishQuiz(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host || !this.selectedDoc) {
+      this.quizMode = 'idle';
+      return;
+    }
+
+    let correctCount = 0;
+    for (let i = 0; i < this.quizAnswers.length; i++) {
+      if (this.quizAnswers[i].isCorrect) {
+        correctCount += 1;
+      }
+    }
+
+    const session: QuizSession = {
+      id: generateQuizSessionId(),
+      docId: this.selectedDoc.id,
+      docTitle: this.selectedDoc.title || this.selectedDoc.name,
+      startTime: this.quizStartTime,
+      endTime: Date.now(),
+      questions: this.quizQuestions,
+      answers: this.quizAnswers,
+      score: calculateScore(correctCount, this.quizQuestions.length),
+      correctCount,
+      totalCount: this.quizQuestions.length,
+    };
+
+    this.quizRecord = await this.quizRepository.addQuizSession(host, session);
+    this.quizMode = 'result';
+  }
+
+  private resetQuiz(): void {
+    this.quizMode = 'idle';
+    this.quizQuestions = [];
+    this.quizCurrentIndex = 0;
+    this.quizAnswers = [];
+    this.quizSelectedOptionIndex = -1;
+    this.quizShowAnswer = false;
   }
 
   onBackPress(): boolean {
@@ -959,10 +1127,10 @@ struct Index {
 
               ForEach(group.cards, (card: ReferenceCardData) => {
                 ListItem() {
-                  ReferenceCard({ card, lang: this.lang, theme: this.theme, fontSize: this.fontSize, unboundedTableColumns: this.isLandscape })
+                  ReferenceCard({ card, lang: this.lang, theme: this.theme, fontSize: this.fontSize, unboundedTableColumns: this.isLandscape, learningMode: this.learningModeEnabled })
                     .margin({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 });
                 }
-              }, (card: ReferenceCardData) => `${this.selectedDocId}:search:${card.id}`);
+              }, (card: ReferenceCardData) => `${this.selectedDocId}:search:${card.id}:${this.learningModeEnabled}`);
             }
           }, (group: SectionWithCards) => `${this.selectedDocId}:search:${group.section.id}`);
         }
@@ -1039,10 +1207,10 @@ struct Index {
 
               ForEach(group.cards, (card: ReferenceCardData, cardIndex: number) => {
                 ListItem() {
-                  ReferenceCard({ card, lang: this.lang, theme: this.theme, fontSize: this.fontSize, unboundedTableColumns: this.isLandscape })
+                  ReferenceCard({ card, lang: this.lang, theme: this.theme, fontSize: this.fontSize, unboundedTableColumns: this.isLandscape, learningMode: this.learningModeEnabled })
                     .margin({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 });
                 }
-              }, (card: ReferenceCardData) => `${this.selectedDocId}:${card.id}`);
+              }, (card: ReferenceCardData) => `${this.selectedDocId}:${card.id}:${this.learningModeEnabled}`);
             }
           }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
         }
@@ -1321,7 +1489,38 @@ struct Index {
       .borderRadius(this.fontSize * 0.8)
       .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
 
-      Row() {
+      Column({ space: 0 }) {
+        Row() {
+          Column({ space: this.fontSize * 0.2 }) {
+            Text(this.t('学习模式', 'Learning Mode'))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 1);
+            Text(this.t(
+              '表格仅显示首个非空列，其余内容用 * 隐藏，便于自测记忆',
+              'Tables show only the first non-empty column, hiding rest with * for self-testing'
+            ))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.7)
+              .opacity(0.7);
+          }
+          .layoutWeight(1)
+          .alignItems(HorizontalAlign.Start);
+
+          Toggle({ type: ToggleType.Switch, isOn: this.learningModeEnabled })
+            .selectedColor(this.theme.accentColor)
+            .onChange((isOn: boolean) => this.toggleLearningMode(isOn));
+        }
+        .width('100%')
+        .alignItems(VerticalAlign.Center)
+        .justifyContent(FlexAlign.SpaceBetween)
+        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
+      }
+      .width('100%')
+      .backgroundColor(this.theme.surfaceBackgroundColor)
+      .borderRadius(this.fontSize * 0.8)
+      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+
+      Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
         Text(this.t('开源地址：', 'Open Source: '))
           .fontColor(this.theme.mutedTextColor)
           .fontSize(this.fontSize * 1);
@@ -1332,8 +1531,6 @@ struct Index {
           .onClick(() => openExternalLink(this.getUIContext().getHostContext(), 'github.com/jqknono/reference-harmony'));
       }
       .width('100%')
-      .alignItems(VerticalAlign.Center)
-      .justifyContent(FlexAlign.SpaceBetween)
       .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
       .backgroundColor(this.theme.surfaceBackgroundColor)
       .borderRadius(this.fontSize * 0.8)
@@ -1357,7 +1554,479 @@ struct Index {
   private getTabLabel(index: number): string {
     if (index === 0) return this.t('目录', 'Catalog');
     if (index === 1) return this.t('备忘清单', 'Cheatsheet');
+    if (index === 2) return this.t('测验', 'Quiz');
     return this.t('设置', 'Settings');
+  }
+
+  private formatDuration(ms: number): string {
+    const seconds = Math.floor(ms / 1000);
+    if (seconds < 60) return `${seconds}秒`;
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}分${remainingSeconds}秒`;
+  }
+
+  private formatDateTime(timestamp: number): string {
+    const date = new Date(timestamp);
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    return `${month}/${day} ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+  }
+
+  @Builder
+  private QuizTab(): void {
+    Column({ space: this.fontSize * 0.6 }) {
+      Text(this.t('测验', 'Quiz'))
+        .fontSize(this.fontSize * 1.47)
+        .fontWeight(FontWeight.Bold)
+        .fontColor(this.theme.titleColor)
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1 });
+
+      if (this.quizMode === 'idle') {
+        this.QuizIdleView();
+      } else if (this.quizMode === 'selecting') {
+        this.QuizSelectingView();
+      } else if (this.quizMode === 'answering') {
+        this.QuizAnsweringView();
+      } else if (this.quizMode === 'result') {
+        this.QuizResultView();
+      }
+    }
+    .height('100%')
+    .width('100%')
+    .backgroundColor(this.theme.pageBackgroundColor);
+  }
+
+  @Builder
+  private QuizIdleView(): void {
+    Column({ space: this.fontSize * 0.8 }) {
+      if (!this.selectedDoc) {
+        Column({ space: this.fontSize * 0.5 }) {
+          Text(this.t('请先选择文档', 'Please select a document first'))
+            .fontSize(this.fontSize)
+            .fontColor(this.theme.mutedTextColor);
+          Text(this.t('在"目录"中打开一个文档后，即可开始测验', 'Open a document in "Catalog" to start quiz'))
+            .fontSize(this.fontSize * 0.8)
+            .fontColor(this.theme.mutedTextColor)
+            .opacity(0.7);
+        }
+        .padding(this.fontSize * 1);
+      } else {
+        Column({ space: this.fontSize * 0.6 }) {
+          Row({ space: this.fontSize * 0.5 }) {
+            Text(this.t('当前文档：', 'Current Doc: '))
+              .fontSize(this.fontSize)
+              .fontColor(this.theme.mutedTextColor);
+            Text(this.selectedDoc.name || this.selectedDoc.title)
+              .fontSize(this.fontSize)
+              .fontColor(this.theme.titleColor)
+              .fontWeight(FontWeight.Medium);
+          }
+          .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+          Text(this.t(`可生成 ${this.quizAvailableCount} 道题目`, `${this.quizAvailableCount} questions available`))
+            .fontSize(this.fontSize * 0.85)
+            .fontColor(this.theme.mutedTextColor)
+            .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+          if (this.quizAvailableCount > 0) {
+            Row({ space: this.fontSize * 0.6 }) {
+              ForEach([5, 10, 15], (count: number) => {
+                if (this.quizAvailableCount >= count || count === 5) {
+                  Text(this.t(`${Math.min(count, this.quizAvailableCount)} 题`, `${Math.min(count, this.quizAvailableCount)} Q`))
+                    .fontSize(this.fontSize * 0.9)
+                    .fontColor(this.theme.accentColor)
+                    .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 })
+                    .backgroundColor(this.theme.surfaceBackgroundColor)
+                    .border({ width: 1, color: this.theme.accentColor })
+                    .borderRadius(this.fontSize * 0.5)
+                    .onClick(() => this.startQuiz(Math.min(count, this.quizAvailableCount)));
+                }
+              }, (count: number) => `quiz_start_${count}`);
+            }
+            .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5 });
+          } else {
+            Text(this.t('当前文档没有可生成测验的表格内容', 'No table content available for quiz in this document'))
+              .fontSize(this.fontSize * 0.85)
+              .fontColor(this.theme.dangerTextColor)
+              .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+          }
+        }
+        .width('100%')
+        .padding({ top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
+        .backgroundColor(this.theme.surfaceBackgroundColor)
+        .borderRadius(this.fontSize * 0.5)
+        .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
+      }
+
+      // 测验记录
+      if (this.quizRecord && this.quizRecord.totalQuizCount > 0) {
+        Column({ space: this.fontSize * 0.5 }) {
+          Text(this.t('测验记录', 'Quiz History'))
+            .fontSize(this.fontSize)
+            .fontWeight(FontWeight.Medium)
+            .fontColor(this.theme.titleColor);
+
+          Row({ space: this.fontSize * 1 }) {
+            Column({ space: this.fontSize * 0.2 }) {
+              Text(`${this.quizRecord.totalQuizCount}`)
+                .fontSize(this.fontSize * 1.5)
+                .fontWeight(FontWeight.Bold)
+                .fontColor(this.theme.accentColor);
+              Text(this.t('总测验', 'Total'))
+                .fontSize(this.fontSize * 0.75)
+                .fontColor(this.theme.mutedTextColor);
+            }
+
+            Column({ space: this.fontSize * 0.2 }) {
+              Text(`${this.quizRecord.averageScore}%`)
+                .fontSize(this.fontSize * 1.5)
+                .fontWeight(FontWeight.Bold)
+                .fontColor(this.theme.accentColor);
+              Text(this.t('平均分', 'Average'))
+                .fontSize(this.fontSize * 0.75)
+                .fontColor(this.theme.mutedTextColor);
+            }
+
+            Column({ space: this.fontSize * 0.2 }) {
+              Text(`${this.quizRecord.totalCorrectCount}/${this.quizRecord.totalQuestionCount}`)
+                .fontSize(this.fontSize * 1.5)
+                .fontWeight(FontWeight.Bold)
+                .fontColor(this.theme.accentColor);
+              Text(this.t('正确率', 'Correct'))
+                .fontSize(this.fontSize * 0.75)
+                .fontColor(this.theme.mutedTextColor);
+            }
+          }
+          .justifyContent(FlexAlign.SpaceAround)
+          .width('100%');
+        }
+        .width('100%')
+        .padding(this.fontSize * 1)
+        .backgroundColor(this.theme.surfaceBackgroundColor)
+        .borderRadius(this.fontSize * 0.5)
+        .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+        // 最近测验列表
+        if (this.quizRecord.sessions.length > 0) {
+          Column({ space: this.fontSize * 0.3 }) {
+            Text(this.t('最近测验', 'Recent Quizzes'))
+              .fontSize(this.fontSize * 0.9)
+              .fontColor(this.theme.mutedTextColor)
+              .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+            List() {
+              ForEach(this.quizRepository.getRecentSessions(this.quizRecord, 10), (session: QuizSession) => {
+                ListItem() {
+                  Row() {
+                    Column({ space: this.fontSize * 0.15 }) {
+                      Text(session.docTitle)
+                        .fontSize(this.fontSize * 0.9)
+                        .fontColor(this.theme.titleColor)
+                        .maxLines(1)
+                        .textOverflow({ overflow: TextOverflow.Ellipsis });
+                      Text(this.formatDateTime(session.endTime))
+                        .fontSize(this.fontSize * 0.75)
+                        .fontColor(this.theme.mutedTextColor);
+                    }
+                    .layoutWeight(1)
+                    .alignItems(HorizontalAlign.Start);
+
+                    Column({ space: this.fontSize * 0.1 }) {
+                      Text(`${session.score}%`)
+                        .fontSize(this.fontSize)
+                        .fontWeight(FontWeight.Bold)
+                        .fontColor(session.score >= 60 ? this.theme.accentColor : this.theme.dangerTextColor);
+                      Text(`${session.correctCount}/${session.totalCount}`)
+                        .fontSize(this.fontSize * 0.75)
+                        .fontColor(this.theme.mutedTextColor);
+                    }
+                    .alignItems(HorizontalAlign.End);
+                  }
+                  .width('100%')
+                  .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 });
+                }
+              }, (session: QuizSession) => session.id);
+            }
+            .layoutWeight(1)
+            .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 });
+          }
+          .layoutWeight(1);
+        }
+      }
+    }
+    .layoutWeight(1);
+  }
+
+  @Builder
+  private QuizSelectingView(): void {
+    Column({ space: this.fontSize * 0.8 }) {
+      Text(this.t('选择题目数量', 'Select Question Count'))
+        .fontSize(this.fontSize)
+        .fontColor(this.theme.titleColor);
+    }
+    .padding(this.fontSize * 1);
+  }
+
+  @Builder
+  private QuizAnsweringView(): void {
+    Column({ space: this.fontSize * 0.6 }) {
+      // 进度条
+      Row() {
+        Text(`${this.quizCurrentIndex + 1} / ${this.quizQuestions.length}`)
+          .fontSize(this.fontSize * 0.9)
+          .fontColor(this.theme.mutedTextColor);
+        Blank();
+        Text(this.t('退出', 'Exit'))
+          .fontSize(this.fontSize * 0.9)
+          .fontColor(this.theme.dangerTextColor)
+          .onClick(() => this.resetQuiz());
+      }
+      .width('100%')
+      .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+      Progress({ value: this.quizCurrentIndex + 1, total: this.quizQuestions.length })
+        .width('100%')
+        .color(this.theme.accentColor)
+        .backgroundColor(this.theme.surfaceMutedBackgroundColor)
+        .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+      // 题目
+      Scroll() {
+        Column({ space: this.fontSize * 0.8 }) {
+          Text(this.quizQuestions[this.quizCurrentIndex]?.question ?? '')
+            .fontSize(this.fontSize * 1.1)
+            .fontColor(this.theme.titleColor)
+            .fontWeight(FontWeight.Medium)
+            .width('100%')
+            .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+          // 选项
+          Column({ space: this.fontSize * 0.5 }) {
+            ForEach(this.quizQuestions[this.quizCurrentIndex]?.options ?? [], (option: QuizOption, optionIndex: number) => {
+              Row({ space: this.fontSize * 0.6 }) {
+                Text(String.fromCharCode(65 + optionIndex))
+                  .fontSize(this.fontSize)
+                  .fontWeight(FontWeight.Bold)
+                  .fontColor(this.getOptionLabelColor(optionIndex));
+
+                Text(option.text)
+                  .fontSize(this.fontSize)
+                  .fontColor(this.getOptionTextColor(optionIndex))
+                  .layoutWeight(1);
+
+                if (this.quizShowAnswer) {
+                  if (option.isCorrect) {
+                    Text('✓')
+                      .fontSize(this.fontSize)
+                      .fontColor(0xff4caf50);
+                  } else if (optionIndex === this.quizSelectedOptionIndex && !option.isCorrect) {
+                    Text('✗')
+                      .fontSize(this.fontSize)
+                      .fontColor(this.theme.dangerTextColor);
+                  }
+                }
+              }
+              .width('100%')
+              .padding(this.fontSize * 0.8)
+              .backgroundColor(this.getOptionBackgroundColor(optionIndex))
+              .border({ width: this.fontSize * 0.1, color: this.getOptionBorderColor(optionIndex) })
+              .borderRadius(this.fontSize * 0.5)
+              .onClick(() => this.selectQuizOption(optionIndex));
+            }, (_option: QuizOption, optionIndex: number) => {
+              const qid = this.quizQuestions[this.quizCurrentIndex]?.id ?? 'q';
+              return `${qid}_option_${optionIndex}`;
+            });
+          }
+          .width('100%')
+          .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+          // 解释（答案后显示）
+          if (this.quizShowAnswer && this.quizQuestions[this.quizCurrentIndex]?.explanation) {
+            Text(this.quizQuestions[this.quizCurrentIndex].explanation)
+              .fontSize(this.fontSize * 0.9)
+              .fontColor(this.theme.mutedTextColor)
+              .fontStyle(FontStyle.Italic)
+              .width('100%')
+              .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+          }
+        }
+      }
+      .layoutWeight(1)
+      .scrollBar(BarState.Off);
+
+      // 底部按钮
+      Row({ space: this.fontSize * 1 }) {
+        if (!this.quizShowAnswer) {
+          Text(this.t('确认答案', 'Confirm'))
+            .fontSize(this.fontSize)
+            .fontColor(this.quizSelectedOptionIndex >= 0 ? 0xffffffff : this.theme.mutedTextColor)
+            .padding({ left: this.fontSize * 1.5, right: this.fontSize * 1.5, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
+            .backgroundColor(this.quizSelectedOptionIndex >= 0 ? this.theme.accentColor : this.theme.surfaceMutedBackgroundColor)
+            .borderRadius(this.fontSize * 0.5)
+            .onClick(() => this.confirmQuizAnswer());
+        } else {
+          Text(this.quizCurrentIndex + 1 >= this.quizQuestions.length ? this.t('查看结果', 'View Results') : this.t('下一题', 'Next'))
+            .fontSize(this.fontSize)
+            .fontColor(0xffffffff)
+            .padding({ left: this.fontSize * 1.5, right: this.fontSize * 1.5, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
+            .backgroundColor(this.theme.accentColor)
+            .borderRadius(this.fontSize * 0.5)
+            .onClick(() => this.nextQuizQuestion());
+        }
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.Center)
+      .padding({ left: this.fontSize * 1, right: this.fontSize * 1, bottom: this.fontSize * 1 });
+    }
+    .layoutWeight(1)
+    .width('100%');
+  }
+
+  private getOptionLabelColor(optionIndex: number): number {
+    if (!this.quizShowAnswer) {
+      return optionIndex === this.quizSelectedOptionIndex ? this.theme.accentColor : this.theme.mutedTextColor;
+    }
+    const option = this.quizQuestions[this.quizCurrentIndex]?.options[optionIndex];
+    if (option?.isCorrect) return 0xff4caf50;
+    if (optionIndex === this.quizSelectedOptionIndex) return this.theme.dangerTextColor;
+    return this.theme.mutedTextColor;
+  }
+
+  private getOptionTextColor(optionIndex: number): number {
+    if (!this.quizShowAnswer) {
+      return optionIndex === this.quizSelectedOptionIndex ? this.theme.titleColor : this.theme.textColor;
+    }
+    const option = this.quizQuestions[this.quizCurrentIndex]?.options[optionIndex];
+    if (option?.isCorrect) return 0xff4caf50;
+    if (optionIndex === this.quizSelectedOptionIndex) return this.theme.dangerTextColor;
+    return this.theme.textColor;
+  }
+
+  private getOptionBackgroundColor(optionIndex: number): number {
+    if (!this.quizShowAnswer) {
+      return optionIndex === this.quizSelectedOptionIndex ? this.theme.chipSelectedBackgroundColor : this.theme.surfaceBackgroundColor;
+    }
+    const option = this.quizQuestions[this.quizCurrentIndex]?.options[optionIndex];
+    if (option?.isCorrect) return 0x204caf50;
+    if (optionIndex === this.quizSelectedOptionIndex && !option?.isCorrect) return 0x20f44336;
+    return this.theme.surfaceBackgroundColor;
+  }
+
+  private getOptionBorderColor(optionIndex: number): number {
+    if (!this.quizShowAnswer) {
+      return optionIndex === this.quizSelectedOptionIndex ? this.theme.accentColor : this.theme.borderColor;
+    }
+    const option = this.quizQuestions[this.quizCurrentIndex]?.options[optionIndex];
+    if (option?.isCorrect) return 0xff4caf50;
+    if (optionIndex === this.quizSelectedOptionIndex && !option?.isCorrect) return this.theme.dangerTextColor;
+    return this.theme.borderColor;
+  }
+
+  private getQuizCorrectCount(): number {
+    let count = 0;
+    for (let i = 0; i < this.quizAnswers.length; i++) {
+      if (this.quizAnswers[i].isCorrect) count++;
+    }
+    return count;
+  }
+
+  private getQuizScore(): number {
+    return calculateScore(this.getQuizCorrectCount(), this.quizQuestions.length);
+  }
+
+  @Builder
+  private QuizResultView(): void {
+    Column({ space: this.fontSize * 0.8 }) {
+      // 分数显示
+      Column({ space: this.fontSize * 0.3 }) {
+        Text(this.t('测验完成！', 'Quiz Complete!'))
+          .fontSize(this.fontSize * 1.2)
+          .fontWeight(FontWeight.Bold)
+          .fontColor(this.theme.titleColor);
+
+        Text(`${this.getQuizScore()}%`)
+          .fontSize(this.fontSize * 3)
+          .fontWeight(FontWeight.Bold)
+          .fontColor(this.getQuizScore() >= 60 ? this.theme.accentColor : this.theme.dangerTextColor);
+
+        Text(this.t(`${this.getQuizCorrectCount()} / ${this.quizQuestions.length} 正确`, `${this.getQuizCorrectCount()} / ${this.quizQuestions.length} Correct`))
+          .fontSize(this.fontSize)
+          .fontColor(this.theme.mutedTextColor);
+
+        Text(this.t(`用时：${this.formatDuration(Date.now() - this.quizStartTime)}`, `Duration: ${this.formatDuration(Date.now() - this.quizStartTime)}`))
+          .fontSize(this.fontSize * 0.9)
+          .fontColor(this.theme.mutedTextColor);
+      }
+      .width('100%')
+      .padding(this.fontSize * 1.5)
+      .backgroundColor(this.theme.surfaceBackgroundColor)
+      .borderRadius(this.fontSize * 0.5)
+      .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+      // 答题详情
+      Text(this.t('答题详情', 'Answer Details'))
+        .fontSize(this.fontSize)
+        .fontWeight(FontWeight.Medium)
+        .fontColor(this.theme.titleColor)
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+      List() {
+        ForEach(this.quizQuestions, (question: QuizQuestion, qIndex: number) => {
+          ListItem() {
+            Row({ space: this.fontSize * 0.5 }) {
+              Text(`${qIndex + 1}.`)
+                .fontSize(this.fontSize * 0.9)
+                .fontColor(this.theme.mutedTextColor);
+
+              Text(question.question)
+                .fontSize(this.fontSize * 0.85)
+                .fontColor(this.theme.textColor)
+                .layoutWeight(1)
+                .maxLines(2)
+                .textOverflow({ overflow: TextOverflow.Ellipsis });
+
+              Text(this.quizAnswers[qIndex]?.isCorrect ? '✓' : '✗')
+                .fontSize(this.fontSize)
+                .fontColor(this.quizAnswers[qIndex]?.isCorrect ? 0xff4caf50 : this.theme.dangerTextColor);
+            }
+            .width('100%')
+            .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 });
+          }
+        }, (question: QuizQuestion, qIndex: number) => `result_${qIndex}`);
+      }
+      .layoutWeight(1)
+      .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 });
+
+      // 底部按钮
+      Row({ space: this.fontSize * 1 }) {
+        Text(this.t('返回', 'Back'))
+          .fontSize(this.fontSize)
+          .fontColor(this.theme.accentColor)
+          .padding({ left: this.fontSize * 1.5, right: this.fontSize * 1.5, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
+          .backgroundColor(this.theme.surfaceBackgroundColor)
+          .border({ width: 1, color: this.theme.accentColor })
+          .borderRadius(this.fontSize * 0.5)
+          .onClick(() => this.resetQuiz());
+
+        if (this.quizAvailableCount > 0) {
+          Text(this.t('再来一次', 'Try Again'))
+            .fontSize(this.fontSize)
+            .fontColor(0xffffffff)
+            .padding({ left: this.fontSize * 1.5, right: this.fontSize * 1.5, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
+            .backgroundColor(this.theme.accentColor)
+            .borderRadius(this.fontSize * 0.5)
+            .onClick(() => this.startQuiz(Math.min(this.quizQuestions.length, this.quizAvailableCount)));
+        }
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.Center)
+      .padding({ left: this.fontSize * 1, right: this.fontSize * 1, bottom: this.fontSize * 1 });
+    }
+    .height('100%')
+    .width('100%');
   }
 
   @Builder
@@ -1377,6 +2046,8 @@ struct Index {
       this.DocListTab();
     } else if (this.currentTabIndex === 1) {
       this.ReadTab();
+    } else if (this.currentTabIndex === 2) {
+      this.QuizTab();
     } else {
       this.SettingsTab();
     }
@@ -1399,9 +2070,14 @@ struct Index {
           .tabBar(this.TabBarItem(1));
 
           TabContent() {
-            this.SettingsTab();
+            this.QuizTab();
           }
           .tabBar(this.TabBarItem(2));
+
+          TabContent() {
+            this.SettingsTab();
+          }
+          .tabBar(this.TabBarItem(3));
         }
         .scrollable(false)
         .barBackgroundColor(this.theme.surfaceBackgroundColor)

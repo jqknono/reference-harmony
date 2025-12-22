@@ -10,6 +10,7 @@ export struct ReferenceCard {
   @Prop theme: AppThemeTokens;
   @Prop fontSize: number = 15;
   @Prop unboundedTableColumns: boolean = false;
+  @Prop learningMode: boolean = false;
 
   private isEncoded(): boolean {
     return this.card.encoded === true;
@@ -28,6 +29,7 @@ export struct ReferenceCard {
             fontWeight: FontWeight.Medium,
             theme: this.theme,
             unboundedTableColumns: this.unboundedTableColumns,
+            learningMode: this.learningMode,
           });
         }
         if (decodeIfEncoded(this.card.back, this.isEncoded()).trim()) {
@@ -37,6 +39,7 @@ export struct ReferenceCard {
             fontColor: this.theme.qaBackTextColor,
             theme: this.theme,
             unboundedTableColumns: this.unboundedTableColumns,
+            learningMode: this.learningMode,
           });
         }
       }
@@ -56,6 +59,7 @@ export struct ReferenceCard {
         fontColor: this.theme.textColor,
         theme: this.theme,
         unboundedTableColumns: this.unboundedTableColumns,
+        learningMode: this.learningMode,
       });
     }
   }
@@ -71,6 +75,7 @@ export struct ReferenceCard {
           fontWeight: FontWeight.Bold,
           theme: this.theme,
           unboundedTableColumns: this.unboundedTableColumns,
+          learningMode: this.learningMode,
         })
           .layoutWeight(1);
       }
