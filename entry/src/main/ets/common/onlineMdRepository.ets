@@ -18,6 +18,24 @@ export interface ParseResult {
   error?: string;
 }
 
+function stripUrlQueryAndFragment(rawUrl: string): string {
+  const s = (rawUrl ?? '').trim();
+  if (!s) return '';
+  const q = s.indexOf('?');
+  const h = s.indexOf('#');
+  let end = s.length;
+  if (q !== -1 && q < end) end = q;
+  if (h !== -1 && h < end) end = h;
+  let base = s.slice(0, end);
+  while (base.endsWith('/')) base = base.slice(0, -1);
+  return base;
+}
+
+function isMdUrl(rawUrl: string): boolean {
+  const base = stripUrlQueryAndFragment(rawUrl).toLowerCase();
+  return !!base && base.endsWith('.md');
+}
+
 function cleanHeadingText(text: string): string {
   return text.replace(/\\<\s*\/\s*>\s*/g, '').replace(/\s*\{[^}]*\}\s*$/, '').trim();
 }
@@ -657,6 +675,10 @@ export class OnlineMdRepository {
   private static readonly PREFS_NAME = 'online_md_links';
   private static readonly LINKS_KEY = 'links';
 
+  static isMarkdownUrl(url: string): boolean {
+    return isMdUrl(url);
+  }
+
   async getLinks(context: Context): Promise<Array<OnlineMdLink>> {
     const prefs: Preferences | undefined = await Promise.resolve()
       .then((): Promise<Preferences> => preferences.getPreferences(context, OnlineMdRepository.PREFS_NAME))
@@ -709,6 +731,16 @@ export class OnlineMdRepository {
   }
 
   async fetchAndParse(url: string): Promise<ParseResult> {
+    if (!isMdUrl(url)) {
+      const baseUrl = stripUrlQueryAndFragment(url);
+      return {
+        success: false,
+        error: baseUrl
+          ? `仅支持 Markdown 文件（仅允许 .md 后缀）：${baseUrl}`
+          : '仅支持 Markdown 文件（仅允许 .md 后缀）',
+      };
+    }
+
     const httpRequest = http.createHttp();
     const requestOptions: http.HttpRequestOptions = {
       method: http.RequestMethod.GET,
@@ -719,7 +751,17 @@ export class OnlineMdRepository {
       connectTimeout: 30000,
       readTimeout: 60000,
     };
-    const responsePromise: Promise<http.HttpResponse> = httpRequest.request(url, requestOptions);
+    // 该 API 可能同步抛异常（ArkTS 编译器会要求显式处理）
+    let responsePromise: Promise<http.HttpResponse>;
+    try {
+      responsePromise = httpRequest.request(url, requestOptions);
+    } catch (e) {
+      httpRequest.destroy();
+      return {
+        success: false,
+        error: String(e),
+      };
+    }
 
     return responsePromise.then(
       (response: http.HttpResponse): ParseResult => {
@@ -772,7 +814,8 @@ export class OnlineMdRepository {
   }
 
   private extractIdFromUrl(url: string): string {
-    const parts = url.split('/');
+    const cleanUrl = stripUrlQueryAndFragment(url);
+    const parts = (cleanUrl || url).split('/');
     let fileName = parts[parts.length - 1] ?? 'online';
     if (fileName.toLowerCase().endsWith('.md')) {
       fileName = fileName.slice(0, -3);

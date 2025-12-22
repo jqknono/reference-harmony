@@ -1,90 +1,90 @@
-import type { ReferenceCardData, ReferenceLang } from '../common/referenceModels';
+import type { ReferenceCardData } from '../common/referenceModels';
 import type { AppThemeTokens } from '../common/appTheme';
 import { MarkdownView } from './MarkdownView';
 import { decodeIfEncoded } from '../common/encodedContent';
 
-@Component
-export struct ReferenceCard {
-  @Prop card: ReferenceCardData;
-  @Prop lang: ReferenceLang;
-  @Prop theme: AppThemeTokens;
-  @Prop fontSize: number = 15;
-  @Prop unboundedTableColumns: boolean = false;
-  @Prop learningMode: boolean = false;
+interface ReferenceCardParams {
+  card: ReferenceCardData;
+  theme: AppThemeTokens;
+  hostContext: object | undefined;
+  fontSize?: number;
+  unboundedTableColumns?: boolean;
+  learningMode?: boolean;
+  margin?: Margin | number;
+}
 
-  private isEncoded(): boolean {
-    return this.card.encoded === true;
-  }
+@Builder
+export function ReferenceCard($$: ReferenceCardParams): void {
+  Column({ space: ($$.fontSize ?? 15) * 0.5 }) {
+    Row() {
+      Column() {
+        MarkdownView({
+          markdown: decodeIfEncoded($$.card.title, $$.card.encoded === true),
+          inlineOnly: true,
+          fontSize: $$.fontSize ?? 15,
+          fontColor: $$.theme.cardTitleColor,
+          fontWeight: FontWeight.Bold,
+          theme: $$.theme,
+          unboundedTableColumns: $$.unboundedTableColumns ?? false,
+          learningMode: $$.learningMode ?? false,
+          hostContext: $$.hostContext,
+        });
+      }
+      .layoutWeight(1);
+    }
 
-  @Builder
-  private Body(): void {
-    if (this.card.kind === 'qa') {
-      Column({ space: this.fontSize * 0.5 }) {
-        if (decodeIfEncoded(this.card.front, this.isEncoded()).trim()) {
+    if ($$.card.kind === 'qa') {
+      Column({ space: ($$.fontSize ?? 15) * 0.5 }) {
+        if (decodeIfEncoded($$.card.front, $$.card.encoded === true).trim()) {
           MarkdownView({
-            markdown: decodeIfEncoded(this.card.front, this.isEncoded()),
+            markdown: decodeIfEncoded($$.card.front, $$.card.encoded === true),
             inlineOnly: true,
-            fontSize: this.fontSize,
-            fontColor: this.theme.qaFrontTextColor,
+            fontSize: $$.fontSize ?? 15,
+            fontColor: $$.theme.qaFrontTextColor,
             fontWeight: FontWeight.Medium,
-            theme: this.theme,
-            unboundedTableColumns: this.unboundedTableColumns,
-            learningMode: this.learningMode,
+            theme: $$.theme,
+            unboundedTableColumns: $$.unboundedTableColumns ?? false,
+            learningMode: $$.learningMode ?? false,
+            hostContext: $$.hostContext,
           });
         }
-        if (decodeIfEncoded(this.card.back, this.isEncoded()).trim()) {
+
+        if (decodeIfEncoded($$.card.back, $$.card.encoded === true).trim()) {
           MarkdownView({
-            markdown: decodeIfEncoded(this.card.back, this.isEncoded()),
-            fontSize: this.fontSize,
-            fontColor: this.theme.qaBackTextColor,
-            theme: this.theme,
-            unboundedTableColumns: this.unboundedTableColumns,
-            learningMode: this.learningMode,
+            markdown: decodeIfEncoded($$.card.back, $$.card.encoded === true),
+            fontSize: $$.fontSize ?? 15,
+            fontColor: $$.theme.qaBackTextColor,
+            theme: $$.theme,
+            unboundedTableColumns: $$.unboundedTableColumns ?? false,
+            learningMode: $$.learningMode ?? false,
+            hostContext: $$.hostContext,
           });
         }
       }
-    } else if (this.card.kind === 'code') {
-      Text(decodeIfEncoded(this.card.code, this.isEncoded()))
+    } else if ($$.card.kind === 'code') {
+      Text(decodeIfEncoded($$.card.code, $$.card.encoded === true))
         .fontFamily('monospace')
-        .fontSize(this.fontSize * 0.8)
-        .fontColor(this.theme.markdown.codeTextColor)
+        .fontSize(($$.fontSize ?? 15) * 0.8)
+        .fontColor($$.theme.markdown.codeTextColor)
         .textAlign(TextAlign.Start)
         .width('100%')
         .maxLines(999)
         .textOverflow({ overflow: TextOverflow.Clip });
     } else {
       MarkdownView({
-        markdown: decodeIfEncoded(this.card.body, this.isEncoded()),
-        fontSize: this.fontSize,
-        fontColor: this.theme.textColor,
-        theme: this.theme,
-        unboundedTableColumns: this.unboundedTableColumns,
-        learningMode: this.learningMode,
+        markdown: decodeIfEncoded($$.card.body, $$.card.encoded === true),
+        fontSize: $$.fontSize ?? 15,
+        fontColor: $$.theme.textColor,
+        theme: $$.theme,
+        unboundedTableColumns: $$.unboundedTableColumns ?? false,
+        learningMode: $$.learningMode ?? false,
+        hostContext: $$.hostContext,
       });
     }
   }
-
-  build() {
-    Column({ space: this.fontSize * 0.5 }) {
-      Row() {
-        MarkdownView({
-          markdown: decodeIfEncoded(this.card.title, this.isEncoded()),
-          inlineOnly: true,
-          fontSize: this.fontSize,
-          fontColor: this.theme.cardTitleColor,
-          fontWeight: FontWeight.Bold,
-          theme: this.theme,
-          unboundedTableColumns: this.unboundedTableColumns,
-          learningMode: this.learningMode,
-        })
-          .layoutWeight(1);
-      }
-
-      this.Body()
-    }
-    .padding(this.fontSize * 1)
-    .backgroundColor(this.theme.surfaceBackgroundColor)
-    .borderRadius(this.fontSize * 0.8)
-    .shadow({ radius: this.fontSize * 0.4, color: this.theme.shadowColor, offsetX: 0, offsetY: 2 });
-  }
+  .padding(($$.fontSize ?? 15) * 1)
+  .backgroundColor($$.theme.surfaceBackgroundColor)
+  .borderRadius(($$.fontSize ?? 15) * 0.8)
+  .border({ width: ($$.fontSize ?? 15) * 0.06, color: $$.theme.borderColor })
+  .margin($$.margin ?? 0);
 }

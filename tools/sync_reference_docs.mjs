@@ -777,6 +777,53 @@ async function mapWithConcurrency(items, concurrency, fn) {
   return results;
 }
 
+async function syncDocsToMds({ lang, modeUsed, source, ref, limit, concurrency, filter }) {
+  const mdsRootDir = path.join(process.cwd(), 'mds');
+  const langOutDir = path.join(mdsRootDir, lang);
+
+  // 只清空 lang 目录，避免影响用户在 mds/ 下的其它手工文件
+  await fs.rm(langOutDir, { recursive: true, force: true });
+  await fs.mkdir(langOutDir, { recursive: true });
+
+  const docsDirPrefix = `${source.docsDir.replace(/\\/g, '/')}/`;
+  const absLocalDocsDir = path.join(process.cwd(), source.submoduleDir, source.docsDir);
+
+  if (modeUsed === 'local') {
+    const docs = await listLocalMarkdownFiles(absLocalDocsDir);
+    const filteredDocs = filter ? docs.filter((d) => d.relPath.replace(/\\/g, '/').includes(filter)) : docs;
+    const selected = typeof limit === 'number' ? filteredDocs.slice(0, limit) : filteredDocs;
+    let done = 0;
+    await mapWithConcurrency(selected, concurrency ?? 8, async (doc) => {
+      const rel = doc.relPath.replace(/\\/g, '/');
+      const outAbs = path.join(langOutDir, rel);
+      await fs.mkdir(path.dirname(outAbs), { recursive: true });
+      const md = await fs.readFile(doc.absPath, 'utf8');
+      await fs.writeFile(outAbs, md, 'utf8');
+      done++;
+      if (done % 200 === 0) console.log(`... mds ${lang} ${done}/${selected.length}`);
+      return true;
+    });
+    console.log(`OK: mds ${lang} ${selected.length} md -> ${langOutDir}`);
+    return;
+  }
+
+  const docs = await listMarkdownFiles({ repo: source.repo, docsDir: source.docsDir, ref });
+  const filteredDocs = filter ? docs.filter((d) => String(d.path ?? '').includes(filter)) : docs;
+  const selected = typeof limit === 'number' ? filteredDocs.slice(0, limit) : filteredDocs;
+  let done = 0;
+  await mapWithConcurrency(selected, Math.min(concurrency ?? 8, 4), async (doc) => {
+    const rel = doc.path.replace(/\\/g, '/').startsWith(docsDirPrefix) ? doc.path.replace(/\\/g, '/').slice(docsDirPrefix.length) : doc.path;
+    const outAbs = path.join(langOutDir, rel);
+    await fs.mkdir(path.dirname(outAbs), { recursive: true });
+    const md = await githubText(doc.download_url);
+    await fs.writeFile(outAbs, md, 'utf8');
+    done++;
+    if (done % 200 === 0) console.log(`... mds ${lang} ${done}/${selected.length}`);
+    return true;
+  });
+  console.log(`OK: mds ${lang} ${selected.length} md -> ${langOutDir}`);
+}
+
 async function main() {
   const { zhRef, enRef, langs, mode, limit, concurrency, filter } = parseArgs(process.argv.slice(2));
   const outDir = path.join(process.cwd(), 'entry', 'src', 'main', 'resources', 'rawfile', 'reference');
@@ -812,6 +859,9 @@ async function main() {
     if (mode === 'local' && !localAvailable) {
       throw new Error(`未找到本地 submodule 文档目录: ${absLocalDocsDir}`);
     }
+
+    // 同步上游 Markdown 到 mds/{lang}/，用于 GitHub Pages 托管/在线解析
+    await syncDocsToMds({ lang, modeUsed, source, ref, limit, concurrency, filter });
 
     if (modeUsed === 'local') {
       const docs = await listLocalMarkdownFiles(absLocalDocsDir);

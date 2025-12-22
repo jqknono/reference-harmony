@@ -1,5 +1,10 @@
 import { reminderAgentManager } from '@kit.BackgroundTasksKit';
 import { BusinessError } from '@kit.BasicServicesKit';
+import preferences from '@ohos.data.preferences';
+import type { Context } from '@ohos.abilityAccessCtrl';
+
+type Preferences = preferences.Preferences;
+type ValueType = preferences.ValueType;
 
 /**
  * 艾宾浩斯记忆曲线的复习时间间隔（分钟）
@@ -46,23 +51,94 @@ const STAGE_LABELS_EN: string[] = [
 
 // 存储已发布的提醒 ID
 let publishedReminderIds: number[] = [];
+let hasHydratedFromPrefs: boolean = false;
+
+const PREFS_NAME: string = 'settings';
+const PREF_KEY_REMINDER_IDS: string = 'ebbinghausReminderIds';
 
 /**
  * 艾宾浩斯记忆提醒管理器
  */
 export class EbbinghausReminderManager {
   private static readonly REMINDER_ID_BASE: number = 100000;
+  private static readonly BUNDLE_NAME: string = 'reference.app.jqknono.com';
+
+  private static decodeIds(value: ValueType): number[] {
+    if (typeof value !== 'string') return [];
+    const text: string = value.trim();
+    if (text.length === 0) return [];
+
+    const parts: string[] = text.split(',');
+    const ids: number[] = [];
+    for (let i = 0; i < parts.length; i++) {
+      const n: number = Number(parts[i]);
+      if (Number.isFinite(n) && n > 0) {
+        ids.push(n);
+      }
+    }
+    return ids;
+  }
+
+  private static encodeIds(ids: number[]): string {
+    if (ids.length === 0) return '';
+    return ids.join(',');
+  }
+
+  private static async getPrefs(context: Context): Promise<Preferences | undefined> {
+    return Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(context, PREFS_NAME))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+  }
+
+  private static async ensureHydrated(context: Context): Promise<void> {
+    if (hasHydratedFromPrefs) return;
+
+    const prefs: Preferences | undefined = await EbbinghausReminderManager.getPrefs(context);
+    if (!prefs) {
+      hasHydratedFromPrefs = true;
+      return;
+    }
+
+    const raw: ValueType = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get(PREF_KEY_REMINDER_IDS, ''))
+      .then((v: ValueType): ValueType => v, (): ValueType => '');
+
+    publishedReminderIds = EbbinghausReminderManager.decodeIds(raw);
+    hasHydratedFromPrefs = true;
+  }
+
+  private static async persistIds(context: Context): Promise<void> {
+    const prefs: Preferences | undefined = await EbbinghausReminderManager.getPrefs(context);
+    if (!prefs) return;
+
+    const encoded: string = EbbinghausReminderManager.encodeIds(publishedReminderIds);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put(PREF_KEY_REMINDER_IDS, encoded))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  static async hydrate(context: Context): Promise<void> {
+    await EbbinghausReminderManager.ensureHydrated(context);
+  }
 
   /**
    * 发布艾宾浩斯记忆提醒
+   * 会将发布的提醒 ID 持久化，避免应用重启后无法取消导致提醒数量超限。
+   * @param host HostContext
    * @param lang 语言设置
    * @returns 发布的提醒 ID 数组
    */
-  static async publishReminders(lang: string): Promise<number[]> {
+  static async publishReminders(context: Context, lang: string): Promise<number[]> {
+    await EbbinghausReminderManager.ensureHydrated(context);
     const newIds: number[] = [];
     const isZh: boolean = lang !== 'en';
+    let stopOnLimit: boolean = false;
 
     for (let i = 0; i < EBBINGHAUS_INTERVALS_MINUTES.length; i++) {
+      if (stopOnLimit) break;
       const intervalMinutes: number = EBBINGHAUS_INTERVALS_MINUTES[i];
       const stageLabel: string = isZh ? STAGE_LABELS_ZH[i] : STAGE_LABELS_EN[i];
 
@@ -78,24 +154,29 @@ export class EbbinghausReminderManager {
         notificationId: EbbinghausReminderManager.REMINDER_ID_BASE + i,
         slotType: 2, // SOCIAL_COMMUNICATION
         wantAgent: {
-          pkgName: 'com.example.reference_harmony',
+          pkgName: EbbinghausReminderManager.BUNDLE_NAME,
           abilityName: 'EntryAbility',
         },
         actionButton: [
           {
-            title: isZh ? '打开应用' : 'Open App',
+            title: isZh ? '关闭' : 'Dismiss',
             type: reminderAgentManager.ActionButtonType.ACTION_BUTTON_TYPE_CLOSE,
           },
         ],
       };
 
-      const reminderId: number | undefined = await reminderAgentManager.publishReminder(timerRequest).then(
-        (id: number): number => id,
-        (err: BusinessError): undefined => {
-          console.error(`[EbbinghausReminder] Failed to publish reminder ${i}: ${err.code} ${err.message}`);
-          return undefined;
-        },
-      );
+      const reminderId: number | undefined = await Promise.resolve()
+        .then((): Promise<number> => reminderAgentManager.publishReminder(timerRequest))
+        .then(
+          (id: number): number => id,
+          (err: BusinessError): undefined => {
+            console.error(`[EbbinghausReminder] Failed to publish reminder ${i}: ${err.code} ${err.message}`);
+            if (err.code === 1700002) {
+              stopOnLimit = true;
+            }
+            return undefined;
+          },
+        );
 
       if (reminderId !== undefined) {
         newIds.push(reminderId);
@@ -103,24 +184,31 @@ export class EbbinghausReminderManager {
     }
 
     publishedReminderIds = newIds;
+    await EbbinghausReminderManager.persistIds(context);
     return newIds;
   }
 
   /**
    * 取消所有艾宾浩斯记忆提醒
    */
-  static async cancelAllReminders(): Promise<void> {
-    // 取消已记录的提醒
+  static async cancelAllReminders(context: Context): Promise<void> {
+    await EbbinghausReminderManager.ensureHydrated(context);
+
+    // 逐个取消已记录的提醒（ArkTS 不支持对 namespace 做反射式调用，也不支持 Function.call/apply）
     for (let i = 0; i < publishedReminderIds.length; i++) {
       const reminderId: number = publishedReminderIds[i];
-      await reminderAgentManager.cancelReminder(reminderId).then(
-        (): void => undefined,
-        (err: BusinessError): void => {
-          console.error(`[EbbinghausReminder] Failed to cancel reminder ${reminderId}: ${err.code} ${err.message}`);
-        },
-      );
+      await Promise.resolve()
+        .then((): Promise<void> => reminderAgentManager.cancelReminder(reminderId))
+        .then(
+          (): void => undefined,
+          (err: BusinessError): void => {
+            console.error(`[EbbinghausReminder] Failed to cancel reminder ${reminderId}: ${err.code} ${err.message}`);
+          },
+        );
     }
+
     publishedReminderIds = [];
+    await EbbinghausReminderManager.persistIds(context);
   }
 
   /**

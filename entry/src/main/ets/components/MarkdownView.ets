@@ -208,6 +208,31 @@ function estimateTokensWidth(tokens: Array<MarkdownInlineToken>, fontSize: numbe
   return width;
 }
 
+interface MarkdownInlineStyledParams {
+  tokens: Array<MarkdownInlineToken>;
+  fontSize: number;
+  color: number;
+  weight: FontWeight;
+  align: TextAlign;
+  linkColor: number;
+  codeTextColor: number;
+  hostContext: object | undefined;
+  maxLines?: number;
+  overflow?: TextOverflow;
+}
+
+interface MarkdownViewParams {
+  markdown: string;
+  inlineOnly?: boolean;
+  fontSize?: number;
+  fontColor?: number;
+  fontWeight?: FontWeight;
+  theme?: AppThemeTokens;
+  unboundedTableColumns?: boolean;
+  learningMode?: boolean;
+  hostContext?: object;
+}
+
 function computeColumnWidths(
   header: Array<Array<MarkdownInlineToken>>,
   rows: Array<Array<Array<MarkdownInlineToken>>>,
@@ -512,267 +537,223 @@ function parseBlocks(markdown: string, fontSize: number, maxTableColumnWidth: nu
   return blocks;
 }
 
-@Component
-export struct MarkdownView {
-  @Prop markdown: string;
-  @Prop inlineOnly: boolean = false;
-  @Prop fontSize: number = 15;
-  @Prop fontColor: number = 0x222222;
-  @Prop fontWeight: FontWeight = FontWeight.Normal;
-  @Prop theme: AppThemeTokens = getAppThemeTokens('light');
-  @Prop unboundedTableColumns: boolean = false;
-  @Prop learningMode: boolean = false;
-
-  private maxTableColumnWidth(): number {
-    return this.unboundedTableColumns ? 0 : this.fontSize * 30;
-  }
-
-  private tableCellMaxLines(): number {
-    return this.unboundedTableColumns ? 1 : 999;
-  }
-
-  private tableHeaderOverflow(): TextOverflow {
-    return this.unboundedTableColumns ? TextOverflow.Clip : TextOverflow.Ellipsis;
-  }
-
-  private mdHeadingColor(): number {
-    return this.theme.markdown.headingColor;
-  }
-
-  private mdLinkColor(): number {
-    return this.theme.markdown.linkColor;
-  }
-
-  private mdCodeTextColor(): number {
-    return this.theme.markdown.codeTextColor;
-  }
-
-  private mdCodeBackgroundColor(): number {
-    return this.theme.markdown.codeBackgroundColor;
-  }
-
-  private mdTableHeaderBackgroundColor(): number {
-    return this.theme.markdown.tableHeaderBackgroundColor;
-  }
-
-  private mdTableCellBackgroundColor(): number {
-    return this.theme.markdown.tableCellBackgroundColor;
-  }
-
-  private mdTableBorderColor(): number {
-    return this.theme.markdown.tableBorderColor;
-  }
-
-  private tableTextAlign(aligns: Array<MarkdownCellAlign>, colIndex: number): TextAlign {
-    const key: MarkdownCellAlign = aligns.length > colIndex ? aligns[colIndex] : 'start';
-    if (key === 'center') return TextAlign.Center;
-    if (key === 'end') return TextAlign.End;
-    return TextAlign.Start;
-  }
-
-  private isCellEmpty(tokens: Array<MarkdownInlineToken>): boolean {
-    for (let i = 0; i < tokens.length; i++) {
-      if (tokens[i].text.trim().length > 0) return false;
-    }
-    return true;
-  }
-
-  private findFirstNonEmptyColIndex(row: Array<Array<MarkdownInlineToken>>): number {
-    for (let i = 0; i < row.length; i++) {
-      if (!this.isCellEmpty(row[i])) return i;
-    }
-    return -1;
-  }
-
-  private maskCellContent(tokens: Array<MarkdownInlineToken>): Array<MarkdownInlineToken> {
-    let totalLength: number = 0;
-    for (let i = 0; i < tokens.length; i++) {
-      totalLength += tokens[i].text.length;
-    }
-    const maskLength: number = Math.max(1, Math.min(totalLength, 8));
-    const masked: Array<MarkdownInlineToken> = [{ kind: 'text', text: '*'.repeat(maskLength) }];
-    return masked;
-  }
-
-  private getCellDisplayTokens(
-    row: Array<Array<MarkdownInlineToken>>,
-    colIndex: number
-  ): Array<MarkdownInlineToken> {
-    const cell: Array<MarkdownInlineToken> = row[colIndex];
-    if (!this.learningMode) return cell;
-    if (this.isCellEmpty(cell)) return cell;
-    const firstNonEmptyCol: number = this.findFirstNonEmptyColIndex(row);
-    if (colIndex === firstNonEmptyCol) return cell;
-    return this.maskCellContent(cell);
-  }
-
-  private openUrl(rawUrl: string | undefined): void {
-    openExternalLink(this.getUIContext().getHostContext(), rawUrl ?? '');
-  }
-
-  @Builder
-  private InlineStyled(
-    tokens: Array<MarkdownInlineToken>,
-    color: number,
-    weight: FontWeight,
-    align: TextAlign,
-    maxLines: number = 999,
-    overflow: TextOverflow = TextOverflow.Clip,
-  ): void {
-    Text() {
-      ForEach(tokens, (token: MarkdownInlineToken, index: number) => {
-        if (token.kind === 'text') {
-          Span(token.text);
-        } else if (token.kind === 'bold') {
-          Span(token.text).fontWeight(FontWeight.Bold);
-        } else if (token.kind === 'italic') {
-          Span(token.text).fontStyle(FontStyle.Italic);
-        } else if (token.kind === 'code') {
-          Span(token.text).fontFamily('monospace').fontColor(this.mdCodeTextColor());
-        } else {
-          Span(token.text)
-            .fontColor(this.mdLinkColor())
-            .decoration({ type: TextDecorationType.Underline })
-            .onClick(() => this.openUrl(token.url ?? token.text));
-        }
-      }, (_: MarkdownInlineToken, index: number) => `${index}`);
-    }
-    .fontSize(this.fontSize)
-    .fontColor(color)
-    .fontWeight(weight)
-    .textAlign(align)
-    .width('100%')
-    .maxLines(maxLines)
-    .textOverflow({ overflow });
-  }
-
-  @Builder
-  private Inline(tokens: Array<MarkdownInlineToken>): void {
-    this.InlineStyled(tokens, this.fontColor, this.fontWeight, TextAlign.Start);
-  }
-
-  private headingFontSize(level: number): number {
-    if (level <= 1) return this.fontSize + 6;
-    if (level === 2) return this.fontSize + 4;
-    if (level === 3) return this.fontSize + 2;
-    return this.fontSize;
-  }
-
-  build() {
-    Column({ space: this.inlineOnly ? 0 : 6 }) {
-      if (this.inlineOnly) {
-        this.Inline(parseInlineTokens(this.markdown ?? ''));
+@Builder
+function MarkdownInlineStyled($$: MarkdownInlineStyledParams): void {
+  Text() {
+    ForEach($$.tokens, (token: MarkdownInlineToken, index: number) => {
+      if (token.kind === 'text') {
+        Span(token.text);
+      } else if (token.kind === 'bold') {
+        Span(token.text).fontWeight(FontWeight.Bold);
+      } else if (token.kind === 'italic') {
+        Span(token.text).fontStyle(FontStyle.Italic);
+      } else if (token.kind === 'code') {
+        Span(token.text).fontFamily('monospace').fontColor($$.codeTextColor);
       } else {
-        ForEach(parseBlocks(this.markdown ?? '', this.fontSize, this.maxTableColumnWidth()), (block: MarkdownBlock, index: number) => {
-          if (block.kind === 'codeblock') {
-            Scroll() {
-              Text(block.code)
-                .fontFamily('monospace')
-                .fontSize(this.fontSize - 2)
-                .fontColor(this.mdCodeTextColor())
-                .textAlign(TextAlign.Start)
-                .constraintSize({ minWidth: '100%' })
-                .maxLines(999);
-            }
-            .scrollable(ScrollDirection.Horizontal)
-            .scrollBar(BarState.Off)
-            .backgroundColor(this.mdCodeBackgroundColor())
-            .borderRadius(this.fontSize * 0.5)
-            .padding(this.fontSize * 0.6)
-            .width('100%');
-          } else if (block.kind === 'heading') {
-            Text() {
-              ForEach(block.tokens, (t: MarkdownInlineToken, i2: number) => {
-                if (t.kind === 'text') {
-                  Span(t.text);
-                } else if (t.kind === 'bold') {
-                  Span(t.text).fontWeight(FontWeight.Bold);
-                } else if (t.kind === 'italic') {
-                  Span(t.text).fontStyle(FontStyle.Italic);
-                } else if (t.kind === 'code') {
-                  Span(t.text).fontFamily('monospace').fontColor(this.mdCodeTextColor());
-                } else {
-                  Span(t.text)
-                    .fontColor(this.mdLinkColor())
-                    .decoration({ type: TextDecorationType.Underline })
-                    .onClick(() => this.openUrl(t.url ?? t.text));
-                }
-              }, (_: MarkdownInlineToken, i2: number) => `${index}:${i2}`);
-            }
-            .fontSize(this.headingFontSize(block.level))
-            .fontColor(this.mdHeadingColor())
-            .fontWeight(FontWeight.Bold)
-            .maxLines(999)
-            .textOverflow({ overflow: TextOverflow.Clip });
-          } else if (block.kind === 'list') {
-            Column({ space: this.fontSize * 0.2 }) {
-              ForEach(block.items, (item: Array<MarkdownInlineToken>, itemIndex: number) => {
-                Row({ space: this.fontSize * 0.5 }) {
-                  Text(block.ordered ? `${itemIndex + 1}.` : '\u2022')
-                    .fontSize(this.fontSize)
-                    .fontColor(this.fontColor);
-                  this.Inline(item);
-                }
-              }, (_: Array<MarkdownInlineToken>, itemIndex: number) => `${index}:${itemIndex}`);
-            }
-          } else if (block.kind === 'table') {
-            Scroll() {
-              Column({ space: 0 }) {
-                if (block.header.length > 0) {
-                  Row({ space: 0 }) {
-                    ForEach(block.header, (cell: Array<MarkdownInlineToken>, colIndex: number) => {
-                      Column() {
-                        this.InlineStyled(
-                          cell,
-                          this.mdHeadingColor(),
-                          FontWeight.Bold,
-                          this.tableTextAlign(block.aligns, colIndex),
-                          1,
-                          this.tableHeaderOverflow(),
-                        );
-                      }
-                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : this.fontSize * 4)
-                      .alignItems(HorizontalAlign.Start)
-                      .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .backgroundColor(this.mdTableHeaderBackgroundColor())
-                      .borderWidth(1)
-                      .borderColor(this.mdTableBorderColor());
-                    }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:h:${colIndex}`);
-                  }
-                }
-
-                ForEach(block.rows, (row: Array<Array<MarkdownInlineToken>>, rowIndex: number) => {
-                  Row({ space: 0 }) {
-                    ForEach(row, (cell: Array<MarkdownInlineToken>, colIndex: number) => {
-                      Column() {
-                        this.InlineStyled(
-                          this.getCellDisplayTokens(row, colIndex),
-                          this.fontColor,
-                          FontWeight.Normal,
-                          this.tableTextAlign(block.aligns, colIndex),
-                          this.tableCellMaxLines(),
-                          TextOverflow.Clip,
-                        );
-                      }
-                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : this.fontSize * 4)
-                      .alignItems(HorizontalAlign.Start)
-                      .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .backgroundColor(this.mdTableCellBackgroundColor())
-                      .borderWidth(1)
-                      .borderColor(this.mdTableBorderColor());
-                    }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:${rowIndex}:${colIndex}:${this.learningMode}`);
-                  }
-                }, (_: Array<Array<MarkdownInlineToken>>, rowIndex: number) => `${index}:r:${rowIndex}`);
-              }
-              .alignItems(HorizontalAlign.Start)
-            }
-            .scrollable(ScrollDirection.Horizontal)
-            .scrollBar(BarState.Off);
-          } else {
-            this.Inline(block.tokens);
-          }
-        }, (_: MarkdownBlock, index: number) => `${index}`);
+        Span(token.text)
+          .fontColor($$.linkColor)
+          .decoration({ type: TextDecorationType.Underline })
+          .onClick(() => openExternalLink($$.hostContext, token.url ?? token.text));
       }
+    }, (_: MarkdownInlineToken, index: number) => `${index}`);
+  }
+  .fontSize($$.fontSize)
+  .fontColor($$.color)
+  .fontWeight($$.weight)
+  .textAlign($$.align)
+  .width('100%')
+  .maxLines($$.maxLines ?? 999)
+  .textOverflow({ overflow: $$.overflow ?? TextOverflow.Clip });
+}
+
+function tableTextAlignForColumn(aligns: Array<MarkdownCellAlign>, colIndex: number): TextAlign {
+  const key: MarkdownCellAlign = aligns.length > colIndex ? aligns[colIndex] : 'start';
+  if (key === 'center') return TextAlign.Center;
+  if (key === 'end') return TextAlign.End;
+  return TextAlign.Start;
+}
+
+function isCellTokensEmpty(tokens: Array<MarkdownInlineToken>): boolean {
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i].text.trim().length > 0) return false;
+  }
+  return true;
+}
+
+function findFirstNonEmptyColumnIndex(row: Array<Array<MarkdownInlineToken>>): number {
+  for (let i = 0; i < row.length; i++) {
+    if (!isCellTokensEmpty(row[i])) return i;
+  }
+  return -1;
+}
+
+function maskCellTokens(tokens: Array<MarkdownInlineToken>): Array<MarkdownInlineToken> {
+  let totalLength: number = 0;
+  for (let i = 0; i < tokens.length; i++) {
+    totalLength += tokens[i].text.length;
+  }
+  const maskLength: number = Math.max(1, Math.min(totalLength, 8));
+  const masked: Array<MarkdownInlineToken> = [{ kind: 'text', text: '*'.repeat(maskLength) }];
+  return masked;
+}
+
+function getCellDisplayTokensForLearning(
+  row: Array<Array<MarkdownInlineToken>>,
+  colIndex: number,
+  learningMode: boolean
+): Array<MarkdownInlineToken> {
+  const cell: Array<MarkdownInlineToken> = row[colIndex];
+  if (!learningMode) return cell;
+  if (isCellTokensEmpty(cell)) return cell;
+  const firstNonEmptyCol: number = findFirstNonEmptyColumnIndex(row);
+  if (colIndex === firstNonEmptyCol) return cell;
+  return maskCellTokens(cell);
+}
+
+function headingFontSizeForLevel(baseFontSize: number, level: number): number {
+  if (level <= 1) return baseFontSize + 6;
+  if (level === 2) return baseFontSize + 4;
+  if (level === 3) return baseFontSize + 2;
+  return baseFontSize;
+}
+
+@Builder
+export function MarkdownView($$: MarkdownViewParams): void {
+  Column({ space: ($$.inlineOnly ?? false) ? 0 : 6 }) {
+    if ($$.inlineOnly ?? false) {
+      MarkdownInlineStyled({
+        tokens: parseInlineTokens($$.markdown ?? ''),
+        fontSize: $$.fontSize ?? 15,
+        color: $$.fontColor ?? 0x222222,
+        weight: $$.fontWeight ?? FontWeight.Normal,
+        align: TextAlign.Start,
+        linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+        codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+        hostContext: $$.hostContext,
+      });
+    } else {
+      ForEach(parseBlocks($$.markdown ?? '', $$.fontSize ?? 15, ($$.unboundedTableColumns ?? false) ? 0 : ($$.fontSize ?? 15) * 30), (block: MarkdownBlock, index: number) => {
+        if (block.kind === 'codeblock') {
+          Scroll() {
+            Text(block.code)
+              .fontFamily('monospace')
+              .fontSize(($$.fontSize ?? 15) - 2)
+              .fontColor(($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor)
+              .textAlign(TextAlign.Start)
+              .constraintSize({ minWidth: '100%' })
+              .maxLines(999);
+          }
+          .scrollable(ScrollDirection.Horizontal)
+          .scrollBar(BarState.Off)
+          .backgroundColor(($$.theme ?? getAppThemeTokens('light')).markdown.codeBackgroundColor)
+          .borderRadius(($$.fontSize ?? 15) * 0.5)
+          .padding(($$.fontSize ?? 15) * 0.6)
+          .width('100%');
+        } else if (block.kind === 'heading') {
+          MarkdownInlineStyled({
+            tokens: block.tokens,
+            fontSize: headingFontSizeForLevel($$.fontSize ?? 15, block.level),
+            color: ($$.theme ?? getAppThemeTokens('light')).markdown.headingColor,
+            weight: FontWeight.Bold,
+            align: TextAlign.Start,
+            linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+            codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+            hostContext: $$.hostContext,
+          });
+        } else if (block.kind === 'list') {
+          Column({ space: ($$.fontSize ?? 15) * 0.2 }) {
+            ForEach(block.items, (item: Array<MarkdownInlineToken>, itemIndex: number) => {
+              Row({ space: ($$.fontSize ?? 15) * 0.5 }) {
+                Text(block.ordered ? `${itemIndex + 1}.` : '\u2022')
+                  .fontSize($$.fontSize ?? 15)
+                  .fontColor($$.fontColor ?? 0x222222);
+                MarkdownInlineStyled({
+                  tokens: item,
+                  fontSize: $$.fontSize ?? 15,
+                  color: $$.fontColor ?? 0x222222,
+                  weight: $$.fontWeight ?? FontWeight.Normal,
+                  align: TextAlign.Start,
+                  linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                  codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                  hostContext: $$.hostContext,
+                });
+              }
+            }, (_: Array<MarkdownInlineToken>, itemIndex: number) => `${index}:${itemIndex}`);
+          }
+        } else if (block.kind === 'table') {
+          Scroll() {
+            Column({ space: 0 }) {
+              if (block.header.length > 0) {
+                Row({ space: 0 }) {
+                  ForEach(block.header, (cell: Array<MarkdownInlineToken>, colIndex: number) => {
+                    Column() {
+                      MarkdownInlineStyled({
+                        tokens: cell,
+                        fontSize: $$.fontSize ?? 15,
+                        color: ($$.theme ?? getAppThemeTokens('light')).markdown.headingColor,
+                        weight: FontWeight.Bold,
+                        align: tableTextAlignForColumn(block.aligns, colIndex),
+                        linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                        codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                        hostContext: $$.hostContext,
+                        maxLines: 1,
+                        overflow: ($$.unboundedTableColumns ?? false) ? TextOverflow.Clip : TextOverflow.Ellipsis,
+                      });
+                    }
+                    .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : ($$.fontSize ?? 15) * 4)
+                    .alignItems(HorizontalAlign.Start)
+                    .padding({ left: ($$.fontSize ?? 15) * 0.5, right: ($$.fontSize ?? 15) * 0.5, top: ($$.fontSize ?? 15) * 0.4, bottom: ($$.fontSize ?? 15) * 0.4 })
+                    .backgroundColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableHeaderBackgroundColor)
+                    .borderWidth(1)
+                    .borderColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableBorderColor);
+                  }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:h:${colIndex}`);
+                }
+              }
+
+              ForEach(block.rows, (row: Array<Array<MarkdownInlineToken>>, rowIndex: number) => {
+                Row({ space: 0 }) {
+                  ForEach(row, (_cell: Array<MarkdownInlineToken>, colIndex: number) => {
+                    Column() {
+                      MarkdownInlineStyled({
+                        tokens: getCellDisplayTokensForLearning(row, colIndex, $$.learningMode ?? false),
+                        fontSize: $$.fontSize ?? 15,
+                        color: $$.fontColor ?? 0x222222,
+                        weight: FontWeight.Normal,
+                        align: tableTextAlignForColumn(block.aligns, colIndex),
+                        linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                        codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                        hostContext: $$.hostContext,
+                        maxLines: ($$.unboundedTableColumns ?? false) ? 1 : 999,
+                        overflow: TextOverflow.Clip,
+                      });
+                    }
+                    .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : ($$.fontSize ?? 15) * 4)
+                    .alignItems(HorizontalAlign.Start)
+                    .padding({ left: ($$.fontSize ?? 15) * 0.5, right: ($$.fontSize ?? 15) * 0.5, top: ($$.fontSize ?? 15) * 0.4, bottom: ($$.fontSize ?? 15) * 0.4 })
+                    .backgroundColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableCellBackgroundColor)
+                    .borderWidth(1)
+                    .borderColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableBorderColor);
+                  }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:${rowIndex}:${colIndex}:${$$.learningMode ?? false}`);
+                }
+              }, (_: Array<Array<MarkdownInlineToken>>, rowIndex: number) => `${index}:r:${rowIndex}`);
+            }
+            .alignItems(HorizontalAlign.Start)
+          }
+          .scrollable(ScrollDirection.Horizontal)
+          .scrollBar(BarState.Off);
+        } else {
+          MarkdownInlineStyled({
+            tokens: block.tokens,
+            fontSize: $$.fontSize ?? 15,
+            color: $$.fontColor ?? 0x222222,
+            weight: $$.fontWeight ?? FontWeight.Normal,
+            align: TextAlign.Start,
+            linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+            codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+            hostContext: $$.hostContext,
+          });
+        }
+      }, (_: MarkdownBlock, index: number) => `${index}`);
     }
   }
 }

@@ -1,4 +1,4 @@
-import { AbilityConstant, ConfigurationConstant, UIAbility, Want } from '@kit.AbilityKit';
+import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import preferences from '@ohos.data.preferences';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
@@ -52,17 +52,6 @@ export default class EntryAbility extends UIAbility {
   }
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
-    const appContext = this.context.getApplicationContext();
-    if (appContext) {
-      Promise.resolve()
-        .then((): void => appContext.setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET))
-        .then(
-          (): void => undefined,
-          (err: Error | string): void => {
-            hilog.error(DOMAIN, 'testTag', 'Failed to set colorMode. Cause: %{public}s', JSON.stringify(err));
-          },
-        );
-    }
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
   }
 

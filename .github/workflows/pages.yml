@@ -1,0 +1,72 @@
+name: Deploy mds to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "mds/**"
+      - "tools/build_pages.mjs"
+      - "package.json"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: "站点域名（可选）。例如：https://xxx.github.io/reference-harmony/ 或自定义域名。留空则自动推导 GitHub Pages 地址。"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build site (npm)
+        run: |
+          npm install --no-audit --no-fund
+          OWNER="${{ github.repository_owner }}"
+          REPO="${{ github.event.repository.name }}"
+          INPUT_DOMAIN="${{ github.event.inputs.domain }}"
+          if [ -n "$INPUT_DOMAIN" ]; then
+            DOMAIN="$INPUT_DOMAIN"
+          elif [ "$REPO" = "$OWNER.github.io" ]; then
+            DOMAIN="https://$OWNER.github.io/"
+          else
+            DOMAIN="https://$OWNER.github.io/$REPO/"
+          fi
+          npm run build -- --domain="$DOMAIN"
+
+      - name: Upload artifact (dist)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+
