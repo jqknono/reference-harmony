@@ -81,7 +81,7 @@ for (const rel of relFiles) {
         <td class="path"><a href="${downloadUrl}" download>${relUrlPath}</a></td>
         <td class="size">${size}</td>
         <td class="mtime">${mtime}</td>
-        <td class="action"><a class="btn" href="${downloadUrl}" download>下载</a></td>
+        <td class="action"><button class="btn" data-url="${downloadUrl}">复制链接</button></td>
       </tr>`.trim())
 }
 
@@ -198,6 +198,16 @@ const html = `<!doctype html>
         border-radius: 0.6rem;
         background: var(--bg);
         color: var(--fg);
+        cursor: pointer;
+        font: inherit;
+      }
+      .btn:hover {
+        background: color-mix(in srgb, var(--bg) 90%, var(--fg) 10%);
+      }
+      .btn.copied {
+        background: #22c55e;
+        color: #fff;
+        border-color: #22c55e;
       }
       @media (max-width: 48rem) {
         thead th:nth-child(3), tbody td:nth-child(3) { display: none; }
@@ -260,6 +270,22 @@ ${rows.map((r) => `              ${r}`).join('\n')}
             if (ok) shown++;
           });
           document.getElementById('count').textContent = String(shown);
+        });
+
+        // 复制链接功能
+        tbody.addEventListener('click', function (e) {
+          var btn = e.target.closest('.btn[data-url]');
+          if (!btn) return;
+          var url = btn.getAttribute('data-url');
+          navigator.clipboard.writeText(url).then(function () {
+            var orig = btn.textContent;
+            btn.textContent = '已复制';
+            btn.classList.add('copied');
+            setTimeout(function () {
+              btn.textContent = orig;
+              btn.classList.remove('copied');
+            }, 1500);
+          });
         });
       })();
     </script>

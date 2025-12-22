@@ -1,7 +1,6 @@
 import preferences from '@ohos.data.preferences';
 import pasteboard from '@ohos.pasteboard';
 import { window } from '@kit.ArkUI';
-import type common from '@ohos.app.ability.common';
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
 import { getAppThemeTokens } from '../common/appTheme';
@@ -9,7 +8,6 @@ import type { AppThemeId, AppThemeTokens } from '../common/appTheme';
 import { decodeIfEncoded } from '../common/encodedContent';
 import { ReferenceCard } from '../components/ReferenceCard';
 import { openExternalLink } from '../common/openExternalLink';
-import { EbbinghausReminderManager } from '../common/ebinghausReminder';
 import type { QuizQuestion, QuizAnswer, QuizSession, QuizRecord, QuizOption } from '../common/quizModels';
 import { generateQuizSessionId } from '../common/quizModels';
 import { extractQuestionsFromDoc, selectRandomQuestions, calculateScore } from '../common/quizUtils';
@@ -91,9 +89,6 @@ struct Index {
   @State private fontSize: number = 15;
   @State private orientationMode: 'portrait' | 'landscape' | 'auto' = 'portrait';
   @State private isLandscape: boolean = false;
-  @State private ebbinghausReminderEnabled: boolean = false;
-  @State private ebbinghausActiveCount: number = 0;
-  @State private ebbinghausDebugMode: boolean = true;
   @State private learningModeEnabled: boolean = false;
 
   // 测验相关状态
@@ -439,47 +434,6 @@ struct Index {
     await this.saveOrientationModeSetting(next);
   }
 
-  private async loadEbbinghausReminderSetting(): Promise<void> {
-    const host = this.getUIContext().getHostContext();
-    if (!host) return;
-    const prefs: Preferences | undefined = await Promise.resolve()
-      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
-      .then((p: Preferences): Preferences => p, (): undefined => undefined);
-    if (!prefs) {
-      this.ebbinghausReminderEnabled = false;
-      return;
-    }
-    const saved: boolean = await Promise.resolve()
-      .then((): Promise<ValueType> => prefs.get('ebbinghausReminder', false))
-      .then(
-        (value: ValueType): boolean => value === true || value === 'true',
-        (): boolean => false,
-      );
-    this.ebbinghausReminderEnabled = saved;
-    await EbbinghausReminderManager.hydrate(host);
-    await EbbinghausReminderManager.syncActiveReminders(host);
-    this.refreshEbbinghausActiveCount();
-  }
-
-  private async saveEbbinghausReminderSetting(enabled: boolean): Promise<void> {
-    const host = this.getUIContext().getHostContext();
-    if (!host) return;
-    const prefs: Preferences | undefined = await Promise.resolve()
-      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
-      .then((p: Preferences): Preferences => p, (): undefined => undefined);
-    if (!prefs) return;
-    await Promise.resolve()
-      .then((): Promise<void> => prefs.put('ebbinghausReminder', enabled))
-      .then((): void => undefined, (): void => undefined);
-    await Promise.resolve()
-      .then((): Promise<void> => prefs.flush())
-      .then((): void => undefined, (): void => undefined);
-  }
-
-  private refreshEbbinghausActiveCount(): void {
-    this.ebbinghausActiveCount = EbbinghausReminderManager.getActiveReminderCount();
-  }
-
   private async loadLearningModeSetting(): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
@@ -599,104 +553,6 @@ struct Index {
     }
     this.recentDocIds = next;
     await this.saveRecentDocIds();
-    if (this.ebbinghausReminderEnabled) {
-      await this.refreshRecentDocsSystemNotification();
-    }
-  }
-
-  private getRecentDocsForSystemNotification(maxCount: number): Array<ReferenceDocSummary> {
-    const byId: Map<string, ReferenceDocSummary> = new Map<string, ReferenceDocSummary>();
-    for (let i = 0; i < this.docs.length; i++) {
-      const doc = this.docs[i];
-      byId.set(doc.id, doc);
-    }
-    for (let i = 0; i < this.onlineMdDocs.length; i++) {
-      const doc = this.onlineMdDocs[i];
-      byId.set(doc.id, doc);
-    }
-
-    const result: Array<ReferenceDocSummary> = [];
-    for (let i = 0; i < this.recentDocIds.length; i++) {
-      if (result.length >= maxCount) break;
-      const id: string = this.recentDocIds[i];
-      const doc = byId.get(id);
-      if (doc) result.push(doc);
-    }
-    return result;
-  }
-
-  private async refreshRecentDocsSystemNotification(): Promise<void> {
-    const recentDocs: Array<ReferenceDocSummary> = this.getRecentDocsForSystemNotification(3);
-    await EbbinghausReminderManager.publishRecentDocsNotification(this.lang, recentDocs);
-  }
-
-  private async toggleEbbinghausReminder(enabled: boolean): Promise<void> {
-    if (this.ebbinghausReminderEnabled === enabled) return;
-
-    const host = this.getUIContext().getHostContext() as common.UIAbilityContext;
-    if (!host) return;
-
-    if (enabled) {
-      // 检查通知权限
-      const isNotificationEnabled: boolean = await EbbinghausReminderManager.isNotificationEnabled();
-      if (!isNotificationEnabled) {
-        // 请求用户开启通知权限
-        await EbbinghausReminderManager.requestEnableNotification(host);
-        const enabledAfterRequest: boolean = await EbbinghausReminderManager.isNotificationEnabled();
-        if (!enabledAfterRequest) {
-          this.errorText = this.t(
-            '未开启通知权限，无法启用复习提醒。请在系统设置中为本应用开启通知权限。',
-            'Notifications are disabled. Please enable notifications for this app in system settings.',
-          );
-          return;
-        }
-      }
-      this.errorText = '';
-      this.ebbinghausReminderEnabled = enabled;
-      await this.saveEbbinghausReminderSetting(enabled);
-      await EbbinghausReminderManager.cancelAllReminders(host);
-      const ids: number[] = await EbbinghausReminderManager.publishReminders(host, this.lang, this.ebbinghausDebugMode);
-      if (ids.length === 0) {
-        const reason: string = EbbinghausReminderManager.getLastReminderPublishErrorText();
-        this.errorText = this.t(
-          `提醒发布失败${reason ? `（${reason}）` : ''}。请检查：系统通知是否已开启、是否限制后台活动。`,
-          `Failed to publish reminders${reason ? ` (${reason})` : ''}. Please check notification settings and background restrictions.`,
-        );
-        return;
-      }
-      // 提示用户当前使用的是系统级提醒还是本地定时器
-      if (!EbbinghausReminderManager.isUsingSystemReminder()) {
-        this.errorText = this.t(
-          '已降级为本地定时器模式：应用被杀死后将无法触发通知。',
-          'Degraded to local timer mode: notifications will not trigger if the app is killed.',
-        );
-      } else {
-        this.errorText = '';
-      }
-      await this.refreshRecentDocsSystemNotification();
-    } else {
-      this.ebbinghausReminderEnabled = enabled;
-      await this.saveEbbinghausReminderSetting(enabled);
-      await EbbinghausReminderManager.cancelAllReminders(host);
-      await EbbinghausReminderManager.cancelRecentDocsNotification();
-    }
-    await EbbinghausReminderManager.syncActiveReminders(host);
-    this.refreshEbbinghausActiveCount();
-  }
-
-  private async toggleEbbinghausDebugMode(enabled: boolean): Promise<void> {
-    if (this.ebbinghausDebugMode === enabled) return;
-    this.ebbinghausDebugMode = enabled;
-
-    // 如果提醒功能已开启，需要重新发布提醒
-    if (this.ebbinghausReminderEnabled) {
-      const host = this.getUIContext().getHostContext();
-      if (!host) return;
-      await EbbinghausReminderManager.cancelAllReminders(host);
-      await EbbinghausReminderManager.publishReminders(host, this.lang, enabled);
-      await EbbinghausReminderManager.syncActiveReminders(host);
-      this.refreshEbbinghausActiveCount();
-    }
   }
 
   private async ensureRepository(): Promise<ReferenceRepository | undefined> {
@@ -1141,7 +997,6 @@ struct Index {
     await this.loadThemeSetting();
     await this.loadLangSetting();
     await this.loadOrientationModeSetting();
-    await this.loadEbbinghausReminderSetting();
     await this.loadLearningModeSetting();
     await this.loadFavoriteAndRecentDocs();
     await this.loadManifest(!skipAutoOpenFirst);
@@ -2182,77 +2037,6 @@ struct Index {
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.SpaceBetween)
         .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
-      }
-      .width('100%')
-      .backgroundColor(this.theme.surfaceBackgroundColor)
-      .borderRadius(this.fontSize * 0.8)
-      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
-
-      Column({ space: 0 }) {
-        Row() {
-          Column({ space: this.fontSize * 0.2 }) {
-            Text(this.t('艾宾浩斯记忆提醒', 'Ebbinghaus Memory Reminder'))
-              .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.95);
-            Text(EbbinghausReminderManager.getIntervalDescription(this.lang, this.ebbinghausDebugMode))
-              .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.75)
-              .opacity(0.7);
-          }
-          .layoutWeight(1)
-          .alignItems(HorizontalAlign.Start);
-
-          Toggle({ type: ToggleType.Switch, isOn: this.ebbinghausReminderEnabled })
-            .selectedColor(this.theme.accentColor)
-            .onChange((isOn: boolean) => this.toggleEbbinghausReminder(isOn));
-        }
-        .width('100%')
-        .alignItems(VerticalAlign.Center)
-        .justifyContent(FlexAlign.SpaceBetween)
-        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
-
-        if (this.ebbinghausReminderEnabled) {
-          Divider()
-            .color(this.theme.borderColor)
-            .strokeWidth(this.fontSize * 0.07);
-
-          Column({ space: this.fontSize * 0.3 }) {
-            Text(this.t(
-              `当前活跃提醒：${this.ebbinghausActiveCount} 个`,
-              `Active reminders: ${this.ebbinghausActiveCount}`
-            ))
-              .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.85);
-            Text(this.t(
-              '开启后将在学习后的关键时间点发送通知，帮助您根据记忆曲线进行复习。',
-              'When enabled, notifications will be sent at key time points after learning to help you review according to the memory curve.'
-            ))
-              .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.8)
-              .opacity(0.7);
-
-            Divider()
-              .color(this.theme.borderColor)
-              .strokeWidth(this.fontSize * 0.07)
-              .margin({ top: this.fontSize * 0.3 });
-
-            Row() {
-              Text(this.t('调试模式（每20秒通知）', 'Debug Mode (notify every 20s)'))
-                .fontColor(this.ebbinghausDebugMode ? this.theme.accentColor : this.theme.mutedTextColor)
-                .fontSize(this.fontSize * 0.85);
-              Toggle({ type: ToggleType.Switch, isOn: this.ebbinghausDebugMode })
-                .selectedColor(this.theme.accentColor)
-                .onChange((isOn: boolean) => this.toggleEbbinghausDebugMode(isOn));
-            }
-            .width('100%')
-            .alignItems(VerticalAlign.Center)
-            .justifyContent(FlexAlign.SpaceBetween)
-            .margin({ top: this.fontSize * 0.3 });
-          }
-          .width('100%')
-          .alignItems(HorizontalAlign.Start)
-          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.5, bottom: this.fontSize * 0.7 });
-        }
       }
       .width('100%')
       .backgroundColor(this.theme.surfaceBackgroundColor)
