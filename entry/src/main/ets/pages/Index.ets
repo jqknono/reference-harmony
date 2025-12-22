@@ -7,6 +7,7 @@ import type { AppThemeId, AppThemeTokens } from '../common/appTheme';
 import { decodeIfEncoded } from '../common/encodedContent';
 import { ReferenceCard } from '../components/ReferenceCard';
 import { openExternalLink } from '../common/openExternalLink';
+import { EbbinghausReminderManager } from '../common/ebinghausReminder';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
@@ -56,6 +57,8 @@ struct Index {
   @State private fontSize: number = 15;
   @State private orientationMode: 'portrait' | 'landscape' | 'auto' = 'portrait';
   @State private isLandscape: boolean = false;
+  @State private ebbinghausReminderEnabled: boolean = false;
+  @State private ebbinghausActiveCount: number = 0;
 
   private lengthToNumber(value: Length): number {
     if (typeof value === 'number') return value;
@@ -375,6 +378,59 @@ struct Index {
     await this.saveOrientationModeSetting(next);
   }
 
+  private async loadEbbinghausReminderSetting(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) {
+      this.ebbinghausReminderEnabled = false;
+      return;
+    }
+    const saved: boolean = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get('ebbinghausReminder', false))
+      .then(
+        (value: ValueType): boolean => value === true || value === 'true',
+        (): boolean => false,
+      );
+    this.ebbinghausReminderEnabled = saved;
+    this.refreshEbbinghausActiveCount();
+  }
+
+  private async saveEbbinghausReminderSetting(enabled: boolean): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put('ebbinghausReminder', enabled))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  private refreshEbbinghausActiveCount(): void {
+    this.ebbinghausActiveCount = EbbinghausReminderManager.getActiveReminderCount();
+  }
+
+  private async toggleEbbinghausReminder(enabled: boolean): Promise<void> {
+    if (this.ebbinghausReminderEnabled === enabled) return;
+    this.ebbinghausReminderEnabled = enabled;
+    await this.saveEbbinghausReminderSetting(enabled);
+
+    if (enabled) {
+      await EbbinghausReminderManager.cancelAllReminders();
+      await EbbinghausReminderManager.publishReminders(this.lang);
+    } else {
+      await EbbinghausReminderManager.cancelAllReminders();
+    }
+    this.refreshEbbinghausActiveCount();
+  }
+
   private async ensureRepository(): Promise<ReferenceRepository | undefined> {
     if (this.repository) {
       return this.repository;
@@ -676,6 +732,7 @@ struct Index {
     await this.loadLangSetting();
     await this.loadOrientationModeSetting();
     this.applyOrientationModeSetting(this.orientationMode);
+    await this.loadEbbinghausReminderSetting();
     await this.loadManifest();
     await this.loadManifestCounts();
   }
@@ -1205,6 +1262,59 @@ struct Index {
         .alignItems(VerticalAlign.Center)
         .justifyContent(FlexAlign.SpaceBetween)
         .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
+      }
+      .width('100%')
+      .backgroundColor(this.theme.surfaceBackgroundColor)
+      .borderRadius(this.fontSize * 0.8)
+      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+
+      Column({ space: 0 }) {
+        Row() {
+          Column({ space: this.fontSize * 0.2 }) {
+            Text(this.t('艾宾浩斯记忆提醒', 'Ebbinghaus Memory Reminder'))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 1);
+            Text(EbbinghausReminderManager.getIntervalDescription(this.lang))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.7)
+              .opacity(0.7);
+          }
+          .layoutWeight(1)
+          .alignItems(HorizontalAlign.Start);
+
+          Toggle({ type: ToggleType.Switch, isOn: this.ebbinghausReminderEnabled })
+            .selectedColor(this.theme.accentColor)
+            .onChange((isOn: boolean) => this.toggleEbbinghausReminder(isOn));
+        }
+        .width('100%')
+        .alignItems(VerticalAlign.Center)
+        .justifyContent(FlexAlign.SpaceBetween)
+        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
+
+        if (this.ebbinghausReminderEnabled) {
+          Divider()
+            .color(this.theme.borderColor)
+            .strokeWidth(this.fontSize * 0.07);
+
+          Column({ space: this.fontSize * 0.3 }) {
+            Text(this.t(
+              `当前活跃提醒：${this.ebbinghausActiveCount} 个`,
+              `Active reminders: ${this.ebbinghausActiveCount}`
+            ))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.8);
+            Text(this.t(
+              '开启后将在学习后的关键时间点发送通知，帮助您根据记忆曲线进行复习。',
+              'When enabled, notifications will be sent at key time points after learning to help you review according to the memory curve.'
+            ))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.75)
+              .opacity(0.7);
+          }
+          .width('100%')
+          .alignItems(HorizontalAlign.Start)
+          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.5, bottom: this.fontSize * 0.7 });
+        }
       }
       .width('100%')
       .backgroundColor(this.theme.surfaceBackgroundColor)
