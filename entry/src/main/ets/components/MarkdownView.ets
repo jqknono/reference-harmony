@@ -29,11 +29,18 @@ interface MarkdownCodeBlock {
   code: string;
 }
 
+type MarkdownListRehypeStyle = 'default' | 'none' | 'arrow' | 'timeline';
+
 interface MarkdownListBlock {
   kind: 'list';
   ordered: boolean;
   items: Array<Array<MarkdownInlineToken>>;
+  rehypeClassNames?: Array<string>;
+  rehypeStyle?: MarkdownListRehypeStyle;
+  rehypeColumns?: Array<Array<Array<MarkdownInlineToken>>>;
 }
+
+type MarkdownTableRehypeStyle = 'default' | 'style-list' | 'style-list-arrow';
 
 interface MarkdownTableBlock {
   kind: 'table';
@@ -41,6 +48,11 @@ interface MarkdownTableBlock {
   header: Array<Array<MarkdownInlineToken>>;
   rows: Array<Array<Array<MarkdownInlineToken>>>;
   columnWidths: Array<number>;
+  rehypeClassNames?: Array<string>;
+  rehypeStyle?: MarkdownTableRehypeStyle;
+  rehypeShowHeader?: boolean;
+  rehypeLeftAlign?: boolean;
+  rehypeWrapText?: boolean;
 }
 
 type MarkdownBlock = MarkdownParagraphBlock | MarkdownHeadingBlock | MarkdownCodeBlock | MarkdownListBlock | MarkdownTableBlock;
@@ -54,6 +66,127 @@ interface ListMarkerMatch {
 
 function normalizeNewlines(input: string): string {
   return input.split('\r\n').join('\n').split('\r').join('\n');
+}
+
+function isRehypeIgnoreStartLine(trimmedLine: string): boolean {
+  return /^<!--\s*rehype:ignore:start\s*-->$/.test(trimmedLine);
+}
+
+function isRehypeIgnoreEndLine(trimmedLine: string): boolean {
+  return /^<!--\s*rehype:ignore:end\s*-->$/.test(trimmedLine);
+}
+
+interface RehypeDirective {
+  classNames: Array<string>;
+}
+
+function mergeUniqueStrings(a: Array<string> | undefined, b: Array<string>): Array<string> {
+  const out: Array<string> = (a ?? []).slice(0);
+  for (let i = 0; i < b.length; i++) {
+    const v = b[i];
+    if (!v) continue;
+    if (out.indexOf(v) >= 0) continue;
+    out.push(v);
+  }
+  return out;
+}
+
+function parseRehypeDirective(trimmedLine: string): RehypeDirective | undefined {
+  const m = /^<!--\s*rehype:([\s\S]*?)-->$/.exec(trimmedLine);
+  if (!m) return undefined;
+  const payload = String(m[1] ?? '').trim();
+  if (!payload) return { classNames: [] };
+
+  const parts = payload.split('&').map((s: string): string => s.trim()).filter(Boolean);
+  const classNames: Array<string> = [];
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    const eq = part.indexOf('=');
+    const key = (eq >= 0 ? part.slice(0, eq) : part).trim();
+    const value = (eq >= 0 ? part.slice(eq + 1) : '').trim();
+    if (key === 'className' || key === 'class') {
+      const pieces = value.split(/\s+/).map((s: string): string => s.trim()).filter(Boolean);
+      for (let j = 0; j < pieces.length; j++) {
+        classNames.push(pieces[j]);
+      }
+    }
+  }
+  return { classNames };
+}
+
+type RehypeTargetKind = 'list' | 'table' | 'any';
+
+function rehypeTargetKindFromClassNames(classNames: Array<string>): RehypeTargetKind {
+  for (let i = 0; i < classNames.length; i++) {
+    const c = classNames[i];
+    if (!c) continue;
+    if (c === 'style-none' || c === 'style-arrow' || c === 'style-timeline' || c.startsWith('cols-')) return 'list';
+    if (c === 'style-list' || c === 'style-list-arrow' || c === 'show-header' || c === 'left-align' || c === 'wrap-text' || c === 'auto-wrap'
+      || c === 'shortcuts' || c === 'shortcuts-last') return 'table';
+  }
+  return 'any';
+}
+
+function finalizeListBlockRehype(block: MarkdownListBlock): void {
+  const classNames = block.rehypeClassNames ?? [];
+  if (hasClassName(classNames, 'style-none')) {
+    block.rehypeStyle = 'none';
+  } else if (hasClassName(classNames, 'style-arrow')) {
+    block.rehypeStyle = 'arrow';
+  } else if (hasClassName(classNames, 'style-timeline')) {
+    block.rehypeStyle = 'timeline';
+  } else {
+    block.rehypeStyle = 'default';
+  }
+
+  const cols = Math.max(1, parseColsFromClassNames(classNames));
+  const items = block.items ?? [];
+  const columns: Array<Array<Array<MarkdownInlineToken>>> = [];
+  for (let c = 0; c < cols; c++) columns.push([]);
+  const perCol = Math.max(1, Math.ceil(items.length / cols));
+  for (let itemIndex = 0; itemIndex < items.length; itemIndex++) {
+    const colIndex = Math.min(cols - 1, Math.floor(itemIndex / perCol));
+    columns[colIndex].push(items[itemIndex]);
+  }
+  block.rehypeColumns = columns;
+}
+
+function finalizeTableBlockRehype(block: MarkdownTableBlock, fontSize: number, maxTableColumnWidth: number): void {
+  const classNames = block.rehypeClassNames ?? [];
+  block.rehypeShowHeader = hasClassName(classNames, 'show-header');
+  block.rehypeLeftAlign = hasClassName(classNames, 'left-align');
+  block.rehypeWrapText = hasClassName(classNames, 'wrap-text') || hasClassName(classNames, 'auto-wrap');
+
+  if (hasClassName(classNames, 'style-list-arrow')) {
+    block.rehypeStyle = 'style-list-arrow';
+  } else if (hasClassName(classNames, 'style-list')) {
+    block.rehypeStyle = 'style-list';
+  } else {
+    block.rehypeStyle = 'default';
+  }
+
+  if (hasClassName(classNames, 'auto-wrap')) {
+    block.columnWidths = computeColumnWidths(block.header, block.rows, fontSize, Math.max(fontSize * 12, maxTableColumnWidth * 0.6));
+  }
+}
+
+function applyRehypeClassNamesToBlock(
+  block: MarkdownBlock,
+  classNames: Array<string>,
+  fontSize: number,
+  maxTableColumnWidth: number
+): void {
+  if (!classNames.length) return;
+  if (block.kind === 'list') {
+    block.rehypeClassNames = mergeUniqueStrings(block.rehypeClassNames, classNames);
+    finalizeListBlockRehype(block);
+    return;
+  }
+  if (block.kind === 'table') {
+    block.rehypeClassNames = mergeUniqueStrings(block.rehypeClassNames, classNames);
+    finalizeTableBlockRehype(block, fontSize, maxTableColumnWidth);
+    return;
+  }
 }
 
 function parseListMarker(trimmedLine: string): ListMarkerMatch | null {
@@ -416,13 +549,63 @@ function stripHtmlComments(lines: Array<string>): Array<string> {
 
 function parseBlocks(markdown: string, fontSize: number, maxTableColumnWidth: number): Array<MarkdownBlock> {
   const text = normalizeNewlines(markdown);
-  const rawLines = stripHtmlComments(text.split('\n'));
+  const rawLines = text.split('\n');
   const blocks: Array<MarkdownBlock> = [];
+
+  let pendingRehypeClassNames: Array<string> = [];
+  let rehypeIgnoreDepth = 0;
+  let inHtmlComment = false;
 
   let i = 0;
   while (i < rawLines.length) {
     const line = rawLines[i];
     const trimmed = line.trim();
+
+    if (inHtmlComment) {
+      if (trimmed.indexOf('-->') >= 0) {
+        inHtmlComment = false;
+      }
+      i += 1;
+      continue;
+    }
+
+    if (trimmed) {
+      if (isRehypeIgnoreStartLine(trimmed)) {
+        rehypeIgnoreDepth += 1;
+        i += 1;
+        continue;
+      }
+      if (isRehypeIgnoreEndLine(trimmed)) {
+        if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth -= 1;
+        i += 1;
+        continue;
+      }
+      if (rehypeIgnoreDepth > 0) {
+        i += 1;
+        continue;
+      }
+
+      if (trimmed.startsWith('<!--')) {
+        const directive = parseRehypeDirective(trimmed);
+        if (directive) {
+          const classNames = directive.classNames ?? [];
+          const targetKind = rehypeTargetKindFromClassNames(classNames);
+          const lastIndex = blocks.length - 1;
+          if (targetKind !== 'any' && lastIndex >= 0 && blocks[lastIndex].kind === targetKind) {
+            applyRehypeClassNamesToBlock(blocks[lastIndex], classNames, fontSize, maxTableColumnWidth);
+          } else {
+            pendingRehypeClassNames = mergeUniqueStrings(pendingRehypeClassNames, classNames);
+          }
+          i += 1;
+          continue;
+        }
+
+        // 非 rehype 的 HTML 注释：跳过（兼容多行注释块）
+        inHtmlComment = trimmed.indexOf('-->') < 0;
+        i += 1;
+        continue;
+      }
+    }
 
     if (!trimmed) {
       i += 1;
@@ -442,7 +625,10 @@ function parseBlocks(markdown: string, fontSize: number, maxTableColumnWidth: nu
         codeLines.push(l);
         i += 1;
       }
-      blocks.push({ kind: 'codeblock', language, code: codeLines.join('\n') });
+      const block: MarkdownCodeBlock = { kind: 'codeblock', language, code: codeLines.join('\n') };
+      // 目前仅对 list/table 处理 rehype className；其它 block 上的指令直接消费掉，避免泄露到后续 block。
+      pendingRehypeClassNames = [];
+      blocks.push(block);
       continue;
     }
 
@@ -454,7 +640,9 @@ function parseBlocks(markdown: string, fontSize: number, maxTableColumnWidth: nu
       const after = trimmed.substring(level);
       if (after.startsWith(' ')) {
         const title = after.trim();
-        blocks.push({ kind: 'heading', level, tokens: parseInlineTokens(title) });
+        const block: MarkdownHeadingBlock = { kind: 'heading', level, tokens: parseInlineTokens(title) };
+        pendingRehypeClassNames = [];
+        blocks.push(block);
         i += 1;
         continue;
       }
@@ -498,7 +686,13 @@ function parseBlocks(markdown: string, fontSize: number, maxTableColumnWidth: nu
         }
 
         const columnWidths = computeColumnWidths(header, rows, fontSize, maxTableColumnWidth);
-        blocks.push({ kind: 'table', aligns, header, rows, columnWidths });
+        const block: MarkdownTableBlock = { kind: 'table', aligns, header, rows, columnWidths };
+        if (pendingRehypeClassNames.length) {
+          applyRehypeClassNamesToBlock(block, pendingRehypeClassNames, fontSize, maxTableColumnWidth);
+        }
+        pendingRehypeClassNames = [];
+        finalizeTableBlockRehype(block, fontSize, maxTableColumnWidth);
+        blocks.push(block);
         continue;
       }
     }
@@ -517,7 +711,13 @@ function parseBlocks(markdown: string, fontSize: number, maxTableColumnWidth: nu
         items.push(parseInlineTokens(itemText));
         i += 1;
       }
-      blocks.push({ kind: 'list', ordered, items });
+      const block: MarkdownListBlock = { kind: 'list', ordered, items };
+      if (pendingRehypeClassNames.length) {
+        applyRehypeClassNamesToBlock(block, pendingRehypeClassNames, fontSize, maxTableColumnWidth);
+      }
+      pendingRehypeClassNames = [];
+      finalizeListBlockRehype(block);
+      blocks.push(block);
       continue;
     }
 
@@ -529,10 +729,13 @@ function parseBlocks(markdown: string, fontSize: number, maxTableColumnWidth: nu
       if (t.startsWith('```')) break;
       if (t.startsWith('#') && t.indexOf(' ') >= 0) break;
       if (parseListMarker(t)) break;
+      if (t.startsWith('<!--')) break;
       paragraphLines.push(l);
       i += 1;
     }
-    blocks.push({ kind: 'paragraph', tokens: parseInlineTokens(paragraphLines.join('\n')) });
+    const block: MarkdownParagraphBlock = { kind: 'paragraph', tokens: parseInlineTokens(paragraphLines.join('\n')) };
+    pendingRehypeClassNames = [];
+    blocks.push(block);
   }
 
   return blocks;
@@ -572,6 +775,23 @@ function tableTextAlignForColumn(aligns: Array<MarkdownCellAlign>, colIndex: num
   if (key === 'center') return TextAlign.Center;
   if (key === 'end') return TextAlign.End;
   return TextAlign.Start;
+}
+
+function hasClassName(classNames: Array<string> | undefined, value: string): boolean {
+  if (!classNames || !value) return false;
+  return classNames.indexOf(value) >= 0;
+}
+
+function parseColsFromClassNames(classNames: Array<string> | undefined): number {
+  if (!classNames) return 1;
+  for (let i = 0; i < classNames.length; i++) {
+    const c = classNames[i];
+    if (!c) continue;
+    if (!c.startsWith('cols-')) continue;
+    const n = Number(c.substring('cols-'.length));
+    if (Number.isFinite(n) && n >= 1) return Math.max(1, Math.min(Math.floor(n), 6));
+  }
+  return 1;
 }
 
 function isCellTokensEmpty(tokens: Array<MarkdownInlineToken>): boolean {
@@ -662,86 +882,207 @@ export function MarkdownView($$: MarkdownViewParams): void {
             hostContext: $$.hostContext,
           });
         } else if (block.kind === 'list') {
-          Column({ space: ($$.fontSize ?? 15) * 0.2 }) {
-            ForEach(block.items, (item: Array<MarkdownInlineToken>, itemIndex: number) => {
-              Row({ space: ($$.fontSize ?? 15) * 0.5 }) {
-                Text(block.ordered ? `${itemIndex + 1}.` : '\u2022')
-                  .fontSize($$.fontSize ?? 15)
-                  .fontColor($$.fontColor ?? 0x222222);
-                MarkdownInlineStyled({
-                  tokens: item,
-                  fontSize: $$.fontSize ?? 15,
-                  color: $$.fontColor ?? 0x222222,
-                  weight: $$.fontWeight ?? FontWeight.Normal,
-                  align: TextAlign.Start,
-                  linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
-                  codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
-                  hostContext: $$.hostContext,
-                });
-              }
-            }, (_: Array<MarkdownInlineToken>, itemIndex: number) => `${index}:${itemIndex}`);
-          }
-        } else if (block.kind === 'table') {
-          Scroll() {
-            Column({ space: 0 }) {
-              if (block.header.length > 0) {
-                Row({ space: 0 }) {
-                  ForEach(block.header, (cell: Array<MarkdownInlineToken>, colIndex: number) => {
-                    Column() {
+          if ((block.rehypeStyle ?? 'default') === 'none') {
+            if ((block.rehypeColumns?.length ?? 0) > 1) {
+              Row({ space: ($$.fontSize ?? 15) * 1 }) {
+                ForEach(block.rehypeColumns ?? [], (colItems: Array<Array<MarkdownInlineToken>>, colIndex: number) => {
+                  Column({ space: ($$.fontSize ?? 15) * 0.25 }) {
+                    ForEach(colItems, (item: Array<MarkdownInlineToken>, itemIndex: number) => {
                       MarkdownInlineStyled({
-                        tokens: cell,
-                        fontSize: $$.fontSize ?? 15,
-                        color: ($$.theme ?? getAppThemeTokens('light')).markdown.headingColor,
-                        weight: FontWeight.Bold,
-                        align: tableTextAlignForColumn(block.aligns, colIndex),
-                        linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
-                        codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
-                        hostContext: $$.hostContext,
-                        maxLines: 1,
-                        overflow: ($$.unboundedTableColumns ?? false) ? TextOverflow.Clip : TextOverflow.Ellipsis,
-                      });
-                    }
-                    .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : ($$.fontSize ?? 15) * 4)
-                    .alignItems(HorizontalAlign.Start)
-                    .padding({ left: ($$.fontSize ?? 15) * 0.5, right: ($$.fontSize ?? 15) * 0.5, top: ($$.fontSize ?? 15) * 0.4, bottom: ($$.fontSize ?? 15) * 0.4 })
-                    .backgroundColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableHeaderBackgroundColor)
-                    .borderWidth(1)
-                    .borderColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableBorderColor);
-                  }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:h:${colIndex}`);
-                }
-              }
-
-              ForEach(block.rows, (row: Array<Array<MarkdownInlineToken>>, rowIndex: number) => {
-                Row({ space: 0 }) {
-                  ForEach(row, (_cell: Array<MarkdownInlineToken>, colIndex: number) => {
-                    Column() {
-                      MarkdownInlineStyled({
-                        tokens: getCellDisplayTokensForLearning(row, colIndex, $$.learningMode ?? false),
+                        tokens: item,
                         fontSize: $$.fontSize ?? 15,
                         color: $$.fontColor ?? 0x222222,
-                        weight: FontWeight.Normal,
-                        align: tableTextAlignForColumn(block.aligns, colIndex),
+                        weight: $$.fontWeight ?? FontWeight.Normal,
+                        align: TextAlign.Start,
                         linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
                         codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
                         hostContext: $$.hostContext,
-                        maxLines: colIndex === 0 ? 1 : (($$.unboundedTableColumns ?? false) ? 1 : 999),
-                        overflow: TextOverflow.Clip,
                       });
-                    }
-                    .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : ($$.fontSize ?? 15) * 4)
-                    .alignItems(HorizontalAlign.Start)
-                    .padding({ left: ($$.fontSize ?? 15) * 0.5, right: ($$.fontSize ?? 15) * 0.5, top: ($$.fontSize ?? 15) * 0.4, bottom: ($$.fontSize ?? 15) * 0.4 })
-                    .backgroundColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableCellBackgroundColor)
-                    .borderWidth(1)
-                    .borderColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableBorderColor);
-                  }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:${rowIndex}:${colIndex}:${$$.learningMode ?? false}`);
-                }
-              }, (_: Array<Array<MarkdownInlineToken>>, rowIndex: number) => `${index}:r:${rowIndex}`);
+                    }, (_: Array<MarkdownInlineToken>, itemIndex: number) => `${index}:none:c${colIndex}:${itemIndex}`);
+                  }
+                  .layoutWeight(1);
+                }, (_: Array<Array<MarkdownInlineToken>>, colIndex: number) => `${index}:none:col:${colIndex}`);
+              }
+              .alignItems(VerticalAlign.Top);
+            } else {
+              Column({ space: ($$.fontSize ?? 15) * 0.25 }) {
+                ForEach(block.items, (item: Array<MarkdownInlineToken>, itemIndex: number) => {
+                  MarkdownInlineStyled({
+                    tokens: item,
+                    fontSize: $$.fontSize ?? 15,
+                    color: $$.fontColor ?? 0x222222,
+                    weight: $$.fontWeight ?? FontWeight.Normal,
+                    align: TextAlign.Start,
+                    linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                    codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                    hostContext: $$.hostContext,
+                  });
+                }, (_: Array<MarkdownInlineToken>, itemIndex: number) => `${index}:none:${itemIndex}`);
+              }
             }
-            .alignItems(HorizontalAlign.Start)
+          } else {
+            if ((block.rehypeColumns?.length ?? 0) > 1) {
+              Row({ space: ($$.fontSize ?? 15) * 1 }) {
+                ForEach(block.rehypeColumns ?? [], (colItems: Array<Array<MarkdownInlineToken>>, colIndex: number) => {
+                  Column({ space: ($$.fontSize ?? 15) * 0.25 }) {
+                    ForEach(colItems, (item: Array<MarkdownInlineToken>, itemIndex: number) => {
+                      Row({ space: ($$.fontSize ?? 15) * 0.5 }) {
+                        Text((block.rehypeStyle ?? 'default') === 'arrow' ? '▶' : (((block.rehypeStyle ?? 'default') === 'timeline') ? '●' : '\u2022'))
+                          .fontSize(($$.fontSize ?? 15) * 0.9)
+                          .fontColor(((block.rehypeStyle ?? 'default') === 'arrow' || (block.rehypeStyle ?? 'default') === 'timeline')
+                            ? ($$.theme ?? getAppThemeTokens('light')).accentColor
+                            : ($$.fontColor ?? 0x222222))
+                          .width(($$.fontSize ?? 15) * 1.4);
+                        MarkdownInlineStyled({
+                          tokens: item,
+                          fontSize: $$.fontSize ?? 15,
+                          color: $$.fontColor ?? 0x222222,
+                          weight: $$.fontWeight ?? FontWeight.Normal,
+                          align: TextAlign.Start,
+                          linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                          codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                          hostContext: $$.hostContext,
+                        });
+                      }
+                    }, (_: Array<MarkdownInlineToken>, itemIndex: number) => `${index}:styled:c${colIndex}:${itemIndex}`);
+                  }
+                  .layoutWeight(1);
+                }, (_: Array<Array<MarkdownInlineToken>>, colIndex: number) => `${index}:styled:col:${colIndex}`);
+              }
+              .alignItems(VerticalAlign.Top);
+            } else {
+              Column({ space: ($$.fontSize ?? 15) * 0.25 }) {
+                ForEach(block.items, (item: Array<MarkdownInlineToken>, itemIndex: number) => {
+                  Row({ space: ($$.fontSize ?? 15) * 0.5 }) {
+                    Text(block.ordered && (block.rehypeStyle ?? 'default') === 'default' ? `${itemIndex + 1}.` : ((block.rehypeStyle ?? 'default') === 'arrow' ? '▶' : (((block.rehypeStyle ?? 'default') === 'timeline') ? '●' : '\u2022')))
+                      .fontSize(block.ordered && (block.rehypeStyle ?? 'default') === 'default' ? ($$.fontSize ?? 15) : (($$.fontSize ?? 15) * 0.9))
+                      .fontColor(((block.rehypeStyle ?? 'default') === 'arrow' || (block.rehypeStyle ?? 'default') === 'timeline')
+                        ? ($$.theme ?? getAppThemeTokens('light')).accentColor
+                        : ($$.fontColor ?? 0x222222))
+                      .width(($$.fontSize ?? 15) * 1.4);
+                    MarkdownInlineStyled({
+                      tokens: item,
+                      fontSize: $$.fontSize ?? 15,
+                      color: $$.fontColor ?? 0x222222,
+                      weight: $$.fontWeight ?? FontWeight.Normal,
+                      align: TextAlign.Start,
+                      linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                      codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                      hostContext: $$.hostContext,
+                    });
+                  }
+                }, (_: Array<MarkdownInlineToken>, itemIndex: number) => `${index}:styled:${itemIndex}:${block.ordered}`);
+              }
+            }
           }
-          .scrollable(ScrollDirection.Horizontal)
-          .scrollBar(BarState.Off);
+        } else if (block.kind === 'table') {
+          if (((block.rehypeStyle ?? 'default') === 'style-list' || (block.rehypeStyle ?? 'default') === 'style-list-arrow')
+            && block.rows.length > 0
+            && (block.rows[0]?.length ?? 0) === 2) {
+            Column({ space: ($$.fontSize ?? 15) * 0.6 }) {
+              ForEach(block.rows, (row: Array<Array<MarkdownInlineToken>>, rowIndex: number) => {
+                Column({ space: ($$.fontSize ?? 15) * 0.35 }) {
+                  Row({ space: ($$.fontSize ?? 15) * 0.45 }) {
+                    if ((block.rehypeStyle ?? 'default') === 'style-list-arrow') {
+                      Text('▶')
+                        .fontSize(($$.fontSize ?? 15) * 0.9)
+                        .fontColor(($$.theme ?? getAppThemeTokens('light')).accentColor);
+                    }
+
+                    MarkdownInlineStyled({
+                      tokens: row[0],
+                      fontSize: $$.fontSize ?? 15,
+                      color: ($$.theme ?? getAppThemeTokens('light')).markdown.headingColor,
+                      weight: FontWeight.Bold,
+                      align: TextAlign.Start,
+                      linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                      codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                      hostContext: $$.hostContext,
+                      maxLines: (block.rehypeWrapText ?? false) ? 999 : 1,
+                    });
+                  }
+
+                  MarkdownInlineStyled({
+                    tokens: row[1],
+                    fontSize: $$.fontSize ?? 15,
+                    color: $$.fontColor ?? 0x222222,
+                    weight: FontWeight.Normal,
+                    align: TextAlign.Start,
+                    linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                    codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                    hostContext: $$.hostContext,
+                  });
+                }
+                .padding(($$.fontSize ?? 15) * 0.7)
+                .backgroundColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableCellBackgroundColor)
+                .borderRadius(($$.fontSize ?? 15) * 0.6)
+                .borderWidth(1)
+                .borderColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableBorderColor);
+              }, (_: Array<Array<MarkdownInlineToken>>, rowIndex: number) => `${index}:listTable:${rowIndex}`);
+            }
+            .width('100%');
+          } else {
+            Scroll() {
+              Column({ space: 0 }) {
+                if ((block.rehypeShowHeader ?? false) && block.header.length > 0) {
+                  Row({ space: 0 }) {
+                    ForEach(block.header, (cell: Array<MarkdownInlineToken>, colIndex: number) => {
+                      Column() {
+                        MarkdownInlineStyled({
+                          tokens: cell,
+                          fontSize: $$.fontSize ?? 15,
+                          color: ($$.theme ?? getAppThemeTokens('light')).markdown.headingColor,
+                          weight: FontWeight.Bold,
+                          align: ((block.rehypeLeftAlign ?? false) && colIndex === block.header.length - 1) ? TextAlign.Start : tableTextAlignForColumn(block.aligns, colIndex),
+                          linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                          codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                          hostContext: $$.hostContext,
+                          maxLines: (block.rehypeWrapText ?? false) ? 999 : 1,
+                          overflow: ($$.unboundedTableColumns ?? false) ? TextOverflow.Clip : TextOverflow.Ellipsis,
+                        });
+                      }
+                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : ($$.fontSize ?? 15) * 4)
+                      .alignItems(HorizontalAlign.Start)
+                      .padding({ left: ($$.fontSize ?? 15) * 0.5, right: ($$.fontSize ?? 15) * 0.5, top: ($$.fontSize ?? 15) * 0.4, bottom: ($$.fontSize ?? 15) * 0.4 })
+                      .backgroundColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableHeaderBackgroundColor)
+                      .borderWidth(1)
+                      .borderColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableBorderColor);
+                    }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:h:${colIndex}`);
+                  }
+                }
+
+                ForEach(block.rows, (row: Array<Array<MarkdownInlineToken>>, rowIndex: number) => {
+                  Row({ space: 0 }) {
+                    ForEach(row, (_cell: Array<MarkdownInlineToken>, colIndex: number) => {
+                      Column() {
+                        MarkdownInlineStyled({
+                          tokens: getCellDisplayTokensForLearning(row, colIndex, $$.learningMode ?? false),
+                          fontSize: $$.fontSize ?? 15,
+                          color: $$.fontColor ?? 0x222222,
+                          weight: FontWeight.Normal,
+                          align: ((block.rehypeLeftAlign ?? false) && colIndex === row.length - 1) ? TextAlign.Start : tableTextAlignForColumn(block.aligns, colIndex),
+                          linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                          codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                          hostContext: $$.hostContext,
+                          maxLines: (block.rehypeWrapText ?? false) ? 999 : (colIndex === 0 ? 1 : (($$.unboundedTableColumns ?? false) ? 1 : 999)),
+                          overflow: TextOverflow.Clip,
+                        });
+                      }
+                      .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : ($$.fontSize ?? 15) * 4)
+                      .alignItems(HorizontalAlign.Start)
+                      .padding({ left: ($$.fontSize ?? 15) * 0.5, right: ($$.fontSize ?? 15) * 0.5, top: ($$.fontSize ?? 15) * 0.4, bottom: ($$.fontSize ?? 15) * 0.4 })
+                      .backgroundColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableCellBackgroundColor)
+                      .borderWidth(1)
+                      .borderColor(($$.theme ?? getAppThemeTokens('light')).markdown.tableBorderColor);
+                    }, (_: Array<MarkdownInlineToken>, colIndex: number) => `${index}:${rowIndex}:${colIndex}:${$$.learningMode ?? false}`);
+                  }
+                }, (_: Array<Array<MarkdownInlineToken>>, rowIndex: number) => `${index}:r:${rowIndex}`);
+              }
+              .alignItems(HorizontalAlign.Start)
+            }
+            .scrollable(ScrollDirection.Horizontal)
+            .scrollBar(BarState.Off);
+          }
         } else {
           MarkdownInlineStyled({
             tokens: block.tokens,
