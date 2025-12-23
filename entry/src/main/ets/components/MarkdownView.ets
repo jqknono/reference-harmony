@@ -267,10 +267,11 @@ function computeColumnWidths(
   const maxW = maxColumnWidth > 0 ? maxColumnWidth : 0;
   for (let c = 0; c < colCount; c++) {
     const estimated = maxContentWidths[c] + cellPaddingLR;
-    // 每个字符约 8px 宽度（中文约 14px），加上 padding 16px
-    // 短内容：最小 50px
-    // 中等内容：按字符数计算
-    // 长内容：最大 400px，让内容换行
+    // 第一列通常是“键/名称”，在清单表格中要求不换行，因此列宽按内容自适应（允许横向滚动）
+    if (c === 0) {
+      widths.push(estimated);
+      continue;
+    }
     widths.push(maxW > 0 && estimated > maxW ? maxW : estimated);
   }
 
@@ -723,7 +724,7 @@ export function MarkdownView($$: MarkdownViewParams): void {
                         linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
                         codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
                         hostContext: $$.hostContext,
-                        maxLines: ($$.unboundedTableColumns ?? false) ? 1 : 999,
+                        maxLines: colIndex === 0 ? 1 : (($$.unboundedTableColumns ?? false) ? 1 : 999),
                         overflow: TextOverflow.Clip,
                       });
                     }

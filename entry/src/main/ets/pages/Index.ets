@@ -1,51 +1,32 @@
 import preferences from '@ohos.data.preferences';
 import pasteboard from '@ohos.pasteboard';
+import picker from '@ohos.file.picker';
 import { window } from '@kit.ArkUI';
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
 import { getAppThemeTokens } from '../common/appTheme';
 import type { AppThemeId, AppThemeTokens } from '../common/appTheme';
-import { decodeIfEncoded } from '../common/encodedContent';
-import { ReferenceCard } from '../components/ReferenceCard';
-import { openExternalLink } from '../common/openExternalLink';
-import type { QuizQuestion, QuizAnswer, QuizSession, QuizRecord, QuizOption } from '../common/quizModels';
+import type { QuizQuestion, QuizAnswer, QuizSession, QuizRecord } from '../common/quizModels';
 import { generateQuizSessionId } from '../common/quizModels';
 import { extractQuestionsFromDoc, selectRandomQuestions, calculateScore } from '../common/quizUtils';
 import { QuizRepository } from '../common/quizRepository';
 import { OnlineMdRepository } from '../common/onlineMdRepository';
+import { LocalMdRepository } from '../common/localMdRepository';
 import type { OnlineMdLink } from '../common/onlineMdModels';
 import { peekLaunchParams, takeLaunchParams } from '../common/launchParamsStore';
 import type { LaunchParams } from '../common/launchParamsStore';
 
+import type { SectionWithCards } from './index/types';
+import { DEFAULT_ONLINE_MD_LINK_ID, DEFAULT_ONLINE_MD_URL, DEFAULT_ONLINE_MD_NAME, LAUNCH_ACTION_OPEN_RECENT_DOCS, RECENT_DOC_MAX_COUNT } from './index/constants';
+import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens } from './index/utils';
+import { DocListTab } from './index/DocListTab';
+import { ReadTab } from './index/ReadTab';
+import { QuizTab } from './index/QuizTab';
+import { SettingsTab } from './index/SettingsTab';
+import { TocPanel } from './index/TocPanel';
+
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
-
-interface SectionWithCards {
-  section: ReferenceSection;
-  cards: Array<ReferenceCardData>;
-}
-
-interface CardMargin {
-  left: number;
-  right: number;
-  top: number;
-  bottom: number;
-}
-
-function makeCardMargin(fontSize: number): CardMargin {
-  const margin: CardMargin = {
-    left: fontSize * 1,
-    right: fontSize * 1,
-    top: fontSize * 0.5,
-    bottom: fontSize * 0.5
-  };
-  return margin;
-}
-
-const DEFAULT_ONLINE_MD_LINK_ID: string = 'online_default_quickreference';
-const DEFAULT_ONLINE_MD_URL: string = 'https://reference.jqknono.com/mds/zh/quickreference.md';
-const DEFAULT_ONLINE_MD_NAME: string = 'Quick Reference 备忘清单';
-const LAUNCH_ACTION_OPEN_RECENT_DOCS: string = 'openRecentDocs';
 
 @Entry
 @Component
@@ -78,7 +59,6 @@ struct Index {
 
   private tabsController: TabsController = new TabsController();
   private listScroller: ListScroller = new ListScroller();
-  private sectionNavScroller: Scroller = new Scroller();
   private listSearchScroller: ListScroller = new ListScroller();
   private listSectionNavScroller: Scroller = new Scroller();
   private listCardNavScroller: Scroller = new Scroller();
@@ -115,16 +95,19 @@ struct Index {
   private onlineMdDocCache: Map<string, ReferenceDoc> = new Map<string, ReferenceDoc>();
   private onlineMdCopyTimer: number = -1;
 
+  // 本地 MD 相关状态
+  @State private localMdLinks: Array<OnlineMdLink> = [];
+  @State private localMdImporting: boolean = false;
+  @State private localMdImportResult: string = '';
+  @State private localMdDocs: Array<ReferenceDocSummary> = [];
+  @State private localMdCopySuccess: boolean = false;
+  private localMdRepository: LocalMdRepository = new LocalMdRepository();
+  private localMdDocCache: Map<string, ReferenceDoc> = new Map<string, ReferenceDoc>();
+  private localMdCopyTimer: number = -1;
+
   // 收藏与最近阅读
   @State private favoriteDocIds: Array<string> = [];
   @State private recentDocIds: Array<string> = [];
-  private readonly RECENT_DOC_MAX_COUNT: number = 5;
-
-  private lengthToNumber(value: Length): number {
-    if (typeof value === 'number') return value;
-    const parsed: number = Number.parseFloat(String(value));
-    return Number.isFinite(parsed) ? parsed : 0;
-  }
 
   private stopAllTextInputEditing(): void {
     this.catalogSearchInputController.stopEditing();
@@ -142,13 +125,14 @@ struct Index {
     if (docId.length > 0) {
       if (this.isOnlineDoc(docId)) {
         await this.openOnlineDoc(docId);
+      } else if (this.isLocalDoc(docId)) {
+        await this.openLocalDoc(docId);
       } else {
         await this.openDoc(docId, true);
       }
       return;
     }
 
-    // 仅打开 App：回到目录页（最近阅读会在目录中分组展示）
     this.currentTabIndex = 0;
     if (!this.isLandscape) {
       this.tabsController.changeIndex(0);
@@ -159,23 +143,9 @@ struct Index {
     return this.isLandscape ? this.fontSize * 1.5 : 0;
   }
 
-  private tabPadding(): Padding {
-    const base: number = this.fontSize * 1;
-    return this.isLandscape
-      ? { left: base, right: base, top: base, bottom: 0 }
-      : { left: base, right: base, top: base, bottom: base };
-  }
-
-  private toHexColorString(color: number): string {
-    const value: number = color >>> 0;
-    const hex: string = value.toString(16);
-    const normalized: string = (hex.length <= 6 ? hex.padStart(6, '0') : hex.padStart(8, '0'));
-    return `#${normalized}`;
-  }
-
   private updateLandscapeFromArea(area: Area): void {
-    const width: number = this.lengthToNumber(area.width);
-    const height: number = this.lengthToNumber(area.height);
+    const width: number = lengthToNumber(area.width);
+    const height: number = lengthToNumber(area.height);
     const next: boolean = height > 0 && width > height;
     if (this.isLandscape !== next) {
       this.isLandscape = next;
@@ -184,118 +154,6 @@ struct Index {
 
   private t(zh: string, en: string): string {
     return this.lang === 'en' ? en : zh;
-  }
-
-  private iconKey(docId: string, icon: string | undefined): string {
-    if (!icon) return docId;
-    const trimmed = icon.trim();
-    if (!trimmed) return docId;
-    if (trimmed.startsWith('data:')) return docId;
-    return `${docId}:${trimmed}`;
-  }
-
-  private hasIconError(iconKey: string): boolean {
-    if (!iconKey) return false;
-    return this.iconErrorKeys.indexOf(iconKey) >= 0;
-  }
-
-  private markIconError(iconKey: string): void {
-    if (!iconKey) return;
-    if (this.hasIconError(iconKey)) return;
-    const next: Array<string> = this.iconErrorKeys.slice();
-    next.push(iconKey);
-    this.iconErrorKeys = next;
-  }
-
-  private isRemoteIcon(icon: string | undefined): boolean {
-    const s: string = (icon ?? '').trim().toLowerCase();
-    return s.startsWith('http://') || s.startsWith('https://');
-  }
-
-  private trimmedIcon(icon: string | undefined): string {
-    return (icon ?? '').trim();
-  }
-
-  private isRawfileIcon(icon: string | undefined): boolean {
-    const s = this.trimmedIcon(icon);
-    return s.startsWith('reference/');
-  }
-
-  private isSvgIcon(icon: string | undefined): boolean {
-    const s: string = this.trimmedIcon(icon).toLowerCase();
-    return s.endsWith('.svg');
-  }
-
-  private canShowLocalIcon(docId: string, icon: string | undefined): boolean {
-    const s = this.trimmedIcon(icon);
-    if (!s) return false;
-    if (this.isRemoteIcon(s)) return false;
-    return !this.hasIconError(this.iconKey(docId, s));
-  }
-
-  private getAvatarText(label: string): string {
-    const trimmed: string = (label ?? '').trim();
-    if (!trimmed) return '?';
-    const chars: Array<string> = Array.from(trimmed);
-    let picked: string = chars[0] ?? '?';
-    if (picked === '.' && chars.length > 1) {
-      picked = chars[1];
-    }
-    return picked.toUpperCase();
-  }
-
-  @Builder
-  private DocAvatar(docId: string, label: string, icon: string | undefined, size: number, radius: number): void {
-    if (this.canShowLocalIcon(docId, icon)) {
-      if (this.isRawfileIcon(icon)) {
-        if (this.isSvgIcon(icon)) {
-          ForEach([this.iconKey(docId, this.trimmedIcon(icon))], (_: string) => {
-            Image($rawfile(this.trimmedIcon(icon)))
-              .width(size)
-              .height(size)
-              .syncLoad(true)
-              .fillColor(this.theme.avatarTextColor)
-              .onError(() => this.markIconError(this.iconKey(docId, this.trimmedIcon(icon))));
-          }, (k: string) => k);
-        } else {
-          ForEach([this.iconKey(docId, this.trimmedIcon(icon))], (_: string) => {
-            Image($rawfile(this.trimmedIcon(icon)))
-              .width(size)
-              .height(size)
-              .syncLoad(true)
-              .onError(() => this.markIconError(this.iconKey(docId, this.trimmedIcon(icon))));
-          }, (k: string) => k);
-        }
-      } else {
-        if (this.isSvgIcon(icon)) {
-          ForEach([this.iconKey(docId, this.trimmedIcon(icon))], (_: string) => {
-            Image(this.trimmedIcon(icon))
-              .width(size)
-              .height(size)
-              .syncLoad(true)
-              .fillColor(this.theme.avatarTextColor)
-              .onError(() => this.markIconError(this.iconKey(docId, this.trimmedIcon(icon))));
-          }, (k: string) => k);
-        } else {
-          ForEach([this.iconKey(docId, this.trimmedIcon(icon))], (_: string) => {
-            Image(this.trimmedIcon(icon))
-              .width(size)
-              .height(size)
-              .syncLoad(true)
-              .onError(() => this.markIconError(this.iconKey(docId, this.trimmedIcon(icon))));
-          }, (k: string) => k);
-        }
-      }
-    } else {
-      Text(this.getAvatarText(label))
-        .width(size)
-        .height(size)
-        .textAlign(TextAlign.Center)
-        .fontSize(Math.floor(size * 0.4))
-        .fontColor(this.theme.avatarTextColor)
-        .backgroundColor(this.theme.avatarBackgroundColor)
-        .borderRadius(radius);
-    }
   }
 
   private async loadThemeSetting(): Promise<void> {
@@ -525,10 +383,6 @@ struct Index {
       .then((): void => undefined, (): void => undefined);
   }
 
-  private isDocFavorite(docId: string): boolean {
-    return this.favoriteDocIds.indexOf(docId) >= 0;
-  }
-
   private async toggleDocFavorite(docId: string): Promise<void> {
     const index = this.favoriteDocIds.indexOf(docId);
     if (index >= 0) {
@@ -541,15 +395,11 @@ struct Index {
     await this.saveFavoriteDocIds();
   }
 
-  private isDocRecent(docId: string): boolean {
-    return this.recentDocIds.indexOf(docId) >= 0;
-  }
-
   private async addToRecentDocs(docId: string): Promise<void> {
     const next = this.recentDocIds.filter((id: string): boolean => id !== docId);
     next.unshift(docId);
-    if (next.length > this.RECENT_DOC_MAX_COUNT) {
-      next.splice(this.RECENT_DOC_MAX_COUNT);
+    if (next.length > RECENT_DOC_MAX_COUNT) {
+      next.splice(RECENT_DOC_MAX_COUNT);
     }
     this.recentDocIds = next;
     await this.saveRecentDocIds();
@@ -599,39 +449,9 @@ struct Index {
     this.sectionCards = groups;
   }
 
-  private normalizeSearchTokens(query: string): Array<string> {
-    const trimmed = query.trim();
-    if (!trimmed) return [];
-    return trimmed
-      .split(/\s+/)
-      .map((part: string): string => part.trim().toLowerCase())
-      .filter((part: string): boolean => !!part);
-  }
-
-  private cardMatchesTokens(card: ReferenceCardData, tokens: Array<string>): boolean {
-    if (tokens.length === 0) return true;
-    const encoded: boolean = card.encoded === true;
-    const haystack = [
-      decodeIfEncoded(card.title ?? '', encoded),
-      decodeIfEncoded(card.body ?? '', encoded),
-      decodeIfEncoded(card.front ?? '', encoded),
-      decodeIfEncoded(card.back ?? '', encoded),
-      decodeIfEncoded(card.code ?? '', encoded),
-    ]
-      .join('\n')
-      .toLowerCase();
-
-    for (let i = 0; i < tokens.length; i++) {
-      const token = tokens[i];
-      if (!token) continue;
-      if (haystack.indexOf(token) < 0) return false;
-    }
-    return true;
-  }
-
   private rebuildSearchResults(): void {
     const doc = this.selectedDoc;
-    const tokens = this.normalizeSearchTokens(this.searchQuery);
+    const tokens = normalizeSearchTokens(this.searchQuery);
     if (!doc || tokens.length === 0) {
       this.searchSectionCards = [];
       this.searchResultCount = 0;
@@ -644,7 +464,7 @@ struct Index {
     for (let i = 0; i < doc.cards.length; i++) {
       const card = doc.cards[i];
       if (card.sectionId === 'intro') continue;
-      if (!this.cardMatchesTokens(card, tokens)) continue;
+      if (!cardMatchesTokens(card, tokens)) continue;
       matchedCount++;
       let list = bySection.get(card.sectionId);
       if (!list) {
@@ -711,87 +531,18 @@ struct Index {
     for (let i = 0; i < this.onlineMdDocs.length; i++) {
       pushIfMatched(this.onlineMdDocs[i]);
     }
+    for (let i = 0; i < this.localMdDocs.length; i++) {
+      pushIfMatched(this.localMdDocs[i]);
+    }
 
-    results.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => this.compareCatalogDocs(a, b));
+    results.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => {
+      const ak = (a.name || a.title || a.id || '').trim().toLowerCase();
+      const bk = (b.name || b.title || b.id || '').trim().toLowerCase();
+      if (ak < bk) return -1;
+      if (ak > bk) return 1;
+      return 0;
+    });
     this.catalogSearchResults = results;
-  }
-
-  private catalogDocSortKey(doc: ReferenceDocSummary): string {
-    return (doc.name || doc.title || doc.id || '').trim().toLowerCase();
-  }
-
-  private compareCatalogDocs(a: ReferenceDocSummary, b: ReferenceDocSummary): number {
-    const ak = this.catalogDocSortKey(a);
-    const bk = this.catalogDocSortKey(b);
-    if (ak < bk) return -1;
-    if (ak > bk) return 1;
-
-    const aid = (a.id ?? '').toLowerCase();
-    const bid = (b.id ?? '').toLowerCase();
-    if (aid < bid) return -1;
-    if (aid > bid) return 1;
-
-    const af = (a.file ?? '').toLowerCase();
-    const bf = (b.file ?? '').toLowerCase();
-    if (af < bf) return -1;
-    if (af > bf) return 1;
-    return 0;
-  }
-
-  private getCatalogDocsForDisplay(): Array<ReferenceDocSummary> {
-    const merged: Array<ReferenceDocSummary> = [];
-    for (let i = 0; i < this.docs.length; i++) {
-      merged.push(this.docs[i]);
-    }
-    for (let i = 0; i < this.onlineMdDocs.length; i++) {
-      merged.push(this.onlineMdDocs[i]);
-    }
-
-    // 分组：收藏、最近阅读、其他
-    const favorites: Array<ReferenceDocSummary> = [];
-    const recent: Array<ReferenceDocSummary> = [];
-    const others: Array<ReferenceDocSummary> = [];
-
-    for (let i = 0; i < merged.length; i++) {
-      const doc = merged[i];
-      if (this.isDocFavorite(doc.id)) {
-        favorites.push(doc);
-      } else if (this.isDocRecent(doc.id)) {
-        recent.push(doc);
-      } else {
-        others.push(doc);
-      }
-    }
-
-    // 收藏按收藏顺序排序（最新收藏在前）
-    favorites.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => {
-      const ai = this.favoriteDocIds.indexOf(a.id);
-      const bi = this.favoriteDocIds.indexOf(b.id);
-      return ai - bi;
-    });
-
-    // 最近阅读按阅读顺序排序（最新阅读在前）
-    recent.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => {
-      const ai = this.recentDocIds.indexOf(a.id);
-      const bi = this.recentDocIds.indexOf(b.id);
-      return ai - bi;
-    });
-
-    // 其他按字典序排序
-    others.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => this.compareCatalogDocs(a, b));
-
-    // 合并：收藏 + 最近阅读 + 其他
-    const result: Array<ReferenceDocSummary> = [];
-    for (let i = 0; i < favorites.length; i++) {
-      result.push(favorites[i]);
-    }
-    for (let i = 0; i < recent.length; i++) {
-      result.push(recent[i]);
-    }
-    for (let i = 0; i < others.length; i++) {
-      result.push(others[i]);
-    }
-    return result;
   }
 
   private async openDoc(docId: string, switchToReadTab: boolean = true): Promise<void> {
@@ -822,7 +573,6 @@ struct Index {
         this.rebuildSearchResults();
         this.updateQuizAvailableCount();
         this.addToRecentDocs(docId);
-        // 滚动到页面顶部
         this.listScroller.scrollToIndex(0);
         this.listSearchScroller.scrollToIndex(0);
         if (switchToReadTab) {
@@ -870,10 +620,8 @@ struct Index {
         this.rebuildSearchResults();
         this.updateQuizAvailableCount();
         this.addToRecentDocs(docId);
-        // 滚动到页面顶部
         this.listScroller.scrollToIndex(0);
         this.listSearchScroller.scrollToIndex(0);
-        // 跳转到测验标签页
         this.currentTabIndex = 2;
         if (!this.isLandscape) {
           this.tabsController.changeIndex(2);
@@ -891,8 +639,9 @@ struct Index {
 
   private async switchLang(next: ReferenceLang): Promise<void> {
     if (this.lang === next) return;
+    this.stopAllTextInputEditing();
     this.lang = next;
-    await this.saveLangSetting(next);
+    // 先清空与文档/目录相关的状态，避免语言已切换但目录仍短暂显示旧清单。
     this.docs = [];
     this.selectedDoc = undefined;
     this.selectedDocId = '';
@@ -904,6 +653,11 @@ struct Index {
     this.catalogSearchQuery = '';
     this.catalogSearchResults = [];
     this.iconErrorKeys = [];
+    this.errorText = '';
+    this.showTocPanel = false;
+
+    // 保存设置不应阻塞目录清单切换
+    this.saveLangSetting(next);
     await this.loadManifest(true);
     await this.loadManifestCounts();
   }
@@ -959,11 +713,6 @@ struct Index {
     }
   }
 
-  private formatDocCount(count: number): string {
-    if (!Number.isFinite(count) || count < 0) return this.t('未知', 'N/A');
-    return `${Math.floor(count)}`;
-  }
-
   private async loadManifestCounts(): Promise<void> {
     const repo = await this.ensureRepository();
     if (!repo) return;
@@ -1003,6 +752,7 @@ struct Index {
     await this.loadManifestCounts();
     await this.loadQuizRecord();
     await this.loadOnlineMdLinks();
+    await this.loadLocalMdLinks();
     await this.consumeNotificationLaunchIfAny();
   }
 
@@ -1018,6 +768,14 @@ struct Index {
     const stored = await this.onlineMdRepository.getLinks(host);
     this.onlineMdLinks = this.mergeDefaultOnlineMdLink(stored);
     await this.rebuildOnlineMdDocs();
+  }
+
+  private async loadLocalMdLinks(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const stored = await this.localMdRepository.getLinks(host);
+    this.localMdLinks = stored;
+    await this.rebuildLocalMdDocs();
   }
 
   private mergeDefaultOnlineMdLink(links: Array<OnlineMdLink>): Array<OnlineMdLink> {
@@ -1037,12 +795,6 @@ struct Index {
     return [defaultLink, ...links];
   }
 
-  private isDefaultOnlineMdLink(link: OnlineMdLink): boolean {
-    if (!link) return false;
-    if (link.id === DEFAULT_ONLINE_MD_LINK_ID) return true;
-    return (link.url ?? '').trim() === DEFAULT_ONLINE_MD_URL.trim();
-  }
-
   private findOnlineMdLink(linkId: string): OnlineMdLink | undefined {
     for (let i = 0; i < this.onlineMdLinks.length; i++) {
       const link = this.onlineMdLinks[i];
@@ -1060,8 +812,14 @@ struct Index {
 
     const cachedDoc = await this.onlineMdRepository.getDocFromCache(host, linkId);
     if (cachedDoc) {
-      this.onlineMdDocCache.set(linkId, cachedDoc);
-      return cachedDoc;
+      const cachedUrl: string = (cachedDoc.source?.url ?? '').trim();
+      const defaultUrl: string = DEFAULT_ONLINE_MD_URL.trim();
+      if (linkId === DEFAULT_ONLINE_MD_LINK_ID && cachedUrl && defaultUrl && cachedUrl !== defaultUrl) {
+        await this.onlineMdRepository.deleteDocCache(host, linkId);
+      } else {
+        this.onlineMdDocCache.set(linkId, cachedDoc);
+        return cachedDoc;
+      }
     }
 
     const link = this.findOnlineMdLink(linkId);
@@ -1096,16 +854,23 @@ struct Index {
 
       const cachedDoc = await this.onlineMdRepository.getDocFromCache(host, linkId);
       if (cachedDoc) {
-        this.onlineMdDocCache.set(linkId, cachedDoc);
-        summaries.push({
-          id: linkId,
-          name: link.name || cachedDoc.name,
-          title: cachedDoc.title,
-          file: `online:${link.url}`,
-          sectionCount: cachedDoc.sections.length,
-          cardCount: cachedDoc.cards.length,
-        });
-        continue;
+        const cachedUrl: string = (cachedDoc.source?.url ?? '').trim();
+        const defaultUrl: string = DEFAULT_ONLINE_MD_URL.trim();
+        if (linkId === DEFAULT_ONLINE_MD_LINK_ID && cachedUrl && defaultUrl && cachedUrl !== defaultUrl) {
+          await this.onlineMdRepository.deleteDocCache(host, linkId);
+          this.onlineMdDocCache.delete(linkId);
+        } else {
+          this.onlineMdDocCache.set(linkId, cachedDoc);
+          summaries.push({
+            id: linkId,
+            name: link.name || cachedDoc.name,
+            title: cachedDoc.title,
+            file: `online:${link.url}`,
+            sectionCount: cachedDoc.sections.length,
+            cardCount: cachedDoc.cards.length,
+          });
+          continue;
+        }
       }
 
       const fallbackName = (link?.name ?? linkId).trim() || linkId;
@@ -1119,6 +884,44 @@ struct Index {
       });
     }
     this.onlineMdDocs = summaries;
+    this.rebuildCatalogSearchResults();
+  }
+
+  private async rebuildLocalMdDocs(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+
+    const summaries: Array<ReferenceDocSummary> = [];
+    for (let i = 0; i < this.localMdLinks.length; i++) {
+      const link = this.localMdLinks[i];
+      const linkId = link?.id ?? '';
+      if (!linkId) continue;
+
+      const cachedDoc = await this.localMdRepository.getDocFromCache(host, linkId);
+      if (cachedDoc) {
+        this.localMdDocCache.set(linkId, cachedDoc);
+        summaries.push({
+          id: linkId,
+          name: link.name || cachedDoc.name,
+          title: cachedDoc.title,
+          file: `local:${link.url}`,
+          sectionCount: cachedDoc.sections.length,
+          cardCount: cachedDoc.cards.length,
+        });
+        continue;
+      }
+
+      const fallbackName = (link?.name ?? linkId).trim() || linkId;
+      summaries.push({
+        id: linkId,
+        name: fallbackName,
+        title: '',
+        file: `local:${link?.url ?? ''}`,
+        sectionCount: 0,
+        cardCount: 0,
+      });
+    }
+    this.localMdDocs = summaries;
     this.rebuildCatalogSearchResults();
   }
 
@@ -1136,8 +939,8 @@ struct Index {
 
     if (!OnlineMdRepository.isMarkdownUrl(url)) {
       this.onlineMdParseResult = this.t(
-        `仅支持 Markdown 文件：URL 必须以 .md 结尾（当前：${url}）`,
-        `Only Markdown files are supported: URL must end with .md (current: ${url})`
+        `仅支持 Markdown 文件：URL 必须以 .md/.markdown 结尾（当前：${url}）`,
+        `Only Markdown files are supported: URL must end with .md/.markdown (current: ${url})`
       );
       return;
     }
@@ -1214,8 +1017,110 @@ struct Index {
       }, (): void => undefined);
   }
 
+  private copyLocalMdUri(uri: string): void {
+    const pasteboardData = pasteboard.createData(pasteboard.MIMETYPE_TEXT_PLAIN, uri);
+    const systemPasteboard = pasteboard.getSystemPasteboard();
+    Promise.resolve()
+      .then((): Promise<void> => systemPasteboard.setData(pasteboardData))
+      .then((): void => {
+        if (this.localMdCopyTimer !== -1) {
+          clearTimeout(this.localMdCopyTimer);
+        }
+        this.localMdCopySuccess = true;
+        this.localMdCopyTimer = setTimeout(() => {
+          this.localMdCopySuccess = false;
+          this.localMdCopyTimer = -1;
+        }, 3000);
+      }, (): void => undefined);
+  }
+
+  private async removeLocalMd(linkId: string): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+
+    await this.localMdRepository.removeLink(host, linkId);
+    await this.localMdRepository.deleteDocCache(host, linkId);
+    this.localMdDocCache.delete(linkId);
+
+    const stored = await this.localMdRepository.getLinks(host);
+    this.localMdLinks = stored;
+    await this.rebuildLocalMdDocs();
+  }
+
+  private async selectLocalMarkdownFileUri(): Promise<string> {
+    const options = new picker.DocumentSelectOptions();
+    options.maxSelectNumber = 1;
+    options.fileSuffixFilters = ['.md', '.markdown'];
+
+    return new picker.DocumentViewPicker()
+      .select(options)
+      .then(
+        (uris: Array<string>): string => (uris && uris.length > 0 ? String(uris[0] ?? '') : ''),
+        (): string => '',
+      );
+  }
+
+  private async importLocalMarkdown(): Promise<void> {
+    if (this.localMdImporting) return;
+    const host = this.getUIContext().getHostContext();
+    if (!host) {
+      this.localMdImportResult = this.t('无法获取上下文', 'Failed to get context');
+      return;
+    }
+
+    this.stopAllTextInputEditing();
+    this.localMdImporting = true;
+    this.localMdImportResult = '';
+
+    const uri = (await this.selectLocalMarkdownFileUri()).trim();
+    if (!uri) {
+      this.localMdImporting = false;
+      return;
+    }
+
+    const result = await this.localMdRepository.readAndParse(uri);
+    const doc = result.doc;
+    if (!result.success || !doc) {
+      this.localMdImporting = false;
+      this.localMdImportResult = this.t(`导入失败：${result.error ?? ''}`, `Import failed: ${result.error ?? ''}`);
+      return;
+    }
+
+    for (let i = 0; i < this.localMdLinks.length; i++) {
+      const link = this.localMdLinks[i];
+      if ((link?.url ?? '').trim() !== uri) continue;
+      await this.localMdRepository.saveDocToCache(host, link.id, doc);
+      this.localMdDocCache.set(link.id, doc);
+      await this.rebuildLocalMdDocs();
+      this.localMdImporting = false;
+      this.localMdImportResult = this.t(
+        `已更新：${doc.name}（${doc.sections.length} 章节，${doc.cards.length} 卡片）`,
+        `Updated: ${doc.name} (${doc.sections.length} sections, ${doc.cards.length} cards)`
+      );
+      return;
+    }
+
+    const newLink = await this.localMdRepository.addLink(host, uri, doc.name || this.t('本地 Markdown', 'Local Markdown'));
+    await this.localMdRepository.saveDocToCache(host, newLink.id, doc);
+    this.localMdDocCache.set(newLink.id, doc);
+
+    const stored = await this.localMdRepository.getLinks(host);
+    this.localMdLinks = stored;
+    await this.rebuildLocalMdDocs();
+
+    this.localMdImporting = false;
+    this.localMdImportResult = this.t(
+      `导入成功：${doc.name}（${doc.sections.length} 章节，${doc.cards.length} 卡片）`,
+      `Import success: ${doc.name} (${doc.sections.length} sections, ${doc.cards.length} cards)`
+    );
+  }
+
   private isOnlineDoc(docId: string): boolean {
     return docId.startsWith('online_');
+  }
+
+  private isLocalDoc(docId: string): boolean {
+    return docId.startsWith('local_');
   }
 
   private async openOnlineDoc(linkId: string): Promise<void> {
@@ -1269,7 +1174,105 @@ struct Index {
     this.rebuildSearchResults();
     this.updateQuizAvailableCount();
     this.addToRecentDocs(linkId);
-    // 跳转到测验标签页
+    this.currentTabIndex = 2;
+    if (!this.isLandscape) {
+      this.tabsController.changeIndex(2);
+    }
+    if (requestId === this.openDocRequestId) {
+      this.loading = false;
+    }
+  }
+
+  private findLocalMdLink(linkId: string): OnlineMdLink | undefined {
+    for (let i = 0; i < this.localMdLinks.length; i++) {
+      const link = this.localMdLinks[i];
+      if (link?.id === linkId) return link;
+    }
+    return undefined;
+  }
+
+  private async ensureLocalMdDocReady(linkId: string): Promise<ReferenceDoc | undefined> {
+    const inMemory = this.localMdDocCache.get(linkId);
+    if (inMemory) return inMemory;
+
+    const host = this.getUIContext().getHostContext();
+    if (!host) return undefined;
+
+    const cachedDoc = await this.localMdRepository.getDocFromCache(host, linkId);
+    if (cachedDoc) {
+      this.localMdDocCache.set(linkId, cachedDoc);
+      return cachedDoc;
+    }
+
+    const link = this.findLocalMdLink(linkId);
+    const uri = (link?.url ?? '').trim();
+    if (!uri) return undefined;
+
+    const result = await this.localMdRepository.readAndParse(uri);
+    const doc = result.doc;
+    if (!result.success || !doc) {
+      this.errorText = this.t(
+        `加载本地文档失败：${result.error ?? ''}`,
+        `Failed to load local doc: ${result.error ?? ''}`
+      );
+      return undefined;
+    }
+
+    await this.localMdRepository.saveDocToCache(host, linkId, doc);
+    this.localMdDocCache.set(linkId, doc);
+    await this.rebuildLocalMdDocs();
+    return doc;
+  }
+
+  private async openLocalDoc(linkId: string): Promise<void> {
+    this.openDocRequestId++;
+    const requestId = this.openDocRequestId;
+    this.loading = true;
+    this.errorText = '';
+    this.selectedDocIcon = '';
+
+    const doc = await this.ensureLocalMdDocReady(linkId);
+    if (requestId !== this.openDocRequestId) return;
+    if (!doc) {
+      this.loading = false;
+      return;
+    }
+    this.selectedDoc = doc;
+    this.selectedDocId = linkId;
+    this.selectedDocAvatarVersion = requestId;
+    this.rebuildSectionCards(doc);
+    this.rebuildSearchResults();
+    this.updateQuizAvailableCount();
+    this.addToRecentDocs(linkId);
+    this.currentTabIndex = 1;
+    if (!this.isLandscape) {
+      this.tabsController.changeIndex(1);
+    }
+    if (requestId === this.openDocRequestId) {
+      this.loading = false;
+    }
+  }
+
+  private async openLocalDocAndQuiz(linkId: string): Promise<void> {
+    this.openDocRequestId++;
+    const requestId = this.openDocRequestId;
+    this.loading = true;
+    this.errorText = '';
+    this.selectedDocIcon = '';
+
+    const doc = await this.ensureLocalMdDocReady(linkId);
+    if (requestId !== this.openDocRequestId) return;
+    if (!doc) {
+      this.loading = false;
+      return;
+    }
+    this.selectedDoc = doc;
+    this.selectedDocId = linkId;
+    this.selectedDocAvatarVersion = requestId;
+    this.rebuildSectionCards(doc);
+    this.rebuildSearchResults();
+    this.updateQuizAvailableCount();
+    this.addToRecentDocs(linkId);
     this.currentTabIndex = 2;
     if (!this.isLandscape) {
       this.tabsController.changeIndex(2);
@@ -1397,1332 +1400,11 @@ struct Index {
     return true;
   }
 
-  @Builder
-  private DocListTab(): void {
-    Column({ space: this.fontSize * 0.6 }) {
-      Text(this.t('开发速查', 'Quick Reference'))
-        .fontSize(this.fontSize * 1.5)
-        .fontWeight(FontWeight.Bold)
-        .fontColor(this.theme.accentColor);
-
-      if (!this.isLandscape) {
-        Row({ space: this.fontSize * 0.6 }) {
-        TextInput({
-          text: this.catalogSearchQuery,
-          placeholder: this.t('搜索文档…', 'Search docs…'),
-          controller: this.catalogSearchInputController,
-        })
-          .layoutWeight(1)
-          .fontSize(this.fontSize)
-          .fontColor(this.theme.titleColor)
-          .placeholderColor(this.theme.mutedTextColor)
-          .enableAutoFill(false)
-          .backgroundColor(this.theme.surfaceBackgroundColor)
-          .border({ width: 1, color: this.theme.borderColor })
-          .borderRadius(this.fontSize * 0.8)
-          .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 })
-          .onChange((value: string) => {
-            this.catalogSearchQuery = value;
-            this.rebuildCatalogSearchResults();
-          });
-
-        if (this.catalogSearchQuery.trim()) {
-          Text(this.t('清除', 'Clear'))
-            .fontSize(this.fontSize * 0.8)
-            .fontColor(this.theme.mutedTextColor)
-            .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
-            .backgroundColor(this.theme.surfaceBackgroundColor)
-            .border({ width: 1, color: this.theme.borderColor })
-            .borderRadius(this.fontSize * 0.8)
-            .onClick(() => {
-              this.catalogSearchQuery = '';
-              this.catalogSearchResults = [];
-            });
-        }
-        }
-      }
-
-      if (this.loading) {
-        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor);
-      }
-
-      if (this.errorText) {
-        Text(this.errorText).fontColor(this.theme.dangerTextColor).maxLines(6);
-      }
-
-      if (this.catalogSearchQuery.trim() && this.catalogSearchResults.length === 0) {
-        Text(this.t('没有匹配的文档', 'No matching docs.')).fontColor(this.theme.mutedTextColor);
-      }
-
-      List() {
-        ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.getCatalogDocsForDisplay(), (doc: ReferenceDocSummary) => {
-          ListItem() {
-            Stack({ alignContent: Alignment.TopStart }) {
-              Row({ space: this.fontSize * 0.8 }) {
-                Column() {
-                  this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, this.fontSize * 2.5, 0);
-                }
-                .onClick(() => this.isOnlineDoc(doc.id) ? this.openOnlineDoc(doc.id) : this.openDoc(doc.id, true))
-
-                Column({ space: this.fontSize * 0.2 }) {
-                  Text(doc.name || doc.id).fontSize(this.fontSize * 1).fontColor(this.theme.titleColor);
-
-                  if (doc.title && doc.title !== doc.name) {
-                    Text(doc.title)
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.mutedTextColor)
-                      .maxLines(2);
-                  }
-
-                  Text(this.t(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`, `${doc.sectionCount} sections · ${doc.cardCount} cards`))
-                    .fontSize(this.fontSize * 0.8)
-                    .fontColor(this.theme.mutedTextColor);
-                }.layoutWeight(1);
-
-                if (this.isLandscape) {
-                  // 横屏：左右摆放
-                  Row({ space: this.fontSize * 0.8 }) {
-                    Text(this.t('打开', 'Open'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.accentColor)
-                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .border({ width: 1, color: this.theme.accentColor })
-                      .borderRadius(this.fontSize * 0.4)
-                      .onClick(() => this.isOnlineDoc(doc.id) ? this.openOnlineDoc(doc.id) : this.openDoc(doc.id, true));
-                    Text(this.t('测验', 'Quiz'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.accentColor)
-                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .border({ width: 1, color: this.theme.accentColor })
-                      .borderRadius(this.fontSize * 0.4)
-                      .onClick(() => this.isOnlineDoc(doc.id) ? this.openOnlineDocAndQuiz(doc.id) : this.openDocAndQuiz(doc.id));
-                  }
-                } else {
-                  // 竖屏：上下堆叠
-                  Column({ space: this.fontSize * 0.5 }) {
-                    Text(this.t('打开', 'Open'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.accentColor)
-                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .border({ width: 1, color: this.theme.accentColor })
-                      .borderRadius(this.fontSize * 0.4)
-                      .onClick(() => this.isOnlineDoc(doc.id) ? this.openOnlineDoc(doc.id) : this.openDoc(doc.id, true));
-                    Text(this.t('测验', 'Quiz'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.accentColor)
-                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .border({ width: 1, color: this.theme.accentColor })
-                      .borderRadius(this.fontSize * 0.4)
-                      .onClick(() => this.isOnlineDoc(doc.id) ? this.openOnlineDocAndQuiz(doc.id) : this.openDocAndQuiz(doc.id));
-                  }
-                  .alignItems(HorizontalAlign.End);
-                }
-              }
-              .padding(this.fontSize * 1)
-              .width('100%');
-
-              // 标记行 - 左上角
-              Row({ space: this.fontSize * 0.3 }) {
-                if (this.isDocFavorite(doc.id)) {
-                  Text(this.t('收藏', 'Fav'))
-                    .fontSize(this.fontSize * 0.65)
-                    .fontColor(0xffffffff)
-                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
-                    .backgroundColor(0xffF59E0B)
-                    .borderRadius({
-                      topLeft: this.fontSize * 0.7,
-                      topRight: this.fontSize * 0.4,
-                      bottomLeft: this.fontSize * 0,
-                      bottomRight: this.fontSize * 0.4
-                    });
-                }
-                if (this.isDocRecent(doc.id) && !this.isDocFavorite(doc.id)) {
-                  Text(this.t('最近', 'Recent'))
-                    .fontSize(this.fontSize * 0.65)
-                    .fontColor(0xffffffff)
-                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
-                    .backgroundColor(0xff10B981)
-                    .borderRadius({
-                      topLeft: this.fontSize * 0.7,
-                      topRight: this.fontSize * 0.4,
-                      bottomLeft: this.fontSize * 0,
-                      bottomRight: this.fontSize * 0.4
-                    });
-                }
-                if (this.isOnlineDoc(doc.id)) {
-                  Text(this.t('在线', 'Online'))
-                    .fontSize(this.fontSize * 0.65)
-                    .fontColor(0xffffffff)
-                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
-                    .backgroundColor(this.theme.accentColor)
-                    .borderRadius({
-                      topLeft: this.fontSize * 0.7,
-                      topRight: this.fontSize * 0.4,
-                      bottomLeft: this.fontSize * 0,
-                      bottomRight: this.fontSize * 0.4
-                    });
-                }
-              }
-            }
-            .backgroundColor(this.theme.surfaceBackgroundColor)
-            .borderRadius(this.fontSize * 0.8);
-          }
-          .margin({ bottom: this.fontSize * 0.6 });
-        }, (doc: ReferenceDocSummary) => {
-          const favKey = this.isDocFavorite(doc.id) ? 'fav' : '';
-          const recentKey = this.isDocRecent(doc.id) ? 'recent' : '';
-          return this.isOnlineDoc(doc.id)
-            ? `online:${doc.id}:${favKey}:${recentKey}`
-            : `${this.lang}:${doc.id}:${favKey}:${recentKey}`;
-        });
-      }
-      .layoutWeight(1)
-      .divider({ strokeWidth: 0 });
-    }
-    .padding(this.tabPadding())
-    .height('100%')
-    .width('100%')
-    .backgroundColor(this.theme.pageBackgroundColor);
-  }
-
-  @Builder
-  private ReadTab(): void {
-    Column({ space: this.fontSize * 0.6 }) {
-      Row({ space: this.fontSize * 0.6 }) {
-        if (this.selectedDoc) {
-          ForEach([this.selectedDocAvatarVersion], (_: number) => {
-            this.DocAvatar(
-              this.selectedDocId,
-              this.selectedDoc?.name || this.selectedDoc?.title || this.selectedDocId,
-              this.selectedDocIcon || undefined,
-              this.fontSize * 1.5,
-              0,
-            );
-          }, (k: number) => `${k}`);
-        }
-
-        Column({ space: this.fontSize * 0.1 }) {
-          Text(this.selectedDoc ? (this.selectedDoc.name || this.selectedDoc.title) : this.t('未选择', 'No selection'))
-            .fontSize(this.fontSize * 1.2)
-            .fontWeight(FontWeight.Bold)
-            .fontColor(this.theme.accentColor);
-
-          if (this.selectedDoc && this.selectedDoc.title && this.selectedDoc.title !== this.selectedDoc.name) {
-            Text(this.selectedDoc.title).fontSize(this.fontSize * 0.8).fontColor(this.theme.mutedTextColor).maxLines(2);
-          }
-        }
-        .layoutWeight(1);
-
-        if (this.selectedDocId) {
-          Text(this.isDocFavorite(this.selectedDocId) ? '★' : '☆')
-            .fontSize(this.fontSize * 1.5)
-            .fontColor(this.isDocFavorite(this.selectedDocId) ? 0xffF59E0B : this.theme.mutedTextColor)
-            .onClick(() => {
-              this.toggleDocFavorite(this.selectedDocId);
-            });
-        }
-
-        Text(this.t('目录', 'TOC'))
-          .fontSize(this.fontSize * 1)
-          .fontColor(this.theme.accentColor)
-          .onClick(() => {
-            this.stopAllTextInputEditing();
-            this.showTocPanel = true;
-          });
-      }
-      .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
-
-      if (this.selectedDoc && !this.isLandscape) {
-        Row({ space: this.fontSize * 0.6 }) {
-          TextInput({
-            text: this.searchQuery,
-            placeholder: this.t('搜索当前文档…', 'Search current doc…'),
-            controller: this.docSearchInputController,
-          })
-            .layoutWeight(1)
-            .fontSize(this.fontSize * 1)
-            .fontColor(this.theme.titleColor)
-            .placeholderColor(this.theme.mutedTextColor)
-            .enableAutoFill(false)
-            .backgroundColor(this.theme.surfaceBackgroundColor)
-            .border({ width: 1, color: this.theme.borderColor })
-            .borderRadius(this.fontSize * 0.8)
-            .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
-            .onChange((value: string) => {
-              this.searchQuery = value;
-              this.rebuildSearchResults();
-            });
-
-          if (this.searchQuery.trim()) {
-            Text(this.t('清除', 'Clear'))
-              .fontSize(this.fontSize * 0.8)
-              .fontColor(this.theme.mutedTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-              .backgroundColor(this.theme.surfaceBackgroundColor)
-              .border({ width: 1, color: this.theme.borderColor })
-              .borderRadius(this.fontSize * 0.8)
-              .onClick(() => {
-                this.searchQuery = '';
-                this.rebuildSearchResults();
-              });
-          }
-        }
-        .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-      }
-
-      if (this.loading) {
-        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor).padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-      }
-
-      if (this.errorText) {
-        Text(this.errorText).fontColor(this.theme.dangerTextColor).padding({ left: this.fontSize * 1, right: this.fontSize * 1 }).maxLines(6);
-      }
-
-      if (!this.selectedDoc) {
-        Text(this.t('请先在"目录"中打开一个文档', 'Open a doc in "Catalog" first.')).fontColor(this.theme.mutedTextColor).padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-      }
-
-      if (this.searchQuery.trim()) {
-        if (this.searchResultCount === 0) {
-          Text(this.t('没有匹配结果', 'No results.')).fontColor(this.theme.mutedTextColor).padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-        } else {
-          Text(this.t(`${this.searchResultCount} 条结果`, `${this.searchResultCount} results`))
-            .fontSize(this.fontSize * 0.8)
-            .fontColor(this.theme.mutedTextColor)
-            .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-        }
-
-        List({ scroller: this.listSearchScroller }) {
-          ForEach(this.searchSectionCards, (group: SectionWithCards, groupIndex: number) => {
-            ListItemGroup() {
-              ListItem() {
-                Row({ space: this.fontSize * 0.4 }) {
-                  Text('#')
-                    .fontSize(this.fontSize * 1)
-                    .fontWeight(FontWeight.Bold)
-                    .fontColor(this.theme.sectionTitleColor);
-                  Text(`${group.section.title} (${group.cards.length})`)
-                    .fontSize(this.fontSize)
-                    .fontWeight(FontWeight.Medium)
-                    .fontColor(this.theme.sectionTitleColor);
-                }
-                .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
-              }
-
-              ForEach(group.cards, (card: ReferenceCardData) => {
-                ListItem() {
-                  ReferenceCard({
-                    card,
-                    theme: this.theme,
-                    fontSize: this.fontSize,
-                    unboundedTableColumns: this.isLandscape,
-                    learningMode: this.learningModeEnabled,
-                    hostContext: this.getUIContext().getHostContext(),
-                    margin: makeCardMargin(this.fontSize),
-                  })
-                  ;
-                }
-              }, (card: ReferenceCardData) => `${this.selectedDocId}:search:${card.id}:${this.learningModeEnabled}`);
-            }
-          }, (group: SectionWithCards) => `${this.selectedDocId}:search:${group.section.id}`);
-        }
-        .layoutWeight(1)
-        .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 });
-
-        if (this.searchSectionCards.length > 0) {
-          Column() {
-            Scroll(this.listSectionNavScroller) {
-              Row({ space: this.fontSize * 0.5 }) {
-                ForEach(this.searchSectionCards, (group: SectionWithCards, groupIndex: number) => {
-                  Text(group.section.title)
-                    .fontSize(this.fontSize * 0.8)
-                    .fontColor(this.searchNavSectionIndex === groupIndex ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-                    .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
-                    .backgroundColor(this.searchNavSectionIndex === groupIndex ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-                    .borderRadius(this.fontSize * 66)
-                    .onClick(() => {
-                      this.searchNavSectionIndex = groupIndex;
-                      this.listSearchScroller.scrollToItemInGroup(groupIndex, 0, true, ScrollAlign.START);
-                    });
-                }, (group: SectionWithCards) => `${this.selectedDocId}:search:nav:${group.section.id}:${this.searchNavSectionIndex}`);
-              }
-              .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.5, bottom: this.fontSize * 0.2 });
-            }
-            .scrollable(ScrollDirection.Horizontal)
-            .scrollBar(BarState.Off);
-
-            Scroll(this.listCardNavScroller) {
-              Row({ space: this.fontSize * 0.4 }) {
-                ForEach(
-                  this.searchSectionCards[this.searchNavSectionIndex]?.cards ?? [],
-                  (card: ReferenceCardData, cardIndex: number) => {
-                    Text(this.getTocCardTitle(card))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.mutedTextColor)
-                      .maxLines(1)
-                      .textOverflow({ overflow: TextOverflow.Ellipsis })
-                      .constraintSize({ maxWidth: this.fontSize * 8 })
-                      .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .backgroundColor(this.theme.chipBackgroundColor)
-                      .borderRadius(this.fontSize * 0.4)
-                      .onClick(() => {
-                        this.listSearchScroller.scrollToItemInGroup(this.searchNavSectionIndex, cardIndex + 1, true, ScrollAlign.START);
-                      });
-                  },
-                  (card: ReferenceCardData) => `${this.selectedDocId}:search:cardnav:${card.id}`
-                );
-              }
-              .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.2, bottom: this.fontSize * 0.5 });
-            }
-            .scrollable(ScrollDirection.Horizontal)
-            .scrollBar(BarState.Off);
-          }
-          .backgroundColor(this.theme.surfaceMutedBackgroundColor);
-        }
-      } else {
-        List({ scroller: this.listScroller }) {
-          ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
-            ListItemGroup() {
-              ListItem() {
-                Row({ space: this.fontSize * 0.4 }) {
-                  Text('#')
-                    .fontSize(this.fontSize * 1)
-                    .fontWeight(FontWeight.Bold)
-                    .fontColor(this.theme.sectionTitleColor);
-                  Text(group.section.title)
-                    .fontSize(this.fontSize)
-                    .fontWeight(FontWeight.Medium)
-                    .fontColor(this.theme.sectionTitleColor);
-                }
-                .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
-              }
-
-              ForEach(group.cards, (card: ReferenceCardData, cardIndex: number) => {
-                ListItem() {
-                  ReferenceCard({
-                    card,
-                    theme: this.theme,
-                    fontSize: this.fontSize,
-                    unboundedTableColumns: this.isLandscape,
-                    learningMode: this.learningModeEnabled,
-                    hostContext: this.getUIContext().getHostContext(),
-                    margin: makeCardMargin(this.fontSize),
-                  })
-                  ;
-                }
-              }, (card: ReferenceCardData) => `${this.selectedDocId}:${card.id}:${this.learningModeEnabled}`);
-            }
-          }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
-        }
-        .layoutWeight(1)
-        .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 })
-        .onAppear(() => {
-          if (this.pendingTocScrollGroupIndex >= 0 && this.pendingTocScrollItemIndex >= 0) {
-            const groupIndex: number = this.pendingTocScrollGroupIndex;
-            const itemIndex: number = this.pendingTocScrollItemIndex;
-            this.pendingTocScrollGroupIndex = -1;
-            this.pendingTocScrollItemIndex = -1;
-            this.listScroller.scrollToItemInGroup(groupIndex, itemIndex, true, ScrollAlign.START);
-          }
-        });
-      }
-    }
-    .height('100%')
-    .width('100%')
-    .backgroundColor(this.theme.pageBackgroundColor);
-  }
-
-  private getTocCardTitle(card: ReferenceCardData): string {
-    const encoded = card.encoded === true;
-    if (card.title) {
-      return decodeIfEncoded(card.title, encoded);
-    }
-    if (card.kind === 'qa' && card.front) {
-      const front = decodeIfEncoded(card.front, encoded);
-      const firstLine = front.split('\n')[0] ?? '';
-      return firstLine.substring(0, 50) || card.id;
-    }
-    if (card.body) {
-      const body = decodeIfEncoded(card.body, encoded);
-      const firstLine = body.split('\n')[0] ?? '';
-      return firstLine.substring(0, 50) || card.id;
-    }
-    return card.id;
-  }
-
-  @Builder
-  private TocPanel(): void {
-    Column() {
-      Column() {
-        Row() {
-          Text(this.t('目录', 'Table of Contents'))
-            .fontSize(this.fontSize * 1.2)
-            .fontWeight(FontWeight.Bold)
-            .fontColor(this.theme.titleColor);
-          Blank();
-          Text(this.t('关闭', 'Close'))
-            .fontSize(this.fontSize * 1)
-            .fontColor(this.theme.accentColor)
-            .onClick(() => {
-              this.stopAllTextInputEditing();
-              this.showTocPanel = false;
-            });
-        }
-        .width('100%')
-        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.8 });
-
-        List() {
-          ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
-            ListItemGroup() {
-              ListItem() {
-                Row({ space: this.fontSize * 0.4 }) {
-                  Text('#')
-                    .fontSize(this.fontSize)
-                    .fontWeight(FontWeight.Bold)
-                    .fontColor(this.theme.sectionTitleColor);
-                  Text(group.section.title)
-                    .fontSize(this.fontSize * 1)
-                    .fontWeight(FontWeight.Medium)
-                    .fontColor(this.theme.sectionTitleColor);
-                }
-                .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.8, bottom: this.fontSize * 0.4 });
-              }
-
-              ForEach(group.cards, (card: ReferenceCardData, cardIndex: number) => {
-                ListItem() {
-                  Text(this.getTocCardTitle(card))
-                    .fontSize(this.fontSize * 0.8)
-                    .fontColor(this.theme.textColor)
-                    .maxLines(1)
-                    .textOverflow({ overflow: TextOverflow.Ellipsis })
-                    .padding({ left: this.fontSize * 1.87, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
-                    .width('100%')
-                    .onClick(() => {
-                      this.stopAllTextInputEditing();
-                      this.showTocPanel = false;
-                      const hasSearch: boolean = !!this.searchQuery.trim();
-                      if (hasSearch) {
-                        this.searchQuery = '';
-                        this.pendingTocScrollGroupIndex = groupIndex;
-                        this.pendingTocScrollItemIndex = cardIndex + 1;
-                      } else {
-                        this.listScroller.scrollToItemInGroup(groupIndex, cardIndex + 1, true, ScrollAlign.START);
-                      }
-                    });
-                }
-              }, (card: ReferenceCardData) => `toc:${this.selectedDocId}:${card.id}`);
-            }
-          }, (group: SectionWithCards) => `toc:${this.selectedDocId}:${group.section.id}`);
-        }
-        .layoutWeight(1)
-        .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 });
-      }
-      .width('100%')
-      .height('70%')
-      .backgroundColor(this.theme.surfaceBackgroundColor)
-      .borderRadius({
-        topLeft: this.fontSize * 1,
-        topRight: this.fontSize * 1,
-        bottomLeft: this.fontSize * 0,
-        bottomRight: this.fontSize * 0
-      });
-    }
-    .width('100%')
-    .height('100%')
-    .justifyContent(FlexAlign.End)
-    .backgroundColor('#80000000')
-    .onClick(() => {
-      this.stopAllTextInputEditing();
-      this.showTocPanel = false;
-    });
-  }
-
-  @Builder
-  private SettingsTab(): void {
-    Scroll() {
-      Column({ space: this.fontSize * 0.8 }) {
-        Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.25).fontWeight(FontWeight.Bold).fontColor(this.theme.accentColor);
-
-      Column({ space: 0 }) {
-        Row() {
-          Text(this.t('屏幕方向', 'Orientation'))
-            .fontColor(this.theme.mutedTextColor)
-            .fontSize(this.fontSize * 0.95);
-
-          Row({ space: this.fontSize * 0.6 }) {
-            Text(this.t('竖屏', 'Portrait'))
-              .fontSize(this.fontSize * 0.85)
-              .fontColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-              .backgroundColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-              .borderRadius(this.fontSize * 66)
-              .onClick(() => this.switchOrientationMode('portrait'));
-            Text(this.t('横屏', 'Landscape'))
-              .fontSize(this.fontSize * 0.85)
-              .fontColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-              .backgroundColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-              .borderRadius(this.fontSize * 66)
-              .onClick(() => this.switchOrientationMode('landscape'));
-            Text(this.t('自动', 'Auto'))
-              .fontSize(this.fontSize * 0.85)
-              .fontColor(this.orientationMode === 'auto' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-              .backgroundColor(this.orientationMode === 'auto' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-              .borderRadius(this.fontSize * 66)
-              .onClick(() => this.switchOrientationMode('auto'));
-          }
-        }
-        .width('100%')
-        .alignItems(VerticalAlign.Center)
-        .justifyContent(FlexAlign.SpaceBetween)
-        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
-
-        Divider()
-          .color(this.theme.borderColor)
-          .strokeWidth(this.fontSize * 0.07);
-
-        Row() {
-          Text(this.t('语言', 'Language'))
-            .fontColor(this.theme.mutedTextColor)
-            .fontSize(this.fontSize * 0.95);
-
-          Row({ space: this.fontSize * 0.6 }) {
-            Text(this.t('中文', '中文'))
-              .fontSize(this.fontSize * 0.85)
-              .fontColor(this.lang === 'zh' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-              .backgroundColor(this.lang === 'zh' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-              .borderRadius(this.fontSize * 66)
-              .onClick(() => this.switchLang('zh'));
-            Text('English')
-              .fontSize(this.fontSize * 0.85)
-              .fontColor(this.lang === 'en' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-              .backgroundColor(this.lang === 'en' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-              .borderRadius(this.fontSize * 66)
-              .onClick(() => this.switchLang('en'));
-          }
-        }
-        .width('100%')
-        .alignItems(VerticalAlign.Center)
-        .justifyContent(FlexAlign.SpaceBetween)
-        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
-
-        Divider()
-          .color(this.theme.borderColor)
-          .strokeWidth(this.fontSize * 0.07);
-
-        Row() {
-          Text(this.t('主题', 'Theme'))
-            .fontColor(this.theme.mutedTextColor)
-            .fontSize(this.fontSize * 0.95);
-
-          Row({ space: this.fontSize * 0.6 }) {
-            Text(this.t('暗黑', 'Dark'))
-              .fontSize(this.fontSize * 0.85)
-              .fontColor(this.themeId === 'dark' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-              .backgroundColor(this.themeId === 'dark' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-              .borderRadius(this.fontSize * 66)
-              .onClick(() => this.switchTheme('dark'));
-            Text(this.t('明亮', 'Light'))
-              .fontSize(this.fontSize * 0.85)
-              .fontColor(this.themeId === 'light' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-              .backgroundColor(this.themeId === 'light' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-              .borderRadius(this.fontSize * 66)
-              .onClick(() => this.switchTheme('light'));
-          }
-        }
-        .width('100%')
-        .alignItems(VerticalAlign.Center)
-        .justifyContent(FlexAlign.SpaceBetween)
-        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
-      }
-      .width('100%')
-      .backgroundColor(this.theme.surfaceBackgroundColor)
-      .borderRadius(this.fontSize * 0.8)
-      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
-
-      Column({ space: 0 }) {
-        Row() {
-          Column({ space: this.fontSize * 0.2 }) {
-            Text(this.t('学习模式', 'Learning Mode'))
-              .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.95);
-            Text(this.t(
-              '表格仅显示首个非空列，其余内容用 * 隐藏，便于自测记忆',
-              'Tables show only the first non-empty column, hiding rest with * for self-testing'
-            ))
-              .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.75)
-              .opacity(0.7);
-          }
-          .layoutWeight(1)
-          .alignItems(HorizontalAlign.Start);
-
-          Toggle({ type: ToggleType.Switch, isOn: this.learningModeEnabled })
-            .selectedColor(this.theme.accentColor)
-            .onChange((isOn: boolean) => this.toggleLearningMode(isOn));
-        }
-        .width('100%')
-        .alignItems(VerticalAlign.Center)
-        .justifyContent(FlexAlign.SpaceBetween)
-        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
-      }
-      .width('100%')
-      .backgroundColor(this.theme.surfaceBackgroundColor)
-      .borderRadius(this.fontSize * 0.8)
-      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
-
-      // 在线 Markdown 链接管理
-      Column({ space: 0 }) {
-        Row() {
-          Column({ space: this.fontSize * 0.2 }) {
-            Text(this.t('添加在线 Markdown', 'Add Online Markdown'))
-              .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.95);
-            Text(this.t(
-              '输入 MD 文件链接，解析后可在目录中查看',
-              'Enter MD file link, parsed content will appear in catalog'
-            ))
-              .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.75)
-              .opacity(0.7);
-          }
-          .layoutWeight(1)
-          .alignItems(HorizontalAlign.Start);
-        }
-        .width('100%')
-        .alignItems(VerticalAlign.Center)
-        .justifyContent(FlexAlign.SpaceBetween)
-        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.5 });
-
-        Row({ space: this.fontSize * 0.5 }) {
-          TextInput({
-            text: this.onlineMdInputUrl,
-            placeholder: this.t('输入 Markdown URL...', 'Enter Markdown URL...'),
-          })
-            .layoutWeight(1)
-            .fontSize(this.fontSize * 0.8)
-            .placeholderFont({ size: this.fontSize * 0.8 })
-            .fontColor(this.theme.titleColor)
-            .placeholderColor(this.theme.mutedTextColor)
-            .enableAutoFill(false)
-            .backgroundColor(this.theme.pageBackgroundColor)
-            .border({ width: 1, color: this.theme.borderColor })
-            .borderRadius(this.fontSize * 0.5)
-            .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-            .onChange((value: string) => {
-              this.onlineMdInputUrl = value;
-            });
-
-          Text(this.onlineMdParsing ? this.t('解析中...', 'Parsing...') : this.t('添加', 'Add'))
-            .fontSize(this.fontSize * 0.85)
-            .fontColor(this.onlineMdParsing ? this.theme.mutedTextColor : this.theme.chipSelectedTextColor)
-            .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-            .backgroundColor(this.onlineMdParsing ? this.theme.chipBackgroundColor : this.theme.chipSelectedBackgroundColor)
-            .borderRadius(this.fontSize * 66)
-            .onClick(() => {
-              if (!this.onlineMdParsing) {
-                this.parseAndAddOnlineMd();
-              }
-            });
-        }
-        .width('100%')
-        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, bottom: this.fontSize * 0.5 });
-
-        if (this.onlineMdParseResult) {
-          Text(this.onlineMdParseResult)
-            .fontSize(this.fontSize * 0.85)
-            .fontColor(this.onlineMdParseResult.includes(this.t('成功', 'success')) ? this.theme.accentColor : this.theme.dangerTextColor)
-            .width('100%')
-            .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, bottom: this.fontSize * 0.5 });
-        }
-
-        if (this.onlineMdLinks.length > 0) {
-          Divider()
-            .color(this.theme.borderColor)
-            .strokeWidth(this.fontSize * 0.07);
-
-          Column({ space: this.fontSize * 0.3 }) {
-            Row({ space: this.fontSize * 0.5 }) {
-              Text(this.t(`已添加 ${this.onlineMdLinks.length} 个链接`, `${this.onlineMdLinks.length} links added`))
-                .fontSize(this.fontSize * 0.85)
-                .fontColor(this.theme.mutedTextColor);
-              Text(this.t('（点击链接复制）', '(click link to copy)'))
-                .fontSize(this.fontSize * 0.75)
-                .fontColor(this.theme.mutedTextColor)
-                .opacity(0.7);
-              if (this.onlineMdCopySuccess) {
-                Text(this.t('复制成功', 'Copied'))
-                  .fontSize(this.fontSize * 0.75)
-                  .fontColor(this.theme.accentColor)
-                  .fontWeight(FontWeight.Medium);
-              }
-            }
-            .width('100%')
-            .alignItems(VerticalAlign.Center);
-
-            ForEach(this.onlineMdLinks, (link: OnlineMdLink) => {
-              Row({ space: this.fontSize * 0.5 }) {
-                Column({ space: this.fontSize * 0.1 }) {
-                  Text(link.name)
-                    .fontSize(this.fontSize * 0.9)
-                    .fontColor(this.theme.titleColor)
-                    .maxLines(1)
-                    .textOverflow({ overflow: TextOverflow.Ellipsis });
-                  Text(link.url)
-                    .fontSize(this.fontSize * 0.75)
-                    .fontColor(this.theme.accentColor)
-                    .maxLines(1)
-                    .textOverflow({ overflow: TextOverflow.Ellipsis })
-                    .decoration({ type: TextDecorationType.Underline });
-                }
-                .layoutWeight(1)
-                .alignItems(HorizontalAlign.Start)
-                .onClick(() => this.copyOnlineMdUrl(link.url));
-
-                if (this.isDefaultOnlineMdLink(link)) {
-                  Text(this.t('删除', 'Delete'))
-                    .fontSize(this.fontSize * 0.8)
-                    .fontColor(this.theme.mutedTextColor)
-                    .opacity(0.7)
-                    .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 });
-                } else {
-                  Text(this.t('删除', 'Delete'))
-                    .fontSize(this.fontSize * 0.8)
-                    .fontColor(this.theme.dangerTextColor)
-                    .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 })
-                    .onClick(() => this.removeOnlineMd(link.id));
-                }
-              }
-              .width('100%')
-              .padding({ top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 });
-            }, (link: OnlineMdLink) => link.id);
-          }
-          .width('100%')
-          .alignItems(HorizontalAlign.Start)
-          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.5, bottom: this.fontSize * 0.7 });
-        }
-      }
-      .width('100%')
-      .backgroundColor(this.theme.surfaceBackgroundColor)
-      .borderRadius(this.fontSize * 0.8)
-      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
-
-      Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
-        Text(this.t('开源地址：', 'Open Source: '))
-          .fontColor(this.theme.mutedTextColor)
-          .fontSize(this.fontSize * 0.9);
-        Text('github.com/jqknono/reference-harmony')
-          .fontColor(this.theme.accentColor)
-          .fontSize(this.fontSize * 0.9)
-          .decoration({ type: TextDecorationType.Underline })
-          .onClick(() => openExternalLink(this.getUIContext().getHostContext(), 'github.com/jqknono/reference-harmony'));
-      }
-      .width('100%')
-      .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
-      .backgroundColor(this.theme.surfaceBackgroundColor)
-      .borderRadius(this.fontSize * 0.8)
-      .border({ width: this.fontSize * 0.1, color: this.theme.borderColor });
-
-      Column({ space: this.fontSize * 0.2 }) {
-        Text(this.t(`中文备忘清单：${this.formatDocCount(this.zhDocCount)}`, `ZH cheat sheets: ${this.formatDocCount(this.zhDocCount)}`))
-          .fontColor(this.theme.mutedTextColor)
-          .fontSize(this.fontSize * 0.85);
-        Text(this.t(`英文备忘清单：${this.formatDocCount(this.enDocCount)}`, `EN cheat sheets: ${this.formatDocCount(this.enDocCount)}`))
-          .fontColor(this.theme.mutedTextColor)
-          .fontSize(this.fontSize * 0.85);
-      }
-      }
-      .padding(this.tabPadding())
-      .width('100%')
-    }
-    .align(Alignment.Top)
-    .height('100%')
-    .width('100%')
-    .scrollBar(BarState.Auto)
-    .backgroundColor(this.theme.pageBackgroundColor);
-  }
-
   private getTabLabel(index: number): string {
     if (index === 0) return this.t('目录', 'Catalog');
     if (index === 1) return this.t('备忘清单', 'Cheatsheet');
     if (index === 2) return this.t('测验', 'Quiz');
     return this.t('设置', 'Settings');
-  }
-
-  private formatDuration(ms: number): string {
-    const seconds = Math.floor(ms / 1000);
-    if (seconds < 60) return `${seconds}秒`;
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
-    return `${minutes}分${remainingSeconds}秒`;
-  }
-
-  private formatDateTime(timestamp: number): string {
-    const date = new Date(timestamp);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    const hour = date.getHours();
-    const minute = date.getMinutes();
-    return `${month}/${day} ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-  }
-
-  @Builder
-  private QuizTab(): void {
-    Column({ space: this.fontSize * 0.6 }) {
-      Text(this.t('测验', 'Quiz'))
-        .fontSize(this.fontSize * 1.5)
-        .fontWeight(FontWeight.Bold)
-        .fontColor(this.theme.accentColor)
-        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1 });
-
-      if (this.quizMode === 'idle') {
-        this.QuizIdleView();
-      } else if (this.quizMode === 'selecting') {
-        this.QuizSelectingView();
-      } else if (this.quizMode === 'answering') {
-        this.QuizAnsweringView();
-      } else if (this.quizMode === 'result') {
-        this.QuizResultView();
-      }
-    }
-    .height('100%')
-    .width('100%')
-    .backgroundColor(this.theme.pageBackgroundColor);
-  }
-
-  @Builder
-  private QuizIdleView(): void {
-    Column({ space: this.fontSize * 0.8 }) {
-      if (!this.selectedDoc) {
-        Column({ space: this.fontSize * 0.5 }) {
-          Text(this.t('请先选择文档', 'Please select a document first'))
-            .fontSize(this.fontSize)
-            .fontColor(this.theme.mutedTextColor);
-          Text(this.t('在"目录"中打开一个文档后，即可开始测验', 'Open a document in "Catalog" to start quiz'))
-            .fontSize(this.fontSize * 0.8)
-            .fontColor(this.theme.mutedTextColor)
-            .opacity(0.7);
-        }
-        .padding(this.fontSize * 1);
-      } else {
-        Column({ space: this.fontSize * 0.6 }) {
-          Row({ space: this.fontSize * 0.5 }) {
-            Text(this.t('当前文档：', 'Current Doc: '))
-              .fontSize(this.fontSize)
-              .fontColor(this.theme.mutedTextColor);
-            Text(this.selectedDoc.name || this.selectedDoc.title)
-              .fontSize(this.fontSize)
-              .fontColor(this.theme.titleColor)
-              .fontWeight(FontWeight.Medium);
-          }
-          .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-          Text(this.t(`可生成 ${this.quizAvailableCount} 道题目`, `${this.quizAvailableCount} questions available`))
-            .fontSize(this.fontSize * 0.85)
-            .fontColor(this.theme.mutedTextColor)
-            .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-          if (this.quizAvailableCount > 0) {
-            Row({ space: this.fontSize * 0.6 }) {
-              ForEach([5, 10, 15], (count: number) => {
-                if (this.quizAvailableCount >= count || count === 5) {
-                  Text(this.t(`${Math.min(count, this.quizAvailableCount)} 题`, `${Math.min(count, this.quizAvailableCount)} Q`))
-                    .fontSize(this.fontSize * 0.9)
-                    .fontColor(this.theme.accentColor)
-                    .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 })
-                    .backgroundColor(this.theme.surfaceBackgroundColor)
-                    .border({ width: 1, color: this.theme.accentColor })
-                    .borderRadius(this.fontSize * 0.5)
-                    .onClick(() => this.startQuiz(Math.min(count, this.quizAvailableCount)));
-                }
-              }, (count: number) => `quiz_start_${count}`);
-            }
-            .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5 });
-          } else {
-            Text(this.t('当前文档没有可生成测验的表格内容', 'No table content available for quiz in this document'))
-              .fontSize(this.fontSize * 0.85)
-              .fontColor(this.theme.dangerTextColor)
-              .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-          }
-        }
-        .width('100%')
-        .padding({ top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
-        .backgroundColor(this.theme.surfaceBackgroundColor)
-        .borderRadius(this.fontSize * 0.5)
-        .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
-      }
-
-      // 测验记录
-      if (this.quizRecord && this.quizRecord.totalQuizCount > 0) {
-        Column({ space: this.fontSize * 0.5 }) {
-          Text(this.t('测验记录', 'Quiz History'))
-            .fontSize(this.fontSize)
-            .fontWeight(FontWeight.Medium)
-            .fontColor(this.theme.titleColor);
-
-          Row({ space: this.fontSize * 1 }) {
-            Column({ space: this.fontSize * 0.2 }) {
-              Text(`${this.quizRecord.totalQuizCount}`)
-                .fontSize(this.fontSize * 1.5)
-                .fontWeight(FontWeight.Bold)
-                .fontColor(this.theme.accentColor);
-              Text(this.t('总测验', 'Total'))
-                .fontSize(this.fontSize * 0.75)
-                .fontColor(this.theme.mutedTextColor);
-            }
-
-            Column({ space: this.fontSize * 0.2 }) {
-              Text(`${this.quizRecord.averageScore}%`)
-                .fontSize(this.fontSize * 1.5)
-                .fontWeight(FontWeight.Bold)
-                .fontColor(this.theme.accentColor);
-              Text(this.t('平均分', 'Average'))
-                .fontSize(this.fontSize * 0.75)
-                .fontColor(this.theme.mutedTextColor);
-            }
-
-            Column({ space: this.fontSize * 0.2 }) {
-              Text(`${this.quizRecord.totalCorrectCount}/${this.quizRecord.totalQuestionCount}`)
-                .fontSize(this.fontSize * 1.5)
-                .fontWeight(FontWeight.Bold)
-                .fontColor(this.theme.accentColor);
-              Text(this.t('正确率', 'Correct'))
-                .fontSize(this.fontSize * 0.75)
-                .fontColor(this.theme.mutedTextColor);
-            }
-          }
-          .justifyContent(FlexAlign.SpaceAround)
-          .width('100%');
-        }
-        .width('100%')
-        .padding(this.fontSize * 1)
-        .backgroundColor(this.theme.surfaceBackgroundColor)
-        .borderRadius(this.fontSize * 0.5)
-        .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-        // 最近测验列表
-        if (this.quizRecord.sessions.length > 0) {
-          Column({ space: this.fontSize * 0.3 }) {
-            Text(this.t('最近测验', 'Recent Quizzes'))
-              .fontSize(this.fontSize * 0.9)
-              .fontColor(this.theme.mutedTextColor)
-              .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-            List() {
-              ForEach(this.quizRepository.getRecentSessions(this.quizRecord, 10), (session: QuizSession) => {
-                ListItem() {
-                  Row() {
-                    Column({ space: this.fontSize * 0.15 }) {
-                      Text(session.docName || session.docTitle)
-                        .fontSize(this.fontSize * 0.9)
-                        .fontColor(this.theme.titleColor)
-                        .maxLines(1)
-                        .textOverflow({ overflow: TextOverflow.Ellipsis });
-                      Text(this.formatDateTime(session.endTime))
-                        .fontSize(this.fontSize * 0.75)
-                        .fontColor(this.theme.mutedTextColor);
-                    }
-                    .layoutWeight(1)
-                    .alignItems(HorizontalAlign.Start);
-
-                    Column({ space: this.fontSize * 0.1 }) {
-                      Text(`${session.score}%`)
-                        .fontSize(this.fontSize)
-                        .fontWeight(FontWeight.Bold)
-                        .fontColor(session.score >= 60 ? this.theme.accentColor : this.theme.dangerTextColor);
-                      Text(`${session.correctCount}/${session.totalCount}`)
-                        .fontSize(this.fontSize * 0.75)
-                        .fontColor(this.theme.mutedTextColor);
-                    }
-                    .alignItems(HorizontalAlign.End);
-                  }
-                  .width('100%')
-                  .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 });
-                }
-              }, (session: QuizSession) => session.id);
-            }
-            .layoutWeight(1)
-            .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 });
-          }
-          .layoutWeight(1);
-        }
-      }
-    }
-    .layoutWeight(1);
-  }
-
-  @Builder
-  private QuizSelectingView(): void {
-    Column({ space: this.fontSize * 0.8 }) {
-      Text(this.t('选择题目数量', 'Select Question Count'))
-        .fontSize(this.fontSize)
-        .fontColor(this.theme.titleColor);
-    }
-    .padding(this.fontSize * 1);
-  }
-
-  @Builder
-  private QuizAnsweringView(): void {
-    Column({ space: this.fontSize * 0.6 }) {
-      // 进度条
-      Row() {
-        Text(`${this.quizCurrentIndex + 1} / ${this.quizQuestions.length}`)
-          .fontSize(this.fontSize * 0.9)
-          .fontColor(this.theme.mutedTextColor);
-        Blank();
-        Text(this.t('退出', 'Exit'))
-          .fontSize(this.fontSize * 0.9)
-          .fontColor(this.theme.dangerTextColor)
-          .onClick(() => this.resetQuiz());
-      }
-      .width('100%')
-      .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-      Progress({ value: this.quizCurrentIndex + 1, total: this.quizQuestions.length })
-        .width('100%')
-        .color(this.theme.accentColor)
-        .backgroundColor(this.theme.surfaceMutedBackgroundColor)
-        .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-      // 题目
-      Scroll() {
-        Column({ space: this.fontSize * 0.8 }) {
-          Text(this.quizQuestions[this.quizCurrentIndex]?.question ?? '')
-            .fontSize(this.fontSize * 1.1)
-            .fontColor(this.theme.titleColor)
-            .fontWeight(FontWeight.Medium)
-            .width('100%')
-            .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-          // 选项
-          Column({ space: this.fontSize * 0.5 }) {
-            ForEach(this.quizQuestions[this.quizCurrentIndex]?.options ?? [], (option: QuizOption, optionIndex: number) => {
-              Row({ space: this.fontSize * 0.6 }) {
-                Text(String.fromCharCode(65 + optionIndex))
-                  .fontSize(this.fontSize)
-                  .fontWeight(FontWeight.Bold)
-                  .fontColor(this.getOptionLabelColor(optionIndex));
-
-                Text(option.text)
-                  .fontSize(this.fontSize)
-                  .fontColor(this.getOptionTextColor(optionIndex))
-                  .layoutWeight(1);
-
-                if (this.quizShowAnswer) {
-                  if (option.isCorrect) {
-                    Text('✓')
-                      .fontSize(this.fontSize)
-                      .fontColor(0xff4caf50);
-                  } else if (optionIndex === this.quizSelectedOptionIndex && !option.isCorrect) {
-                    Text('✗')
-                      .fontSize(this.fontSize)
-                      .fontColor(this.theme.dangerTextColor);
-                  }
-                }
-              }
-              .width('100%')
-              .padding(this.fontSize * 0.8)
-              .backgroundColor(this.getOptionBackgroundColor(optionIndex))
-              .border({ width: this.fontSize * 0.1, color: this.getOptionBorderColor(optionIndex) })
-              .borderRadius(this.fontSize * 0.5)
-              .onClick(() => this.selectQuizOption(optionIndex));
-            }, (_option: QuizOption, optionIndex: number) => {
-              const qid = this.quizQuestions[this.quizCurrentIndex]?.id ?? 'q';
-              return `${qid}_option_${optionIndex}`;
-            });
-          }
-          .width('100%')
-          .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-          // 解释（答案后显示）
-          if (this.quizShowAnswer && this.quizQuestions[this.quizCurrentIndex]?.explanation) {
-            Text(this.quizQuestions[this.quizCurrentIndex].explanation)
-              .fontSize(this.fontSize * 0.9)
-              .fontColor(this.theme.mutedTextColor)
-              .fontStyle(FontStyle.Italic)
-              .width('100%')
-              .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-          }
-        }
-      }
-      .layoutWeight(1)
-      .scrollBar(BarState.Off);
-
-      // 底部按钮
-      Row({ space: this.fontSize * 1 }) {
-        if (!this.quizShowAnswer) {
-          Text(this.t('确认答案', 'Confirm'))
-            .fontSize(this.fontSize)
-            .fontColor(this.quizSelectedOptionIndex >= 0 ? 0xffffffff : this.theme.mutedTextColor)
-            .padding({ left: this.fontSize * 1.5, right: this.fontSize * 1.5, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
-            .backgroundColor(this.quizSelectedOptionIndex >= 0 ? this.theme.accentColor : this.theme.surfaceMutedBackgroundColor)
-            .borderRadius(this.fontSize * 0.5)
-            .onClick(() => this.confirmQuizAnswer());
-        } else {
-          Text(this.quizCurrentIndex + 1 >= this.quizQuestions.length ? this.t('查看结果', 'View Results') : this.t('下一题', 'Next'))
-            .fontSize(this.fontSize)
-            .fontColor(0xffffffff)
-            .padding({ left: this.fontSize * 1.5, right: this.fontSize * 1.5, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
-            .backgroundColor(this.theme.accentColor)
-            .borderRadius(this.fontSize * 0.5)
-            .onClick(() => this.nextQuizQuestion());
-        }
-      }
-      .width('100%')
-      .justifyContent(FlexAlign.Center)
-      .padding({ left: this.fontSize * 1, right: this.fontSize * 1, bottom: this.fontSize * 1 });
-    }
-    .layoutWeight(1)
-    .width('100%');
-  }
-
-  private getOptionLabelColor(optionIndex: number): number {
-    if (!this.quizShowAnswer) {
-      return optionIndex === this.quizSelectedOptionIndex ? this.theme.accentColor : this.theme.mutedTextColor;
-    }
-    const option = this.quizQuestions[this.quizCurrentIndex]?.options[optionIndex];
-    if (option?.isCorrect) return 0xff4caf50;
-    if (optionIndex === this.quizSelectedOptionIndex) return this.theme.dangerTextColor;
-    return this.theme.mutedTextColor;
-  }
-
-  private getOptionTextColor(optionIndex: number): number {
-    if (!this.quizShowAnswer) {
-      return optionIndex === this.quizSelectedOptionIndex ? this.theme.titleColor : this.theme.textColor;
-    }
-    const option = this.quizQuestions[this.quizCurrentIndex]?.options[optionIndex];
-    if (option?.isCorrect) return 0xff4caf50;
-    if (optionIndex === this.quizSelectedOptionIndex) return this.theme.dangerTextColor;
-    return this.theme.textColor;
-  }
-
-  private getOptionBackgroundColor(optionIndex: number): number {
-    if (!this.quizShowAnswer) {
-      return optionIndex === this.quizSelectedOptionIndex ? this.theme.chipSelectedBackgroundColor : this.theme.surfaceBackgroundColor;
-    }
-    const option = this.quizQuestions[this.quizCurrentIndex]?.options[optionIndex];
-    if (option?.isCorrect) return 0x204caf50;
-    if (optionIndex === this.quizSelectedOptionIndex && !option?.isCorrect) return 0x20f44336;
-    return this.theme.surfaceBackgroundColor;
-  }
-
-  private getOptionBorderColor(optionIndex: number): number {
-    if (!this.quizShowAnswer) {
-      return optionIndex === this.quizSelectedOptionIndex ? this.theme.accentColor : this.theme.borderColor;
-    }
-    const option = this.quizQuestions[this.quizCurrentIndex]?.options[optionIndex];
-    if (option?.isCorrect) return 0xff4caf50;
-    if (optionIndex === this.quizSelectedOptionIndex && !option?.isCorrect) return this.theme.dangerTextColor;
-    return this.theme.borderColor;
-  }
-
-  private getQuizCorrectCount(): number {
-    let count = 0;
-    for (let i = 0; i < this.quizAnswers.length; i++) {
-      if (this.quizAnswers[i].isCorrect) count++;
-    }
-    return count;
-  }
-
-  private getQuizScore(): number {
-    return calculateScore(this.getQuizCorrectCount(), this.quizQuestions.length);
-  }
-
-  @Builder
-  private QuizResultView(): void {
-    Column({ space: this.fontSize * 0.8 }) {
-      // 分数显示
-      Column({ space: this.fontSize * 0.3 }) {
-        Text(this.t('测验完成！', 'Quiz Complete!'))
-          .fontSize(this.fontSize * 1.2)
-          .fontWeight(FontWeight.Bold)
-          .fontColor(this.theme.titleColor);
-
-        Text(`${this.getQuizScore()}%`)
-          .fontSize(this.fontSize * 3)
-          .fontWeight(FontWeight.Bold)
-          .fontColor(this.getQuizScore() >= 60 ? this.theme.accentColor : this.theme.dangerTextColor);
-
-        Text(this.t(`${this.getQuizCorrectCount()} / ${this.quizQuestions.length} 正确`, `${this.getQuizCorrectCount()} / ${this.quizQuestions.length} Correct`))
-          .fontSize(this.fontSize)
-          .fontColor(this.theme.mutedTextColor);
-
-        Text(this.t(`用时：${this.formatDuration(Date.now() - this.quizStartTime)}`, `Duration: ${this.formatDuration(Date.now() - this.quizStartTime)}`))
-          .fontSize(this.fontSize * 0.9)
-          .fontColor(this.theme.mutedTextColor);
-      }
-      .width('100%')
-      .padding(this.fontSize * 1.5)
-      .backgroundColor(this.theme.surfaceBackgroundColor)
-      .borderRadius(this.fontSize * 0.5)
-      .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-      // 答题详情
-      Text(this.t('答题详情', 'Answer Details'))
-        .fontSize(this.fontSize)
-        .fontWeight(FontWeight.Medium)
-        .fontColor(this.theme.titleColor)
-        .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
-
-      List() {
-        ForEach(this.quizQuestions, (question: QuizQuestion, qIndex: number) => {
-          ListItem() {
-            Row({ space: this.fontSize * 0.5 }) {
-              Text(`${qIndex + 1}.`)
-                .fontSize(this.fontSize * 0.9)
-                .fontColor(this.theme.mutedTextColor);
-
-              Text(question.question)
-                .fontSize(this.fontSize * 0.85)
-                .fontColor(this.theme.textColor)
-                .layoutWeight(1)
-                .maxLines(2)
-                .textOverflow({ overflow: TextOverflow.Ellipsis });
-
-              Text(this.quizAnswers[qIndex]?.isCorrect ? '✓' : '✗')
-                .fontSize(this.fontSize)
-                .fontColor(this.quizAnswers[qIndex]?.isCorrect ? 0xff4caf50 : this.theme.dangerTextColor);
-            }
-            .width('100%')
-            .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 });
-          }
-        }, (question: QuizQuestion, qIndex: number) => `result_${qIndex}`);
-      }
-      .layoutWeight(1)
-      .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 });
-
-      // 底部按钮
-      Row({ space: this.fontSize * 1 }) {
-        Text(this.t('返回', 'Back'))
-          .fontSize(this.fontSize)
-          .fontColor(this.theme.accentColor)
-          .padding({ left: this.fontSize * 1.5, right: this.fontSize * 1.5, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
-          .backgroundColor(this.theme.surfaceBackgroundColor)
-          .border({ width: 1, color: this.theme.accentColor })
-          .borderRadius(this.fontSize * 0.5)
-          .onClick(() => this.resetQuiz());
-
-        if (this.quizAvailableCount > 0) {
-          Text(this.t('再来一次', 'Try Again'))
-            .fontSize(this.fontSize)
-            .fontColor(0xffffffff)
-            .padding({ left: this.fontSize * 1.5, right: this.fontSize * 1.5, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
-            .backgroundColor(this.theme.accentColor)
-            .borderRadius(this.fontSize * 0.5)
-            .onClick(() => this.startQuiz(Math.min(this.quizQuestions.length, this.quizAvailableCount)));
-        }
-      }
-      .width('100%')
-      .justifyContent(FlexAlign.Center)
-      .padding({ left: this.fontSize * 1, right: this.fontSize * 1, bottom: this.fontSize * 1 });
-    }
-    .layoutWeight(1)
-    .width('100%');
   }
 
   @Builder
@@ -2742,13 +1424,118 @@ struct Index {
   @Builder
   private CurrentTabContent(): void {
     if (this.currentTabIndex === 0) {
-      this.DocListTab();
+      DocListTab({
+        currentTabIndex: this.currentTabIndex,
+        loading: this.loading,
+        errorText: this.errorText,
+        catalogSearchQuery: this.catalogSearchQuery,
+        catalogSearchResults: this.catalogSearchResults,
+        theme: this.theme,
+        fontSize: this.fontSize,
+        lang: this.lang,
+        isLandscape: this.isLandscape,
+        favoriteDocIds: this.favoriteDocIds,
+        recentDocIds: this.recentDocIds,
+        iconErrorKeys: this.iconErrorKeys,
+        catalogSearchInputController: this.catalogSearchInputController,
+        tabsController: this.tabsController,
+        docs: this.docs,
+        onlineMdDocs: this.onlineMdDocs,
+        localMdDocs: this.localMdDocs,
+        onOpenDoc: (docId: string, switchToReadTab: boolean): void => { this.openDoc(docId, switchToReadTab); },
+        onOpenOnlineDoc: (docId: string): void => { this.openOnlineDoc(docId); },
+        onOpenLocalDoc: (docId: string): void => { this.openLocalDoc(docId); },
+        onOpenDocAndQuiz: (docId: string): void => { this.openDocAndQuiz(docId); },
+        onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },
+        onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
+        onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
+      });
     } else if (this.currentTabIndex === 1) {
-      this.ReadTab();
+      ReadTab({
+        theme: this.theme,
+        fontSize: this.fontSize,
+        lang: this.lang,
+        isLandscape: this.isLandscape,
+        learningModeEnabled: this.learningModeEnabled,
+        searchQuery: this.searchQuery,
+        searchSectionCards: this.searchSectionCards,
+        searchResultCount: this.searchResultCount,
+        searchNavSectionIndex: this.searchNavSectionIndex,
+        sectionCards: this.sectionCards,
+        loading: this.loading,
+        errorText: this.errorText,
+        iconErrorKeys: this.iconErrorKeys,
+        pendingTocScrollGroupIndex: this.pendingTocScrollGroupIndex,
+        pendingTocScrollItemIndex: this.pendingTocScrollItemIndex,
+        selectedDoc: this.selectedDoc ?? null,
+        selectedDocId: this.selectedDocId,
+        selectedDocIcon: this.selectedDocIcon,
+        selectedDocAvatarVersion: this.selectedDocAvatarVersion,
+        favoriteDocIds: this.favoriteDocIds,
+        listScroller: this.listScroller,
+        listSearchScroller: this.listSearchScroller,
+        listSectionNavScroller: this.listSectionNavScroller,
+        listCardNavScroller: this.listCardNavScroller,
+        docSearchInputController: this.docSearchInputController,
+        onToggleDocFavorite: (docId: string): void => { this.toggleDocFavorite(docId); },
+        onShowTocPanel: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = true; },
+        onRebuildSearchResults: (): void => { this.rebuildSearchResults(); },
+      });
     } else if (this.currentTabIndex === 2) {
-      this.QuizTab();
+      QuizTab({
+        theme: this.theme,
+        fontSize: this.fontSize,
+        lang: this.lang,
+        isLandscape: this.isLandscape,
+        quizMode: this.quizMode,
+        quizQuestions: this.quizQuestions,
+        quizCurrentIndex: this.quizCurrentIndex,
+        quizAnswers: this.quizAnswers,
+        quizSelectedOptionIndex: this.quizSelectedOptionIndex,
+        quizShowAnswer: this.quizShowAnswer,
+        quizStartTime: this.quizStartTime,
+        quizQuestionStartTime: this.quizQuestionStartTime,
+        quizRecord: this.quizRecord,
+        quizAvailableCount: this.quizAvailableCount,
+        selectedDoc: this.selectedDoc ?? null,
+        quizRepository: this.quizRepository,
+        onStartQuiz: (count: number): void => { this.startQuiz(count); },
+        onSelectQuizOption: (index: number): void => { this.selectQuizOption(index); },
+        onConfirmQuizAnswer: (): void => { this.confirmQuizAnswer(); },
+        onNextQuizQuestion: (): void => { this.nextQuizQuestion(); },
+        onResetQuiz: (): void => { this.resetQuiz(); },
+      });
     } else {
-      this.SettingsTab();
+      SettingsTab({
+        theme: this.theme,
+        fontSize: this.fontSize,
+        lang: this.lang,
+        isLandscape: this.isLandscape,
+        themeId: this.themeId,
+        orientationMode: this.orientationMode,
+        learningModeEnabled: this.learningModeEnabled,
+        zhDocCount: this.zhDocCount,
+        enDocCount: this.enDocCount,
+        onlineMdInputUrl: this.onlineMdInputUrl,
+        onlineMdParsing: this.onlineMdParsing,
+        onlineMdParseResult: this.onlineMdParseResult,
+        onlineMdLinks: this.onlineMdLinks,
+        onlineMdCopySuccess: this.onlineMdCopySuccess,
+        localMdImporting: this.localMdImporting,
+        localMdImportResult: this.localMdImportResult,
+        localMdLinks: this.localMdLinks,
+        localMdCopySuccess: this.localMdCopySuccess,
+        onSwitchOrientationMode: (mode: 'portrait' | 'landscape' | 'auto'): void => { this.switchOrientationMode(mode); },
+        onSwitchLang: (lang: ReferenceLang): void => { this.switchLang(lang); },
+        onSwitchTheme: (theme: AppThemeId): void => { this.switchTheme(theme); },
+        onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
+        onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
+        onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
+        onCopyOnlineMdUrl: (url: string): void => { this.copyOnlineMdUrl(url); },
+        onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },
+        onRemoveLocalMd: (linkId: string): void => { this.removeLocalMd(linkId); },
+        onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
+      });
     }
   }
 
@@ -2759,22 +1546,127 @@ struct Index {
       } else {
         Tabs({ barPosition: BarPosition.End, index: this.currentTabIndex, controller: this.tabsController }) {
           TabContent() {
-            this.DocListTab();
+            DocListTab({
+              currentTabIndex: this.currentTabIndex,
+              loading: this.loading,
+              errorText: this.errorText,
+              catalogSearchQuery: this.catalogSearchQuery,
+              catalogSearchResults: this.catalogSearchResults,
+              theme: this.theme,
+              fontSize: this.fontSize,
+              lang: this.lang,
+              isLandscape: this.isLandscape,
+              favoriteDocIds: this.favoriteDocIds,
+              recentDocIds: this.recentDocIds,
+              iconErrorKeys: this.iconErrorKeys,
+              catalogSearchInputController: this.catalogSearchInputController,
+              tabsController: this.tabsController,
+              docs: this.docs,
+              onlineMdDocs: this.onlineMdDocs,
+              localMdDocs: this.localMdDocs,
+              onOpenDoc: (docId: string, switchToReadTab: boolean): void => { this.openDoc(docId, switchToReadTab); },
+              onOpenOnlineDoc: (docId: string): void => { this.openOnlineDoc(docId); },
+              onOpenLocalDoc: (docId: string): void => { this.openLocalDoc(docId); },
+              onOpenDocAndQuiz: (docId: string): void => { this.openDocAndQuiz(docId); },
+              onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },
+              onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
+              onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
+            });
           }
           .tabBar(this.TabBarItem(0));
 
           TabContent() {
-            this.ReadTab();
+            ReadTab({
+              theme: this.theme,
+              fontSize: this.fontSize,
+              lang: this.lang,
+              isLandscape: this.isLandscape,
+              learningModeEnabled: this.learningModeEnabled,
+              searchQuery: this.searchQuery,
+              searchSectionCards: this.searchSectionCards,
+              searchResultCount: this.searchResultCount,
+              searchNavSectionIndex: this.searchNavSectionIndex,
+              sectionCards: this.sectionCards,
+              loading: this.loading,
+              errorText: this.errorText,
+              iconErrorKeys: this.iconErrorKeys,
+              pendingTocScrollGroupIndex: this.pendingTocScrollGroupIndex,
+              pendingTocScrollItemIndex: this.pendingTocScrollItemIndex,
+              selectedDoc: this.selectedDoc ?? null,
+              selectedDocId: this.selectedDocId,
+              selectedDocIcon: this.selectedDocIcon,
+              selectedDocAvatarVersion: this.selectedDocAvatarVersion,
+              favoriteDocIds: this.favoriteDocIds,
+              listScroller: this.listScroller,
+              listSearchScroller: this.listSearchScroller,
+              listSectionNavScroller: this.listSectionNavScroller,
+              listCardNavScroller: this.listCardNavScroller,
+              docSearchInputController: this.docSearchInputController,
+              onToggleDocFavorite: (docId: string): void => { this.toggleDocFavorite(docId); },
+              onShowTocPanel: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = true; },
+              onRebuildSearchResults: (): void => { this.rebuildSearchResults(); },
+            });
           }
           .tabBar(this.TabBarItem(1));
 
           TabContent() {
-            this.QuizTab();
+            QuizTab({
+              theme: this.theme,
+              fontSize: this.fontSize,
+              lang: this.lang,
+              isLandscape: this.isLandscape,
+              quizMode: this.quizMode,
+              quizQuestions: this.quizQuestions,
+              quizCurrentIndex: this.quizCurrentIndex,
+              quizAnswers: this.quizAnswers,
+              quizSelectedOptionIndex: this.quizSelectedOptionIndex,
+              quizShowAnswer: this.quizShowAnswer,
+              quizStartTime: this.quizStartTime,
+              quizQuestionStartTime: this.quizQuestionStartTime,
+              quizRecord: this.quizRecord,
+              quizAvailableCount: this.quizAvailableCount,
+              selectedDoc: this.selectedDoc ?? null,
+              quizRepository: this.quizRepository,
+              onStartQuiz: (count: number): void => { this.startQuiz(count); },
+              onSelectQuizOption: (index: number): void => { this.selectQuizOption(index); },
+              onConfirmQuizAnswer: (): void => { this.confirmQuizAnswer(); },
+              onNextQuizQuestion: (): void => { this.nextQuizQuestion(); },
+              onResetQuiz: (): void => { this.resetQuiz(); },
+            });
           }
           .tabBar(this.TabBarItem(2));
 
           TabContent() {
-            this.SettingsTab();
+            SettingsTab({
+              theme: this.theme,
+              fontSize: this.fontSize,
+              lang: this.lang,
+              isLandscape: this.isLandscape,
+              themeId: this.themeId,
+              orientationMode: this.orientationMode,
+              learningModeEnabled: this.learningModeEnabled,
+              zhDocCount: this.zhDocCount,
+              enDocCount: this.enDocCount,
+              onlineMdInputUrl: this.onlineMdInputUrl,
+              onlineMdParsing: this.onlineMdParsing,
+              onlineMdParseResult: this.onlineMdParseResult,
+              onlineMdLinks: this.onlineMdLinks,
+              onlineMdCopySuccess: this.onlineMdCopySuccess,
+              localMdImporting: this.localMdImporting,
+              localMdImportResult: this.localMdImportResult,
+              localMdLinks: this.localMdLinks,
+              localMdCopySuccess: this.localMdCopySuccess,
+              onSwitchOrientationMode: (mode: 'portrait' | 'landscape' | 'auto'): void => { this.switchOrientationMode(mode); },
+              onSwitchLang: (lang: ReferenceLang): void => { this.switchLang(lang); },
+              onSwitchTheme: (theme: AppThemeId): void => { this.switchTheme(theme); },
+              onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
+              onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
+              onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
+              onCopyOnlineMdUrl: (url: string): void => { this.copyOnlineMdUrl(url); },
+              onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },
+              onRemoveLocalMd: (linkId: string): void => { this.removeLocalMd(linkId); },
+              onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
+            });
           }
           .tabBar(this.TabBarItem(3));
         }
@@ -2786,7 +1678,26 @@ struct Index {
       }
 
       if (this.showTocPanel) {
-        this.TocPanel();
+        TocPanel({
+          theme: this.theme,
+          fontSize: this.fontSize,
+          lang: this.lang,
+          selectedDocId: this.selectedDocId,
+          sectionCards: this.sectionCards,
+          onClose: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = false; },
+          onScrollToCard: (groupIndex: number, cardIndex: number): void => {
+            this.stopAllTextInputEditing();
+            this.showTocPanel = false;
+            const hasSearch: boolean = !!this.searchQuery.trim();
+            if (hasSearch) {
+              this.searchQuery = '';
+              this.pendingTocScrollGroupIndex = groupIndex;
+              this.pendingTocScrollItemIndex = cardIndex + 1;
+            } else {
+              this.listScroller.scrollToItemInGroup(groupIndex, cardIndex + 1, true, ScrollAlign.START);
+            }
+          },
+        });
       }
     }
     .backgroundColor(this.theme.pageBackgroundColor)

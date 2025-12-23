@@ -1,0 +1,423 @@
+import type { ReferenceDocSummary } from '../../common/referenceModels';
+import type { AppThemeTokens } from '../../common/appTheme';
+import { getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, isRemoteIcon, iconKey } from './utils';
+
+@Component
+export struct DocListTab {
+  @Link currentTabIndex: number;
+  @Link loading: boolean;
+  @Link errorText: string;
+  @Link catalogSearchQuery: string;
+  @Link catalogSearchResults: Array<ReferenceDocSummary>;
+  @Prop theme: AppThemeTokens;
+  @Prop fontSize: number;
+  @Prop lang: 'zh' | 'en';
+  @Prop isLandscape: boolean;
+  @Prop docs: Array<ReferenceDocSummary> = [];
+  @Prop onlineMdDocs: Array<ReferenceDocSummary> = [];
+  @Prop localMdDocs: Array<ReferenceDocSummary> = [];
+  @Prop favoriteDocIds: Array<string>;
+  @Prop recentDocIds: Array<string>;
+  @Link iconErrorKeys: Array<string>;
+
+  catalogSearchInputController: TextInputController = new TextInputController();
+  tabsController?: TabsController;
+
+  onOpenDoc?: (docId: string, switchToReadTab: boolean) => void;
+  onOpenOnlineDoc?: (docId: string) => void;
+  onOpenLocalDoc?: (docId: string) => void;
+  onOpenDocAndQuiz?: (docId: string) => void;
+  onOpenOnlineDocAndQuiz?: (docId: string) => void;
+  onOpenLocalDocAndQuiz?: (docId: string) => void;
+  onRebuildCatalogSearchResults?: () => void;
+
+  private t(zh: string, en: string): string {
+    return this.lang === 'en' ? en : zh;
+  }
+
+  private tabPadding(): Padding {
+    const base: number = this.fontSize * 1;
+    return this.isLandscape
+      ? { left: base, right: base, top: base, bottom: 0 }
+      : { left: base, right: base, top: base, bottom: base };
+  }
+
+  private isOnlineDoc(docId: string): boolean {
+    return docId.startsWith('online_');
+  }
+
+  private isLocalDoc(docId: string): boolean {
+    return docId.startsWith('local_');
+  }
+
+  private isDocFavorite(docId: string): boolean {
+    return this.favoriteDocIds.indexOf(docId) >= 0;
+  }
+
+  private isDocRecent(docId: string): boolean {
+    return this.recentDocIds.indexOf(docId) >= 0;
+  }
+
+  private catalogDocSortKey(doc: ReferenceDocSummary): string {
+    return (doc.name || doc.title || doc.id || '').trim().toLowerCase();
+  }
+
+  private compareCatalogDocs(a: ReferenceDocSummary, b: ReferenceDocSummary): number {
+    const ak = this.catalogDocSortKey(a);
+    const bk = this.catalogDocSortKey(b);
+    if (ak < bk) return -1;
+    if (ak > bk) return 1;
+
+    const aid = (a.id ?? '').toLowerCase();
+    const bid = (b.id ?? '').toLowerCase();
+    if (aid < bid) return -1;
+    if (aid > bid) return 1;
+
+    const af = (a.file ?? '').toLowerCase();
+    const bf = (b.file ?? '').toLowerCase();
+    if (af < bf) return -1;
+    if (af > bf) return 1;
+    return 0;
+  }
+
+  private getCatalogDocsForDisplay(): Array<ReferenceDocSummary> {
+    const merged: Array<ReferenceDocSummary> = [];
+    for (let i = 0; i < this.docs.length; i++) {
+      merged.push(this.docs[i]);
+    }
+    for (let i = 0; i < this.onlineMdDocs.length; i++) {
+      merged.push(this.onlineMdDocs[i]);
+    }
+    for (let i = 0; i < this.localMdDocs.length; i++) {
+      merged.push(this.localMdDocs[i]);
+    }
+
+    const favorites: Array<ReferenceDocSummary> = [];
+    const recent: Array<ReferenceDocSummary> = [];
+    const others: Array<ReferenceDocSummary> = [];
+
+    for (let i = 0; i < merged.length; i++) {
+      const doc = merged[i];
+      if (this.isDocFavorite(doc.id)) {
+        favorites.push(doc);
+      } else if (this.isDocRecent(doc.id)) {
+        recent.push(doc);
+      } else {
+        others.push(doc);
+      }
+    }
+
+    favorites.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => {
+      const ai = this.favoriteDocIds.indexOf(a.id);
+      const bi = this.favoriteDocIds.indexOf(b.id);
+      return ai - bi;
+    });
+
+    recent.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => {
+      const ai = this.recentDocIds.indexOf(a.id);
+      const bi = this.recentDocIds.indexOf(b.id);
+      return ai - bi;
+    });
+
+    others.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => this.compareCatalogDocs(a, b));
+
+    const result: Array<ReferenceDocSummary> = [];
+    for (let i = 0; i < favorites.length; i++) {
+      result.push(favorites[i]);
+    }
+    for (let i = 0; i < recent.length; i++) {
+      result.push(recent[i]);
+    }
+    for (let i = 0; i < others.length; i++) {
+      result.push(others[i]);
+    }
+    return result;
+  }
+
+  private hasIconError(iconKeyValue: string): boolean {
+    if (!iconKeyValue) return false;
+    return this.iconErrorKeys.indexOf(iconKeyValue) >= 0;
+  }
+
+  private markIconError(iconKeyValue: string): void {
+    if (!iconKeyValue) return;
+    if (this.hasIconError(iconKeyValue)) return;
+    const next: Array<string> = this.iconErrorKeys.slice();
+    next.push(iconKeyValue);
+    this.iconErrorKeys = next;
+  }
+
+  private canShowLocalIcon(docId: string, icon: string | undefined): boolean {
+    const s = trimmedIcon(icon);
+    if (!s) return false;
+    if (isRemoteIcon(s)) return false;
+    return !this.hasIconError(iconKey(docId, s));
+  }
+
+  @Builder
+  private DocAvatar(docId: string, label: string, icon: string | undefined, size: number, radius: number): void {
+    if (this.canShowLocalIcon(docId, icon)) {
+      if (isRawfileIcon(icon)) {
+        if (isSvgIcon(icon)) {
+          ForEach([iconKey(docId, trimmedIcon(icon))], (_: string) => {
+            Image($rawfile(trimmedIcon(icon)))
+              .width(size)
+              .height(size)
+              .syncLoad(true)
+              .fillColor(this.theme.avatarTextColor)
+              .onError(() => this.markIconError(iconKey(docId, trimmedIcon(icon))));
+          }, (k: string) => k);
+        } else {
+          ForEach([iconKey(docId, trimmedIcon(icon))], (_: string) => {
+            Image($rawfile(trimmedIcon(icon)))
+              .width(size)
+              .height(size)
+              .syncLoad(true)
+              .onError(() => this.markIconError(iconKey(docId, trimmedIcon(icon))));
+          }, (k: string) => k);
+        }
+      } else {
+        if (isSvgIcon(icon)) {
+          ForEach([iconKey(docId, trimmedIcon(icon))], (_: string) => {
+            Image(trimmedIcon(icon))
+              .width(size)
+              .height(size)
+              .syncLoad(true)
+              .fillColor(this.theme.avatarTextColor)
+              .onError(() => this.markIconError(iconKey(docId, trimmedIcon(icon))));
+          }, (k: string) => k);
+        } else {
+          ForEach([iconKey(docId, trimmedIcon(icon))], (_: string) => {
+            Image(trimmedIcon(icon))
+              .width(size)
+              .height(size)
+              .syncLoad(true)
+              .onError(() => this.markIconError(iconKey(docId, trimmedIcon(icon))));
+          }, (k: string) => k);
+        }
+      }
+    } else {
+      Text(getAvatarText(label))
+        .width(size)
+        .height(size)
+        .textAlign(TextAlign.Center)
+        .fontSize(Math.floor(size * 0.4))
+        .fontColor(this.theme.avatarTextColor)
+        .backgroundColor(this.theme.avatarBackgroundColor)
+        .borderRadius(radius);
+    }
+  }
+
+  private handleOpenDoc(docId: string): void {
+    if (this.isOnlineDoc(docId)) {
+      this.onOpenOnlineDoc?.(docId);
+    } else if (this.isLocalDoc(docId)) {
+      this.onOpenLocalDoc?.(docId);
+    } else {
+      this.onOpenDoc?.(docId, true);
+    }
+  }
+
+  private handleOpenDocAndQuiz(docId: string): void {
+    if (this.isOnlineDoc(docId)) {
+      this.onOpenOnlineDocAndQuiz?.(docId);
+    } else if (this.isLocalDoc(docId)) {
+      this.onOpenLocalDocAndQuiz?.(docId);
+    } else {
+      this.onOpenDocAndQuiz?.(docId);
+    }
+  }
+
+  build() {
+    Column({ space: this.fontSize * 0.6 }) {
+      Text(this.t('开发速查', 'Quick Reference'))
+        .fontSize(this.fontSize * 1.5)
+        .fontWeight(FontWeight.Bold)
+        .fontColor(this.theme.accentColor);
+
+      if (!this.isLandscape) {
+        Row({ space: this.fontSize * 0.6 }) {
+          TextInput({
+            text: this.catalogSearchQuery,
+            placeholder: this.t('搜索文档…', 'Search docs…'),
+            controller: this.catalogSearchInputController,
+          })
+            .layoutWeight(1)
+            .fontSize(this.fontSize)
+            .fontColor(this.theme.titleColor)
+            .placeholderColor(this.theme.mutedTextColor)
+            .enableAutoFill(false)
+            .backgroundColor(this.theme.surfaceBackgroundColor)
+            .border({ width: 1, color: this.theme.borderColor })
+            .borderRadius(this.fontSize * 0.8)
+            .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 })
+            .onChange((value: string) => {
+              this.catalogSearchQuery = value;
+              this.onRebuildCatalogSearchResults?.();
+            });
+
+          if (this.catalogSearchQuery.trim()) {
+            Text(this.t('清除', 'Clear'))
+              .fontSize(this.fontSize * 0.8)
+              .fontColor(this.theme.mutedTextColor)
+              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
+              .backgroundColor(this.theme.surfaceBackgroundColor)
+              .border({ width: 1, color: this.theme.borderColor })
+              .borderRadius(this.fontSize * 0.8)
+              .onClick(() => {
+                this.catalogSearchQuery = '';
+                this.catalogSearchResults = [];
+              });
+          }
+        }
+      }
+
+      if (this.loading) {
+        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor);
+      }
+
+      if (this.errorText) {
+        Text(this.errorText).fontColor(this.theme.dangerTextColor).maxLines(6);
+      }
+
+      if (this.catalogSearchQuery.trim() && this.catalogSearchResults.length === 0) {
+        Text(this.t('没有匹配的文档', 'No matching docs.')).fontColor(this.theme.mutedTextColor);
+      }
+
+      List() {
+        ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.getCatalogDocsForDisplay(), (doc: ReferenceDocSummary) => {
+          ListItem() {
+            Stack({ alignContent: Alignment.TopStart }) {
+              Row({ space: this.fontSize * 0.8 }) {
+                Column() {
+                  this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, this.fontSize * 2.5, 0);
+                }
+                .onClick(() => this.handleOpenDoc(doc.id))
+
+                Column({ space: this.fontSize * 0.2 }) {
+                  Text(doc.name || doc.id).fontSize(this.fontSize * 1).fontColor(this.theme.titleColor);
+
+                  if (doc.title && doc.title !== doc.name) {
+                    Text(doc.title)
+                      .fontSize(this.fontSize * 0.8)
+                      .fontColor(this.theme.mutedTextColor)
+                      .maxLines(2);
+                  }
+
+                  Text(this.t(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`, `${doc.sectionCount} sections · ${doc.cardCount} cards`))
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.theme.mutedTextColor);
+                }
+                .layoutWeight(1)
+                .onClick(() => this.handleOpenDoc(doc.id));
+
+                if (this.isLandscape) {
+                  Row({ space: this.fontSize * 0.8 }) {
+                    Text(this.t('打开', 'Open'))
+                      .fontSize(this.fontSize * 0.8)
+                      .fontColor(this.theme.accentColor)
+                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                      .border({ width: 1, color: this.theme.accentColor })
+                      .borderRadius(this.fontSize * 0.4)
+                      .onClick(() => this.handleOpenDoc(doc.id));
+                    Text(this.t('测验', 'Quiz'))
+                      .fontSize(this.fontSize * 0.8)
+                      .fontColor(this.theme.accentColor)
+                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                      .border({ width: 1, color: this.theme.accentColor })
+                      .borderRadius(this.fontSize * 0.4)
+                      .onClick(() => this.handleOpenDocAndQuiz(doc.id));
+                  }
+                } else {
+                  Column({ space: this.fontSize * 0.5 }) {
+                    Text(this.t('打开', 'Open'))
+                      .fontSize(this.fontSize * 0.8)
+                      .fontColor(this.theme.accentColor)
+                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                      .border({ width: 1, color: this.theme.accentColor })
+                      .borderRadius(this.fontSize * 0.4)
+                      .onClick(() => this.handleOpenDoc(doc.id));
+                    Text(this.t('测验', 'Quiz'))
+                      .fontSize(this.fontSize * 0.8)
+                      .fontColor(this.theme.accentColor)
+                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                      .border({ width: 1, color: this.theme.accentColor })
+                      .borderRadius(this.fontSize * 0.4)
+                      .onClick(() => this.handleOpenDocAndQuiz(doc.id));
+                  }
+                  .alignItems(HorizontalAlign.End);
+                }
+              }
+              .padding(this.fontSize * 1)
+              .width('100%');
+
+              Row({ space: this.fontSize * 0.3 }) {
+                if (this.isDocFavorite(doc.id)) {
+                  Text(this.t('收藏', 'Fav'))
+                    .fontSize(this.fontSize * 0.65)
+                    .fontColor(0xffffffff)
+                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                    .backgroundColor(0xffF59E0B)
+                    .borderRadius({
+                      topLeft: this.fontSize * 0.7,
+                      topRight: this.fontSize * 0.4,
+                      bottomLeft: this.fontSize * 0,
+                      bottomRight: this.fontSize * 0.4
+                    });
+                }
+                if (this.isDocRecent(doc.id) && !this.isDocFavorite(doc.id)) {
+                  Text(this.t('最近', 'Recent'))
+                    .fontSize(this.fontSize * 0.65)
+                    .fontColor(0xffffffff)
+                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                    .backgroundColor(0xff10B981)
+                    .borderRadius({
+                      topLeft: this.fontSize * 0.7,
+                      topRight: this.fontSize * 0.4,
+                      bottomLeft: this.fontSize * 0,
+                      bottomRight: this.fontSize * 0.4
+                    });
+                }
+                if (this.isOnlineDoc(doc.id)) {
+                  Text(this.t('在线', 'Online'))
+                    .fontSize(this.fontSize * 0.65)
+                    .fontColor(0xffffffff)
+                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                    .backgroundColor(this.theme.accentColor)
+                    .borderRadius({
+                      topLeft: this.fontSize * 0.7,
+                      topRight: this.fontSize * 0.4,
+                      bottomLeft: this.fontSize * 0,
+                      bottomRight: this.fontSize * 0.4
+                    });
+                }
+                if (this.isLocalDoc(doc.id)) {
+                  Text(this.t('本地', 'Local'))
+                    .fontSize(this.fontSize * 0.65)
+                    .fontColor(0xffffffff)
+                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                    .backgroundColor(0xff6366F1)
+                    .borderRadius({
+                      topLeft: this.fontSize * 0.7,
+                      topRight: this.fontSize * 0.4,
+                      bottomLeft: this.fontSize * 0,
+                      bottomRight: this.fontSize * 0.4
+                    });
+                }
+              }
+            }
+            .backgroundColor(this.theme.surfaceBackgroundColor)
+            .borderRadius(this.fontSize * 0.8);
+          }
+          .margin({ bottom: this.fontSize * 0.6 });
+        }, (doc: ReferenceDocSummary) => `${this.lang}:${doc.id}`);
+      }
+      .layoutWeight(1)
+      .divider({ strokeWidth: 0 });
+    }
+    .padding(this.tabPadding())
+    .height('100%')
+    .width('100%')
+    .backgroundColor(this.theme.pageBackgroundColor);
+  }
+}

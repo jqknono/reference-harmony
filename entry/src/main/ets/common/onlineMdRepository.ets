@@ -46,7 +46,7 @@ function stripUrlQueryAndFragment(rawUrl: string): string {
 
 function isMdUrl(rawUrl: string): boolean {
   const base = stripUrlQueryAndFragment(rawUrl).toLowerCase();
-  return !!base && base.endsWith('.md');
+  return !!base && (base.endsWith('.md') || base.endsWith('.markdown'));
 }
 
 function cleanHeadingText(text: string): string {
@@ -749,8 +749,8 @@ export class OnlineMdRepository {
       return {
         success: false,
         error: baseUrl
-          ? `仅支持 Markdown 文件（仅允许 .md 后缀）：${baseUrl}`
-          : '仅支持 Markdown 文件（仅允许 .md 后缀）',
+          ? `仅支持 Markdown 文件（仅允许 .md/.markdown 后缀）：${baseUrl}`
+          : '仅支持 Markdown 文件（仅允许 .md/.markdown 后缀）',
       };
     }
 
@@ -841,8 +841,11 @@ export class OnlineMdRepository {
     const cleanUrl = stripUrlQueryAndFragment(url);
     const parts = (cleanUrl || url).split('/');
     let fileName = parts[parts.length - 1] ?? 'online';
-    if (fileName.toLowerCase().endsWith('.md')) {
+    const lower = fileName.toLowerCase();
+    if (lower.endsWith('.md')) {
       fileName = fileName.slice(0, -3);
+    } else if (lower.endsWith('.markdown')) {
+      fileName = fileName.slice(0, -'.markdown'.length);
     }
     const normalized = fileName.normalize('NFKD').replace(/[^\w-]/g, '_');
     return `online_${normalized.replace(/_+/g, '_').replace(/^_+|_+$/g, '') || 'doc'}`;
