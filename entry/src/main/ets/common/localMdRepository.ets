@@ -13,6 +13,29 @@ import { parseMarkdownToDoc } from './onlineMdRepository';
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
 
+interface ReadTextResult {
+  text: string;
+  error: string;
+}
+
+interface StatAttemptResult {
+  ok: boolean;
+  stat: fs.Stat | null;
+  error: string;
+}
+
+interface OpenAttemptResult {
+  ok: boolean;
+  fd: number;
+  error: string;
+}
+
+interface ReadAttemptResult {
+  ok: boolean;
+  n: number;
+  error: string;
+}
+
 function stripQueryAndFragment(raw: string): string {
   const s = (raw ?? '').trim();
   if (!s) return '';
@@ -110,12 +133,16 @@ export class LocalMdRepository {
       return { success: false, error: '文件路径为空' };
     }
 
-    const markdown = await this.readTextFromUri(fileUri).then(
-      (text: string): string => text,
-      (err: Error | string): string => {
-        throw new Error(String(err));
-      },
-    );
+    const readResult = await Promise.resolve()
+      .then((): Promise<string> => this.readTextFromUri(fileUri))
+      .then(
+        (text: string): ReadTextResult => ({ text: text, error: '' }),
+        (err: Error | string): ReadTextResult => ({ text: '', error: String(err) }),
+      );
+    if (readResult.error) {
+      return { success: false, error: readResult.error };
+    }
+    const markdown = readResult.text;
 
     if (!markdown.trim()) {
       return { success: false, error: '文件内容为空' };
@@ -197,43 +224,93 @@ export class LocalMdRepository {
   }
 
   private async readTextFromUri(uri: string): Promise<string> {
-    const pathOrUri = normalizeFileUriToPath(uri);
-    const path = stripQueryAndFragment(pathOrUri);
-    if (!path) return '';
+    const rawUri = stripQueryAndFragment((uri ?? '').trim());
+    if (!rawUri) return '';
+    const rawPathOrUri = normalizeFileUriToPath(rawUri);
+    const strippedPath = stripQueryAndFragment(rawPathOrUri);
 
-    const stat = await Promise.resolve()
-      .then((): Promise<fs.Stat> => fs.stat(path))
-      .then(
-        (s: fs.Stat): fs.Stat => s,
-        (e: Error | string): Promise<fs.Stat> => Promise.reject<fs.Stat>(new Error(`读取文件信息失败：${String(e)}`)),
-      );
+    const candidates: Array<string> = [];
+    if (strippedPath) candidates.push(strippedPath);
+    if (rawUri && rawUri !== strippedPath) candidates.push(rawUri);
+    if (candidates.length === 0) return '';
 
-    const size: number = stat.size;
-    if (!Number.isFinite(size) || size <= 0) {
-      return '';
+    let fileFd: number = -1;
+    let lastOpenError = '';
+    for (let i = 0; i < candidates.length; i++) {
+      const candidate = candidates[i];
+      const openResult = await Promise.resolve()
+        .then((): Promise<fs.File> => fs.open(candidate, fs.OpenMode.READ_ONLY))
+        .then(
+          (f: fs.File): OpenAttemptResult => ({ ok: true, fd: f.fd, error: '' }),
+          (e: Error | string): OpenAttemptResult => ({ ok: false, fd: -1, error: `打开文件失败：${String(e)}` }),
+        );
+      if (openResult.ok && openResult.fd >= 0) {
+        fileFd = openResult.fd;
+        lastOpenError = '';
+        break;
+      }
+      lastOpenError = openResult.error;
+    }
+    if (fileFd < 0) {
+      return Promise.reject(new Error(lastOpenError || '打开文件失败'));
     }
 
-    const file = await Promise.resolve()
-      .then(() => fs.open(path, fs.OpenMode.READ_ONLY))
+    const chunkSize = 64 * 1024;
+    const chunks: Array<Uint8Array> = [];
+    let total = 0;
+    let position = 0;
+
+    const readAll = async (): Promise<string> => {
+      while (true) {
+        const buf = new ArrayBuffer(chunkSize);
+        const readResult = await Promise.resolve()
+          .then((): Promise<number> => fs.read(fileFd, buf, { offset: position, length: chunkSize }))
+          .then(
+            (n: number): ReadAttemptResult => ({ ok: true, n: n, error: '' }),
+            (e: Error | string): ReadAttemptResult => ({ ok: false, n: 0, error: `读取文件失败：${String(e)}` }),
+          );
+        if (!readResult.ok) {
+          return Promise.reject(new Error(readResult.error || '读取文件失败'));
+        }
+        if (readResult.n <= 0) {
+          break;
+        }
+
+        const view = new Uint8Array(buf, 0, readResult.n);
+        const copy = new Uint8Array(readResult.n);
+        copy.set(view);
+        chunks.push(copy);
+        total += readResult.n;
+        position += readResult.n;
+      }
+
+      if (total <= 0) return '';
+
+      const merged = new Uint8Array(total);
+      let offset = 0;
+      for (let i = 0; i < chunks.length; i++) {
+        const c = chunks[i];
+        merged.set(c, offset);
+        offset += c.length;
+      }
+      return this.decoder.decodeToString(merged);
+    };
+
+    return Promise.resolve()
+      .then((): Promise<string> => readAll())
       .then(
-        (f: fs.File): fs.File => f,
-        (e: Error | string): Promise<fs.File> => Promise.reject<fs.File>(new Error(`打开文件失败：${String(e)}`)),
+        (text: string): Promise<string> =>
+          Promise.resolve()
+            .then((): Promise<void> => fs.close(fileFd))
+            .then((): string => text, (): string => text),
+        (e: Error | string): Promise<string> =>
+          Promise.resolve()
+            .then((): Promise<void> => fs.close(fileFd))
+            .then(
+              (): Promise<string> => Promise.reject<string>(e),
+              (): Promise<string> => Promise.reject<string>(e),
+            ),
       );
-
-    const buf = new ArrayBuffer(size);
-    const readLen: number = await Promise.resolve()
-      .then((): Promise<number> => fs.read(file.fd, buf, { offset: 0, length: size }))
-      .then(
-        (n: number): number => n,
-        (e: Error | string): Promise<number> => Promise.reject<number>(new Error(`读取文件失败：${String(e)}`)),
-      );
-
-    await Promise.resolve()
-      .then(() => fs.close(file.fd))
-      .then((): void => undefined, (): void => undefined);
-
-    const bytes = new Uint8Array(buf, 0, Math.max(0, Math.min(readLen, size)));
-    return this.decoder.decodeToString(bytes);
   }
 }
 

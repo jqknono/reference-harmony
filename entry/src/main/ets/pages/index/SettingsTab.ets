@@ -206,7 +206,7 @@ export struct SettingsTab {
                 .fontColor(this.theme.mutedTextColor)
                 .fontSize(this.fontSize * 0.95);
               Text(this.t(
-                '输入 Markdown 链接（建议 raw 直链），会自动拆分为记忆卡片；表格可在"测验"中生成题目（默认含示例）',
+                '输入 Markdown 链接（建议 raw 直链），会自动拆分为记忆卡片；表格可在"测验"中生成题目',
                 'Enter a Markdown URL (prefer raw content URL). It becomes flashcards; tables can generate quiz questions (sample included)'
               ))
                 .fontColor(this.theme.mutedTextColor)

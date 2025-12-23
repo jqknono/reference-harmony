@@ -1072,47 +1072,47 @@ struct Index {
     this.localMdImporting = true;
     this.localMdImportResult = '';
 
-    const uri = (await this.selectLocalMarkdownFileUri()).trim();
-    if (!uri) {
-      this.localMdImporting = false;
-      return;
-    }
+    try {
+      const uri = (await this.selectLocalMarkdownFileUri()).trim();
+      if (!uri) {
+        return;
+      }
 
-    const result = await this.localMdRepository.readAndParse(uri);
-    const doc = result.doc;
-    if (!result.success || !doc) {
-      this.localMdImporting = false;
-      this.localMdImportResult = this.t(`导入失败：${result.error ?? ''}`, `Import failed: ${result.error ?? ''}`);
-      return;
-    }
+      const result = await this.localMdRepository.readAndParse(uri);
+      const doc = result.doc;
+      if (!result.success || !doc) {
+        this.localMdImportResult = this.t(`导入失败：${result.error ?? ''}`, `Import failed: ${result.error ?? ''}`);
+        return;
+      }
 
-    for (let i = 0; i < this.localMdLinks.length; i++) {
-      const link = this.localMdLinks[i];
-      if ((link?.url ?? '').trim() !== uri) continue;
-      await this.localMdRepository.saveDocToCache(host, link.id, doc);
-      this.localMdDocCache.set(link.id, doc);
+      for (let i = 0; i < this.localMdLinks.length; i++) {
+        const link = this.localMdLinks[i];
+        if ((link?.url ?? '').trim() !== uri) continue;
+        await this.localMdRepository.saveDocToCache(host, link.id, doc);
+        this.localMdDocCache.set(link.id, doc);
+        await this.rebuildLocalMdDocs();
+        this.localMdImportResult = this.t(
+          `已更新：${doc.name}（${doc.sections.length} 章节，${doc.cards.length} 卡片）`,
+          `Updated: ${doc.name} (${doc.sections.length} sections, ${doc.cards.length} cards)`
+        );
+        return;
+      }
+
+      const newLink = await this.localMdRepository.addLink(host, uri, doc.name || this.t('本地 Markdown', 'Local Markdown'));
+      await this.localMdRepository.saveDocToCache(host, newLink.id, doc);
+      this.localMdDocCache.set(newLink.id, doc);
+
+      const stored = await this.localMdRepository.getLinks(host);
+      this.localMdLinks = stored;
       await this.rebuildLocalMdDocs();
-      this.localMdImporting = false;
+
       this.localMdImportResult = this.t(
-        `已更新：${doc.name}（${doc.sections.length} 章节，${doc.cards.length} 卡片）`,
-        `Updated: ${doc.name} (${doc.sections.length} sections, ${doc.cards.length} cards)`
+        `导入成功：${doc.name}（${doc.sections.length} 章节，${doc.cards.length} 卡片）`,
+        `Import success: ${doc.name} (${doc.sections.length} sections, ${doc.cards.length} cards)`
       );
-      return;
+    } finally {
+      this.localMdImporting = false;
     }
-
-    const newLink = await this.localMdRepository.addLink(host, uri, doc.name || this.t('本地 Markdown', 'Local Markdown'));
-    await this.localMdRepository.saveDocToCache(host, newLink.id, doc);
-    this.localMdDocCache.set(newLink.id, doc);
-
-    const stored = await this.localMdRepository.getLinks(host);
-    this.localMdLinks = stored;
-    await this.rebuildLocalMdDocs();
-
-    this.localMdImporting = false;
-    this.localMdImportResult = this.t(
-      `导入成功：${doc.name}（${doc.sections.length} 章节，${doc.cards.length} 卡片）`,
-      `Import success: ${doc.name} (${doc.sections.length} sections, ${doc.cards.length} cards)`
-    );
   }
 
   private isOnlineDoc(docId: string): boolean {
