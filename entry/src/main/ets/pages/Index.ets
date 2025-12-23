@@ -1284,14 +1284,14 @@ struct Index {
       this.quizAvailableCount = 0;
       return;
     }
-    const questions = extractQuestionsFromDoc(this.selectedDoc);
+    const questions = extractQuestionsFromDoc(this.selectedDoc, this.lang);
     this.quizAvailableCount = questions.length;
   }
 
   private async startQuiz(questionCount: number): Promise<void> {
     if (!this.selectedDoc) return;
 
-    const allQuestions = extractQuestionsFromDoc(this.selectedDoc);
+    const allQuestions = extractQuestionsFromDoc(this.selectedDoc, this.lang);
     if (allQuestions.length === 0) return;
 
     const selected = selectRandomQuestions(allQuestions, questionCount);
@@ -1387,9 +1387,11 @@ struct Index {
       this.showTocPanel = false;
       return true;
     }
-    if (!this.isLandscape && this.currentTabIndex !== 0) {
+    if (this.currentTabIndex !== 0) {
       this.currentTabIndex = 0;
-      this.tabsController.changeIndex(0);
+      if (!this.isLandscape) {
+        this.tabsController.changeIndex(0);
+      }
       return true;
     }
     return true;
@@ -1399,9 +1401,9 @@ struct Index {
   private DocListTab(): void {
     Column({ space: this.fontSize * 0.6 }) {
       Text(this.t('开发速查', 'Quick Reference'))
-        .fontSize(22)
+        .fontSize(this.fontSize * 1.5)
         .fontWeight(FontWeight.Bold)
-        .fontColor(this.theme.titleColor);
+        .fontColor(this.theme.accentColor);
 
       if (!this.isLandscape) {
         Row({ space: this.fontSize * 0.6 }) {
@@ -1603,7 +1605,7 @@ struct Index {
           Text(this.selectedDoc ? (this.selectedDoc.name || this.selectedDoc.title) : this.t('未选择', 'No selection'))
             .fontSize(this.fontSize * 1.2)
             .fontWeight(FontWeight.Bold)
-            .fontColor(this.theme.titleColor);
+            .fontColor(this.theme.accentColor);
 
           if (this.selectedDoc && this.selectedDoc.title && this.selectedDoc.title !== this.selectedDoc.name) {
             Text(this.selectedDoc.title).fontSize(this.fontSize * 0.8).fontColor(this.theme.mutedTextColor).maxLines(2);
@@ -1939,7 +1941,7 @@ struct Index {
   private SettingsTab(): void {
     Scroll() {
       Column({ space: this.fontSize * 0.8 }) {
-        Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.25).fontWeight(FontWeight.Bold).fontColor(this.theme.titleColor);
+        Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.25).fontWeight(FontWeight.Bold).fontColor(this.theme.accentColor);
 
       Column({ space: 0 }) {
         Row() {
@@ -2273,9 +2275,9 @@ struct Index {
   private QuizTab(): void {
     Column({ space: this.fontSize * 0.6 }) {
       Text(this.t('测验', 'Quiz'))
-        .fontSize(this.fontSize * 1.47)
+        .fontSize(this.fontSize * 1.5)
         .fontWeight(FontWeight.Bold)
-        .fontColor(this.theme.titleColor)
+        .fontColor(this.theme.accentColor)
         .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1 });
 
       if (this.quizMode === 'idle') {
@@ -2727,7 +2729,7 @@ struct Index {
   private TabBarItem(index: number): void {
     Column() {
       Text(this.getTabLabel(index))
-        .fontSize(this.fontSize * 0.85)
+        .fontSize(this.fontSize * 1)
         .maxLines(1)
         .textOverflow({ overflow: TextOverflow.Ellipsis })
         .textAlign(TextAlign.Center)

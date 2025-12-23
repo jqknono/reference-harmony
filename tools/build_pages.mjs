@@ -90,7 +90,7 @@ const html = `<!doctype html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>mds 文件列表</title>
+    <title>备忘清单 文件列表</title>
     <style>
       :root {
         color-scheme: light dark;
@@ -220,9 +220,9 @@ const html = `<!doctype html>
   <body>
     <div class="wrap">
       <header>
-        <h1>mds 文件列表</h1>
+        <h1>备忘清单 文件列表</h1>
         <div class="meta">
-          构建域名：<span id="domain"></span> · 文件数：<span id="count"></span>
+          开源地址：<a href="https://github.com/jqknono/reference-harmony" target="_blank" rel="noreferrer">GitHub</a> · 文件数：<span id="count"></span>
         </div>
       </header>
 
@@ -254,8 +254,6 @@ ${rows.map((r) => `              ${r}`).join('\n')}
 
     <script>
       (function () {
-        var domain = ${JSON.stringify(domain)};
-        document.getElementById('domain').textContent = domain;
         var tbody = document.getElementById('tbody');
         var rows = Array.prototype.slice.call(tbody.querySelectorAll('tr'));
         document.getElementById('count').textContent = String(rows.length);

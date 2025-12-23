@@ -1,6 +1,6 @@
 // 测验工具 - 从表格内容生成选择题
 
-import type { ReferenceCardData, ReferenceDoc } from './referenceModels';
+import type { ReferenceCardData, ReferenceDoc, ReferenceLang } from './referenceModels';
 import type { QuizQuestion, QuizOption } from './quizModels';
 import { generateQuizQuestionId } from './quizModels';
 import { decodeIfEncoded } from './encodedContent';
@@ -167,6 +167,7 @@ function generateQuestionsFromTable(
   cardId: string,
   cardTitle: string,
   table: ParsedTable,
+  lang: ReferenceLang,
 ): Array<QuizQuestion> {
   const questions: Array<QuizQuestion> = [];
 
@@ -195,26 +196,27 @@ function generateQuestionsFromTable(
 
   if (col0Values.length < 2) return questions;
 
-  // 判断表头是否有效（非空且不是仅由 "-" 组成）
+  // 判断表头是否有效（非空且不是仅由标点符号/分隔符组成）
   const isValidHeader = (h: string): boolean => {
-    if (!h) return false;
-    // 检查是否仅由 "-" 和空格组成
-    for (let i = 0; i < h.length; i++) {
-      const ch = h.charAt(i);
-      if (ch !== '-' && ch !== ' ') return true;
-    }
-    return false;
+    const t = (h ?? '').trim();
+    if (!t) return false;
+    // 只要包含字母/数字/中文，即认为是有效表头；否则（如仅为 "："、"—"、"…" 等标点）使用默认文案
+    return /[A-Za-z0-9\u4E00-\u9FFF]/.test(t);
   };
 
   const rawHeader0 = stripMarkdownFormatting(table.headers[0]);
   const rawHeader1 = stripMarkdownFormatting(table.headers[1]);
-  const header0 = isValidHeader(rawHeader0) ? rawHeader0 : '项目';
-  const header1 = isValidHeader(rawHeader1) ? rawHeader1 : '含义';
+  const defaultHeader0 = lang === 'en' ? 'Item' : '项目';
+  const defaultHeader1 = lang === 'en' ? 'Meaning' : '含义';
+  const header0 = isValidHeader(rawHeader0) ? rawHeader0 : defaultHeader0;
+  const header1 = isValidHeader(rawHeader1) ? rawHeader1 : defaultHeader1;
 
   // 生成题目：给出第一列的值，问第二列是什么
   for (let i = 0; i < col0Values.length && questions.length < 10; i++) {
     const correctValue = col1Values[i];
-    const questionText = `【${cardTitle}】"${col0Values[i]}" 的 ${header1} 是什么？`;
+    const questionText = lang === 'en'
+      ? `[${cardTitle}] What is the ${header1} of "${col0Values[i]}"?`
+      : `【${cardTitle}】"${col0Values[i]}" 的 ${header1} 是什么？`;
 
     // 收集干扰项（从其他行的第二列值中选取，去重）
     const distractors: Array<string> = [];
@@ -258,6 +260,10 @@ function generateQuestionsFromTable(
       }
     }
 
+    const explanation = lang === 'en'
+      ? `Correct answer: ${correctValue}`
+      : `正确答案：${correctValue}`;
+
     questions.push({
       id: generateQuizQuestionId(docId, cardId, i),
       docId,
@@ -265,7 +271,7 @@ function generateQuestionsFromTable(
       question: questionText,
       options: shuffledOptions,
       correctIndex,
-      explanation: `正确答案：${correctValue}`,
+      explanation,
     });
   }
 
@@ -275,6 +281,7 @@ function generateQuestionsFromTable(
 export function extractQuestionsFromCard(
   docId: string,
   card: ReferenceCardData,
+  lang: ReferenceLang,
 ): Array<QuizQuestion> {
   const encoded = card.encoded === true;
   const body = decodeIfEncoded(card.body ?? '', encoded);
@@ -286,17 +293,17 @@ export function extractQuestionsFromCard(
 
   const cardTitle = decodeIfEncoded(card.title ?? '', encoded) || card.id;
 
-  return generateQuestionsFromTable(docId, card.id, cardTitle, table);
+  return generateQuestionsFromTable(docId, card.id, cardTitle, table, lang);
 }
 
-export function extractQuestionsFromDoc(doc: ReferenceDoc): Array<QuizQuestion> {
+export function extractQuestionsFromDoc(doc: ReferenceDoc, lang: ReferenceLang): Array<QuizQuestion> {
   const allQuestions: Array<QuizQuestion> = [];
 
   for (let i = 0; i < doc.cards.length; i++) {
     const card = doc.cards[i];
     if (card.sectionId === 'intro') continue;
 
-    const questions = extractQuestionsFromCard(doc.id, card);
+    const questions = extractQuestionsFromCard(doc.id, card, lang);
     for (let j = 0; j < questions.length; j++) {
       allQuestions.push(questions[j]);
     }
