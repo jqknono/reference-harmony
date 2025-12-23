@@ -933,16 +933,20 @@ export function MarkdownView($$: MarkdownViewParams): void {
                             ? ($$.theme ?? getAppThemeTokens('light')).accentColor
                             : ($$.fontColor ?? 0x222222))
                           .width(($$.fontSize ?? 15) * 1.4);
-                        MarkdownInlineStyled({
-                          tokens: item,
-                          fontSize: $$.fontSize ?? 15,
-                          color: $$.fontColor ?? 0x222222,
-                          weight: $$.fontWeight ?? FontWeight.Normal,
-                          align: TextAlign.Start,
-                          linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
-                          codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
-                          hostContext: $$.hostContext,
-                        });
+                        Column() {
+                          MarkdownInlineStyled({
+                            tokens: item,
+                            fontSize: $$.fontSize ?? 15,
+                            color: $$.fontColor ?? 0x222222,
+                            weight: $$.fontWeight ?? FontWeight.Normal,
+                            align: TextAlign.Start,
+                            linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                            codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                            hostContext: $$.hostContext,
+                          });
+                        }
+                        .layoutWeight(1)
+                        .alignItems(HorizontalAlign.Start);
                       }
                     }, (_: Array<MarkdownInlineToken>, itemIndex: number) => `${index}:styled:c${colIndex}:${itemIndex}`);
                   }
@@ -960,16 +964,20 @@ export function MarkdownView($$: MarkdownViewParams): void {
                         ? ($$.theme ?? getAppThemeTokens('light')).accentColor
                         : ($$.fontColor ?? 0x222222))
                       .width(($$.fontSize ?? 15) * 1.4);
-                    MarkdownInlineStyled({
-                      tokens: item,
-                      fontSize: $$.fontSize ?? 15,
-                      color: $$.fontColor ?? 0x222222,
-                      weight: $$.fontWeight ?? FontWeight.Normal,
-                      align: TextAlign.Start,
-                      linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
-                      codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
-                      hostContext: $$.hostContext,
-                    });
+                    Column() {
+                      MarkdownInlineStyled({
+                        tokens: item,
+                        fontSize: $$.fontSize ?? 15,
+                        color: $$.fontColor ?? 0x222222,
+                        weight: $$.fontWeight ?? FontWeight.Normal,
+                        align: TextAlign.Start,
+                        linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                        codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                        hostContext: $$.hostContext,
+                      });
+                    }
+                    .layoutWeight(1)
+                    .alignItems(HorizontalAlign.Start);
                   }
                 }, (_: Array<MarkdownInlineToken>, itemIndex: number) => `${index}:styled:${itemIndex}:${block.ordered}`);
               }
@@ -989,17 +997,21 @@ export function MarkdownView($$: MarkdownViewParams): void {
                         .fontColor(($$.theme ?? getAppThemeTokens('light')).accentColor);
                     }
 
-                    MarkdownInlineStyled({
-                      tokens: row[0],
-                      fontSize: $$.fontSize ?? 15,
-                      color: ($$.theme ?? getAppThemeTokens('light')).markdown.headingColor,
-                      weight: FontWeight.Bold,
-                      align: TextAlign.Start,
-                      linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
-                      codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
-                      hostContext: $$.hostContext,
-                      maxLines: (block.rehypeWrapText ?? false) ? 999 : 1,
-                    });
+                    Column() {
+                      MarkdownInlineStyled({
+                        tokens: row[0],
+                        fontSize: $$.fontSize ?? 15,
+                        color: ($$.theme ?? getAppThemeTokens('light')).markdown.headingColor,
+                        weight: FontWeight.Bold,
+                        align: TextAlign.Start,
+                        linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
+                        codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
+                        hostContext: $$.hostContext,
+                        maxLines: (block.rehypeWrapText ?? false) ? 999 : 1,
+                      });
+                    }
+                    .layoutWeight(1)
+                    .alignItems(HorizontalAlign.Start);
                   }
 
                   MarkdownInlineStyled({

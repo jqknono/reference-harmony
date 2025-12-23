@@ -4,3 +4,5 @@ export const DEFAULT_ONLINE_MD_NAME: string = 'HTTP 状态码备忘清单';
 export const LAUNCH_ACTION_OPEN_RECENT_DOCS: string = 'openRecentDocs';
 export const RECENT_DOC_MAX_COUNT: number = 5;
 
+
+

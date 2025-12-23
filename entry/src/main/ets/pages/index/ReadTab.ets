@@ -233,7 +233,7 @@ export struct ReadTab {
           ForEach(this.searchSectionCards, (group: SectionWithCards, groupIndex: number) => {
             ListItemGroup() {
               ListItem() {
-                Row({ space: this.fontSize * 0.4 }) {
+                Row({ space: this.fontSize * 0.6 }) {
                   Text('#')
                     .fontSize(this.fontSize * 1)
                     .fontWeight(FontWeight.Bold)
@@ -314,6 +314,7 @@ export struct ReadTab {
             .scrollable(ScrollDirection.Horizontal)
             .scrollBar(BarState.Off);
           }
+          .width('100%')
           .backgroundColor(this.theme.surfaceMutedBackgroundColor);
         }
       } else {

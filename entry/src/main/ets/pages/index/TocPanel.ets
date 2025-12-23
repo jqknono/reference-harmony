@@ -41,9 +41,9 @@ export struct TocPanel {
           ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
             ListItemGroup() {
               ListItem() {
-                Row({ space: this.fontSize * 0.4 }) {
+                Row({ space: this.fontSize * 1 }) {
                   Text('#')
-                    .fontSize(this.fontSize)
+                    .fontSize(this.fontSize * 1)
                     .fontWeight(FontWeight.Bold)
                     .fontColor(this.theme.sectionTitleColor);
                   Text(group.section.title)
@@ -57,11 +57,11 @@ export struct TocPanel {
               ForEach(group.cards, (card: ReferenceCardData, cardIndex: number) => {
                 ListItem() {
                   Text(getTocCardTitle(card))
-                    .fontSize(this.fontSize * 0.8)
+                    .fontSize(this.fontSize * 1)
                     .fontColor(this.theme.textColor)
                     .maxLines(1)
                     .textOverflow({ overflow: TextOverflow.Ellipsis })
-                    .padding({ left: this.fontSize * 1.87, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
+                    .padding({ left: this.fontSize * 1.8, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
                     .width('100%')
                     .onClick(() => {
                       this.onScrollToCard?.(groupIndex, cardIndex);
