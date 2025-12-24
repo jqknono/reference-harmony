@@ -31,19 +31,19 @@
       "id": "s1-1",
       "sectionId": "s1",
       "title": "查看系统信息",
-      "body": ":- | -\n:- | -\n`systemctl list-dependencies` | 显示单元的依赖关系\n`systemctl list-sockets` | 列出套接字和激活的内容\n`systemctl list-jobs` | 查看活动的 systemd 作业\n`systemctl list-unit-files` | 查看单元文件及其状态\n`systemctl list-units` | 显示单位是否已加载/活动\n`systemctl get-default` | 列出默认目标(如运行级别)\n<!--rehype:className=style-list-->"
+      "body": ":- | -\n:- | -\n`systemctl list-dependencies` | 显示单元的依赖关系\n`systemctl list-sockets` | 列出套接字和激活的内容\n`systemctl list-jobs` | 查看活动的 systemd 作业\n`systemctl list-unit-files` | 查看单元文件及其状态\n`systemctl list-units` | 显示单位是否已加载/活动\n`systemctl get-default` | 列出默认目标(如运行级别)"
     },
     {
       "id": "s1-2",
       "sectionId": "s1",
       "title": "改变系统状态",
-      "body": ":- | -\n:- | -\n`systemctl reboot` | 重启系统(reboot.target)\n`systemctl poweroff` | 关闭系统(poweroff.target)\n`systemctl emergency` | 进入紧急模式(emergency.target)\n`systemctl default` | 返回默认目标(multi-user.target)\n<!--rehype:className=style-list-->"
+      "body": ":- | -\n:- | -\n`systemctl reboot` | 重启系统(reboot.target)\n`systemctl poweroff` | 关闭系统(poweroff.target)\n`systemctl emergency` | 进入紧急模式(emergency.target)\n`systemctl default` | 返回默认目标(multi-user.target)"
     },
     {
       "id": "s1-3",
       "sectionId": "s1",
       "title": "使用服务",
-      "body": ":- | -\n:- | -\n`systemctl stop service` | <red>停止</red>正在运行的服务\n`systemctl start service` | 启动服务\n`systemctl restart service` | 重新启动正在运行的服务\n`systemctl reload service` | 重新加载服务中的所有配置文件\n`systemctl daemon-reload` | 必须运行以重新加载更改的单元文件\n`systemctl status service` | 查看服务是否正在运行/启用\n`systemctl --failed` | 显示未能运行的服务\n`systemctl reset-failed` | 将任何单位从失败状态重置\n`systemctl enable service` | 使服务在启动时启动\n`systemctl disable service` | 禁用服务 - 不会在启动时启动\n`systemctl show service` | 显示服务(或其他单元)的属性\n`systemctl edit service` | 创建片段以放入单元文件\n`systemctl edit --full service` | 编辑整个单元文件以进行服务\n`systemctl -H host status network` | 远程运行任何 systemctl 命令\n<!--rehype:className=style-list-->"
+      "body": ":- | -\n:- | -\n`systemctl stop service` | <red>停止</red>正在运行的服务\n`systemctl start service` | 启动服务\n`systemctl restart service` | 重新启动正在运行的服务\n`systemctl reload service` | 重新加载服务中的所有配置文件\n`systemctl daemon-reload` | 必须运行以重新加载更改的单元文件\n`systemctl status service` | 查看服务是否正在运行/启用\n`systemctl --failed` | 显示未能运行的服务\n`systemctl reset-failed` | 将任何单位从失败状态重置\n`systemctl enable service` | 使服务在启动时启动\n`systemctl disable service` | 禁用服务 - 不会在启动时启动\n`systemctl show service` | 显示服务(或其他单元)的属性\n`systemctl edit service` | 创建片段以放入单元文件\n`systemctl edit --full service` | 编辑整个单元文件以进行服务\n`systemctl -H host status network` | 远程运行任何 systemctl 命令"
     },
     {
       "id": "s1-4",
@@ -55,19 +55,19 @@
       "id": "s1-5",
       "sectionId": "s1",
       "title": "SysVinit 到 Systemd",
-      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`service SERVICE_NAME start` | `systemctl start SERVICE_NAME` | 用于启动服务(不重启持久)\n`service SERVICE_NAME stop` | `systemctl stop SERVICE_NAME` | 用于停止服务(不永久重启)\n`service SERVICE_NAME restart` | `systemctl restart SERVICE_NAME` | 用于停止然后启动服务\n`service SERVICE_NAME reload` | `systemctl reload SERVICE_NAME` | 重新加载配置文件而不中断挂起的操作\n`service SERVICE_NAME condrestart` | `systemctl condrestart SERVICE_NAME` | 如果服务已在运行，则重新启动\n`service SERVICE_NAME status` | `systemctl status SERVICE_NAME` | 判断服务当前是否正在运行\n`chkconfig SERVICE_NAME on` | `systemctl enable SERVICE_NAME` | 打开服务，以便在下次启动时启动，或其他触发器\n`chkconfig SERVICE_NAME off` | `systemctl disable SERVICE_NAME` | 为下次重新启动或任何其他触发器关闭服务\n`chkconfig SERVICE_NAME` | `systemctl is-enabled SERVICE_NAME` | 用于检查服务是否配置为在当前环境中启动\n`chkconfig –list` | `systemctl list-unit-files –type=service` (or) <br/>`ls /etc/systemd/system/*.wants/` | 打印一个服务表，列出每个配置的运行级别打开或关闭\n`chkconfig –list \\| grep 5:on` | `systemctl list-dependencies graphical.target` | 打印启动到图形模式时将启动的服务表\n`chkconfig SERVICE_NAME –list` | `ls /etc/systemd/system/*.wants/SERVICE_NAME.service` | 用于列出此服务配置为打开或关闭的级别\n`chkconfig SERVICE_NAME –add` | `systemctl daemon-reload` | 在创建新服务文件或修改任何配置时使用\n<!--rehype:className=show-header-->"
+      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`service SERVICE_NAME start` | `systemctl start SERVICE_NAME` | 用于启动服务(不重启持久)\n`service SERVICE_NAME stop` | `systemctl stop SERVICE_NAME` | 用于停止服务(不永久重启)\n`service SERVICE_NAME restart` | `systemctl restart SERVICE_NAME` | 用于停止然后启动服务\n`service SERVICE_NAME reload` | `systemctl reload SERVICE_NAME` | 重新加载配置文件而不中断挂起的操作\n`service SERVICE_NAME condrestart` | `systemctl condrestart SERVICE_NAME` | 如果服务已在运行，则重新启动\n`service SERVICE_NAME status` | `systemctl status SERVICE_NAME` | 判断服务当前是否正在运行\n`chkconfig SERVICE_NAME on` | `systemctl enable SERVICE_NAME` | 打开服务，以便在下次启动时启动，或其他触发器\n`chkconfig SERVICE_NAME off` | `systemctl disable SERVICE_NAME` | 为下次重新启动或任何其他触发器关闭服务\n`chkconfig SERVICE_NAME` | `systemctl is-enabled SERVICE_NAME` | 用于检查服务是否配置为在当前环境中启动\n`chkconfig –list` | `systemctl list-unit-files –type=service` (or) <br/>`ls /etc/systemd/system/*.wants/` | 打印一个服务表，列出每个配置的运行级别打开或关闭\n`chkconfig –list \\| grep 5:on` | `systemctl list-dependencies graphical.target` | 打印启动到图形模式时将启动的服务表\n`chkconfig SERVICE_NAME –list` | `ls /etc/systemd/system/*.wants/SERVICE_NAME.service` | 用于列出此服务配置为打开或关闭的级别\n`chkconfig SERVICE_NAME –add` | `systemctl daemon-reload` | 在创建新服务文件或修改任何配置时使用"
     },
     {
       "id": "s1-6",
       "sectionId": "s1",
       "title": "目标运行级别",
-      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`0` | `runlevel0.target`, `poweroff.target` | 停止系统\n`1`, `s`, `single` | `runlevel1.target`, `rescue.target` | 单用户模式\n`2`, `4` | `runlevel2.target`, `runlevel4.target`, `multi-user.target` | 用户定义/站点特定的运行级别。 默认情况下，与 3 相同\n`3` | `runlevel3.target`, `multi-user.target` | 多用户，非图形。 用户通常可以通过多个控制台或通过网络登录\n`5` | `runlevel5.target`, `graphical.target` | 多用户，图形。 通常具有运行级别 3 的所有服务以及图形登录\n`6` | `runlevel6.target`, `reboot.target` | 重启\n`emergency` | `emergency.target` | 应急外壳\n<!--rehype:className=show-header-->"
+      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`0` | `runlevel0.target`, `poweroff.target` | 停止系统\n`1`, `s`, `single` | `runlevel1.target`, `rescue.target` | 单用户模式\n`2`, `4` | `runlevel2.target`, `runlevel4.target`, `multi-user.target` | 用户定义/站点特定的运行级别。 默认情况下，与 3 相同\n`3` | `runlevel3.target`, `multi-user.target` | 多用户，非图形。 用户通常可以通过多个控制台或通过网络登录\n`5` | `runlevel5.target`, `graphical.target` | 多用户，图形。 通常具有运行级别 3 的所有服务以及图形登录\n`6` | `runlevel6.target`, `reboot.target` | 重启\n`emergency` | `emergency.target` | 应急外壳"
     },
     {
       "id": "s1-7",
       "sectionId": "s1",
       "title": "更改运行级别",
-      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`telinit 3` | `systemctl isolate multi-user.target` <br/>OR `systemctl isolate runlevel3.target`<br/>OR `telinit 3` | 更改为多用户运行级别\n`sed s/^id:.*:initdefault:/id:3:initdefault:/` | `ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target` | 设置为在下次重新启动时使用多用户运行级别\n<!--rehype:className=show-header-->"
+      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`telinit 3` | `systemctl isolate multi-user.target` <br/>OR `systemctl isolate runlevel3.target`<br/>OR `telinit 3` | 更改为多用户运行级别\n`sed s/^id:.*:initdefault:/id:3:initdefault:/` | `ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target` | 设置为在下次重新启动时使用多用户运行级别"
     },
     {
       "id": "s2-8",

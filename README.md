@@ -99,6 +99,7 @@ node tools/sync_reference_docs.mjs --mode=github
 
 ## 开发约束（重要）
 
+- **启用 Git Hooks（提交前自动更新 `versionCode`）**：首次克隆后执行一次 `git config core.hooksPath .githooks`（或 `npm run hooks:install`），之后每次 `git commit` 会自动把 `AppScope/app.json5` 的 `versionCode` 更新为当前时间戳（形如 `202512241655`）并加入暂存区。
 - 禁止在本仓库的**源代码**（`.ets/.ts/.js/.mjs`，包含工具脚本）中使用 `try/catch/finally` 语句块。
 - 处理异常请使用返回结果类型或 Promise 的双参数 `then(onFulfilled, onRejected)` 链路/显式 `throw`。
 - 如需补充上下文，请在同一执行路径直接构造 `Error` 并抛出（或拒绝 Promise），不要借助 `try/catch` 包裹。

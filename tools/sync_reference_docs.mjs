@@ -48,7 +48,7 @@ function cleanHeadingText(text) {
 
 function isTableSeparatorLine(line) {
   // | --- | :---: | ---: |
-  const trimmed = line.trim();
+  const trimmed = stripHtmlCommentsInLine(line).trim();
   if (!trimmed.includes('|')) return false;
 
   // Fast-path reject: real separator rows contain only pipes, colons, dashes and whitespace.
@@ -80,6 +80,12 @@ function stripListMarker(line) {
 
 function escapeRegExp(s) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function stripHtmlCommentsInLine(line) {
+  // Remove HTML comments like: <!-- ... --> (including rehype directives).
+  // Note: this is intentionally line-scoped; code fences preserve their inner content.
+  return String(line ?? '').replace(/<!--[\s\S]*?-->/g, '');
 }
 
 function parseFenceOpen(line) {
@@ -131,9 +137,9 @@ function isSetextUnderline(line, ch) {
 
 function getSetextHeading(lines, i) {
   if (i + 1 >= lines.length) return undefined;
-  const text = (lines[i] ?? '').trim();
+  const text = stripHtmlCommentsInLine(lines[i] ?? '').trim();
   if (!text) return undefined;
-  const underline = (lines[i + 1] ?? '').trim();
+  const underline = stripHtmlCommentsInLine(lines[i + 1] ?? '').trim();
   if (isSetextUnderline(underline, '=')) return { level: 1, text };
   if (isSetextUnderline(underline, '-')) return { level: 2, text };
   return undefined;
@@ -213,23 +219,24 @@ function extractDocNameAndTitle(frontmatter, body, { id, lang }) {
   let rehypeIgnoreDepth = 0;
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (!line) continue;
-    if (isRehypeIgnoreStart(line)) {
+    const rawLine = lines[i];
+    if (!rawLine) continue;
+    if (isRehypeIgnoreStart(rawLine)) {
       rehypeIgnoreDepth++;
       continue;
     }
-    if (isRehypeIgnoreEnd(line)) {
+    if (isRehypeIgnoreEnd(rawLine)) {
       if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
       continue;
     }
     if (rehypeIgnoreDepth > 0) continue;
+    const line = stripHtmlCommentsInLine(rawLine);
+    if (!line.trim()) continue;
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
-    if (/^\s*<!--/.test(line)) continue;
     const fence = parseFenceOpen(line);
     if (fence) {
       i++;
-      while (i < lines.length && !isFenceClose(lines[i], fence.marker)) i++;
+      while (i < lines.length && !isFenceClose(stripHtmlCommentsInLine(lines[i]), fence.marker)) i++;
       continue;
     }
 
@@ -251,24 +258,25 @@ function extractDocNameAndTitle(frontmatter, body, { id, lang }) {
 
   const start = h1Index === -1 ? 0 : (h1IsSetext ? h1Index + 2 : h1Index + 1);
   for (let i = start; i < lines.length; i++) {
-    const line = lines[i];
-    if (!line) continue;
-    if (isRehypeIgnoreStart(line)) {
+    const rawLine = lines[i];
+    if (!rawLine) continue;
+    if (isRehypeIgnoreStart(rawLine)) {
       rehypeIgnoreDepth++;
       continue;
     }
-    if (isRehypeIgnoreEnd(line)) {
+    if (isRehypeIgnoreEnd(rawLine)) {
       if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
       continue;
     }
     if (rehypeIgnoreDepth > 0) continue;
+    const line = stripHtmlCommentsInLine(rawLine);
+    if (!line.trim()) continue;
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
-    if (/^\s*<!--/.test(line)) continue;
 
     const fence = parseFenceOpen(line);
     if (fence) {
       i++;
-      while (i < lines.length && !isFenceClose(lines[i], fence.marker)) i++;
+      while (i < lines.length && !isFenceClose(stripHtmlCommentsInLine(lines[i]), fence.marker)) i++;
       continue;
     }
 
@@ -433,19 +441,20 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     if (iter > maxIterations) {
       throw new Error(`解析超时：${lang}/${id} (iter=${iter} lines=${lines.length})`);
     }
-    const line = lines[i];
+    const rawLine = lines[i];
+    const line = stripHtmlCommentsInLine(rawLine);
     if (debug && i % 20 === 0) console.log(`... at ${lang}/${id} i=${i} ${line.trim().slice(0, 60)}`);
-    if (isRehypeIgnoreStart(line)) {
+    if (isRehypeIgnoreStart(rawLine)) {
       rehypeIgnoreDepth++;
       continue;
     }
-    if (isRehypeIgnoreEnd(line)) {
+    if (isRehypeIgnoreEnd(rawLine)) {
       if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
       continue;
     }
     if (rehypeIgnoreDepth > 0) continue;
+    if (!line.trim()) continue;
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue; // e.g. "{.shortcuts}"
-    if (/^\s*<!--/.test(line)) continue;
     if (isHorizontalRuleLine(line)) continue;
 
     const setext = getSetextHeading(lines, i);
@@ -504,38 +513,41 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     if (fence) {
       if (isHtmlPreviewFence(fence)) {
         i++;
-        while (i < lines.length && !isFenceClose(lines[i], fence.marker)) i++;
+        while (i < lines.length && !isFenceClose(stripHtmlCommentsInLine(lines[i]), fence.marker)) i++;
         continue;
       }
       const codeParts = [];
 
-      const skipBetweenFences = (l) =>
-        !l.trim()
-        || /^\s*\{[.#][^}]+\}\s*$/.test(l)
-        || isHorizontalRuleLine(l)
-        || (/^\s*<!--/.test(l) && !isRehypeIgnoreStart(l) && !isRehypeIgnoreEnd(l));
+      const skipBetweenFences = (l) => {
+        // Don't cross ignore markers; outer loop needs to process ignore regions.
+        if (isRehypeIgnoreStart(l) || isRehypeIgnoreEnd(l)) return false;
+        const cleaned = stripHtmlCommentsInLine(l);
+        return !cleaned.trim()
+          || /^\s*\{[.#][^}]+\}\s*$/.test(cleaned)
+          || isHorizontalRuleLine(cleaned);
+      };
 
       while (i < lines.length) {
-        const openFence = parseFenceOpen(lines[i]);
+        const openFence = parseFenceOpen(stripHtmlCommentsInLine(lines[i]));
         if (!openFence) break;
-        const fenceOpenLine = lines[i];
+        const fenceOpenLine = stripHtmlCommentsInLine(lines[i]);
         const buf = [];
         i++; // move into fence body
         let fenceLines = 0;
-        while (i < lines.length && !isFenceClose(lines[i], openFence.marker)) {
+        while (i < lines.length && !isFenceClose(stripHtmlCommentsInLine(lines[i]), openFence.marker)) {
           buf.push(lines[i]);
           i++;
           fenceLines++;
           if (debug && fenceLines % 5000 === 0) console.log(`... fence ${lang}/${id} lines=${fenceLines}`);
         }
-        const fenceCloseLine = i < lines.length ? lines[i] : openFence.marker;
+        const fenceCloseLine = i < lines.length ? stripHtmlCommentsInLine(lines[i]) : openFence.marker;
         // 保留完整的代码块格式（包括围栏标记）
         const codeBlock = `${fenceOpenLine}\n${buf.join('\n')}\n${fenceCloseLine}`;
         codeParts.push(codeBlock);
 
         let j = i + 1;
         while (j < lines.length && skipBetweenFences(lines[j])) j++;
-        const nextFence = j < lines.length ? parseFenceOpen(lines[j]) : undefined;
+        const nextFence = j < lines.length ? parseFenceOpen(stripHtmlCommentsInLine(lines[j])) : undefined;
         if (!nextFence || isHtmlPreviewFence(nextFence)) break;
 
         i = j;
@@ -555,11 +567,13 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
 
     // table (keep as a single card; do not split into front/back)
     if (line.includes('|') && i + 1 < lines.length && isTableSeparatorLine(lines[i + 1])) {
-      const buf = [line.trimEnd(), lines[i + 1].trimEnd()];
+      const buf = [line.trimEnd(), stripHtmlCommentsInLine(lines[i + 1]).trimEnd()];
       i += 2;
       let rows = 0;
-      while (i < lines.length && lines[i].trim() && lines[i].includes('|')) {
-        buf.push(lines[i].trimEnd());
+      while (i < lines.length) {
+        const rowLine = stripHtmlCommentsInLine(lines[i]);
+        if (!rowLine.trim() || !rowLine.includes('|')) break;
+        buf.push(rowLine.trimEnd());
         i++;
         rows++;
         if (debug && rows % 5000 === 0) console.log(`... table ${lang}/${id} rows=${rows}`);
@@ -582,8 +596,11 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
     if (isListItem(line)) {
       const items = [];
       let listItems = 0;
-      while (i < lines.length && isListItem(lines[i])) {
-        items.push(`• ${stripListMarker(lines[i])}`);
+      while (i < lines.length) {
+        const itemLine = stripHtmlCommentsInLine(lines[i]);
+        if (!isListItem(itemLine)) break;
+        const itemText = stripListMarker(itemLine);
+        if (itemText) items.push(`• ${itemText}`);
         i++;
         listItems++;
         if (debug && listItems % 5000 === 0) console.log(`... list ${lang}/${id} items=${listItems}`);
@@ -606,13 +623,15 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       const buf = [line.trim()];
       i++;
       let paraLines = 1;
-      while (i < lines.length && lines[i].trim()) {
+      while (i < lines.length) {
+        const nextLine = stripHtmlCommentsInLine(lines[i]);
+        if (!nextLine.trim()) break;
         if (getSetextHeading(lines, i)) break;
-        if (/^#{1,6}\s+/.test(lines[i])) break;
-        if (isListItem(lines[i])) break;
-        if (parseFenceOpen(lines[i])) break;
-        if (isHorizontalRuleLine(lines[i])) break;
-        if (!/^\s*\{[.#][^}]+\}\s*$/.test(lines[i])) buf.push(lines[i].trim());
+        if (/^#{1,6}\s+/.test(nextLine)) break;
+        if (isListItem(nextLine)) break;
+        if (parseFenceOpen(nextLine)) break;
+        if (isHorizontalRuleLine(nextLine)) break;
+        if (!/^\s*\{[.#][^}]+\}\s*$/.test(nextLine)) buf.push(nextLine.trim());
         i++;
         paraLines++;
         if (debug && paraLines % 5000 === 0) console.log(`... paragraph ${lang}/${id} lines=${paraLines}`);

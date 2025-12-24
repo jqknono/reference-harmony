@@ -387,7 +387,7 @@
       "id": "s5-55",
       "sectionId": "s5",
       "title": "Lambda表达式方式传入函数参数",
-      "body": "```kotlin\n//我们还是不改变什么\nfun num1AndNum2(num1: Int, num2: Int, operation: (Int, Int) -> Int): Int {\n    return operation(num1, num2)\n}\n\nfun main(args: Array<String>) {\n    //wow哦天哪，Lambda可以做到这样简洁\n    val total = num1AndNum2(100, 200) { n1, n2 ->\n        n1 + n2\n    }\n    println(total)\n}\n```\n\n这里之所以可以把lambda写在外部，是因为operation是最后一个参数。\n<!--rehype:className=wrap-text-->"
+      "body": "```kotlin\n//我们还是不改变什么\nfun num1AndNum2(num1: Int, num2: Int, operation: (Int, Int) -> Int): Int {\n    return operation(num1, num2)\n}\n\nfun main(args: Array<String>) {\n    //wow哦天哪，Lambda可以做到这样简洁\n    val total = num1AndNum2(100, 200) { n1, n2 ->\n        n1 + n2\n    }\n    println(total)\n}\n```\n\n这里之所以可以把lambda写在外部，是因为operation是最后一个参数。"
     },
     {
       "id": "s5-57",
@@ -400,7 +400,7 @@
       "id": "s5-58",
       "sectionId": "s5",
       "title": "运算符重载",
-      "body": "```kotlin\nclass Money(var amount: Double)\n\n// 配合扩展函数，重载运算符 + 即 plus\noperator fun Money.plus(money: Money): Money {\n    // 把金额相加返回一个新的 Money对象\n    return Money(this.amount + money.amount)\n}\n\nfun main() {\n    val appleMoney = Money(10.0)\n    val eggMoney = Money(6.0)\n    // 你没有看错，我们将两个类对象相加了\n    val allMoney = appleMoney + eggMoney\n    println(allMoney.amount)\n    // Print: 16.0\n}\n\n```\n\n这里的 **运算符重载** 依赖于 **扩展函数**\n<!--rehype:className=wrap-text-->"
+      "body": "```kotlin\nclass Money(var amount: Double)\n\n// 配合扩展函数，重载运算符 + 即 plus\noperator fun Money.plus(money: Money): Money {\n    // 把金额相加返回一个新的 Money对象\n    return Money(this.amount + money.amount)\n}\n\nfun main() {\n    val appleMoney = Money(10.0)\n    val eggMoney = Money(6.0)\n    // 你没有看错，我们将两个类对象相加了\n    val allMoney = appleMoney + eggMoney\n    println(allMoney.amount)\n    // Print: 16.0\n}\n\n```\n\n这里的 **运算符重载** 依赖于 **扩展函数**"
     },
     {
       "id": "s5-60",
@@ -469,14 +469,14 @@
       "id": "s6-69",
       "sectionId": "s6",
       "title": "%E5%86%85%E9%83%A8%E7%B1%BB",
-      "body": "%60%60%60kotlin%0Aclass%20Outer%20%7B%0A%20%20%20%20val%20outStr%3A%20String%20%3D%20%22Outer%22%0A%20%20%20%20%2F%2F%20inner%20%E5%8F%AF%E4%BB%A5%E8%AE%A9%E5%86%85%E9%83%A8%E7%B1%BB%E8%AE%BF%E9%97%AE%E5%A4%96%E9%83%A8%E7%B1%BB%0A%20%20%20%20inner%20class%20Inner%20%7B%0A%20%20%20%20%20%20%20%20fun%20printOutStr()%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20println(outStr)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%0Afun%20main()%20%7B%0A%20%20%20%20val%20outer%20%3D%20Outer()%0A%20%20%20%20outer.Inner().printOutStr()%0A%20%20%20%20%2F%2F%20Print%3A%20Outer%0A%7D%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E4%B8%8D%E7%94%A8inner%E4%BF%AE%E9%A5%B0%EF%BC%8C%E4%BC%9A%E5%AF%BC%E8%87%B4Inner%E7%B1%BB%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8outStr%0A%3C!--rehype%3AclassName%3Dwrap-text--%3E",
+      "body": "%60%60%60kotlin%0Aclass%20Outer%20%7B%0A%20%20%20%20val%20outStr%3A%20String%20%3D%20%22Outer%22%0A%20%20%20%20%2F%2F%20inner%20%E5%8F%AF%E4%BB%A5%E8%AE%A9%E5%86%85%E9%83%A8%E7%B1%BB%E8%AE%BF%E9%97%AE%E5%A4%96%E9%83%A8%E7%B1%BB%0A%20%20%20%20inner%20class%20Inner%20%7B%0A%20%20%20%20%20%20%20%20fun%20printOutStr()%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20println(outStr)%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%7D%0A%0Afun%20main()%20%7B%0A%20%20%20%20val%20outer%20%3D%20Outer()%0A%20%20%20%20outer.Inner().printOutStr()%0A%20%20%20%20%2F%2F%20Print%3A%20Outer%0A%7D%0A%60%60%60%0A%0A%E5%A6%82%E6%9E%9C%E4%B8%8D%E7%94%A8inner%E4%BF%AE%E9%A5%B0%EF%BC%8C%E4%BC%9A%E5%AF%BC%E8%87%B4Inner%E7%B1%BB%E6%97%A0%E6%B3%95%E4%BD%BF%E7%94%A8outStr",
       "encoded": true
     },
     {
       "id": "s6-71",
       "sectionId": "s6",
       "title": "object%E5%8D%95%E4%BE%8B%E7%B1%BB",
-      "body": "%60%60%60kotlin%0Aobject%20HttpUtils%20%7B%0A%0A%20%20%20%20const%20val%20baseUrl%20%3D%20%22https%3A%2F%2Fxxxx.com%22%0A%0A%20%20%20%20fun%20getRequest(url%3A%20String)%3A%20String%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81....%0A%20%20%20%20%20%20%20%20return%20%22Result%22%0A%20%20%20%20%7D%0A%7D%0A%0Afun%20main()%20%7B%0A%20%20%20%20println(HttpUtils.baseUrl)%0A%20%20%20%20%2F%2F%20Print%3A%20%22https%3A%2F%2Fxxxx.com%22%0A%20%20%20%20HttpUtils.getRequest(%22xxxxx%22)%0A%7D%0A%60%60%60%0A%0Aobject%E7%B1%BB%E4%B8%AD%E5%AE%9A%E4%B9%89%E7%9A%84%E5%87%BD%E6%95%B0%E5%92%8C%E5%B1%9E%E6%80%A7%E9%83%BD%E5%8F%AF%E4%BB%A5%E7%94%A8%E7%B1%BB%E5%90%8D%E7%9B%B4%E6%8E%A5%E5%BC%95%E7%94%A8%0A%3C!--rehype%3AclassName%3Dwrap-text--%3E",
+      "body": "%60%60%60kotlin%0Aobject%20HttpUtils%20%7B%0A%0A%20%20%20%20const%20val%20baseUrl%20%3D%20%22https%3A%2F%2Fxxxx.com%22%0A%0A%20%20%20%20fun%20getRequest(url%3A%20String)%3A%20String%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81....%0A%20%20%20%20%20%20%20%20return%20%22Result%22%0A%20%20%20%20%7D%0A%7D%0A%0Afun%20main()%20%7B%0A%20%20%20%20println(HttpUtils.baseUrl)%0A%20%20%20%20%2F%2F%20Print%3A%20%22https%3A%2F%2Fxxxx.com%22%0A%20%20%20%20HttpUtils.getRequest(%22xxxxx%22)%0A%7D%0A%60%60%60%0A%0Aobject%E7%B1%BB%E4%B8%AD%E5%AE%9A%E4%B9%89%E7%9A%84%E5%87%BD%E6%95%B0%E5%92%8C%E5%B1%9E%E6%80%A7%E9%83%BD%E5%8F%AF%E4%BB%A5%E7%94%A8%E7%B1%BB%E5%90%8D%E7%9B%B4%E6%8E%A5%E5%BC%95%E7%94%A8",
       "encoded": true
     },
     {

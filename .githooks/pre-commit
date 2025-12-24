@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+VERSION_CODE="$(date '+%Y%m%d%H')"
+
+# 更新 AppScope/app.json5 中的 versionCode（数字）
+VERSION_CODE="$VERSION_CODE" perl -pi -e 's/("versionCode"\s*:\s*)\d+/$1$ENV{VERSION_CODE}/' AppScope/app.json5
+
+# 确保本次提交包含更新后的 versionCode
+git add AppScope/app.json5
+

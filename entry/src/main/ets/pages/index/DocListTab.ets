@@ -94,7 +94,6 @@ export struct DocListTab {
 
     const favorites: Array<ReferenceDocSummary> = [];
     const recent: Array<ReferenceDocSummary> = [];
-    const others: Array<ReferenceDocSummary> = [];
 
     for (let i = 0; i < merged.length; i++) {
       const doc = merged[i];
@@ -102,8 +101,6 @@ export struct DocListTab {
         favorites.push(doc);
       } else if (this.isDocRecent(doc.id)) {
         recent.push(doc);
-      } else {
-        others.push(doc);
       }
     }
 
@@ -119,7 +116,9 @@ export struct DocListTab {
       return ai - bi;
     });
 
-    others.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => this.compareCatalogDocs(a, b));
+    // “完整清单”：按字典序展示全部文档（包含收藏/最近），这样同一文档会存在多个入口。
+    const allSorted: Array<ReferenceDocSummary> = merged.slice();
+    allSorted.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => this.compareCatalogDocs(a, b));
 
     const result: Array<ReferenceDocSummary> = [];
     for (let i = 0; i < favorites.length; i++) {
@@ -128,8 +127,8 @@ export struct DocListTab {
     for (let i = 0; i < recent.length; i++) {
       result.push(recent[i]);
     }
-    for (let i = 0; i < others.length; i++) {
-      result.push(others[i]);
+    for (let i = 0; i < allSorted.length; i++) {
+      result.push(allSorted[i]);
     }
     return result;
   }
@@ -410,7 +409,7 @@ export struct DocListTab {
             .borderRadius(this.fontSize * 0.8);
           }
           .margin({ bottom: this.fontSize * 0.6 });
-        }, (doc: ReferenceDocSummary) => `${this.lang}:${doc.id}`);
+        }, (doc: ReferenceDocSummary, index: number) => `${this.lang}:${doc.id}:${index}`);
       }
       .layoutWeight(1)
       .divider({ strokeWidth: 0 });

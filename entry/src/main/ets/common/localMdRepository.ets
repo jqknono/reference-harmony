@@ -8,7 +8,7 @@ import type { Context } from '@ohos.abilityAccessCtrl';
 import type { OnlineMdLink, OnlineMdLinkList } from './onlineMdModels';
 import type { ReferenceDoc, ReferenceDocSummary, ReferenceDocSource } from './referenceModels';
 import type { ParseResult } from './onlineMdRepository';
-import { parseMarkdownToDoc } from './onlineMdRepository';
+import { parseMarkdownToDoc } from './markdownDocParser';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;

@@ -7,6 +7,7 @@ import type { Context } from '@ohos.abilityAccessCtrl';
 import type { OnlineMdLink, OnlineMdLinkList } from './onlineMdModels';
 import { generateOnlineMdId } from './onlineMdModels';
 import type { ReferenceDoc, ReferenceDocSummary, ReferenceSection, ReferenceCardData, ReferenceDocSource } from './referenceModels';
+import { parseMarkdownToDoc } from './markdownDocParser';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
@@ -53,8 +54,14 @@ function cleanHeadingText(text: string): string {
   return text.replace(/\\<\s*\/\s*>\s*/g, '').replace(/\s*\{[^}]*\}\s*$/, '').trim();
 }
 
+function stripHtmlCommentsInLine(line: string): string {
+  // 移除 HTML 注释（含 rehype 指令），例如: <!-- ... -->
+  // 仅用于普通文本行；代码围栏内部的内容会被整体保留。
+  return String(line ?? '').replace(/<!--[\s\S]*?-->/g, '');
+}
+
 function isTableSeparatorLine(line: string): boolean {
-  const trimmed = line.trim();
+  const trimmed = stripHtmlCommentsInLine(line).trim();
   if (!trimmed.includes('|')) return false;
   if (/[^|\s:-]/.test(trimmed)) return false;
   const cells = splitTableRow(trimmed);
@@ -140,9 +147,9 @@ function isSetextUnderline(line: string, ch?: string): boolean {
 
 function getSetextHeading(lines: Array<string>, i: number): SetextHeadingInfo | undefined {
   if (i + 1 >= lines.length) return undefined;
-  const text = (lines[i] ?? '').trim();
+  const text = stripHtmlCommentsInLine(lines[i] ?? '').trim();
   if (!text) return undefined;
-  const underline = (lines[i + 1] ?? '').trim();
+  const underline = stripHtmlCommentsInLine(lines[i + 1] ?? '').trim();
   if (isSetextUnderline(underline, '=')) {
     const result: SetextHeadingInfo = { level: 1, text: text };
     return result;
@@ -259,23 +266,24 @@ function extractDocNameAndTitle(frontmatter: Frontmatter, body: string, id: stri
   let rehypeIgnoreDepth = 0;
 
   for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (!line) continue;
-    if (isRehypeIgnoreStart(line)) {
+    const rawLine = lines[i];
+    if (!rawLine) continue;
+    if (isRehypeIgnoreStart(rawLine)) {
       rehypeIgnoreDepth++;
       continue;
     }
-    if (isRehypeIgnoreEnd(line)) {
+    if (isRehypeIgnoreEnd(rawLine)) {
       if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
       continue;
     }
     if (rehypeIgnoreDepth > 0) continue;
+    const line = stripHtmlCommentsInLine(rawLine);
+    if (!line.trim()) continue;
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
-    if (/^\s*<!--/.test(line)) continue;
     const fence = parseFenceOpen(line);
     if (fence) {
       i++;
-      while (i < lines.length && !isFenceClose(lines[i], fence.marker)) i++;
+      while (i < lines.length && !isFenceClose(stripHtmlCommentsInLine(lines[i]), fence.marker)) i++;
       continue;
     }
 
@@ -297,24 +305,25 @@ function extractDocNameAndTitle(frontmatter: Frontmatter, body: string, id: stri
 
   const start = h1Index === -1 ? 0 : (h1IsSetext ? h1Index + 2 : h1Index + 1);
   for (let i = start; i < lines.length; i++) {
-    const line = lines[i];
-    if (!line) continue;
-    if (isRehypeIgnoreStart(line)) {
+    const rawLine = lines[i];
+    if (!rawLine) continue;
+    if (isRehypeIgnoreStart(rawLine)) {
       rehypeIgnoreDepth++;
       continue;
     }
-    if (isRehypeIgnoreEnd(line)) {
+    if (isRehypeIgnoreEnd(rawLine)) {
       if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
       continue;
     }
     if (rehypeIgnoreDepth > 0) continue;
+    const line = stripHtmlCommentsInLine(rawLine);
+    if (!line.trim()) continue;
     if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
-    if (/^\s*<!--/.test(line)) continue;
 
     const fence = parseFenceOpen(line);
     if (fence) {
       i++;
-      while (i < lines.length && !isFenceClose(lines[i], fence.marker)) i++;
+      while (i < lines.length && !isFenceClose(stripHtmlCommentsInLine(lines[i]), fence.marker)) i++;
       continue;
     }
 
@@ -342,353 +351,6 @@ interface CardRaw {
   body?: string;
   lang?: string;
   encoded?: boolean;
-}
-
-export function parseMarkdownToDoc(markdown: string, id: string, url: string): ReferenceDoc {
-  const fmResult = extractFrontmatter(markdown);
-  const frontmatter = fmResult.frontmatter;
-  const body = fmResult.body;
-  const lines = body.replace(/\r\n/g, '\n').split('\n');
-
-  const meta = extractDocNameAndTitle(frontmatter, body, id);
-  const title = meta.title;
-  const name = meta.name;
-  const introTitle = '简介';
-
-  const introSection: ReferenceSection = { id: 'intro', title: introTitle, startIndex: 0 };
-  const sections: Array<ReferenceSection> = [introSection];
-  const cards: Array<CardRaw> = [];
-
-  let currentSectionId = 'intro';
-  let currentSectionTitle = introTitle;
-  let lastH3 = '';
-  let lastH4 = '';
-  let h3TitleUsed = false;
-  let h4TitleUsed = false;
-  let consumedDocHeading = false;
-
-  const resetHeadingState = (): void => {
-    lastH3 = '';
-    lastH4 = '';
-    h3TitleUsed = false;
-    h4TitleUsed = false;
-  };
-
-  const setH3 = (titleText: string): void => {
-    lastH3 = titleText;
-    lastH4 = '';
-    h3TitleUsed = false;
-    h4TitleUsed = false;
-  };
-
-  const setH4 = (titleText: string): void => {
-    lastH4 = titleText;
-    h4TitleUsed = false;
-  };
-
-  const nextCardTitle = (): string => {
-    if (currentSectionId === 'intro') return currentSectionTitle;
-    if (lastH4 && lastH3 && !h3TitleUsed) {
-      h3TitleUsed = true;
-      h4TitleUsed = true;
-      return `${lastH3} - ${lastH4}`;
-    }
-    if (lastH4) {
-      if (!h4TitleUsed) {
-        h4TitleUsed = true;
-        return lastH4;
-      }
-      return '';
-    }
-    if (lastH3) {
-      if (!h3TitleUsed) {
-        h3TitleUsed = true;
-        return lastH3;
-      }
-      return '';
-    }
-    return currentSectionTitle;
-  };
-
-  const pushCard = (card: CardRaw): void => {
-    const allText = [card.title ?? '', card.body ?? ''].join('\n');
-    const needsEncoding = allText.includes('"') || allText.includes("'");
-    if (!needsEncoding) {
-      cards.push(card);
-      return;
-    }
-    const encodedCard: CardRaw = {
-      id: card.id,
-      sectionId: card.sectionId,
-      title: encodeURIComponent(card.title),
-      body: card.body ? encodeURIComponent(card.body) : undefined,
-      lang: card.lang,
-      encoded: true,
-    };
-    cards.push(encodedCard);
-  };
-
-  const intro = (frontmatter.intro ?? '').trim();
-  if (intro) {
-    const introCard: CardRaw = {
-      id: `${currentSectionId}-${cards.length}`,
-      sectionId: currentSectionId,
-      title: nextCardTitle(),
-      body: intro,
-    };
-    pushCard(introCard);
-  }
-
-  let rehypeIgnoreDepth = 0;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
-    if (isRehypeIgnoreStart(line)) {
-      rehypeIgnoreDepth++;
-      continue;
-    }
-    if (isRehypeIgnoreEnd(line)) {
-      if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
-      continue;
-    }
-    if (rehypeIgnoreDepth > 0) continue;
-    if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
-    if (/^\s*<!--/.test(line)) continue;
-    if (isHorizontalRuleLine(line)) continue;
-
-    const setext = getSetextHeading(lines, i);
-    if (setext) {
-      if (setext.level === 1) {
-        consumedDocHeading = true;
-        resetHeadingState();
-      } else {
-        currentSectionTitle = cleanHeadingText(setext.text);
-        currentSectionId = `s${sections.length}`;
-        const newSection: ReferenceSection = { id: currentSectionId, title: currentSectionTitle, startIndex: cards.length };
-        sections.push(newSection);
-        resetHeadingState();
-      }
-      i++;
-      continue;
-    }
-
-    const h1 = /^#\s+(.+)$/.exec(line);
-    if (h1) {
-      const hText = cleanHeadingText(h1[1].trim());
-      if (!consumedDocHeading) {
-        consumedDocHeading = true;
-        resetHeadingState();
-        continue;
-      }
-      currentSectionTitle = hText;
-      currentSectionId = `s${sections.length}`;
-      const newSection1: ReferenceSection = { id: currentSectionId, title: currentSectionTitle, startIndex: cards.length };
-      sections.push(newSection1);
-      resetHeadingState();
-      continue;
-    }
-
-    const h2 = /^##\s+(.+)$/.exec(line);
-    if (h2) {
-      currentSectionTitle = cleanHeadingText(h2[1].trim());
-      currentSectionId = `s${sections.length}`;
-      const newSection2: ReferenceSection = { id: currentSectionId, title: currentSectionTitle, startIndex: cards.length };
-      sections.push(newSection2);
-      resetHeadingState();
-      continue;
-    }
-
-    const h3 = /^###\s+(.+)$/.exec(line);
-    if (h3) {
-      setH3(cleanHeadingText(h3[1].trim()));
-      continue;
-    }
-
-    const h4 = /^####\s+(.+)$/.exec(line);
-    if (h4) {
-      setH4(cleanHeadingText(h4[1].trim()));
-      continue;
-    }
-
-    const fence = parseFenceOpen(line);
-    if (fence) {
-      if (isHtmlPreviewFence(fence)) {
-        i++;
-        while (i < lines.length && !isFenceClose(lines[i], fence.marker)) i++;
-        continue;
-      }
-      const codeParts: Array<string> = [];
-
-      const skipBetweenFences = (l: string): boolean =>
-        !l.trim()
-        || /^\s*\{[.#][^}]+\}\s*$/.test(l)
-        || isHorizontalRuleLine(l)
-        || (/^\s*<!--/.test(l) && !isRehypeIgnoreStart(l) && !isRehypeIgnoreEnd(l));
-
-      while (i < lines.length) {
-        const openFence = parseFenceOpen(lines[i]);
-        if (!openFence) break;
-        const fenceOpenLine = lines[i];
-        const buf: Array<string> = [];
-        i++;
-        while (i < lines.length && !isFenceClose(lines[i], openFence.marker)) {
-          buf.push(lines[i]);
-          i++;
-        }
-        const fenceCloseLine = i < lines.length ? lines[i] : openFence.marker;
-        const codeBlock = `${fenceOpenLine}\n${buf.join('\n')}\n${fenceCloseLine}`;
-        codeParts.push(codeBlock);
-
-        let j = i + 1;
-        while (j < lines.length && skipBetweenFences(lines[j])) j++;
-        const nextFence = j < lines.length ? parseFenceOpen(lines[j]) : undefined;
-        if (!nextFence || isHtmlPreviewFence(nextFence)) break;
-
-        i = j;
-      }
-
-      const mergedCode = codeParts.join('\n\n').trimEnd();
-      if (mergedCode) {
-        const codeCard: CardRaw = {
-          id: `${currentSectionId}-${cards.length}`,
-          sectionId: currentSectionId,
-          title: nextCardTitle(),
-          body: mergedCode,
-        };
-        pushCard(codeCard);
-      }
-      continue;
-    }
-
-    if (line.includes('|') && i + 1 < lines.length && isTableSeparatorLine(lines[i + 1])) {
-      const buf = [line.trimEnd(), lines[i + 1].trimEnd()];
-      i += 2;
-      while (i < lines.length && lines[i].trim() && lines[i].includes('|')) {
-        buf.push(lines[i].trimEnd());
-        i++;
-      }
-      i--;
-      const bodyText = buf.join('\n').trimEnd();
-      if (bodyText) {
-        const tableCard: CardRaw = {
-          id: `${currentSectionId}-${cards.length}`,
-          sectionId: currentSectionId,
-          title: nextCardTitle(),
-          body: bodyText,
-        };
-        pushCard(tableCard);
-      }
-      continue;
-    }
-
-    if (isListItem(line)) {
-      const items: Array<string> = [];
-      while (i < lines.length && isListItem(lines[i])) {
-        items.push(`• ${stripListMarker(lines[i])}`);
-        i++;
-      }
-      i--;
-      const text = items.join('\n').trim();
-      if (text) {
-        const listCard: CardRaw = {
-          id: `${currentSectionId}-${cards.length}`,
-          sectionId: currentSectionId,
-          title: nextCardTitle(),
-          body: text,
-        };
-        pushCard(listCard);
-      }
-      continue;
-    }
-
-    if (line.trim()) {
-      const buf = [line.trim()];
-      i++;
-      while (i < lines.length && lines[i].trim()) {
-        if (getSetextHeading(lines, i)) break;
-        if (/^#{1,6}\s+/.test(lines[i])) break;
-        if (isListItem(lines[i])) break;
-        if (parseFenceOpen(lines[i])) break;
-        if (isHorizontalRuleLine(lines[i])) break;
-        if (!/^\s*\{[.#][^}]+\}\s*$/.test(lines[i])) buf.push(lines[i].trim());
-        i++;
-      }
-      i--;
-      const text = buf.join('\n').trim();
-      if (text) {
-        const textCard: CardRaw = {
-          id: `${currentSectionId}-${cards.length}`,
-          sectionId: currentSectionId,
-          title: nextCardTitle(),
-          body: text,
-        };
-        pushCard(textCard);
-      }
-    }
-  }
-
-  const decodeIfNeeded = (s: string | undefined, encoded: boolean | undefined): string => {
-    if (encoded && typeof s === 'string') return decodeURIComponent(s);
-    return s ?? '';
-  };
-
-  const mergedCards: Array<CardRaw> = [];
-  for (let i = 0; i < cards.length; i++) {
-    const card = cards[i];
-    if (card.title === '' && mergedCards.length > 0) {
-      const prev = mergedCards[mergedCards.length - 1];
-      if (prev.sectionId === card.sectionId) {
-        const prevBody = decodeIfNeeded(prev.body, prev.encoded);
-        const cardBody = decodeIfNeeded(card.body, card.encoded);
-        const prevTitle = decodeIfNeeded(prev.title, prev.encoded);
-        const mergedBody = (prevBody || '') + '\n\n' + (cardBody || '');
-        const needsEncoding = mergedBody.includes('"') || mergedBody.includes("'") || prevTitle.includes('"') || prevTitle.includes("'");
-        if (needsEncoding) {
-          prev.title = encodeURIComponent(prevTitle);
-          prev.body = encodeURIComponent(mergedBody);
-          prev.encoded = true;
-        } else {
-          prev.title = prevTitle;
-          prev.body = mergedBody;
-          prev.encoded = undefined;
-        }
-        if (card.lang && !prev.lang) prev.lang = card.lang;
-        continue;
-      }
-    }
-    mergedCards.push(card);
-  }
-
-  const finalCards: Array<ReferenceCardData> = mergedCards.map((c: CardRaw): ReferenceCardData => {
-    const cardData: ReferenceCardData = {
-      id: c.id,
-      sectionId: c.sectionId,
-      title: c.title,
-      kind: 'text',
-      encoded: c.encoded,
-      body: c.body,
-      lang: c.lang,
-    };
-    return cardData;
-  });
-
-  const docSource: ReferenceDocSource = {
-    repo: url,
-    path: url,
-    ref: 'online',
-    url: url,
-    lang: 'zh',
-    mode: 'online',
-  };
-  const doc: ReferenceDoc = {
-    id: id,
-    name: name,
-    title: title,
-    sections: sections,
-    cards: finalCards,
-    source: docSource,
-  };
-  return doc;
 }
 
 export class OnlineMdRepository {

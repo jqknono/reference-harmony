@@ -75,7 +75,7 @@
       "id": "s1-18",
       "sectionId": "s1",
       "title": "%E5%91%BD%E4%BB%A4%20CMD",
-      "body": "%3A-%20%7C%20-%0A%3A-%20%7C%20-%0A%60CMD%20%5B%22executable%22%2C%22param1%22%2C%22param2%22%5D%60%20%7C%20(exec%20%E5%BD%A2%E5%BC%8F%EF%BC%8C%E8%BF%99%E6%98%AF%E9%A6%96%E9%80%89%E5%BD%A2%E5%BC%8F)%0A%60CMD%20%5B%22param1%22%2C%22param2%22%5D%60%20%7C%20(%E4%BD%9C%E4%B8%BA%20ENTRYPOINT%20%E7%9A%84%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0)%0A%60CMD%20command%20param1%20param2%60%20%7C%20(shell%E5%BD%A2%E5%BC%8F)%0A%3C!--rehype%3Aclass%3Dauto-wrap--%3E%0A%0A%60%60%60dockerfile%0AEXPOSE%205900%0ACMD%20%5B%22bundle%22%2C%20%22exec%22%2C%20%22rails%22%2C%20%22server%22%5D%0A%60%60%60",
+      "body": "%3A-%20%7C%20-%0A%3A-%20%7C%20-%0A%60CMD%20%5B%22executable%22%2C%22param1%22%2C%22param2%22%5D%60%20%7C%20(exec%20%E5%BD%A2%E5%BC%8F%EF%BC%8C%E8%BF%99%E6%98%AF%E9%A6%96%E9%80%89%E5%BD%A2%E5%BC%8F)%0A%60CMD%20%5B%22param1%22%2C%22param2%22%5D%60%20%7C%20(%E4%BD%9C%E4%B8%BA%20ENTRYPOINT%20%E7%9A%84%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0)%0A%60CMD%20command%20param1%20param2%60%20%7C%20(shell%E5%BD%A2%E5%BC%8F)%0A%0A%60%60%60dockerfile%0AEXPOSE%205900%0ACMD%20%5B%22bundle%22%2C%20%22exec%22%2C%20%22rails%22%2C%20%22server%22%5D%0A%60%60%60",
       "encoded": true
     },
     {
@@ -102,13 +102,13 @@
       "id": "s1-28",
       "sectionId": "s1",
       "title": ".dockerignore 文件",
-      "body": "```ignore\n# 注释说明\n*/temp*\n*/*/temp*\ntemp?\n```\n\n:- | -\n:- | -\n`# comment` | 忽略\n`*/temp*` | 在根的任何直接子目录中<br />排除名称以 `temp` 开头的文件和目录\n`*/*/temp*` | 从根以下两级的任何子目录中<br />排除以 `temp` 开头的文件和目录\n`temp?` | 排除根目录中名称为<br /> `temp` 的单字符扩展名的文件和目录\n<!--rehype:class=auto-wrap-->\n\n如果此文件存在，排除与其中的模式匹配的文件和目录，有利于避免 `ADD` 或 `COPY` 将敏感文件添加到镜像中。匹配是使用 Go 的 [filepath.Match](https://golang.org/pkg/path/filepath#Match) 规则完成的。"
+      "body": "```ignore\n# 注释说明\n*/temp*\n*/*/temp*\ntemp?\n```\n\n:- | -\n:- | -\n`# comment` | 忽略\n`*/temp*` | 在根的任何直接子目录中<br />排除名称以 `temp` 开头的文件和目录\n`*/*/temp*` | 从根以下两级的任何子目录中<br />排除以 `temp` 开头的文件和目录\n`temp?` | 排除根目录中名称为<br /> `temp` 的单字符扩展名的文件和目录\n\n如果此文件存在，排除与其中的模式匹配的文件和目录，有利于避免 `ADD` 或 `COPY` 将敏感文件添加到镜像中。匹配是使用 Go 的 [filepath.Match](https://golang.org/pkg/path/filepath#Match) 规则完成的。"
     },
     {
       "id": "s1-31",
       "sectionId": "s1",
       "title": "主要命令",
-      "body": "命令 | 说明\n:- | -\n`FROM image` | 构建的基础镜像\n~~`MAINTAINER email`~~ | (已弃用)维护者的名字\n`COPY [--chown=<user>:<group>] <src>... <dest>` | 将上下文中的路径复制到位置 `dest` 的容器中\n`ADD [--chown=<user>:<group>] <src>... <dest>` | 与 `COPY` 相同，但解压缩存档并接受 http url。\n`RUN <command>` | 在容器内运行任意命令。\n`USER <user>[:<group>]` | 设置默认用户名。\n`WORKDIR /path/to/workdir` | 设置默认工作目录。\n`CMD command param1 param2` | 设置默认命令\n`ENV <key>=<value> ...` | 设置环境变量\n`EXPOSE <port> [<port>/<protocol>...]` | 运行时侦听指定的网络端口\n<!--rehype:class=auto-wrap-->"
+      "body": "命令 | 说明\n:- | -\n`FROM image` | 构建的基础镜像\n~~`MAINTAINER email`~~ | (已弃用)维护者的名字\n`COPY [--chown=<user>:<group>] <src>... <dest>` | 将上下文中的路径复制到位置 `dest` 的容器中\n`ADD [--chown=<user>:<group>] <src>... <dest>` | 与 `COPY` 相同，但解压缩存档并接受 http url。\n`RUN <command>` | 在容器内运行任意命令。\n`USER <user>[:<group>]` | 设置默认用户名。\n`WORKDIR /path/to/workdir` | 设置默认工作目录。\n`CMD command param1 param2` | 设置默认命令\n`ENV <key>=<value> ...` | 设置环境变量\n`EXPOSE <port> [<port>/<protocol>...]` | 运行时侦听指定的网络端口"
     },
     {
       "id": "s2-32",
