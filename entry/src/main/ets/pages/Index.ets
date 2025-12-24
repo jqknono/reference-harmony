@@ -17,8 +17,8 @@ import { peekLaunchParams, takeLaunchParams } from '../common/launchParamsStore'
 import type { LaunchParams } from '../common/launchParamsStore';
 
 import type { SectionWithCards } from './index/types';
-import { DEFAULT_ONLINE_MD_LINK_ID, DEFAULT_ONLINE_MD_URL, DEFAULT_ONLINE_MD_NAME, LAUNCH_ACTION_OPEN_RECENT_DOCS, RECENT_DOC_MAX_COUNT } from './index/constants';
-import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens } from './index/utils';
+import { LAUNCH_ACTION_OPEN_RECENT_DOCS, RECENT_DOC_MAX_COUNT } from './index/constants';
+import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens, toHexColorString } from './index/utils';
 import { DocListTab } from './index/DocListTab';
 import { ReadTab } from './index/ReadTab';
 import { QuizTab } from './index/QuizTab';
@@ -166,6 +166,7 @@ struct Index {
     if (!prefs) {
       this.themeId = 'dark';
       this.theme = getAppThemeTokens(this.themeId);
+      this.applySystemBarStyle();
       return;
     }
     const saved: string = await Promise.resolve()
@@ -177,9 +178,22 @@ struct Index {
     const normalizedTheme: AppThemeId = (saved === 'light' || saved === 'reference' || saved === 'coo') ? 'light' : 'dark';
     this.themeId = normalizedTheme;
     this.theme = getAppThemeTokens(this.themeId);
+    this.applySystemBarStyle();
     if (saved !== this.themeId) {
       await this.saveThemeSetting(this.themeId);
     }
+  }
+
+  private applySystemBarStyle(): void {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const background: string = toHexColorString(this.theme.surfaceBackgroundColor);
+    Promise.resolve()
+      .then((): Promise<window.Window> => window.getLastWindow(host))
+      .then((w: window.Window): Promise<void> => w.setWindowSystemBarProperties({
+        navigationBarColor: background,
+      }))
+      .then((): void => undefined, (): void => undefined);
   }
 
   private async saveThemeSetting(next: AppThemeId): Promise<void> {
@@ -709,6 +723,7 @@ struct Index {
     if (this.themeId === next) return;
     this.themeId = next;
     this.theme = getAppThemeTokens(next);
+    this.applySystemBarStyle();
     await this.saveThemeSetting(next);
   }
 
@@ -810,7 +825,7 @@ struct Index {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const stored = await this.onlineMdRepository.getLinks(host);
-    this.onlineMdLinks = this.mergeDefaultOnlineMdLink(stored);
+    this.onlineMdLinks = stored;
     await this.rebuildOnlineMdDocs();
   }
 
@@ -820,23 +835,6 @@ struct Index {
     const stored = await this.localMdRepository.getLinks(host);
     this.localMdLinks = stored;
     await this.rebuildLocalMdDocs();
-  }
-
-  private mergeDefaultOnlineMdLink(links: Array<OnlineMdLink>): Array<OnlineMdLink> {
-    const normalized = DEFAULT_ONLINE_MD_URL.trim();
-    for (let i = 0; i < links.length; i++) {
-      const url = (links[i]?.url ?? '').trim();
-      if (url === normalized) {
-        return links;
-      }
-    }
-    const defaultLink: OnlineMdLink = {
-      id: DEFAULT_ONLINE_MD_LINK_ID,
-      url: DEFAULT_ONLINE_MD_URL,
-      name: DEFAULT_ONLINE_MD_NAME,
-      addedTime: 0,
-    };
-    return [defaultLink, ...links];
   }
 
   private findOnlineMdLink(linkId: string): OnlineMdLink | undefined {
@@ -856,14 +854,8 @@ struct Index {
 
     const cachedDoc = await this.onlineMdRepository.getDocFromCache(host, linkId);
     if (cachedDoc) {
-      const cachedUrl: string = (cachedDoc.source?.url ?? '').trim();
-      const defaultUrl: string = DEFAULT_ONLINE_MD_URL.trim();
-      if (linkId === DEFAULT_ONLINE_MD_LINK_ID && cachedUrl && defaultUrl && cachedUrl !== defaultUrl) {
-        await this.onlineMdRepository.deleteDocCache(host, linkId);
-      } else {
-        this.onlineMdDocCache.set(linkId, cachedDoc);
-        return cachedDoc;
-      }
+      this.onlineMdDocCache.set(linkId, cachedDoc);
+      return cachedDoc;
     }
 
     const link = this.findOnlineMdLink(linkId);
@@ -898,23 +890,16 @@ struct Index {
 
       const cachedDoc = await this.onlineMdRepository.getDocFromCache(host, linkId);
       if (cachedDoc) {
-        const cachedUrl: string = (cachedDoc.source?.url ?? '').trim();
-        const defaultUrl: string = DEFAULT_ONLINE_MD_URL.trim();
-        if (linkId === DEFAULT_ONLINE_MD_LINK_ID && cachedUrl && defaultUrl && cachedUrl !== defaultUrl) {
-          await this.onlineMdRepository.deleteDocCache(host, linkId);
-          this.onlineMdDocCache.delete(linkId);
-        } else {
-          this.onlineMdDocCache.set(linkId, cachedDoc);
-          summaries.push({
-            id: linkId,
-            name: link.name || cachedDoc.name,
-            title: cachedDoc.title,
-            file: `online:${link.url}`,
-            sectionCount: cachedDoc.sections.length,
-            cardCount: cachedDoc.cards.length,
-          });
-          continue;
-        }
+        this.onlineMdDocCache.set(linkId, cachedDoc);
+        summaries.push({
+          id: linkId,
+          name: link.name || cachedDoc.name,
+          title: cachedDoc.title,
+          file: `online:${link.url}`,
+          sectionCount: cachedDoc.sections.length,
+          cardCount: cachedDoc.cards.length,
+        });
+        continue;
       }
 
       const fallbackName = (link?.name ?? linkId).trim() || linkId;
@@ -1019,7 +1004,7 @@ struct Index {
     this.onlineMdDocCache.set(newLink.id, doc);
 
     const stored = await this.onlineMdRepository.getLinks(host);
-    this.onlineMdLinks = this.mergeDefaultOnlineMdLink(stored);
+    this.onlineMdLinks = stored;
     await this.rebuildOnlineMdDocs();
 
     this.onlineMdParsing = false;
@@ -1031,7 +1016,6 @@ struct Index {
   }
 
   private async removeOnlineMd(linkId: string): Promise<void> {
-    if (linkId === DEFAULT_ONLINE_MD_LINK_ID) return;
     const host = this.getUIContext().getHostContext();
     if (!host) return;
 
@@ -1040,7 +1024,7 @@ struct Index {
     this.onlineMdDocCache.delete(linkId);
 
     const stored = await this.onlineMdRepository.getLinks(host);
-    this.onlineMdLinks = this.mergeDefaultOnlineMdLink(stored);
+    this.onlineMdLinks = stored;
     await this.rebuildOnlineMdDocs();
   }
 
@@ -1461,7 +1445,7 @@ struct Index {
         .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
         .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
     }
-    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0, left: this.fontSize * 0.5, right: this.fontSize * 0.5 })
+    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0.2, left: this.fontSize * 0.5, right: this.fontSize * 0.5 })
     .onClick((): void => {
       if (this.currentTabIndex === index) return;
       this.stopAllTextInputEditing();
@@ -1474,21 +1458,25 @@ struct Index {
 
   @Builder
   private BottomTabBar(): void {
-    Row() {
-      this.TabBarItem(0);
-      this.TabBarItem(1);
-      this.TabBarItem(2);
-      this.TabBarItem(3);
+    Stack({ alignContent: Alignment.TopStart }) {
+      Row() {
+        this.TabBarItem(0);
+        this.TabBarItem(1);
+        this.TabBarItem(2);
+        this.TabBarItem(3);
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.SpaceBetween)
+      .padding({
+        left: this.fontSize * 1,
+        right: this.fontSize * 1,
+        top: this.fontSize * 1,
+        bottom: this.fontSize * 1,
+      });
     }
     .width('100%')
-    .justifyContent(FlexAlign.SpaceBetween)
-    .padding({
-      left: this.fontSize * 1,
-      right: this.fontSize * 1,
-      top: this.fontSize * 0.2,
-      bottom: this.fontSize * 0.6,
-    })
-    .backgroundColor(this.theme.surfaceBackgroundColor);
+    .backgroundColor(this.theme.surfaceBackgroundColor)
+    .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM]);
   }
 
   @Builder
@@ -1779,6 +1767,7 @@ struct Index {
       }
     }
     .backgroundColor(this.theme.pageBackgroundColor)
+    .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
     .onAreaChange((_: Area, area: Area) => {
       this.updateLandscapeFromArea(area);
     })

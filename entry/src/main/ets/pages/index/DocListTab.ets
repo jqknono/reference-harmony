@@ -39,7 +39,7 @@ export struct DocListTab {
     const base: number = this.fontSize * 1;
     return this.isLandscape
       ? { left: base, right: base, top: base, bottom: 0 }
-      : { left: base, right: base, top: base, bottom: base };
+      : { left: base, right: base, top: base, bottom: 0 };
   }
 
   private isOnlineDoc(docId: string): boolean {

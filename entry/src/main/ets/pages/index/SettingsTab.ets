@@ -3,7 +3,6 @@ import type { ReferenceLang } from '../../common/referenceModels';
 import type { OnlineMdLink } from '../../common/onlineMdModels';
 import { openExternalLink } from '../../common/openExternalLink';
 import { formatDocCount } from './utils';
-import { DEFAULT_ONLINE_MD_LINK_ID, DEFAULT_ONLINE_MD_URL } from './constants';
 
 @Component
 export struct SettingsTab {
@@ -52,12 +51,6 @@ export struct SettingsTab {
     return this.isLandscape
       ? { left: base, right: base, top: base, bottom: 0 }
       : { left: base, right: base, top: base, bottom: base };
-  }
-
-  private isDefaultOnlineMdLink(link: OnlineMdLink): boolean {
-    if (!link) return false;
-    if (link.id === DEFAULT_ONLINE_MD_LINK_ID) return true;
-    return (link.url ?? '').trim() === DEFAULT_ONLINE_MD_URL.trim();
   }
 
   build() {
@@ -306,19 +299,11 @@ export struct SettingsTab {
                   .alignItems(HorizontalAlign.Start)
                   .onClick(() => this.onCopyOnlineMdUrl?.(link.url));
 
-                  if (this.isDefaultOnlineMdLink(link)) {
-                    Text(this.t('示例', 'Sample'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.mutedTextColor)
-                      .opacity(0.7)
-                      .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 });
-                  } else {
-                    Text(this.t('删除', 'Delete'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.dangerTextColor)
-                      .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 })
-                      .onClick(() => this.onRemoveOnlineMd?.(link.id));
-                  }
+                  Text(this.t('删除', 'Delete'))
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.theme.dangerTextColor)
+                    .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 })
+                    .onClick(() => this.onRemoveOnlineMd?.(link.id));
                 }
                 .width('100%')
                 .padding({ top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 });
@@ -445,41 +430,58 @@ export struct SettingsTab {
         .borderRadius(this.fontSize * 0.8)
         .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
 
-        Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
-          Text(this.t('清单更新地址：', 'Cheatsheets Site: '))
-            .fontColor(this.theme.mutedTextColor)
-            .fontSize(this.fontSize * 0.9);
-          Text('reference.jqknono.com')
-            .fontColor(this.theme.accentColor)
-            .fontSize(this.fontSize * 0.9)
-            .decoration({ type: TextDecorationType.Underline })
-            .onClick(() => openExternalLink(this.getHostContext(), 'reference.jqknono.com'));
-          Text(this.t('（持续更新）', '(continuously updated)'))
-            .fontColor(this.theme.mutedTextColor)
-            .fontSize(this.fontSize * 0.85)
-            .opacity(0.75);
-        }
-        .width('100%')
-        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
-        .backgroundColor(this.theme.surfaceBackgroundColor)
-        .borderRadius(this.fontSize * 0.8)
-        .border({ width: this.fontSize * 0.1, color: this.theme.borderColor });
+        // 开源信息
+        Column({ space: 0 }) {
+          Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
+            Text(this.t('开源地址：', 'Open Source: '))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.9);
+            Text('github.com/jqknono/reference-harmony')
+              .fontColor(this.theme.accentColor)
+              .fontSize(this.fontSize * 0.9)
+              .decoration({ type: TextDecorationType.Underline })
+              .onClick(() => openExternalLink(this.getHostContext(), 'github.com/jqknono/reference-harmony'));
+          }
+          .width('100%')
+          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.5 });
 
-        Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
-          Text(this.t('开源地址：', 'Open Source: '))
-            .fontColor(this.theme.mutedTextColor)
-            .fontSize(this.fontSize * 0.9);
-          Text('github.com/jqknono/reference-harmony')
-            .fontColor(this.theme.accentColor)
-            .fontSize(this.fontSize * 0.9)
-            .decoration({ type: TextDecorationType.Underline })
-            .onClick(() => openExternalLink(this.getHostContext(), 'github.com/jqknono/reference-harmony'));
+          Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
+            Text(this.t('开源协议：', 'License: '))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.9);
+            Text('GPL-3.0')
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.9);
+          }
+          .width('100%')
+          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.3, bottom: this.fontSize * 0.5 });
+
+          Divider()
+            .color(this.theme.borderColor)
+            .strokeWidth(this.fontSize * 0.07);
+
+          Column({ space: this.fontSize * 0.25 }) {
+            Text(this.t('本应用使用了以下开源项目：', 'This app uses the following open source projects:'))
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.8)
+              .opacity(0.8);
+            Text('• jaywcjlove/reference (MIT)')
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.75)
+              .opacity(0.7);
+            Text('• Fechin/reference (GPL-3.0)')
+              .fontColor(this.theme.mutedTextColor)
+              .fontSize(this.fontSize * 0.75)
+              .opacity(0.7);
+          }
+          .width('100%')
+          .alignItems(HorizontalAlign.Start)
+          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.5, bottom: this.fontSize * 0.7 });
         }
         .width('100%')
-        .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
         .backgroundColor(this.theme.surfaceBackgroundColor)
         .borderRadius(this.fontSize * 0.8)
-        .border({ width: this.fontSize * 0.1, color: this.theme.borderColor });
+        .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
 
         Column({ space: this.fontSize * 0.2 }) {
           Text(this.t(`中文备忘清单：${formatDocCount(this.zhDocCount, this.lang)}`, `ZH cheat sheets: ${formatDocCount(this.zhDocCount, this.lang)}`))

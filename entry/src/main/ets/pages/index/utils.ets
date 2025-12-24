@@ -20,9 +20,10 @@ export function lengthToNumber(value: Length): number {
 
 export function toHexColorString(color: number): string {
   const value: number = color >>> 0;
-  const hex: string = value.toString(16);
-  const normalized: string = (hex.length <= 6 ? hex.padStart(6, '0') : hex.padStart(8, '0'));
-  return `#${normalized}`;
+  const rgb: number = value & 0x00ffffff;
+  const argb: number = value <= 0x00ffffff ? (0xff000000 | rgb) : value;
+  const hex: string = (argb >>> 0).toString(16).padStart(8, '0');
+  return `#${hex}`;
 }
 
 export function getAvatarText(label: string): string {
