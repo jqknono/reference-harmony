@@ -108,6 +108,7 @@ struct Index {
   // 收藏与最近阅读
   @State private favoriteDocIds: Array<string> = [];
   @State private recentDocIds: Array<string> = [];
+  private recentDocAutoOpenFixApplied: boolean = false;
 
   private stopAllTextInputEditing(): void {
     this.catalogSearchInputController.stopEditing();
@@ -346,11 +347,18 @@ struct Index {
     const recentStr: string = await Promise.resolve()
       .then((): Promise<ValueType> => prefs.get('recentDocIds', '[]'))
       .then((v: ValueType): string => typeof v === 'string' ? v : '[]', (): string => '[]');
+    const fixApplied: boolean = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get('recentDocAutoOpenFixApplied', false))
+      .then(
+        (v: ValueType): boolean => v === true || v === 'true',
+        (): boolean => false,
+      );
 
     const parsedFavorites: Array<string> = JSON.parse(favoriteStr) as Array<string>;
     const parsedRecent: Array<string> = JSON.parse(recentStr) as Array<string>;
     this.favoriteDocIds = parsedFavorites;
     this.recentDocIds = parsedRecent;
+    this.recentDocAutoOpenFixApplied = fixApplied;
   }
 
   private async saveFavoriteDocIds(): Promise<void> {
@@ -381,6 +389,39 @@ struct Index {
     await Promise.resolve()
       .then((): Promise<void> => prefs.flush())
       .then((): void => undefined, (): void => undefined);
+  }
+
+  private async saveRecentDocAutoOpenFixApplied(applied: boolean): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put('recentDocAutoOpenFixApplied', applied))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  /**
+   * 迁移旧版本 bug：
+   * - 旧逻辑会在启动时“自动预加载首个文档”并错误写入 recentDocIds，
+   *   导致目录第一项永远显示“最近”。
+   * - 这里做一次性清理：仅在 recent 只包含首篇时清空。
+   */
+  private async migrateRecentDocsAutoOpenBugIfNeeded(): Promise<void> {
+    if (this.recentDocAutoOpenFixApplied) return;
+    const firstDocId = (this.docs.length > 0 ? this.docs[0]?.id : '') ?? '';
+    const shouldClear: boolean = !!firstDocId && this.recentDocIds.length === 1 && this.recentDocIds[0] === firstDocId;
+    if (shouldClear) {
+      this.recentDocIds = [];
+      await this.saveRecentDocIds();
+    }
+    this.recentDocAutoOpenFixApplied = true;
+    await this.saveRecentDocAutoOpenFixApplied(true);
   }
 
   private async toggleDocFavorite(docId: string): Promise<void> {
@@ -545,7 +586,7 @@ struct Index {
     this.catalogSearchResults = results;
   }
 
-  private async openDoc(docId: string, switchToReadTab: boolean = true): Promise<void> {
+  private async openDoc(docId: string, switchToReadTab: boolean = true, recordRecent: boolean = true): Promise<void> {
     this.openDocRequestId++;
     const requestId = this.openDocRequestId;
     const repo = await this.ensureRepository();
@@ -572,7 +613,9 @@ struct Index {
         this.rebuildSectionCards(doc);
         this.rebuildSearchResults();
         this.updateQuizAvailableCount();
-        this.addToRecentDocs(docId);
+        if (recordRecent) {
+          this.addToRecentDocs(docId);
+        }
         this.listScroller.scrollToIndex(0);
         this.listSearchScroller.scrollToIndex(0);
         if (switchToReadTab) {
@@ -694,8 +737,9 @@ struct Index {
           cardCount: doc.cardCount,
         }));
         this.rebuildCatalogSearchResults();
+        await this.migrateRecentDocsAutoOpenBugIfNeeded();
         if (autoOpenFirst && !this.selectedDocId && this.docs.length > 0) {
-          await this.openDoc(this.docs[0].id, false);
+          await this.openDoc(this.docs[0].id, false, false);
         }
       },
       (e: Error | string): void => {
@@ -1413,12 +1457,38 @@ struct Index {
       Text(this.getTabLabel(index))
         .fontSize(this.fontSize * 1)
         .maxLines(1)
-        .textOverflow({ overflow: TextOverflow.Ellipsis })
         .textAlign(TextAlign.Center)
         .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
         .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
     }
-    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0, left: this.fontSize * 0.5, right: this.fontSize * 0.5 });
+    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0, left: this.fontSize * 0.5, right: this.fontSize * 0.5 })
+    .onClick((): void => {
+      if (this.currentTabIndex === index) return;
+      this.stopAllTextInputEditing();
+      this.currentTabIndex = index;
+      if (!this.isLandscape) {
+        this.tabsController.changeIndex(index);
+      }
+    });
+  }
+
+  @Builder
+  private BottomTabBar(): void {
+    Row() {
+      this.TabBarItem(0);
+      this.TabBarItem(1);
+      this.TabBarItem(2);
+      this.TabBarItem(3);
+    }
+    .width('100%')
+    .justifyContent(FlexAlign.SpaceBetween)
+    .padding({
+      left: this.fontSize * 1,
+      right: this.fontSize * 1,
+      top: this.fontSize * 0.2,
+      bottom: this.fontSize * 0.6,
+    })
+    .backgroundColor(this.theme.surfaceBackgroundColor);
   }
 
   @Builder
@@ -1544,137 +1614,145 @@ struct Index {
       if (this.isLandscape) {
         this.CurrentTabContent();
       } else {
-        Tabs({ barPosition: BarPosition.End, index: this.currentTabIndex, controller: this.tabsController }) {
-          TabContent() {
-            DocListTab({
-              currentTabIndex: this.currentTabIndex,
-              loading: this.loading,
-              errorText: this.errorText,
-              catalogSearchQuery: this.catalogSearchQuery,
-              catalogSearchResults: this.catalogSearchResults,
-              theme: this.theme,
-              fontSize: this.fontSize,
-              lang: this.lang,
-              isLandscape: this.isLandscape,
-              favoriteDocIds: this.favoriteDocIds,
-              recentDocIds: this.recentDocIds,
-              iconErrorKeys: this.iconErrorKeys,
-              catalogSearchInputController: this.catalogSearchInputController,
-              tabsController: this.tabsController,
-              docs: this.docs,
-              onlineMdDocs: this.onlineMdDocs,
-              localMdDocs: this.localMdDocs,
-              onOpenDoc: (docId: string, switchToReadTab: boolean): void => { this.openDoc(docId, switchToReadTab); },
-              onOpenOnlineDoc: (docId: string): void => { this.openOnlineDoc(docId); },
-              onOpenLocalDoc: (docId: string): void => { this.openLocalDoc(docId); },
-              onOpenDocAndQuiz: (docId: string): void => { this.openDocAndQuiz(docId); },
-              onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },
-              onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
-              onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
-            });
-          }
-          .tabBar(this.TabBarItem(0));
+        Column() {
+          Tabs({ barPosition: BarPosition.End, index: this.currentTabIndex, controller: this.tabsController }) {
+            TabContent() {
+              DocListTab({
+                currentTabIndex: this.currentTabIndex,
+                loading: this.loading,
+                errorText: this.errorText,
+                catalogSearchQuery: this.catalogSearchQuery,
+                catalogSearchResults: this.catalogSearchResults,
+                theme: this.theme,
+                fontSize: this.fontSize,
+                lang: this.lang,
+                isLandscape: this.isLandscape,
+                favoriteDocIds: this.favoriteDocIds,
+                recentDocIds: this.recentDocIds,
+                iconErrorKeys: this.iconErrorKeys,
+                catalogSearchInputController: this.catalogSearchInputController,
+                tabsController: this.tabsController,
+                docs: this.docs,
+                onlineMdDocs: this.onlineMdDocs,
+                localMdDocs: this.localMdDocs,
+                onOpenDoc: (docId: string, switchToReadTab: boolean): void => { this.openDoc(docId, switchToReadTab); },
+                onOpenOnlineDoc: (docId: string): void => { this.openOnlineDoc(docId); },
+                onOpenLocalDoc: (docId: string): void => { this.openLocalDoc(docId); },
+                onOpenDocAndQuiz: (docId: string): void => { this.openDocAndQuiz(docId); },
+                onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },
+                onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
+                onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
+              });
+            }
+            .tabBar(this.TabBarItem(0));
 
-          TabContent() {
-            ReadTab({
-              theme: this.theme,
-              fontSize: this.fontSize,
-              lang: this.lang,
-              isLandscape: this.isLandscape,
-              learningModeEnabled: this.learningModeEnabled,
-              searchQuery: this.searchQuery,
-              searchSectionCards: this.searchSectionCards,
-              searchResultCount: this.searchResultCount,
-              searchNavSectionIndex: this.searchNavSectionIndex,
-              sectionCards: this.sectionCards,
-              loading: this.loading,
-              errorText: this.errorText,
-              iconErrorKeys: this.iconErrorKeys,
-              pendingTocScrollGroupIndex: this.pendingTocScrollGroupIndex,
-              pendingTocScrollItemIndex: this.pendingTocScrollItemIndex,
-              selectedDoc: this.selectedDoc ?? null,
-              selectedDocId: this.selectedDocId,
-              selectedDocIcon: this.selectedDocIcon,
-              selectedDocAvatarVersion: this.selectedDocAvatarVersion,
-              favoriteDocIds: this.favoriteDocIds,
-              listScroller: this.listScroller,
-              listSearchScroller: this.listSearchScroller,
-              listSectionNavScroller: this.listSectionNavScroller,
-              listCardNavScroller: this.listCardNavScroller,
-              docSearchInputController: this.docSearchInputController,
-              onToggleDocFavorite: (docId: string): void => { this.toggleDocFavorite(docId); },
-              onShowTocPanel: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = true; },
-              onRebuildSearchResults: (): void => { this.rebuildSearchResults(); },
-            });
-          }
-          .tabBar(this.TabBarItem(1));
+            TabContent() {
+              ReadTab({
+                theme: this.theme,
+                fontSize: this.fontSize,
+                lang: this.lang,
+                isLandscape: this.isLandscape,
+                learningModeEnabled: this.learningModeEnabled,
+                searchQuery: this.searchQuery,
+                searchSectionCards: this.searchSectionCards,
+                searchResultCount: this.searchResultCount,
+                searchNavSectionIndex: this.searchNavSectionIndex,
+                sectionCards: this.sectionCards,
+                loading: this.loading,
+                errorText: this.errorText,
+                iconErrorKeys: this.iconErrorKeys,
+                pendingTocScrollGroupIndex: this.pendingTocScrollGroupIndex,
+                pendingTocScrollItemIndex: this.pendingTocScrollItemIndex,
+                selectedDoc: this.selectedDoc ?? null,
+                selectedDocId: this.selectedDocId,
+                selectedDocIcon: this.selectedDocIcon,
+                selectedDocAvatarVersion: this.selectedDocAvatarVersion,
+                favoriteDocIds: this.favoriteDocIds,
+                listScroller: this.listScroller,
+                listSearchScroller: this.listSearchScroller,
+                listSectionNavScroller: this.listSectionNavScroller,
+                listCardNavScroller: this.listCardNavScroller,
+                docSearchInputController: this.docSearchInputController,
+                onToggleDocFavorite: (docId: string): void => { this.toggleDocFavorite(docId); },
+                onShowTocPanel: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = true; },
+                onRebuildSearchResults: (): void => { this.rebuildSearchResults(); },
+              });
+            }
+            .tabBar(this.TabBarItem(1));
 
-          TabContent() {
-            QuizTab({
-              theme: this.theme,
-              fontSize: this.fontSize,
-              lang: this.lang,
-              isLandscape: this.isLandscape,
-              quizMode: this.quizMode,
-              quizQuestions: this.quizQuestions,
-              quizCurrentIndex: this.quizCurrentIndex,
-              quizAnswers: this.quizAnswers,
-              quizSelectedOptionIndex: this.quizSelectedOptionIndex,
-              quizShowAnswer: this.quizShowAnswer,
-              quizStartTime: this.quizStartTime,
-              quizQuestionStartTime: this.quizQuestionStartTime,
-              quizRecord: this.quizRecord,
-              quizAvailableCount: this.quizAvailableCount,
-              selectedDoc: this.selectedDoc ?? null,
-              quizRepository: this.quizRepository,
-              onStartQuiz: (count: number): void => { this.startQuiz(count); },
-              onSelectQuizOption: (index: number): void => { this.selectQuizOption(index); },
-              onConfirmQuizAnswer: (): void => { this.confirmQuizAnswer(); },
-              onNextQuizQuestion: (): void => { this.nextQuizQuestion(); },
-              onResetQuiz: (): void => { this.resetQuiz(); },
-            });
-          }
-          .tabBar(this.TabBarItem(2));
+            TabContent() {
+              QuizTab({
+                theme: this.theme,
+                fontSize: this.fontSize,
+                lang: this.lang,
+                isLandscape: this.isLandscape,
+                quizMode: this.quizMode,
+                quizQuestions: this.quizQuestions,
+                quizCurrentIndex: this.quizCurrentIndex,
+                quizAnswers: this.quizAnswers,
+                quizSelectedOptionIndex: this.quizSelectedOptionIndex,
+                quizShowAnswer: this.quizShowAnswer,
+                quizStartTime: this.quizStartTime,
+                quizQuestionStartTime: this.quizQuestionStartTime,
+                quizRecord: this.quizRecord,
+                quizAvailableCount: this.quizAvailableCount,
+                selectedDoc: this.selectedDoc ?? null,
+                quizRepository: this.quizRepository,
+                onStartQuiz: (count: number): void => { this.startQuiz(count); },
+                onSelectQuizOption: (index: number): void => { this.selectQuizOption(index); },
+                onConfirmQuizAnswer: (): void => { this.confirmQuizAnswer(); },
+                onNextQuizQuestion: (): void => { this.nextQuizQuestion(); },
+                onResetQuiz: (): void => { this.resetQuiz(); },
+              });
+            }
+            .tabBar(this.TabBarItem(2));
 
-          TabContent() {
-            SettingsTab({
-              theme: this.theme,
-              fontSize: this.fontSize,
-              lang: this.lang,
-              isLandscape: this.isLandscape,
-              themeId: this.themeId,
-              orientationMode: this.orientationMode,
-              learningModeEnabled: this.learningModeEnabled,
-              zhDocCount: this.zhDocCount,
-              enDocCount: this.enDocCount,
-              onlineMdInputUrl: this.onlineMdInputUrl,
-              onlineMdParsing: this.onlineMdParsing,
-              onlineMdParseResult: this.onlineMdParseResult,
-              onlineMdLinks: this.onlineMdLinks,
-              onlineMdCopySuccess: this.onlineMdCopySuccess,
-              localMdImporting: this.localMdImporting,
-              localMdImportResult: this.localMdImportResult,
-              localMdLinks: this.localMdLinks,
-              localMdCopySuccess: this.localMdCopySuccess,
-              onSwitchOrientationMode: (mode: 'portrait' | 'landscape' | 'auto'): void => { this.switchOrientationMode(mode); },
-              onSwitchLang: (lang: ReferenceLang): void => { this.switchLang(lang); },
-              onSwitchTheme: (theme: AppThemeId): void => { this.switchTheme(theme); },
-              onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
-              onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
-              onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
-              onCopyOnlineMdUrl: (url: string): void => { this.copyOnlineMdUrl(url); },
-              onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },
-              onRemoveLocalMd: (linkId: string): void => { this.removeLocalMd(linkId); },
-              onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
-            });
+            TabContent() {
+              SettingsTab({
+                theme: this.theme,
+                fontSize: this.fontSize,
+                lang: this.lang,
+                isLandscape: this.isLandscape,
+                themeId: this.themeId,
+                orientationMode: this.orientationMode,
+                learningModeEnabled: this.learningModeEnabled,
+                zhDocCount: this.zhDocCount,
+                enDocCount: this.enDocCount,
+                onlineMdInputUrl: this.onlineMdInputUrl,
+                onlineMdParsing: this.onlineMdParsing,
+                onlineMdParseResult: this.onlineMdParseResult,
+                onlineMdLinks: this.onlineMdLinks,
+                onlineMdCopySuccess: this.onlineMdCopySuccess,
+                localMdImporting: this.localMdImporting,
+                localMdImportResult: this.localMdImportResult,
+                localMdLinks: this.localMdLinks,
+                localMdCopySuccess: this.localMdCopySuccess,
+                onSwitchOrientationMode: (mode: 'portrait' | 'landscape' | 'auto'): void => { this.switchOrientationMode(mode); },
+                onSwitchLang: (lang: ReferenceLang): void => { this.switchLang(lang); },
+                onSwitchTheme: (theme: AppThemeId): void => { this.switchTheme(theme); },
+                onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
+                onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
+                onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
+                onCopyOnlineMdUrl: (url: string): void => { this.copyOnlineMdUrl(url); },
+                onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },
+                onRemoveLocalMd: (linkId: string): void => { this.removeLocalMd(linkId); },
+                onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
+              });
+            }
+            .tabBar(this.TabBarItem(3));
           }
-          .tabBar(this.TabBarItem(3));
+          .layoutWeight(1)
+          .scrollable(false)
+          .barHeight(0)
+          .barBackgroundColor(this.theme.surfaceBackgroundColor)
+          .onChange((index: number) => {
+            this.currentTabIndex = index;
+          });
+
+          this.BottomTabBar();
         }
-        .scrollable(false)
-        .barBackgroundColor(this.theme.surfaceBackgroundColor)
-        .onChange((index: number) => {
-          this.currentTabIndex = index;
-        });
+        .width('100%')
+        .height('100%');
       }
 
       if (this.showTocPanel) {

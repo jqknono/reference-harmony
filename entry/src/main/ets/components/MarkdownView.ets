@@ -165,9 +165,10 @@ function finalizeTableBlockRehype(block: MarkdownTableBlock, fontSize: number, m
     block.rehypeStyle = 'default';
   }
 
-  if (hasClassName(classNames, 'auto-wrap')) {
-    block.columnWidths = computeColumnWidths(block.header, block.rows, fontSize, Math.max(fontSize * 12, maxTableColumnWidth * 0.6));
-  }
+  // 默认不换行且不截断：列宽按内容自适应，超出屏幕由横向滚动承载。
+  // 当显式启用 wrap-text/auto-wrap 时，限制单列最大宽度以促使换行。
+  const maxColumnWidth = (block.rehypeWrapText ?? false) ? Math.max(fontSize * 12, maxTableColumnWidth * 0.6) : 0;
+  block.columnWidths = computeColumnWidths(block.header, block.rows, fontSize, maxColumnWidth);
 }
 
 function applyRehypeClassNamesToBlock(
@@ -396,7 +397,8 @@ function computeColumnWidths(
   }
 
   const widths: Array<number> = [];
-  const cellPaddingLR = fontSize * 1;
+  // 经验值：列宽估算需要留出少量冗余，避免因字体度量/取整导致最后 1 个字被 Clip 掉
+  const cellPaddingLR = fontSize * 1.4;
   const maxW = maxColumnWidth > 0 ? maxColumnWidth : 0;
   for (let c = 0; c < colCount; c++) {
     const estimated = maxContentWidths[c] + cellPaddingLR;
@@ -430,6 +432,17 @@ function parseInlineTokens(text: string): Array<MarkdownInlineToken> {
 
   while (i < len) {
     const ch = text.charAt(i);
+
+    // HTML 换行：支持 <br> / <br/> / <br />，渲染时应产生硬换行
+    if (ch === '<') {
+      const rest = text.substring(i);
+      const m = /^<br\s*\/?>/i.exec(rest);
+      if (m) {
+        appendTextToken(tokens, '\n');
+        i += m[0].length;
+        continue;
+      }
+    }
 
     if (ch === '\\' && i + 1 < len) {
       appendTextToken(tokens, text.charAt(i + 1));
@@ -478,12 +491,14 @@ function parseInlineTokens(text: string): Array<MarkdownInlineToken> {
     const nextStar = text.indexOf('*', i);
     const nextUnderscore = text.indexOf('_', i);
     const nextBracket = text.indexOf('[', i);
+    const nextAngle = text.indexOf('<', i);
 
     if (nextBackslash >= 0 && nextBackslash < nextSpecial) nextSpecial = nextBackslash;
     if (nextTick >= 0 && nextTick < nextSpecial) nextSpecial = nextTick;
     if (nextStar >= 0 && nextStar < nextSpecial) nextSpecial = nextStar;
     if (nextUnderscore >= 0 && nextUnderscore < nextSpecial) nextSpecial = nextUnderscore;
     if (nextBracket >= 0 && nextBracket < nextSpecial) nextSpecial = nextBracket;
+    if (nextAngle >= 0 && nextAngle < nextSpecial) nextSpecial = nextAngle;
 
     if (nextSpecial <= i) {
       appendTextToken(tokens, ch);
@@ -801,6 +816,13 @@ function isCellTokensEmpty(tokens: Array<MarkdownInlineToken>): boolean {
   return true;
 }
 
+function tokensHasHardLineBreak(tokens: Array<MarkdownInlineToken>): boolean {
+  for (let i = 0; i < tokens.length; i++) {
+    if (tokens[i].text.indexOf('\n') >= 0) return true;
+  }
+  return false;
+}
+
 function findFirstNonEmptyColumnIndex(row: Array<Array<MarkdownInlineToken>>): number {
   for (let i = 0; i < row.length; i++) {
     if (!isCellTokensEmpty(row[i])) return i;
@@ -1007,7 +1029,7 @@ export function MarkdownView($$: MarkdownViewParams): void {
                         linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
                         codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
                         hostContext: $$.hostContext,
-                        maxLines: (block.rehypeWrapText ?? false) ? 999 : 1,
+                        maxLines: ((block.rehypeWrapText ?? false) || tokensHasHardLineBreak(row[0])) ? 999 : 1,
                       });
                     }
                     .layoutWeight(1)
@@ -1049,8 +1071,8 @@ export function MarkdownView($$: MarkdownViewParams): void {
                           linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
                           codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
                           hostContext: $$.hostContext,
-                          maxLines: (block.rehypeWrapText ?? false) ? 999 : 1,
-                          overflow: ($$.unboundedTableColumns ?? false) ? TextOverflow.Clip : TextOverflow.Ellipsis,
+                          maxLines: ((block.rehypeWrapText ?? false) || tokensHasHardLineBreak(cell)) ? 999 : 1,
+                          overflow: TextOverflow.Clip,
                         });
                       }
                       .width(block.columnWidths.length > colIndex ? block.columnWidths[colIndex] : ($$.fontSize ?? 15) * 4)
@@ -1076,7 +1098,9 @@ export function MarkdownView($$: MarkdownViewParams): void {
                           linkColor: ($$.theme ?? getAppThemeTokens('light')).markdown.linkColor,
                           codeTextColor: ($$.theme ?? getAppThemeTokens('light')).markdown.codeTextColor,
                           hostContext: $$.hostContext,
-                          maxLines: (block.rehypeWrapText ?? false) ? 999 : (colIndex === 0 ? 1 : (($$.unboundedTableColumns ?? false) ? 1 : 999)),
+                          // 默认表格单元格不换行；仅在显式指定 wrap-text/auto-wrap 时才允许换行
+                          maxLines: ((block.rehypeWrapText ?? false)
+                            || tokensHasHardLineBreak(getCellDisplayTokensForLearning(row, colIndex, $$.learningMode ?? false))) ? 999 : 1,
                           overflow: TextOverflow.Clip,
                         });
                       }

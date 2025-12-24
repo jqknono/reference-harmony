@@ -58,11 +58,18 @@ function isTableSeparatorLine(line: string): boolean {
   if (!trimmed.includes('|')) return false;
   if (/[^|\s:-]/.test(trimmed)) return false;
   const cells = splitTableRow(trimmed);
-  if (cells.length === 0) return false;
+  if (cells.length < 2) return false;
   for (let i = 0; i < cells.length; i++) {
     const cell = cells[i];
     const c = cell.replace(/\s+/g, '');
-    if (!/^:?-{3,}:?$/.test(c)) return false;
+    if (!c) return false;
+    let hasDash = false;
+    for (let j = 0; j < c.length; j++) {
+      const ch = c.charAt(j);
+      if (ch === '-') hasDash = true;
+      if (ch !== '-' && ch !== ':') return false;
+    }
+    if (!hasDash) return false;
   }
   return true;
 }
