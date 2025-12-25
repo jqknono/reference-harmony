@@ -21,6 +21,8 @@ export struct ReadTab {
   @Link iconErrorKeys: Array<string>;
   @Link pendingTocScrollGroupIndex: number;
   @Link pendingTocScrollItemIndex: number;
+  @Link listScrollIndex: number;
+  @Link listSearchScrollIndex: number;
 
   @Prop selectedDoc: ReferenceDoc | null = null;
   @Prop selectedDocId: string = '';
@@ -33,6 +35,11 @@ export struct ReadTab {
   listSectionNavScroller: Scroller = new Scroller();
   listCardNavScroller: Scroller = new Scroller();
   docSearchInputController: TextInputController = new TextInputController();
+
+  // 旋转/重建时，List 可能会先回调一次 start=0，导致把父组件保存的滚动位置覆盖为 0。
+  // 这里用一个轻量的“门闩”：等 onAppear 根据已保存的 index 恢复完滚动后，再开始同步 onScrollIndex。
+  private enableListIndexSync: boolean = false;
+  private enableSearchListIndexSync: boolean = false;
 
   onToggleDocFavorite?: (docId: string) => void;
   onShowTocPanel?: () => void;
@@ -264,7 +271,20 @@ export struct ReadTab {
           }, (group: SectionWithCards) => `${this.selectedDocId}:search:${group.section.id}`);
         }
         .layoutWeight(1)
-        .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 });
+        .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 })
+        .onScrollIndex((start: number, _end: number) => {
+          if (!this.enableSearchListIndexSync) return;
+          if (this.listSearchScrollIndex !== start) {
+            this.listSearchScrollIndex = start;
+          }
+        })
+        .onAppear(() => {
+          const index: number = this.listSearchScrollIndex;
+          if (index > 0) {
+            this.listSearchScroller.scrollToIndex(index);
+          }
+          this.enableSearchListIndexSync = true;
+        });
 
         if (this.searchSectionCards.length > 0) {
           Column() {
@@ -354,6 +374,12 @@ export struct ReadTab {
         }
         .layoutWeight(1)
         .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 })
+        .onScrollIndex((start: number, _end: number) => {
+          if (!this.enableListIndexSync) return;
+          if (this.listScrollIndex !== start) {
+            this.listScrollIndex = start;
+          }
+        })
         .onAppear(() => {
           if (this.pendingTocScrollGroupIndex >= 0 && this.pendingTocScrollItemIndex >= 0) {
             const groupIndex: number = this.pendingTocScrollGroupIndex;
@@ -361,7 +387,14 @@ export struct ReadTab {
             this.pendingTocScrollGroupIndex = -1;
             this.pendingTocScrollItemIndex = -1;
             this.listScroller.scrollToItemInGroup(groupIndex, itemIndex, true, ScrollAlign.START);
+            this.enableListIndexSync = true;
+            return;
           }
+          const index: number = this.listScrollIndex;
+          if (index > 0) {
+            this.listScroller.scrollToIndex(index);
+          }
+          this.enableListIndexSync = true;
         });
       }
     }

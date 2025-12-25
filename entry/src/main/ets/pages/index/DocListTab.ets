@@ -9,6 +9,8 @@ export struct DocListTab {
   @Link errorText: string;
   @Link catalogSearchQuery: string;
   @Link catalogSearchResults: Array<ReferenceDocSummary>;
+  @Link listScrollIndex: number;
+  @Link searchListScrollIndex: number;
   @Prop theme: AppThemeTokens;
   @Prop fontSize: number;
   @Prop lang: 'zh' | 'en';
@@ -21,6 +23,7 @@ export struct DocListTab {
   @Link iconErrorKeys: Array<string>;
 
   catalogSearchInputController: TextInputController = new TextInputController();
+  listScroller: ListScroller = new ListScroller();
   tabsController?: TabsController;
 
   onOpenDoc?: (docId: string, switchToReadTab: boolean) => void;
@@ -283,7 +286,7 @@ export struct DocListTab {
         Text(this.t('没有匹配的文档', 'No matching docs.')).fontColor(this.theme.mutedTextColor);
       }
 
-      List() {
+      List({ scroller: this.listScroller }) {
         ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.getCatalogDocsForDisplay(), (doc: ReferenceDocSummary) => {
           ListItem() {
             Stack({ alignContent: Alignment.TopStart }) {
@@ -412,7 +415,26 @@ export struct DocListTab {
         }, (doc: ReferenceDocSummary, index: number) => `${this.lang}:${doc.id}:${index}`);
       }
       .layoutWeight(1)
-      .divider({ strokeWidth: 0 });
+      .divider({ strokeWidth: 0 })
+      .onScrollIndex((start: number, _end: number) => {
+        const isSearching: boolean = !!this.catalogSearchQuery.trim();
+        if (isSearching) {
+          if (this.searchListScrollIndex !== start) {
+            this.searchListScrollIndex = start;
+          }
+        } else {
+          if (this.listScrollIndex !== start) {
+            this.listScrollIndex = start;
+          }
+        }
+      })
+      .onAppear(() => {
+        const isSearching: boolean = !!this.catalogSearchQuery.trim();
+        const index: number = isSearching ? this.searchListScrollIndex : this.listScrollIndex;
+        if (index > 0) {
+          this.listScroller.scrollToIndex(index);
+        }
+      });
     }
     .padding(this.tabPadding())
     .height('100%')

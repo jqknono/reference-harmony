@@ -5,7 +5,7 @@ import { window } from '@kit.ArkUI';
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
 import { getAppThemeTokens } from '../common/appTheme';
-import type { AppThemeId, AppThemeTokens } from '../common/appTheme';
+import type { AppThemeTokens } from '../common/appTheme';
 import type { QuizQuestion, QuizAnswer, QuizSession, QuizRecord } from '../common/quizModels';
 import { generateQuizSessionId } from '../common/quizModels';
 import { extractQuestionsFromDoc, selectRandomQuestions, calculateScore } from '../common/quizUtils';
@@ -27,6 +27,8 @@ import { TocPanel } from './index/TocPanel';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
+type ThemePreference = 'light' |'dark' |  'system';
+type ResolvedAppThemeId = 'light' | 'dark';
 
 @Entry
 @Component
@@ -35,8 +37,9 @@ struct Index {
   @State private loading: boolean = false;
   @State private errorText: string = '';
   @State private lang: ReferenceLang = 'zh';
-  @State private themeId: AppThemeId = 'dark';
+  @State private themeId: ThemePreference = 'dark';
   @State private theme: AppThemeTokens = getAppThemeTokens('dark');
+  private systemThemeTimer: number = -1;
 
   @State private docs: Array<ReferenceDocSummary> = [];
   @State private zhDocCount: number = -1;
@@ -56,12 +59,27 @@ struct Index {
   @State private searchNavSectionIndex: number = 0;
   @State private pendingTocScrollGroupIndex: number = -1;
   @State private pendingTocScrollItemIndex: number = -1;
+  @State private catalogListScrollIndex: number = 0;
+  @State private catalogSearchListScrollIndex: number = 0;
+  @State private readTabListScrollIndex: number = 0;
+  @State private readTabListSearchScrollIndex: number = 0;
+  @State private quizHistoryListScrollIndex: number = 0;
+  @State private quizAnsweringScrollY: number = 0;
+  @State private quizResultListScrollIndex: number = 0;
+  @State private settingsScrollY: number = 0;
+  @State private tocListScrollIndex: number = 0;
 
   private tabsController: TabsController = new TabsController();
+  private catalogListScroller: ListScroller = new ListScroller();
   private listScroller: ListScroller = new ListScroller();
   private listSearchScroller: ListScroller = new ListScroller();
   private listSectionNavScroller: Scroller = new Scroller();
   private listCardNavScroller: Scroller = new Scroller();
+  private quizHistoryListScroller: ListScroller = new ListScroller();
+  private quizResultListScroller: ListScroller = new ListScroller();
+  private quizAnsweringScroller: Scroller = new Scroller();
+  private settingsScroller: Scroller = new Scroller();
+  private tocListScroller: ListScroller = new ListScroller();
   private catalogSearchInputController: TextInputController = new TextInputController();
   private docSearchInputController: TextInputController = new TextInputController();
   private repository: ReferenceRepository | undefined = undefined;
@@ -116,6 +134,15 @@ struct Index {
     this.getUIContext().getFocusController().clearFocus();
   }
 
+  private resetReadTabScrollState(): void {
+    this.readTabListScrollIndex = 0;
+    this.readTabListSearchScrollIndex = 0;
+  }
+
+  private resetTocScrollState(): void {
+    this.tocListScrollIndex = 0;
+  }
+
   private async consumeNotificationLaunchIfAny(): Promise<void> {
     const params: LaunchParams | undefined = takeLaunchParams();
     if (!params) return;
@@ -134,10 +161,7 @@ struct Index {
       return;
     }
 
-    this.currentTabIndex = 0;
-    if (!this.isLandscape) {
-      this.tabsController.changeIndex(0);
-    }
+    this.switchToTab(0);
   }
 
   private landscapeSideMargin(): number {
@@ -157,6 +181,86 @@ struct Index {
     return this.lang === 'en' ? en : zh;
   }
 
+  private switchToTab(index: number): void {
+    if (this.currentTabIndex === index) return;
+    // 竖屏：交给 Tabs 自身动画；横屏：自定义动画更新内容。
+    if (!this.isLandscape) {
+      this.tabsController.changeIndex(index);
+      return;
+    }
+
+    const uiContext = this.getUIContext?.();
+    if (uiContext && typeof uiContext.animateTo === 'function') {
+      uiContext.animateTo(
+        { duration: this.tabAnimationDuration(), curve: Curve.EaseInOut },
+        () => {
+          this.currentTabIndex = index;
+        }
+      );
+      return;
+    }
+
+    this.currentTabIndex = index;
+  }
+
+  private resolveSystemTheme(): ResolvedAppThemeId {
+    const host = this.getUIContext().getHostContext();
+    const colorMode: number | string | undefined = (host && typeof host.resourceManager?.getConfigurationSync === 'function')
+      ? host.resourceManager.getConfigurationSync()?.colorMode
+      : undefined;
+    const colorModeNumber: number = typeof colorMode === 'number' ? colorMode : -1;
+    const colorModeText: string = typeof colorMode === 'string' ? colorMode : '';
+    if (colorModeNumber === 1 || colorModeText === 'light' || colorModeText === 'COLOR_MODE_LIGHT') {
+      return 'light';
+    }
+    if (colorModeNumber === 0 || colorModeText === 'dark' || colorModeText === 'COLOR_MODE_DARK') {
+      return 'dark';
+    }
+    return this.theme.id;
+  }
+
+  private resolveThemePreference(preferred: ThemePreference, systemMode?: ResolvedAppThemeId): ResolvedAppThemeId {
+    if (preferred === 'system') {
+      return systemMode ?? this.resolveSystemTheme();
+    }
+    return preferred;
+  }
+
+  private applyThemePreference(preferred: ThemePreference): void {
+    const systemMode: ResolvedAppThemeId = this.resolveSystemTheme();
+    const resolved: ResolvedAppThemeId = this.resolveThemePreference(preferred, systemMode);
+    this.themeId = preferred;
+    this.theme = getAppThemeTokens(resolved);
+    this.applySystemBarStyle();
+    if (preferred === 'system') {
+      this.startSystemThemeWatcher();
+    } else {
+      this.stopSystemThemeWatcher();
+    }
+  }
+
+  private startSystemThemeWatcher(): void {
+    if (this.systemThemeTimer >= 0) return;
+    this.systemThemeTimer = setInterval((): void => {
+      if (this.themeId !== 'system') {
+        this.stopSystemThemeWatcher();
+        return;
+      }
+      const resolved: ResolvedAppThemeId = this.resolveSystemTheme();
+      if (this.theme.id !== resolved) {
+        this.theme = getAppThemeTokens(resolved);
+        this.applySystemBarStyle();
+      }
+    }, 1500);
+  }
+
+  private stopSystemThemeWatcher(): void {
+    if (this.systemThemeTimer >= 0) {
+      clearInterval(this.systemThemeTimer);
+      this.systemThemeTimer = -1;
+    }
+  }
+
   private async loadThemeSetting(): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
@@ -164,9 +268,7 @@ struct Index {
       .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
       .then((p: Preferences): Preferences => p, (): undefined => undefined);
     if (!prefs) {
-      this.themeId = 'dark';
-      this.theme = getAppThemeTokens(this.themeId);
-      this.applySystemBarStyle();
+      this.applyThemePreference('dark');
       return;
     }
     const saved: string = await Promise.resolve()
@@ -175,12 +277,12 @@ struct Index {
         (value: ValueType): string => (typeof value === 'string' ? value : String(value)),
         (): string => 'dark',
       );
-    const normalizedTheme: AppThemeId = (saved === 'light' || saved === 'reference' || saved === 'coo') ? 'light' : 'dark';
-    this.themeId = normalizedTheme;
-    this.theme = getAppThemeTokens(this.themeId);
-    this.applySystemBarStyle();
-    if (saved !== this.themeId) {
-      await this.saveThemeSetting(this.themeId);
+    const normalizedTheme: ThemePreference = (saved === 'light' || saved === 'reference' || saved === 'coo')
+      ? 'light'
+      : (saved === 'system' ? 'system' : 'dark');
+    this.applyThemePreference(normalizedTheme);
+    if (saved !== normalizedTheme) {
+      await this.saveThemeSetting(normalizedTheme);
     }
   }
 
@@ -196,7 +298,7 @@ struct Index {
       .then((): void => undefined, (): void => undefined);
   }
 
-  private async saveThemeSetting(next: AppThemeId): Promise<void> {
+  private async saveThemeSetting(next: ThemePreference): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const prefs: Preferences | undefined = await Promise.resolve()
@@ -630,13 +732,12 @@ struct Index {
         if (recordRecent) {
           this.addToRecentDocs(docId);
         }
+        this.resetReadTabScrollState();
+        this.resetTocScrollState();
         this.listScroller.scrollToIndex(0);
         this.listSearchScroller.scrollToIndex(0);
         if (switchToReadTab) {
-          this.currentTabIndex = 1;
-          if (!this.isLandscape) {
-            this.tabsController.changeIndex(1);
-          }
+          this.switchToTab(1);
         }
       },
       (e: Error | string): void => {
@@ -677,12 +778,11 @@ struct Index {
         this.rebuildSearchResults();
         this.updateQuizAvailableCount();
         this.addToRecentDocs(docId);
+        this.resetReadTabScrollState();
+        this.resetTocScrollState();
         this.listScroller.scrollToIndex(0);
         this.listSearchScroller.scrollToIndex(0);
-        this.currentTabIndex = 2;
-        if (!this.isLandscape) {
-          this.tabsController.changeIndex(2);
-        }
+        this.switchToTab(2);
       },
       (e: Error | string): void => {
         if (requestId !== this.openDocRequestId) return;
@@ -709,6 +809,14 @@ struct Index {
     this.searchResultCount = 0;
     this.catalogSearchQuery = '';
     this.catalogSearchResults = [];
+    this.catalogListScrollIndex = 0;
+    this.catalogSearchListScrollIndex = 0;
+    this.quizHistoryListScrollIndex = 0;
+    this.quizAnsweringScrollY = 0;
+    this.quizResultListScrollIndex = 0;
+    this.settingsScrollY = 0;
+    this.resetReadTabScrollState();
+    this.resetTocScrollState();
     this.iconErrorKeys = [];
     this.errorText = '';
     this.showTocPanel = false;
@@ -719,11 +827,9 @@ struct Index {
     await this.loadManifestCounts();
   }
 
-  private async switchTheme(next: AppThemeId): Promise<void> {
+  private async switchTheme(next: ThemePreference): Promise<void> {
     if (this.themeId === next) return;
-    this.themeId = next;
-    this.theme = getAppThemeTokens(next);
-    this.applySystemBarStyle();
+    this.applyThemePreference(next);
     await this.saveThemeSetting(next);
   }
 
@@ -795,6 +901,10 @@ struct Index {
         this.enDocCount = -1;
       },
     );
+  }
+
+  aboutToDisappear(): void {
+    this.stopSystemThemeWatcher();
   }
 
   async aboutToAppear(): Promise<void> {
@@ -1172,10 +1282,9 @@ struct Index {
     this.rebuildSearchResults();
     this.updateQuizAvailableCount();
     this.addToRecentDocs(linkId);
-    this.currentTabIndex = 1;
-    if (!this.isLandscape) {
-      this.tabsController.changeIndex(1);
-    }
+    this.resetReadTabScrollState();
+    this.resetTocScrollState();
+    this.switchToTab(1);
     if (requestId === this.openDocRequestId) {
       this.loading = false;
     }
@@ -1202,10 +1311,9 @@ struct Index {
     this.rebuildSearchResults();
     this.updateQuizAvailableCount();
     this.addToRecentDocs(linkId);
-    this.currentTabIndex = 2;
-    if (!this.isLandscape) {
-      this.tabsController.changeIndex(2);
-    }
+    this.resetReadTabScrollState();
+    this.resetTocScrollState();
+    this.switchToTab(2);
     if (requestId === this.openDocRequestId) {
       this.loading = false;
     }
@@ -1272,10 +1380,9 @@ struct Index {
     this.rebuildSearchResults();
     this.updateQuizAvailableCount();
     this.addToRecentDocs(linkId);
-    this.currentTabIndex = 1;
-    if (!this.isLandscape) {
-      this.tabsController.changeIndex(1);
-    }
+    this.resetReadTabScrollState();
+    this.resetTocScrollState();
+    this.switchToTab(1);
     if (requestId === this.openDocRequestId) {
       this.loading = false;
     }
@@ -1301,10 +1408,9 @@ struct Index {
     this.rebuildSearchResults();
     this.updateQuizAvailableCount();
     this.addToRecentDocs(linkId);
-    this.currentTabIndex = 2;
-    if (!this.isLandscape) {
-      this.tabsController.changeIndex(2);
-    }
+    this.resetReadTabScrollState();
+    this.resetTocScrollState();
+    this.switchToTab(2);
     if (requestId === this.openDocRequestId) {
       this.loading = false;
     }
@@ -1333,6 +1439,8 @@ struct Index {
     this.quizShowAnswer = false;
     this.quizStartTime = Date.now();
     this.quizQuestionStartTime = Date.now();
+    this.quizAnsweringScrollY = 0;
+    this.quizResultListScrollIndex = 0;
     this.quizMode = 'answering';
   }
 
@@ -1369,6 +1477,8 @@ struct Index {
     this.quizSelectedOptionIndex = -1;
     this.quizShowAnswer = false;
     this.quizQuestionStartTime = Date.now();
+    this.quizAnsweringScrollY = 0;
+    this.quizAnsweringScroller.scrollTo({ xOffset: 0, yOffset: 0, animation: false });
   }
 
   private async finishQuiz(): Promise<void> {
@@ -1400,6 +1510,7 @@ struct Index {
     };
 
     this.quizRecord = await this.quizRepository.addQuizSession(host, session);
+    this.quizResultListScrollIndex = 0;
     this.quizMode = 'result';
   }
 
@@ -1410,6 +1521,8 @@ struct Index {
     this.quizAnswers = [];
     this.quizSelectedOptionIndex = -1;
     this.quizShowAnswer = false;
+    this.quizAnsweringScrollY = 0;
+    this.quizResultListScrollIndex = 0;
   }
 
   onBackPress(): boolean {
@@ -1419,10 +1532,7 @@ struct Index {
       return true;
     }
     if (this.currentTabIndex !== 0) {
-      this.currentTabIndex = 0;
-      if (!this.isLandscape) {
-        this.tabsController.changeIndex(0);
-      }
+      this.switchToTab(0);
       return true;
     }
     return true;
@@ -1435,6 +1545,10 @@ struct Index {
     return this.t('设置', 'Settings');
   }
 
+  private tabAnimationDuration(): number {
+    return 260;
+  }
+
   @Builder
   private TabBarItem(index: number): void {
     Column() {
@@ -1445,14 +1559,12 @@ struct Index {
         .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
         .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
     }
-    .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0.2, left: this.fontSize * 0.5, right: this.fontSize * 0.5 })
+    .layoutWeight(1)
+    .padding({ top: this.fontSize * 0.5, bottom: this.fontSize * 0.5, left: this.fontSize * 1, right: this.fontSize * 1 })
     .onClick((): void => {
       if (this.currentTabIndex === index) return;
       this.stopAllTextInputEditing();
-      this.currentTabIndex = index;
-      if (!this.isLandscape) {
-        this.tabsController.changeIndex(index);
-      }
+      this.switchToTab(index);
     });
   }
 
@@ -1468,8 +1580,8 @@ struct Index {
       .width('100%')
       .justifyContent(FlexAlign.SpaceBetween)
       .padding({
-        left: this.fontSize * 1,
-        right: this.fontSize * 1,
+        left: this.fontSize * 2,
+        right: this.fontSize * 2,
         top: this.fontSize * 1,
         bottom: this.fontSize * 1,
       });
@@ -1488,6 +1600,8 @@ struct Index {
         errorText: this.errorText,
         catalogSearchQuery: this.catalogSearchQuery,
         catalogSearchResults: this.catalogSearchResults,
+        listScrollIndex: this.catalogListScrollIndex,
+        searchListScrollIndex: this.catalogSearchListScrollIndex,
         theme: this.theme,
         fontSize: this.fontSize,
         lang: this.lang,
@@ -1496,6 +1610,7 @@ struct Index {
         recentDocIds: this.recentDocIds,
         iconErrorKeys: this.iconErrorKeys,
         catalogSearchInputController: this.catalogSearchInputController,
+        listScroller: this.catalogListScroller,
         tabsController: this.tabsController,
         docs: this.docs,
         onlineMdDocs: this.onlineMdDocs,
@@ -1530,6 +1645,8 @@ struct Index {
         selectedDocIcon: this.selectedDocIcon,
         selectedDocAvatarVersion: this.selectedDocAvatarVersion,
         favoriteDocIds: this.favoriteDocIds,
+        listScrollIndex: this.readTabListScrollIndex,
+        listSearchScrollIndex: this.readTabListSearchScrollIndex,
         listScroller: this.listScroller,
         listSearchScroller: this.listSearchScroller,
         listSectionNavScroller: this.listSectionNavScroller,
@@ -1545,6 +1662,12 @@ struct Index {
         fontSize: this.fontSize,
         lang: this.lang,
         isLandscape: this.isLandscape,
+        historyListScrollIndex: this.quizHistoryListScrollIndex,
+        answeringScrollY: this.quizAnsweringScrollY,
+        resultListScrollIndex: this.quizResultListScrollIndex,
+        historyListScroller: this.quizHistoryListScroller,
+        resultListScroller: this.quizResultListScroller,
+        answeringScroller: this.quizAnsweringScroller,
         quizMode: this.quizMode,
         quizQuestions: this.quizQuestions,
         quizCurrentIndex: this.quizCurrentIndex,
@@ -1569,6 +1692,8 @@ struct Index {
         fontSize: this.fontSize,
         lang: this.lang,
         isLandscape: this.isLandscape,
+        scrollY: this.settingsScrollY,
+        scroller: this.settingsScroller,
         themeId: this.themeId,
         orientationMode: this.orientationMode,
         learningModeEnabled: this.learningModeEnabled,
@@ -1585,7 +1710,7 @@ struct Index {
         localMdCopySuccess: this.localMdCopySuccess,
         onSwitchOrientationMode: (mode: 'portrait' | 'landscape' | 'auto'): void => { this.switchOrientationMode(mode); },
         onSwitchLang: (lang: ReferenceLang): void => { this.switchLang(lang); },
-        onSwitchTheme: (theme: AppThemeId): void => { this.switchTheme(theme); },
+        onSwitchTheme: (theme: ThemePreference): void => { this.switchTheme(theme); },
         onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
         onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
         onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
@@ -1611,6 +1736,8 @@ struct Index {
                 errorText: this.errorText,
                 catalogSearchQuery: this.catalogSearchQuery,
                 catalogSearchResults: this.catalogSearchResults,
+                listScrollIndex: this.catalogListScrollIndex,
+                searchListScrollIndex: this.catalogSearchListScrollIndex,
                 theme: this.theme,
                 fontSize: this.fontSize,
                 lang: this.lang,
@@ -1619,6 +1746,7 @@ struct Index {
                 recentDocIds: this.recentDocIds,
                 iconErrorKeys: this.iconErrorKeys,
                 catalogSearchInputController: this.catalogSearchInputController,
+                listScroller: this.catalogListScroller,
                 tabsController: this.tabsController,
                 docs: this.docs,
                 onlineMdDocs: this.onlineMdDocs,
@@ -1656,6 +1784,8 @@ struct Index {
                 selectedDocIcon: this.selectedDocIcon,
                 selectedDocAvatarVersion: this.selectedDocAvatarVersion,
                 favoriteDocIds: this.favoriteDocIds,
+                listScrollIndex: this.readTabListScrollIndex,
+                listSearchScrollIndex: this.readTabListSearchScrollIndex,
                 listScroller: this.listScroller,
                 listSearchScroller: this.listSearchScroller,
                 listSectionNavScroller: this.listSectionNavScroller,
@@ -1674,6 +1804,12 @@ struct Index {
                 fontSize: this.fontSize,
                 lang: this.lang,
                 isLandscape: this.isLandscape,
+                historyListScrollIndex: this.quizHistoryListScrollIndex,
+                answeringScrollY: this.quizAnsweringScrollY,
+                resultListScrollIndex: this.quizResultListScrollIndex,
+                historyListScroller: this.quizHistoryListScroller,
+                resultListScroller: this.quizResultListScroller,
+                answeringScroller: this.quizAnsweringScroller,
                 quizMode: this.quizMode,
                 quizQuestions: this.quizQuestions,
                 quizCurrentIndex: this.quizCurrentIndex,
@@ -1701,6 +1837,8 @@ struct Index {
                 fontSize: this.fontSize,
                 lang: this.lang,
                 isLandscape: this.isLandscape,
+                scrollY: this.settingsScrollY,
+                scroller: this.settingsScroller,
                 themeId: this.themeId,
                 orientationMode: this.orientationMode,
                 learningModeEnabled: this.learningModeEnabled,
@@ -1717,7 +1855,7 @@ struct Index {
                 localMdCopySuccess: this.localMdCopySuccess,
                 onSwitchOrientationMode: (mode: 'portrait' | 'landscape' | 'auto'): void => { this.switchOrientationMode(mode); },
                 onSwitchLang: (lang: ReferenceLang): void => { this.switchLang(lang); },
-                onSwitchTheme: (theme: AppThemeId): void => { this.switchTheme(theme); },
+                onSwitchTheme: (theme: ThemePreference): void => { this.switchTheme(theme); },
                 onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
                 onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
                 onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
@@ -1730,6 +1868,8 @@ struct Index {
             .tabBar(this.TabBarItem(3));
           }
           .layoutWeight(1)
+          .animationDuration(this.tabAnimationDuration())
+          .animationCurve(Curve.EaseInOut)
           .scrollable(false)
           .barHeight(0)
           .barBackgroundColor(this.theme.surfaceBackgroundColor)
@@ -1750,6 +1890,8 @@ struct Index {
           lang: this.lang,
           selectedDocId: this.selectedDocId,
           sectionCards: this.sectionCards,
+          listScrollIndex: this.tocListScrollIndex,
+          listScroller: this.tocListScroller,
           onClose: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = false; },
           onScrollToCard: (groupIndex: number, cardIndex: number): void => {
             this.stopAllTextInputEditing();

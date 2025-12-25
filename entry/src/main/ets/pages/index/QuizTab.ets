@@ -22,9 +22,15 @@ export struct QuizTab {
   @Link quizQuestionStartTime: number;
   @Link quizRecord: QuizRecord | null;
   @Link quizAvailableCount: number;
+  @Link historyListScrollIndex: number;
+  @Link answeringScrollY: number;
+  @Link resultListScrollIndex: number;
 
   @Prop selectedDoc: ReferenceDoc | null = null;
   quizRepository: QuizRepository = new QuizRepository();
+  historyListScroller: ListScroller = new ListScroller();
+  resultListScroller: ListScroller = new ListScroller();
+  answeringScroller: Scroller = new Scroller();
 
   onStartQuiz?: (count: number) => void;
   onSelectQuizOption?: (index: number) => void;
@@ -204,7 +210,7 @@ export struct QuizTab {
               .fontColor(this.theme.mutedTextColor)
               .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
 
-            List() {
+            List({ scroller: this.historyListScroller }) {
               ForEach(this.quizRepository.getRecentSessions(this.quizRecord, 10), (session: QuizSession) => {
                 ListItem() {
                   Row() {
@@ -238,7 +244,18 @@ export struct QuizTab {
               }, (session: QuizSession) => session.id);
             }
             .layoutWeight(1)
-            .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 });
+            .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 })
+            .onScrollIndex((start: number, _end: number) => {
+              if (this.historyListScrollIndex !== start) {
+                this.historyListScrollIndex = start;
+              }
+            })
+            .onAppear(() => {
+              const index: number = this.historyListScrollIndex;
+              if (index > 0) {
+                this.historyListScroller.scrollToIndex(index);
+              }
+            });
           }
           .layoutWeight(1);
         }
@@ -279,7 +296,7 @@ export struct QuizTab {
         .backgroundColor(this.theme.surfaceMutedBackgroundColor)
         .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
 
-      Scroll() {
+      Scroll(this.answeringScroller) {
         Column({ space: this.fontSize * 0.8 }) {
           Text(this.quizQuestions[this.quizCurrentIndex]?.question ?? '')
             .fontSize(this.fontSize * 1.1)
@@ -338,7 +355,17 @@ export struct QuizTab {
         }
       }
       .layoutWeight(1)
-      .scrollBar(BarState.Off);
+      .scrollBar(BarState.Off)
+      .onDidScroll((_xOffset: number, _yOffset: number, _scrollState: ScrollState) => {
+        const yOffset: number = this.answeringScroller.currentOffset().yOffset;
+        if (this.answeringScrollY !== yOffset) {
+          this.answeringScrollY = yOffset;
+        }
+      })
+      .onAppear(() => {
+        const yOffset: number = this.answeringScrollY;
+        this.answeringScroller.scrollTo({ xOffset: 0, yOffset, animation: false });
+      });
 
       Row({ space: this.fontSize * 1 }) {
         if (!this.quizShowAnswer) {
@@ -401,7 +428,7 @@ export struct QuizTab {
         .fontColor(this.theme.titleColor)
         .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
 
-      List() {
+      List({ scroller: this.resultListScroller }) {
         ForEach(this.quizQuestions, (question: QuizQuestion, qIndex: number) => {
           ListItem() {
             Row({ space: this.fontSize * 0.5 }) {
@@ -426,7 +453,18 @@ export struct QuizTab {
         }, (question: QuizQuestion, qIndex: number) => `result_${qIndex}`);
       }
       .layoutWeight(1)
-      .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 });
+      .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 })
+      .onScrollIndex((start: number, _end: number) => {
+        if (this.resultListScrollIndex !== start) {
+          this.resultListScrollIndex = start;
+        }
+      })
+      .onAppear(() => {
+        const index: number = this.resultListScrollIndex;
+        if (index > 0) {
+          this.resultListScroller.scrollToIndex(index);
+        }
+      });
 
       Row({ space: this.fontSize * 1 }) {
         Text(this.t('返回', 'Back'))

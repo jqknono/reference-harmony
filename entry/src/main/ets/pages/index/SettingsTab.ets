@@ -1,8 +1,10 @@
-import type { AppThemeId, AppThemeTokens } from '../../common/appTheme';
+import type { AppThemeTokens } from '../../common/appTheme';
 import type { ReferenceLang } from '../../common/referenceModels';
 import type { OnlineMdLink } from '../../common/onlineMdModels';
 import { openExternalLink } from '../../common/openExternalLink';
 import { formatDocCount } from './utils';
+
+type ThemePreference = 'dark' | 'light' | 'system';
 
 @Component
 export struct SettingsTab {
@@ -10,7 +12,7 @@ export struct SettingsTab {
   @Prop fontSize: number;
   @Prop lang: ReferenceLang;
   @Prop isLandscape: boolean;
-  @Prop themeId: AppThemeId;
+  @Prop themeId: ThemePreference;
   @Prop orientationMode: 'portrait' | 'landscape' | 'auto';
   @Prop learningModeEnabled: boolean;
   @Prop zhDocCount: number;
@@ -26,10 +28,13 @@ export struct SettingsTab {
   @Link localMdImportResult: string;
   @Link localMdLinks: Array<OnlineMdLink>;
   @Link localMdCopySuccess: boolean;
+  @Link scrollY: number;
+
+  scroller: Scroller = new Scroller();
 
   onSwitchOrientationMode?: (mode: 'portrait' | 'landscape' | 'auto') => void;
   onSwitchLang?: (lang: ReferenceLang) => void;
-  onSwitchTheme?: (theme: AppThemeId) => void;
+  onSwitchTheme?: (theme: ThemePreference) => void;
   onToggleLearningMode?: (enabled: boolean) => void;
   onParseAndAddOnlineMd?: () => void;
   onRemoveOnlineMd?: (linkId: string) => void;
@@ -54,7 +59,7 @@ export struct SettingsTab {
   }
 
   build() {
-    Scroll() {
+    Scroll(this.scroller) {
       Column({ space: this.fontSize * 0.8 }) {
         Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.25).fontWeight(FontWeight.Bold).fontColor(this.theme.accentColor);
 
@@ -148,6 +153,13 @@ export struct SettingsTab {
                 .backgroundColor(this.themeId === 'light' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
                 .borderRadius(this.fontSize * 66)
                 .onClick(() => this.onSwitchTheme?.('light'));
+              Text(this.t('跟随系统', 'System'))
+                .fontSize(this.fontSize * 0.85)
+                .fontColor(this.themeId === 'system' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+                .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                .backgroundColor(this.themeId === 'system' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+                .borderRadius(this.fontSize * 66)
+                .onClick(() => this.onSwitchTheme?.('system'));
             }
           }
           .width('100%')
@@ -499,6 +511,16 @@ export struct SettingsTab {
     .height('100%')
     .width('100%')
     .scrollBar(BarState.Auto)
+    .onDidScroll((_xOffset: number, _yOffset: number, _scrollState: ScrollState) => {
+      const yOffset: number = this.scroller.currentOffset().yOffset;
+      if (this.scrollY !== yOffset) {
+        this.scrollY = yOffset;
+      }
+    })
+    .onAppear(() => {
+      const yOffset: number = this.scrollY;
+      this.scroller.scrollTo({ xOffset: 0, yOffset, animation: false });
+    })
     .backgroundColor(this.theme.pageBackgroundColor);
   }
 }

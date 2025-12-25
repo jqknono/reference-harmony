@@ -1,4 +1,5 @@
-export type AppThemeId = 'dark' | 'light';
+export type ResolvedAppThemeId = 'dark' | 'light';
+export type AppThemeId = ResolvedAppThemeId | 'system';
 
 export interface MarkdownThemeTokens {
   headingColor: number;
@@ -11,7 +12,7 @@ export interface MarkdownThemeTokens {
 }
 
 export interface AppThemeTokens {
-  id: AppThemeId;
+  id: ResolvedAppThemeId;
 
   pageBackgroundColor: number;
   surfaceBackgroundColor: number;

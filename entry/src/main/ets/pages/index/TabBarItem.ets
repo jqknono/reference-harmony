@@ -19,6 +19,7 @@ export function TabBarItem(props: TabBarItemProps): void {
       .fontColor(props.currentTabIndex === props.index ? props.theme.accentColor : props.theme.mutedTextColor)
       .fontWeight(props.currentTabIndex === props.index ? FontWeight.Medium : FontWeight.Normal);
   }
-  .padding({ top: props.fontSize * 0.2, bottom: props.fontSize * 0, left: props.fontSize * 0.5, right: props.fontSize * 0.5 });
+  .layoutWeight(1)
+  .padding({ top: props.fontSize * 0.5, bottom: props.fontSize * 0.5, left: props.fontSize * 5, right: props.fontSize * 5 });
 }
 

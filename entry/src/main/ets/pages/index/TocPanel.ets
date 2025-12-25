@@ -10,6 +10,9 @@ export struct TocPanel {
   @Prop lang: 'zh' | 'en';
   @Prop selectedDocId: string;
   @Prop sectionCards: Array<SectionWithCards>;
+  @Link listScrollIndex: number;
+
+  listScroller: ListScroller = new ListScroller();
 
   onClose?: () => void;
   onScrollToCard?: (groupIndex: number, cardIndex: number) => void;
@@ -37,7 +40,7 @@ export struct TocPanel {
         .width('100%')
         .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.8 });
 
-        List() {
+        List({ scroller: this.listScroller }) {
           ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
             ListItemGroup() {
               ListItem() {
@@ -72,7 +75,18 @@ export struct TocPanel {
           }, (group: SectionWithCards) => `toc:${this.selectedDocId}:${group.section.id}`);
         }
         .layoutWeight(1)
-        .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 });
+        .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 })
+        .onScrollIndex((start: number, _end: number) => {
+          if (this.listScrollIndex !== start) {
+            this.listScrollIndex = start;
+          }
+        })
+        .onAppear(() => {
+          const index: number = this.listScrollIndex;
+          if (index > 0) {
+            this.listScroller.scrollToIndex(index);
+          }
+        });
       }
       .width('100%')
       .height('70%')
