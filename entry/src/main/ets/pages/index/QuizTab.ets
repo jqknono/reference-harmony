@@ -210,7 +210,7 @@ export struct QuizTab {
               .fontColor(this.theme.mutedTextColor)
               .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
 
-            List({ scroller: this.historyListScroller }) {
+            List({ scroller: this.historyListScroller, initialIndex: this.historyListScrollIndex }) {
               ForEach(this.quizRepository.getRecentSessions(this.quizRecord, 10), (session: QuizSession) => {
                 ListItem() {
                   Row() {
@@ -248,12 +248,6 @@ export struct QuizTab {
             .onScrollIndex((start: number, _end: number) => {
               if (this.historyListScrollIndex !== start) {
                 this.historyListScrollIndex = start;
-              }
-            })
-            .onAppear(() => {
-              const index: number = this.historyListScrollIndex;
-              if (index > 0) {
-                this.historyListScroller.scrollToIndex(index);
               }
             });
           }
@@ -428,7 +422,7 @@ export struct QuizTab {
         .fontColor(this.theme.titleColor)
         .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
 
-      List({ scroller: this.resultListScroller }) {
+      List({ scroller: this.resultListScroller, initialIndex: this.resultListScrollIndex }) {
         ForEach(this.quizQuestions, (question: QuizQuestion, qIndex: number) => {
           ListItem() {
             Row({ space: this.fontSize * 0.5 }) {
@@ -457,12 +451,6 @@ export struct QuizTab {
       .onScrollIndex((start: number, _end: number) => {
         if (this.resultListScrollIndex !== start) {
           this.resultListScrollIndex = start;
-        }
-      })
-      .onAppear(() => {
-        const index: number = this.resultListScrollIndex;
-        if (index > 0) {
-          this.resultListScroller.scrollToIndex(index);
         }
       });
 

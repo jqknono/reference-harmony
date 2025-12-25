@@ -63,6 +63,8 @@ struct Index {
   @State private catalogSearchListScrollIndex: number = 0;
   @State private readTabListScrollIndex: number = 0;
   @State private readTabListSearchScrollIndex: number = 0;
+  @State private readTabListScrollItemIndexInGroup: number = 0;
+  @State private readTabListSearchScrollItemIndexInGroup: number = 0;
   @State private quizHistoryListScrollIndex: number = 0;
   @State private quizAnsweringScrollY: number = 0;
   @State private quizResultListScrollIndex: number = 0;
@@ -137,6 +139,8 @@ struct Index {
   private resetReadTabScrollState(): void {
     this.readTabListScrollIndex = 0;
     this.readTabListSearchScrollIndex = 0;
+    this.readTabListScrollItemIndexInGroup = 0;
+    this.readTabListSearchScrollItemIndexInGroup = 0;
   }
 
   private resetTocScrollState(): void {
@@ -1647,6 +1651,8 @@ struct Index {
         favoriteDocIds: this.favoriteDocIds,
         listScrollIndex: this.readTabListScrollIndex,
         listSearchScrollIndex: this.readTabListSearchScrollIndex,
+        listScrollItemIndexInGroup: this.readTabListScrollItemIndexInGroup,
+        listSearchScrollItemIndexInGroup: this.readTabListSearchScrollItemIndexInGroup,
         listScroller: this.listScroller,
         listSearchScroller: this.listSearchScroller,
         listSectionNavScroller: this.listSectionNavScroller,
@@ -1786,6 +1792,8 @@ struct Index {
                 favoriteDocIds: this.favoriteDocIds,
                 listScrollIndex: this.readTabListScrollIndex,
                 listSearchScrollIndex: this.readTabListSearchScrollIndex,
+                listScrollItemIndexInGroup: this.readTabListScrollItemIndexInGroup,
+                listSearchScrollItemIndexInGroup: this.readTabListSearchScrollItemIndexInGroup,
                 listScroller: this.listScroller,
                 listSearchScroller: this.listSearchScroller,
                 listSectionNavScroller: this.listSectionNavScroller,

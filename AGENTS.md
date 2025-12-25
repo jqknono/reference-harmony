@@ -8,7 +8,18 @@
 
 - `hvigorw --stop-daemon`
 
-# UI 布局约束
+## UI 布局约束
 
 - 代码块应占满横向空间，不应有左右缩进（负 margin）。
 - 禁止按像素（px）调整布局尺寸，应使用字体相对值（基于 `fontSize` 计算）。
+
+## 开发文档
+
+- [设计](https://developer.huawei.com/consumer/cn/doc/design-guides/design-concepts-0000001795698445)
+- [ArkTS（方舟编程语言）](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts)
+- [ArkUI（方舟 UI 框架）](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkui)
+- [ArkData（方舟数据管理）](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkdata)
+- [Ability Kit（程序框架服务）](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ability-kit)
+- [UI Design Kit（UI 设计套件）](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ui-design-kit-guide)
+- [最佳实践](https://developer.huawei.com/consumer/cn/doc/best-practices/bpta-best-practices-overview)
+- [API 参考](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/development-intro-api)

@@ -23,6 +23,8 @@ export struct ReadTab {
   @Link pendingTocScrollItemIndex: number;
   @Link listScrollIndex: number;
   @Link listSearchScrollIndex: number;
+  @Link listScrollItemIndexInGroup: number;
+  @Link listSearchScrollItemIndexInGroup: number;
 
   @Prop selectedDoc: ReferenceDoc | null = null;
   @Prop selectedDocId: string = '';
@@ -36,8 +38,8 @@ export struct ReadTab {
   listCardNavScroller: Scroller = new Scroller();
   docSearchInputController: TextInputController = new TextInputController();
 
-  // 旋转/重建时，List 可能会先回调一次 start=0，导致把父组件保存的滚动位置覆盖为 0。
-  // 这里用一个轻量的“门闩”：等 onAppear 根据已保存的 index 恢复完滚动后，再开始同步 onScrollIndex。
+  // 旋转/重建时，List 可能会先回调一次 index=0，导致把父组件保存的滚动位置覆盖为 0。
+  // 这里用一个轻量的“门闩”：等 onAppear 根据已保存的锚点恢复完滚动后，再开始同步滚动状态。
   private enableListIndexSync: boolean = false;
   private enableSearchListIndexSync: boolean = false;
 
@@ -133,85 +135,87 @@ export struct ReadTab {
 
   build() {
     Column({ space: this.fontSize * 0.6 }) {
-      Row({ space: this.fontSize * 0.6 }) {
-        if (this.selectedDoc) {
-          ForEach([this.selectedDocAvatarVersion], (_: number) => {
-            this.DocAvatar(
-              this.selectedDocId,
-              this.selectedDoc?.name || this.selectedDoc?.title || this.selectedDocId,
-              this.selectedDocIcon || undefined,
-              this.fontSize * 1.5,
-              0,
-            );
-          }, (k: number) => `${k}`);
-        }
-
-        Column({ space: this.fontSize * 0.1 }) {
-          Text(this.selectedDoc ? (this.selectedDoc.name || this.selectedDoc.title) : this.t('未选择', 'No selection'))
-            .fontSize(this.fontSize * 1.2)
-            .fontWeight(FontWeight.Bold)
-            .fontColor(this.theme.accentColor);
-
-          if (this.selectedDoc && this.selectedDoc.title && this.selectedDoc.title !== this.selectedDoc.name) {
-            Text(this.selectedDoc.title).fontSize(this.fontSize * 0.8).fontColor(this.theme.mutedTextColor).maxLines(2);
-          }
-        }
-        .layoutWeight(1);
-
-        if (this.selectedDocId) {
-          Text(this.isDocFavorite(this.selectedDocId) ? '★' : '☆')
-            .fontSize(this.fontSize * 1.5)
-            .fontColor(this.isDocFavorite(this.selectedDocId) ? 0xffF59E0B : this.theme.mutedTextColor)
-            .onClick(() => {
-              this.onToggleDocFavorite?.(this.selectedDocId);
-            });
-        }
-
-        Text(this.t('目录', 'TOC'))
-          .fontSize(this.fontSize * 1)
-          .fontColor(this.theme.accentColor)
-          .onClick(() => {
-            this.onShowTocPanel?.();
-          });
-      }
-      .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
-
-      if (this.selectedDoc && !this.isLandscape) {
+      Column({ space: this.fontSize * 0.6 }) {
         Row({ space: this.fontSize * 0.6 }) {
-          TextInput({
-            text: this.searchQuery,
-            placeholder: this.t('搜索当前文档…', 'Search current doc…'),
-            controller: this.docSearchInputController,
-          })
-            .layoutWeight(1)
-            .fontSize(this.fontSize * 1)
-            .fontColor(this.theme.titleColor)
-            .placeholderColor(this.theme.mutedTextColor)
-            .enableAutoFill(false)
-            .backgroundColor(this.theme.surfaceBackgroundColor)
-            .border({ width: 1, color: this.theme.borderColor })
-            .borderRadius(this.fontSize * 0.8)
-            .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
-            .onChange((value: string) => {
-              this.searchQuery = value;
-              this.onRebuildSearchResults?.();
-            });
+          if (this.selectedDoc) {
+            ForEach([this.selectedDocAvatarVersion], (_: number) => {
+              this.DocAvatar(
+                this.selectedDocId,
+                this.selectedDoc?.name || this.selectedDoc?.title || this.selectedDocId,
+                this.selectedDocIcon || undefined,
+                this.fontSize * 1.5,
+                0,
+              );
+            }, (k: number) => `${k}`);
+          }
 
-          if (this.searchQuery.trim()) {
-            Text(this.t('清除', 'Clear'))
-              .fontSize(this.fontSize * 0.8)
-              .fontColor(this.theme.mutedTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+          Column({ space: this.fontSize * 0.1 }) {
+            Text(this.selectedDoc ? (this.selectedDoc.name || this.selectedDoc.title) : this.t('未选择', 'No selection'))
+              .fontSize(this.fontSize * 1.2)
+              .fontWeight(FontWeight.Bold)
+              .fontColor(this.theme.accentColor);
+
+            if (this.selectedDoc && this.selectedDoc.title && this.selectedDoc.title !== this.selectedDoc.name) {
+              Text(this.selectedDoc.title).fontSize(this.fontSize * 0.8).fontColor(this.theme.mutedTextColor).maxLines(2);
+            }
+          }
+          .layoutWeight(1);
+
+          if (this.selectedDocId) {
+            Text(this.isDocFavorite(this.selectedDocId) ? '★' : '☆')
+              .fontSize(this.fontSize * 1.5)
+              .fontColor(this.isDocFavorite(this.selectedDocId) ? 0xffF59E0B : this.theme.mutedTextColor)
+              .onClick(() => {
+                this.onToggleDocFavorite?.(this.selectedDocId);
+              });
+          }
+
+          Text(this.t('目录', 'TOC'))
+            .fontSize(this.fontSize * 1)
+            .fontColor(this.theme.accentColor)
+            .onClick(() => {
+              this.onShowTocPanel?.();
+            });
+        }
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
+
+        if (this.selectedDoc && !this.isLandscape) {
+          Row({ space: this.fontSize * 0.6 }) {
+            TextInput({
+              text: this.searchQuery,
+              placeholder: this.t('搜索当前文档…', 'Search current doc…'),
+              controller: this.docSearchInputController,
+            })
+              .layoutWeight(1)
+              .fontSize(this.fontSize * 1)
+              .fontColor(this.theme.titleColor)
+              .placeholderColor(this.theme.mutedTextColor)
+              .enableAutoFill(false)
               .backgroundColor(this.theme.surfaceBackgroundColor)
               .border({ width: 1, color: this.theme.borderColor })
               .borderRadius(this.fontSize * 0.8)
-              .onClick(() => {
-                this.searchQuery = '';
+              .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
+              .onChange((value: string) => {
+                this.searchQuery = value;
                 this.onRebuildSearchResults?.();
               });
+
+            if (this.searchQuery.trim()) {
+              Text(this.t('清除', 'Clear'))
+                .fontSize(this.fontSize * 0.8)
+                .fontColor(this.theme.mutedTextColor)
+                .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                .backgroundColor(this.theme.surfaceBackgroundColor)
+                .border({ width: 1, color: this.theme.borderColor })
+                .borderRadius(this.fontSize * 0.8)
+                .onClick(() => {
+                  this.searchQuery = '';
+                  this.onRebuildSearchResults?.();
+                });
+            }
           }
+          .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
         }
-        .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
       }
 
       if (this.loading) {
@@ -236,7 +240,7 @@ export struct ReadTab {
             .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
         }
 
-        List({ scroller: this.listSearchScroller }) {
+        List({ scroller: this.listSearchScroller, initialIndex: this.listSearchScrollIndex }) {
           ForEach(this.searchSectionCards, (group: SectionWithCards, groupIndex: number) => {
             ListItemGroup() {
               ListItem() {
@@ -272,16 +276,40 @@ export struct ReadTab {
         }
         .layoutWeight(1)
         .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 })
-        .onScrollIndex((start: number, _end: number) => {
+        .onScrollVisibleContentChange((startInfo: VisibleListContentInfo, _endInfo: VisibleListContentInfo) => {
           if (!this.enableSearchListIndexSync) return;
-          if (this.listSearchScrollIndex !== start) {
-            this.listSearchScrollIndex = start;
+
+          const groupIndex: number = startInfo.index;
+          if (this.listSearchScrollIndex !== groupIndex) {
+            this.listSearchScrollIndex = groupIndex;
+          }
+
+          const cardsLen: number = this.searchSectionCards[groupIndex]?.cards?.length ?? 0;
+          let itemIndexInGroup: number = typeof startInfo.itemIndexInGroup === 'number' ? startInfo.itemIndexInGroup : 0;
+          if (cardsLen > 0) {
+            // indexInGroup: 0=组内标题，1..N=card；为了锚点到 card，这里将 0 归一到 1。
+            if (itemIndexInGroup <= 0) {
+              itemIndexInGroup = 1;
+            } else if (itemIndexInGroup > cardsLen) {
+              itemIndexInGroup = cardsLen;
+            }
+          }
+
+          if (this.listSearchScrollItemIndexInGroup !== itemIndexInGroup) {
+            this.listSearchScrollItemIndexInGroup = itemIndexInGroup;
           }
         })
         .onAppear(() => {
-          const index: number = this.listSearchScrollIndex;
-          if (index > 0) {
-            this.listSearchScroller.scrollToIndex(index);
+          const groupIndex: number = this.listSearchScrollIndex;
+          const cardsLen: number = this.searchSectionCards[groupIndex]?.cards?.length ?? 0;
+          if (groupIndex >= 0 && groupIndex < this.searchSectionCards.length && cardsLen > 0) {
+            let itemIndexInGroup: number = this.listSearchScrollItemIndexInGroup;
+            if (itemIndexInGroup <= 0) {
+              itemIndexInGroup = 1;
+            } else if (itemIndexInGroup > cardsLen) {
+              itemIndexInGroup = cardsLen;
+            }
+            this.listSearchScroller.scrollToItemInGroup(groupIndex, itemIndexInGroup, false, ScrollAlign.START);
           }
           this.enableSearchListIndexSync = true;
         });
@@ -338,7 +366,7 @@ export struct ReadTab {
           .backgroundColor(this.theme.surfaceMutedBackgroundColor);
         }
       } else {
-        List({ scroller: this.listScroller }) {
+        List({ scroller: this.listScroller, initialIndex: this.listScrollIndex }) {
           ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
             ListItemGroup() {
               ListItem() {
@@ -374,10 +402,27 @@ export struct ReadTab {
         }
         .layoutWeight(1)
         .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 })
-        .onScrollIndex((start: number, _end: number) => {
+        .onScrollVisibleContentChange((startInfo: VisibleListContentInfo, _endInfo: VisibleListContentInfo) => {
           if (!this.enableListIndexSync) return;
-          if (this.listScrollIndex !== start) {
-            this.listScrollIndex = start;
+
+          const groupIndex: number = startInfo.index;
+          if (this.listScrollIndex !== groupIndex) {
+            this.listScrollIndex = groupIndex;
+          }
+
+          const cardsLen: number = this.sectionCards[groupIndex]?.cards?.length ?? 0;
+          let itemIndexInGroup: number = typeof startInfo.itemIndexInGroup === 'number' ? startInfo.itemIndexInGroup : 0;
+          if (cardsLen > 0) {
+            // indexInGroup: 0=组内标题，1..N=card；为了锚点到 card，这里将 0 归一到 1。
+            if (itemIndexInGroup <= 0) {
+              itemIndexInGroup = 1;
+            } else if (itemIndexInGroup > cardsLen) {
+              itemIndexInGroup = cardsLen;
+            }
+          }
+
+          if (this.listScrollItemIndexInGroup !== itemIndexInGroup) {
+            this.listScrollItemIndexInGroup = itemIndexInGroup;
           }
         })
         .onAppear(() => {
@@ -387,12 +432,18 @@ export struct ReadTab {
             this.pendingTocScrollGroupIndex = -1;
             this.pendingTocScrollItemIndex = -1;
             this.listScroller.scrollToItemInGroup(groupIndex, itemIndex, true, ScrollAlign.START);
-            this.enableListIndexSync = true;
-            return;
-          }
-          const index: number = this.listScrollIndex;
-          if (index > 0) {
-            this.listScroller.scrollToIndex(index);
+          } else {
+            const groupIndex: number = this.listScrollIndex;
+            const cardsLen: number = this.sectionCards[groupIndex]?.cards?.length ?? 0;
+            if (groupIndex >= 0 && groupIndex < this.sectionCards.length && cardsLen > 0) {
+              let itemIndexInGroup: number = this.listScrollItemIndexInGroup;
+              if (itemIndexInGroup <= 0) {
+                itemIndexInGroup = 1;
+              } else if (itemIndexInGroup > cardsLen) {
+                itemIndexInGroup = cardsLen;
+              }
+              this.listScroller.scrollToItemInGroup(groupIndex, itemIndexInGroup, false, ScrollAlign.START);
+            }
           }
           this.enableListIndexSync = true;
         });

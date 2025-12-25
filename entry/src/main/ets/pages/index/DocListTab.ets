@@ -286,7 +286,7 @@ export struct DocListTab {
         Text(this.t('没有匹配的文档', 'No matching docs.')).fontColor(this.theme.mutedTextColor);
       }
 
-      List({ scroller: this.listScroller }) {
+      List({ scroller: this.listScroller, initialIndex: this.catalogSearchQuery.trim() ? this.searchListScrollIndex : this.listScrollIndex }) {
         ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.getCatalogDocsForDisplay(), (doc: ReferenceDocSummary) => {
           ListItem() {
             Stack({ alignContent: Alignment.TopStart }) {
@@ -426,13 +426,6 @@ export struct DocListTab {
           if (this.listScrollIndex !== start) {
             this.listScrollIndex = start;
           }
-        }
-      })
-      .onAppear(() => {
-        const isSearching: boolean = !!this.catalogSearchQuery.trim();
-        const index: number = isSearching ? this.searchListScrollIndex : this.listScrollIndex;
-        if (index > 0) {
-          this.listScroller.scrollToIndex(index);
         }
       });
     }

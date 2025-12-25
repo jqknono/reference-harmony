@@ -40,7 +40,7 @@ export struct TocPanel {
         .width('100%')
         .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.8 });
 
-        List({ scroller: this.listScroller }) {
+        List({ scroller: this.listScroller, initialIndex: this.listScrollIndex }) {
           ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
             ListItemGroup() {
               ListItem() {
@@ -79,12 +79,6 @@ export struct TocPanel {
         .onScrollIndex((start: number, _end: number) => {
           if (this.listScrollIndex !== start) {
             this.listScrollIndex = start;
-          }
-        })
-        .onAppear(() => {
-          const index: number = this.listScrollIndex;
-          if (index > 0) {
-            this.listScroller.scrollToIndex(index);
           }
         });
       }
