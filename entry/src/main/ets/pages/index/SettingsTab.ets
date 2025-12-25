@@ -3,6 +3,7 @@ import type { ReferenceLang } from '../../common/referenceModels';
 import type { OnlineMdLink } from '../../common/onlineMdModels';
 import { openExternalLink } from '../../common/openExternalLink';
 import { formatDocCount } from './utils';
+import { SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
 
 type ThemePreference = 'dark' | 'light' | 'system';
 
@@ -204,8 +205,9 @@ export struct SettingsTab {
         .borderRadius(this.fontSize * 0.8)
         .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
 
-        // 在线 Markdown 链接管理
-        Column({ space: 0 }) {
+        if (SHOW_IMPORT_MARKDOWN_URL_SETTING) {
+          // 在线 Markdown 链接管理
+          Column({ space: 0 }) {
           Row() {
             Column({ space: this.fontSize * 0.2 }) {
               Text(this.t('添加在线 Markdown', 'Add Online Markdown'))
@@ -331,6 +333,7 @@ export struct SettingsTab {
         .backgroundColor(this.theme.surfaceBackgroundColor)
         .borderRadius(this.fontSize * 0.8)
         .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+        }
 
         // 本地 Markdown 文件导入
         Column({ space: 0 }) {

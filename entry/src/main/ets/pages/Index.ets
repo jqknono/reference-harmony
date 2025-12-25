@@ -1568,7 +1568,8 @@ struct Index {
       this.switchToTab(0);
       return true;
     }
-    return true;
+    // 目录页允许系统处理返回手势以退出应用
+    return false;
   }
 
   private getTabLabel(index: number): string {
