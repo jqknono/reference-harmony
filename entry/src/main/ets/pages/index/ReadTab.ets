@@ -46,6 +46,7 @@ export struct ReadTab {
   onToggleDocFavorite?: (docId: string) => void;
   onShowTocPanel?: () => void;
   onRebuildSearchResults?: () => void;
+  onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
 
   private getHostContext(): Context | undefined {
     return this.getUIContext().getHostContext();
@@ -280,7 +281,11 @@ export struct ReadTab {
           if (!this.enableSearchListIndexSync) return;
 
           const groupIndex: number = startInfo.index;
-          if (this.listSearchScrollIndex !== groupIndex) {
+          const previousGroupIndex: number = this.listSearchScrollIndex;
+          if (previousGroupIndex !== groupIndex) {
+            if (this.isLandscape) {
+              this.onLandscapeScrollDirection?.(groupIndex > previousGroupIndex ? 'up' : 'down');
+            }
             this.listSearchScrollIndex = groupIndex;
           }
 
@@ -295,7 +300,11 @@ export struct ReadTab {
             }
           }
 
-          if (this.listSearchScrollItemIndexInGroup !== itemIndexInGroup) {
+          const previousItemIndexInGroup: number = this.listSearchScrollItemIndexInGroup;
+          if (previousItemIndexInGroup !== itemIndexInGroup) {
+            if (this.isLandscape && groupIndex === previousGroupIndex) {
+              this.onLandscapeScrollDirection?.(itemIndexInGroup > previousItemIndexInGroup ? 'up' : 'down');
+            }
             this.listSearchScrollItemIndexInGroup = itemIndexInGroup;
           }
         })
@@ -406,7 +415,11 @@ export struct ReadTab {
           if (!this.enableListIndexSync) return;
 
           const groupIndex: number = startInfo.index;
-          if (this.listScrollIndex !== groupIndex) {
+          const previousGroupIndex: number = this.listScrollIndex;
+          if (previousGroupIndex !== groupIndex) {
+            if (this.isLandscape) {
+              this.onLandscapeScrollDirection?.(groupIndex > previousGroupIndex ? 'up' : 'down');
+            }
             this.listScrollIndex = groupIndex;
           }
 
@@ -421,7 +434,11 @@ export struct ReadTab {
             }
           }
 
-          if (this.listScrollItemIndexInGroup !== itemIndexInGroup) {
+          const previousItemIndexInGroup: number = this.listScrollItemIndexInGroup;
+          if (previousItemIndexInGroup !== itemIndexInGroup) {
+            if (this.isLandscape && groupIndex === previousGroupIndex) {
+              this.onLandscapeScrollDirection?.(itemIndexInGroup > previousItemIndexInGroup ? 'up' : 'down');
+            }
             this.listScrollItemIndexInGroup = itemIndexInGroup;
           }
         })

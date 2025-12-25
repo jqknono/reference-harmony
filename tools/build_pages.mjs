@@ -81,7 +81,10 @@ for (const rel of relFiles) {
         <td class="path"><a href="${downloadUrl}" download>${relUrlPath}</a></td>
         <td class="size">${size}</td>
         <td class="mtime">${mtime}</td>
-        <td class="action"><button class="btn" data-url="${downloadUrl}">复制链接</button></td>
+        <td class="action">
+          <a class="btn" href="${downloadUrl}" download>下载</a>
+          <button class="btn" data-url="${downloadUrl}">复制链接</button>
+        </td>
       </tr>`.trim())
 }
 
@@ -190,6 +193,9 @@ const html = `<!doctype html>
       }
       .action {
         white-space: nowrap;
+      }
+      .action .btn + .btn {
+        margin-left: 0.4rem;
       }
       .btn {
         display: inline-block;

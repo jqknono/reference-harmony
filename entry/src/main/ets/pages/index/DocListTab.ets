@@ -33,6 +33,7 @@ export struct DocListTab {
   onOpenOnlineDocAndQuiz?: (docId: string) => void;
   onOpenLocalDocAndQuiz?: (docId: string) => void;
   onRebuildCatalogSearchResults?: () => void;
+  onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
 
   private t(zh: string, en: string): string {
     return this.lang === 'en' ? en : zh;
@@ -419,11 +420,19 @@ export struct DocListTab {
       .onScrollIndex((start: number, _end: number) => {
         const isSearching: boolean = !!this.catalogSearchQuery.trim();
         if (isSearching) {
-          if (this.searchListScrollIndex !== start) {
+          const previous: number = this.searchListScrollIndex;
+          if (previous !== start) {
+            if (this.isLandscape) {
+              this.onLandscapeScrollDirection?.(start > previous ? 'up' : 'down');
+            }
             this.searchListScrollIndex = start;
           }
         } else {
-          if (this.listScrollIndex !== start) {
+          const previous: number = this.listScrollIndex;
+          if (previous !== start) {
+            if (this.isLandscape) {
+              this.onLandscapeScrollDirection?.(start > previous ? 'up' : 'down');
+            }
             this.listScrollIndex = start;
           }
         }

@@ -42,6 +42,7 @@ export struct SettingsTab {
   onImportLocalMarkdown?: () => void;
   onRemoveLocalMd?: (linkId: string) => void;
   onCopyLocalMdUri?: (uri: string) => void;
+  onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
 
   private getHostContext(): Context | undefined {
     return this.getUIContext().getHostContext();
@@ -511,9 +512,15 @@ export struct SettingsTab {
     .height('100%')
     .width('100%')
     .scrollBar(BarState.Auto)
-    .onDidScroll((_xOffset: number, _yOffset: number, _scrollState: ScrollState) => {
+    .onDidScroll((_xOffset: number, _yOffset: number, scrollState: ScrollState) => {
       const yOffset: number = this.scroller.currentOffset().yOffset;
-      if (this.scrollY !== yOffset) {
+      const previous: number = this.scrollY;
+      const delta: number = yOffset - previous;
+      const threshold: number = this.fontSize * 0.6;
+      if (this.isLandscape && scrollState !== ScrollState.Idle && Math.abs(delta) >= threshold) {
+        this.onLandscapeScrollDirection?.(delta > 0 ? 'up' : 'down');
+      }
+      if (previous !== yOffset) {
         this.scrollY = yOffset;
       }
     })

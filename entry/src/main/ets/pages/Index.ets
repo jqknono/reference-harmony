@@ -89,6 +89,7 @@ struct Index {
   @State private fontSize: number = 15;
   @State private orientationMode: 'portrait' | 'landscape' | 'auto' = 'portrait';
   @State private isLandscape: boolean = false;
+  @State private landscapeTabBarVisible: boolean = false;
   @State private learningModeEnabled: boolean = false;
 
   // 测验相关状态
@@ -178,7 +179,35 @@ struct Index {
     const next: boolean = height > 0 && width > height;
     if (this.isLandscape !== next) {
       this.isLandscape = next;
+      if (!next && this.landscapeTabBarVisible) {
+        this.landscapeTabBarVisible = false;
+      }
     }
+  }
+
+  private setLandscapeTabBarVisible(visible: boolean): void {
+    if (!this.isLandscape) return;
+    if (this.landscapeTabBarVisible === visible) return;
+    const uiContext = this.getUIContext?.();
+    if (uiContext && typeof uiContext.animateTo === 'function') {
+      uiContext.animateTo(
+        { duration: this.tabAnimationDuration(), curve: Curve.EaseInOut },
+        () => {
+          this.landscapeTabBarVisible = visible;
+        }
+      );
+      return;
+    }
+    this.landscapeTabBarVisible = visible;
+  }
+
+  private handleLandscapeContentScroll(direction: 'up' | 'down'): void {
+    if (!this.isLandscape) return;
+    if (direction === 'down') {
+      this.setLandscapeTabBarVisible(true);
+      return;
+    }
+    this.setLandscapeTabBarVisible(false);
   }
 
   private t(zh: string, en: string): string {
@@ -1584,10 +1613,10 @@ struct Index {
       .width('100%')
       .justifyContent(FlexAlign.SpaceBetween)
       .padding({
-        left: this.fontSize * 2,
-        right: this.fontSize * 2,
-        top: this.fontSize * 1,
-        bottom: this.fontSize * 1,
+        left: this.fontSize * 1,
+        right: this.fontSize * 1,
+        top: this.fontSize * 0.5,
+        bottom: this.fontSize * 0.5,
       });
     }
     .width('100%')
@@ -1626,6 +1655,7 @@ struct Index {
         onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },
         onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
         onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
+        onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
       });
     } else if (this.currentTabIndex === 1) {
       ReadTab({
@@ -1661,6 +1691,7 @@ struct Index {
         onToggleDocFavorite: (docId: string): void => { this.toggleDocFavorite(docId); },
         onShowTocPanel: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = true; },
         onRebuildSearchResults: (): void => { this.rebuildSearchResults(); },
+        onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
       });
     } else if (this.currentTabIndex === 2) {
       QuizTab({
@@ -1691,6 +1722,7 @@ struct Index {
         onConfirmQuizAnswer: (): void => { this.confirmQuizAnswer(); },
         onNextQuizQuestion: (): void => { this.nextQuizQuestion(); },
         onResetQuiz: (): void => { this.resetQuiz(); },
+        onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
       });
     } else {
       SettingsTab({
@@ -1724,6 +1756,7 @@ struct Index {
         onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },
         onRemoveLocalMd: (linkId: string): void => { this.removeLocalMd(linkId); },
         onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
+        onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
       });
     }
   }
@@ -1731,7 +1764,14 @@ struct Index {
   build() {
     Stack() {
       if (this.isLandscape) {
-        this.CurrentTabContent();
+        Stack({ alignContent: Alignment.Bottom }) {
+          this.CurrentTabContent();
+          if (this.landscapeTabBarVisible) {
+            this.BottomTabBar();
+          }
+        }
+        .width('100%')
+        .height('100%');
       } else {
         Column() {
           Tabs({ barPosition: BarPosition.End, index: this.currentTabIndex, controller: this.tabsController }) {
@@ -1764,6 +1804,7 @@ struct Index {
                 onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },
                 onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
                 onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
+                onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
               });
             }
             .tabBar(this.TabBarItem(0));
@@ -1802,6 +1843,7 @@ struct Index {
                 onToggleDocFavorite: (docId: string): void => { this.toggleDocFavorite(docId); },
                 onShowTocPanel: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = true; },
                 onRebuildSearchResults: (): void => { this.rebuildSearchResults(); },
+                onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
               });
             }
             .tabBar(this.TabBarItem(1));
@@ -1835,6 +1877,7 @@ struct Index {
                 onConfirmQuizAnswer: (): void => { this.confirmQuizAnswer(); },
                 onNextQuizQuestion: (): void => { this.nextQuizQuestion(); },
                 onResetQuiz: (): void => { this.resetQuiz(); },
+                onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
               });
             }
             .tabBar(this.TabBarItem(2));
@@ -1871,6 +1914,7 @@ struct Index {
                 onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },
                 onRemoveLocalMd: (linkId: string): void => { this.removeLocalMd(linkId); },
                 onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
+                onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
               });
             }
             .tabBar(this.TabBarItem(3));

@@ -37,6 +37,7 @@ export struct QuizTab {
   onConfirmQuizAnswer?: () => void;
   onNextQuizQuestion?: () => void;
   onResetQuiz?: () => void;
+  onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
 
   private t(zh: string, en: string): string {
     return this.lang === 'en' ? en : zh;
@@ -157,51 +158,53 @@ export struct QuizTab {
       }
 
       if (this.quizRecord && this.quizRecord.totalQuizCount > 0) {
-        Column({ space: this.fontSize * 0.5 }) {
-          Text(this.t('测验记录', 'Quiz History'))
-            .fontSize(this.fontSize)
-            .fontWeight(FontWeight.Medium)
-            .fontColor(this.theme.titleColor);
+        if (!this.isLandscape) {
+          Column({ space: this.fontSize * 0.5 }) {
+            Text(this.t('测验记录', 'Quiz History'))
+              .fontSize(this.fontSize)
+              .fontWeight(FontWeight.Medium)
+              .fontColor(this.theme.titleColor);
 
-          Row({ space: this.fontSize * 1 }) {
-            Column({ space: this.fontSize * 0.2 }) {
-              Text(`${this.quizRecord.totalQuizCount}`)
-                .fontSize(this.fontSize * 1.5)
-                .fontWeight(FontWeight.Bold)
-                .fontColor(this.theme.accentColor);
-              Text(this.t('总测验', 'Total'))
-                .fontSize(this.fontSize * 0.75)
-                .fontColor(this.theme.mutedTextColor);
-            }
+            Row({ space: this.fontSize * 1 }) {
+              Column({ space: this.fontSize * 0.2 }) {
+                Text(`${this.quizRecord.totalQuizCount}`)
+                  .fontSize(this.fontSize * 1.5)
+                  .fontWeight(FontWeight.Bold)
+                  .fontColor(this.theme.accentColor);
+                Text(this.t('总测验', 'Total'))
+                  .fontSize(this.fontSize * 0.75)
+                  .fontColor(this.theme.mutedTextColor);
+              }
 
-            Column({ space: this.fontSize * 0.2 }) {
-              Text(`${this.quizRecord.averageScore}%`)
-                .fontSize(this.fontSize * 1.5)
-                .fontWeight(FontWeight.Bold)
-                .fontColor(this.theme.accentColor);
-              Text(this.t('平均分', 'Average'))
-                .fontSize(this.fontSize * 0.75)
-                .fontColor(this.theme.mutedTextColor);
-            }
+              Column({ space: this.fontSize * 0.2 }) {
+                Text(`${this.quizRecord.averageScore}%`)
+                  .fontSize(this.fontSize * 1.5)
+                  .fontWeight(FontWeight.Bold)
+                  .fontColor(this.theme.accentColor);
+                Text(this.t('平均分', 'Average'))
+                  .fontSize(this.fontSize * 0.75)
+                  .fontColor(this.theme.mutedTextColor);
+              }
 
-            Column({ space: this.fontSize * 0.2 }) {
-              Text(`${this.quizRecord.totalCorrectCount}/${this.quizRecord.totalQuestionCount}`)
-                .fontSize(this.fontSize * 1.5)
-                .fontWeight(FontWeight.Bold)
-                .fontColor(this.theme.accentColor);
-              Text(this.t('正确率', 'Correct'))
-                .fontSize(this.fontSize * 0.75)
-                .fontColor(this.theme.mutedTextColor);
+              Column({ space: this.fontSize * 0.2 }) {
+                Text(`${this.quizRecord.totalCorrectCount}/${this.quizRecord.totalQuestionCount}`)
+                  .fontSize(this.fontSize * 1.5)
+                  .fontWeight(FontWeight.Bold)
+                  .fontColor(this.theme.accentColor);
+                Text(this.t('正确率', 'Correct'))
+                  .fontSize(this.fontSize * 0.75)
+                  .fontColor(this.theme.mutedTextColor);
+              }
             }
+            .justifyContent(FlexAlign.SpaceAround)
+            .width('100%');
           }
-          .justifyContent(FlexAlign.SpaceAround)
-          .width('100%');
+          .width('100%')
+          .padding(this.fontSize * 1)
+          .backgroundColor(this.theme.surfaceBackgroundColor)
+          .borderRadius(this.fontSize * 0.5)
+          .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
         }
-        .width('100%')
-        .padding(this.fontSize * 1)
-        .backgroundColor(this.theme.surfaceBackgroundColor)
-        .borderRadius(this.fontSize * 0.5)
-        .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
 
         if (this.quizRecord.sessions.length > 0) {
           Column({ space: this.fontSize * 0.3 }) {
@@ -246,7 +249,11 @@ export struct QuizTab {
             .layoutWeight(1)
             .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 })
             .onScrollIndex((start: number, _end: number) => {
-              if (this.historyListScrollIndex !== start) {
+              const previous: number = this.historyListScrollIndex;
+              if (previous !== start) {
+                if (this.isLandscape) {
+                  this.onLandscapeScrollDirection?.(start > previous ? 'up' : 'down');
+                }
                 this.historyListScrollIndex = start;
               }
             });
@@ -350,9 +357,15 @@ export struct QuizTab {
       }
       .layoutWeight(1)
       .scrollBar(BarState.Off)
-      .onDidScroll((_xOffset: number, _yOffset: number, _scrollState: ScrollState) => {
+      .onDidScroll((_xOffset: number, _yOffset: number, scrollState: ScrollState) => {
         const yOffset: number = this.answeringScroller.currentOffset().yOffset;
-        if (this.answeringScrollY !== yOffset) {
+        const previous: number = this.answeringScrollY;
+        const delta: number = yOffset - previous;
+        const threshold: number = this.fontSize * 0.6;
+        if (this.isLandscape && scrollState !== ScrollState.Idle && Math.abs(delta) >= threshold) {
+          this.onLandscapeScrollDirection?.(delta > 0 ? 'up' : 'down');
+        }
+        if (previous !== yOffset) {
           this.answeringScrollY = yOffset;
         }
       })
@@ -449,7 +462,11 @@ export struct QuizTab {
       .layoutWeight(1)
       .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 })
       .onScrollIndex((start: number, _end: number) => {
-        if (this.resultListScrollIndex !== start) {
+        const previous: number = this.resultListScrollIndex;
+        if (previous !== start) {
+          if (this.isLandscape) {
+            this.onLandscapeScrollDirection?.(start > previous ? 'up' : 'down');
+          }
           this.resultListScrollIndex = start;
         }
       });
