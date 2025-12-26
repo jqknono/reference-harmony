@@ -89,6 +89,12 @@ function splitTableRow(line) {
   let current = '';
   let inInlineCode = false;
 
+  const isEscapedByBackslashes = (idx) => {
+    let n = 0;
+    for (let j = idx - 1; j >= 0 && s[j] === '\\'; j--) n++;
+    return n % 2 === 1;
+  };
+
   for (let i = 0; i < s.length; i++) {
     const ch = s[i];
 
@@ -106,7 +112,16 @@ function splitTableRow(line) {
 
     // 行内代码切换（简单支持：单个反引号）
     if (ch === '`') {
-      inInlineCode = !inInlineCode;
+      if (inInlineCode) {
+        // 代码段内不处理反斜杠转义：反斜杠属于内容，不影响闭合
+        inInlineCode = false;
+      } else {
+        const escaped = isEscapedByBackslashes(i);
+        const hasClose = s.indexOf('`', i + 1) >= 0;
+        if (!escaped && hasClose) {
+          inInlineCode = true;
+        }
+      }
       current += ch;
       continue;
     }
@@ -159,7 +174,7 @@ function stripTagsInLine(line) {
   // - 行内代码（反引号包裹）里的 `<...>`
   // - 被反斜杠转义的 `\<...>`（通常用于展示字面量 `<tag>`）
   // - Markdown autolink：`<https://...>` / `<mailto:...>` / `<user@a.b>`（保留内容，去掉尖括号）
-  // - `<br>` / `<br/>` / `<br />` 视为硬换行：转为字面量 "\\n"（两字符），避免破坏表格按 '\n' 分行解析
+  // - `<br>` / `<br/>` / `<br />` 视为硬换行：转为字面量 "\\n"（两字符），避免表格按 '\n' 分行解析被破坏
   const s = String(line ?? '');
   let out = '';
   let inInlineCode = false;

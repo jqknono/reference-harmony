@@ -1606,7 +1606,8 @@ struct Index {
 
   private getTabLabel(index: number): string {
     if (index === 0) return this.t('目录', 'Catalog');
-    if (index === 1) return this.t('清单', 'Cheatsheet');
+    // 英文 "Cheatsheet" 在窄屏/大字号下易被截断；插入零宽空格以允许必要时在单词内部换行。
+    if (index === 1) return this.t('清单', 'Cheat\u200Bsheet');
     if (index === 2) return this.t('测验', 'Quiz');
     return this.t('设置', 'Settings');
   }
@@ -1619,14 +1620,17 @@ struct Index {
   private TabBarItem(index: number): void {
     Column() {
       Text(this.getTabLabel(index))
+        .width('100%')
         .fontSize(this.fontSize * 1)
-        .maxLines(1)
+        .maxLines(2)
+        .textOverflow({ overflow: TextOverflow.Clip })
         .textAlign(TextAlign.Center)
         .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
         .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
     }
     .layoutWeight(1)
-    .padding({ top: this.fontSize * 0.5, bottom: this.fontSize * 0.5, left: this.fontSize * 1, right: this.fontSize * 1 })
+    // 让每个 Tab item 占满等宽区域，避免左右 padding 吃掉可用宽度导致标题截断
+    .padding({ top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
     .onClick((): void => {
       if (this.currentTabIndex === index) return;
       this.stopAllTextInputEditing();
@@ -1644,10 +1648,9 @@ struct Index {
         this.TabBarItem(3);
       }
       .width('100%')
-      .justifyContent(FlexAlign.SpaceBetween)
       .padding({
-        left: this.fontSize * 1,
-        right: this.fontSize * 1,
+        left: this.fontSize * 0.5,
+        right: this.fontSize * 0.5,
         top: this.fontSize * 0.5,
         bottom: this.fontSize * 0.5,
       });

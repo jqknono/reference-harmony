@@ -1,6 +1,7 @@
 import { getAppThemeTokens } from '../common/appTheme';
 import type { AppThemeTokens } from '../common/appTheme';
 import { openExternalLink } from '../common/openExternalLink';
+import { stripTagsInLine } from '../common/markdownDocParser';
 
 type MarkdownInlineKind = 'text' | 'bold' | 'italic' | 'code' | 'link';
 
@@ -153,7 +154,10 @@ function finalizeListBlockRehype(block: MarkdownListBlock): void {
 
 function finalizeTableBlockRehype(block: MarkdownTableBlock, fontSize: number, maxTableColumnWidth: number): void {
   const classNames = block.rehypeClassNames ?? [];
-  block.rehypeShowHeader = hasClassName(classNames, 'show-header');
+  // 表格表头默认应显示（符合 Markdown 表格语义：首行是 header）
+  // 注：离线 rawfile 产物会剥离 HTML 注释（含 rehype 指令），因此不能依赖 `show-header` 指令才能显示表头。
+  // 若未来需要隐藏表头，可引入显式的 hide-header 指令；当前保持默认显示以匹配预期。
+  block.rehypeShowHeader = true;
   block.rehypeLeftAlign = hasClassName(classNames, 'left-align');
   block.rehypeWrapText = hasClassName(classNames, 'wrap-text') || hasClassName(classNames, 'auto-wrap');
 
@@ -275,6 +279,13 @@ function splitTableRow(trimmedLine: string): Array<string> {
   let current = '';
   let inInlineCode = false;
 
+  const isEscapedByBackslashes = (idx: number): boolean => {
+    // 仅在行内代码外生效的转义判断：奇数个连续反斜杠视为转义
+    let n = 0;
+    for (let j = idx - 1; j >= 0 && line.charAt(j) === '\\'; j--) n++;
+    return n % 2 === 1;
+  };
+
   for (let i = 0; i < line.length; i++) {
     const ch = line.charAt(i);
 
@@ -292,7 +303,17 @@ function splitTableRow(trimmedLine: string): Array<string> {
 
     // 行内代码切换（简单支持：单个反引号）
     if (ch === '`') {
-      inInlineCode = !inInlineCode;
+      if (inInlineCode) {
+        // 行内代码内不处理反斜杠转义：反斜杠属于内容，不影响闭合
+        inInlineCode = false;
+      } else {
+        // 仅当该反引号未被转义、且后续存在闭合反引号时，才进入行内代码
+        const escaped = isEscapedByBackslashes(i);
+        const hasClose = line.indexOf('`', i + 1) >= 0;
+        if (!escaped && hasClose) {
+          inInlineCode = true;
+        }
+      }
       current += ch;
       continue;
     }
@@ -515,7 +536,11 @@ function appendTextToken(tokens: Array<MarkdownInlineToken>, text: string): void
   tokens.push({ kind: 'text', text });
 }
 
-function parseInlineTokens(text: string): Array<MarkdownInlineToken> {
+function parseInlineTokens(rawText: string): Array<MarkdownInlineToken> {
+  // 兼容上游文档中的自定义行内标签（例如 <yel>Eq</yel>ual）。
+  // 这里按与 `sync_reference_docs.mjs` / `markdownDocParser.ets` 相同的规则剥离标签，
+  // 避免 UI 渲染器把 `<yel>` 等当成普通字符原样展示。
+  const text = stripTagsInLine(rawText ?? '');
   const tokens: Array<MarkdownInlineToken> = [];
   const len = text.length;
   let i = 0;
@@ -547,6 +572,12 @@ function parseInlineTokens(text: string): Array<MarkdownInlineToken> {
       const next = text.charAt(i + 1);
       if (next === 'n') {
         appendTextToken(tokens, '\n');
+        i += 2;
+        continue;
+      }
+      // `\``：用于展示“反引号”字符（常见于快捷键），渲染为 code 样式更符合预期
+      if (next === '`') {
+        tokens.push({ kind: 'code', text: '`' });
         i += 2;
         continue;
       }

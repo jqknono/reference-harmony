@@ -55,7 +55,7 @@
       "id": "s1-5",
       "sectionId": "s1",
       "title": "SysVinit 到 Systemd",
-      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`service SERVICE_NAME start` | `systemctl start SERVICE_NAME` | 用于启动服务(不重启持久)\n`service SERVICE_NAME stop` | `systemctl stop SERVICE_NAME` | 用于停止服务(不永久重启)\n`service SERVICE_NAME restart` | `systemctl restart SERVICE_NAME` | 用于停止然后启动服务\n`service SERVICE_NAME reload` | `systemctl reload SERVICE_NAME` | 重新加载配置文件而不中断挂起的操作\n`service SERVICE_NAME condrestart` | `systemctl condrestart SERVICE_NAME` | 如果服务已在运行，则重新启动\n`service SERVICE_NAME status` | `systemctl status SERVICE_NAME` | 判断服务当前是否正在运行\n`chkconfig SERVICE_NAME on` | `systemctl enable SERVICE_NAME` | 打开服务，以便在下次启动时启动，或其他触发器\n`chkconfig SERVICE_NAME off` | `systemctl disable SERVICE_NAME` | 为下次重新启动或任何其他触发器关闭服务\n`chkconfig SERVICE_NAME` | `systemctl is-enabled SERVICE_NAME` | 用于检查服务是否配置为在当前环境中启动\n`chkconfig –list` | `systemctl list-unit-files –type=service` (or) `ls /etc/systemd/system/*.wants/` | 打印一个服务表，列出每个配置的运行级别打开或关闭\n`chkconfig –list \\| grep 5:on` | `systemctl list-dependencies graphical.target` | 打印启动到图形模式时将启动的服务表\n`chkconfig SERVICE_NAME –list` | `ls /etc/systemd/system/*.wants/SERVICE_NAME.service` | 用于列出此服务配置为打开或关闭的级别\n`chkconfig SERVICE_NAME –add` | `systemctl daemon-reload` | 在创建新服务文件或修改任何配置时使用"
+      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`service SERVICE_NAME start` | `systemctl start SERVICE_NAME` | 用于启动服务(不重启持久)\n`service SERVICE_NAME stop` | `systemctl stop SERVICE_NAME` | 用于停止服务(不永久重启)\n`service SERVICE_NAME restart` | `systemctl restart SERVICE_NAME` | 用于停止然后启动服务\n`service SERVICE_NAME reload` | `systemctl reload SERVICE_NAME` | 重新加载配置文件而不中断挂起的操作\n`service SERVICE_NAME condrestart` | `systemctl condrestart SERVICE_NAME` | 如果服务已在运行，则重新启动\n`service SERVICE_NAME status` | `systemctl status SERVICE_NAME` | 判断服务当前是否正在运行\n`chkconfig SERVICE_NAME on` | `systemctl enable SERVICE_NAME` | 打开服务，以便在下次启动时启动，或其他触发器\n`chkconfig SERVICE_NAME off` | `systemctl disable SERVICE_NAME` | 为下次重新启动或任何其他触发器关闭服务\n`chkconfig SERVICE_NAME` | `systemctl is-enabled SERVICE_NAME` | 用于检查服务是否配置为在当前环境中启动\n`chkconfig –list` | `systemctl list-unit-files –type=service` (or) \\n`ls /etc/systemd/system/*.wants/` | 打印一个服务表，列出每个配置的运行级别打开或关闭\n`chkconfig –list \\| grep 5:on` | `systemctl list-dependencies graphical.target` | 打印启动到图形模式时将启动的服务表\n`chkconfig SERVICE_NAME –list` | `ls /etc/systemd/system/*.wants/SERVICE_NAME.service` | 用于列出此服务配置为打开或关闭的级别\n`chkconfig SERVICE_NAME –add` | `systemctl daemon-reload` | 在创建新服务文件或修改任何配置时使用"
     },
     {
       "id": "s1-6",
@@ -67,7 +67,7 @@
       "id": "s1-7",
       "sectionId": "s1",
       "title": "更改运行级别",
-      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`telinit 3` | `systemctl isolate multi-user.target` OR `systemctl isolate runlevel3.target`OR `telinit 3` | 更改为多用户运行级别\n`sed s/^id:.*:initdefault:/id:3:initdefault:/` | `ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target` | 设置为在下次重新启动时使用多用户运行级别"
+      "body": "SysVinit | Systemd | 说明\n:- | - | -\n`telinit 3` | `systemctl isolate multi-user.target` \\nOR `systemctl isolate runlevel3.target`\\nOR `telinit 3` | 更改为多用户运行级别\n`sed s/^id:.*:initdefault:/id:3:initdefault:/` | `ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target` | 设置为在下次重新启动时使用多用户运行级别"
     },
     {
       "id": "s2-8",

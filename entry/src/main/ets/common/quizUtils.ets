@@ -28,6 +28,12 @@ function splitTableRow(trimmedLine: string): Array<string> {
   let current = '';
   let inInlineCode = false;
 
+  const isEscapedByBackslashes = (idx: number): boolean => {
+    let n = 0;
+    for (let j = idx - 1; j >= 0 && line.charAt(j) === '\\'; j--) n++;
+    return n % 2 === 1;
+  };
+
   for (let i = 0; i < line.length; i++) {
     const ch = line.charAt(i);
 
@@ -45,7 +51,16 @@ function splitTableRow(trimmedLine: string): Array<string> {
 
     // 行内代码切换（简单支持：单个反引号）
     if (ch === '`') {
-      inInlineCode = !inInlineCode;
+      if (inInlineCode) {
+        // 行内代码内不处理反斜杠转义：反斜杠属于内容，不影响闭合
+        inInlineCode = false;
+      } else {
+        const escaped = isEscapedByBackslashes(i);
+        const hasClose = line.indexOf('`', i + 1) >= 0;
+        if (!escaped && hasClose) {
+          inInlineCode = true;
+        }
+      }
       current += ch;
       continue;
     }
