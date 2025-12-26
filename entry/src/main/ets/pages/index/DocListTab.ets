@@ -1,6 +1,7 @@
 import type { ReferenceDocSummary } from '../../common/referenceModels';
 import type { AppThemeTokens } from '../../common/appTheme';
 import { getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, isRemoteIcon, iconKey } from './utils';
+import { KEEP_FAVORITE_AND_RECENT_ENTRY_IN_FULL_CATALOG_LIST } from './constants';
 
 @Component
 export struct DocListTab {
@@ -121,7 +122,9 @@ export struct DocListTab {
     });
 
     // “完整清单”：按字典序展示全部文档（包含收藏/最近），这样同一文档会存在多个入口。
-    const allSorted: Array<ReferenceDocSummary> = merged.slice();
+    const allSorted: Array<ReferenceDocSummary> = KEEP_FAVORITE_AND_RECENT_ENTRY_IN_FULL_CATALOG_LIST
+      ? merged.slice()
+      : merged.filter((doc: ReferenceDocSummary): boolean => !this.isDocFavorite(doc.id) && !this.isDocRecent(doc.id));
     allSorted.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => this.compareCatalogDocs(a, b));
 
     const result: Array<ReferenceDocSummary> = [];

@@ -276,6 +276,7 @@ export struct ReadTab {
           }, (group: SectionWithCards) => `${this.selectedDocId}:search:${group.section.id}`);
         }
         .layoutWeight(1)
+        .scrollBar(BarState.Off)
         .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 })
         .onScrollVisibleContentChange((startInfo: VisibleListContentInfo, _endInfo: VisibleListContentInfo) => {
           if (!this.enableSearchListIndexSync) return;
@@ -410,6 +411,7 @@ export struct ReadTab {
           }, (group: SectionWithCards) => `${this.selectedDocId}:${group.section.id}`);
         }
         .layoutWeight(1)
+        .scrollBar(BarState.Off)
         .divider({ strokeWidth: this.fontSize * 0.0001, color: 0x00000000 })
         .onScrollVisibleContentChange((startInfo: VisibleListContentInfo, _endInfo: VisibleListContentInfo) => {
           if (!this.enableListIndexSync) return;

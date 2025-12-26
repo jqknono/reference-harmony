@@ -25,8 +25,17 @@ const SOURCES = {
 };
 
 function parseArgs(argv) {
-  /** @type {{ zhRef: string; enRef: string; langs: string[]; mode: 'auto'|'local'|'github'; limit?: number; concurrency?: number; filter?: string }} */
-  const out = { zhRef: 'main', enRef: 'main', langs: ['zh', 'en'], mode: 'auto', limit: undefined, concurrency: 8, filter: undefined };
+  /** @type {{ zhRef: string; enRef: string; langs: string[]; mode: 'auto'|'local'|'github'; limit?: number; concurrency?: number; filter?: string; keepTags?: boolean }} */
+  const out = {
+    zhRef: 'main',
+    enRef: 'main',
+    langs: ['zh', 'en'],
+    mode: 'auto',
+    limit: undefined,
+    concurrency: 8,
+    filter: undefined,
+    keepTags: false,
+  };
   for (const arg of argv) {
     if (arg.startsWith('--ref=')) out.zhRef = arg.slice('--ref='.length); // backwards-compatible
     if (arg.startsWith('--zh-ref=')) out.zhRef = arg.slice('--zh-ref='.length);
@@ -36,6 +45,11 @@ function parseArgs(argv) {
     if (arg.startsWith('--limit=')) out.limit = Number(arg.slice('--limit='.length));
     if (arg.startsWith('--concurrency=')) out.concurrency = Number(arg.slice('--concurrency='.length));
     if (arg.startsWith('--filter=')) out.filter = arg.slice('--filter='.length).trim();
+    if (arg === '--keep-tags' || arg === '--keep-tag' || arg === '--keep-html-tags' || arg === '--keep-html-tag') out.keepTags = true;
+    if (arg === '--no-keep-tags' || arg === '--no-keep-tag' || arg === '--no-keep-html-tags' || arg === '--no-keep-html-tag') out.keepTags = false;
+    // backwards-compatible alias (old name)
+    if (arg === '--keep-kbd-tag') out.keepTags = true;
+    if (arg === '--no-keep-kbd-tag') out.keepTags = false;
   }
   return out;
 }
@@ -64,10 +78,51 @@ function isTableSeparatorLine(line) {
 }
 
 function splitTableRow(line) {
+  // Markdown 表格行解析：
+  // - `\|` 表示单元格内的字面量 `|`，不应当作为分隔符
+  // - 行内代码（反引号包裹）中的 `|` 也不应当作为分隔符
   let s = line.trim();
   if (s.startsWith('|')) s = s.slice(1);
   if (s.endsWith('|')) s = s.slice(0, -1);
-  return s.split('|').map((c) => c.trim());
+
+  const cells = [];
+  let current = '';
+  let inInlineCode = false;
+
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i];
+
+    // 处理转义：\| -> |
+    if (ch === '\\' && i + 1 < s.length) {
+      const next = s[i + 1];
+      if (next === '|') {
+        current += '|';
+        i += 1;
+        continue;
+      }
+      current += ch;
+      continue;
+    }
+
+    // 行内代码切换（简单支持：单个反引号）
+    if (ch === '`') {
+      inInlineCode = !inInlineCode;
+      current += ch;
+      continue;
+    }
+
+    // 列分隔符：不在行内代码内时生效
+    if (ch === '|' && !inInlineCode) {
+      cells.push(current.trim());
+      current = '';
+      continue;
+    }
+
+    current += ch;
+  }
+
+  cells.push(current.trim());
+  return cells;
 }
 
 function isListItem(line) {
@@ -86,6 +141,115 @@ function stripHtmlCommentsInLine(line) {
   // Remove HTML comments like: <!-- ... --> (including rehype directives).
   // Note: this is intentionally line-scoped; code fences preserve their inner content.
   return String(line ?? '').replace(/<!--[\s\S]*?-->/g, '');
+}
+
+function isProbablyAutolinkInner(inner) {
+  const s = String(inner ?? '').trim();
+  if (!s) return false;
+  if (/\s/.test(s)) return false;
+  if (/^(https?:\/\/|mailto:|tel:)/i.test(s)) return true;
+  // email autolink: <user@example.com>
+  if (s.includes('@') && /^[^@]+@[^@]+\.[^@]+$/.test(s)) return true;
+  return false;
+}
+
+function stripTagsInLine(line) {
+  // 剥离任意 `<tag ...>` / `</tag>`，保留内部文本。
+  // 重要：避免误伤
+  // - 行内代码（反引号包裹）里的 `<...>`
+  // - 被反斜杠转义的 `\<...>`（通常用于展示字面量 `<tag>`）
+  // - Markdown autolink：`<https://...>` / `<mailto:...>` / `<user@a.b>`（保留内容，去掉尖括号）
+  // - `<br>` / `<br/>` / `<br />` 视为硬换行：转为字面量 "\\n"（两字符），避免破坏表格按 '\n' 分行解析
+  const s = String(line ?? '');
+  let out = '';
+  let inInlineCode = false;
+  let inlineFenceLen = 0;
+
+  const countBackticksAt = (idx) => {
+    let n = 0;
+    while (idx + n < s.length && s[idx + n] === '`') n++;
+    return n;
+  };
+
+  const isEscapedByBackslashes = (idx) => {
+    let n = 0;
+    for (let j = idx - 1; j >= 0 && s[j] === '\\'; j--) n++;
+    return n % 2 === 1;
+  };
+
+  const findClosingBacktickRun = (fromIdx, fenceLen) => {
+    for (let j = fromIdx; j < s.length; j++) {
+      if (s[j] !== '`') continue;
+      const run = countBackticksAt(j);
+      if (run === fenceLen) return j;
+      j += run - 1;
+    }
+    return -1;
+  };
+
+  for (let i = 0; i < s.length; i++) {
+    const ch = s[i];
+
+    if (ch === '`') {
+      const run = countBackticksAt(i);
+      const escaped = isEscapedByBackslashes(i);
+      if (!inInlineCode) {
+        if (!escaped) {
+          const close = findClosingBacktickRun(i + run, run);
+          if (close !== -1) {
+            inInlineCode = true;
+            inlineFenceLen = run;
+          }
+        }
+      } else if (run === inlineFenceLen) {
+        // 代码段内不处理反斜杠转义：反斜杠属于内容，不影响闭合
+        inInlineCode = false;
+        inlineFenceLen = 0;
+      }
+      out += '`'.repeat(run);
+      i += run - 1;
+      continue;
+    }
+
+    if (!inInlineCode) {
+      if (ch === '\\' && i + 1 < s.length && s[i + 1] === '<') {
+        out += ch;
+        out += '<';
+        i += 1;
+        continue;
+      }
+      if (ch === '<') {
+        const end = s.indexOf('>', i + 1);
+        if (end === -1) {
+          out += ch;
+          continue;
+        }
+        const inner = s.slice(i + 1, end);
+        const lowerInner = inner.trim().toLowerCase();
+        if (lowerInner.startsWith('br') && (lowerInner.length === 2 || /^[\s/]/.test(lowerInner.slice(2)))) {
+          out += '\\n';
+          i = end;
+          continue;
+        }
+        if (isProbablyAutolinkInner(inner)) {
+          out += inner.trim();
+          i = end;
+          continue;
+        }
+        // 仅当 `<` 后不是空白时，才视为 tag（避免误伤 "a < b" 之类）
+        const first = inner.charAt(0);
+        if (first && !/\s/.test(first)) {
+          // Drop the whole tag token: <...>
+          i = end;
+          continue;
+        }
+        out += ch;
+        continue;
+      }
+    }
+    out += ch;
+  }
+  return out;
 }
 
 function parseFenceOpen(line) {
@@ -338,7 +502,7 @@ async function resolveLocalIconRawfilePath({ lang, id, source, outDir }) {
   );
 }
 
-function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, ref, icon, debug }) {
+function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, ref, icon, debug, keepTags }) {
   const { frontmatter, body } = extractFrontmatter(markdown);
   const lines = body.replace(/\r\n/g, '\n').split('\n');
 
@@ -346,6 +510,12 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
   const title = meta.title;
   const name = meta.name;
   const introTitle = lang === 'en' ? 'Intro' : '简介';
+
+  const normalizeLine = (raw) => {
+    const withoutComments = stripHtmlCommentsInLine(raw);
+    if (keepTags) return withoutComments;
+    return stripTagsInLine(withoutComments);
+  };
 
   /** @type {{ id: string; title: string; startIndex: number }[]} */
   const sections = [{ id: 'intro', title: introTitle, startIndex: 0 }];
@@ -442,7 +612,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       throw new Error(`解析超时：${lang}/${id} (iter=${iter} lines=${lines.length})`);
     }
     const rawLine = lines[i];
-    const line = stripHtmlCommentsInLine(rawLine);
+    const line = normalizeLine(rawLine);
     if (debug && i % 20 === 0) console.log(`... at ${lang}/${id} i=${i} ${line.trim().slice(0, 60)}`);
     if (isRehypeIgnoreStart(rawLine)) {
       rehypeIgnoreDepth++;
@@ -567,11 +737,11 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
 
     // table (keep as a single card; do not split into front/back)
     if (line.includes('|') && i + 1 < lines.length && isTableSeparatorLine(lines[i + 1])) {
-      const buf = [line.trimEnd(), stripHtmlCommentsInLine(lines[i + 1]).trimEnd()];
+      const buf = [line.trimEnd(), normalizeLine(lines[i + 1]).trimEnd()];
       i += 2;
       let rows = 0;
       while (i < lines.length) {
-        const rowLine = stripHtmlCommentsInLine(lines[i]);
+        const rowLine = normalizeLine(lines[i]);
         if (!rowLine.trim() || !rowLine.includes('|')) break;
         buf.push(rowLine.trimEnd());
         i++;
@@ -597,7 +767,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       const items = [];
       let listItems = 0;
       while (i < lines.length) {
-        const itemLine = stripHtmlCommentsInLine(lines[i]);
+        const itemLine = normalizeLine(lines[i]);
         if (!isListItem(itemLine)) break;
         const itemText = stripListMarker(itemLine);
         if (itemText) items.push(`• ${itemText}`);
@@ -624,7 +794,7 @@ function parseMarkdownToCards(markdown, { id, lang, mode, source, sourcePath, re
       i++;
       let paraLines = 1;
       while (i < lines.length) {
-        const nextLine = stripHtmlCommentsInLine(lines[i]);
+        const nextLine = normalizeLine(lines[i]);
         if (!nextLine.trim()) break;
         if (getSetextHeading(lines, i)) break;
         if (/^#{1,6}\s+/.test(nextLine)) break;
@@ -844,7 +1014,7 @@ async function syncDocsToMds({ lang, modeUsed, source, ref, limit, concurrency, 
 }
 
 async function main() {
-  const { zhRef, enRef, langs, mode, limit, concurrency, filter } = parseArgs(process.argv.slice(2));
+  const { zhRef, enRef, langs, mode, limit, concurrency, filter, keepTags } = parseArgs(process.argv.slice(2));
   const outDir = path.join(process.cwd(), 'entry', 'src', 'main', 'resources', 'rawfile', 'reference');
   await fs.mkdir(outDir, { recursive: true });
 
@@ -900,7 +1070,7 @@ async function main() {
             iconCache.set(cacheKey, v);
             return v;
           });
-        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath, ref, icon, debug: Boolean(filter) });
+        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath, ref, icon, debug: Boolean(filter), keepTags });
         if (filter) console.log(`Parsed: ${lang} ${id} sections=${parsed.sections.length} cards=${parsed.cards.length}`);
         const file = `reference/${lang}/${id}.json`;
 
@@ -936,7 +1106,7 @@ async function main() {
             iconCache.set(cacheKey, v);
             return v;
           });
-        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath: doc.path, ref, icon, debug: Boolean(filter) });
+        const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath: doc.path, ref, icon, debug: Boolean(filter), keepTags });
         if (filter) console.log(`Parsed: ${lang} ${id} sections=${parsed.sections.length} cards=${parsed.cards.length}`);
         const file = `reference/${lang}/${id}.json`;
 

@@ -165,10 +165,58 @@ function finalizeTableBlockRehype(block: MarkdownTableBlock, fontSize: number, m
     block.rehypeStyle = 'default';
   }
 
+  pruneEmptyTableColumns(block);
+
   // 默认不换行且不截断：列宽按内容自适应，超出屏幕由横向滚动承载。
   // 当显式启用 wrap-text/auto-wrap 时，限制单列最大宽度以促使换行。
   const maxColumnWidth = (block.rehypeWrapText ?? false) ? Math.max(fontSize * 12, maxTableColumnWidth * 0.6) : 0;
   block.columnWidths = computeColumnWidths(block.header, block.rows, fontSize, maxColumnWidth);
+}
+
+function pruneEmptyTableColumns(block: MarkdownTableBlock): void {
+  const colCount = block.aligns.length;
+  if (colCount <= 1) return;
+  if ((block.rows?.length ?? 0) <= 0 && (block.header?.length ?? 0) <= 0) return;
+
+  // 仅在表格会渲染 header 时才把 header 纳入“列是否为空”的判断；
+  // style-list/style-list-arrow 分支不会渲染 header，因此始终只看 rows。
+  const considerHeader: boolean = ((block.rehypeStyle ?? 'default') === 'default')
+    && (block.rehypeShowHeader ?? false)
+    && (block.header.length > 0);
+
+  const keepCols: Array<number> = [];
+  for (let c = 0; c < colCount; c++) {
+    let nonEmpty = false;
+    if (considerHeader && c < block.header.length && !isCellTokensEmpty(block.header[c])) {
+      nonEmpty = true;
+    }
+    if (!nonEmpty) {
+      for (let r = 0; r < block.rows.length; r++) {
+        const row = block.rows[r];
+        if (c < row.length && !isCellTokensEmpty(row[c])) {
+          nonEmpty = true;
+          break;
+        }
+      }
+    }
+    if (nonEmpty) keepCols.push(c);
+  }
+
+  // 不做无意义的变换；也避免“全部为空列”导致的空表结构异常
+  if (keepCols.length === 0 || keepCols.length === colCount) return;
+
+  block.aligns = keepCols.map((idx: number): MarkdownCellAlign => block.aligns[idx] ?? 'start');
+  if (block.header.length > 0) {
+    block.header = keepCols.map((idx: number): Array<MarkdownInlineToken> => block.header[idx] ?? []);
+  }
+
+  const newRows: Array<Array<Array<MarkdownInlineToken>>> = [];
+  for (let r = 0; r < block.rows.length; r++) {
+    const row = block.rows[r];
+    const newRow: Array<Array<MarkdownInlineToken>> = keepCols.map((idx: number): Array<MarkdownInlineToken> => row[idx] ?? []);
+    newRows.push(newRow);
+  }
+  block.rows = newRows;
 }
 
 function applyRehypeClassNamesToBlock(
@@ -216,18 +264,50 @@ function parseListMarker(trimmedLine: string): ListMarkerMatch | null {
 }
 
 function splitTableRow(trimmedLine: string): Array<string> {
+  // Markdown 表格行解析：
+  // - `\|` 表示单元格内的字面量 `|`，不应当作为分隔符
+  // - 行内代码（反引号包裹）中的 `|` 也不应当作为分隔符
   let line = trimmedLine.trim();
-  if (line.startsWith('|')) {
-    line = line.substring(1);
-  }
-  if (line.endsWith('|')) {
-    line = line.substring(0, line.length - 1);
-  }
-  const parts = line.split('|');
+  if (line.startsWith('|')) line = line.substring(1);
+  if (line.endsWith('|')) line = line.substring(0, line.length - 1);
+
   const cells: Array<string> = [];
-  for (let i = 0; i < parts.length; i++) {
-    cells.push(parts[i].trim());
+  let current = '';
+  let inInlineCode = false;
+
+  for (let i = 0; i < line.length; i++) {
+    const ch = line.charAt(i);
+
+    // 处理转义：\| -> |
+    if (ch === '\\' && i + 1 < line.length) {
+      const next = line.charAt(i + 1);
+      if (next === '|') {
+        current += '|';
+        i += 1;
+        continue;
+      }
+      current += ch;
+      continue;
+    }
+
+    // 行内代码切换（简单支持：单个反引号）
+    if (ch === '`') {
+      inInlineCode = !inInlineCode;
+      current += ch;
+      continue;
+    }
+
+    // 列分隔符：不在行内代码内时生效
+    if (ch === '|' && !inInlineCode) {
+      cells.push(current.trim());
+      current = '';
+      continue;
+    }
+
+    current += ch;
   }
+
+  cells.push(current.trim());
   return cells;
 }
 
@@ -334,10 +414,22 @@ function estimateTextWidth(text: string, fontSize: number): number {
   return width;
 }
 
+function estimateInlineTokenWidth(token: MarkdownInlineToken, fontSize: number): number {
+  const text = token.text ?? '';
+  const base = estimateTextWidth(text, fontSize);
+  if (token.kind !== 'code') return base;
+
+  // 代码片段使用等宽字体渲染（Span.fontFamily('monospace')），标点/符号在等宽字体中通常不会比字母更窄。
+  // 为避免列宽估算偏小导致 TextOverflow.Clip 截断，给 code token 一个更保守的下限估算。
+  const charCount = Array.from(text).length;
+  const monospaceMin = charCount * fontSize * 0.65;
+  return Math.max(base, monospaceMin);
+}
+
 function estimateTokensWidth(tokens: Array<MarkdownInlineToken>, fontSize: number): number {
   let width = 0;
   for (let i = 0; i < tokens.length; i++) {
-    width += estimateTextWidth(tokens[i].text, fontSize);
+    width += estimateInlineTokenWidth(tokens[i], fontSize);
   }
   return width;
 }
@@ -433,6 +525,13 @@ function parseInlineTokens(text: string): Array<MarkdownInlineToken> {
   while (i < len) {
     const ch = text.charAt(i);
 
+    // 内部硬换行：解析阶段可能将 <br> 转为 "\\n" 或 U+2028/U+2029（兼容历史），此处统一映射为 '\n'
+    if (ch === '\u2028' || ch === '\u2029') {
+      appendTextToken(tokens, '\n');
+      i += 1;
+      continue;
+    }
+
     // HTML 换行：支持 <br> / <br/> / <br />，渲染时应产生硬换行
     if (ch === '<') {
       const rest = text.substring(i);
@@ -445,7 +544,13 @@ function parseInlineTokens(text: string): Array<MarkdownInlineToken> {
     }
 
     if (ch === '\\' && i + 1 < len) {
-      appendTextToken(tokens, text.charAt(i + 1));
+      const next = text.charAt(i + 1);
+      if (next === 'n') {
+        appendTextToken(tokens, '\n');
+        i += 2;
+        continue;
+      }
+      appendTextToken(tokens, next);
       i += 2;
       continue;
     }

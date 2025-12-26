@@ -17,7 +17,7 @@ import { peekLaunchParams, takeLaunchParams } from '../common/launchParamsStore'
 import type { LaunchParams } from '../common/launchParamsStore';
 
 import type { SectionWithCards } from './index/types';
-import { LAUNCH_ACTION_OPEN_RECENT_DOCS, RECENT_DOC_MAX_COUNT } from './index/constants';
+import { CATALOG_DOC_ID_BLACKLIST, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, RECENT_DOC_MAX_COUNT } from './index/constants';
 import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens, toHexColorString } from './index/utils';
 import { DocListTab } from './index/DocListTab';
 import { ReadTab } from './index/ReadTab';
@@ -323,10 +323,14 @@ struct Index {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const background: string = toHexColorString(this.theme.surfaceBackgroundColor);
+    const content: string = toHexColorString(this.theme.id === 'dark' ? 0xffffff : 0x000000);
     Promise.resolve()
       .then((): Promise<window.Window> => window.getLastWindow(host))
       .then((w: window.Window): Promise<void> => w.setWindowSystemBarProperties({
+        statusBarColor: background,
+        statusBarContentColor: content,
         navigationBarColor: background,
+        navigationBarContentColor: content,
       }))
       .then((): void => undefined, (): void => undefined);
   }
@@ -381,6 +385,10 @@ struct Index {
   }
 
   private async loadOrientationModeSetting(): Promise<void> {
+    if (!ENABLE_ORIENTATION_MODE_SETTING) {
+      this.orientationMode = 'portrait';
+      return;
+    }
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const prefs: Preferences | undefined = await Promise.resolve()
@@ -404,6 +412,7 @@ struct Index {
   }
 
   private async saveOrientationModeSetting(next: 'portrait' | 'landscape' | 'auto'): Promise<void> {
+    if (!ENABLE_ORIENTATION_MODE_SETTING) return;
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const prefs: Preferences | undefined = await Promise.resolve()
@@ -421,10 +430,11 @@ struct Index {
   private applyOrientationModeSetting(mode: 'portrait' | 'landscape' | 'auto'): void {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
+    const resolvedMode: 'portrait' | 'landscape' | 'auto' = ENABLE_ORIENTATION_MODE_SETTING ? mode : 'portrait';
     let orientation: window.Orientation;
-    if (mode === 'landscape') {
+    if (resolvedMode === 'landscape') {
       orientation = window.Orientation.LANDSCAPE;
-    } else if (mode === 'auto') {
+    } else if (resolvedMode === 'auto') {
       orientation = window.Orientation.AUTO_ROTATION_RESTRICTED;
     } else {
       orientation = window.Orientation.PORTRAIT;
@@ -436,6 +446,12 @@ struct Index {
   }
 
   private async switchOrientationMode(next: 'portrait' | 'landscape' | 'auto'): Promise<void> {
+    if (!ENABLE_ORIENTATION_MODE_SETTING) {
+      if (this.orientationMode !== 'portrait') {
+        this.orientationMode = 'portrait';
+      }
+      return;
+    }
     if (this.orientationMode === next) return;
     this.orientationMode = next;
     this.applyOrientationModeSetting(next);
@@ -493,6 +509,16 @@ struct Index {
     const favoriteStr: string = await Promise.resolve()
       .then((): Promise<ValueType> => prefs.get('favoriteDocIds', '[]'))
       .then((v: ValueType): string => typeof v === 'string' ? v : '[]', (): string => '[]');
+
+    const parsedFavorites: Array<string> = JSON.parse(favoriteStr) as Array<string>;
+    this.favoriteDocIds = parsedFavorites;
+
+    if (!ENABLE_RECENT_DOCS) {
+      this.recentDocIds = [];
+      this.recentDocAutoOpenFixApplied = true;
+      return;
+    }
+
     const recentStr: string = await Promise.resolve()
       .then((): Promise<ValueType> => prefs.get('recentDocIds', '[]'))
       .then((v: ValueType): string => typeof v === 'string' ? v : '[]', (): string => '[]');
@@ -503,9 +529,7 @@ struct Index {
         (): boolean => false,
       );
 
-    const parsedFavorites: Array<string> = JSON.parse(favoriteStr) as Array<string>;
     const parsedRecent: Array<string> = JSON.parse(recentStr) as Array<string>;
-    this.favoriteDocIds = parsedFavorites;
     this.recentDocIds = parsedRecent;
     this.recentDocAutoOpenFixApplied = fixApplied;
   }
@@ -526,6 +550,7 @@ struct Index {
   }
 
   private async saveRecentDocIds(): Promise<void> {
+    if (!ENABLE_RECENT_DOCS) return;
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const prefs: Preferences | undefined = await Promise.resolve()
@@ -541,6 +566,7 @@ struct Index {
   }
 
   private async saveRecentDocAutoOpenFixApplied(applied: boolean): Promise<void> {
+    if (!ENABLE_RECENT_DOCS) return;
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const prefs: Preferences | undefined = await Promise.resolve()
@@ -562,6 +588,7 @@ struct Index {
    * - 这里做一次性清理：仅在 recent 只包含首篇时清空。
    */
   private async migrateRecentDocsAutoOpenBugIfNeeded(): Promise<void> {
+    if (!ENABLE_RECENT_DOCS) return;
     if (this.recentDocAutoOpenFixApplied) return;
     const firstDocId = (this.docs.length > 0 ? this.docs[0]?.id : '') ?? '';
     const shouldClear: boolean = !!firstDocId && this.recentDocIds.length === 1 && this.recentDocIds[0] === firstDocId;
@@ -586,6 +613,7 @@ struct Index {
   }
 
   private async addToRecentDocs(docId: string): Promise<void> {
+    if (!ENABLE_RECENT_DOCS) return;
     const next = this.recentDocIds.filter((id: string): boolean => id !== docId);
     next.unshift(docId);
     if (next.length > RECENT_DOC_MAX_COUNT) {
@@ -881,15 +909,17 @@ struct Index {
         if (this.lang !== targetLang) {
           return;
         }
-        this.docs = (manifest.docs ?? []).map((doc: ReferenceDocSummary): ReferenceDocSummary => ({
-          id: doc.id,
-          name: doc.name || doc.title || doc.id,
-          title: doc.title || doc.name || doc.id,
-          icon: doc.icon,
-          file: doc.file,
-          sectionCount: doc.sectionCount,
-          cardCount: doc.cardCount,
-        }));
+        this.docs = (manifest.docs ?? [])
+          .filter((doc: ReferenceDocSummary): boolean => !CATALOG_DOC_ID_BLACKLIST.has(doc.id))
+          .map((doc: ReferenceDocSummary): ReferenceDocSummary => ({
+            id: doc.id,
+            name: doc.name || doc.title || doc.id,
+            title: doc.title || doc.name || doc.id,
+            icon: doc.icon,
+            file: doc.file,
+            sectionCount: doc.sectionCount,
+            cardCount: doc.cardCount,
+          }));
         this.rebuildCatalogSearchResults();
         await this.migrateRecentDocsAutoOpenBugIfNeeded();
         if (autoOpenFirst && !this.selectedDocId && this.docs.length > 0) {
@@ -916,11 +946,13 @@ struct Index {
     if (!repo) return;
 
     const zh = repo.getManifestByLang('zh').then(
-      (manifest: ReferenceManifest): number => (manifest.docs ?? []).length,
+      (manifest: ReferenceManifest): number =>
+        (manifest.docs ?? []).filter((doc: ReferenceDocSummary): boolean => !CATALOG_DOC_ID_BLACKLIST.has(doc.id)).length,
       (): number => -1,
     );
     const en = repo.getManifestByLang('en').then(
-      (manifest: ReferenceManifest): number => (manifest.docs ?? []).length,
+      (manifest: ReferenceManifest): number =>
+        (manifest.docs ?? []).filter((doc: ReferenceDocSummary): boolean => !CATALOG_DOC_ID_BLACKLIST.has(doc.id)).length,
       (): number => -1,
     );
 
@@ -1574,7 +1606,7 @@ struct Index {
 
   private getTabLabel(index: number): string {
     if (index === 0) return this.t('目录', 'Catalog');
-    if (index === 1) return this.t('备忘清单', 'Cheatsheet');
+    if (index === 1) return this.t('清单', 'Cheatsheet');
     if (index === 2) return this.t('测验', 'Quiz');
     return this.t('设置', 'Settings');
   }

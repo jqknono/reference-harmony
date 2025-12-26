@@ -62,6 +62,7 @@ node tools/sync_reference_docs.mjs --mode=github
 - `--limit=20`：仅生成前 N 个文档（便于调试）
 - `--filter=keyword`：仅处理路径包含关键字的文档
 - `--concurrency=8`：并发数
+- `--keep-tags`：生成 JSON 时保留行内 `<tag>` / `</tag>`（默认会剥离标签，仅保留内部文本；行内代码/转义的 `\\<tag>`/autolink 不受影响）
 
 > 如果 App 提示 “加载 manifest 失败”，通常是 `rawfile/reference/**` 未生成或不完整，先运行上述脚本。
 

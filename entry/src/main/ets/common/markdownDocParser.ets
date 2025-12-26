@@ -16,11 +16,161 @@ function stripHtmlCommentsInLine(line: string): string {
   return String(line ?? '').replace(/<!--[\s\S]*?-->/g, '');
 }
 
+function isProbablyAutolinkInner(inner: string): boolean {
+  const s = String(inner ?? '').trim();
+  if (!s) return false;
+  if (/\s/.test(s)) return false;
+  if (/^(https?:\/\/|mailto:|tel:)/i.test(s)) return true;
+  // email autolink: <user@example.com>
+  if (s.includes('@') && /^[^@]+@[^@]+\.[^@]+$/.test(s)) return true;
+  return false;
+}
+
+function stripTagsInLine(line: string): string {
+  // 剥离任意 `<tag ...>` / `</tag>`，保留内部文本。
+  // 重要：避免误伤
+  // - 行内代码（反引号包裹）里的 `<...>`
+  // - 被反斜杠转义的 `\<...>`（通常用于展示字面量 `<tag>`）
+  // - Markdown autolink：`<https://...>` / `<mailto:...>` / `<user@a.b>`（保留内容，去掉尖括号）
+  // - `<br>` / `<br/>` / `<br />` 视为硬换行：转为字面量 "\\n"（两字符），避免破坏表格按 '\n' 分行解析
+  const s = String(line ?? '');
+  let out = '';
+  let inInlineCode = false;
+  let inlineFenceLen = 0;
+
+  const countBackticksAt = (idx: number): number => {
+    let n = 0;
+    while (idx + n < s.length && s.charAt(idx + n) === '`') n++;
+    return n;
+  };
+
+  const isEscapedByBackslashes = (idx: number): boolean => {
+    let n = 0;
+    for (let j = idx - 1; j >= 0 && s.charAt(j) === '\\'; j--) n++;
+    return n % 2 === 1;
+  };
+
+  const findClosingBacktickRun = (fromIdx: number, fenceLen: number): number => {
+    for (let j = fromIdx; j < s.length; j++) {
+      if (s.charAt(j) !== '`') continue;
+      const run = countBackticksAt(j);
+      if (run === fenceLen) return j;
+      j += run - 1;
+    }
+    return -1;
+  };
+
+  for (let i = 0; i < s.length; i++) {
+    const ch = s.charAt(i);
+
+    if (ch === '`') {
+      const run = countBackticksAt(i);
+      const escaped = isEscapedByBackslashes(i);
+      if (!inInlineCode) {
+        if (!escaped) {
+          const close = findClosingBacktickRun(i + run, run);
+          if (close !== -1) {
+            inInlineCode = true;
+            inlineFenceLen = run;
+          }
+        }
+      } else if (run === inlineFenceLen) {
+        // 代码段内不处理反斜杠转义：反斜杠属于内容，不影响闭合
+        inInlineCode = false;
+        inlineFenceLen = 0;
+      }
+      out += '`'.repeat(run);
+      i += run - 1;
+      continue;
+    }
+
+    if (!inInlineCode) {
+      if (ch === '\\' && i + 1 < s.length && s.charAt(i + 1) === '<') {
+        out += ch;
+        out += '<';
+        i += 1;
+        continue;
+      }
+      if (ch === '<') {
+        const end = s.indexOf('>', i + 1);
+        if (end === -1) {
+          out += ch;
+          continue;
+        }
+        const inner = s.slice(i + 1, end);
+        const lowerInner = inner.trim().toLowerCase();
+        if (lowerInner.startsWith('br') && (lowerInner.length === 2 || /^[\s/]/.test(lowerInner.slice(2)))) {
+          out += '\\n';
+          i = end;
+          continue;
+        }
+        if (isProbablyAutolinkInner(inner)) {
+          out += inner.trim();
+          i = end;
+          continue;
+        }
+        // 仅当 `<` 后不是空白时，才视为 tag（避免误伤 "a < b" 之类）
+        const first = inner.charAt(0);
+        if (first && !/\s/.test(first)) {
+          // Drop the whole tag token: <...>
+          i = end;
+          continue;
+        }
+        out += ch;
+        continue;
+      }
+    }
+    out += ch;
+  }
+  return out;
+}
+
 function splitTableRow(line: string): Array<string> {
+  // Markdown 表格行解析：
+  // - `\|` 表示单元格内的字面量 `|`，不应当作为分隔符
+  // - 行内代码（反引号包裹）中的 `|` 也不应当作为分隔符
   let s = line.trim();
   if (s.startsWith('|')) s = s.slice(1);
   if (s.endsWith('|')) s = s.slice(0, -1);
-  return s.split('|').map((c: string): string => c.trim());
+
+  const cells: Array<string> = [];
+  let current = '';
+  let inInlineCode = false;
+
+  for (let i = 0; i < s.length; i++) {
+    const ch = s.charAt(i);
+
+    // 处理转义：\| -> |
+    if (ch === '\\' && i + 1 < s.length) {
+      const next = s.charAt(i + 1);
+      if (next === '|') {
+        current += '|';
+        i += 1;
+        continue;
+      }
+      current += ch;
+      continue;
+    }
+
+    // 行内代码切换（简单支持：单个反引号）
+    if (ch === '`') {
+      inInlineCode = !inInlineCode;
+      current += ch;
+      continue;
+    }
+
+    // 列分隔符：不在行内代码内时生效
+    if (ch === '|' && !inInlineCode) {
+      cells.push(current.trim());
+      current = '';
+      continue;
+    }
+
+    current += ch;
+  }
+
+  cells.push(current.trim());
+  return cells;
 }
 
 function isTableSeparatorLine(line: string): boolean {
@@ -305,7 +455,7 @@ interface CardRaw {
   encoded?: boolean;
 }
 
-export function parseMarkdownToDoc(markdown: string, id: string, url: string): ReferenceDoc {
+export function parseMarkdownToDoc(markdown: string, id: string, url: string, keepTags: boolean = false): ReferenceDoc {
   const fmResult = extractFrontmatter(markdown);
   const frontmatter = fmResult.frontmatter;
   const body = fmResult.body;
@@ -315,6 +465,12 @@ export function parseMarkdownToDoc(markdown: string, id: string, url: string): R
   const title = meta.title;
   const name = meta.name;
   const introTitle = '简介';
+
+  const normalizeLine = (raw: string): string => {
+    const withoutComments = stripHtmlCommentsInLine(raw);
+    if (keepTags) return withoutComments;
+    return stripTagsInLine(withoutComments);
+  };
 
   const introSection: ReferenceSection = { id: 'intro', title: introTitle, startIndex: 0 };
   const sections: Array<ReferenceSection> = [introSection];
@@ -404,7 +560,7 @@ export function parseMarkdownToDoc(markdown: string, id: string, url: string): R
 
   for (let i = 0; i < lines.length; i++) {
     const rawLine = lines[i];
-    const line = stripHtmlCommentsInLine(rawLine);
+    const line = normalizeLine(rawLine);
     if (isRehypeIgnoreStart(rawLine)) {
       rehypeIgnoreDepth++;
       continue;
@@ -527,10 +683,10 @@ export function parseMarkdownToDoc(markdown: string, id: string, url: string): R
     }
 
     if (line.includes('|') && i + 1 < lines.length && isTableSeparatorLine(lines[i + 1])) {
-      const buf = [line.trimEnd(), stripHtmlCommentsInLine(lines[i + 1]).trimEnd()];
+      const buf = [line.trimEnd(), normalizeLine(lines[i + 1]).trimEnd()];
       i += 2;
       while (i < lines.length) {
-        const rowLine = stripHtmlCommentsInLine(lines[i]);
+        const rowLine = normalizeLine(lines[i]);
         if (!rowLine.trim() || !rowLine.includes('|')) break;
         buf.push(rowLine.trimEnd());
         i++;
@@ -552,7 +708,7 @@ export function parseMarkdownToDoc(markdown: string, id: string, url: string): R
     if (isListItem(line)) {
       const items: Array<string> = [];
       while (i < lines.length) {
-        const itemLine = stripHtmlCommentsInLine(lines[i]);
+        const itemLine = normalizeLine(lines[i]);
         if (!isListItem(itemLine)) break;
         const itemText = stripListMarker(itemLine);
         if (itemText) items.push(`• ${itemText}`);
@@ -576,7 +732,7 @@ export function parseMarkdownToDoc(markdown: string, id: string, url: string): R
       const buf = [line.trim()];
       i++;
       while (i < lines.length) {
-        const nextLine = stripHtmlCommentsInLine(lines[i]);
+        const nextLine = normalizeLine(lines[i]);
         if (!nextLine.trim()) break;
         if (getSetextHeading(lines, i)) break;
         if (/^#{1,6}\s+/.test(nextLine)) break;

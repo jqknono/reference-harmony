@@ -3,7 +3,7 @@ import type { ReferenceLang } from '../../common/referenceModels';
 import type { OnlineMdLink } from '../../common/onlineMdModels';
 import { openExternalLink } from '../../common/openExternalLink';
 import { formatDocCount } from './utils';
-import { SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
+import { ENABLE_ORIENTATION_MODE_SETTING, SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
 
 type ThemePreference = 'dark' | 'light' | 'system';
 
@@ -66,43 +66,45 @@ export struct SettingsTab {
         Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.25).fontWeight(FontWeight.Bold).fontColor(this.theme.accentColor);
 
         Column({ space: 0 }) {
-          Row() {
-            Text(this.t('屏幕方向', 'Orientation'))
-              .fontColor(this.theme.mutedTextColor)
-              .fontSize(this.fontSize * 0.95);
+          if (ENABLE_ORIENTATION_MODE_SETTING) {
+            Row() {
+              Text(this.t('屏幕方向', 'Orientation'))
+                .fontColor(this.theme.mutedTextColor)
+                .fontSize(this.fontSize * 0.95);
 
-            Row({ space: this.fontSize * 0.6 }) {
-              Text(this.t('竖屏', 'Portrait'))
-                .fontSize(this.fontSize * 0.85)
-                .fontColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-                .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                .backgroundColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-                .borderRadius(this.fontSize * 66)
-                .onClick(() => this.onSwitchOrientationMode?.('portrait'));
-              Text(this.t('横屏', 'Landscape'))
-                .fontSize(this.fontSize * 0.85)
-                .fontColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-                .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                .backgroundColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-                .borderRadius(this.fontSize * 66)
-                .onClick(() => this.onSwitchOrientationMode?.('landscape'));
-              Text(this.t('自动', 'Auto'))
-                .fontSize(this.fontSize * 0.85)
-                .fontColor(this.orientationMode === 'auto' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
-                .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                .backgroundColor(this.orientationMode === 'auto' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
-                .borderRadius(this.fontSize * 66)
-                .onClick(() => this.onSwitchOrientationMode?.('auto'));
+              Row({ space: this.fontSize * 0.6 }) {
+                Text(this.t('竖屏', 'Portrait'))
+                  .fontSize(this.fontSize * 0.85)
+                  .fontColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+                  .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                  .backgroundColor(this.orientationMode === 'portrait' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+                  .borderRadius(this.fontSize * 66)
+                  .onClick(() => this.onSwitchOrientationMode?.('portrait'));
+                Text(this.t('横屏', 'Landscape'))
+                  .fontSize(this.fontSize * 0.85)
+                  .fontColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+                  .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                  .backgroundColor(this.orientationMode === 'landscape' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+                  .borderRadius(this.fontSize * 66)
+                  .onClick(() => this.onSwitchOrientationMode?.('landscape'));
+                Text(this.t('自动', 'Auto'))
+                  .fontSize(this.fontSize * 0.85)
+                  .fontColor(this.orientationMode === 'auto' ? this.theme.chipSelectedTextColor : this.theme.chipTextColor)
+                  .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                  .backgroundColor(this.orientationMode === 'auto' ? this.theme.chipSelectedBackgroundColor : this.theme.chipBackgroundColor)
+                  .borderRadius(this.fontSize * 66)
+                  .onClick(() => this.onSwitchOrientationMode?.('auto'));
+              }
             }
-          }
-          .width('100%')
-          .alignItems(VerticalAlign.Center)
-          .justifyContent(FlexAlign.SpaceBetween)
-          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
+            .width('100%')
+            .alignItems(VerticalAlign.Center)
+            .justifyContent(FlexAlign.SpaceBetween)
+            .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
 
-          Divider()
-            .color(this.theme.borderColor)
-            .strokeWidth(this.fontSize * 0.07);
+            Divider()
+              .color(this.theme.borderColor)
+              .strokeWidth(this.fontSize * 0.07);
+          }
 
           Row() {
             Text(this.t('语言', 'Language'))

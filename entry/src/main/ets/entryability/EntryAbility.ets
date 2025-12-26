@@ -3,6 +3,7 @@ import preferences from '@ohos.data.preferences';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { saveLaunchParams, LaunchParams } from '../common/launchParamsStore';
+import { ENABLE_ORIENTATION_MODE_SETTING } from '../pages/index/constants';
 
 const DOMAIN = 0x0000;
 const LAUNCH_ACTION_KEY: string = 'launchAction';
@@ -33,20 +34,22 @@ type OrientationMode = 'portrait' | 'landscape' | 'auto';
 
 export default class EntryAbility extends UIAbility {
   private applyPreferredOrientation(windowStage: window.WindowStage): void {
-    const setting = Promise.resolve()
-      .then((): Promise<preferences.Preferences> => preferences.getPreferences(this.context, 'settings'))
-      .then(
-        (prefs: preferences.Preferences): Promise<preferences.ValueType> => prefs.get('orientationMode', 'portrait'),
-        (): Promise<preferences.ValueType> => Promise.resolve('portrait'),
-      )
-      .then(
-        (value: preferences.ValueType): OrientationMode => {
-          const s: string = typeof value === 'string' ? value : String(value);
-          if (s === 'landscape' || s === 'auto') return s;
-          return 'portrait';
-        },
-        (): OrientationMode => 'portrait',
-      );
+    const setting: Promise<OrientationMode> = ENABLE_ORIENTATION_MODE_SETTING
+      ? Promise.resolve()
+        .then((): Promise<preferences.Preferences> => preferences.getPreferences(this.context, 'settings'))
+        .then(
+          (prefs: preferences.Preferences): Promise<preferences.ValueType> => prefs.get('orientationMode', 'portrait'),
+          (): Promise<preferences.ValueType> => Promise.resolve('portrait'),
+        )
+        .then(
+          (value: preferences.ValueType): OrientationMode => {
+            const s: string = typeof value === 'string' ? value : String(value);
+            if (s === 'landscape' || s === 'auto') return s;
+            return 'portrait';
+          },
+          (): OrientationMode => 'portrait',
+        )
+      : Promise.resolve('portrait' as OrientationMode);
 
     const mainWindow = Promise.resolve().then((): Promise<window.Window> => windowStage.getMainWindow());
 
