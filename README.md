@@ -1,6 +1,6 @@
 # 开发速查（Quick Reference）- HarmonyOS App
 
-开源地址: https://github.com/jqknono/reference-harmony
+开源地址: [jqknono/reference-harmony](https://github.com/jqknono/reference-harmony)
 
 一个将上游「速查表/备忘清单」Markdown 预处理为离线卡片数据，并在 HarmonyOS 上以更适合手机阅读的方式展示的应用。
 
@@ -100,7 +100,7 @@ node tools/sync_reference_docs.mjs --mode=github
 
 ## 开发约束（重要）
 
-- **启用 Git Hooks（提交前自动更新 `versionCode`）**：首次克隆后执行一次 `git config core.hooksPath .githooks`（或 `npm run hooks:install`），之后每次 `git commit` 会自动把 `AppScope/app.json5` 的 `versionCode` 更新为当前时间戳（形如 `202512241655`）并加入暂存区。
+- **启用 Git Hooks（提交前自动同步版本信息）**：首次克隆后执行一次 `git config core.hooksPath .githooks`（或 `npm run hooks:install`），之后每次 `git commit` 会自动把 `AppScope/app.json5` 的 `versionCode` 更新为当前时间戳，并将 `AppScope/app.json5` 的 `versionName/versionCode` 同步到 `entry/src/main/ets/pages/index/SettingsTab.ets`（关于页兜底版本展示）后加入暂存区。
 - 禁止在本仓库的**源代码**（`.ets/.ts/.js/.mjs`，包含工具脚本）中使用 `try/catch/finally` 语句块。
 - 处理异常请使用返回结果类型或 Promise 的双参数 `then(onFulfilled, onRejected)` 链路/显式 `throw`。
 - 如需补充上下文，请在同一执行路径直接构造 `Error` 并抛出（或拒绝 Promise），不要借助 `try/catch` 包裹。
@@ -116,3 +116,26 @@ node tools/sync_reference_docs.mjs --mode=github
 
 - 中文：`jaywcjlove/reference`（MIT License，详见 `submodules/jaywcjlove-reference/LICENSE`）
 - 英文：`Fechin/reference`（GPL-3.0，详见 `submodules/fechin-reference/LICENSE`）
+
+## 上架合规 / 隐私（AppGallery Connect）
+
+> 本节仅整理华为官方文档要点与链接；实际要求以 AppGallery Connect / 审核政策页面为准。
+
+- **隐私政策（强制）**：创建应用或更新版本时，必须提交 App 隐私政策链接，且需与 App 内隐私政策内容保持一致。参考：[隐私政策链接提交及内容规范参考FAQ](https://developer.huawei.com/consumer/cn/doc/app/50128)
+- **隐私标签（上架需填写）**：上架应用时需填写应用及第三方组件收集的个人数据项与用途。参考：[AppGallery 隐私标签服务说明](https://developer.huawei.com/consumer/cn/doc/privacy-label)
+- **应用隐私说明（条件触发）**：若检测到涉及敏感隐私权限或受限开放权限，需要在 AGC 填写“应用隐私说明”。参考：[配置隐私说明](https://developer.huawei.com/consumer/cn/doc/app/agc-help-release-app-privacy-desc-0000002313477969)
+- **提交审核流程**：参考：[提交审核（HarmonyOS 5 及以上）](https://developer.huawei.com/consumer/cn/doc/app/agc-help-release-app-submit-0000002286180890)
+- **隐私声明管理（可选参考）**：参考：[FAQ-管理隐私声明](https://developer.huawei.com/consumer/cn/doc/app/agc-help-privacy-policy-faq-0000002342315628)
+- **个人信息保护常见问题（可选参考）**：参考：[APP常见个人信息保护问题FAQ](https://developer.huawei.com/consumer/cn/doc/app/FAQ-faq-09)
+
+## 官方开发文档（HarmonyOS）
+
+- **设计**：[HarmonyOS 设计规范与指南](https://developer.huawei.com/consumer/cn/design/)
+- **ArkTS**：[ArkTS 指南](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkts)
+- **ArkUI**：[ArkUI 指南](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkui)
+- **ArkData**：[ArkData 指南](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/arkdata)
+- **Ability Kit**：[Ability Kit 指南](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ability-kit)
+- **UI Design Kit**：[UI Design Kit 指南](https://developer.huawei.com/consumer/cn/doc/harmonyos-guides/ui-design-kit-guide)
+- **最佳实践**：[HarmonyOS 最佳实践](https://developer.huawei.com/consumer/cn/doc/best-practices/bpta-best-practices-overview)
+- **API 参考**：[HarmonyOS API 参考](https://developer.huawei.com/consumer/cn/doc/harmonyos-references/development-intro-api)
+- **AppGallery Connect**：[AppGallery Connect 文档入口](https://developer.huawei.com/consumer/cn/agconnect/)

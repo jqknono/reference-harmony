@@ -9,8 +9,35 @@ VERSION_CODE="$(date '+%Y%m%d%H')"
 # 更新 AppScope/app.json5 中的 versionCode（数字）
 VERSION_CODE="$VERSION_CODE" perl -pi -e 's/("versionCode"\s*:\s*)\d+/$1$ENV{VERSION_CODE}/' AppScope/app.json5
 
+# 从 AppScope/app.json5 提取 versionName（字符串）
+VERSION_NAME="$(perl -ne 'if (/"versionName"\s*:\s*"([^"]+)"/) { print $1; exit }' AppScope/app.json5)"
+if [ -z "$VERSION_NAME" ]; then
+  echo "[pre-commit] Failed to parse versionName from AppScope/app.json5" >&2
+  exit 1
+fi
+
+# 将版本信息同步到设置页（兜底展示）
+SETTINGS_ABOUT_FILE="entry/src/main/ets/pages/index/SettingsTab.ets"
+if [ ! -f "$SETTINGS_ABOUT_FILE" ]; then
+  echo "[pre-commit] Missing file: $SETTINGS_ABOUT_FILE" >&2
+  exit 1
+fi
+
+VERSION_NAME="$VERSION_NAME" perl -pi -e 's/(const\s+FALLBACK_VERSION_NAME\s*:\s*string\s*=\s*)\x27[^\x27]*\x27;/$1\x27$ENV{VERSION_NAME}\x27;/' "$SETTINGS_ABOUT_FILE"
+VERSION_CODE="$VERSION_CODE" perl -pi -e 's/(const\s+FALLBACK_VERSION_CODE\s*:\s*number\s*=\s*)\d+;/$1$ENV{VERSION_CODE};/' "$SETTINGS_ABOUT_FILE"
+
+if ! grep -q "FALLBACK_VERSION_NAME: string = '$VERSION_NAME'" "$SETTINGS_ABOUT_FILE"; then
+  echo "[pre-commit] Failed to sync versionName to $SETTINGS_ABOUT_FILE" >&2
+  exit 1
+fi
+if ! grep -q "FALLBACK_VERSION_CODE: number = $VERSION_CODE;" "$SETTINGS_ABOUT_FILE"; then
+  echo "[pre-commit] Failed to sync versionCode to $SETTINGS_ABOUT_FILE" >&2
+  exit 1
+fi
+
 # 确保本次提交包含更新后的 versionCode
 git add AppScope/app.json5
+git add "$SETTINGS_ABOUT_FILE"
 
 
 

@@ -4,8 +4,24 @@ import type { OnlineMdLink } from '../../common/onlineMdModels';
 import { openExternalLink } from '../../common/openExternalLink';
 import { formatDocCount } from './utils';
 import { ENABLE_ORIENTATION_MODE_SETTING, SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
+import webview from '@ohos.web.webview';
+import bundleManager from '@ohos.bundle.bundleManager';
 
 type ThemePreference = 'dark' | 'light' | 'system';
+
+const PRIVACY_STATEMENT_URL: string =
+  'https://agreement-drcn.hispace.dbankcloud.cn/index.html?lang=zh&agreementId=1844306128905764736';
+
+const APP_DISPLAY_NAME_ZH: string = '开发速查';
+const APP_DISPLAY_NAME_EN: string = 'Quick Reference';
+const FALLBACK_VERSION_NAME: string = '0.11.0';
+const FALLBACK_VERSION_CODE: number = 2025122719;
+const DEVELOPER_NAME: string = '李偲';
+
+interface BundleInfoLike {
+  versionName?: string;
+  versionCode?: number;
+}
 
 @Component
 export struct SettingsTab {
@@ -30,8 +46,14 @@ export struct SettingsTab {
   @Link localMdLinks: Array<OnlineMdLink>;
   @Link localMdCopySuccess: boolean;
   @Link scrollY: number;
+  @Link showPrivacyStatement: boolean;
+  @Link showAbout: boolean;
 
   scroller: Scroller = new Scroller();
+  private privacyStatementController: webview.WebviewController = new webview.WebviewController();
+  @State private appVersionName: string = FALLBACK_VERSION_NAME;
+  @State private appVersionCode: number = FALLBACK_VERSION_CODE;
+  @State private aboutInfoLoaded: boolean = false;
 
   onSwitchOrientationMode?: (mode: 'portrait' | 'landscape' | 'auto') => void;
   onSwitchLang?: (lang: ReferenceLang) => void;
@@ -53,6 +75,28 @@ export struct SettingsTab {
     return this.lang === 'en' ? en : zh;
   }
 
+  private ensureAboutInfoLoaded(): void {
+    if (this.aboutInfoLoaded) return;
+    this.aboutInfoLoaded = true;
+    Promise.resolve()
+      .then((): Promise<BundleInfoLike> => bundleManager.getBundleInfoForSelf(0))
+      .then(
+        (info: BundleInfoLike): void => {
+          const versionName: string = typeof info?.versionName === 'string' ? info.versionName.trim() : '';
+          const versionCode: number = typeof info?.versionCode === 'number' ? info.versionCode : -1;
+          if (versionName) this.appVersionName = versionName;
+          if (versionCode > 0) this.appVersionCode = versionCode;
+        },
+        (): void => undefined,
+      );
+  }
+
+  private formatAppVersionText(): string {
+    const name: string = (this.appVersionName || FALLBACK_VERSION_NAME).trim() || FALLBACK_VERSION_NAME;
+    const code: number = this.appVersionCode > 0 ? this.appVersionCode : FALLBACK_VERSION_CODE;
+    return `${name} (${code})`;
+  }
+
   private tabPadding(): Padding {
     const base: number = this.fontSize * 1;
     return this.isLandscape
@@ -61,9 +105,10 @@ export struct SettingsTab {
   }
 
   build() {
-    Scroll(this.scroller) {
-      Column({ space: this.fontSize * 0.8 }) {
-        Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.25).fontWeight(FontWeight.Bold).fontColor(this.theme.accentColor);
+    Stack() {
+      Scroll(this.scroller) {
+        Column({ space: this.fontSize * 0.8 }) {
+          Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.25).fontWeight(FontWeight.Bold).fontColor(this.theme.accentColor);
 
         Column({ space: 0 }) {
           if (ENABLE_ORIENTATION_MODE_SETTING) {
@@ -448,6 +493,74 @@ export struct SettingsTab {
         .borderRadius(this.fontSize * 0.8)
         .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
 
+        // 业务与隐私声明
+        Column({ space: 0 }) {
+          Row() {
+            Column({ space: this.fontSize * 0.2 }) {
+              Text(this.t('业务与隐私的声明', 'Business & Privacy Statement'))
+                .fontColor(this.theme.mutedTextColor)
+                .fontSize(this.fontSize * 0.95);
+              Text(this.t('查看我们如何使用您的数据', 'See how we use your data'))
+                .fontColor(this.theme.mutedTextColor)
+                .fontSize(this.fontSize * 0.75)
+                .opacity(0.7);
+            }
+            .layoutWeight(1)
+            .alignItems(HorizontalAlign.Start);
+
+            Text('›')
+              .fontSize(this.fontSize * 1.4)
+              .fontColor(this.theme.mutedTextColor)
+              .opacity(0.65);
+          }
+          .width('100%')
+          .alignItems(VerticalAlign.Center)
+          .justifyContent(FlexAlign.SpaceBetween)
+          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+          .onClick(() => {
+            this.showAbout = false;
+            this.showPrivacyStatement = true;
+          });
+        }
+        .width('100%')
+        .backgroundColor(this.theme.surfaceBackgroundColor)
+        .borderRadius(this.fontSize * 0.8)
+        .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+
+        // 关于
+        Column({ space: 0 }) {
+          Row() {
+            Column({ space: this.fontSize * 0.2 }) {
+              Text(this.t('关于', 'About'))
+                .fontColor(this.theme.mutedTextColor)
+                .fontSize(this.fontSize * 0.95);
+              Text(this.t('查看应用信息与版本', 'App info & version'))
+                .fontColor(this.theme.mutedTextColor)
+                .fontSize(this.fontSize * 0.75)
+                .opacity(0.7);
+            }
+            .layoutWeight(1)
+            .alignItems(HorizontalAlign.Start);
+
+            Text('›')
+              .fontSize(this.fontSize * 1.4)
+              .fontColor(this.theme.mutedTextColor)
+              .opacity(0.65);
+          }
+          .width('100%')
+          .alignItems(VerticalAlign.Center)
+          .justifyContent(FlexAlign.SpaceBetween)
+          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+          .onClick(() => {
+            this.showPrivacyStatement = false;
+            this.showAbout = true;
+          });
+        }
+        .width('100%')
+        .backgroundColor(this.theme.surfaceBackgroundColor)
+        .borderRadius(this.fontSize * 0.8)
+        .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+
         // 开源信息
         Column({ space: 0 }) {
           Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
@@ -509,30 +622,140 @@ export struct SettingsTab {
             .fontColor(this.theme.mutedTextColor)
             .fontSize(this.fontSize * 0.85);
         }
+        }
+        .padding(this.tabPadding())
+        .width('100%')
       }
-      .padding(this.tabPadding())
+      .align(Alignment.Top)
+      .height('100%')
       .width('100%')
+      .scrollBar(BarState.Auto)
+      .onDidScroll((_xOffset: number, _yOffset: number, scrollState: ScrollState) => {
+        const yOffset: number = this.scroller.currentOffset().yOffset;
+        const previous: number = this.scrollY;
+        const delta: number = yOffset - previous;
+        const threshold: number = this.fontSize * 0.6;
+        if (this.isLandscape && scrollState !== ScrollState.Idle && Math.abs(delta) >= threshold) {
+          this.onLandscapeScrollDirection?.(delta > 0 ? 'up' : 'down');
+        }
+        if (previous !== yOffset) {
+          this.scrollY = yOffset;
+        }
+      })
+      .onAppear(() => {
+        const yOffset: number = this.scrollY;
+        this.scroller.scrollTo({ xOffset: 0, yOffset, animation: false });
+      })
+      .backgroundColor(this.theme.pageBackgroundColor);
+
+      if (this.showPrivacyStatement) {
+        Column({ space: 0 }) {
+          Row() {
+            Text(this.t('业务与隐私的声明', 'Business & Privacy Statement'))
+              .fontSize(this.fontSize * 1.1)
+              .fontWeight(FontWeight.Bold)
+              .fontColor(this.theme.titleColor);
+            Blank();
+            Text(this.t('关闭', 'Close'))
+              .fontSize(this.fontSize * 1)
+              .fontColor(this.theme.accentColor)
+              .onClick(() => {
+                this.showPrivacyStatement = false;
+              });
+          }
+          .width('100%')
+          .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.8 });
+
+          Divider()
+            .color(this.theme.borderColor)
+            .strokeWidth(this.fontSize * 0.07);
+
+          Web({ src: PRIVACY_STATEMENT_URL, controller: this.privacyStatementController })
+            .width('100%')
+            .layoutWeight(1);
+        }
+        .width('100%')
+        .height('100%')
+        .backgroundColor(this.theme.pageBackgroundColor);
+      }
+
+      if (this.showAbout) {
+        Column({ space: 0 }) {
+          Row() {
+            Text(this.t('关于', 'About'))
+              .fontSize(this.fontSize * 1.1)
+              .fontWeight(FontWeight.Bold)
+              .fontColor(this.theme.titleColor);
+            Blank();
+            Text(this.t('关闭', 'Close'))
+              .fontSize(this.fontSize * 1)
+              .fontColor(this.theme.accentColor)
+              .onClick(() => {
+                this.showAbout = false;
+              });
+          }
+          .width('100%')
+          .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.8 });
+
+          Divider()
+            .color(this.theme.borderColor)
+            .strokeWidth(this.fontSize * 0.07);
+
+          Column({ space: this.fontSize * 0.7 }) {
+            Image($r('app.media.app_icon'))
+              .width(this.fontSize * 4.5)
+              .height(this.fontSize * 4.5)
+              .borderRadius(this.fontSize * 1);
+
+            Text(this.t(APP_DISPLAY_NAME_ZH, APP_DISPLAY_NAME_EN))
+              .fontSize(this.fontSize * 1.25)
+              .fontWeight(FontWeight.Bold)
+              .fontColor(this.theme.titleColor);
+
+            Column({ space: this.fontSize * 0.35 }) {
+              Row({ space: this.fontSize * 0.5 }) {
+                Text(this.t('版本', 'Version'))
+                  .fontSize(this.fontSize * 0.9)
+                  .fontColor(this.theme.mutedTextColor);
+                Text(this.formatAppVersionText())
+                  .fontSize(this.fontSize * 0.9)
+                  .fontColor(this.theme.titleColor);
+              }
+              .width('100%')
+              .justifyContent(FlexAlign.SpaceBetween);
+
+              Row({ space: this.fontSize * 0.5 }) {
+                Text(this.t('开发者', 'Developer'))
+                  .fontSize(this.fontSize * 0.9)
+                  .fontColor(this.theme.mutedTextColor);
+                Text(DEVELOPER_NAME)
+                  .fontSize(this.fontSize * 0.9)
+                  .fontColor(this.theme.titleColor);
+              }
+              .width('100%')
+              .justifyContent(FlexAlign.SpaceBetween);
+            }
+            .width('100%')
+            .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.9, bottom: this.fontSize * 0.9 })
+            .backgroundColor(this.theme.surfaceBackgroundColor)
+            .borderRadius(this.fontSize * 0.8)
+            .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+          }
+          .layoutWeight(1)
+          .width('100%')
+          .alignItems(HorizontalAlign.Center)
+          .justifyContent(FlexAlign.Center)
+          .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 1 })
+          .onAppear(() => {
+            this.ensureAboutInfoLoaded();
+          });
+        }
+        .width('100%')
+        .height('100%')
+        .backgroundColor(this.theme.pageBackgroundColor);
+      }
     }
-    .align(Alignment.Top)
-    .height('100%')
     .width('100%')
-    .scrollBar(BarState.Auto)
-    .onDidScroll((_xOffset: number, _yOffset: number, scrollState: ScrollState) => {
-      const yOffset: number = this.scroller.currentOffset().yOffset;
-      const previous: number = this.scrollY;
-      const delta: number = yOffset - previous;
-      const threshold: number = this.fontSize * 0.6;
-      if (this.isLandscape && scrollState !== ScrollState.Idle && Math.abs(delta) >= threshold) {
-        this.onLandscapeScrollDirection?.(delta > 0 ? 'up' : 'down');
-      }
-      if (previous !== yOffset) {
-        this.scrollY = yOffset;
-      }
-    })
-    .onAppear(() => {
-      const yOffset: number = this.scrollY;
-      this.scroller.scrollTo({ xOffset: 0, yOffset, animation: false });
-    })
-    .backgroundColor(this.theme.pageBackgroundColor);
+    .height('100%');
   }
 }

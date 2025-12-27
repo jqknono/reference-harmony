@@ -56,6 +56,8 @@ struct Index {
   @State private catalogSearchQuery: string = '';
   @State private catalogSearchResults: Array<ReferenceDocSummary> = [];
   @State private showTocPanel: boolean = false;
+  @State private showPrivacyStatement: boolean = false;
+  @State private showAbout: boolean = false;
   @State private searchNavSectionIndex: number = 0;
   @State private pendingTocScrollGroupIndex: number = -1;
   @State private pendingTocScrollItemIndex: number = -1;
@@ -1596,6 +1598,16 @@ struct Index {
       this.showTocPanel = false;
       return true;
     }
+    if (this.currentTabIndex === 3) {
+      if (this.showPrivacyStatement) {
+        this.showPrivacyStatement = false;
+        return true;
+      }
+      if (this.showAbout) {
+        this.showAbout = false;
+        return true;
+      }
+    }
     if (this.currentTabIndex !== 0) {
       this.switchToTab(0);
       return true;
@@ -1767,6 +1779,8 @@ struct Index {
         lang: this.lang,
         isLandscape: this.isLandscape,
         scrollY: this.settingsScrollY,
+        showPrivacyStatement: this.showPrivacyStatement,
+        showAbout: this.showAbout,
         scroller: this.settingsScroller,
         themeId: this.themeId,
         orientationMode: this.orientationMode,
@@ -1925,6 +1939,8 @@ struct Index {
                 lang: this.lang,
                 isLandscape: this.isLandscape,
                 scrollY: this.settingsScrollY,
+                showPrivacyStatement: this.showPrivacyStatement,
+                showAbout: this.showAbout,
                 scroller: this.settingsScroller,
                 themeId: this.themeId,
                 orientationMode: this.orientationMode,
