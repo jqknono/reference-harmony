@@ -2,6 +2,7 @@ import preferences from '@ohos.data.preferences';
 import pasteboard from '@ohos.pasteboard';
 import picker from '@ohos.file.picker';
 import { window } from '@kit.ArkUI';
+import webview from '@ohos.web.webview';
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
 import { getAppThemeTokens } from '../common/appTheme';
@@ -17,7 +18,7 @@ import { peekLaunchParams, takeLaunchParams } from '../common/launchParamsStore'
 import type { LaunchParams } from '../common/launchParamsStore';
 
 import type { SectionWithCards } from './index/types';
-import { CATALOG_DOC_ID_BLACKLIST, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, RECENT_DOC_MAX_COUNT } from './index/constants';
+import { CATALOG_DOC_ID_BLACKLIST, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT } from './index/constants';
 import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens, toHexColorString } from './index/utils';
 import { DocListTab } from './index/DocListTab';
 import { ReadTab } from './index/ReadTab';
@@ -29,6 +30,10 @@ type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
 type ThemePreference = 'light' |'dark' |  'system';
 type ResolvedAppThemeId = 'light' | 'dark';
+
+interface TerminableContext {
+  terminateSelf?: () => Promise<void>;
+}
 
 @Entry
 @Component
@@ -58,6 +63,8 @@ struct Index {
   @State private showTocPanel: boolean = false;
   @State private showPrivacyStatement: boolean = false;
   @State private showAbout: boolean = false;
+  @State private showPrivacyConsentDialog: boolean = false;
+  @State private showPrivacyConsentStatement: boolean = false;
   @State private searchNavSectionIndex: number = 0;
   @State private pendingTocScrollGroupIndex: number = -1;
   @State private pendingTocScrollItemIndex: number = -1;
@@ -86,6 +93,7 @@ struct Index {
   private tocListScroller: ListScroller = new ListScroller();
   private catalogSearchInputController: TextInputController = new TextInputController();
   private docSearchInputController: TextInputController = new TextInputController();
+  private privacyConsentStatementController: webview.WebviewController = new webview.WebviewController();
   private repository: ReferenceRepository | undefined = undefined;
   private openDocRequestId: number = 0;
   @State private fontSize: number = 15;
@@ -498,6 +506,58 @@ struct Index {
     if (this.learningModeEnabled === enabled) return;
     this.learningModeEnabled = enabled;
     await this.saveLearningModeSetting(enabled);
+  }
+
+  private async loadPrivacyConsentSetting(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) {
+      this.showPrivacyConsentDialog = true;
+      return;
+    }
+    const accepted: boolean = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get(PRIVACY_CONSENT_PREF_KEY, false))
+      .then(
+        (v: ValueType): boolean => v === true || v === 'true',
+        (): boolean => false,
+      );
+    this.showPrivacyConsentDialog = !accepted;
+  }
+
+  private async savePrivacyConsentSetting(accepted: boolean): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put(PRIVACY_CONSENT_PREF_KEY, accepted))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  private agreePrivacyConsent(): void {
+    if (!this.showPrivacyConsentDialog) return;
+    this.showPrivacyConsentDialog = false;
+    this.showPrivacyConsentStatement = false;
+    this.savePrivacyConsentSetting(true);
+  }
+
+  private declinePrivacyConsent(): void {
+    // 不同意：保持弹窗不消失；用户可通过系统返回手势退出应用
+    // 点击“取消”应直接退出应用（与常见合规弹窗行为一致）
+    const host: Context | undefined = this.getUIContext().getHostContext();
+    const ctx: TerminableContext | undefined = host as TerminableContext | undefined;
+    if (!ctx || typeof ctx.terminateSelf !== 'function') return;
+    Promise.resolve()
+      .then((): Promise<void> | void => ctx.terminateSelf?.())
+      .then((): void => undefined, (): void => undefined);
   }
 
   private async loadFavoriteAndRecentDocs(): Promise<void> {
@@ -981,6 +1041,7 @@ struct Index {
 
     await this.loadThemeSetting();
     await this.loadLangSetting();
+    await this.loadPrivacyConsentSetting();
     await this.loadOrientationModeSetting();
     await this.loadLearningModeSetting();
     await this.loadFavoriteAndRecentDocs();
@@ -1593,6 +1654,14 @@ struct Index {
   }
 
   onBackPress(): boolean {
+    if (this.showPrivacyConsentDialog) {
+      if (this.showPrivacyConsentStatement) {
+        this.showPrivacyConsentStatement = false;
+        return true;
+      }
+      // 交给系统处理返回手势以退出应用
+      return false;
+    }
     if (this.showTocPanel) {
       this.stopAllTextInputEditing();
       this.showTocPanel = false;
@@ -1626,6 +1695,116 @@ struct Index {
 
   private tabAnimationDuration(): number {
     return 260;
+  }
+
+  @Builder
+  private PrivacyConsentButtons(): void {
+    Row({ space: this.fontSize * 0.8 }) {
+      Text(this.t('取消', 'Cancel'))
+        .layoutWeight(1)
+        .textAlign(TextAlign.Center)
+        .fontSize(this.fontSize * 0.95)
+        .fontColor(this.theme.mutedTextColor)
+        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.55, bottom: this.fontSize * 0.55 })
+        .backgroundColor(this.theme.chipBackgroundColor)
+        .borderRadius(this.fontSize * 0.75)
+        .onClick(() => this.declinePrivacyConsent());
+
+      Text(this.t('同意', 'Agree'))
+        .layoutWeight(1)
+        .textAlign(TextAlign.Center)
+        .fontSize(this.fontSize * 0.95)
+        .fontColor(this.theme.chipSelectedTextColor)
+        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.55, bottom: this.fontSize * 0.55 })
+        .backgroundColor(this.theme.chipSelectedBackgroundColor)
+        .borderRadius(this.fontSize * 0.75)
+        .onClick(() => this.agreePrivacyConsent());
+    }
+    .width('100%')
+    .alignItems(VerticalAlign.Center);
+  }
+
+  @Builder
+  private PrivacyConsentOverlay(): void {
+    if (this.showPrivacyConsentStatement) {
+      Column({ space: 0 }) {
+        Row() {
+          Text(this.t('业务与隐私的声明', 'Business & Privacy Statement'))
+            .fontSize(this.fontSize * 1.05)
+            .fontWeight(FontWeight.Bold)
+            .fontColor(this.theme.titleColor);
+          Blank();
+          Text(this.t('返回', 'Back'))
+            .fontSize(this.fontSize * 0.95)
+            .fontColor(this.theme.accentColor)
+            .onClick(() => {
+              this.showPrivacyConsentStatement = false;
+            });
+        }
+        .width('100%')
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.8 });
+
+        Divider()
+          .color(this.theme.borderColor)
+          .strokeWidth(this.fontSize * 0.07);
+
+        Web({ src: PRIVACY_STATEMENT_URL, controller: this.privacyConsentStatementController })
+          .width('100%')
+          .layoutWeight(1);
+
+        Divider()
+          .color(this.theme.borderColor)
+          .strokeWidth(this.fontSize * 0.07);
+
+        Row() {
+          this.PrivacyConsentButtons();
+        }
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.8, bottom: this.fontSize * 1 });
+      }
+      .width('100%')
+      .height('100%')
+      .backgroundColor(this.theme.pageBackgroundColor);
+    } else {
+      Stack({ alignContent: Alignment.Center }) {
+        Column()
+          .width('100%')
+          .height('100%')
+          .backgroundColor(Color.Black)
+          .opacity(0.35);
+
+        Column({ space: this.fontSize * 0.8 }) {
+          Text(this.t('隐私提示', 'Privacy Notice'))
+            .fontSize(this.fontSize * 1.2)
+            .fontWeight(FontWeight.Bold)
+            .fontColor(this.theme.titleColor);
+
+          Text(this.t(
+            '在你使用本应用前，请阅读并同意《业务与隐私的声明》。在你同意前，我们不会启用可能收集个人信息的功能。',
+            'Before using this app, please read and agree to the Business & Privacy Statement. We will not enable features that may collect personal data before you agree.'
+          ))
+            .fontSize(this.fontSize * 0.9)
+            .fontColor(this.theme.mutedTextColor)
+            .lineHeight(this.fontSize * 1.35);
+
+          Text(this.t('《业务与隐私的声明》', 'Business & Privacy Statement'))
+            .fontSize(this.fontSize * 0.95)
+            .fontColor(this.theme.accentColor)
+            .decoration({ type: TextDecorationType.Underline })
+            .onClick(() => {
+              this.showPrivacyConsentStatement = true;
+            });
+
+          this.PrivacyConsentButtons();
+        }
+        .width(this.isLandscape ? '70%' : '90%')
+        .padding({ left: this.fontSize * 1.1, right: this.fontSize * 1.1, top: this.fontSize * 1.1, bottom: this.fontSize * 1 })
+        .backgroundColor(this.theme.surfaceBackgroundColor)
+        .borderRadius(this.fontSize * 1)
+        .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+      }
+      .width('100%')
+      .height('100%');
+    }
   }
 
   @Builder
@@ -2010,6 +2189,10 @@ struct Index {
             }
           },
         });
+      }
+
+      if (this.showPrivacyConsentDialog) {
+        this.PrivacyConsentOverlay();
       }
     }
     .backgroundColor(this.theme.pageBackgroundColor)

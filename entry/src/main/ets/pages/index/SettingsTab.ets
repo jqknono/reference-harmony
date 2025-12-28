@@ -3,19 +3,16 @@ import type { ReferenceLang } from '../../common/referenceModels';
 import type { OnlineMdLink } from '../../common/onlineMdModels';
 import { openExternalLink } from '../../common/openExternalLink';
 import { formatDocCount } from './utils';
-import { ENABLE_ORIENTATION_MODE_SETTING, SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
+import { ENABLE_ORIENTATION_MODE_SETTING, PRIVACY_STATEMENT_URL, SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
 import webview from '@ohos.web.webview';
 import bundleManager from '@ohos.bundle.bundleManager';
 
 type ThemePreference = 'dark' | 'light' | 'system';
 
-const PRIVACY_STATEMENT_URL: string =
-  'https://agreement-drcn.hispace.dbankcloud.cn/index.html?lang=zh&agreementId=1844306128905764736';
-
 const APP_DISPLAY_NAME_ZH: string = '开发速查';
 const APP_DISPLAY_NAME_EN: string = 'Quick Reference';
-const FALLBACK_VERSION_NAME: string = '0.11.0';
-const FALLBACK_VERSION_CODE: number = 2025122719;
+const FALLBACK_VERSION_NAME: string = '0.12.0';
+const FALLBACK_VERSION_CODE: number = 2025122819;
 const DEVELOPER_NAME: string = '李偲';
 
 interface BundleInfoLike {
