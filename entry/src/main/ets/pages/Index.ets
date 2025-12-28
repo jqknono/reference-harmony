@@ -1779,7 +1779,7 @@ struct Index {
             .fontColor(this.theme.titleColor);
 
           Text(this.t(
-            '在你使用本应用前，请阅读并同意《业务与隐私的声明》。在你同意前，我们不会启用可能收集个人信息的功能。',
+            '在您使用本应用前，请阅读并同意《业务与隐私的声明》。在您同意前，我们不会启用可能收集个人信息的功能。',
             'Before using this app, please read and agree to the Business & Privacy Statement. We will not enable features that may collect personal data before you agree.'
           ))
             .fontSize(this.fontSize * 0.9)
