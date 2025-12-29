@@ -278,7 +278,9 @@ export struct DocListTab {
         }
       }
 
-      if (this.loading) {
+      // 避免在“目录”页点卡片打开文档时插入顶部占位导致页面抖动：
+      // 仅当目录清单本身为空且正在加载时才展示加载提示。
+      if (this.loading && (this.docs.length + this.onlineMdDocs.length + this.localMdDocs.length) === 0) {
         Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor);
       }
 

@@ -18,7 +18,7 @@ import { peekLaunchParams, takeLaunchParams } from '../common/launchParamsStore'
 import type { LaunchParams } from '../common/launchParamsStore';
 
 import type { SectionWithCards } from './index/types';
-import { CATALOG_DOC_ID_BLACKLIST, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT } from './index/constants';
+import { CATALOG_DOC_ID_BLACKLIST, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_PRIVACY_CONSENT_DIALOG, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT } from './index/constants';
 import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens, toHexColorString } from './index/utils';
 import { DocListTab } from './index/DocListTab';
 import { ReadTab } from './index/ReadTab';
@@ -42,8 +42,8 @@ struct Index {
   @State private loading: boolean = false;
   @State private errorText: string = '';
   @State private lang: ReferenceLang = 'zh';
-  @State private themeId: ThemePreference = 'dark';
-  @State private theme: AppThemeTokens = getAppThemeTokens('dark');
+  @State private themeId: ThemePreference = 'system';
+  @State private theme: AppThemeTokens = getAppThemeTokens('light');
   private systemThemeTimer: number = -1;
 
   @State private docs: Array<ReferenceDocSummary> = [];
@@ -311,20 +311,21 @@ struct Index {
       .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
       .then((p: Preferences): Preferences => p, (): undefined => undefined);
     if (!prefs) {
-      this.applyThemePreference('dark');
+      this.applyThemePreference('system');
       return;
     }
     const saved: string = await Promise.resolve()
-      .then((): Promise<ValueType> => prefs.get('theme', 'dark'))
+      .then((): Promise<ValueType> => prefs.get('theme', 'system'))
       .then(
         (value: ValueType): string => (typeof value === 'string' ? value : String(value)),
-        (): string => 'dark',
+        (): string => 'system',
       );
-    const normalizedTheme: ThemePreference = (saved === 'light' || saved === 'reference' || saved === 'coo')
+    const savedText: string = (saved ?? '').trim().toLowerCase();
+    const normalizedTheme: ThemePreference = (savedText === 'light' || savedText === 'reference' || savedText === 'coo')
       ? 'light'
-      : (saved === 'system' ? 'system' : 'dark');
+      : (savedText === 'dark' ? 'dark' : 'system');
     this.applyThemePreference(normalizedTheme);
-    if (saved !== normalizedTheme) {
+    if (savedText !== normalizedTheme) {
       await this.saveThemeSetting(normalizedTheme);
     }
   }
@@ -509,6 +510,11 @@ struct Index {
   }
 
   private async loadPrivacyConsentSetting(): Promise<void> {
+    if (!ENABLE_PRIVACY_CONSENT_DIALOG) {
+      this.showPrivacyConsentDialog = false;
+      this.showPrivacyConsentStatement = false;
+      return;
+    }
     const host = this.getUIContext().getHostContext();
     if (!host) return;
     const prefs: Preferences | undefined = await Promise.resolve()

@@ -2,8 +2,10 @@ export const LAUNCH_ACTION_OPEN_RECENT_DOCS: string = 'openRecentDocs';
 export const RECENT_DOC_MAX_COUNT: number = 3;
 
 // 特性开关（默认关闭）
-export const ENABLE_RECENT_DOCS: boolean = false;
+export const ENABLE_RECENT_DOCS: boolean = true;
 export const ENABLE_ORIENTATION_MODE_SETTING: boolean = false;
+// 首次启动：是否显示隐私确认弹窗（默认不显示）
+export const ENABLE_PRIVACY_CONSENT_DIALOG: boolean = false;
 // 目录清单：是否保留“收藏/最近”在原位置（完整清单）中的入口；默认不保留（避免重复入口）
 export const KEEP_FAVORITE_AND_RECENT_ENTRY_IN_FULL_CATALOG_LIST: boolean = false;
 
