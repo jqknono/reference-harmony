@@ -333,15 +333,17 @@ struct Index {
   private applySystemBarStyle(): void {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
-    const background: string = toHexColorString(this.theme.surfaceBackgroundColor);
-    const content: string = toHexColorString(this.theme.id === 'dark' ? 0xffffff : 0x000000);
+    const statusBarBackground: string = toHexColorString(this.theme.pageBackgroundColor);
+    const statusBarContent: string = toHexColorString(this.theme.id === 'dark' ? 0xffffff : 0x000000);
+    const navigationBarBackground: string = toHexColorString(this.theme.surfaceBackgroundColor);
+    const navigationBarContent: string = toHexColorString(this.theme.id === 'dark' ? 0xffffff : 0x000000);
     Promise.resolve()
       .then((): Promise<window.Window> => window.getLastWindow(host))
       .then((w: window.Window): Promise<void> => w.setWindowSystemBarProperties({
-        statusBarColor: background,
-        statusBarContentColor: content,
-        navigationBarColor: background,
-        navigationBarContentColor: content,
+        statusBarColor: statusBarBackground,
+        statusBarContentColor: statusBarContent,
+        navigationBarColor: navigationBarBackground,
+        navigationBarContentColor: navigationBarContent,
       }))
       .then((): void => undefined, (): void => undefined);
   }
