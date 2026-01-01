@@ -12,7 +12,7 @@ type ThemePreference = 'dark' | 'light' | 'system';
 const APP_DISPLAY_NAME_ZH: string = '开发速查';
 const APP_DISPLAY_NAME_EN: string = 'Quick Reference';
 const FALLBACK_VERSION_NAME: string = '0.15.0';
-const FALLBACK_VERSION_CODE: number = 2025123022;
+const FALLBACK_VERSION_CODE: number = 2026010118;
 const DEVELOPER_NAME: string = '李偲';
 
 interface BundleInfoLike {
