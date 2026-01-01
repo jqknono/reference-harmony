@@ -78,7 +78,7 @@ for (const rel of relFiles) {
 
   rows.push(`
       <tr>
-        <td class="path"><a href="${downloadUrl}" target="_blank" rel="noreferrer">${relUrlPath}</a></td>
+        <td class="path"><a href="${downloadUrl}">${relUrlPath}</a></td>
         <td class="size">${size}</td>
         <td class="mtime">${mtime}</td>
         <td class="action">
@@ -299,5 +299,4 @@ ${rows.map((r) => `              ${r}`).join('\n')}
 
 await writeFile(path.join(DIST_DIR, 'index.html'), html, 'utf8')
 console.log(`已生成：${path.relative(PROJECT_ROOT, path.join(DIST_DIR, 'index.html'))}`)
-
 
