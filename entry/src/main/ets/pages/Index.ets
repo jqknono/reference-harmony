@@ -119,6 +119,7 @@ struct Index {
   @State private onlineMdLinks: Array<OnlineMdLink> = [];
   @State private onlineMdInputUrl: string = '';
   @State private onlineMdParsing: boolean = false;
+  @State private onlineMdUpdatingLinkId: string = '';
   @State private onlineMdParseResult: string = '';
   @State private onlineMdDocs: Array<ReferenceDocSummary> = [];
   @State private onlineMdCopySuccess: boolean = false;
@@ -1261,6 +1262,47 @@ struct Index {
     );
   }
 
+  private async updateOnlineMd(linkId: string): Promise<void> {
+    if (!linkId.trim()) return;
+    if (this.onlineMdUpdatingLinkId) return;
+
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+
+    const link = this.findOnlineMdLink(linkId);
+    const url = (link?.url ?? '').trim();
+    if (!url) return;
+
+    this.onlineMdUpdatingLinkId = linkId;
+    this.onlineMdParseResult = '';
+    try {
+      const result = await this.onlineMdRepository.fetchAndParse(url);
+      const doc = result.doc;
+      if (!result.success || !doc) {
+        this.onlineMdParseResult = this.t(`更新失败:${result.error ?? ''}`, `Update failed: ${result.error ?? ''}`);
+        return;
+      }
+
+      await this.onlineMdRepository.saveDocToCache(host, linkId, doc);
+      this.onlineMdDocCache.set(linkId, doc);
+      await this.rebuildOnlineMdDocs();
+
+      if (this.selectedDocId === linkId) {
+        this.selectedDoc = doc;
+        this.rebuildSectionCards(doc);
+        this.rebuildSearchResults();
+        this.updateQuizAvailableCount();
+      }
+
+      this.onlineMdParseResult = this.t(
+        `更新成功:${doc.name}（${doc.sections.length} 节，${doc.cards.length} 卡）`,
+        `Updated: ${doc.name} (${doc.sections.length} sections, ${doc.cards.length} cards)`
+      );
+    } finally {
+      this.onlineMdUpdatingLinkId = '';
+    }
+  }
+
   private async removeOnlineMd(linkId: string): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
@@ -1976,6 +2018,7 @@ struct Index {
         enDocCount: this.enDocCount,
         onlineMdInputUrl: this.onlineMdInputUrl,
         onlineMdParsing: this.onlineMdParsing,
+        onlineMdUpdatingLinkId: this.onlineMdUpdatingLinkId,
         onlineMdParseResult: this.onlineMdParseResult,
         onlineMdLinks: this.onlineMdLinks,
         onlineMdCopySuccess: this.onlineMdCopySuccess,
@@ -1988,6 +2031,7 @@ struct Index {
         onSwitchTheme: (theme: ThemePreference): void => { this.switchTheme(theme); },
         onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
         onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
+        onUpdateOnlineMd: (linkId: string): void => { this.updateOnlineMd(linkId); },
         onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
         onCopyOnlineMdUrl: (url: string): void => { this.copyOnlineMdUrl(url); },
         onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },
@@ -2136,6 +2180,7 @@ struct Index {
                 enDocCount: this.enDocCount,
                 onlineMdInputUrl: this.onlineMdInputUrl,
                 onlineMdParsing: this.onlineMdParsing,
+                onlineMdUpdatingLinkId: this.onlineMdUpdatingLinkId,
                 onlineMdParseResult: this.onlineMdParseResult,
                 onlineMdLinks: this.onlineMdLinks,
                 onlineMdCopySuccess: this.onlineMdCopySuccess,
@@ -2148,6 +2193,7 @@ struct Index {
                 onSwitchTheme: (theme: ThemePreference): void => { this.switchTheme(theme); },
                 onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
                 onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
+                onUpdateOnlineMd: (linkId: string): void => { this.updateOnlineMd(linkId); },
                 onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
                 onCopyOnlineMdUrl: (url: string): void => { this.copyOnlineMdUrl(url); },
                 onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },

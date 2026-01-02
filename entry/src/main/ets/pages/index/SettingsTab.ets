@@ -11,9 +11,10 @@ type ThemePreference = 'dark' | 'light' | 'system';
 
 const APP_DISPLAY_NAME_ZH: string = '开发速查';
 const APP_DISPLAY_NAME_EN: string = 'Quick Reference';
-const FALLBACK_VERSION_NAME: string = '0.15.0';
-const FALLBACK_VERSION_CODE: number = 2026010220;
+const FALLBACK_VERSION_NAME: string = '0.16.0';
+const FALLBACK_VERSION_CODE: number = 2026010221;
 const DEVELOPER_NAME: string = '李偲';
+const ONLINE_FILE_LIST_URL: string = 'https://reference.jqknono.com/';
 
 interface BundleInfoLike {
   versionName?: string;
@@ -34,6 +35,7 @@ export struct SettingsTab {
 
   @Link onlineMdInputUrl: string;
   @Link onlineMdParsing: boolean;
+  @Link onlineMdUpdatingLinkId: string;
   @Link onlineMdParseResult: string;
   @Link onlineMdLinks: Array<OnlineMdLink>;
   @Link onlineMdCopySuccess: boolean;
@@ -57,6 +59,7 @@ export struct SettingsTab {
   onSwitchTheme?: (theme: ThemePreference) => void;
   onToggleLearningMode?: (enabled: boolean) => void;
   onParseAndAddOnlineMd?: () => void;
+  onUpdateOnlineMd?: (linkId: string) => void;
   onRemoveOnlineMd?: (linkId: string) => void;
   onCopyOnlineMdUrl?: (url: string) => void;
   onImportLocalMarkdown?: () => void;
@@ -258,8 +261,8 @@ export struct SettingsTab {
                 .fontColor(this.theme.mutedTextColor)
                 .fontSize(this.fontSize * 0.95);
               Text(this.t(
-                '输入 Markdown 链接（建议 raw 直链），会自动拆分为记忆卡片；表格可在"测验"中生成题目',
-                'Enter a Markdown URL (prefer raw content URL). It becomes flashcards; tables can generate quiz questions (sample included)'
+                '输入任意 Markdown 在线链接（需 .md/.markdown，建议 raw 直链），会自动拆分为记忆卡片；表格可在"测验"中生成题目',
+                'Enter any online Markdown URL (.md/.markdown; prefer raw content URL). It becomes flashcards; tables can generate quiz questions'
               ))
                 .fontColor(this.theme.mutedTextColor)
                 .fontSize(this.fontSize * 0.75)
@@ -315,6 +318,24 @@ export struct SettingsTab {
               .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, bottom: this.fontSize * 0.5 });
           }
 
+          Column({ space: this.fontSize * 0.15 }) {
+            Text(this.t('示例在线清单列表', 'Sample online list'))
+              .fontSize(this.fontSize * 0.8)
+              .fontColor(this.theme.mutedTextColor);
+            Text(ONLINE_FILE_LIST_URL)
+              .fontColor(this.theme.accentColor)
+              .fontSize(this.fontSize * 0.85)
+              .width('100%')
+              .textAlign(TextAlign.Start)
+              .maxLines(1)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+              .decoration({ type: TextDecorationType.Underline })
+              .onClick(() => openExternalLink(this.getHostContext(), ONLINE_FILE_LIST_URL));
+          }
+          .alignItems(HorizontalAlign.Start)
+          .width('100%')
+          .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, bottom: this.fontSize * 0.5 });
+
           if (this.onlineMdLinks.length > 0) {
             Divider()
               .color(this.theme.borderColor)
@@ -357,6 +378,15 @@ export struct SettingsTab {
                   .layoutWeight(1)
                   .alignItems(HorizontalAlign.Start)
                   .onClick(() => this.onCopyOnlineMdUrl?.(link.url));
+
+                  Text(this.onlineMdUpdatingLinkId === link.id ? this.t('更新中...', 'Updating...') : this.t('更新', 'Update'))
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.onlineMdUpdatingLinkId === link.id ? this.theme.mutedTextColor : this.theme.accentColor)
+                    .padding({ left: this.fontSize * 0.5, right: this.fontSize * 0.5, top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 })
+                    .onClick(() => {
+                      if (this.onlineMdUpdatingLinkId === link.id) return;
+                      this.onUpdateOnlineMd?.(link.id);
+                    });
 
                   Text(this.t('删除', 'Delete'))
                     .fontSize(this.fontSize * 0.8)
