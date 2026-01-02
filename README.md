@@ -1,12 +1,21 @@
 # 开发速查（Quick Reference）- HarmonyOS App
 
+一个将上游「速查表/备忘清单」Markdown 预处理为离线卡片数据，并在 HarmonyOS 上以更适合手机阅读的方式展示的应用。
+
 开源地址: [jqknono/reference-harmony](https://github.com/jqknono/reference-harmony)
 
-一个将上游「速查表/备忘清单」Markdown 预处理为离线卡片数据，并在 HarmonyOS 上以更适合手机阅读的方式展示的应用。
+App 下载地址: [华为应用市场](https://appgallery.huawei.com/app/detail?id=reference.app.jqknono.com)
+
+![AppGallery](assets\https___appgallery.huawei.com_app_detail_id=reference.app.jqknono.com.png)
+
+- [备忘清单文件列表--Github Pages](https://jqknono.github.io/reference-harmony/)
+- [备忘清单文件列表--阿里云托管(大陆用户可访问)](https://reference.jqknono.com/)
+
+> 在线清单列表更新速度优先于 App 内离线内容更新速度, App 内部分清单更新存在延迟, 部分清单可能未包含, 可以使用**添加在线 Markdown 链接**或**导入本地 Markdown 文件**来获得最新内容。
 
 ## 应用介绍
 
-### 应用一句话简介（17个字以内，用于小编推荐）
+### 应用一句话简介（17 个字以内，用于小编推荐）
 
 离线速查+测验，随查随学
 
@@ -121,12 +130,12 @@ node tools/sync_reference_docs.mjs --mode=github
 
 > 本节仅整理华为官方文档要点与链接；实际要求以 AppGallery Connect / 审核政策页面为准。
 
-- **隐私政策（强制）**：创建应用或更新版本时，必须提交 App 隐私政策链接，且需与 App 内隐私政策内容保持一致。参考：[隐私政策链接提交及内容规范参考FAQ](https://developer.huawei.com/consumer/cn/doc/app/50128)
+- **隐私政策（强制）**：创建应用或更新版本时，必须提交 App 隐私政策链接，且需与 App 内隐私政策内容保持一致。参考：[隐私政策链接提交及内容规范参考 FAQ](https://developer.huawei.com/consumer/cn/doc/app/50128)
 - **隐私标签（上架需填写）**：上架应用时需填写应用及第三方组件收集的个人数据项与用途。参考：[AppGallery 隐私标签服务说明](https://developer.huawei.com/consumer/cn/doc/privacy-label)
 - **应用隐私说明（条件触发）**：若检测到涉及敏感隐私权限或受限开放权限，需要在 AGC 填写“应用隐私说明”。参考：[配置隐私说明](https://developer.huawei.com/consumer/cn/doc/app/agc-help-release-app-privacy-desc-0000002313477969)
 - **提交审核流程**：参考：[提交审核（HarmonyOS 5 及以上）](https://developer.huawei.com/consumer/cn/doc/app/agc-help-release-app-submit-0000002286180890)
 - **隐私声明管理（可选参考）**：参考：[FAQ-管理隐私声明](https://developer.huawei.com/consumer/cn/doc/app/agc-help-privacy-policy-faq-0000002342315628)
-- **个人信息保护常见问题（可选参考）**：参考：[APP常见个人信息保护问题FAQ](https://developer.huawei.com/consumer/cn/doc/app/FAQ-faq-09)
+- **个人信息保护常见问题（可选参考）**：参考：[APP 常见个人信息保护问题 FAQ](https://developer.huawei.com/consumer/cn/doc/app/FAQ-faq-09)
 
 ## 官方开发文档（HarmonyOS）
 

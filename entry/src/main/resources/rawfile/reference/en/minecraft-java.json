@@ -1,0 +1,151 @@
+{
+  "id": "minecraft-java",
+  "name": "Minecraft Java Edition",
+  "title": "A comprehensive reference for Minecraft Java Edition (1.20.x) commands.",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Intro",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "Target Selectors",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Core Commands",
+      "startIndex": 3
+    },
+    {
+      "id": "s3",
+      "title": "World Management",
+      "startIndex": 11
+    },
+    {
+      "id": "s4",
+      "title": "Entity & Block Manipulation",
+      "startIndex": 18
+    },
+    {
+      "id": "s5",
+      "title": "Utility Commands",
+      "startIndex": 26
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "Intro",
+      "body": "A comprehensive reference for Minecraft Java Edition (1.20.x) commands."
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "Target Selectors",
+      "body": "| Selector | Description |\n| :--- | :--- |\n| `@p` | Nearest player |\n| `@r` | Random player |\n| `@a` | All players |\n| `@e` | All entities (includes mobs, items, etc.) |\n| `@s` | The entity executing the command (Self) |"
+    },
+    {
+      "id": "s1-2",
+      "sectionId": "s1",
+      "title": "Selector Arguments",
+      "body": "| Argument | Example | Description |\n| :--- | :--- | :--- |\n| `type` | `@e[type=skeleton]` | Selects entities of a specific type |\n| `distance` | `@a[distance=..10]` | Selects within a radius (10 blocks) |\n| `limit` | `@e[limit=1]` | Limits the number of targets selected |\n| `sort` | `@a[sort=nearest]` | Sorts selection (nearest, furthest, random, arbitrary) |\n| `gamemode` | `@a[gamemode=creative]` | Selects players in a specific gamemode |\n| `level` | `@a[level=30..]` | Selects players with XP level 30 or higher |"
+    },
+    {
+      "id": "s2-3",
+      "sectionId": "s2",
+      "title": "Teleport (/tp)",
+      "body": "Used to teleport entities to specific locations or other entities.\n\n```mcfunction\n# Teleport yourself to coordinates\n/tp @s 100 64 -200\n\n# Teleport yourself to another player\n/tp @s PlayerName\n\n# Teleport a specific player to you\n/tp PlayerName @s\n\n# Teleport relative to current position (~ is relative)\n/tp @s ~ ~10 ~  (Moves 10 blocks up)\n\n# Teleport with rotation (yaw pitch)\n/tp @s ~ ~ ~ 90 0 (Faces South)\n```"
+    },
+    {
+      "id": "s2-5",
+      "sectionId": "s2",
+      "title": "Game%20Mode%20(%2Fgamemode)",
+      "body": "Changes%20the%20player's%20game%20mode.%0A%0A%60%60%60mcfunction%0A%23%20Survival%20Mode%0A%2Fgamemode%20survival%0A%0A%23%20Creative%20Mode%0A%2Fgamemode%20creative%0A%0A%23%20Adventure%20Mode%0A%2Fgamemode%20adventure%0A%0A%23%20Spectator%20Mode%0A%2Fgamemode%20spectator%0A%0A%23%20Apply%20to%20other%20players%0A%2Fgamemode%20creative%20%40a%5Bdistance%3D..20%5D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-7",
+      "sectionId": "s2",
+      "title": "Give Items (/give)",
+      "body": "Gives items to players.\n\n```mcfunction\n# Give a diamond sword\n/give @s diamond_sword\n\n# Give 64 stone\n/give @s stone 64\n\n# Give item with NBT data (Unbreakable diamond pickaxe)\n/give @s diamond_pickaxe{Unbreakable:1b}\n```"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "Experience (/xp or /experience)",
+      "body": "Adds or removes experience points/levels.\n\n```mcfunction\n# Add 5 levels\n/xp add @s 5 levels\n\n# Add 100 points\n/xp add @s 100 points\n\n# Query current level\n/xp query @s levels\n```"
+    },
+    {
+      "id": "s3-11",
+      "sectionId": "s3",
+      "title": "Time (/time)",
+      "body": "Sets or queries the world time.\n\n```mcfunction\n# Set to day (1000 ticks)\n/time set day\n\n# Set to night (13000 ticks)\n/time set night\n\n# Set to noon (6000 ticks)\n/time set noon\n\n# Set to midnight (18000 ticks)\n/time set midnight\n\n# Add time (skip forward)\n/time add 5000\n```"
+    },
+    {
+      "id": "s3-13",
+      "sectionId": "s3",
+      "title": "Weather (/weather)",
+      "body": "Changes the weather.\n\n```mcfunction\n# Clear weather\n/weather clear\n\n# Rain\n/weather rain\n\n# Thunderstorm\n/weather thunder\n\n# Set duration (in seconds)\n/weather clear 600\n```"
+    },
+    {
+      "id": "s3-15",
+      "sectionId": "s3",
+      "title": "Gamerules%20(%2Fgamerule)",
+      "body": "Sets%20various%20rules%20for%20the%20world.%0A%0A%7C%20Rule%20%7C%20Description%20%7C%0A%7C%20%3A---%20%7C%20%3A---%20%7C%0A%7C%20%60keepInventory%60%20%7C%20If%20true%2C%20players%20keep%20items%20on%20death%20%7C%0A%7C%20%60doDaylightCycle%60%20%7C%20If%20false%2C%20time%20is%20frozen%20%7C%0A%7C%20%60doMobSpawning%60%20%7C%20If%20false%2C%20mobs%20won't%20spawn%20naturally%20%7C%0A%7C%20%60mobGriefing%60%20%7C%20If%20false%2C%20creepers%2Fendermen%20won't%20destroy%20blocks%20%7C%0A%7C%20%60doWeatherCycle%60%20%7C%20If%20false%2C%20weather%20never%20changes%20%7C%0A%7C%20%60commandBlockOutput%60%20%7C%20If%20false%2C%20command%20blocks%20don't%20spam%20chat%20%7C%0A%0A%60%60%60mcfunction%0A%23%20Enable%20keep%20inventory%0A%2Fgamerule%20keepInventory%20true%0A%0A%23%20Disable%20phantom%20spawning%0A%2Fgamerule%20doInsomnia%20false%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s4-18",
+      "sectionId": "s4",
+      "title": "Effect (/effect)",
+      "body": "Manages status effects on entities.\n\n```mcfunction\n# Give Speed II for 30 seconds\n/effect give @s speed 30 1\n\n# Give Night Vision infinitely (hide particles)\n/effect give @s night_vision infinite 0 true\n\n# Clear all effects\n/effect clear @s\n```"
+    },
+    {
+      "id": "s4-20",
+      "sectionId": "s4",
+      "title": "Fill (/fill)",
+      "body": "Fills a region with a specific block.\n\n```mcfunction\n# Fill a 10x10x10 cube with stone\n/fill ~ ~ ~ ~10 ~10 ~10 stone\n\n# Replace only water with air (drain)\n/fill ~-5 ~-5 ~-5 ~5 ~5 ~5 air replace water\n\n# Create a hollow box of glass\n/fill ~ ~ ~ ~5 ~5 ~5 glass outline\n```"
+    },
+    {
+      "id": "s4-22",
+      "sectionId": "s4",
+      "title": "Setblock (/setblock)",
+      "body": "Changes a single block.\n\n```mcfunction\n# Place a torch at current location\n/setblock ~ ~ ~ torch\n\n# Destroy the block (drop item) and place stone\n/setblock ~ ~-1 ~ stone destroy\n```"
+    },
+    {
+      "id": "s4-24",
+      "sectionId": "s4",
+      "title": "Enchant (/enchant)",
+      "body": "Enchants the item currently held.\n\n```mcfunction\n# Add Sharpness V\n/enchant @s sharpness 5\n\n# Add Fortune III\n/enchant @s fortune 3\n```"
+    },
+    {
+      "id": "s5-26",
+      "sectionId": "s5",
+      "title": "Locate (/locate)",
+      "body": "Finds the nearest structure or biome.\n\n```mcfunction\n# Find nearest village\n/locate structure village\n\n# Find nearest cherry grove\n/locate biome cherry_grove\n```"
+    },
+    {
+      "id": "s5-28",
+      "sectionId": "s5",
+      "title": "Kill (/kill)",
+      "body": "Removes entities.\n\n```mcfunction\n# Kill yourself\n/kill @s\n\n# Kill all slimes\n/kill @e[type=slime]\n\n# Kill all items on the ground (cleanup)\n/kill @e[type=item]\n```"
+    },
+    {
+      "id": "s5-30",
+      "sectionId": "s5",
+      "title": "Seed (/seed)",
+      "body": "Displays the world seed.\n\n```mcfunction\n/seed\n```"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/Fechin/reference",
+    "path": "source/_posts/minecraft-java.md",
+    "ref": "main",
+    "url": "https://github.com/Fechin/reference/tree/main/source/_posts/minecraft-java.md",
+    "lang": "en",
+    "mode": "local"
+  }
+}
