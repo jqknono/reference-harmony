@@ -11,6 +11,16 @@ export const KEEP_FAVORITE_AND_RECENT_ENTRY_IN_FULL_CATALOG_LIST: boolean = fals
 
 export const SHOW_IMPORT_MARKDOWN_URL_SETTING: boolean = true;
 
+// 引导评价
+export const ENABLE_APP_REVIEW_PROMPT: boolean = true;
+export const APP_REVIEW_PREF_KEY_DO_NOT_ASK: string = 'appReviewDoNotAsk';
+export const APP_REVIEW_PREF_KEY_LAUNCH_COUNT: string = 'appReviewLaunchCount';
+export const APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT: string = 'appReviewFirstLaunchAt';
+export const APP_REVIEW_PREF_KEY_LAST_PROMPT_AT: string = 'appReviewLastPromptAt';
+export const APP_REVIEW_MIN_LAUNCH_COUNT: number = 6;
+export const APP_REVIEW_MIN_DAYS_SINCE_FIRST_LAUNCH: number = 2;
+export const APP_REVIEW_PROMPT_COOLDOWN_DAYS: number = 30;
+
 // 隐私声明（AGC 隐私声明管理生成的页面）
 export const PRIVACY_STATEMENT_URL: string =
   'https://agreement-drcn.hispace.dbankcloud.cn/index.html?lang=zh&agreementId=1844306128905764736';
@@ -27,5 +37,4 @@ export const PRIVACY_CONSENT_PREF_KEY: string = 'privacyConsentAccepted';
 export const CATALOG_DOC_ID_BLACKLIST: ReadonlySet<string> = new Set<string>([
   'colors-named',
 ]);
-
 

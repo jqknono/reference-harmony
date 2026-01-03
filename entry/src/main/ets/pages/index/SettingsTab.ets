@@ -11,8 +11,8 @@ type ThemePreference = 'dark' | 'light' | 'system';
 
 const APP_DISPLAY_NAME_ZH: string = '开发速查';
 const APP_DISPLAY_NAME_EN: string = 'Quick Reference';
-const FALLBACK_VERSION_NAME: string = '0.16.0';
-const FALLBACK_VERSION_CODE: number = 2026010221;
+const FALLBACK_VERSION_NAME: string = '0.17.0';
+const FALLBACK_VERSION_CODE: number = 2026010323;
 const DEVELOPER_NAME: string = '李偲';
 const ONLINE_FILE_LIST_URL: string = 'https://reference.jqknono.com/';
 
@@ -65,6 +65,7 @@ export struct SettingsTab {
   onImportLocalMarkdown?: () => void;
   onRemoveLocalMd?: (linkId: string) => void;
   onCopyLocalMdUri?: (uri: string) => void;
+  onRequestAppReview?: () => void;
   onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
 
   private getHostContext(): Context | undefined {
@@ -318,22 +319,25 @@ export struct SettingsTab {
               .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, bottom: this.fontSize * 0.5 });
           }
 
-          Column({ space: this.fontSize * 0.15 }) {
-            Text(this.t('示例在线清单列表', 'Sample online list'))
+          Row({ space: this.fontSize * 0.4 }) {
+            Text(this.t('在线清单示例:', 'Sample online list:'))
               .fontSize(this.fontSize * 0.8)
-              .fontColor(this.theme.mutedTextColor);
+              .fontColor(this.theme.mutedTextColor)
+              .maxLines(1)
+              .textOverflow({ overflow: TextOverflow.Clip });
+
             Text(ONLINE_FILE_LIST_URL)
+              .layoutWeight(1)
               .fontColor(this.theme.accentColor)
               .fontSize(this.fontSize * 0.85)
-              .width('100%')
               .textAlign(TextAlign.Start)
               .maxLines(1)
               .textOverflow({ overflow: TextOverflow.Ellipsis })
               .decoration({ type: TextDecorationType.Underline })
               .onClick(() => openExternalLink(this.getHostContext(), ONLINE_FILE_LIST_URL));
           }
-          .alignItems(HorizontalAlign.Start)
           .width('100%')
+          .alignItems(VerticalAlign.Center)
           .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, bottom: this.fontSize * 0.5 });
 
           if (this.onlineMdLinks.length > 0) {
@@ -764,6 +768,35 @@ export struct SettingsTab {
             }
             .width('100%')
             .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.9, bottom: this.fontSize * 0.9 })
+            .backgroundColor(this.theme.surfaceBackgroundColor)
+            .borderRadius(this.fontSize * 0.8)
+            .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+
+            Column({ space: 0 }) {
+              Row() {
+                Column({ space: this.fontSize * 0.2 }) {
+                  Text(this.t('给个好评', 'Rate this app'))
+                    .fontColor(this.theme.mutedTextColor)
+                    .fontSize(this.fontSize * 0.95);
+                }
+                .layoutWeight(1)
+                .alignItems(HorizontalAlign.Start);
+
+                Text('>')
+                  .fontSize(this.fontSize * 1.4)
+                  .fontColor(this.theme.mutedTextColor)
+                  .opacity(0.65);
+              }
+              .width('100%')
+              .alignItems(VerticalAlign.Center)
+              .justifyContent(FlexAlign.SpaceBetween)
+              .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+              .onClick(() => {
+                this.showAbout = false;
+                this.onRequestAppReview?.();
+              });
+            }
+            .width('100%')
             .backgroundColor(this.theme.surfaceBackgroundColor)
             .borderRadius(this.fontSize * 0.8)
             .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });

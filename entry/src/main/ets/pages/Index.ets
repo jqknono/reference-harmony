@@ -3,6 +3,7 @@ import pasteboard from '@ohos.pasteboard';
 import picker from '@ohos.file.picker';
 import { window } from '@kit.ArkUI';
 import webview from '@ohos.web.webview';
+import bundleManager from '@ohos.bundle.bundleManager';
 import { ReferenceRepository } from '../common/referenceRepository';
 import type { ReferenceCardData, ReferenceDoc, ReferenceDocSummary, ReferenceLang, ReferenceManifest, ReferenceSection } from '../common/referenceModels';
 import { getAppThemeTokens } from '../common/appTheme';
@@ -16,9 +17,10 @@ import { LocalMdRepository } from '../common/localMdRepository';
 import type { OnlineMdLink } from '../common/onlineMdModels';
 import { peekLaunchParams, takeLaunchParams } from '../common/launchParamsStore';
 import type { LaunchParams } from '../common/launchParamsStore';
+import { requestAppReview } from '../common/appReview';
 
 import type { SectionWithCards } from './index/types';
-import { CATALOG_DOC_ID_BLACKLIST, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_PRIVACY_CONSENT_DIALOG, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT } from './index/constants';
+import { APP_REVIEW_MIN_DAYS_SINCE_FIRST_LAUNCH, APP_REVIEW_MIN_LAUNCH_COUNT, APP_REVIEW_PREF_KEY_DO_NOT_ASK, APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, APP_REVIEW_PREF_KEY_LAUNCH_COUNT, APP_REVIEW_PROMPT_COOLDOWN_DAYS, CATALOG_DOC_ID_BLACKLIST, ENABLE_APP_REVIEW_PROMPT, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_PRIVACY_CONSENT_DIALOG, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT } from './index/constants';
 import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens, toHexColorString } from './index/utils';
 import { DocListTab } from './index/DocListTab';
 import { ReadTab } from './index/ReadTab';
@@ -33,6 +35,11 @@ type ResolvedAppThemeId = 'light' | 'dark';
 
 interface TerminableContext {
   terminateSelf?: () => Promise<void>;
+}
+
+interface BundleInfoLike {
+  bundleName?: string;
+  name?: string;
 }
 
 @Entry
@@ -63,6 +70,7 @@ struct Index {
   @State private showTocPanel: boolean = false;
   @State private showPrivacyStatement: boolean = false;
   @State private showAbout: boolean = false;
+  @State private showAppReviewPrompt: boolean = false;
   @State private showPrivacyConsentDialog: boolean = false;
   @State private showPrivacyConsentStatement: boolean = false;
   @State private searchNavSectionIndex: number = 0;
@@ -1060,6 +1068,128 @@ struct Index {
     await this.loadOnlineMdLinks();
     await this.loadLocalMdLinks();
     await this.consumeNotificationLaunchIfAny();
+    await this.recordLaunchAndMaybePromptForReview();
+  }
+
+  private async loadAppReviewPrefs(): Promise<Preferences | undefined> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return undefined;
+    try {
+      return await preferences.getPreferences(host, 'settings');
+    } catch (_) {
+      return undefined;
+    }
+  }
+
+  private async getSelfBundleName(): Promise<string> {
+    try {
+      const info = (await bundleManager.getBundleInfoForSelf(0)) as BundleInfoLike;
+      const bundleName: string = typeof info?.bundleName === 'string' ? info.bundleName.trim() : '';
+      if (bundleName) return bundleName;
+      const name: string = typeof info?.name === 'string' ? info.name.trim() : '';
+      return name;
+    } catch (_) {
+      return '';
+    }
+  }
+
+  private async setAppReviewDoNotAsk(doNotAsk: boolean): Promise<void> {
+    const prefs = await this.loadAppReviewPrefs();
+    if (!prefs) return;
+    try {
+      await prefs.put(APP_REVIEW_PREF_KEY_DO_NOT_ASK, doNotAsk);
+      await prefs.flush();
+    } catch (_) {
+      // ignore
+    }
+  }
+
+  private async requestAppReviewFromUserAction(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+
+    const bundleName: string = await this.getSelfBundleName();
+    const result = await requestAppReview(host, bundleName);
+    if (result !== 'failed') {
+      await this.setAppReviewDoNotAsk(true);
+    }
+  }
+
+  private async recordLaunchAndMaybePromptForReview(): Promise<void> {
+    if (!ENABLE_APP_REVIEW_PROMPT) return;
+    if (this.showPrivacyConsentDialog) return;
+
+    const prefs = await this.loadAppReviewPrefs();
+    if (!prefs) return;
+
+    const now: number = Date.now();
+    const toNumber = (value: ValueType, fallback: number): number => {
+      if (typeof value === 'number') return value;
+      if (typeof value === 'string') {
+        const n = Number(value);
+        return Number.isFinite(n) ? n : fallback;
+      }
+      if (typeof value === 'boolean') return value ? 1 : 0;
+      return fallback;
+    };
+    const toBool = (value: ValueType, fallback: boolean): boolean => {
+      if (typeof value === 'boolean') return value;
+      if (typeof value === 'number') return value !== 0;
+      if (typeof value === 'string') return value === 'true' || value === '1';
+      return fallback;
+    };
+
+    const doNotAsk: boolean = toBool(await prefs.get(APP_REVIEW_PREF_KEY_DO_NOT_ASK, false), false);
+    if (doNotAsk) return;
+
+    let firstLaunchAt: number = toNumber(await prefs.get(APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, 0), 0);
+    if (firstLaunchAt <= 0) {
+      firstLaunchAt = now;
+      try {
+        await prefs.put(APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, firstLaunchAt);
+      } catch (_) {
+        // ignore
+      }
+    }
+
+    let launchCount: number = toNumber(await prefs.get(APP_REVIEW_PREF_KEY_LAUNCH_COUNT, 0), 0);
+    launchCount = Math.max(0, launchCount) + 1;
+    try {
+      await prefs.put(APP_REVIEW_PREF_KEY_LAUNCH_COUNT, launchCount);
+    } catch (_) {
+      // ignore
+    }
+
+    const lastPromptAt: number = toNumber(await prefs.get(APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, 0), 0);
+    const cooldownMs: number = APP_REVIEW_PROMPT_COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
+    if (lastPromptAt > 0 && now - lastPromptAt < cooldownMs) {
+      try {
+        await prefs.flush();
+      } catch (_) {
+        // ignore
+      }
+      return;
+    }
+
+    const minDaysMs: number = APP_REVIEW_MIN_DAYS_SINCE_FIRST_LAUNCH * 24 * 60 * 60 * 1000;
+    const eligible: boolean = launchCount >= APP_REVIEW_MIN_LAUNCH_COUNT && now - firstLaunchAt >= minDaysMs;
+    if (!eligible) {
+      try {
+        await prefs.flush();
+      } catch (_) {
+        // ignore
+      }
+      return;
+    }
+
+    try {
+      await prefs.put(APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, now);
+      await prefs.flush();
+    } catch (_) {
+      // ignore
+    }
+
+    this.showAppReviewPrompt = true;
   }
 
   private async loadQuizRecord(): Promise<void> {
@@ -1704,6 +1834,10 @@ struct Index {
   }
 
   onBackPress(): boolean {
+    if (this.showAppReviewPrompt) {
+      this.showAppReviewPrompt = false;
+      return true;
+    }
     if (this.showPrivacyConsentDialog) {
       if (this.showPrivacyConsentStatement) {
         this.showPrivacyConsentStatement = false;
@@ -1855,6 +1989,77 @@ struct Index {
       .width('100%')
       .height('100%');
     }
+  }
+
+  @Builder
+  private AppReviewOverlay(): void {
+    Stack({ alignContent: Alignment.Center }) {
+      Column()
+        .width('100%')
+        .height('100%')
+        .backgroundColor(Color.Black)
+        .opacity(0.35);
+
+      Column({ space: this.fontSize * 0.8 }) {
+        Text(this.t('喜欢这个应用吗？', 'Enjoying the app?'))
+          .fontSize(this.fontSize * 1.2)
+          .fontWeight(FontWeight.Bold)
+          .fontColor(this.theme.titleColor);
+
+        Text(this.t(
+          '如果对你有帮助，欢迎在应用市场给个好评，支持我们持续改进。',
+          'If it helps, a quick rating in the app store would mean a lot.'
+        ))
+          .fontSize(this.fontSize * 0.9)
+          .fontColor(this.theme.mutedTextColor)
+          .lineHeight(this.fontSize * 1.35);
+
+        Text(this.t('不再提示', "Don't ask again"))
+          .fontSize(this.fontSize * 0.9)
+          .fontColor(this.theme.accentColor)
+          .decoration({ type: TextDecorationType.Underline })
+          .onClick(() => {
+            this.showAppReviewPrompt = false;
+            this.setAppReviewDoNotAsk(true);
+          });
+
+        Row({ space: this.fontSize * 0.8 }) {
+          Text(this.t('稍后', 'Later'))
+            .layoutWeight(1)
+            .textAlign(TextAlign.Center)
+            .fontSize(this.fontSize * 0.95)
+            .fontColor(this.theme.mutedTextColor)
+            .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.55, bottom: this.fontSize * 0.55 })
+            .backgroundColor(this.theme.chipBackgroundColor)
+            .borderRadius(this.fontSize * 0.75)
+            .onClick(() => {
+              this.showAppReviewPrompt = false;
+            });
+
+          Text(this.t('去评价', 'Rate now'))
+            .layoutWeight(1)
+            .textAlign(TextAlign.Center)
+            .fontSize(this.fontSize * 0.95)
+            .fontColor(this.theme.chipSelectedTextColor)
+            .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.55, bottom: this.fontSize * 0.55 })
+            .backgroundColor(this.theme.chipSelectedBackgroundColor)
+            .borderRadius(this.fontSize * 0.75)
+            .onClick(() => {
+              this.showAppReviewPrompt = false;
+              this.requestAppReviewFromUserAction();
+            });
+        }
+        .width('100%')
+        .alignItems(VerticalAlign.Center);
+      }
+      .width(this.isLandscape ? '70%' : '90%')
+      .padding({ left: this.fontSize * 1.1, right: this.fontSize * 1.1, top: this.fontSize * 1.1, bottom: this.fontSize * 1 })
+      .backgroundColor(this.theme.surfaceBackgroundColor)
+      .borderRadius(this.fontSize * 1)
+      .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+    }
+    .width('100%')
+    .height('100%');
   }
 
   @Builder
@@ -2037,6 +2242,7 @@ struct Index {
         onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },
         onRemoveLocalMd: (linkId: string): void => { this.removeLocalMd(linkId); },
         onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
+        onRequestAppReview: (): void => { this.requestAppReviewFromUserAction(); },
         onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
       });
     }
@@ -2199,6 +2405,7 @@ struct Index {
                 onImportLocalMarkdown: (): void => { this.importLocalMarkdown(); },
                 onRemoveLocalMd: (linkId: string): void => { this.removeLocalMd(linkId); },
                 onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
+                onRequestAppReview: (): void => { this.requestAppReviewFromUserAction(); },
                 onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
               });
             }
@@ -2243,6 +2450,10 @@ struct Index {
             }
           },
         });
+      }
+
+      if (this.showAppReviewPrompt && !this.showPrivacyConsentDialog) {
+        this.AppReviewOverlay();
       }
 
       if (this.showPrivacyConsentDialog) {
