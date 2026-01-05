@@ -118,6 +118,10 @@ function stripMarkdownFormatting(text: string): string {
   result = result.replace(/_([^_]+)_/g, '$1');
   // 移除链接，保留文本
   result = result.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  // Some sources use literal "\\n" inside table cells for line breaks.
+  result = result.replace(/\\n[ \t]*/g, '\n');
+  // Common HTML line break in markdown.
+  result = result.replace(/<br\s*\/?>/gi, '\n');
   return result.trim();
 }
 
@@ -342,4 +346,3 @@ export function calculateScore(correctCount: number, totalCount: number): number
   if (totalCount <= 0) return 0;
   return Math.round((correctCount / totalCount) * 100);
 }
-

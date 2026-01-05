@@ -1,7 +1,7 @@
 import preferences from '@ohos.data.preferences';
 import pasteboard from '@ohos.pasteboard';
 import picker from '@ohos.file.picker';
-import { window } from '@kit.ArkUI';
+import { window, font } from '@kit.ArkUI';
 import webview from '@ohos.web.webview';
 import bundleManager from '@ohos.bundle.bundleManager';
 import { ReferenceRepository } from '../common/referenceRepository';
@@ -41,6 +41,9 @@ interface BundleInfoLike {
   bundleName?: string;
   name?: string;
 }
+
+const LANDSCAPE_AUTO_HIDE_TABBAR_ASPECT_RATIO_THRESHOLD: number = 16 / 10;
+const FONT_AWESOME_SOLID_FAMILY: string = 'FontAwesomeSolid';
 
 @Entry
 @Component
@@ -104,10 +107,14 @@ struct Index {
   private privacyConsentStatementController: webview.WebviewController = new webview.WebviewController();
   private repository: ReferenceRepository | undefined = undefined;
   private openDocRequestId: number = 0;
+  private rootWidth: number = 0;
+  private rootHeight: number = 0;
+  private fontAwesomeRegistered: boolean = false;
   @State private fontSize: number = 15;
-  @State private orientationMode: 'portrait' | 'landscape' | 'auto' = 'portrait';
+  @State private orientationMode: 'portrait' | 'landscape' | 'auto' = 'auto';
   @State private isLandscape: boolean = false;
   @State private landscapeTabBarVisible: boolean = false;
+  @State private landscapeTabBarPinned: boolean = false;
   @State private learningModeEnabled: boolean = false;
 
   // 测验相关状态
@@ -195,17 +202,51 @@ struct Index {
   private updateLandscapeFromArea(area: Area): void {
     const width: number = lengthToNumber(area.width);
     const height: number = lengthToNumber(area.height);
-    const next: boolean = height > 0 && width > height;
-    if (this.isLandscape !== next) {
-      this.isLandscape = next;
-      if (!next && this.landscapeTabBarVisible) {
-        this.landscapeTabBarVisible = false;
-      }
+    this.rootWidth = width;
+    this.rootHeight = height;
+    const nextLandscape: boolean = height > 0 && width > height;
+    const nextPinned: boolean = nextLandscape ? this.resolveLandscapeTabBarPinned(width, height) : false;
+
+    const wasLandscape: boolean = this.isLandscape;
+    const wasPinned: boolean = this.landscapeTabBarPinned;
+
+    if (this.isLandscape !== nextLandscape) {
+      this.isLandscape = nextLandscape;
     }
+    if (this.landscapeTabBarPinned !== nextPinned) {
+      this.landscapeTabBarPinned = nextPinned;
+    }
+
+    if (!nextLandscape) {
+      if (this.landscapeTabBarVisible) this.landscapeTabBarVisible = false;
+      if (this.landscapeTabBarPinned) this.landscapeTabBarPinned = false;
+      return;
+    }
+
+    if (nextPinned) {
+      if (!this.landscapeTabBarVisible) this.landscapeTabBarVisible = true;
+      return;
+    }
+
+    // Wide main-content area: default to hidden (user can reveal by scrolling down).
+    if ((!wasLandscape || wasPinned) && this.landscapeTabBarVisible) {
+      this.landscapeTabBarVisible = false;
+    }
+  }
+
+  private resolveLandscapeTabBarPinned(rootWidth: number, rootHeight: number): boolean {
+    const sideMargin: number = this.fontSize * 1.5;
+    const contentWidth: number = Math.max(1, rootWidth - sideMargin * 2);
+    const ratio: number = contentWidth / Math.max(1, rootHeight);
+    return ratio <= LANDSCAPE_AUTO_HIDE_TABBAR_ASPECT_RATIO_THRESHOLD;
   }
 
   private setLandscapeTabBarVisible(visible: boolean): void {
     if (!this.isLandscape) return;
+    if (this.landscapeTabBarPinned) {
+      if (!this.landscapeTabBarVisible) this.landscapeTabBarVisible = true;
+      return;
+    }
     if (this.landscapeTabBarVisible === visible) return;
     const uiContext = this.getUIContext?.();
     if (uiContext && typeof uiContext.animateTo === 'function') {
@@ -222,6 +263,7 @@ struct Index {
 
   private handleLandscapeContentScroll(direction: 'up' | 'down'): void {
     if (!this.isLandscape) return;
+    if (this.landscapeTabBarPinned) return;
     if (direction === 'down') {
       this.setLandscapeTabBarVisible(true);
       return;
@@ -417,14 +459,14 @@ struct Index {
       .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
       .then((p: Preferences): Preferences => p, (): undefined => undefined);
     if (!prefs) {
-      this.orientationMode = 'portrait';
+      this.orientationMode = 'auto';
       return;
     }
     const saved: string = await Promise.resolve()
-      .then((): Promise<ValueType> => prefs.get('orientationMode', 'portrait'))
+      .then((): Promise<ValueType> => prefs.get('orientationMode', 'auto'))
       .then(
         (value: ValueType): string => (typeof value === 'string' ? value : String(value)),
-        (): string => 'portrait',
+        (): string => 'auto',
       );
     if (saved === 'landscape' || saved === 'auto') {
       this.orientationMode = saved;
@@ -1052,6 +1094,8 @@ struct Index {
   }
 
   async aboutToAppear(): Promise<void> {
+    this.ensureFontAwesomeRegistered();
+
     const launchParams: LaunchParams | undefined = peekLaunchParams();
     const launchAction: string = launchParams?.launchAction ?? '';
     const skipAutoOpenFirst: boolean = launchAction === LAUNCH_ACTION_OPEN_RECENT_DOCS;
@@ -1877,6 +1921,43 @@ struct Index {
     return this.t('设置', 'Settings');
   }
 
+  private ensureFontAwesomeRegistered(): void {
+    if (this.fontAwesomeRegistered) return;
+    this.fontAwesomeRegistered = true;
+    try {
+      font.registerFont({
+        familyName: FONT_AWESOME_SOLID_FAMILY,
+        familySrc: $rawfile('fonts/fa-solid-900.ttf'),
+      });
+    } catch (_) {
+      // ignore
+    }
+  }
+
+  private getTabIconText(index: number): string {
+    // Font Awesome Free (Solid) unicode values.
+    if (index === 0) return '\uF03A'; // list
+    if (index === 1) return '\uF02D'; // book
+    if (index === 2) return '\uF059'; // question-circle
+    return '\uF013'; // gear
+  }
+
+  private tabIconSize(): number {
+    return this.isLandscape ? this.fontSize * 1.1 : this.fontSize * 1.2;
+  }
+
+  private tabLabelFontSize(): number {
+    return this.isLandscape ? this.fontSize * 0.95 : this.fontSize * 0.75;
+  }
+
+  private tabItemVerticalPadding(): number {
+    return this.isLandscape ? this.fontSize * 0.35 : this.fontSize * 0.45;
+  }
+
+  private tabIconLabelGap(): number {
+    return this.isLandscape ? this.fontSize * 0.55 : this.fontSize * 0.25;
+  }
+
   private tabAnimationDuration(): number {
     return 260;
   }
@@ -2065,18 +2146,47 @@ struct Index {
   @Builder
   private TabBarItem(index: number): void {
     Column() {
-      Text(this.getTabLabel(index))
-        .width('100%')
-        .fontSize(this.fontSize * 1)
-        .maxLines(2)
-        .textOverflow({ overflow: TextOverflow.Clip })
-        .textAlign(TextAlign.Center)
-        .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
-        .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
+      if (this.isLandscape) {
+      Row({ space: this.tabIconLabelGap() }) {
+        Text(this.getTabIconText(index))
+          .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+          .fontSize(this.tabIconSize())
+          .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor);
+
+        Text(this.getTabLabel(index))
+          .fontSize(this.tabLabelFontSize())
+          .maxLines(1)
+          .textOverflow({ overflow: TextOverflow.Clip })
+          .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
+          .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.Center)
+      .alignItems(VerticalAlign.Center);
+    } else {
+      Column({ space: this.tabIconLabelGap() }) {
+        Text(this.getTabIconText(index))
+          .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+          .fontSize(this.tabIconSize())
+          .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor);
+
+        Text(this.getTabLabel(index))
+          .width('100%')
+          .fontSize(this.tabLabelFontSize())
+          .maxLines(2)
+          .textOverflow({ overflow: TextOverflow.Clip })
+          .textAlign(TextAlign.Center)
+          .fontColor(this.currentTabIndex === index ? this.theme.accentColor : this.theme.mutedTextColor)
+          .fontWeight(this.currentTabIndex === index ? FontWeight.Medium : FontWeight.Normal);
+      }
+      .width('100%')
+      .alignItems(HorizontalAlign.Center);
     }
+    }
+    .width('100%')
     .layoutWeight(1)
     // 让每个 Tab item 占满等宽区域，避免左右 padding 吃掉可用宽度导致标题截断
-    .padding({ top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
+    .padding({ top: this.tabItemVerticalPadding(), bottom: this.tabItemVerticalPadding() })
     .onClick((): void => {
       if (this.currentTabIndex === index) return;
       this.stopAllTextInputEditing();
@@ -2086,7 +2196,11 @@ struct Index {
 
   @Builder
   private BottomTabBar(): void {
-    Stack({ alignContent: Alignment.TopStart }) {
+    Column({ space: 0 }) {
+      Divider()
+        .color(this.theme.borderColor)
+        .strokeWidth(this.fontSize * 0.07);
+
       Row() {
         this.TabBarItem(0);
         this.TabBarItem(1);
@@ -2251,9 +2365,15 @@ struct Index {
   build() {
     Stack() {
       if (this.isLandscape) {
-        Stack({ alignContent: Alignment.Bottom }) {
-          this.CurrentTabContent();
-          if (this.landscapeTabBarVisible) {
+        Column() {
+          Stack() {
+            this.CurrentTabContent();
+          }
+          .layoutWeight(1)
+          .padding({ left: this.landscapeSideMargin(), right: this.landscapeSideMargin() })
+          .width('100%');
+
+          if (this.landscapeTabBarPinned || this.landscapeTabBarVisible) {
             this.BottomTabBar();
           }
         }
@@ -2465,7 +2585,6 @@ struct Index {
     .onAreaChange((_: Area, area: Area) => {
       this.updateLandscapeFromArea(area);
     })
-    .padding({ left: this.landscapeSideMargin(), right: this.landscapeSideMargin() })
     .width('100%')
     .height('100%');
   }

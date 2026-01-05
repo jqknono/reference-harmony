@@ -38,8 +38,8 @@ export default class EntryAbility extends UIAbility {
       ? Promise.resolve()
         .then((): Promise<preferences.Preferences> => preferences.getPreferences(this.context, 'settings'))
         .then(
-          (prefs: preferences.Preferences): Promise<preferences.ValueType> => prefs.get('orientationMode', 'portrait'),
-          (): Promise<preferences.ValueType> => Promise.resolve('portrait'),
+          (prefs: preferences.Preferences): Promise<preferences.ValueType> => prefs.get('orientationMode', 'auto'),
+          (): Promise<preferences.ValueType> => Promise.resolve('auto'),
         )
         .then(
           (value: preferences.ValueType): OrientationMode => {
@@ -47,7 +47,7 @@ export default class EntryAbility extends UIAbility {
             if (s === 'landscape' || s === 'auto') return s;
             return 'portrait';
           },
-          (): OrientationMode => 'portrait',
+          (): OrientationMode => 'auto',
         )
       : Promise.resolve('portrait' as OrientationMode);
 

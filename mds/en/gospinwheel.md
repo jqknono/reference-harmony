@@ -7,7 +7,7 @@ tags:
   - Productivity
   - Streaming
 categories:
-  - Web Tools
+  - Other
 intro: Quick-reference cheatsheet for GoSpinWheel — a modern random wheel spinner, name picker, and decision maker.
 plugins:
   - copyCode

@@ -241,40 +241,38 @@ export struct DocListTab {
         .fontWeight(FontWeight.Bold)
         .fontColor(this.theme.accentColor);
 
-      if (!this.isLandscape) {
-        Row({ space: this.fontSize * 0.6 }) {
-          TextInput({
-            text: this.catalogSearchQuery,
-            placeholder: this.t('搜索文档…', 'Search docs…'),
-            controller: this.catalogSearchInputController,
-          })
-            .layoutWeight(1)
-            .fontSize(this.fontSize)
-            .fontColor(this.theme.titleColor)
-            .placeholderColor(this.theme.mutedTextColor)
-            .enableAutoFill(false)
+      Row({ space: this.fontSize * 0.6 }) {
+        TextInput({
+          text: this.catalogSearchQuery,
+          placeholder: this.t('搜索文档…', 'Search docs…'),
+          controller: this.catalogSearchInputController,
+        })
+          .layoutWeight(1)
+          .fontSize(this.fontSize)
+          .fontColor(this.theme.titleColor)
+          .placeholderColor(this.theme.mutedTextColor)
+          .enableAutoFill(false)
+          .backgroundColor(this.theme.surfaceBackgroundColor)
+          .border({ width: 1, color: this.theme.borderColor })
+          .borderRadius(this.fontSize * 0.8)
+          .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 })
+          .onChange((value: string) => {
+            this.catalogSearchQuery = value;
+            this.onRebuildCatalogSearchResults?.();
+          });
+
+        if (this.catalogSearchQuery.trim()) {
+          Text(this.t('清除', 'Clear'))
+            .fontSize(this.fontSize * 0.8)
+            .fontColor(this.theme.mutedTextColor)
+            .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
             .backgroundColor(this.theme.surfaceBackgroundColor)
             .border({ width: 1, color: this.theme.borderColor })
             .borderRadius(this.fontSize * 0.8)
-            .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 })
-            .onChange((value: string) => {
-              this.catalogSearchQuery = value;
-              this.onRebuildCatalogSearchResults?.();
+            .onClick(() => {
+              this.catalogSearchQuery = '';
+              this.catalogSearchResults = [];
             });
-
-          if (this.catalogSearchQuery.trim()) {
-            Text(this.t('清除', 'Clear'))
-              .fontSize(this.fontSize * 0.8)
-              .fontColor(this.theme.mutedTextColor)
-              .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
-              .backgroundColor(this.theme.surfaceBackgroundColor)
-              .border({ width: 1, color: this.theme.borderColor })
-              .borderRadius(this.fontSize * 0.8)
-              .onClick(() => {
-                this.catalogSearchQuery = '';
-                this.catalogSearchResults = [];
-              });
-          }
         }
       }
 

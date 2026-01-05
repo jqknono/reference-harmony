@@ -180,7 +180,7 @@ export struct ReadTab {
         }
         .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
 
-        if (this.selectedDoc && !this.isLandscape) {
+        if (this.selectedDoc) {
           Row({ space: this.fontSize * 0.6 }) {
             TextInput({
               text: this.searchQuery,
