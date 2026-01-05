@@ -4,7 +4,9 @@
 
 开源地址: [jqknono/reference-harmony](https://github.com/jqknono/reference-harmony)
 
-App 下载: <a href="https://appgallery.huawei.com/app/detail?id=reference.app.jqknono.com"><img src="assets/appgallery-icon.png" alt="华为应用市场（AppGallery）" height="24" /></a>
+App 下载: [AppGallery](https://appgallery.huawei.com/app/detail?id=reference.app.jqknono.com)
+
+<!-- <a href="https://appgallery.huawei.com/app/detail?id=reference.app.jqknono.com"><img src="assets/appgallery-icon.png" alt="华为应用市场（AppGallery）" height="40" /></a> -->
 
 [![AppGallery QR](assets/https___appgallery.huawei.com_app_detail_id=reference.app.jqknono.com.png)](https://appgallery.huawei.com/app/detail?id=reference.app.jqknono.com)
 
