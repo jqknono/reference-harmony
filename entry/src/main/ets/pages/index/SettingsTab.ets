@@ -11,8 +11,8 @@ type ThemePreference = 'dark' | 'light' | 'system';
 
 const APP_DISPLAY_NAME_ZH: string = '开发速查';
 const APP_DISPLAY_NAME_EN: string = 'Quick Reference';
-const FALLBACK_VERSION_NAME: string = '0.19.0';
-const FALLBACK_VERSION_CODE: number = 2026010611;
+const FALLBACK_VERSION_NAME: string = '0.20.0';
+const FALLBACK_VERSION_CODE: number = 2026010613;
 const DEVELOPER_NAME: string = '李偲';
 const ONLINE_FILE_LIST_URL: string = 'https://reference.jqknono.com/';
 

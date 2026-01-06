@@ -1,7 +1,7 @@
 import preferences from '@ohos.data.preferences';
 import pasteboard from '@ohos.pasteboard';
 import picker from '@ohos.file.picker';
-import { window, font } from '@kit.ArkUI';
+import { window } from '@kit.ArkUI';
 import webview from '@ohos.web.webview';
 import bundleManager from '@ohos.bundle.bundleManager';
 import { ReferenceRepository } from '../common/referenceRepository';
@@ -1175,6 +1175,14 @@ struct Index {
     }
   }
 
+  private async getAppReviewPreferenceValue(prefs: Preferences, key: string, fallback: ValueType): Promise<ValueType> {
+    try {
+      return await prefs.get(key, fallback);
+    } catch (_) {
+      return fallback;
+    }
+  }
+
   private async requestAppReviewFromUserAction(): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
@@ -1210,10 +1218,18 @@ struct Index {
       return fallback;
     };
 
-    const doNotAsk: boolean = toBool(await prefs.get(APP_REVIEW_PREF_KEY_DO_NOT_ASK, false), false);
+    const doNotAskValue: ValueType = await this.getAppReviewPreferenceValue(
+      prefs,
+      APP_REVIEW_PREF_KEY_DO_NOT_ASK,
+      false
+    );
+    const doNotAsk: boolean = toBool(doNotAskValue, false);
     if (doNotAsk) return;
 
-    let firstLaunchAt: number = toNumber(await prefs.get(APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, 0), 0);
+    let firstLaunchAt: number = toNumber(
+      await this.getAppReviewPreferenceValue(prefs, APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, 0),
+      0
+    );
     if (firstLaunchAt <= 0) {
       firstLaunchAt = now;
       try {
@@ -1223,7 +1239,10 @@ struct Index {
       }
     }
 
-    let launchCount: number = toNumber(await prefs.get(APP_REVIEW_PREF_KEY_LAUNCH_COUNT, 0), 0);
+    let launchCount: number = toNumber(
+      await this.getAppReviewPreferenceValue(prefs, APP_REVIEW_PREF_KEY_LAUNCH_COUNT, 0),
+      0
+    );
     launchCount = Math.max(0, launchCount) + 1;
     try {
       await prefs.put(APP_REVIEW_PREF_KEY_LAUNCH_COUNT, launchCount);
@@ -1231,7 +1250,10 @@ struct Index {
       // ignore
     }
 
-    const lastPromptAt: number = toNumber(await prefs.get(APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, 0), 0);
+    const lastPromptAt: number = toNumber(
+      await this.getAppReviewPreferenceValue(prefs, APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, 0),
+      0
+    );
     const cooldownMs: number = APP_REVIEW_PROMPT_COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
     if (lastPromptAt > 0 && now - lastPromptAt < cooldownMs) {
       try {
@@ -1950,9 +1972,13 @@ struct Index {
 
   private ensureFontAwesomeRegistered(): void {
     if (this.fontAwesomeRegistered) return;
+    const uiContext = this.getUIContext();
+    if (!uiContext) return;
+    const contextFont = uiContext.getFont();
+    if (!contextFont) return;
     this.fontAwesomeRegistered = true;
     try {
-      font.registerFont({
+      contextFont.registerFont({
         familyName: FONT_AWESOME_SOLID_FAMILY,
         familySrc: $rawfile('fonts/fa-solid-900.ttf'),
       });
