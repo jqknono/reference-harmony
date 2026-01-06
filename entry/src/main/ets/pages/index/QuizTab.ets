@@ -2,7 +2,7 @@ import type { ReferenceDoc } from '../../common/referenceModels';
 import type { AppThemeTokens } from '../../common/appTheme';
 import type { QuizQuestion, QuizAnswer, QuizSession, QuizRecord, QuizOption } from '../../common/quizModels';
 import { QuizRepository } from '../../common/quizRepository';
-import { formatDuration, formatDateTime } from './utils';
+import { formatDuration, formatDateTime, lengthToNumber } from './utils';
 import { calculateScore } from '../../common/quizUtils';
 
 @Component
@@ -38,6 +38,7 @@ export struct QuizTab {
   onNextQuizQuestion?: () => void;
   onResetQuiz?: () => void;
   onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
+  onTitleAreaHeightChange?: (height: number) => void;
 
   private t(zh: string, en: string): string {
     return this.lang === 'en' ? en : zh;
@@ -505,7 +506,10 @@ export struct QuizTab {
         .fontSize(this.fontSize * 1.5)
         .fontWeight(FontWeight.Bold)
         .fontColor(this.theme.accentColor)
-        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1 });
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1 })
+        .onAreaChange((_: Area, area: Area) => {
+          this.onTitleAreaHeightChange?.(lengthToNumber(area.height));
+        });
 
       if (this.quizMode === 'idle') {
         this.QuizIdleView();

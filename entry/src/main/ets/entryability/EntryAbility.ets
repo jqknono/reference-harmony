@@ -33,6 +33,25 @@ function extractLaunchParams(want: Want): void {
 type OrientationMode = 'portrait' | 'landscape' | 'auto';
 
 export default class EntryAbility extends UIAbility {
+  private lastWindowStage?: window.WindowStage;
+
+  private ensureStatusBarVisible(windowStage?: window.WindowStage): void {
+    if (!windowStage) return;
+
+    Promise.resolve()
+      .then((): Promise<window.Window> => windowStage.getMainWindow())
+      .then((w: window.Window): Promise<void> => Promise.resolve()
+        .then((): Promise<void> => w.setWindowLayoutFullScreen(false))
+        .then((): Promise<void> => w.setWindowSystemBarEnable(['status', 'navigation']))
+        .then((): void => undefined))
+      .then(
+        (): void => undefined,
+        (err: Error | string): void => {
+          hilog.error(DOMAIN, 'testTag', 'Failed to ensure status bar visible. Cause: %{public}s', JSON.stringify(err));
+        },
+      );
+  }
+
   private applyPreferredOrientation(windowStage: window.WindowStage): void {
     const setting: Promise<OrientationMode> = ENABLE_ORIENTATION_MODE_SETTING
       ? Promise.resolve()
@@ -96,7 +115,9 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
+    this.lastWindowStage = windowStage;
     this.applyPreferredOrientation(windowStage);
+    this.ensureStatusBarVisible(windowStage);
 
     windowStage.loadContent('pages/Index', (err) => {
       if (err.code) {
@@ -104,6 +125,7 @@ export default class EntryAbility extends UIAbility {
         return;
       }
       hilog.info(DOMAIN, 'testTag', 'Succeeded in loading the content.');
+      this.ensureStatusBarVisible(windowStage);
     });
   }
 
@@ -115,6 +137,7 @@ export default class EntryAbility extends UIAbility {
   onForeground(): void {
     // Ability has brought to foreground
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onForeground');
+    this.ensureStatusBarVisible(this.lastWindowStage);
   }
 
   onBackground(): void {

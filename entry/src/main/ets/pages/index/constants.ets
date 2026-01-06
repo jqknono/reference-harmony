@@ -10,6 +10,7 @@ export const ENABLE_PRIVACY_CONSENT_DIALOG: boolean = false;
 export const KEEP_FAVORITE_AND_RECENT_ENTRY_IN_FULL_CATALOG_LIST: boolean = false;
 
 export const SHOW_IMPORT_MARKDOWN_URL_SETTING: boolean = true;
+export const TABBAR_AUTO_HIDE_EFFECTIVE_ASPECT_RATIO_THRESHOLD: number = 3;
 
 // 引导评价
 export const ENABLE_APP_REVIEW_PROMPT: boolean = true;
@@ -37,4 +38,3 @@ export const PRIVACY_CONSENT_PREF_KEY: string = 'privacyConsentAccepted';
 export const CATALOG_DOC_ID_BLACKLIST: ReadonlySet<string> = new Set<string>([
   'colors-named',
 ]);
-

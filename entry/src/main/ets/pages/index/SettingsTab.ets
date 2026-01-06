@@ -2,7 +2,7 @@ import type { AppThemeTokens } from '../../common/appTheme';
 import type { ReferenceLang } from '../../common/referenceModels';
 import type { OnlineMdLink } from '../../common/onlineMdModels';
 import { openExternalLink } from '../../common/openExternalLink';
-import { formatDocCount } from './utils';
+import { formatDocCount, lengthToNumber } from './utils';
 import { ENABLE_ORIENTATION_MODE_SETTING, PRIVACY_STATEMENT_URL, SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
 import webview from '@ohos.web.webview';
 import bundleManager from '@ohos.bundle.bundleManager';
@@ -11,8 +11,8 @@ type ThemePreference = 'dark' | 'light' | 'system';
 
 const APP_DISPLAY_NAME_ZH: string = '开发速查';
 const APP_DISPLAY_NAME_EN: string = 'Quick Reference';
-const FALLBACK_VERSION_NAME: string = '0.18.0';
-const FALLBACK_VERSION_CODE: number = 2026010522;
+const FALLBACK_VERSION_NAME: string = '0.19.0';
+const FALLBACK_VERSION_CODE: number = 2026010611;
 const DEVELOPER_NAME: string = '李偲';
 const ONLINE_FILE_LIST_URL: string = 'https://reference.jqknono.com/';
 
@@ -67,6 +67,7 @@ export struct SettingsTab {
   onCopyLocalMdUri?: (uri: string) => void;
   onRequestAppReview?: () => void;
   onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
+  onTitleAreaHeightChange?: (height: number) => void;
 
   private getHostContext(): Context | undefined {
     return this.getUIContext().getHostContext();
@@ -109,7 +110,13 @@ export struct SettingsTab {
     Stack() {
       Scroll(this.scroller) {
         Column({ space: this.fontSize * 0.8 }) {
-          Text(this.t('设置', 'Settings')).fontSize(this.fontSize * 1.25).fontWeight(FontWeight.Bold).fontColor(this.theme.accentColor);
+          Text(this.t('设置', 'Settings'))
+            .fontSize(this.fontSize * 1.25)
+            .fontWeight(FontWeight.Bold)
+            .fontColor(this.theme.accentColor)
+            .onAreaChange((_: Area, area: Area) => {
+              this.onTitleAreaHeightChange?.(lengthToNumber(area.height));
+            });
 
         Column({ space: 0 }) {
           if (ENABLE_ORIENTATION_MODE_SETTING) {

@@ -1,6 +1,6 @@
 import type { ReferenceDocSummary } from '../../common/referenceModels';
 import type { AppThemeTokens } from '../../common/appTheme';
-import { getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, isRemoteIcon, iconKey } from './utils';
+import { getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, isRemoteIcon, iconKey, lengthToNumber } from './utils';
 import { KEEP_FAVORITE_AND_RECENT_ENTRY_IN_FULL_CATALOG_LIST } from './constants';
 
 @Component
@@ -35,6 +35,7 @@ export struct DocListTab {
   onOpenLocalDocAndQuiz?: (docId: string) => void;
   onRebuildCatalogSearchResults?: () => void;
   onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
+  onTitleAreaHeightChange?: (height: number) => void;
 
   private t(zh: string, en: string): string {
     return this.lang === 'en' ? en : zh;
@@ -239,7 +240,10 @@ export struct DocListTab {
       Text(this.t('开发速查', 'Quick Reference'))
         .fontSize(this.fontSize * 1.5)
         .fontWeight(FontWeight.Bold)
-        .fontColor(this.theme.accentColor);
+        .fontColor(this.theme.accentColor)
+        .onAreaChange((_: Area, area: Area) => {
+          this.onTitleAreaHeightChange?.(lengthToNumber(area.height));
+        });
 
       Row({ space: this.fontSize * 0.6 }) {
         TextInput({

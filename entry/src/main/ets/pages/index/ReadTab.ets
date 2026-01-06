@@ -2,7 +2,7 @@ import type { ReferenceDoc, ReferenceCardData } from '../../common/referenceMode
 import type { AppThemeTokens } from '../../common/appTheme';
 import type { SectionWithCards } from './types';
 import { ReferenceCard } from '../../components/ReferenceCard';
-import { makeCardMargin, getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, isRemoteIcon, iconKey, getTocCardTitle } from './utils';
+import { makeCardMargin, getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, isRemoteIcon, iconKey, getTocCardTitle, lengthToNumber } from './utils';
 
 @Component
 export struct ReadTab {
@@ -47,6 +47,7 @@ export struct ReadTab {
   onShowTocPanel?: () => void;
   onRebuildSearchResults?: () => void;
   onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
+  onTitleAreaHeightChange?: (height: number) => void;
 
   private getHostContext(): Context | undefined {
     return this.getUIContext().getHostContext();
@@ -178,7 +179,10 @@ export struct ReadTab {
               this.onShowTocPanel?.();
             });
         }
-        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 });
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.4 })
+        .onAreaChange((_: Area, area: Area) => {
+          this.onTitleAreaHeightChange?.(lengthToNumber(area.height));
+        });
 
         if (this.selectedDoc) {
           Row({ space: this.fontSize * 0.6 }) {

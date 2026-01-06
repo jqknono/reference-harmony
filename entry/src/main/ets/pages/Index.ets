@@ -20,7 +20,7 @@ import type { LaunchParams } from '../common/launchParamsStore';
 import { requestAppReview } from '../common/appReview';
 
 import type { SectionWithCards } from './index/types';
-import { APP_REVIEW_MIN_DAYS_SINCE_FIRST_LAUNCH, APP_REVIEW_MIN_LAUNCH_COUNT, APP_REVIEW_PREF_KEY_DO_NOT_ASK, APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, APP_REVIEW_PREF_KEY_LAUNCH_COUNT, APP_REVIEW_PROMPT_COOLDOWN_DAYS, CATALOG_DOC_ID_BLACKLIST, ENABLE_APP_REVIEW_PROMPT, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_PRIVACY_CONSENT_DIALOG, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT } from './index/constants';
+import { APP_REVIEW_MIN_DAYS_SINCE_FIRST_LAUNCH, APP_REVIEW_MIN_LAUNCH_COUNT, APP_REVIEW_PREF_KEY_DO_NOT_ASK, APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, APP_REVIEW_PREF_KEY_LAUNCH_COUNT, APP_REVIEW_PROMPT_COOLDOWN_DAYS, CATALOG_DOC_ID_BLACKLIST, ENABLE_APP_REVIEW_PROMPT, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_PRIVACY_CONSENT_DIALOG, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT, TABBAR_AUTO_HIDE_EFFECTIVE_ASPECT_RATIO_THRESHOLD } from './index/constants';
 import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens, toHexColorString } from './index/utils';
 import { DocListTab } from './index/DocListTab';
 import { ReadTab } from './index/ReadTab';
@@ -42,7 +42,6 @@ interface BundleInfoLike {
   name?: string;
 }
 
-const LANDSCAPE_AUTO_HIDE_TABBAR_ASPECT_RATIO_THRESHOLD: number = 16 / 10;
 const FONT_AWESOME_SOLID_FAMILY: string = 'FontAwesomeSolid';
 
 @Entry
@@ -111,6 +110,8 @@ struct Index {
   private rootHeight: number = 0;
   private fontAwesomeRegistered: boolean = false;
   @State private fontSize: number = 15;
+  @State private titleAreaHeight: number = 0;
+  @State private bottomTabBarHeight: number = 0;
   @State private orientationMode: 'portrait' | 'landscape' | 'auto' = 'auto';
   @State private isLandscape: boolean = false;
   @State private landscapeTabBarVisible: boolean = false;
@@ -199,11 +200,36 @@ struct Index {
     return this.isLandscape ? this.fontSize * 1.5 : 0;
   }
 
+  private effectiveDisplayHeightExcludingTitleAndTab(rootHeight: number): number {
+    const titleHeight: number = Math.max(0, this.titleAreaHeight);
+    const tabHeight: number = Math.max(0, this.bottomTabBarHeight);
+    return Math.max(1, rootHeight - titleHeight - tabHeight);
+  }
+
+  private setTitleAreaHeight(height: number): void {
+    const next: number = Math.max(0, Math.floor(height));
+    if (this.titleAreaHeight === next) return;
+    this.titleAreaHeight = next;
+    this.updateLandscapeFromSize(this.rootWidth, this.rootHeight);
+  }
+
+  private setBottomTabBarHeight(height: number): void {
+    const next: number = Math.max(0, Math.floor(height));
+    if (this.bottomTabBarHeight === next) return;
+    this.bottomTabBarHeight = next;
+    this.updateLandscapeFromSize(this.rootWidth, this.rootHeight);
+  }
+
   private updateLandscapeFromArea(area: Area): void {
     const width: number = lengthToNumber(area.width);
     const height: number = lengthToNumber(area.height);
     this.rootWidth = width;
     this.rootHeight = height;
+    this.updateLandscapeFromSize(width, height);
+  }
+
+  private updateLandscapeFromSize(width: number, height: number): void {
+    if (width <= 0 || height <= 0) return;
     const nextLandscape: boolean = height > 0 && width > height;
     const nextPinned: boolean = nextLandscape ? this.resolveLandscapeTabBarPinned(width, height) : false;
 
@@ -237,8 +263,9 @@ struct Index {
   private resolveLandscapeTabBarPinned(rootWidth: number, rootHeight: number): boolean {
     const sideMargin: number = this.fontSize * 1.5;
     const contentWidth: number = Math.max(1, rootWidth - sideMargin * 2);
-    const ratio: number = contentWidth / Math.max(1, rootHeight);
-    return ratio <= LANDSCAPE_AUTO_HIDE_TABBAR_ASPECT_RATIO_THRESHOLD;
+    const effectiveHeight: number = this.effectiveDisplayHeightExcludingTitleAndTab(rootHeight);
+    const ratio: number = contentWidth / effectiveHeight;
+    return ratio <= TABBAR_AUTO_HIDE_EFFECTIVE_ASPECT_RATIO_THRESHOLD;
   }
 
   private setLandscapeTabBarVisible(visible: boolean): void {
@@ -2217,7 +2244,10 @@ struct Index {
     }
     .width('100%')
     .backgroundColor(this.theme.surfaceBackgroundColor)
-    .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM]);
+    .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.BOTTOM])
+    .onAreaChange((_: Area, area: Area) => {
+      this.setBottomTabBarHeight(lengthToNumber(area.height));
+    });
   }
 
   @Builder
@@ -2252,6 +2282,7 @@ struct Index {
         onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
         onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
         onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+        onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
       });
     } else if (this.currentTabIndex === 1) {
       ReadTab({
@@ -2288,6 +2319,7 @@ struct Index {
         onShowTocPanel: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = true; },
         onRebuildSearchResults: (): void => { this.rebuildSearchResults(); },
         onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+        onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
       });
     } else if (this.currentTabIndex === 2) {
       QuizTab({
@@ -2319,6 +2351,7 @@ struct Index {
         onNextQuizQuestion: (): void => { this.nextQuizQuestion(); },
         onResetQuiz: (): void => { this.resetQuiz(); },
         onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+        onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
       });
     } else {
       SettingsTab({
@@ -2358,6 +2391,7 @@ struct Index {
         onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
         onRequestAppReview: (): void => { this.requestAppReviewFromUserAction(); },
         onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+        onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
       });
     }
   }
@@ -2412,6 +2446,7 @@ struct Index {
                 onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
                 onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
                 onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+                onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
               });
             }
             .tabBar(this.TabBarItem(0));
@@ -2451,6 +2486,7 @@ struct Index {
                 onShowTocPanel: (): void => { this.stopAllTextInputEditing(); this.showTocPanel = true; },
                 onRebuildSearchResults: (): void => { this.rebuildSearchResults(); },
                 onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+                onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
               });
             }
             .tabBar(this.TabBarItem(1));
@@ -2485,6 +2521,7 @@ struct Index {
                 onNextQuizQuestion: (): void => { this.nextQuizQuestion(); },
                 onResetQuiz: (): void => { this.resetQuiz(); },
                 onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+                onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
               });
             }
             .tabBar(this.TabBarItem(2));
@@ -2527,8 +2564,9 @@ struct Index {
                 onCopyLocalMdUri: (uri: string): void => { this.copyLocalMdUri(uri); },
                 onRequestAppReview: (): void => { this.requestAppReviewFromUserAction(); },
                 onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+                onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
               });
-            }
+          }
             .tabBar(this.TabBarItem(3));
           }
           .layoutWeight(1)
@@ -2545,6 +2583,18 @@ struct Index {
         }
         .width('100%')
         .height('100%');
+      }
+
+      // Measure-only instance: ensures we can get a stable bottom tab height even when the tab bar is hidden in landscape.
+      if (this.bottomTabBarHeight <= 0) {
+        Column() {
+          Blank().layoutWeight(1);
+          this.BottomTabBar();
+        }
+        .width('100%')
+        .height('100%')
+        .opacity(0)
+        .enabled(false);
       }
 
       if (this.showTocPanel) {
