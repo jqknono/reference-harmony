@@ -16,6 +16,7 @@ export struct DocListTab {
   @Prop fontSize: number;
   @Prop lang: 'zh' | 'en';
   @Prop isLandscape: boolean;
+  @Prop showSearchBar: boolean = true;
   @Prop docs: Array<ReferenceDocSummary> = [];
   @Prop onlineMdDocs: Array<ReferenceDocSummary> = [];
   @Prop localMdDocs: Array<ReferenceDocSummary> = [];
@@ -26,6 +27,8 @@ export struct DocListTab {
   catalogSearchInputController: TextInputController = new TextInputController();
   listScroller: ListScroller = new ListScroller();
   tabsController?: TabsController;
+
+  @State private headerAreaHeight: number = 0;
 
   onOpenDoc?: (docId: string, switchToReadTab: boolean) => void;
   onOpenOnlineDoc?: (docId: string) => void;
@@ -46,6 +49,18 @@ export struct DocListTab {
     return this.isLandscape
       ? { left: base, right: base, top: base, bottom: 0 }
       : { left: base, right: base, top: base, bottom: 0 };
+  }
+
+  private shouldShowHeader(): boolean {
+    // 横屏：tab 栏隐藏时，连带收起 title/header（标题+搜索）；竖屏始终展示 header。
+    return !this.isLandscape || this.showSearchBar;
+  }
+
+  private setHeaderAreaHeight(height: number): void {
+    const next: number = Math.max(0, Math.floor(height));
+    if (this.headerAreaHeight === next) return;
+    this.headerAreaHeight = next;
+    this.onTitleAreaHeightChange?.(next);
   }
 
   private isOnlineDoc(docId: string): boolean {
@@ -236,216 +251,236 @@ export struct DocListTab {
   }
 
   build() {
-    Column({ space: this.fontSize * 0.6 }) {
-      Text(this.t('开发速查', 'Quick Reference'))
-        .fontSize(this.fontSize * 1.5)
-        .fontWeight(FontWeight.Bold)
-        .fontColor(this.theme.accentColor)
-        .onAreaChange((_: Area, area: Area) => {
-          this.onTitleAreaHeightChange?.(lengthToNumber(area.height));
+    Stack({ alignContent: Alignment.TopStart }) {
+      // 内容区：当 header 展示时，为其预留高度；header 隐藏时，内容自动上移填满空间。
+      Column({ space: this.fontSize * 0.6 }) {
+        // 避免在“目录”页点卡片打开文档时插入顶部占位导致页面抖动：
+        // 仅当目录清单本身为空且正在加载时才展示加载提示。
+        if (this.loading && (this.docs.length + this.onlineMdDocs.length + this.localMdDocs.length) === 0) {
+          Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor);
+        }
+
+        if (this.errorText) {
+          Text(this.errorText).fontColor(this.theme.dangerTextColor).maxLines(6);
+        }
+
+        if (this.catalogSearchQuery.trim() && this.catalogSearchResults.length === 0) {
+          Text(this.t('没有匹配的文档', 'No matching docs.')).fontColor(this.theme.mutedTextColor);
+        }
+
+        List({ scroller: this.listScroller, initialIndex: this.catalogSearchQuery.trim() ? this.searchListScrollIndex : this.listScrollIndex }) {
+          ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.getCatalogDocsForDisplay(), (doc: ReferenceDocSummary) => {
+            ListItem() {
+              Stack({ alignContent: Alignment.TopStart }) {
+                Row({ space: this.fontSize * 0.8 }) {
+                  Column() {
+                    this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, this.fontSize * 2.5, 0);
+                  }
+                  .onClick(() => this.handleOpenDoc(doc.id))
+
+                  Column({ space: this.fontSize * 0.2 }) {
+                    Text(doc.name || doc.id).fontSize(this.fontSize * 1).fontColor(this.theme.titleColor);
+
+                    if (doc.title && doc.title !== doc.name) {
+                      Text(doc.title)
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.mutedTextColor)
+                        .maxLines(2);
+                    }
+
+                    Text(this.t(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`, `${doc.sectionCount} sections · ${doc.cardCount} cards`))
+                      .fontSize(this.fontSize * 0.8)
+                      .fontColor(this.theme.mutedTextColor);
+                  }
+                  .layoutWeight(1)
+                  .onClick(() => this.handleOpenDoc(doc.id));
+
+                  if (this.isLandscape) {
+                    Row({ space: this.fontSize * 0.8 }) {
+                      Text(this.t('打开', 'Open'))
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.accentColor)
+                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                        .border({ width: 1, color: this.theme.accentColor })
+                        .borderRadius(this.fontSize * 0.4)
+                        .onClick(() => this.handleOpenDoc(doc.id));
+                      Text(this.t('测验', 'Quiz'))
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.accentColor)
+                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                        .border({ width: 1, color: this.theme.accentColor })
+                        .borderRadius(this.fontSize * 0.4)
+                        .onClick(() => this.handleOpenDocAndQuiz(doc.id));
+                    }
+                  } else {
+                    Column({ space: this.fontSize * 0.5 }) {
+                      Text(this.t('打开', 'Open'))
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.accentColor)
+                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                        .border({ width: 1, color: this.theme.accentColor })
+                        .borderRadius(this.fontSize * 0.4)
+                        .onClick(() => this.handleOpenDoc(doc.id));
+                      Text(this.t('测验', 'Quiz'))
+                        .fontSize(this.fontSize * 0.8)
+                        .fontColor(this.theme.accentColor)
+                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                        .border({ width: 1, color: this.theme.accentColor })
+                        .borderRadius(this.fontSize * 0.4)
+                        .onClick(() => this.handleOpenDocAndQuiz(doc.id));
+                    }
+                    .alignItems(HorizontalAlign.End);
+                  }
+                }
+                .padding(this.fontSize * 1)
+                .width('100%');
+
+                Row({ space: this.fontSize * 0.3 }) {
+                  if (this.isDocFavorite(doc.id)) {
+                    Text(this.t('收藏', 'Fav'))
+                      .fontSize(this.fontSize * 0.65)
+                      .fontColor(0xffffffff)
+                      .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                      .backgroundColor(0xffF59E0B)
+                      .borderRadius({
+                        topLeft: this.fontSize * 0.7,
+                        topRight: this.fontSize * 0.4,
+                        bottomLeft: this.fontSize * 0,
+                        bottomRight: this.fontSize * 0.4
+                      });
+                  }
+                  if (this.isDocRecent(doc.id) && !this.isDocFavorite(doc.id)) {
+                    Text(this.t('最近', 'Recent'))
+                      .fontSize(this.fontSize * 0.65)
+                      .fontColor(0xffffffff)
+                      .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                      .backgroundColor(0xff10B981)
+                      .borderRadius({
+                        topLeft: this.fontSize * 0.7,
+                        topRight: this.fontSize * 0.4,
+                        bottomLeft: this.fontSize * 0,
+                        bottomRight: this.fontSize * 0.4
+                      });
+                  }
+                  if (this.isOnlineDoc(doc.id)) {
+                    Text(this.t('在线', 'Online'))
+                      .fontSize(this.fontSize * 0.65)
+                      .fontColor(0xffffffff)
+                      .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                      .backgroundColor(this.theme.accentColor)
+                      .borderRadius({
+                        topLeft: this.fontSize * 0.7,
+                        topRight: this.fontSize * 0.4,
+                        bottomLeft: this.fontSize * 0,
+                        bottomRight: this.fontSize * 0.4
+                      });
+                  }
+                  if (this.isLocalDoc(doc.id)) {
+                    Text(this.t('本地', 'Local'))
+                      .fontSize(this.fontSize * 0.65)
+                      .fontColor(0xffffffff)
+                      .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                      .backgroundColor(0xff6366F1)
+                      .borderRadius({
+                        topLeft: this.fontSize * 0.7,
+                        topRight: this.fontSize * 0.4,
+                        bottomLeft: this.fontSize * 0,
+                        bottomRight: this.fontSize * 0.4
+                      });
+                  }
+                }
+              }
+              .backgroundColor(this.theme.surfaceBackgroundColor)
+              .borderRadius(this.fontSize * 0.8);
+            }
+            .margin({ bottom: this.fontSize * 0.6 });
+          }, (doc: ReferenceDocSummary, index: number) => `${this.lang}:${doc.id}:${index}`);
+        }
+        .layoutWeight(1)
+        .divider({ strokeWidth: 0 })
+        .onScrollIndex((start: number, _end: number) => {
+          const isSearching: boolean = !!this.catalogSearchQuery.trim();
+          if (isSearching) {
+            const previous: number = this.searchListScrollIndex;
+            if (previous !== start) {
+              if (this.isLandscape) {
+                this.onLandscapeScrollDirection?.(start > previous ? 'up' : 'down');
+              }
+              this.searchListScrollIndex = start;
+            }
+          } else {
+            const previous: number = this.listScrollIndex;
+            if (previous !== start) {
+              if (this.isLandscape) {
+                this.onLandscapeScrollDirection?.(start > previous ? 'up' : 'down');
+              }
+              this.listScrollIndex = start;
+            }
+          }
         });
-
-      Row({ space: this.fontSize * 0.6 }) {
-        TextInput({
-          text: this.catalogSearchQuery,
-          placeholder: this.t('搜索文档…', 'Search docs…'),
-          controller: this.catalogSearchInputController,
-        })
-          .layoutWeight(1)
-          .fontSize(this.fontSize)
-          .fontColor(this.theme.titleColor)
-          .placeholderColor(this.theme.mutedTextColor)
-          .enableAutoFill(false)
-          .backgroundColor(this.theme.surfaceBackgroundColor)
-          .border({ width: 1, color: this.theme.borderColor })
-          .borderRadius(this.fontSize * 0.8)
-          .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 })
-          .onChange((value: string) => {
-            this.catalogSearchQuery = value;
-            this.onRebuildCatalogSearchResults?.();
-          });
-
-        if (this.catalogSearchQuery.trim()) {
-          Text(this.t('清除', 'Clear'))
-            .fontSize(this.fontSize * 0.8)
-            .fontColor(this.theme.mutedTextColor)
-            .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
-            .backgroundColor(this.theme.surfaceBackgroundColor)
-            .border({ width: 1, color: this.theme.borderColor })
-            .borderRadius(this.fontSize * 0.8)
-            .onClick(() => {
-              this.catalogSearchQuery = '';
-              this.catalogSearchResults = [];
-            });
-        }
       }
+      .padding({
+        left: this.tabPadding().left,
+        right: this.tabPadding().right,
+        top: lengthToNumber(this.tabPadding().top ?? 0) + (this.shouldShowHeader() ? (this.headerAreaHeight + this.fontSize * 0.6) : 0),
+        bottom: this.tabPadding().bottom
+      })
+      .height('100%')
+      .width('100%');
 
-      // 避免在“目录”页点卡片打开文档时插入顶部占位导致页面抖动：
-      // 仅当目录清单本身为空且正在加载时才展示加载提示。
-      if (this.loading && (this.docs.length + this.onlineMdDocs.length + this.localMdDocs.length) === 0) {
-        Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor);
-      }
+      // Header（标题+搜索）：横屏 tab 栏隐藏时同步收起。
+      Column() {
+        Column({ space: this.fontSize * 0.6 }) {
+          Text(this.t('开发速查', 'Quick Reference'))
+            .fontSize(this.fontSize * 1.5)
+            .fontWeight(FontWeight.Bold)
+            .fontColor(this.theme.accentColor);
 
-      if (this.errorText) {
-        Text(this.errorText).fontColor(this.theme.dangerTextColor).maxLines(6);
-      }
+          Row({ space: this.fontSize * 0.6 }) {
+            TextInput({
+              text: this.catalogSearchQuery,
+              placeholder: this.t('搜索文档…', 'Search docs…'),
+              controller: this.catalogSearchInputController,
+            })
+              .layoutWeight(1)
+              .fontSize(this.fontSize)
+              .fontColor(this.theme.titleColor)
+              .placeholderColor(this.theme.mutedTextColor)
+              .enableAutoFill(false)
+              .backgroundColor(this.theme.surfaceBackgroundColor)
+              .border({ width: 1, color: this.theme.borderColor })
+              .borderRadius(this.fontSize * 0.8)
+              .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 })
+              .onChange((value: string) => {
+                this.catalogSearchQuery = value;
+                this.onRebuildCatalogSearchResults?.();
+              });
 
-      if (this.catalogSearchQuery.trim() && this.catalogSearchResults.length === 0) {
-        Text(this.t('没有匹配的文档', 'No matching docs.')).fontColor(this.theme.mutedTextColor);
-      }
-
-      List({ scroller: this.listScroller, initialIndex: this.catalogSearchQuery.trim() ? this.searchListScrollIndex : this.listScrollIndex }) {
-        ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.getCatalogDocsForDisplay(), (doc: ReferenceDocSummary) => {
-          ListItem() {
-            Stack({ alignContent: Alignment.TopStart }) {
-              Row({ space: this.fontSize * 0.8 }) {
-                Column() {
-                  this.DocAvatar(doc.id, doc.name || doc.id, doc.icon, this.fontSize * 2.5, 0);
-                }
-                .onClick(() => this.handleOpenDoc(doc.id))
-
-                Column({ space: this.fontSize * 0.2 }) {
-                  Text(doc.name || doc.id).fontSize(this.fontSize * 1).fontColor(this.theme.titleColor);
-
-                  if (doc.title && doc.title !== doc.name) {
-                    Text(doc.title)
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.mutedTextColor)
-                      .maxLines(2);
-                  }
-
-                  Text(this.t(`${doc.sectionCount} 章节 · ${doc.cardCount} 卡片`, `${doc.sectionCount} sections · ${doc.cardCount} cards`))
-                    .fontSize(this.fontSize * 0.8)
-                    .fontColor(this.theme.mutedTextColor);
-                }
-                .layoutWeight(1)
-                .onClick(() => this.handleOpenDoc(doc.id));
-
-                if (this.isLandscape) {
-                  Row({ space: this.fontSize * 0.8 }) {
-                    Text(this.t('打开', 'Open'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.accentColor)
-                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .border({ width: 1, color: this.theme.accentColor })
-                      .borderRadius(this.fontSize * 0.4)
-                      .onClick(() => this.handleOpenDoc(doc.id));
-                    Text(this.t('测验', 'Quiz'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.accentColor)
-                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .border({ width: 1, color: this.theme.accentColor })
-                      .borderRadius(this.fontSize * 0.4)
-                      .onClick(() => this.handleOpenDocAndQuiz(doc.id));
-                  }
-                } else {
-                  Column({ space: this.fontSize * 0.5 }) {
-                    Text(this.t('打开', 'Open'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.accentColor)
-                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .border({ width: 1, color: this.theme.accentColor })
-                      .borderRadius(this.fontSize * 0.4)
-                      .onClick(() => this.handleOpenDoc(doc.id));
-                    Text(this.t('测验', 'Quiz'))
-                      .fontSize(this.fontSize * 0.8)
-                      .fontColor(this.theme.accentColor)
-                      .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                      .border({ width: 1, color: this.theme.accentColor })
-                      .borderRadius(this.fontSize * 0.4)
-                      .onClick(() => this.handleOpenDocAndQuiz(doc.id));
-                  }
-                  .alignItems(HorizontalAlign.End);
-                }
-              }
-              .padding(this.fontSize * 1)
-              .width('100%');
-
-              Row({ space: this.fontSize * 0.3 }) {
-                if (this.isDocFavorite(doc.id)) {
-                  Text(this.t('收藏', 'Fav'))
-                    .fontSize(this.fontSize * 0.65)
-                    .fontColor(0xffffffff)
-                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
-                    .backgroundColor(0xffF59E0B)
-                    .borderRadius({
-                      topLeft: this.fontSize * 0.7,
-                      topRight: this.fontSize * 0.4,
-                      bottomLeft: this.fontSize * 0,
-                      bottomRight: this.fontSize * 0.4
-                    });
-                }
-                if (this.isDocRecent(doc.id) && !this.isDocFavorite(doc.id)) {
-                  Text(this.t('最近', 'Recent'))
-                    .fontSize(this.fontSize * 0.65)
-                    .fontColor(0xffffffff)
-                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
-                    .backgroundColor(0xff10B981)
-                    .borderRadius({
-                      topLeft: this.fontSize * 0.7,
-                      topRight: this.fontSize * 0.4,
-                      bottomLeft: this.fontSize * 0,
-                      bottomRight: this.fontSize * 0.4
-                    });
-                }
-                if (this.isOnlineDoc(doc.id)) {
-                  Text(this.t('在线', 'Online'))
-                    .fontSize(this.fontSize * 0.65)
-                    .fontColor(0xffffffff)
-                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
-                    .backgroundColor(this.theme.accentColor)
-                    .borderRadius({
-                      topLeft: this.fontSize * 0.7,
-                      topRight: this.fontSize * 0.4,
-                      bottomLeft: this.fontSize * 0,
-                      bottomRight: this.fontSize * 0.4
-                    });
-                }
-                if (this.isLocalDoc(doc.id)) {
-                  Text(this.t('本地', 'Local'))
-                    .fontSize(this.fontSize * 0.65)
-                    .fontColor(0xffffffff)
-                    .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
-                    .backgroundColor(0xff6366F1)
-                    .borderRadius({
-                      topLeft: this.fontSize * 0.7,
-                      topRight: this.fontSize * 0.4,
-                      bottomLeft: this.fontSize * 0,
-                      bottomRight: this.fontSize * 0.4
-                    });
-                }
-              }
+            if (this.catalogSearchQuery.trim()) {
+              Text(this.t('清除', 'Clear'))
+                .fontSize(this.fontSize * 0.8)
+                .fontColor(this.theme.mutedTextColor)
+                .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
+                .backgroundColor(this.theme.surfaceBackgroundColor)
+                .border({ width: 1, color: this.theme.borderColor })
+                .borderRadius(this.fontSize * 0.8)
+                .onClick(() => {
+                  this.catalogSearchQuery = '';
+                  this.catalogSearchResults = [];
+                });
             }
-            .backgroundColor(this.theme.surfaceBackgroundColor)
-            .borderRadius(this.fontSize * 0.8);
-          }
-          .margin({ bottom: this.fontSize * 0.6 });
-        }, (doc: ReferenceDocSummary, index: number) => `${this.lang}:${doc.id}:${index}`);
-      }
-      .layoutWeight(1)
-      .divider({ strokeWidth: 0 })
-      .onScrollIndex((start: number, _end: number) => {
-        const isSearching: boolean = !!this.catalogSearchQuery.trim();
-        if (isSearching) {
-          const previous: number = this.searchListScrollIndex;
-          if (previous !== start) {
-            if (this.isLandscape) {
-              this.onLandscapeScrollDirection?.(start > previous ? 'up' : 'down');
-            }
-            this.searchListScrollIndex = start;
-          }
-        } else {
-          const previous: number = this.listScrollIndex;
-          if (previous !== start) {
-            if (this.isLandscape) {
-              this.onLandscapeScrollDirection?.(start > previous ? 'up' : 'down');
-            }
-            this.listScrollIndex = start;
           }
         }
-      });
+        // 横屏 tab 自动隐藏的判定依赖标题区高度：这里把“标题+搜索栏”整体计入，避免误判为 pinned。
+        .onAreaChange((_: Area, area: Area) => {
+          this.setHeaderAreaHeight(lengthToNumber(area.height));
+        });
+      }
+      .padding({ left: this.tabPadding().left, right: this.tabPadding().right, top: lengthToNumber(this.tabPadding().top ?? 0), bottom: 0 })
+      .opacity(this.shouldShowHeader() ? 1 : 0)
+      .translate({ x: 0, y: this.shouldShowHeader() ? 0 : -(this.headerAreaHeight + this.fontSize * 0.6 + lengthToNumber(this.tabPadding().top ?? 0)) })
+      .enabled(this.shouldShowHeader());
     }
-    .padding(this.tabPadding())
     .height('100%')
     .width('100%')
     .backgroundColor(this.theme.pageBackgroundColor);

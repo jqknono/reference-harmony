@@ -256,6 +256,7 @@ struct Index {
 
     // Wide main-content area: default to hidden (user can reveal by scrolling down).
     if ((!wasLandscape || wasPinned) && this.landscapeTabBarVisible) {
+      this.stopAllTextInputEditing();
       this.landscapeTabBarVisible = false;
     }
   }
@@ -273,6 +274,10 @@ struct Index {
     if (this.landscapeTabBarPinned) {
       if (!this.landscapeTabBarVisible) this.landscapeTabBarVisible = true;
       return;
+    }
+    if (!visible && this.landscapeTabBarVisible) {
+      // tab 栏隐藏时，同步收起搜索输入的焦点/键盘
+      this.stopAllTextInputEditing();
     }
     if (this.landscapeTabBarVisible === visible) return;
     const uiContext = this.getUIContext?.();
@@ -2291,6 +2296,7 @@ struct Index {
         fontSize: this.fontSize,
         lang: this.lang,
         isLandscape: this.isLandscape,
+        showSearchBar: this.landscapeTabBarPinned || this.landscapeTabBarVisible,
         favoriteDocIds: this.favoriteDocIds,
         recentDocIds: this.recentDocIds,
         iconErrorKeys: this.iconErrorKeys,
@@ -2316,6 +2322,7 @@ struct Index {
         fontSize: this.fontSize,
         lang: this.lang,
         isLandscape: this.isLandscape,
+        showSearchBar: this.landscapeTabBarPinned || this.landscapeTabBarVisible,
         learningModeEnabled: this.learningModeEnabled,
         searchQuery: this.searchQuery,
         searchSectionCards: this.searchSectionCards,
@@ -2455,6 +2462,7 @@ struct Index {
                 fontSize: this.fontSize,
                 lang: this.lang,
                 isLandscape: this.isLandscape,
+                showSearchBar: true,
                 favoriteDocIds: this.favoriteDocIds,
                 recentDocIds: this.recentDocIds,
                 iconErrorKeys: this.iconErrorKeys,
@@ -2483,6 +2491,7 @@ struct Index {
                 fontSize: this.fontSize,
                 lang: this.lang,
                 isLandscape: this.isLandscape,
+                showSearchBar: true,
                 learningModeEnabled: this.learningModeEnabled,
                 searchQuery: this.searchQuery,
                 searchSectionCards: this.searchSectionCards,
@@ -2628,6 +2637,7 @@ struct Index {
           theme: this.theme,
           fontSize: this.fontSize,
           lang: this.lang,
+          isLandscape: this.isLandscape,
           selectedDocId: this.selectedDocId,
           sectionCards: this.sectionCards,
           listScrollIndex: this.tocListScrollIndex,

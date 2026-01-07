@@ -8,6 +8,7 @@ export struct TocPanel {
   @Prop theme: AppThemeTokens;
   @Prop fontSize: number;
   @Prop lang: 'zh' | 'en';
+  @Prop isLandscape: boolean = false;
   @Prop selectedDocId: string;
   @Prop sectionCards: Array<SectionWithCards>;
   @Link listScrollIndex: number;
@@ -19,6 +20,15 @@ export struct TocPanel {
 
   private t(zh: string, en: string): string {
     return this.lang === 'en' ? en : zh;
+  }
+
+  private panelSidePadding(): number {
+    return this.isLandscape ? this.fontSize * 4 : this.fontSize * 1;
+  }
+
+  private tocCardLeftPadding(): number {
+    // card 左侧缩进 = 基础左右 padding + 额外缩进
+    return this.panelSidePadding() + this.fontSize * 0.8;
   }
 
   build() {
@@ -38,7 +48,12 @@ export struct TocPanel {
             });
         }
         .width('100%')
-        .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 1, bottom: this.fontSize * 0.8 });
+        .padding({
+          left: this.panelSidePadding(),
+          right: this.panelSidePadding(),
+          top: this.fontSize * 1,
+          bottom: this.fontSize * 0.8
+        });
 
         List({ scroller: this.listScroller, initialIndex: this.listScrollIndex }) {
           ForEach(this.sectionCards, (group: SectionWithCards, groupIndex: number) => {
@@ -54,7 +69,12 @@ export struct TocPanel {
                     .fontWeight(FontWeight.Medium)
                     .fontColor(this.theme.sectionTitleColor);
                 }
-                .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.8, bottom: this.fontSize * 0.4 });
+                .padding({
+                  left: this.panelSidePadding(),
+                  right: this.panelSidePadding(),
+                  top: this.fontSize * 0.8,
+                  bottom: this.fontSize * 0.4
+                });
               }
 
               ForEach(group.cards, (card: ReferenceCardData, cardIndex: number) => {
@@ -64,7 +84,12 @@ export struct TocPanel {
                     .fontColor(this.theme.textColor)
                     .maxLines(1)
                     .textOverflow({ overflow: TextOverflow.Ellipsis })
-                    .padding({ left: this.fontSize * 1.8, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
+                    .padding({
+                      left: this.tocCardLeftPadding(),
+                      right: this.panelSidePadding(),
+                      top: this.fontSize * 0.5,
+                      bottom: this.fontSize * 0.5
+                    })
                     .width('100%')
                     .onClick(() => {
                       this.onScrollToCard?.(groupIndex, cardIndex);
