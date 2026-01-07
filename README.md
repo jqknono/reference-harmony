@@ -19,19 +19,40 @@ App 下载: [AppGallery](https://appgallery.huawei.com/app/detail?id=reference.a
 
 ### 应用一句话简介（17 个字以内，用于小编推荐）
 
-技术速查+智能测验，学习更高效
+程序员的随身速查宝典，学编程必备
 
-### 应用介绍（面向普通用户，用于应用商店介绍）
+### 应用介绍（面向普通用户，用于应用商店介绍, 8000字以内, 不支持Emoji）
 
-一款专为开发者打造的智能速查学习应用，集成 **400+** 精选技术速查表，涵盖编程语言、开发框架、数据库、运维工具等全栈技术。采用卡片式阅读体验，支持离线使用、智能搜索、个性化测验等功能，让技术学习更轻松高效。
+**程序员的口袋知识库** —— 随时随地查阅技术文档，让学习编程不再枯燥！
 
-- **全栈覆盖**：400+ 技术速查表，涵盖前端、后端、移动端、运维等热门技术栈
-- **智能学习**：基于问答卡片的自适应测验系统，巩固知识点，提升学习效果
-- **离线优先**：本地存储所有内容，无网络环境也能随时查阅
-- **高效检索**：支持全文搜索、目录导航、关键词高亮，快速定位所需内容
-- **个性化体验**：中英文双语支持，深色/浅色主题切换，横屏适配
-- **云端同步**：支持在线 Markdown 解析，获取最新技术文档
-- **学习管理**：收藏夹、阅读历史、学习进度跟踪，打造专属知识库
+无论你是刚入门的编程小白，还是经验丰富的技术大牛，这款应用都能帮你快速查阅各种编程语言、开发框架、常用工具的语法和命令。告别频繁百度，一个 App 搞定所有速查需求！
+
+**海量内容，一网打尽**
+- 收录 **400+** 精选技术速查表（197 中文 + 206 英文）
+- 覆盖 Python、Java、JavaScript、Go、Rust、C/C++ 等主流编程语言
+- 囊括 React、Vue、Docker、Git、MySQL、Redis 等热门技术栈
+- 从 Linux 命令到正则表达式，从 Vim 快捷键到 ChatGPT 提示词，应有尽有
+
+**卡片式学习，高效记忆**
+- 知识点按卡片组织，清晰直观，一目了然
+- 智能测验功能，通过问答巩固所学，让记忆更牢固
+- 收藏夹 + 阅读历史，打造你的专属知识库
+
+**贴心设计，极致体验**
+- 深色/浅色主题自由切换，夜间学习不伤眼
+- 强大搜索功能，秒速定位你要的内容
+- 完全离线可用，地铁飞机上随时查阅
+- 横屏适配，平板阅读更舒适
+- 中英双语切换，外语文档轻松阅读
+
+**持续更新，永不过时**
+- 支持添加在线 Markdown 链接，实时获取最新文档
+- 支持导入本地 Markdown 文件，打造个人知识库
+- 开源项目，社区驱动，内容持续丰富
+
+**适合人群**：程序员、开发者、计算机专业学生、IT 运维人员、技术爱好者
+
+立即下载，开启你的高效学习之旅！
 
 ## 功能
 
@@ -81,7 +102,7 @@ node tools/sync_reference_docs.mjs --mode=github
 ### 使用 DevEco Studio（推荐）
 
 1. 用 DevEco Studio 打开工程目录（本仓库根目录）。
-2. 确认已配置 HarmonyOS SDK（本工程 `modelVersion` 为 `6.0.1`，对应 API 21）。
+2. 确认已配置 HarmonyOS SDK（本工程 `targetSdkVersion` 为 `6.0.1(21)`，对应 API 21）。
 3. 运行 `tools/sync_reference_docs.mjs` 生成/更新离线数据（可选，仓库已包含一份示例数据）。
 4. 选择设备/模拟器后运行。
 
@@ -104,9 +125,11 @@ node tools/sync_reference_docs.mjs --mode=github
   - `entry/src/main/resources/rawfile/reference/`：离线数据（由脚本生成）
 - `tools/sync_reference_docs.mjs`：同步上游 Markdown 并生成离线 JSON
 - `submodules/`：上游数据源仓库（可选但推荐）
-  - `submodules/jaywcjlove-reference`：中文数据源
-  - `submodules/fechin-reference`：英文数据源
-- `docs/DEV_PLAN.md`：实现思路与迭代计划
+  - `submodules/jaywcjlove-reference`：中文数据源（197 篇）
+  - `submodules/fechin-reference`：英文数据源（206 篇）
+- `docs/`：开发文档
+  - `docs/dev_plan_1.md`：实现思路与迭代计划
+  - `docs/dev_plan_2.md`：功能扩展路线图
 
 ## 开发约束（重要）
 
@@ -117,7 +140,7 @@ node tools/sync_reference_docs.mjs --mode=github
 
 ## 常见问题
 
-- **`hvigor/ohpm` 命令行工具启动报错**（`Class extends value undefined...`）：见 `docs/DEV_PLAN.md` 的 “命令行工具依赖冲突” 说明。
+- **`hvigor/ohpm` 命令行工具启动报错**（`Class extends value undefined...`）：见 `docs/dev_plan_1.md` 的 “命令行工具依赖冲突” 说明。
 - **GitHub API 受限/拉取慢**：优先使用 `git submodule update --init --recursive` 并 `--mode=local`。
 
 ## 致谢与说明
