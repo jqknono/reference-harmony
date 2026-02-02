@@ -10,10 +10,10 @@ App 下载: [AppGallery](https://appgallery.huawei.com/app/detail?id=reference.a
 
 [![AppGallery QR](assets/https___appgallery.huawei.com_app_detail_id=reference.app.jqknono.com.png)](https://appgallery.huawei.com/app/detail?id=reference.app.jqknono.com)
 
-- [备忘清单文件列表--Github Pages](https://jqknono.github.io/reference-harmony/)
-- [备忘清单文件列表--阿里云托管(大陆用户可访问)](https://reference.jqknono.com/)
+- [在线清单列表（Web / GitHub Pages）](https://jqknono.github.io/reference-harmony/)
+- [在线清单列表（Web / 阿里云托管，大陆用户可访问）](https://reference.jqknono.com/)
 
-> 在线清单列表更新速度优先于 App 内离线内容更新速度, App 内部分清单更新存在延迟, 部分清单可能未包含, 可以使用**添加在线 Markdown 链接**或**导入本地 Markdown 文件**来获得最新内容。
+> 在线清单列表更新速度优先于 App 内离线内容更新速度。App 会尝试加载“云端清单”（在线目录）；若遇到延迟或缺失，仍可使用**添加在线 Markdown 链接**或**导入本地 Markdown 文件**获取最新内容。
 
 ## 应用介绍
 
@@ -61,6 +61,7 @@ App 下载: [AppGallery](https://appgallery.huawei.com/app/detail?id=reference.a
 - **测验（Quiz）**：从当前文档的问答卡片中随机抽题，进行知识测验并查看得分与答题详情。
 - **设置（Settings）**：语言（`zh`/`en`）与主题（`dark`/`light`）切换；在线 Markdown 链接管理；学习模式开关。
 - **离线数据**：运行时从 `rawfile` 读取 JSON 渲染，不依赖在线接口。
+- **在线清单列表**：从后端加载“云端清单”索引，在目录中直接浏览并打开/测验（运行时解析 Markdown）。
 - **在线 Markdown**：支持添加任意在线 Markdown 链接，实时解析为卡片格式阅读。
 
 ## 数据来源与生成
@@ -114,6 +115,31 @@ node tools/sync_reference_docs.mjs --mode=github
 "C:\Program Files\Huawei\DevEco Studio\tools\node\node.exe" "C:\Program Files\Huawei\DevEco Studio\tools\hvigor\bin\hvigorw.js" clean --mode module -p product=default assembleHap --analyze=normal --parallel --incremental --daemon
 ```
 
+### 在线清单工程（Vue + Node）
+
+后端（提供在线目录 API 与 `/mds/**` 托管）：
+
+```bash
+cd online/server
+node src/index.mjs
+```
+
+前端（Vue 清单列表页，默认读取静态 `catalog.json`；也支持通过 `VITE_API_BASE` 走后端 API）：
+
+```bash
+cd online/web
+npm install
+npm run dev
+```
+
+构建（用于 GitHub Pages，产物在 `online/web/dist/`，并包含 `dist/mds/**` 与 `dist/catalog.json`）：
+
+```bash
+cd online/web
+npm install
+npm run build
+```
+
 ## 工程结构
 
 - `AppScope/`：应用级配置（`app.json5`、应用资源等）
@@ -124,6 +150,8 @@ node tools/sync_reference_docs.mjs --mode=github
   - `entry/src/main/ets/components/ReferenceCard.ets`：卡片渲染
   - `entry/src/main/resources/rawfile/reference/`：离线数据（由脚本生成）
 - `tools/sync_reference_docs.mjs`：同步上游 Markdown 并生成离线 JSON
+- `online/server/`：在线清单后端（Node.js）：提供 `GET /api/v1/catalog` 与静态 `/mds/**` 托管
+- `online/web/`：在线清单前端（Vue3+Vite）：清单列表页（搜索/复制链接/下载）；GitHub Pages 由此构建
 - `submodules/`：上游数据源仓库（可选但推荐）
   - `submodules/jaywcjlove-reference`：中文数据源（197 篇）
   - `submodules/fechin-reference`：英文数据源（206 篇）

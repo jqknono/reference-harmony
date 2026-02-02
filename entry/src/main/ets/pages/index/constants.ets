@@ -12,6 +12,16 @@ export const KEEP_FAVORITE_AND_RECENT_ENTRY_IN_FULL_CATALOG_LIST: boolean = fals
 export const SHOW_IMPORT_MARKDOWN_URL_SETTING: boolean = true;
 export const TABBAR_AUTO_HIDE_EFFECTIVE_ASPECT_RATIO_THRESHOLD: number = 3;
 
+// 调试模式（默认关闭）
+// - SHOW_DEBUG_MODE_TOGGLE: 是否在“设置”里显示调试模式开关
+// - 调试模式开启后：
+//   - 在线清单列表加载失败时才展示错误信息（避免影响普通用户）
+//   - 允许配置在线清单后端服务器地址
+export const SHOW_DEBUG_MODE_TOGGLE: boolean = true;
+export const DEBUG_MODE_PREF_KEY: string = 'debugModeEnabled';
+export const DEBUG_SERVER_ORIGIN_PREF_KEY: string = 'debugServerOrigin';
+export const DEFAULT_DEBUG_SERVER_ORIGIN: string = 'http://192.168.31.2:5179';
+
 // 引导评价
 export const ENABLE_APP_REVIEW_PROMPT: boolean = true;
 export const APP_REVIEW_PREF_KEY_DO_NOT_ASK: string = 'appReviewDoNotAsk';

@@ -2,7 +2,7 @@ import type { ReferenceDoc, ReferenceCardData } from '../../common/referenceMode
 import type { AppThemeTokens } from '../../common/appTheme';
 import type { SectionWithCards } from './types';
 import { ReferenceCard } from '../../components/ReferenceCard';
-import { makeCardMargin, getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, isRemoteIcon, iconKey, getTocCardTitle, lengthToNumber } from './utils';
+import { makeCardMargin, getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, iconKey, getTocCardTitle, lengthToNumber } from './utils';
 
 @Component
 export struct ReadTab {
@@ -93,7 +93,6 @@ export struct ReadTab {
   private canShowLocalIcon(docId: string, icon: string | undefined): boolean {
     const s = trimmedIcon(icon);
     if (!s) return false;
-    if (isRemoteIcon(s)) return false;
     return !this.hasIconError(iconKey(docId, s));
   }
 

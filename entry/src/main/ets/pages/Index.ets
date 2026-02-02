@@ -14,19 +14,25 @@ import { extractQuestionsFromDoc, selectRandomQuestions, calculateScore } from '
 import { QuizRepository } from '../common/quizRepository';
 import { OnlineMdRepository } from '../common/onlineMdRepository';
 import { LocalMdRepository } from '../common/localMdRepository';
+import { OnlineCatalogRepository } from '../common/onlineCatalogRepository';
 import type { OnlineMdLink } from '../common/onlineMdModels';
 import { peekLaunchParams, takeLaunchParams } from '../common/launchParamsStore';
 import type { LaunchParams } from '../common/launchParamsStore';
 import { requestAppReview } from '../common/appReview';
 
 import type { SectionWithCards } from './index/types';
-import { APP_REVIEW_MIN_DAYS_SINCE_FIRST_LAUNCH, APP_REVIEW_MIN_LAUNCH_COUNT, APP_REVIEW_PREF_KEY_DO_NOT_ASK, APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, APP_REVIEW_PREF_KEY_LAUNCH_COUNT, APP_REVIEW_PROMPT_COOLDOWN_DAYS, CATALOG_DOC_ID_BLACKLIST, ENABLE_APP_REVIEW_PROMPT, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_PRIVACY_CONSENT_DIALOG, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT, TABBAR_AUTO_HIDE_EFFECTIVE_ASPECT_RATIO_THRESHOLD } from './index/constants';
+import { APP_REVIEW_MIN_DAYS_SINCE_FIRST_LAUNCH, APP_REVIEW_MIN_LAUNCH_COUNT, APP_REVIEW_PREF_KEY_DO_NOT_ASK, APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, APP_REVIEW_PREF_KEY_LAUNCH_COUNT, APP_REVIEW_PROMPT_COOLDOWN_DAYS, CATALOG_DOC_ID_BLACKLIST, DEBUG_MODE_PREF_KEY, DEBUG_SERVER_ORIGIN_PREF_KEY, DEFAULT_DEBUG_SERVER_ORIGIN, ENABLE_APP_REVIEW_PROMPT, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_PRIVACY_CONSENT_DIALOG, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT, TABBAR_AUTO_HIDE_EFFECTIVE_ASPECT_RATIO_THRESHOLD } from './index/constants';
 import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens, toHexColorString } from './index/utils';
 import { DocListTab } from './index/DocListTab';
 import { ReadTab } from './index/ReadTab';
 import { QuizTab } from './index/QuizTab';
 import { SettingsTab } from './index/SettingsTab';
+import { CustomListTab } from './index/CustomListTab';
 import { TocPanel } from './index/TocPanel';
+import type { CustomListCollection } from '../common/customListModels';
+import { createEmptyCustomListCollection } from '../common/customListModels';
+import { CustomListRepository } from '../common/customListRepository';
+import { handleCustomListBackPress, handleQuizBackPress } from '../common/backHandlerRegistry';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
@@ -131,6 +137,13 @@ struct Index {
   @State private quizAvailableCount: number = 0;
   private quizRepository: QuizRepository = new QuizRepository();
 
+  // 在线清单列表（后端目录）相关状态
+  @State private cloudCatalogDocs: Array<ReferenceDocSummary> = [];
+  private onlineCatalogRepository: OnlineCatalogRepository = new OnlineCatalogRepository();
+  @State private debugModeEnabled: boolean = false;
+  @State private debugServerOrigin: string = DEFAULT_DEBUG_SERVER_ORIGIN;
+  @State private debugServerOriginInput: string = DEFAULT_DEBUG_SERVER_ORIGIN;
+
   // 在线 MD 相关状态
   @State private onlineMdLinks: Array<OnlineMdLink> = [];
   @State private onlineMdInputUrl: string = '';
@@ -158,6 +171,11 @@ struct Index {
   @State private recentDocIds: Array<string> = [];
   private recentDocAutoOpenFixApplied: boolean = false;
 
+  // 自定义清单相关状态
+  @State private customLists: CustomListCollection = createEmptyCustomListCollection();
+  @State private customListScrollY: number = 0;
+  private customListRepository: CustomListRepository = new CustomListRepository();
+
   private stopAllTextInputEditing(): void {
     this.catalogSearchInputController.stopEditing();
     this.docSearchInputController.stopEditing();
@@ -183,7 +201,9 @@ struct Index {
 
     const docId: string = params.recentDocId.trim();
     if (docId.length > 0) {
-      if (this.isOnlineDoc(docId)) {
+      if (this.isCloudDoc(docId)) {
+        await this.openCloudDoc(docId);
+      } else if (this.isOnlineDoc(docId)) {
         await this.openOnlineDoc(docId);
       } else if (this.isLocalDoc(docId)) {
         await this.openLocalDoc(docId);
@@ -594,6 +614,103 @@ struct Index {
     await this.saveLearningModeSetting(enabled);
   }
 
+  private normalizeServerOriginText(origin: string): string {
+    let raw: string = (origin ?? '').trim();
+    if (!raw) raw = DEFAULT_DEBUG_SERVER_ORIGIN;
+    if (!/^https?:\/\//.test(raw)) raw = `http://${raw}`;
+    raw = raw.replace(/\/+$/g, '');
+    return raw;
+  }
+
+  private async loadDebugSettings(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) {
+      this.debugModeEnabled = false;
+      this.debugServerOrigin = DEFAULT_DEBUG_SERVER_ORIGIN;
+      this.debugServerOriginInput = DEFAULT_DEBUG_SERVER_ORIGIN;
+      return;
+    }
+
+    const enabled: boolean = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get(DEBUG_MODE_PREF_KEY, false))
+      .then((v: ValueType): boolean => v === true || v === 'true', (): boolean => false);
+
+    const savedOrigin: string = await Promise.resolve()
+      .then((): Promise<ValueType> => prefs.get(DEBUG_SERVER_ORIGIN_PREF_KEY, DEFAULT_DEBUG_SERVER_ORIGIN))
+      .then((v: ValueType): string => typeof v === 'string' ? v : String(v), (): string => DEFAULT_DEBUG_SERVER_ORIGIN);
+
+    const normalizedOrigin: string = this.normalizeServerOriginText(savedOrigin);
+    this.debugModeEnabled = enabled;
+    this.debugServerOrigin = normalizedOrigin;
+    this.debugServerOriginInput = normalizedOrigin;
+  }
+
+  private async saveDebugModeSetting(enabled: boolean): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put(DEBUG_MODE_PREF_KEY, enabled))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  private async saveDebugServerOriginSetting(origin: string): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    const prefs: Preferences | undefined = await Promise.resolve()
+      .then((): Promise<Preferences> => preferences.getPreferences(host, 'settings'))
+      .then((p: Preferences): Preferences => p, (): undefined => undefined);
+    if (!prefs) return;
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.put(DEBUG_SERVER_ORIGIN_PREF_KEY, origin))
+      .then((): void => undefined, (): void => undefined);
+    await Promise.resolve()
+      .then((): Promise<void> => prefs.flush())
+      .then((): void => undefined, (): void => undefined);
+  }
+
+  private async toggleDebugMode(enabled: boolean): Promise<void> {
+    if (this.debugModeEnabled === enabled) return;
+
+    this.debugModeEnabled = enabled;
+    if (enabled) {
+      const normalized: string = this.normalizeServerOriginText(this.debugServerOriginInput);
+      this.debugServerOrigin = normalized;
+      this.debugServerOriginInput = normalized;
+      this.saveDebugServerOriginSetting(normalized);
+    }
+
+    await this.saveDebugModeSetting(enabled);
+    this.errorText = '';
+    await this.loadCloudCatalog();
+  }
+
+  private async applyDebugServerOrigin(): Promise<void> {
+    const normalized: string = this.normalizeServerOriginText(this.debugServerOriginInput);
+    if (this.debugServerOrigin !== normalized) {
+      this.debugServerOrigin = normalized;
+    }
+    if (this.debugServerOriginInput !== normalized) {
+      this.debugServerOriginInput = normalized;
+    }
+    await this.saveDebugServerOriginSetting(normalized);
+
+    if (this.debugModeEnabled) {
+      this.errorText = '';
+      await this.loadCloudCatalog();
+    }
+  }
+
   private async loadPrivacyConsentSetting(): Promise<void> {
     if (!ENABLE_PRIVACY_CONSENT_DIALOG) {
       this.showPrivacyConsentDialog = false;
@@ -899,6 +1016,9 @@ struct Index {
     for (let i = 0; i < this.docs.length; i++) {
       pushIfMatched(this.docs[i]);
     }
+    for (let i = 0; i < this.cloudCatalogDocs.length; i++) {
+      pushIfMatched(this.cloudCatalogDocs[i]);
+    }
     for (let i = 0; i < this.onlineMdDocs.length; i++) {
       pushIfMatched(this.onlineMdDocs[i]);
     }
@@ -1014,6 +1134,7 @@ struct Index {
     this.lang = next;
     // 先清空与文档/目录相关的状态，避免语言已切换但目录仍短暂显示旧清单。
     this.docs = [];
+    this.cloudCatalogDocs = [];
     this.selectedDoc = undefined;
     this.selectedDocId = '';
     this.selectedDocIcon = '';
@@ -1039,6 +1160,7 @@ struct Index {
     this.saveLangSetting(next);
     await this.loadManifest(true);
     await this.loadManifestCounts();
+    await this.loadCloudCatalog();
   }
 
   private async switchTheme(next: ThemePreference): Promise<void> {
@@ -1137,12 +1259,15 @@ struct Index {
     await this.loadPrivacyConsentSetting();
     await this.loadOrientationModeSetting();
     await this.loadLearningModeSetting();
+    await this.loadDebugSettings();
     await this.loadFavoriteAndRecentDocs();
     await this.loadManifest(!skipAutoOpenFirst);
     await this.loadManifestCounts();
     await this.loadQuizRecord();
+    await this.loadCustomLists();
     await this.loadOnlineMdLinks();
     await this.loadLocalMdLinks();
+    await this.loadCloudCatalog();
     await this.consumeNotificationLaunchIfAny();
     await this.recordLaunchAndMaybePromptForReview();
   }
@@ -1296,6 +1421,12 @@ struct Index {
     this.quizRecord = await this.quizRepository.getQuizRecord(host);
   }
 
+  private async loadCustomLists(): Promise<void> {
+    const host = this.getUIContext().getHostContext();
+    if (!host) return;
+    this.customLists = await this.customListRepository.getCustomLists(host);
+  }
+
   private async loadOnlineMdLinks(): Promise<void> {
     const host = this.getUIContext().getHostContext();
     if (!host) return;
@@ -1310,6 +1441,28 @@ struct Index {
     const stored = await this.localMdRepository.getLinks(host);
     this.localMdLinks = stored;
     await this.rebuildLocalMdDocs();
+  }
+
+  private async loadCloudCatalog(): Promise<void> {
+    const targetLang: ReferenceLang = this.lang;
+    const apiUrlOrOriginOverride: string = this.debugModeEnabled ? this.debugServerOrigin : '';
+    await this.onlineCatalogRepository.fetchCatalog(targetLang, apiUrlOrOriginOverride).then(
+      (docs: Array<ReferenceDocSummary>): void => {
+        if (this.lang !== targetLang) return;
+        this.cloudCatalogDocs = docs;
+        this.rebuildCatalogSearchResults();
+      },
+      (e: Error | string): void => {
+        if (this.lang !== targetLang) return;
+        if (!this.debugModeEnabled) return;
+        if (!this.errorText) {
+          this.errorText = this.t(
+            `在线清单列表加载失败：${String(e)}`,
+            `Failed to load online catalog: ${String(e)}`,
+          );
+        }
+      },
+    );
   }
 
   private findOnlineMdLink(linkId: string): OnlineMdLink | undefined {
@@ -1663,8 +1816,147 @@ struct Index {
     return docId.startsWith('online_');
   }
 
+  private isCloudDoc(docId: string): boolean {
+    return docId.startsWith('cloud_');
+  }
+
   private isLocalDoc(docId: string): boolean {
     return docId.startsWith('local_');
+  }
+
+  private findCloudCatalogSummary(docId: string): ReferenceDocSummary | undefined {
+    for (let i = 0; i < this.cloudCatalogDocs.length; i++) {
+      const doc = this.cloudCatalogDocs[i];
+      if (doc?.id === docId) return doc;
+    }
+    return undefined;
+  }
+
+  private cloudMdUrlFromSummary(summary: ReferenceDocSummary | undefined): string {
+    const raw = (summary?.file ?? '').trim();
+    if (!raw.startsWith('cloud:')) return '';
+    return raw.slice('cloud:'.length).trim();
+  }
+
+  private updateCloudCatalogSummary(docId: string, doc: ReferenceDoc): void {
+    const next: Array<ReferenceDocSummary> = [];
+    let changed: boolean = false;
+    for (let i = 0; i < this.cloudCatalogDocs.length; i++) {
+      const item = this.cloudCatalogDocs[i];
+      if (item.id !== docId) {
+        next.push(item);
+        continue;
+      }
+      changed = true;
+      next.push({
+        id: item.id,
+        name: doc.name || item.name,
+        title: doc.title || item.title,
+        icon: item.icon,
+        file: item.file,
+        sectionCount: doc.sections.length,
+        cardCount: doc.cards.length,
+      });
+    }
+    if (changed) {
+      this.cloudCatalogDocs = next;
+      this.rebuildCatalogSearchResults();
+    }
+  }
+
+  private async ensureCloudDocReady(docId: string): Promise<ReferenceDoc | undefined> {
+    const inMemory = this.onlineMdDocCache.get(docId);
+    if (inMemory) return inMemory;
+
+    const host = this.getUIContext().getHostContext();
+    if (!host) return undefined;
+
+    const cachedDoc = await this.onlineMdRepository.getDocFromCache(host, docId);
+    if (cachedDoc) {
+      this.onlineMdDocCache.set(docId, cachedDoc);
+      return cachedDoc;
+    }
+
+    const summary = this.findCloudCatalogSummary(docId);
+    const url = this.cloudMdUrlFromSummary(summary);
+    if (!url) return undefined;
+
+    const result = await this.onlineMdRepository.fetchAndParse(url);
+    const doc = result.doc;
+    if (!result.success || !doc) {
+      this.errorText = this.t(
+        `加载在线清单失败：${result.error ?? ''}`,
+        `Failed to load online catalog doc: ${result.error ?? ''}`,
+      );
+      return undefined;
+    }
+
+    await this.onlineMdRepository.saveDocToCache(host, docId, doc);
+    this.onlineMdDocCache.set(docId, doc);
+    this.updateCloudCatalogSummary(docId, doc);
+    return doc;
+  }
+
+  private async openCloudDoc(docId: string): Promise<void> {
+    this.openDocRequestId++;
+    const requestId = this.openDocRequestId;
+    this.loading = true;
+    this.errorText = '';
+    this.selectedDocIcon = '';
+
+    const doc = await this.ensureCloudDocReady(docId);
+    if (requestId !== this.openDocRequestId) return;
+    if (!doc) {
+      this.loading = false;
+      return;
+    }
+    const summary = this.findCloudCatalogSummary(docId);
+    const summaryIcon: string = (summary?.icon ?? '').trim();
+    this.selectedDoc = doc;
+    this.selectedDocId = docId;
+    this.selectedDocIcon = summaryIcon || (doc.icon ?? '');
+    this.selectedDocAvatarVersion = requestId;
+    this.rebuildSectionCards(doc);
+    this.rebuildSearchResults();
+    this.updateQuizAvailableCount();
+    this.addToRecentDocs(docId);
+    this.resetReadTabScrollState();
+    this.resetTocScrollState();
+    this.switchToTab(1);
+    if (requestId === this.openDocRequestId) {
+      this.loading = false;
+    }
+  }
+
+  private async openCloudDocAndQuiz(docId: string): Promise<void> {
+    this.openDocRequestId++;
+    const requestId = this.openDocRequestId;
+    this.loading = true;
+    this.errorText = '';
+    this.selectedDocIcon = '';
+
+    const doc = await this.ensureCloudDocReady(docId);
+    if (requestId !== this.openDocRequestId) return;
+    if (!doc) {
+      this.loading = false;
+      return;
+    }
+    const summary = this.findCloudCatalogSummary(docId);
+    const summaryIcon: string = (summary?.icon ?? '').trim();
+    this.selectedDoc = doc;
+    this.selectedDocId = docId;
+    this.selectedDocIcon = summaryIcon || (doc.icon ?? '');
+    this.selectedDocAvatarVersion = requestId;
+    this.rebuildSectionCards(doc);
+    this.rebuildSearchResults();
+    this.updateQuizAvailableCount();
+    this.addToRecentDocs(docId);
+    this.resetReadTabScrollState();
+    this.resetTocScrollState();
+    this.switchToTab(2);
+    if (requestId === this.openDocRequestId) {
+      this.loading = false;
+    }
   }
 
   private async openOnlineDoc(linkId: string): Promise<void> {
@@ -1949,7 +2241,7 @@ struct Index {
       this.showTocPanel = false;
       return true;
     }
-    if (this.currentTabIndex === 3) {
+    if (this.currentTabIndex === 4) {
       if (this.showPrivacyStatement) {
         this.showPrivacyStatement = false;
         return true;
@@ -1958,6 +2250,12 @@ struct Index {
         this.showAbout = false;
         return true;
       }
+    }
+    if (this.currentTabIndex === 3 && handleCustomListBackPress() === true) {
+      return true;
+    }
+    if (this.currentTabIndex === 2 && handleQuizBackPress() === true) {
+      return true;
     }
     if (this.currentTabIndex !== 0) {
       this.switchToTab(0);
@@ -1972,6 +2270,7 @@ struct Index {
     // 英文 "Cheatsheet" 在窄屏/大字号下易被截断；插入零宽空格以允许必要时在单词内部换行。
     if (index === 1) return this.t('清单', 'Cheat\u200Bsheet');
     if (index === 2) return this.t('测验', 'Quiz');
+    if (index === 3) return this.t('记忆', 'Memory');
     return this.t('设置', 'Settings');
   }
 
@@ -1997,6 +2296,7 @@ struct Index {
     if (index === 0) return '\uF03A'; // list
     if (index === 1) return '\uF02D'; // book
     if (index === 2) return '\uF059'; // question-circle
+    if (index === 3) return '\uF5DA'; // brain (memory/learning)
     return '\uF013'; // gear
   }
 
@@ -2264,6 +2564,7 @@ struct Index {
         this.TabBarItem(1);
         this.TabBarItem(2);
         this.TabBarItem(3);
+        this.TabBarItem(4);
       }
       .width('100%')
       .padding({
@@ -2304,12 +2605,15 @@ struct Index {
         listScroller: this.catalogListScroller,
         tabsController: this.tabsController,
         docs: this.docs,
+        cloudDocs: this.cloudCatalogDocs,
         onlineMdDocs: this.onlineMdDocs,
         localMdDocs: this.localMdDocs,
         onOpenDoc: (docId: string, switchToReadTab: boolean): void => { this.openDoc(docId, switchToReadTab); },
+        onOpenCloudDoc: (docId: string): void => { this.openCloudDoc(docId); },
         onOpenOnlineDoc: (docId: string): void => { this.openOnlineDoc(docId); },
         onOpenLocalDoc: (docId: string): void => { this.openLocalDoc(docId); },
         onOpenDocAndQuiz: (docId: string): void => { this.openDocAndQuiz(docId); },
+        onOpenCloudDocAndQuiz: (docId: string): void => { this.openCloudDocAndQuiz(docId); },
         onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },
         onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
         onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
@@ -2386,6 +2690,18 @@ struct Index {
         onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
         onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
       });
+    } else if (this.currentTabIndex === 3) {
+      CustomListTab({
+        theme: this.theme,
+        fontSize: this.fontSize,
+        lang: this.lang,
+        isLandscape: this.isLandscape,
+        customLists: this.customLists,
+        scrollY: this.customListScrollY,
+        onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+        onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
+        onRefreshLists: (): void => { this.loadCustomLists(); },
+      });
     } else {
       SettingsTab({
         theme: this.theme,
@@ -2411,10 +2727,14 @@ struct Index {
         localMdImportResult: this.localMdImportResult,
         localMdLinks: this.localMdLinks,
         localMdCopySuccess: this.localMdCopySuccess,
+        debugModeEnabled: this.debugModeEnabled,
+        debugServerOriginInput: this.debugServerOriginInput,
         onSwitchOrientationMode: (mode: 'portrait' | 'landscape' | 'auto'): void => { this.switchOrientationMode(mode); },
         onSwitchLang: (lang: ReferenceLang): void => { this.switchLang(lang); },
         onSwitchTheme: (theme: ThemePreference): void => { this.switchTheme(theme); },
         onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
+        onToggleDebugMode: (enabled: boolean): void => { this.toggleDebugMode(enabled); },
+        onApplyDebugServerOrigin: (): void => { this.applyDebugServerOrigin(); },
         onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
         onUpdateOnlineMd: (linkId: string): void => { this.updateOnlineMd(linkId); },
         onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
@@ -2470,12 +2790,15 @@ struct Index {
                 listScroller: this.catalogListScroller,
                 tabsController: this.tabsController,
                 docs: this.docs,
+                cloudDocs: this.cloudCatalogDocs,
                 onlineMdDocs: this.onlineMdDocs,
                 localMdDocs: this.localMdDocs,
                 onOpenDoc: (docId: string, switchToReadTab: boolean): void => { this.openDoc(docId, switchToReadTab); },
+                onOpenCloudDoc: (docId: string): void => { this.openCloudDoc(docId); },
                 onOpenOnlineDoc: (docId: string): void => { this.openOnlineDoc(docId); },
                 onOpenLocalDoc: (docId: string): void => { this.openLocalDoc(docId); },
                 onOpenDocAndQuiz: (docId: string): void => { this.openDocAndQuiz(docId); },
+                onOpenCloudDocAndQuiz: (docId: string): void => { this.openCloudDocAndQuiz(docId); },
                 onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },
                 onOpenLocalDocAndQuiz: (docId: string): void => { this.openLocalDocAndQuiz(docId); },
                 onRebuildCatalogSearchResults: (): void => { this.rebuildCatalogSearchResults(); },
@@ -2562,6 +2885,21 @@ struct Index {
             .tabBar(this.TabBarItem(2));
 
             TabContent() {
+              CustomListTab({
+                theme: this.theme,
+                fontSize: this.fontSize,
+                lang: this.lang,
+                isLandscape: this.isLandscape,
+                customLists: this.customLists,
+                scrollY: this.customListScrollY,
+                onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
+                onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
+                onRefreshLists: (): void => { this.loadCustomLists(); },
+              });
+            }
+            .tabBar(this.TabBarItem(3));
+
+            TabContent() {
               SettingsTab({
                 theme: this.theme,
                 fontSize: this.fontSize,
@@ -2586,10 +2924,14 @@ struct Index {
                 localMdImportResult: this.localMdImportResult,
                 localMdLinks: this.localMdLinks,
                 localMdCopySuccess: this.localMdCopySuccess,
+                debugModeEnabled: this.debugModeEnabled,
+                debugServerOriginInput: this.debugServerOriginInput,
                 onSwitchOrientationMode: (mode: 'portrait' | 'landscape' | 'auto'): void => { this.switchOrientationMode(mode); },
                 onSwitchLang: (lang: ReferenceLang): void => { this.switchLang(lang); },
                 onSwitchTheme: (theme: ThemePreference): void => { this.switchTheme(theme); },
                 onToggleLearningMode: (enabled: boolean): void => { this.toggleLearningMode(enabled); },
+                onToggleDebugMode: (enabled: boolean): void => { this.toggleDebugMode(enabled); },
+                onApplyDebugServerOrigin: (): void => { this.applyDebugServerOrigin(); },
                 onParseAndAddOnlineMd: (): void => { this.parseAndAddOnlineMd(); },
                 onUpdateOnlineMd: (linkId: string): void => { this.updateOnlineMd(linkId); },
                 onRemoveOnlineMd: (linkId: string): void => { this.removeOnlineMd(linkId); },
@@ -2602,7 +2944,7 @@ struct Index {
                 onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
               });
           }
-            .tabBar(this.TabBarItem(3));
+            .tabBar(this.TabBarItem(4));
           }
           .layoutWeight(1)
           .animationDuration(this.tabAnimationDuration())

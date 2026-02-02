@@ -1,6 +1,6 @@
 import type { ReferenceDocSummary } from '../../common/referenceModels';
 import type { AppThemeTokens } from '../../common/appTheme';
-import { getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, isRemoteIcon, iconKey, lengthToNumber } from './utils';
+import { getAvatarText, trimmedIcon, isRawfileIcon, isSvgIcon, iconKey, lengthToNumber } from './utils';
 import { KEEP_FAVORITE_AND_RECENT_ENTRY_IN_FULL_CATALOG_LIST } from './constants';
 
 @Component
@@ -18,6 +18,7 @@ export struct DocListTab {
   @Prop isLandscape: boolean;
   @Prop showSearchBar: boolean = true;
   @Prop docs: Array<ReferenceDocSummary> = [];
+  @Prop cloudDocs: Array<ReferenceDocSummary> = [];
   @Prop onlineMdDocs: Array<ReferenceDocSummary> = [];
   @Prop localMdDocs: Array<ReferenceDocSummary> = [];
   @Prop favoriteDocIds: Array<string>;
@@ -31,9 +32,11 @@ export struct DocListTab {
   @State private headerAreaHeight: number = 0;
 
   onOpenDoc?: (docId: string, switchToReadTab: boolean) => void;
+  onOpenCloudDoc?: (docId: string) => void;
   onOpenOnlineDoc?: (docId: string) => void;
   onOpenLocalDoc?: (docId: string) => void;
   onOpenDocAndQuiz?: (docId: string) => void;
+  onOpenCloudDocAndQuiz?: (docId: string) => void;
   onOpenOnlineDocAndQuiz?: (docId: string) => void;
   onOpenLocalDocAndQuiz?: (docId: string) => void;
   onRebuildCatalogSearchResults?: () => void;
@@ -65,6 +68,10 @@ export struct DocListTab {
 
   private isOnlineDoc(docId: string): boolean {
     return docId.startsWith('online_');
+  }
+
+  private isCloudDoc(docId: string): boolean {
+    return docId.startsWith('cloud_');
   }
 
   private isLocalDoc(docId: string): boolean {
@@ -101,10 +108,44 @@ export struct DocListTab {
     return 0;
   }
 
+  private cloudBaseDocIds(): Set<string> {
+    const out: Set<string> = new Set<string>();
+    for (let i = 0; i < this.cloudDocs.length; i++) {
+      const id: string = (this.cloudDocs[i]?.id ?? '').trim();
+      if (this.isCloudDoc(id)) {
+        out.add(id.slice('cloud_'.length));
+      }
+    }
+    return out;
+  }
+
+  private filteredCatalogSearchResults(): Array<ReferenceDocSummary> {
+    const cloudBaseIds = this.cloudBaseDocIds();
+    const out: Array<ReferenceDocSummary> = [];
+    const seen: Set<string> = new Set<string>();
+    for (let i = 0; i < this.catalogSearchResults.length; i++) {
+      const doc = this.catalogSearchResults[i];
+      const id = (doc?.id ?? '').trim();
+      if (!id) continue;
+      if (cloudBaseIds.has(id)) continue;
+      if (seen.has(id)) continue;
+      seen.add(id);
+      out.push(doc);
+    }
+    return out;
+  }
+
   private getCatalogDocsForDisplay(): Array<ReferenceDocSummary> {
     const merged: Array<ReferenceDocSummary> = [];
+    const cloudBaseIds = this.cloudBaseDocIds();
     for (let i = 0; i < this.docs.length; i++) {
-      merged.push(this.docs[i]);
+      const doc = this.docs[i];
+      const id = (doc?.id ?? '').trim();
+      if (id && cloudBaseIds.has(id)) continue;
+      merged.push(doc);
+    }
+    for (let i = 0; i < this.cloudDocs.length; i++) {
+      merged.push(this.cloudDocs[i]);
     }
     for (let i = 0; i < this.onlineMdDocs.length; i++) {
       merged.push(this.onlineMdDocs[i]);
@@ -172,7 +213,6 @@ export struct DocListTab {
   private canShowLocalIcon(docId: string, icon: string | undefined): boolean {
     const s = trimmedIcon(icon);
     if (!s) return false;
-    if (isRemoteIcon(s)) return false;
     return !this.hasIconError(iconKey(docId, s));
   }
 
@@ -231,7 +271,9 @@ export struct DocListTab {
   }
 
   private handleOpenDoc(docId: string): void {
-    if (this.isOnlineDoc(docId)) {
+    if (this.isCloudDoc(docId)) {
+      this.onOpenCloudDoc?.(docId);
+    } else if (this.isOnlineDoc(docId)) {
       this.onOpenOnlineDoc?.(docId);
     } else if (this.isLocalDoc(docId)) {
       this.onOpenLocalDoc?.(docId);
@@ -241,7 +283,9 @@ export struct DocListTab {
   }
 
   private handleOpenDocAndQuiz(docId: string): void {
-    if (this.isOnlineDoc(docId)) {
+    if (this.isCloudDoc(docId)) {
+      this.onOpenCloudDocAndQuiz?.(docId);
+    } else if (this.isOnlineDoc(docId)) {
       this.onOpenOnlineDocAndQuiz?.(docId);
     } else if (this.isLocalDoc(docId)) {
       this.onOpenLocalDocAndQuiz?.(docId);
@@ -256,7 +300,7 @@ export struct DocListTab {
       Column({ space: this.fontSize * 0.6 }) {
         // 避免在“目录”页点卡片打开文档时插入顶部占位导致页面抖动：
         // 仅当目录清单本身为空且正在加载时才展示加载提示。
-        if (this.loading && (this.docs.length + this.onlineMdDocs.length + this.localMdDocs.length) === 0) {
+        if (this.loading && (this.docs.length + this.cloudDocs.length + this.onlineMdDocs.length + this.localMdDocs.length) === 0) {
           Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor);
         }
 
@@ -269,7 +313,7 @@ export struct DocListTab {
         }
 
         List({ scroller: this.listScroller, initialIndex: this.catalogSearchQuery.trim() ? this.searchListScrollIndex : this.listScrollIndex }) {
-          ForEach(this.catalogSearchQuery.trim() ? this.catalogSearchResults : this.getCatalogDocsForDisplay(), (doc: ReferenceDocSummary) => {
+          ForEach(this.catalogSearchQuery.trim() ? this.filteredCatalogSearchResults() : this.getCatalogDocsForDisplay(), (doc: ReferenceDocSummary) => {
             ListItem() {
               Stack({ alignContent: Alignment.TopStart }) {
                 Row({ space: this.fontSize * 0.8 }) {
@@ -355,6 +399,19 @@ export struct DocListTab {
                       .fontColor(0xffffffff)
                       .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
                       .backgroundColor(0xff10B981)
+                      .borderRadius({
+                        topLeft: this.fontSize * 0.7,
+                        topRight: this.fontSize * 0.4,
+                        bottomLeft: this.fontSize * 0,
+                        bottomRight: this.fontSize * 0.4
+                      });
+                  }
+                  if (this.isCloudDoc(doc.id)) {
+                    Text(this.t('云端', 'Cloud'))
+                      .fontSize(this.fontSize * 0.65)
+                      .fontColor(0xffffffff)
+                      .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                      .backgroundColor(0xff0EA5E9)
                       .borderRadius({
                         topLeft: this.fontSize * 0.7,
                         topRight: this.fontSize * 0.4,

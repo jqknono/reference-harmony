@@ -3,7 +3,7 @@ import type { ReferenceLang } from '../../common/referenceModels';
 import type { OnlineMdLink } from '../../common/onlineMdModels';
 import { openExternalLink } from '../../common/openExternalLink';
 import { formatDocCount, lengthToNumber } from './utils';
-import { ENABLE_ORIENTATION_MODE_SETTING, PRIVACY_STATEMENT_URL, SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
+import { DEFAULT_DEBUG_SERVER_ORIGIN, ENABLE_ORIENTATION_MODE_SETTING, PRIVACY_STATEMENT_URL, SHOW_DEBUG_MODE_TOGGLE, SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
 import webview from '@ohos.web.webview';
 import bundleManager from '@ohos.bundle.bundleManager';
 
@@ -12,7 +12,7 @@ type ThemePreference = 'dark' | 'light' | 'system';
 const APP_DISPLAY_NAME_ZH: string = '开发速查';
 const APP_DISPLAY_NAME_EN: string = 'Quick Reference';
 const FALLBACK_VERSION_NAME: string = '0.22.0';
-const FALLBACK_VERSION_CODE: number = 2026012906;
+const FALLBACK_VERSION_CODE: number = 2026020221;
 const DEVELOPER_NAME: string = '李偲';
 const ONLINE_FILE_LIST_URL: string = 'https://reference.jqknono.com/';
 
@@ -32,6 +32,7 @@ export struct SettingsTab {
   @Prop learningModeEnabled: boolean;
   @Prop zhDocCount: number;
   @Prop enDocCount: number;
+  @Prop debugModeEnabled: boolean;
 
   @Link onlineMdInputUrl: string;
   @Link onlineMdParsing: boolean;
@@ -39,6 +40,7 @@ export struct SettingsTab {
   @Link onlineMdParseResult: string;
   @Link onlineMdLinks: Array<OnlineMdLink>;
   @Link onlineMdCopySuccess: boolean;
+  @Link debugServerOriginInput: string;
 
   @Link localMdImporting: boolean;
   @Link localMdImportResult: string;
@@ -58,6 +60,8 @@ export struct SettingsTab {
   onSwitchLang?: (lang: ReferenceLang) => void;
   onSwitchTheme?: (theme: ThemePreference) => void;
   onToggleLearningMode?: (enabled: boolean) => void;
+  onToggleDebugMode?: (enabled: boolean) => void;
+  onApplyDebugServerOrigin?: () => void;
   onParseAndAddOnlineMd?: () => void;
   onUpdateOnlineMd?: (linkId: string) => void;
   onRemoveOnlineMd?: (linkId: string) => void;
@@ -259,6 +263,83 @@ export struct SettingsTab {
         .backgroundColor(this.theme.surfaceBackgroundColor)
         .borderRadius(this.fontSize * 0.8)
         .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+
+        if (SHOW_DEBUG_MODE_TOGGLE) {
+          Column({ space: 0 }) {
+            Row() {
+              Column({ space: this.fontSize * 0.2 }) {
+                Text(this.t('调试模式', 'Debug Mode'))
+                  .fontColor(this.theme.mutedTextColor)
+                  .fontSize(this.fontSize * 0.95);
+                Text(this.t(
+                  '开启后显示在线清单列表加载错误，并允许配置远端服务器地址',
+                  'Show online catalog load errors and allow overriding the remote server address'
+                ))
+                  .fontColor(this.theme.mutedTextColor)
+                  .fontSize(this.fontSize * 0.75)
+                  .opacity(0.7);
+              }
+              .layoutWeight(1)
+              .alignItems(HorizontalAlign.Start);
+
+              Toggle({ type: ToggleType.Switch, isOn: this.debugModeEnabled })
+                .selectedColor(this.theme.accentColor)
+                .onChange((isOn: boolean) => this.onToggleDebugMode?.(isOn));
+            }
+            .width('100%')
+            .alignItems(VerticalAlign.Center)
+            .justifyContent(FlexAlign.SpaceBetween)
+            .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 });
+
+            if (this.debugModeEnabled) {
+              Divider()
+                .color(this.theme.borderColor)
+                .strokeWidth(this.fontSize * 0.07);
+
+              Column({ space: this.fontSize * 0.4 }) {
+                Text(this.t('在线清单服务器地址', 'Online catalog server address'))
+                  .fontSize(this.fontSize * 0.85)
+                  .fontColor(this.theme.mutedTextColor);
+
+                Row({ space: this.fontSize * 0.5 }) {
+                  TextInput({
+                    text: this.debugServerOriginInput,
+                    placeholder: DEFAULT_DEBUG_SERVER_ORIGIN,
+                  })
+                    .layoutWeight(1)
+                    .fontSize(this.fontSize * 0.8)
+                    .placeholderFont({ size: this.fontSize * 0.8 })
+                    .fontColor(this.theme.titleColor)
+                    .placeholderColor(this.theme.mutedTextColor)
+                    .enableAutoFill(false)
+                    .backgroundColor(this.theme.pageBackgroundColor)
+                    .border({ width: 1, color: this.theme.borderColor })
+                    .borderRadius(this.fontSize * 0.5)
+                    .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                    .onChange((value: string) => {
+                      this.debugServerOriginInput = value;
+                    });
+
+                  Text(this.t('应用', 'Apply'))
+                    .fontSize(this.fontSize * 0.85)
+                    .fontColor(this.theme.chipSelectedTextColor)
+                    .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                    .backgroundColor(this.theme.chipSelectedBackgroundColor)
+                    .borderRadius(this.fontSize * 66)
+                    .onClick(() => this.onApplyDebugServerOrigin?.());
+                }
+                .width('100%');
+              }
+              .width('100%')
+              .alignItems(HorizontalAlign.Start)
+              .padding({ left: this.fontSize * 0.9, right: this.fontSize * 0.9, top: this.fontSize * 0.5, bottom: this.fontSize * 0.7 });
+            }
+          }
+          .width('100%')
+          .backgroundColor(this.theme.surfaceBackgroundColor)
+          .borderRadius(this.fontSize * 0.8)
+          .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
+        }
 
         if (SHOW_IMPORT_MARKDOWN_URL_SETTING) {
           // 在线 Markdown 链接管理

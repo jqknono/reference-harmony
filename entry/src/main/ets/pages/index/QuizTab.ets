@@ -2,6 +2,7 @@ import type { ReferenceDoc } from '../../common/referenceModels';
 import type { AppThemeTokens } from '../../common/appTheme';
 import type { QuizQuestion, QuizAnswer, QuizSession, QuizRecord, QuizOption } from '../../common/quizModels';
 import { QuizRepository } from '../../common/quizRepository';
+import { clearQuizBackHandler, setQuizBackHandler } from '../../common/backHandlerRegistry';
 import { formatDuration, formatDateTime, lengthToNumber } from './utils';
 import { calculateScore } from '../../common/quizUtils';
 
@@ -30,7 +31,12 @@ export struct QuizTab {
   quizRepository: QuizRepository = new QuizRepository();
   historyListScroller: ListScroller = new ListScroller();
   resultListScroller: ListScroller = new ListScroller();
+  historyDetailListScroller: ListScroller = new ListScroller();
   answeringScroller: Scroller = new Scroller();
+
+  @State private historyDetailSession: QuizSession | null = null;
+  @State private historyDetailExpandedQuestionId: string = '';
+  @State private historyDetailListScrollIndex: number = 0;
 
   onStartQuiz?: (count: number) => void;
   onSelectQuizOption?: (index: number) => void;
@@ -54,6 +60,76 @@ export struct QuizTab {
 
   private getQuizScore(): number {
     return calculateScore(this.getQuizCorrectCount(), this.quizQuestions.length);
+  }
+
+  private openHistoryDetail(session: QuizSession): void {
+    this.historyDetailSession = session;
+    this.historyDetailExpandedQuestionId = '';
+    this.historyDetailListScrollIndex = 0;
+  }
+
+  private closeHistoryDetail(): void {
+    this.historyDetailSession = null;
+    this.historyDetailExpandedQuestionId = '';
+    this.historyDetailListScrollIndex = 0;
+  }
+
+  private handleBackPress(): boolean {
+    if (this.historyDetailSession) {
+      this.closeHistoryDetail();
+      return true;
+    }
+    if (this.quizMode === 'answering' || this.quizMode === 'result' || this.quizMode === 'selecting') {
+      this.onResetQuiz?.();
+      return true;
+    }
+    return false;
+  }
+
+  private findHistoryAnswer(session: QuizSession, question: QuizQuestion, qIndex: number): QuizAnswer | undefined {
+    const direct = session.answers[qIndex];
+    if (direct?.questionId === question.id) return direct;
+    for (let i = 0; i < session.answers.length; i++) {
+      if (session.answers[i].questionId === question.id) return session.answers[i];
+    }
+    return direct;
+  }
+
+  private optionLabel(index: number): string {
+    if (index < 0) return '-';
+    return String.fromCharCode(65 + index);
+  }
+
+  private historyIsExpanded(questionId: string): boolean {
+    return this.historyDetailExpandedQuestionId === questionId;
+  }
+
+  private historyCorrectIndex(question: QuizQuestion): number {
+    return typeof question.correctIndex === 'number' ? question.correctIndex : -1;
+  }
+
+  private historySelectedIndex(session: QuizSession, question: QuizQuestion, qIndex: number): number {
+    const a = this.findHistoryAnswer(session, question, qIndex);
+    return typeof a?.selectedIndex === 'number' ? a.selectedIndex : -1;
+  }
+
+  private historyIsCorrect(session: QuizSession, question: QuizQuestion, qIndex: number): boolean {
+    const a = this.findHistoryAnswer(session, question, qIndex);
+    return a?.isCorrect === true;
+  }
+
+  private historyAnswerTime(session: QuizSession, question: QuizQuestion, qIndex: number): number {
+    const a = this.findHistoryAnswer(session, question, qIndex);
+    return typeof a?.answerTime === 'number' ? a.answerTime : 0;
+  }
+
+  private historyOptionText(question: QuizQuestion, optionIndex: number): string {
+    const raw = question.options[optionIndex]?.text ?? '';
+    return (raw ?? '').trim();
+  }
+
+  private toggleHistoryQuestionExpand(questionId: string): void {
+    this.historyDetailExpandedQuestionId = this.historyDetailExpandedQuestionId === questionId ? '' : questionId;
   }
 
   private getOptionLabelColor(optionIndex: number): number {
@@ -99,6 +175,9 @@ export struct QuizTab {
   @Builder
   private QuizIdleView(): void {
     Column({ space: this.fontSize * 0.8 }) {
+      if (this.historyDetailSession) {
+        this.QuizHistoryDetailView(this.historyDetailSession);
+      } else {
       if (!this.selectedDoc) {
         Column({ space: this.fontSize * 0.5 }) {
           Text(this.t('请先选择文档', 'Please select a document first'))
@@ -241,10 +320,16 @@ export struct QuizTab {
                         .fontColor(this.theme.mutedTextColor);
                     }
                     .alignItems(HorizontalAlign.End);
+
+                    Text('›')
+                      .fontSize(this.fontSize * 1.2)
+                      .fontColor(this.theme.mutedTextColor)
+                      .margin({ left: this.fontSize * 0.6 });
                   }
                   .width('100%')
                   .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 });
                 }
+                .onClick(() => this.openHistoryDetail(session));
               }, (session: QuizSession) => session.id);
             }
             .layoutWeight(1)
@@ -262,8 +347,157 @@ export struct QuizTab {
           .layoutWeight(1);
         }
       }
+      }
     }
     .layoutWeight(1);
+  }
+
+  @Builder
+  private QuizHistoryDetailView(session: QuizSession): void {
+    Column({ space: this.fontSize * 0.8 }) {
+      Row() {
+        Text('‹ ' + this.t('返回', 'Back'))
+          .fontSize(this.fontSize)
+          .fontColor(this.theme.accentColor)
+          .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.5, bottom: this.fontSize * 0.5 })
+          .borderRadius(this.fontSize * 0.5)
+          .backgroundColor(this.theme.surfaceBackgroundColor)
+          .onClick(() => this.closeHistoryDetail());
+
+        Blank();
+
+        Text(`${session.score}%`)
+          .fontSize(this.fontSize * 1.1)
+          .fontWeight(FontWeight.Bold)
+          .fontColor(session.score >= 60 ? this.theme.accentColor : this.theme.dangerTextColor);
+      }
+      .width('100%')
+      .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+      Column({ space: this.fontSize * 0.25 }) {
+        Text(session.docName || session.docTitle)
+          .fontSize(this.fontSize * 1.05)
+          .fontWeight(FontWeight.Medium)
+          .fontColor(this.theme.titleColor)
+          .maxLines(2)
+          .textOverflow({ overflow: TextOverflow.Ellipsis });
+
+        Text(formatDateTime(session.endTime))
+          .fontSize(this.fontSize * 0.85)
+          .fontColor(this.theme.mutedTextColor);
+
+        Row({ space: this.fontSize * 0.8 }) {
+          Text(this.t('正确', 'Correct') + `: ${session.correctCount}/${session.totalCount}`)
+            .fontSize(this.fontSize * 0.85)
+            .fontColor(this.theme.mutedTextColor);
+          Text(this.t('用时', 'Duration') + `: ${formatDuration(Math.max(0, session.endTime - session.startTime))}`)
+            .fontSize(this.fontSize * 0.85)
+            .fontColor(this.theme.mutedTextColor);
+        }
+        .width('100%');
+      }
+      .width('100%')
+      .padding(this.fontSize * 1)
+      .backgroundColor(this.theme.surfaceBackgroundColor)
+      .borderRadius(this.fontSize * 0.5)
+      .margin({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+      Text(this.t('历史答题详情', 'History Answer Details'))
+        .fontSize(this.fontSize)
+        .fontWeight(FontWeight.Medium)
+        .fontColor(this.theme.titleColor)
+        .padding({ left: this.fontSize * 1, right: this.fontSize * 1 });
+
+      List({ scroller: this.historyDetailListScroller, initialIndex: this.historyDetailListScrollIndex }) {
+        ForEach(session.questions, (question: QuizQuestion, qIndex: number) => {
+          ListItem() {
+            Column({ space: this.fontSize * 0.4 }) {
+              Row({ space: this.fontSize * 0.5 }) {
+                Text(`${qIndex + 1}.`)
+                  .fontSize(this.fontSize * 0.9)
+                  .fontColor(this.theme.mutedTextColor);
+
+                Text(question.question)
+                  .fontSize(this.fontSize * 0.9)
+                  .fontColor(this.theme.textColor)
+                  .layoutWeight(1)
+                  .maxLines(this.historyIsExpanded(question.id) ? 10 : 2)
+                  .textOverflow({ overflow: TextOverflow.Ellipsis });
+
+                Text(this.historyIsCorrect(session, question, qIndex) ? '✓' : '✗')
+                  .fontSize(this.fontSize)
+                  .fontColor(this.historyIsCorrect(session, question, qIndex) ? 0xff4caf50 : this.theme.dangerTextColor);
+              }
+              .width('100%');
+
+              if (!this.historyIsExpanded(question.id)) {
+                Row({ space: this.fontSize * 0.6 }) {
+                  Text(
+                    this.t('你的', 'Yours') +
+                      `: ${this.optionLabel(this.historySelectedIndex(session, question, qIndex))}`
+                  )
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.historyIsCorrect(session, question, qIndex) ? 0xff4caf50 : this.theme.dangerTextColor);
+                  Text(this.t('正确', 'Correct') + `: ${this.optionLabel(this.historyCorrectIndex(question))}`)
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.theme.mutedTextColor);
+                  Blank();
+                  Text(formatDuration(Math.max(0, this.historyAnswerTime(session, question, qIndex))))
+                    .fontSize(this.fontSize * 0.75)
+                    .fontColor(this.theme.mutedTextColor);
+                }
+                .width('100%');
+              }
+
+              if (this.historyIsExpanded(question.id)) {
+                Column({ space: this.fontSize * 0.25 }) {
+                  Text(
+                    this.t('你的答案', 'Your Answer') +
+                      `: ${this.optionLabel(this.historySelectedIndex(session, question, qIndex))} ${this.historyOptionText(question, this.historySelectedIndex(session, question, qIndex))}`
+                  )
+                    .fontSize(this.fontSize * 0.85)
+                    .fontColor(this.historyIsCorrect(session, question, qIndex) ? 0xff4caf50 : this.theme.dangerTextColor);
+
+                  Text(
+                    this.t('正确答案', 'Correct Answer') +
+                      `: ${this.optionLabel(this.historyCorrectIndex(question))} ${this.historyOptionText(question, this.historyCorrectIndex(question))}`
+                  )
+                    .fontSize(this.fontSize * 0.85)
+                    .fontColor(this.theme.mutedTextColor);
+
+                  if (question.explanation) {
+                    Text(this.t('解析', 'Explanation') + `: ${question.explanation}`)
+                      .fontSize(this.fontSize * 0.85)
+                      .fontColor(this.theme.mutedTextColor);
+                  }
+
+                  Text(this.t('耗时', 'Time') + `: ${formatDuration(Math.max(0, this.historyAnswerTime(session, question, qIndex)))}`)
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.theme.mutedTextColor);
+                }
+                .width('100%');
+              }
+            }
+            .width('100%')
+            .padding({ left: this.fontSize * 1, right: this.fontSize * 1, top: this.fontSize * 0.6, bottom: this.fontSize * 0.6 });
+          }
+          .onClick(() => this.toggleHistoryQuestionExpand(question.id));
+        }, (question: QuizQuestion, qIndex: number) => `history_${question.id}_${qIndex}`);
+      }
+      .layoutWeight(1)
+      .divider({ strokeWidth: 1, color: this.theme.borderColor, startMargin: this.fontSize * 1, endMargin: this.fontSize * 1 })
+      .onScrollIndex((start: number, _end: number) => {
+        const previous: number = this.historyDetailListScrollIndex;
+        if (previous !== start) {
+          if (this.isLandscape) {
+            this.onLandscapeScrollDirection?.(start > previous ? 'up' : 'down');
+          }
+          this.historyDetailListScrollIndex = start;
+        }
+      });
+    }
+    .layoutWeight(1)
+    .width('100%');
   }
 
   @Builder
@@ -521,6 +755,8 @@ export struct QuizTab {
         this.QuizResultView();
       }
     }
+    .onAppear(() => setQuizBackHandler((): boolean => this.handleBackPress()))
+    .onDisAppear(() => clearQuizBackHandler())
     .height('100%')
     .width('100%')
     .backgroundColor(this.theme.pageBackgroundColor);

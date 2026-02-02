@@ -1,4 +1,4 @@
-name: Deploy mds to GitHub Pages
+name: Deploy online web to GitHub Pages
 
 on:
   push:
@@ -7,15 +7,10 @@ on:
       - master
     paths:
       - "mds/**"
-      - "tools/build_pages.mjs"
-      - "package.json"
+      - "online/web/**"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
-    inputs:
-      domain:
-        description: "站点域名（可选）。例如：https://xxx.github.io/reference-harmony/ 或自定义域名。留空则自动推导 GitHub Pages 地址。"
-        required: false
-        default: ""
+    {}
 
 permissions:
   contents: read
@@ -45,25 +40,16 @@ jobs:
         with:
           node-version: 20
 
-      - name: Build site (npm)
+      - name: Build site (online/web)
         run: |
+          cd online/web
           npm install --no-audit --no-fund
-          OWNER="${{ github.repository_owner }}"
-          REPO="${{ github.event.repository.name }}"
-          INPUT_DOMAIN="${{ github.event.inputs.domain }}"
-          if [ -n "$INPUT_DOMAIN" ]; then
-            DOMAIN="$INPUT_DOMAIN"
-          elif [ "$REPO" = "$OWNER.github.io" ]; then
-            DOMAIN="https://$OWNER.github.io/"
-          else
-            DOMAIN="https://$OWNER.github.io/$REPO/"
-          fi
-          npm run build -- --domain="$DOMAIN"
+          npm run build
 
       - name: Upload artifact (dist)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./online/web/dist
 
       - name: Deploy to GitHub Pages
         id: deployment
