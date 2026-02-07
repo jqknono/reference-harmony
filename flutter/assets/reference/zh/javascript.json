@@ -1,0 +1,992 @@
+{
+  "id": "javascript",
+  "name": "JavaScript 备忘清单",
+  "title": "包含最重要概念、函数、方法等的 JavaScript 备忘单。 初学者的完整快速参考。",
+  "icon": "reference/icons/zh/javascript.svg",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "JavaScript 条件",
+      "startIndex": 19
+    },
+    {
+      "id": "s3",
+      "title": "JavaScript Functions 函数",
+      "startIndex": 31
+    },
+    {
+      "id": "s4",
+      "title": "JavaScript 范围",
+      "startIndex": 44
+    },
+    {
+      "id": "s5",
+      "title": "JavaScript Arrays",
+      "startIndex": 54
+    },
+    {
+      "id": "s6",
+      "title": "JavaScript 循环",
+      "startIndex": 72
+    },
+    {
+      "id": "s7",
+      "title": "JavaScript 迭代器(Iterators)",
+      "startIndex": 86
+    },
+    {
+      "id": "s8",
+      "title": "JavaScript 对象(Objects)",
+      "startIndex": 92
+    },
+    {
+      "id": "s9",
+      "title": "JavaScript this 绑定",
+      "startIndex": 113
+    },
+    {
+      "id": "s10",
+      "title": "JavaScript Classes",
+      "startIndex": 127
+    },
+    {
+      "id": "s11",
+      "title": "JavaScript Modules",
+      "startIndex": 133
+    },
+    {
+      "id": "s12",
+      "title": "JavaScript Promises",
+      "startIndex": 137
+    },
+    {
+      "id": "s13",
+      "title": "JavaScript Async-Await",
+      "startIndex": 149
+    },
+    {
+      "id": "s14",
+      "title": "JavaScript 请求",
+      "startIndex": 154
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "body": "包含最重要概念、函数、方法等的 JavaScript 备忘单。 初学者的完整快速参考。"
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "介绍",
+      "body": "JavaScript 是一种轻量级的解释型编程语言。\n\n• [JSON 备忘清单](json.md)\n• [JavaScript 中的正则表达式](./regex.md#javascript-中的正则表达式)\n• [TypeScript 备忘清单](./typescript.md)"
+    },
+    {
+      "id": "s1-3",
+      "sectionId": "s1",
+      "title": "%E6%89%93%E5%8D%B0%E8%B0%83%E8%AF%95",
+      "body": "%60%60%60javascript%0A%2F%2F%20%3D%3E%20Hello%20world!%0Aconsole.log('Hello%20world!')%3B%0A%2F%2F%20%3D%3E%20Hello%20QuickReference%0Aconsole.warn('hello%20%25s'%2C%20'QuickReference')%3B%0A%2F%2F%20%E5%B0%86%E9%94%99%E8%AF%AF%E6%B6%88%E6%81%AF%E6%89%93%E5%8D%B0%E5%88%B0%20stderr%0Aconsole.error(new%20Error('Oops!'))%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-4",
+      "sectionId": "s1",
+      "title": "断点调试",
+      "body": "```javascript\nfunction potentiallyBuggyCode() {\n  debugger;\n  // 做可能有问题的东西来检查，逐步通过等。\n}\n```\n\n**debugger** 语句调用任何可用的调试功能。"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "数字",
+      "body": "```javascript\nlet amount = 6;\nlet price = 4.99;\nlet home = 1e2;\nlet num = 1_000_000; // 位数过多可以用 _ 分割\nlet m = 0644;   // 八进制数字 420\n```"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "let 关键字",
+      "body": "```javascript\nlet count; \nconsole.log(count); // => undefined\ncount = 10;\nconsole.log(count); // => 10\n```"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "const 关键字",
+      "body": "```javascript\nconst numberOfColumns = 4;\n// TypeError: Assignment to constant...\nnumberOfColumns = 8;\n```"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "%E5%8F%98%E9%87%8F",
+      "body": "%60%60%60javascript%0Alet%20x%20%3D%20null%3B%0Alet%20name%20%3D%20%22Tammy%22%3B%0Aconst%20found%20%3D%20false%3B%0A%2F%2F%20%3D%3E%20Tammy%2C%20false%2C%20null%0Aconsole.log(name%2C%20found%2C%20x)%3B%0Avar%20a%3B%0Aconsole.log(a)%3B%20%2F%2F%20%3D%3E%20undefined%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-10",
+      "sectionId": "s1",
+      "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2",
+      "body": "%60%60%60javascript%0Alet%20single%20%3D%20'Wheres%20my%20bandit%20hat%3F'%3B%0Alet%20double%20%3D%20%22Wheres%20my%20bandit%20hat%3F%22%3B%0A%2F%2F%20%3D%3E%2021%0Aconsole.log(single.length)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-11",
+      "sectionId": "s1",
+      "title": "算术运算符",
+      "body": "```javascript\n5 + 5 = 10     // 加法 Addition\n10 - 5 = 5     // 减法 Subtraction\n5 * 10 = 50    // 乘法 Multiplication\n10 / 5 = 2     // 除法 Division\n10 % 5 = 0     // 取模 Modulo\n```"
+    },
+    {
+      "id": "s1-12",
+      "sectionId": "s1",
+      "title": "注释",
+      "body": "```javascript\n// 此行将表示注释\n/* \n多行配置\n部署前必须更改\n以下配置。\n*/\n```"
+    },
+    {
+      "id": "s1-13",
+      "sectionId": "s1",
+      "title": "赋值运算符",
+      "body": "```javascript\nlet number = 100;\n// 两个语句都会加 10\nnumber = number + 10;\nnumber += 10;\nconsole.log(number); \n// => 120\n```"
+    },
+    {
+      "id": "s1-14",
+      "sectionId": "s1",
+      "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC",
+      "body": "%60%60%60javascript%0Alet%20age%20%3D%207%3B%0A%2F%2F%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5%0A'Tommy%20is%20'%20%2B%20age%20%2B%20'%20years%20old.'%3B%0A%2F%2F%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8F%92%E5%80%BC%0A%60Tommy%20is%20%24%7Bage%7D%20years%20old.%60%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-15",
+      "sectionId": "s1",
+      "title": "%E5%AD%97%E7%AC%A6%E4%B8%B2",
+      "body": "%60%60%60js%0Avar%20abc%20%3D%20%22abcdefghijklmnopqrstuvwxyz%22%3B%0Avar%20esc%20%3D%20'I%20don%5C't%20%5Cn%20know'%3B%20%20%20%20%2F%2F%20%5Cn%20%E6%8D%A2%E8%A1%8C%0Avar%20len%20%3D%20abc.length%3B%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%0Aabc.indexOf(%22lmno%22)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E6%9F%A5%E6%89%BE%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E5%8C%85%E5%90%AB%E5%88%99%20-1%0Aabc.lastIndexOf(%22lmno%22)%3B%20%20%20%20%20%20%20%20%20%2F%2F%20%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E5%87%BA%E7%8E%B0%0Aabc.slice(3%2C%206)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E5%8E%BB%E6%8E%89%E2%80%9Cdef%E2%80%9D%EF%BC%8C%E8%B4%9F%E5%80%BC%E4%BB%8E%E5%90%8E%E9%9D%A2%E8%AE%A1%E7%AE%97%0Aabc.replace(%22abc%22%2C%22123%22)%3B%20%20%20%20%20%20%20%20%2F%2F%20%E6%9F%A5%E6%89%BE%E5%92%8C%E6%9B%BF%E6%8D%A2%EF%BC%8C%E6%8E%A5%E5%8F%97%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%0Aabc.toUpperCase()%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%A4%A7%E5%86%99%0Aabc.toLowerCase()%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%B0%8F%E5%86%99%0Aabc.concat(%22%20%22%2C%20str2)%3B%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20abc%20%2B%20%22%20%22%20%2B%20str2%0Aabc.charAt(2)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E7%B4%A2%E5%BC%95%E5%A4%84%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%9A%E2%80%9Cc%E2%80%9D%0Aabc%5B2%5D%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20%E4%B8%8D%E5%AE%89%E5%85%A8%EF%BC%8Cabc%5B2%5D%20%3D%20%22C%22%20%E4%B8%8D%E8%B5%B7%E4%BD%9C%E7%94%A8%0A%2F%2F%20%E7%B4%A2%E5%BC%95%E5%A4%84%E7%9A%84%E5%AD%97%E7%AC%A6%E4%BB%A3%E7%A0%81%EF%BC%9A%E2%80%9Cc%E2%80%9D-%3E%2099%0Aabc.charCodeAt(2)%3B%0A%2F%2F%20%E7%94%A8%E9%80%97%E5%8F%B7%E5%88%86%E5%89%B2%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%BB%99%E5%87%BA%E4%B8%80%E4%B8%AA%E6%95%B0%E7%BB%84%0Aabc.split(%22%2C%22)%3B%0A%2F%2F%20%E5%88%86%E5%89%B2%E5%AD%97%E7%AC%A6%0Aabc.split(%22%22)%3B%0A%2F%2F%20%E5%8C%B9%E9%85%8D%E5%BC%80%E5%A4%B4%E5%AD%97%E7%AC%A6%E4%B8%B2%2C%E5%A6%82%E6%9E%9C%E5%BF%BD%E7%95%A5%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E5%88%99%E4%BB%8E%E7%B4%A2%E5%BC%95%200%20%E5%BC%80%E5%A7%8B%E5%8C%B9%E9%85%8D%0Aabc.startsWith(%22bc%22%2C%201)%3B%0A%2F%2F%20%E5%8C%B9%E9%85%8D%E7%BB%93%E5%B0%BE%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%2C%E5%A6%82%E6%9E%9C%E5%BF%BD%E7%95%A5%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0%EF%BC%8C%E5%88%99%E9%BB%98%E8%AE%A4%E6%98%AF%E5%8E%9F%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%0Aabc.endsWith(%22wxy%22%2C%20abc.length%20-%201)%3B%0A%2F%2F%20padEnd%20%E5%92%8C%20padStart%20%E9%83%BD%E7%94%A8%E4%BA%8E%E5%A1%AB%E5%85%85%E9%95%BF%E5%BA%A6%EF%BC%8C%E9%BB%98%E8%AE%A4%E5%A1%AB%E5%85%85%E5%AF%B9%E8%B1%A1%E6%98%AF%E7%A9%BA%E6%A0%BC%0A%22200%22.padEnd(5)%3B%20%2F%2F%20%22200%20%20%22%0A%22200%22.padEnd(5%2C%20%22.%22)%3B%20%2F%2F%20%22200..%22%0A%2F%2F%20%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%0A%22abc%22.repeat(2)%3B%20%2F%2F%20%22abcabc%22%0A%2F%2F%20trim%E3%80%81trimEnd%20%E5%92%8C%20trimStart%20%E7%94%A8%E4%BA%8E%E5%8E%BB%E9%99%A4%E9%A6%96%E5%B0%BE%E7%A9%BA%E6%A0%BC%0A%22%20ab%20c%20%22.trim()%3B%20%2F%2F%20%22ab%20c%22%0A%2F%2F%20%E6%95%B0%E5%AD%97%E8%BD%AC%E4%B8%BA%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%20(16)%E3%80%81%E5%85%AB%E8%BF%9B%E5%88%B6%20(8)%20%E6%88%96%E4%BA%8C%E8%BF%9B%E5%88%B6%20(2)%0A(128).toString(16)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-16",
+      "sectionId": "s1",
+      "title": "%E6%95%B0%E5%AD%97",
+      "body": "%60%60%60js%0Avar%20pi%20%3D%203.141%3B%0Api.toFixed(0)%3B%20%20%20%20%2F%2F%20%E8%BF%94%E5%9B%9E%203%20%20%20%20%20%20%20%20%20%20%20%20%20%0Api.toFixed(2)%3B%20%20%20%20%2F%2F%20%E8%BF%94%E5%9B%9E%203.14%20-%20%E4%BD%BF%E7%94%A8%E9%87%91%E9%92%B1%0Api.toPrecision(2)%20%2F%2F%20%E8%BF%94%E5%9B%9E%203.1%0Api.valueOf()%3B%20%20%20%20%20%2F%2F%20%E8%BF%94%E5%9B%9E%E5%8F%B7%E7%A0%81%0ANumber(true)%3B%20%20%20%20%20%2F%2F%20%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%95%B0%E5%AD%97%0A%2F%2F%20%E8%87%AA%201970%20%E5%B9%B4%E4%BB%A5%E6%9D%A5%E7%9A%84%E6%AF%AB%E7%A7%92%E6%95%B0%0ANumber(new%20Date())%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E8%BF%94%E5%9B%9E%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%95%B0%E5%AD%97%EF%BC%9A3%0AparseInt(%223%20months%22)%3B%20%20%20%20%20%20%20%0A%2F%2F%20%E8%BF%94%E5%9B%9E%203.5%0AparseFloat(%223.5%20days%22)%3B%20%20%20%20%20%0A%2F%2F%20%E6%9C%80%E5%A4%A7%E5%8F%AF%E8%83%BD%E7%9A%84%20JS%20%E6%95%B0%0ANumber.MAX_VALUE%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E6%9C%80%E5%B0%8F%E5%8F%AF%E8%83%BD%E7%9A%84%20JS%20%E7%BC%96%E5%8F%B7%0ANumber.MIN_VALUE%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20-%E6%97%A0%E7%A9%B7%0ANumber.NEGATIVE_INFINITY%20%20%20%20%0A%2F%2F%20%E6%97%A0%E7%A9%B7%0ANumber.POSITIVE_INFINITY%20%20%20%20%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-17",
+      "sectionId": "s1",
+      "title": "Math",
+      "body": "```ts\nconst pi = Math.PI; // 3.141592653589793\nMath.round(4.4); // = 4 - 数字四舍五入\nMath.round(4.5); // = 5\nMath.pow(2,8);   // = 256 - 2 的 8 次方    \nMath.sqrt(49);   // = 7 - 平方根\nMath.abs(-3.14); // = 3.14 - 绝对，正值\nMath.ceil(3.14); // = 4 - 返回 >= 最小整数\n// = 3 - 返回 <= 最大整数\nMath.floor(3.99);       \n// = 0 - 正弦\nMath.sin(0);            \n// OTHERS: tan,atan,asin,acos,余弦值\nMath.cos(Math.PI);      \n// = -2 - 最低值\nMath.min(0, 3, -2, 2);  \n// = 3 - 最高值\nMath.max(0, 3, -2, 2);  \n// = 0 自然对数\nMath.log(1);            \n// = 2.7182pow(E,x) 自然对数的底数\nMath.exp(1);            \n// 0 到 1 之间的随机数\nMath.random();          \n// 随机整数，从 1\nMath.floor(Math.random() * 5) + 1;  \n```"
+    },
+    {
+      "id": "s1-18",
+      "sectionId": "s1",
+      "title": "%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0",
+      "body": "%60%60%60js%0A%2F%2F%20%E5%83%8F%E8%84%9A%E6%9C%AC%E4%BB%A3%E7%A0%81%E4%B8%80%E6%A0%B7%E6%89%A7%E8%A1%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%0Aeval()%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E4%BB%8E%E6%95%B0%E5%AD%97%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2%0AString(23)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E4%BB%8E%E6%95%B0%E5%AD%97%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2%0A(23).toString()%3B%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E4%BB%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%94%E5%9B%9E%E6%95%B0%E5%AD%97%0ANumber(%2223%22)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E8%A7%A3%E7%A0%81%20URI%E3%80%82%20%E7%BB%93%E6%9E%9C%EF%BC%9A%E2%80%9Cmy%20page.asp%E2%80%9D%0AdecodeURI(enc)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E7%BC%96%E7%A0%81%20URI%E3%80%82%20%E7%BB%93%E6%9E%9C%EF%BC%9A%E2%80%9Cmy%2520page.asp%E2%80%9D%0AencodeURI(uri)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E8%A7%A3%E7%A0%81%20URI%20%E7%BB%84%E4%BB%B6%0AdecodeURIComponent(enc)%3B%20%20%20%20%0A%2F%2F%20%E5%AF%B9%20URI%20%E7%BB%84%E4%BB%B6%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A0%81%0AencodeURIComponent(uri)%3B%20%20%20%20%0A%2F%2F%20%E6%98%AF%E4%B8%80%E4%B8%AA%E6%9C%89%E9%99%90%E7%9A%84%E5%90%88%E6%B3%95%E6%95%B0%0AisFinite()%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E6%98%AF%E4%B8%80%E4%B8%AA%E9%9D%9E%E6%B3%95%E6%95%B0%E5%AD%97%0AisNaN()%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%B5%AE%E7%82%B9%E6%95%B0%0AparseFloat()%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%2F%2F%20%E8%A7%A3%E6%9E%90%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B9%B6%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%0AparseInt()%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-19",
+      "sectionId": "s2",
+      "title": "操作符",
+      "body": "```javascript\ntrue || false;       // true\n10 > 5 || 10 > 20;   // true\nfalse || false;      // false\n10 > 100 || 10 > 20; // false\n```"
+    },
+    {
+      "id": "s2-20",
+      "sectionId": "s2",
+      "title": "逻辑运算符 &&",
+      "body": "```javascript\ntrue && true;        // true\n1 > 2 && 2 > 1;      // false\ntrue && false;       // false\n4 === 4 && 3 > 1;    // true\n```"
+    },
+    {
+      "id": "s2-21",
+      "sectionId": "s2",
+      "title": "%E6%AF%94%E8%BE%83%E8%BF%90%E7%AE%97%E7%AC%A6",
+      "body": "%60%60%60javascript%0A1%20%3E%203%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20false%0A3%20%3E%201%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20true%0A250%20%3E%3D%20250%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20true%0A1%20%3D%3D%3D%201%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20true%0A1%20%3D%3D%3D%202%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20false%0A1%20%3D%3D%3D%20'1'%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20false%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-22",
+      "sectionId": "s2",
+      "title": "逻辑运算符",
+      "body": "```javascript\nlet lateToWork = true;\nlet oppositeValue = !lateToWork;\n// => false\nconsole.log(oppositeValue); \n```"
+    },
+    {
+      "id": "s2-23",
+      "sectionId": "s2",
+      "title": "%E7%A9%BA%E5%80%BC%E5%90%88%E5%B9%B6%E8%BF%90%E7%AE%97%E7%AC%A6%20%3F%3F",
+      "body": "%60%60%60javascript%0Anull%20%3F%3F%20'I%20win'%3B%20%20%20%20%20%20%20%20%20%2F%2F%20%20'I%20win'%0Aundefined%20%3F%3F%20'Me%20too'%3B%20%20%20%2F%2F%20%20'Me%20too'%0Afalse%20%3F%3F%20'I%20lose'%20%20%20%20%20%20%20%20%2F%2F%20%20false%0A0%20%3F%3F%20'I%20lose%20again'%20%20%20%20%20%20%2F%2F%20%200%0A''%20%3F%3F%20'Damn%20it'%20%20%20%20%20%20%20%20%20%20%2F%2F%20%20''%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-24",
+      "sectionId": "s2",
+      "title": "if%20Statement%20(if%20%E8%AF%AD%E5%8F%A5)",
+      "body": "%60%60%60javascript%0Aconst%20isMailSent%20%3D%20true%3B%0Aif%20(isMailSent)%20%7B%0A%20%20console.log('Mail%20sent%20to%20recipient')%3B%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-25",
+      "sectionId": "s2",
+      "title": "Ternary Operator (三元运算符)",
+      "body": "```javascript\nvar age = 1;\n\n// => false\nvar status = (age >= 18) ? true : false;\n```"
+    },
+    {
+      "id": "s2-26",
+      "sectionId": "s2",
+      "title": "else%20if",
+      "body": "%60%60%60javascript%0Aconst%20size%20%3D%2010%3B%0Aif%20(size%20%3E%2020)%20%7B%0A%20%20console.log('Medium')%3B%0A%7D%20else%20if%20(size%20%3E%204)%20%7B%0A%20%20console.log('Small')%3B%0A%7D%20else%20%7B%0A%20%20console.log('Tiny')%3B%0A%7D%0A%2F%2F%20Print%3A%20Small%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-27",
+      "sectionId": "s2",
+      "title": "%3D%3D%20vs%20%3D%3D%3D",
+      "body": "%60%60%60javascript%0A0%20%3D%3D%20false%20%20%20%20%20%2F%2F%20true%0A0%20%3D%3D%3D%20false%20%20%20%20%2F%2F%20false%2C%20%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%0A1%20%3D%3D%20%221%22%20%20%20%20%20%20%20%2F%2F%20true%2C%20%20%E8%87%AA%E5%8A%A8%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%0A1%20%3D%3D%3D%20%221%22%20%20%20%20%20%20%2F%2F%20false%2C%20%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%0Anull%20%3D%3D%20undefined%20%20%2F%2F%20true%0Anull%20%3D%3D%3D%20undefined%20%2F%2F%20false%0A'0'%20%3D%3D%20false%20%20%20%20%20%20%20%2F%2F%20true%0A'0'%20%3D%3D%3D%20false%20%20%20%20%20%20%2F%2F%20false%0A%60%60%60%0A%0A%60%3D%3D%60%20%E5%8F%AA%E6%A3%80%E6%9F%A5%E5%80%BC%EF%BC%8C%60%3D%3D%3D%60%20%E6%A3%80%E6%9F%A5%E5%80%BC%E5%92%8C%E7%B1%BB%E5%9E%8B%E3%80%82",
+      "encoded": true
+    },
+    {
+      "id": "s2-29",
+      "sectionId": "s2",
+      "title": "switch%20%E8%AF%AD%E5%8F%A5",
+      "body": "%60%60%60javascript%0Aconst%20food%20%3D%20'salad'%3B%0A%0Aswitch%20(food)%20%7B%0A%20%20case%20'oyster'%3A%20console.log('%E6%B5%B7%E7%9A%84%E5%91%B3%E9%81%93')%3B%0A%20%20%20%20break%3B%0A%20%20case%20'pizza'%3A%20console.log('%E7%BE%8E%E5%91%B3%E7%9A%84%E9%A6%85%E9%A5%BC')%3B%0A%20%20%20%20break%3B%0A%20%20default%3A%0A%20%20%20%20console.log('%E8%AF%B7%E6%82%A8%E7%94%A8%E9%A4%90')%3B%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-30",
+      "sectionId": "s2",
+      "title": "switch%20%E5%A4%9A%20case%20-%20%E5%8D%95%E4%B8%80%E6%93%8D%E4%BD%9C",
+      "body": "%60%60%60javascript%0Aconst%20food%20%3D%20'salad'%3B%0A%0Aswitch%20(food)%20%7B%0A%20%20case%20'oyster'%3A%0A%20%20case%20'pizza'%3A%0A%20%20%20%20console.log('%E7%BE%8E%E5%91%B3%E7%9A%84%E9%A6%85%E9%A5%BC')%3B%0A%20%20%20%20break%3B%0A%20%20default%3A%0A%20%20%20%20console.log('%E8%AF%B7%E6%82%A8%E7%94%A8%E9%A4%90')%3B%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s3-31",
+      "sectionId": "s3",
+      "title": "函数",
+      "body": "```javascript\n// 定义函数：\nfunction sum(num1, num2) {\n  return num1 + num2;\n}\n// 调用函数：\nsum(3, 6); // 9\n```"
+    },
+    {
+      "id": "s3-32",
+      "sectionId": "s3",
+      "title": "%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0",
+      "body": "%60%60%60javascript%0A%2F%2F%20%E5%91%BD%E5%90%8D%E5%87%BD%E6%95%B0%0Afunction%20rocketToMars()%20%7B%0A%20%20return%20'BOOM!'%3B%0A%7D%0A%2F%2F%20%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%0Aconst%20rocketToMars%20%3D%20function()%20%7B%0A%20%20return%20'BOOM!'%3B%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s3-33",
+      "sectionId": "s3",
+      "title": "箭头函数 (ES6) - 有两个参数",
+      "body": "```javascript\nconst sum = (param1, param2) => { \n  return param1 + param2; \n}; \nconsole.log(sum(2,5)); // => 7 \n```"
+    },
+    {
+      "id": "s3-34",
+      "sectionId": "s3",
+      "title": "%E6%B2%A1%E6%9C%89%E5%8F%82%E6%95%B0",
+      "body": "%60%60%60javascript%0Aconst%20printHello%20%3D%20()%20%3D%3E%20%7B%20%0A%20%20console.log('hello')%3B%20%0A%7D%3B%20%0AprintHello()%3B%20%2F%2F%20%3D%3E%20hello%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s3-35",
+      "sectionId": "s3",
+      "title": "只有一个参数",
+      "body": "```javascript\nconst checkWeight = weight => { \n  console.log(`Weight : ${weight}`); \n}; \ncheckWeight(25); // => Weight : 25 \n```"
+    },
+    {
+      "id": "s3-36",
+      "sectionId": "s3",
+      "title": "简洁箭头函数",
+      "body": "```javascript\nconst multiply = (a, b) => a * b; \n// => 60 \nconsole.log(multiply(2, 30)); \n```\n\n从 ES2015 开始提供[箭头函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)"
+    },
+    {
+      "id": "s3-38",
+      "sectionId": "s3",
+      "title": "返回关键字",
+      "body": "```javascript\n// 有 return\nfunction sum(num1, num2) {\n  return num1 + num2;\n}\n// 该函数不输出总和\nfunction sum(num1, num2) {\n  num1 + num2;\n}\n```"
+    },
+    {
+      "id": "s3-39",
+      "sectionId": "s3",
+      "title": "调用函数",
+      "body": "```javascript\n// 定义函数\nfunction sum(num1, num2) {\n  return num1 + num2;\n}\n// 调用函数\nsum(2, 4); // 6\n```"
+    },
+    {
+      "id": "s3-40",
+      "sectionId": "s3",
+      "title": "立即执行函数",
+      "body": "```javascript\n//命名函数并立即执行一次\n(function sum(num1, num2) {\n  return num1 + num2;\n})(2,4)//6\n```"
+    },
+    {
+      "id": "s3-41",
+      "sectionId": "s3",
+      "title": "%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F",
+      "body": "%60%60%60javascript%0Aconst%20dog%20%3D%20function()%20%7B%0A%20%20return%20'Woof!'%3B%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s3-42",
+      "sectionId": "s3",
+      "title": "函数参数",
+      "body": "```javascript\n// 参数是 name\nfunction sayHello(name) {\n  return `Hello, ${name}!`;\n}\n```"
+    },
+    {
+      "id": "s3-43",
+      "sectionId": "s3",
+      "title": "函数声明",
+      "body": "```javascript\nfunction add(num1, num2) {\n  return num1 + num2;\n}\n```"
+    },
+    {
+      "id": "s4-44",
+      "sectionId": "s4",
+      "title": "%E8%8C%83%E5%9B%B4",
+      "body": "%60%60%60javascript%0Afunction%20myFunction()%20%7B%0A%20%20var%20pizzaName%20%3D%20%22Margarita%22%3B%0A%20%20%2F%2F%20%E8%BF%99%E9%87%8C%E7%9A%84%E4%BB%A3%E7%A0%81%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%20PizzaName%0A%20%20%0A%7D%0A%2F%2F%20%E2%9D%8C%20PizzaName%20%E4%B8%8D%E8%83%BD%E5%9C%A8%E8%BF%99%E9%87%8C%E4%BD%BF%E7%94%A8%0A%60%60%60%0A%0A%60%7B%20%7D%60%20%E5%9D%97%E5%86%85%E5%A3%B0%E6%98%8E%E7%9A%84%E5%8F%98%E9%87%8F%0A%0A%60%60%60javascript%0A%7B%0A%20%20let%20x%20%3D%202%3B%0A%7D%0A%2F%2F%20%E2%9D%8C%20x%20%E4%B8%8D%E8%83%BD%E5%9C%A8%E8%BF%99%E9%87%8C%E4%BD%BF%E7%94%A8%0A%0A%7B%0A%20%20var%20x%20%3D%202%3B%0A%7D%0A%2F%2F%20%E2%9C%85%20x%20%E8%83%BD%E5%9C%A8%E8%BF%99%E9%87%8C%E4%BD%BF%E7%94%A8%0A%60%60%60%0A%0A%60%60%60javascript%0Avar%20x%20%3D%202%3B%20%20%20%20%20%20%20%2F%2F%20Global%20scope%0Alet%20x%20%3D%202%3B%20%20%20%20%20%20%20%2F%2F%20Global%20scope%0Aconst%20x%20%3D%202%3B%20%20%20%20%20%20%20%2F%2F%20Global%20scope%0A%60%60%60%0A%0AES6%20%E5%BC%95%E5%85%A5%E4%BA%86%E4%B8%A4%E4%B8%AA%E9%87%8D%E8%A6%81%E7%9A%84%E6%96%B0%20JavaScript%20%E5%85%B3%E9%94%AE%E5%AD%97%EF%BC%9Alet%20%E5%92%8C%20const%E3%80%82%E8%BF%99%E4%B8%A4%E4%B8%AA%E5%85%B3%E9%94%AE%E5%AD%97%E5%9C%A8%20JavaScript%20%E4%B8%AD%E6%8F%90%E4%BE%9B%E4%BA%86%E5%9D%97%E4%BD%9C%E7%94%A8%E5%9F%9F%E3%80%82",
+      "encoded": true
+    },
+    {
+      "id": "s4-48",
+      "sectionId": "s4",
+      "title": "%E5%9D%97%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8F%98%E9%87%8F",
+      "body": "%60%60%60javascript%0Aconst%20isLoggedIn%20%3D%20true%3B%0Aif%20(isLoggedIn%20%3D%3D%20true)%20%7B%0A%20%20const%20statusMessage%20%3D%20'Logged%20in.'%3B%0A%7D%0A%2F%2F%20Uncaught%20ReferenceError...%0A%2F%2F%20%E6%9C%AA%E6%8D%95%E8%8E%B7%E7%9A%84%E5%BC%95%E7%94%A8%E9%94%99%E8%AF%AF...%0Aconsole.log(statusMessage)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s4-49",
+      "sectionId": "s4",
+      "title": "%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F",
+      "body": "%60%60%60javascript%0A%2F%2F%20%E5%85%A8%E5%B1%80%E5%A3%B0%E6%98%8E%E7%9A%84%E5%8F%98%E9%87%8F%0Aconst%20color%20%3D%20'blue'%3B%0Afunction%20printColor()%20%7B%0A%20%20console.log(color)%3B%0A%7D%0A%0AprintColor()%3B%20%2F%2F%20%3D%3E%20blue%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s4-50",
+      "sectionId": "s4",
+      "title": "`let` vs `var`",
+      "body": "```javascript\nfor (let i = 0; i < 3; i++) {\n  // 这是“let”的最大范围\n  // i 可以访问 ✔️\n}\n// i 不能访问 ❌\n```\n\n```javascript\nfor (var i = 0; i < 3; i++) {\n  // i 可以访问 ✔️\n}\n// i 可以访问 ✔️\n```\n\n`var` 的范围是最近的函数块，而 `let` 的范围是最近的封闭块。"
+    },
+    {
+      "id": "s4-52",
+      "sectionId": "s4",
+      "title": "带闭包的循环",
+      "body": "```javascript\n// 打印三次，不是我们的意思。\nfor (var i = 0; i < 3; i++) {\n  setTimeout(_ => console.log(i), 10);\n}\n```\n\n```javascript\n// 按预期打印 0、1 和 2。\nfor (let j = 0; j < 3; j++) { \n  setTimeout(_ => console.log(j), 10);\n}\n```\n\n变量使用 `let` 有自己的副本，变量有使用 `var` 的共享副本。"
+    },
+    {
+      "id": "s5-54",
+      "sectionId": "s5",
+      "title": "方法",
+      "body": ":- | :-\n:- | :-\n`Array.from()` | 类似数组对象创建一个新的 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/from)\n`Array.isArray()` | 值是否是一个 Array [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray)\n`Array.of()` | 创建一个新数组示例 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/of)\n`.at()` | 返回值索引对应的元素 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/at)\n`.concat()` | 合并两个或多个数组 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/concat)\n`.copyWithin()` | 浅复制替换某个位置 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin)\n`.entries()` | 新的 Array Iterator 对象 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/entries)\n`.every()` | 是否能通过回调函数的测试 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/every)\n`.fill()` | 固定值填充一个数组中 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/fill)\n`.filter()` | 返回过滤后的数组 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)\n`.find()` | 第一个元素的值 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/find)\n`.findIndex()` | 第一个元素的索引 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex)\n`.findLast()` | 最后一个元素的值 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/findLast)\n`.findLastIndex()` | 最后一个元素的索引 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/findLastIndex)\n`.flat()` | 扁平化嵌套数组 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flat)\n`.flatMap()` | 与 flat 相同 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap)\n`.forEach()` | 升序循环执行 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)\n`.includes()` | 是否包含一个指定的值 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/includes)\n`.indexOf()` | 找到给定元素的第一个索引 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf)\n`.join()` | 数组链接成一个字符串 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/join)\n`.keys()` | 每个索引键 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/keys)\n`.lastIndexOf()` | 给定元素的最后一个索引 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf)\n`.map()` | 循环返回一个新数组 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/map)\n`.pop()` | `删除`最后一个元素 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/pop)\n`.push()` | 元素`添加`到数组的末尾 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/push)\n`.reduce()` | 循环函数传递当前和上一个值 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)\n`.reduceRight()` | 类似 `reduce` 从右往左循环 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/ReduceRight)\n`.reverse()` | 数组元素的位置颠倒 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse)\n`.shift()` | `删除`第一个元素 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/shift)\n`.slice()` | `提取`元素 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/slice)\n`.some()` | 至少有一个通过测试函数 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some)\n`.sort()` | 元素进行排序 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)\n`.splice()` | `删除`或`替换`或`添加`元素 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)\n`.toLocaleString()` | 字符串表示数组中的元素 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/toLocaleString)\n`.toString()` | 返回字符串 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/toString)\n`.unshift()` | 元素`添加`到数组的`开头` [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/unshift)\n`.values()` | 返回新的 ArrayIterator 对象 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/values)"
+    },
+    {
+      "id": "s5-55",
+      "sectionId": "s5",
+      "title": "%E6%95%B0%E7%BB%84",
+      "body": "%60%60%60javascript%0Aconst%20fruits%20%3D%20%5B%22apple%22%2C%20%22dew%22%2C%20%22banana%22%5D%3B%0A%2F%2F%20%E4%B8%8D%E5%90%8C%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%0Aconst%20data%20%3D%20%5B1%2C%20'chicken'%2C%20false%5D%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s5-56",
+      "sectionId": "s5",
+      "title": "属性 .length",
+      "body": "```javascript\nconst numbers = [1, 2, 3, 4];\nnumbers.length // 4\n```"
+    },
+    {
+      "id": "s5-57",
+      "sectionId": "s5",
+      "title": "索引",
+      "body": "```javascript\n// 访问数组元素\nconst myArray = [100, 200, 300];\nconsole.log(myArray[0]); // 100\nconsole.log(myArray[1]); // 200\n```"
+    },
+    {
+      "id": "s5-58",
+      "sectionId": "s5",
+      "title": "可变图表",
+      "body": "|           | 添加 | 删除 | 开始 | 结束 |\n|:----------|:---:|:------:|:-----:|:---:|\n| `push`    | ✅  |        |       | ✅  |\n| `pop`     |     | ✅     |       | ✅  |\n| `unshift` | ✅  |        | ✅    |     |\n| `shift`   |     | ✅     | ✅    |     |"
+    },
+    {
+      "id": "s5-59",
+      "sectionId": "s5",
+      "title": "%E6%96%B9%E6%B3%95%20.push()",
+      "body": "%60%60%60javascript%0A%2F%2F%20%E6%B7%BB%E5%8A%A0%E5%8D%95%E4%B8%AA%E5%85%83%E7%B4%A0%EF%BC%9A%0Aconst%20cart%20%3D%20%5B'apple'%2C%20'orange'%5D%3B%0Acart.push('pear')%3B%20%0A%2F%2F%20%E6%B7%BB%E5%8A%A0%E5%A4%9A%E4%B8%AA%E5%85%83%E7%B4%A0%EF%BC%9A%0Aconst%20numbers%20%3D%20%5B1%2C%202%5D%3B%0Anumbers.push(3%2C%204%2C%205)%3B%0A%60%60%60%0A%0A%E5%B0%86%E9%A1%B9%E7%9B%AE**%E6%B7%BB%E5%8A%A0%E5%88%B0%E6%9C%AB%E5%B0%BE**%E5%B9%B6%E8%BF%94%E5%9B%9E%E6%96%B0%E7%9A%84%E6%95%B0%E7%BB%84%E9%95%BF%E5%BA%A6%E3%80%82",
+      "encoded": true
+    },
+    {
+      "id": "s5-61",
+      "sectionId": "s5",
+      "title": "%E6%96%B9%E6%B3%95%20.pop()",
+      "body": "%60%60%60javascript%0Aconst%20fruits%20%3D%20%5B%22apple%22%2C%20%22dew%22%2C%20%22banana%22%5D%3B%0Aconst%20fruit%20%3D%20fruits.pop()%3B%20%2F%2F%20'banana'%0A%0Aconsole.log(fruits)%3B%20%2F%2F%20%5B%22apple%22%2C%20%22dew%22%5D%0A%60%60%60%0A%0A%E4%BB%8E**%E6%9C%AB%E5%B0%BE%E5%88%A0%E9%99%A4**%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%E5%B9%B6%E8%BF%94%E5%9B%9E%E5%B7%B2%E5%88%A0%E9%99%A4%E7%9A%84%E9%A1%B9%E7%9B%AE%E3%80%82",
+      "encoded": true
+    },
+    {
+      "id": "s5-63",
+      "sectionId": "s5",
+      "title": "方法 .shift()",
+      "body": "```javascript\nconst array1 = [1, 2, 3];\nconst firstElement = array1.shift();\nconsole.log(array1); // 输出: Array [2, 3]\nconsole.log(firstElement); // 输出: 1\n```\n\n**从头删除**一个项目并返回已删除的项目。"
+    },
+    {
+      "id": "s5-65",
+      "sectionId": "s5",
+      "title": "方法 .some()",
+      "body": "```js\nconst array = [1, 2, 3, 4, 5];\n// 检查元素是否为偶数\nconst even = (element) => element % 2 === 0;\nconsole.log(array.some(even));\n// 预期输出: true\n```"
+    },
+    {
+      "id": "s5-66",
+      "sectionId": "s5",
+      "title": "方法 .concat()",
+      "body": "```javascript\nconst numbers = [3, 2, 1]\nconst newFirstNumber = 4\n    \n// => [ 4, 3, 2, 1 ]\n[newFirstNumber].concat(numbers)\n    \n// => [ 3, 2, 1, 4 ]\nnumbers.concat(newFirstNumber)\n```\n\n如果你想避免改变你的原始数组，你可以使用 concat。"
+    },
+    {
+      "id": "s5-68",
+      "sectionId": "s5",
+      "title": "%E6%96%B9%E6%B3%95%20.splice()",
+      "body": "%60%60%60javascript%0Aconst%20months%20%3D%20%5B'Jan'%2C%20'March'%5D%3B%0Amonths.splice(1%2C%200%2C%20'Feb')%3B%0A%2F%2F%20%E5%9C%A8%E7%B4%A2%E5%BC%95%201%20%E5%A4%84%E6%8F%92%E5%85%A5%0Aconsole.log(months)%3B%0A%2F%2F%20%E9%A2%84%E6%9C%9F%E8%BE%93%E5%87%BA%3A%20Array%20%5B%22Jan%22%2C%20%22Feb%22%2C%20%22March%22%5D%0A%0Amonths.splice(2%2C%201%2C%20'May')%3B%0A%2F%2F%20%E6%9B%BF%E6%8D%A2%E7%B4%A2%E5%BC%95%202%20%E5%A4%84%E7%9A%84%201%20%E4%B8%AA%E5%85%83%E7%B4%A0%0Aconsole.log(months)%3B%0A%2F%2F%20%E9%A2%84%E6%9C%9F%E8%BE%93%E5%87%BA%3A%20Array%20%5B%22Jan%22%2C%20%22Feb%22%2C%20%22May%22%5D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s5-69",
+      "sectionId": "s5",
+      "title": "%E6%96%B9%E6%B3%95%20.unshift()",
+      "body": "%60%60%60javascript%0Alet%20cats%20%3D%20%5B'Bob'%5D%3B%0A%2F%2F%20%3D%3E%20%5B'Willy'%2C%20'Bob'%5D%0Acats.unshift('Willy')%3B%0A%2F%2F%20%3D%3E%20%5B'Puff'%2C%20'George'%2C%20'Willy'%2C%20'Bob'%5D%0Acats.unshift('Puff'%2C%20'George')%3B%0A%60%60%60%0A%0A%E5%B0%86%E9%A1%B9%E7%9B%AE**%E6%B7%BB%E5%8A%A0%E5%88%B0%E5%BC%80%E5%A4%B4**%E5%B9%B6%E8%BF%94%E5%9B%9E%E6%96%B0%E7%9A%84%E6%95%B0%E7%BB%84%E9%95%BF%E5%BA%A6%E3%80%82",
+      "encoded": true
+    },
+    {
+      "id": "s5-71",
+      "sectionId": "s5",
+      "title": "%E6%96%B9%E6%B3%95%20.filter()",
+      "body": "%60%60%60javascript%0Aconst%20words%20%3D%20%5B'js'%2C%20'java'%2C%20'golang'%5D%3B%0Aconst%20result%20%3D%20words.filter(word%20%3D%3E%20%7B%0A%20%20return%20%20word.length%20%3E%203%0A%7D)%3B%0Aconsole.log(result)%3B%0A%2F%2F%20%E9%A2%84%E6%9C%9F%E8%BE%93%E5%87%BA%3A%20Array%20%5B%22java%22%2C%20%22golang%22%5D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-72",
+      "sectionId": "s6",
+      "title": "While 循环",
+      "body": "```javascript\nwhile (condition) {\n  // 要执行的代码块\n}\nlet i = 0;\nwhile (i < 5) {        \n  console.log(i);\n  i++;\n}\n```"
+    },
+    {
+      "id": "s6-73",
+      "sectionId": "s6",
+      "title": "%E5%8F%8D%E5%90%91%E5%BE%AA%E7%8E%AF",
+      "body": "%60%60%60javascript%0Aconst%20fruits%20%3D%20%5B%22apple%22%2C%20%22dew%22%2C%20%22berry%22%5D%3B%0Afor%20(let%20i%20%3D%20fruits.length%20-%201%3B%20i%20%3E%3D%200%3B%20i--)%20%7B%0A%20%20console.log(%60%24%7Bi%7D.%20%24%7Bfruits%5Bi%5D%7D%60)%3B%0A%7D%0A%2F%2F%20%3D%3E%202.%20berry%0A%2F%2F%20%3D%3E%201.%20dew%0A%2F%2F%20%3D%3E%200.%20apple%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-74",
+      "sectionId": "s6",
+      "title": "Do...While 语句",
+      "body": "```javascript\nx = 0\ni = 0\ndo {\n  x = x + i;\n  console.log(x)\n  i++;\n} while (i < 5);\n// => 0 1 3 6 10\n```"
+    },
+    {
+      "id": "s6-75",
+      "sectionId": "s6",
+      "title": "For 循环",
+      "body": "```javascript\nfor (let i = 0; i < 4; i += 1) {\n  console.log(i);\n};\n// => 0, 1, 2, 3\n```"
+    },
+    {
+      "id": "s6-76",
+      "sectionId": "s6",
+      "title": "遍历数组",
+      "body": "```javascript\nfor (let i = 0; i < array.length; i++){\n  console.log(array[i]);\n}\n// => 数组中的每一项\n```"
+    },
+    {
+      "id": "s6-77",
+      "sectionId": "s6",
+      "title": "Break",
+      "body": "```javascript\nfor (let i = 0; i < 99; i += 1) {\n  if (i > 5) break;\n  console.log(i)\n}\n// => 0 1 2 3 4 5\n```"
+    },
+    {
+      "id": "s6-78",
+      "sectionId": "s6",
+      "title": "Continue",
+      "body": "%60%60%60javascript%0Afor%20(i%20%3D%200%3B%20i%20%3C%2010%3B%20i%2B%2B)%20%7B%0A%20%20if%20(i%20%3D%3D%3D%203)%20%7B%0A%20%20%20%20continue%3B%0A%20%20%7D%0A%20%20text%20%2B%3D%20%22The%20number%20is%20%22%20%2B%20i%20%2B%20%22%3Cbr%3E%22%3B%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-79",
+      "sectionId": "s6",
+      "title": "嵌套循环",
+      "body": "```javascript\nfor (let i = 0; i < 2; i += 1) {\n  for (let j = 0; j < 3; j += 1) {\n    console.log(`${i}-${j}`);\n  }\n}\n```"
+    },
+    {
+      "id": "s6-80",
+      "sectionId": "s6",
+      "title": "for...in%20%E5%BE%AA%E7%8E%AF",
+      "body": "%60%60%60javascript%0Aconst%20fruits%20%3D%20%5B%22apple%22%2C%20%22orange%22%2C%20%22banana%22%5D%3B%0Afor%20(let%20index%20in%20fruits)%20%7B%0A%20%20console.log(index)%3B%0A%7D%0A%2F%2F%20%3D%3E%200%0A%2F%2F%20%3D%3E%201%0A%2F%2F%20%3D%3E%202%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-81",
+      "sectionId": "s6",
+      "title": "label 语句",
+      "body": "```js\nvar num = 0;\n\noutPoint:\nfor(var i = 0; i < 10; i++) {\n  for(var j = 0; j < 10; j++) {\n    if(i == 5 && j == 5) {\n      continue outPoint;\n    }\n    num++;\n  }\n}\n\nalert(num);  // 95\n```\n\n从 `alert(num)` 的值可以看出，`continue outPoint;` 语句的作用是跳出当前循环，并跳转到 `outPoint`（标签）下的 `for` 循环继续执行。"
+    },
+    {
+      "id": "s6-83",
+      "sectionId": "s6",
+      "title": "for...of%20%E5%BE%AA%E7%8E%AF",
+      "body": "%60%60%60javascript%0Aconst%20fruits%20%3D%20%5B%22apple%22%2C%20%22orange%22%2C%20%22banana%22%5D%3B%0Afor%20(let%20fruit%20of%20fruits)%20%7B%0A%20%20console.log(fruit)%3B%0A%7D%0A%2F%2F%20%3D%3E%20apple%0A%2F%2F%20%3D%3E%20orange%0A%2F%2F%20%3D%3E%20banana%0A%0Afor%20(let%20%5Bindex%2C%20value%5D%20of%20fruits.entries())%20%7B%0A%20%20console.log(index%2C%20value)%3B%0A%7D%0A%2F%2F%20%3D%3E%200%20apple%0A%2F%2F%20%3D%3E%201%20orange%0A%2F%2F%20%3D%3E%202%20banana%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-84",
+      "sectionId": "s6",
+      "title": "for await...of",
+      "body": "```javascript\nasync function* asyncGenerator() {\n  var i = 0;\n  while (i < 3) {\n    yield i++;\n  }\n}\n\n(async function() {\n  for await (num of asyncGenerator()) {\n    console.log(num);\n  }\n})();\n\n// 0\n// 1\n// 2\n```"
+    },
+    {
+      "id": "s6-85",
+      "sectionId": "s6",
+      "title": "可选的 for 表达式",
+      "body": "```js\nvar i = 0;\n\nfor (;;) {\n  if (i > 3) break;\n  console.log(i);\n  i++;\n}\n```"
+    },
+    {
+      "id": "s7-86",
+      "sectionId": "s7",
+      "title": "分配给变量的函数",
+      "body": "```javascript\nlet plusFive = (number) => {\n  return number + 5;  \n};\n// f 被赋值为 plusFive\nlet f = plusFive;\nplusFive(3); // 8\n// 由于 f 具有函数值，因此可以调用它。\nf(9); // 14\n```"
+    },
+    {
+      "id": "s7-87",
+      "sectionId": "s7",
+      "title": "回调函数",
+      "body": "```javascript\nconst isEven = (n) => {\n  return n % 2 == 0;\n}\nlet printMsg = (evenFunc, num) => {\n  const isNumEven = evenFunc(num);\n  console.log(`${num} is an even number: ${isNumEven}.`)\n}\n// Pass in isEven as the callback function\nprintMsg(isEven, 4); \n// => The number 4 is an even number: True.\n```"
+    },
+    {
+      "id": "s7-88",
+      "sectionId": "s7",
+      "title": "数组方法 .reduce()",
+      "body": "```javascript\nconst numbers = [1, 2, 3, 4];\nconst sum = numbers.reduce((accumulator, curVal) => {  \n  return accumulator + curVal;\n});\nconsole.log(sum); // 10\n```"
+    },
+    {
+      "id": "s7-89",
+      "sectionId": "s7",
+      "title": "%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%20.map()",
+      "body": "%60%60%60javascript%0Aconst%20members%20%3D%20%5B%22Taylor%22%2C%20%22Donald%22%2C%20%22Don%22%2C%20%22Natasha%22%2C%20%22Bobby%22%5D%3B%0Aconst%20announcements%20%3D%20members.map((member)%20%3D%3E%20%7B%0A%20%20return%20member%20%2B%20%22%20joined%20the%20contest.%22%3B%0A%7D)%3B%0Aconsole.log(announcements)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s7-90",
+      "sectionId": "s7",
+      "title": "数组方法 .forEach()",
+      "body": "```javascript\nconst numbers = [28, 77, 45, 99, 27];\nnumbers.forEach(number => {  \n  console.log(number);\n}); \n```"
+    },
+    {
+      "id": "s7-91",
+      "sectionId": "s7",
+      "title": "数组方法 .filter()",
+      "body": "```javascript\nconst randomNumbers = [4, 11, 42, 14, 39];\nconst filteredArray = randomNumbers.filter(n => {  \n  return n > 5;\n});\n```"
+    },
+    {
+      "id": "s8-92",
+      "sectionId": "s8",
+      "title": "%E8%AE%BF%E9%97%AE%E5%B1%9E%E6%80%A7",
+      "body": "%60%60%60javascript%0Aconst%20apple%20%3D%20%7B%20%0A%20%20color%3A%20'Green'%2C%0A%20%20price%3A%20%7B%20bulk%3A%20'%243%2Fkg'%2C%20smallQty%3A%20'%244%2Fkg'%20%7D%0A%7D%3B%0Aconsole.log(apple.color)%3B%20%20%20%20%20%20%2F%2F%20%3D%3E%20Green%0Aconsole.log(apple.price.bulk)%3B%20%2F%2F%20%3D%3E%20%243%2Fkg%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-93",
+      "sectionId": "s8",
+      "title": "%E5%91%BD%E5%90%8D%E5%B1%9E%E6%80%A7",
+      "body": "%60%60%60javascript%0A%2F%2F%20%E6%97%A0%E6%95%88%E9%94%AE%E5%90%8D%E7%A4%BA%E4%BE%8B%0Aconst%20trainSchedule%20%3D%20%7B%0A%20%20%2F%2F%20%E7%94%B1%E4%BA%8E%E5%8D%95%E8%AF%8D%E4%B9%8B%E9%97%B4%E7%9A%84%E7%A9%BA%E6%A0%BC%E8%80%8C%E6%97%A0%E6%95%88%E3%80%82%0A%20%20platform%20num%3A%2010%2C%20%0A%20%20%2F%2F%20%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%8D%E8%83%BD%E6%98%AF%E9%94%AE%E3%80%82%0A%20%2040%20-%2010%20%2B%202%3A%2030%2C%0A%20%20%2F%2F%20%E9%99%A4%E9%9D%9E%E7%94%A8%E5%BC%95%E5%8F%B7%E6%8B%AC%E8%B5%B7%E6%9D%A5%EF%BC%8C%E5%90%A6%E5%88%99%20%2B%20%E5%8F%B7%E6%97%A0%E6%95%88%E3%80%82%0A%20%20%2Bcompartment%3A%20'C'%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-94",
+      "sectionId": "s8",
+      "title": "%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84%E5%B1%9E%E6%80%A7",
+      "body": "%60%60%60javascript%0Aconst%20classElection%20%3D%20%7B%0A%20%20date%3A%20'January%2012'%0A%7D%3B%0Aconsole.log(classElection.place)%3B%20%2F%2F%20undefined%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-95",
+      "sectionId": "s8",
+      "title": "%E5%8F%AF%E5%8F%98%E7%9A%84",
+      "body": "%60%60%60javascript%0Aconst%20student%20%3D%20%7B%0A%20%20name%3A%20'Sheldon'%2C%0A%20%20score%3A%20100%2C%0A%20%20grade%3A%20'A'%2C%0A%7D%0Aconsole.log(student)%0A%2F%2F%20%7B%20name%3A%20'Sheldon'%2C%20score%3A%20100%2C%20grade%3A%20'A'%20%7D%0Adelete%20student.score%0Astudent.grade%20%3D%20'F'%0Aconsole.log(student)%0A%2F%2F%20%7B%20name%3A%20'Sheldon'%2C%20grade%3A%20'F'%20%7D%0Astudent%20%3D%20%7B%7D%0A%2F%2F%20TypeError%3A%20TypeError%EF%BC%9A%E5%88%86%E9%85%8D%E7%BB%99%E5%B8%B8%E9%87%8F%E5%8F%98%E9%87%8F%E3%80%82%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-96",
+      "sectionId": "s8",
+      "title": "%E8%B5%8B%E5%80%BC%E7%AE%80%E5%86%99%E8%AF%AD%E6%B3%95",
+      "body": "%60%60%60javascript%0Aconst%20person%20%3D%20%7B%0A%20%20name%3A%20'Tom'%2C%0A%20%20age%3A%20'22'%2C%0A%7D%3B%0Aconst%20%7Bname%2C%20age%7D%20%3D%20person%3B%0Aconsole.log(name)%3B%20%2F%2F%20'Tom'%0Aconsole.log(age)%3B%20%20%2F%2F%20'22'%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-97",
+      "sectionId": "s8",
+      "title": "%E5%88%A0%E9%99%A4%E8%BF%90%E7%AE%97%E7%AC%A6",
+      "body": "%60%60%60javascript%0Aconst%20person%20%3D%20%7B%0A%20%20firstName%3A%20%22Matilda%22%2C%0A%20%20hobby%3A%20%22knitting%22%2C%0A%20%20goal%3A%20%22learning%20JavaScript%22%0A%7D%3B%0Adelete%20person.hobby%3B%20%2F%2F%20%E6%88%96%20delete%20person%5B'hobby'%5D%3B%0Aconsole.log(person)%3B%0A%2F*%0A%7B%0A%20%20firstName%3A%20%22Matilda%22%0A%20%20goal%3A%20%22learning%20JavaScript%22%0A%7D%20*%2F%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-98",
+      "sectionId": "s8",
+      "title": "%E5%AF%B9%E8%B1%A1%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0",
+      "body": "%60%60%60javascript%0Aconst%20origNum%20%3D%208%3B%0Aconst%20origObj%20%3D%20%7Bcolor%3A%20'blue'%7D%3B%0Aconst%20changeItUp%20%3D%20(num%2C%20obj)%20%3D%3E%20%7B%0A%20%20num%20%3D%207%3B%0A%20%20obj.color%20%3D%20'red'%3B%0A%7D%3B%0AchangeItUp(origNum%2C%20origObj)%3B%0A%2F%2F%20%E5%B0%86%E8%BE%93%E5%87%BA%208%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%95%B4%E6%95%B0%E6%98%AF%E6%8C%89%E5%80%BC%E4%BC%A0%E9%80%92%E7%9A%84%E3%80%82%0Aconsole.log(origNum)%3B%0A%2F%2F%20%E7%94%B1%E4%BA%8E%E4%BC%A0%E9%80%92%E4%BA%86%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%B0%86%E8%BE%93%E5%87%BA%E2%80%9Cred%E2%80%9D%0A%2F%2F%20%E9%80%9A%E8%BF%87%E5%BC%95%E7%94%A8%EF%BC%8C%E5%9B%A0%E6%AD%A4%E6%98%AF%E5%8F%AF%E5%8F%98%E7%9A%84%E3%80%82%0Aconsole.log(origObj.color)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-99",
+      "sectionId": "s8",
+      "title": "%E5%B7%A5%E5%8E%82%E5%87%BD%E6%95%B0",
+      "body": "%60%60%60javascript%0A%2F%2F%20%E4%B8%80%E4%B8%AA%E6%8E%A5%E5%8F%97%20'name'%EF%BC%8C'age'%20%E5%92%8C%20'breed'%20%E7%9A%84%E5%B7%A5%E5%8E%82%E5%87%BD%E6%95%B0%EF%BC%8C%0A%2F%2F%20%20%E5%8F%82%E6%95%B0%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%20dog%20%E5%AF%B9%E8%B1%A1%E3%80%82%0Aconst%20dogFactory%20%3D%20(name%2C%20age%2C%20breed)%20%3D%3E%20%7B%0A%20%20return%20%7B%0A%20%20%20%20name%3A%20name%2C%0A%20%20%20%20age%3A%20age%2C%0A%20%20%20%20breed%3A%20breed%2C%0A%20%20%20%20bark()%20%7B%0A%20%20%20%20%20%20console.log('Woof!')%3B%20%20%0A%20%20%20%20%7D%0A%20%20%7D%3B%0A%7D%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-100",
+      "sectionId": "s8",
+      "title": "%E9%80%9F%E8%AE%B0%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA",
+      "body": "%60%60%60javascript%0Aconst%20activity%20%3D%20'Surfing'%3B%0Aconst%20beach%20%3D%20%7B%20activity%20%7D%3B%0Aconsole.log(beach)%3B%20%2F%2F%20%7B%20activity%3A%20'Surfing'%20%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-101",
+      "sectionId": "s8",
+      "title": "this%20%E5%85%B3%E9%94%AE%E5%AD%97",
+      "body": "%60%60%60javascript%0Aconst%20cat%20%3D%20%7B%0A%20%20name%3A%20'Pipey'%2C%0A%20%20age%3A%208%2C%0A%20%20whatName()%20%7B%0A%20%20%20%20return%20this.name%20%20%0A%20%20%7D%0A%7D%3B%0Aconsole.log(cat.whatName())%3B%20%2F%2F%20%3D%3E%20Pipey%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-102",
+      "sectionId": "s8",
+      "title": "%E6%96%B9%E6%B3%95",
+      "body": "%60%60%60javascript%0Aconst%20engine%20%3D%20%7B%0A%20%20%2F%2F%20%E6%96%B9%E6%B3%95%E7%AE%80%E5%86%99%EF%BC%8C%E6%9C%89%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%0A%20%20start(adverb)%20%7B%0A%20%20%20%20console.log(%60The%20engine%20starts%20up%20%24%7Badverb%7D...%60)%3B%0A%20%20%7D%2C%20%20%0A%20%20%2F%2F%20%E4%B8%8D%E5%B8%A6%E5%8F%82%E6%95%B0%E7%9A%84%E5%8C%BF%E5%90%8D%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%0A%20%20sputter%3A%20()%20%3D%3E%20%7B%0A%20%20%20%20console.log('The%20engine%20sputters...')%3B%0A%20%20%7D%2C%0A%7D%3B%0Aengine.start('noisily')%3B%0Aengine.sputter()%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-103",
+      "sectionId": "s8",
+      "title": "Getters%20%E5%92%8C%20setters",
+      "body": "%60%60%60javascript%0Aconst%20myCat%20%3D%20%7B%0A%20%20_name%3A%20'Dottie'%2C%0A%20%20get%20name()%20%7B%0A%20%20%20%20return%20this._name%3B%20%20%0A%20%20%7D%2C%0A%20%20set%20name(newName)%20%7B%0A%20%20%20%20this._name%20%3D%20newName%3B%20%20%0A%20%20%7D%0A%7D%3B%0A%2F%2F%20%E5%BC%95%E7%94%A8%E8%B0%83%E7%94%A8%20getter%0Aconsole.log(myCat.name)%3B%0A%2F%2F%20%E8%B5%8B%E5%80%BC%E8%B0%83%E7%94%A8%20setter%0AmyCat.name%20%3D%20'Yankee'%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-104",
+      "sectionId": "s8",
+      "title": "Proxy",
+      "body": "Proxy%20%E5%AF%B9%E8%B1%A1%E7%94%A8%E4%BA%8E%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BB%A3%E7%90%86%EF%BC%8C%E4%BB%8E%E8%80%8C%E5%AE%9E%E7%8E%B0%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E7%9A%84%E6%8B%A6%E6%88%AA%E5%92%8C%E8%87%AA%E5%AE%9A%E4%B9%89%EF%BC%88%E5%A6%82%E5%B1%9E%E6%80%A7%E6%9F%A5%E6%89%BE%E3%80%81%E8%B5%8B%E5%80%BC%E3%80%81%E6%9E%9A%E4%B8%BE%E3%80%81%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E7%AD%89%EF%BC%89%E3%80%82%0A%0A%60%60%60javascript%0A%2F%2F%20%E7%94%A8%E4%BA%8E%E6%8B%A6%E6%88%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%AF%BB%E5%8F%96%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C%E3%80%82%0Aconst%20handler%20%3D%20%7B%0A%20%20%20%20get%3A%20function(obj%2C%20prop)%20%7B%0A%20%20%20%20%20%20%20%20return%20prop%20in%20obj%20%3F%20obj%5Bprop%5D%20%3A%2037%3B%0A%20%20%20%20%7D%0A%7D%3B%0A%0Aconst%20p%20%3D%20new%20Proxy(%7B%7D%2C%20handler)%3B%0Ap.a%20%3D%201%3B%0Ap.b%20%3D%20undefined%3B%0A%0Aconsole.log(p.a%2C%20p.b)%3B%20%20%20%20%20%20%2F%2F%201%2C%20undefined%0Aconsole.log('c'%20in%20p%2C%20p.c)%3B%20%2F%2F%20false%2C%2037%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-106",
+      "sectionId": "s8",
+      "title": "语法",
+      "body": "```javascript\nconst p = new Proxy(target, handler)\n```\n\n• target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。\n• handler 一个通常以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。"
+    },
+    {
+      "id": "s8-108",
+      "sectionId": "s8",
+      "title": "方法",
+      "body": ":- | :-\n:- | :-\n`Proxy.revocable()` | 创建一个可撤销的Proxy对象 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/revocable)"
+    },
+    {
+      "id": "s8-109",
+      "sectionId": "s8",
+      "title": "handler 对象的方法",
+      "body": ":- | :-\n:- | :-\n`handler.getPrototypeOf()` | Object.getPrototypeOf 方法的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/getPrototypeOf)\n`handler.setPrototypeOf()` | Object.setPrototypeOf 方法的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/setPrototypeOf)\n`handler.isExtensible()` | Object.isExtensible 方法的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/isExtensible)\n`handler.preventExtensions()` | Object.preventExtensions 方法的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/preventExtensions)\n`handler.getOwnPropertyDescriptor()` | Object.getOwnPropertyDescriptor 方法的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/getOwnPropertyDescriptor)\n`handler.defineProperty()` | Object.defineProperty 方法的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/defineProperty)\n`handler.has()` | in 操作符的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/has)\n`handler.get()` | 属性读取操作的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/get)\n`handler.set()` | 属性设置操作的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/set)\n`handler.deleteProperty()` | delete 操作符的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/deleteProperty)\n`handler.ownKeys()` | Object.getOwnPropertyNames 方法和 Object.getOwnPropertySymbols 方法的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/ownKeys)\n`handler.apply()` | 函数调用操作的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/apply)\n`handler.construct()` | new 操作符的捕捉器 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy/construct)"
+    },
+    {
+      "id": "s8-110",
+      "sectionId": "s8",
+      "title": "Reflect",
+      "body": "Reflect%20%E6%98%AF%E4%B8%80%E4%B8%AA%E5%86%85%E7%BD%AE%E7%9A%84%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%AE%83%E6%8F%90%E4%BE%9B%E6%8B%A6%E6%88%AA%20JavaScript%20%E6%93%8D%E4%BD%9C%E7%9A%84%E6%96%B9%E6%B3%95%E3%80%82%E8%BF%99%E4%BA%9B%E6%96%B9%E6%B3%95%E4%B8%8Eproxy%20handlers%20(en-US)%E7%9A%84%E6%96%B9%E6%B3%95%E7%9B%B8%E5%90%8C%E3%80%82Reflect%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%AE%83%E6%98%AF%E4%B8%8D%E5%8F%AF%E6%9E%84%E9%80%A0%E7%9A%84%E3%80%82%0A%0A%60%60%60javascript%0A%2F%2F%20%E6%A3%80%E6%B5%8B%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8%E7%89%B9%E5%AE%9A%E5%B1%9E%E6%80%A7%0Aconst%20duck%20%3D%20%7B%0A%20%20name%3A%20'Maurice'%2C%0A%20%20color%3A%20'white'%2C%0A%20%20greeting%3A%20function()%20%7B%0A%20%20%20%20console.log(%60Quaaaack!%20My%20name%20is%20%24%7Bthis.name%7D%60)%3B%0A%20%20%7D%0A%7D%0A%0AReflect.has(duck%2C%20'color')%3B%0A%2F%2F%20true%0AReflect.has(duck%2C%20'haircut')%3B%0A%2F%2F%20false%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s8-112",
+      "sectionId": "s8",
+      "title": "静态方法",
+      "body": ":- | :-\n:- | :-\n`Reflect.apply(target, thisArgument, argumentsList)` | 对一个函数进行调用操作，同时可以传入一个数组作为调用参数。和 Function.prototype.apply() 功能类似 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/apply)\n`Reflect.construct(target, argumentsList[, newTarget])` | 对构造函数进行 new 操作，相当于执行 new target(...args) [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/construct)\n`Reflect.defineProperty(target, propertyKey, attributes)` | 和 Object.defineProperty() 类似。如果设置成功就会返回 true [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/defineProperty)\n`Reflect.deleteProperty(target, propertyKey)` | 作为函数的delete操作符，相当于执行 delete target[name] [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/deleteProperty)\n`Reflect.get(target, propertyKey[, receiver])` | 获取对象身上某个属性的值，类似于 target[name] [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/get)\n`Reflect.getOwnPropertyDescriptor(target, propertyKey)`  | 类似于 Object.getOwnPropertyDescriptor()。如果对象中存在该属性，则返回对应的属性描述符，否则返回 undefined [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/getOwnPropertyDescriptor)\n`Reflect.getPrototypeOf(target)` | 类似于 Object.getPrototypeOf() [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/getPrototypeOf)\n`Reflect.has(target, propertyKey)` | 判断一个对象是否存在某个属性，和 in 运算符 的功能完全相同 [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/has)\n`Reflect.isExtensible(target)` | 类似于 Object.isExtensible() [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/isExtensible)\n`Reflect.ownKeys(target)` | 返回一个包含所有自身属性（不包含继承属性）的数组。(类似于 Object.keys(), 但不会受enumerable 影响) [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/ownKeys)\n`Reflect.preventExtensions(target)` | 类似于 Object.preventExtensions()。返回一个Boolean [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/preventExtensions)\n`Reflect.set(target, propertyKey, value[, receiver])` | 将值分配给属性的函数。返回一个Boolean，如果更新成功，则返回true [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/set)\n`Reflect.setPrototypeOf(target, prototype)` | 设置对象原型的函数。返回一个 Boolean，如果更新成功，则返回 true [#](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Reflect/setPrototypeOf)"
+    },
+    {
+      "id": "s9-113",
+      "sectionId": "s9",
+      "title": "%E9%9A%90%E5%BC%8F%E7%BB%91%E5%AE%9A",
+      "body": "%60%60%60js%0Afunction%20foo()%20%7B%0A%20%20console.log(this)%0A%7D%0Alet%20obj1%20%3D%20%7B%0A%20%20name%3A%20%22obj1%22%2C%0A%20%20foo%3A%20foo%0A%7D%0Alet%20obj2%20%3D%20%7B%0A%20%20name%3A%20%22obj2%22%2C%0A%20%20obj1%3A%20obj1%0A%7D%0Aobj2.obj1.foo()%20%2F%2F%20%5BObject%20obj1%5D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s9-114",
+      "sectionId": "s9",
+      "title": "隐式丢失",
+      "body": "```js\nlet a = obj2.obj1.foo()\na() // Window\n```\n\n• 指定隐式绑定：必须在调用的对象内部有一个对函数的引用（比如一个属性）\n• 将以上调用赋值给一个变量，结果最终会是 Window\n• 在 a 被调用的位置没有进行过任何显示绑定，最终全局对象 window 会调用它（`Window.a`）"
+    },
+    {
+      "id": "s9-116",
+      "sectionId": "s9",
+      "title": "%E6%98%BE%E7%A4%BA%E7%BB%91%E5%AE%9A",
+      "body": "%60%60%60js%0Afunction%20getName(a1%2C%20a2)%20%7B%0A%20%20console.log(%22%E6%AD%A4%E4%BA%BA%22%20%2B%20this.name%2C%20%22%E5%B2%81%E6%95%B0%22%20%2B%20(a1%20%2B%20a2))%0A%7D%0Alet%20person%20%3D%20%7B%0A%20%20name%3A%20%22zhangsan%22%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s9-117",
+      "sectionId": "s9",
+      "title": "call",
+      "body": "call 第一个参数接受 this 作用域，剩余参数传递给其调用的函数\n\n```js\ngetName.call(person, 18, 12)\n```"
+    },
+    {
+      "id": "s9-119",
+      "sectionId": "s9",
+      "title": "apply",
+      "body": "apply 第一个参数与 call 相同，第二个参数是其调用函数的参数数组\n\n```js\ngetName.apply(person, [18, 12])\n```"
+    },
+    {
+      "id": "s9-121",
+      "sectionId": "s9",
+      "title": "bind",
+      "body": "bind 函数会返回一个新函数\n\n```js\ngetName.bind(person,18,12)()\n//或者可以这样\ngetName.bind(person)(18, 12)\n//或者这样\ngetName.bind(person).bind(null, 18)(12)\n```"
+    },
+    {
+      "id": "s9-123",
+      "sectionId": "s9",
+      "title": "%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E4%B8%AD%E7%9A%84%20this",
+      "body": "%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95%EF%BC%8C%E7%B1%BB%E4%BC%BC%E4%BA%8E%20map%E3%80%81forEach%20%E7%AD%89%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%87%AA%E5%B7%B1%E8%AE%BE%E7%BD%AE%E7%BB%91%E5%AE%9A%20this%0A%0A%60%60%60js%0Aconst%20obj%20%3D%20%7B%0A%20%20name%3A%20%22zhangsan%22%0A%7D%0Aconst%20array%20%3D%20%5B1%2C%202%2C%203%5D%3B%0Aarray.map(function(value)%7B%0A%20%20console.log(this.name)%0A%7D%2C%20obj)%0A%2F%2F%20zhangsan%20x3%20%0A%60%60%60%0A%0A%E5%85%B6%E4%B8%AD%E4%B8%80%E4%BA%9B%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1%EF%BC%8C%E5%A6%82%20setTimeout%20%E7%AD%89%EF%BC%8C%E5%AE%83%E4%BB%AC%E5%92%8C%E6%9C%AA%E6%98%BE%E7%A4%BA%E7%BB%91%E5%AE%9A%20this%20%E7%9A%84%E9%83%A8%E5%88%86%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95%E4%B8%80%E6%A0%B7%EF%BC%8C%E9%83%BD%E4%BC%9A%E6%8C%87%E5%90%91%E5%85%A8%E5%B1%80%E5%AF%B9%E8%B1%A1%EF%BC%88%60Window%60%EF%BC%89%0A%0A%60%60%60js%0AsetTimeout(function()%7B%20%0A%20%20console.log(this)%0A%7D%2C%201000)%20%2F%2F%20Window%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s10-127",
+      "sectionId": "s10",
+      "title": "%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%2F%E5%AD%97%E6%AE%B5",
+      "body": "%60%60%60javascript%0Aclass%20Dog%20%7B%0A%20%20constructor(name)%20%7B%0A%20%20%20%20this._name%20%3D%20name%3B%20%20%0A%20%20%7D%0A%20%20%0A%20%20introduce()%20%7B%20%0A%20%20%20%20console.log('This%20is%20'%20%2B%20this._name%20%2B%20'%20!')%3B%20%20%0A%20%20%7D%0A%20%20%0A%20%20%2F%2F%20%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%0A%20%20static%20bark()%20%7B%0A%20%20%20%20console.log('Woof!')%3B%20%20%0A%20%20%7D%0A%0A%20%20static%20%7B%0A%20%20%20%20console.log('%E7%B1%BB%E9%9D%99%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96%E5%9D%97%E8%B0%83%E7%94%A8')%3B%0A%20%20%7D%0A%7D%0A%0Aconst%20myDog%20%3D%20new%20Dog('Buster')%3B%0AmyDog.introduce()%3B%0A%0A%2F%2F%20%E8%B0%83%E7%94%A8%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%0ADog.bark()%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s10-128",
+      "sectionId": "s10",
+      "title": "%E5%85%AC%E6%9C%89%E9%9D%99%E6%80%81%E5%AD%97%E6%AE%B5",
+      "body": "%60%60%60js%0Aclass%20ClassStaticField%20%7B%0A%20%20static%20staticField%20%3D%20'static%20field'%0A%7D%0A%0Aconsole.log(ClassStaticField.staticField)%0A%2F%2F%20%E9%A2%84%E6%9C%9F%E8%BE%93%E5%87%BA%E5%80%BC%EF%BC%9A%22static%20field%22%E2%80%8B%20%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s10-129",
+      "sectionId": "s10",
+      "title": "Class",
+      "body": "%60%60%60javascript%0Aclass%20Song%20%7B%0A%20%20constructor()%20%7B%0A%20%20%20%20this.title%3B%0A%20%20%20%20this.author%3B%0A%20%20%7D%0A%20%20%0A%20%20play()%20%7B%0A%20%20%20%20console.log('Song%20playing!')%3B%0A%20%20%7D%0A%7D%0A%0Aconst%20mySong%20%3D%20new%20Song()%3B%0AmySong.play()%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s10-130",
+      "sectionId": "s10",
+      "title": "extends",
+      "body": "%60%60%60javascript%0A%2F%2F%20Parent%20class%0Aclass%20Media%20%7B%0A%20%20constructor(info)%20%7B%0A%20%20%20%20this.publishDate%20%3D%20info.publishDate%3B%0A%20%20%20%20this.name%20%3D%20info.name%3B%0A%20%20%7D%0A%7D%0A%2F%2F%20Child%20class%0Aclass%20Song%20extends%20Media%20%7B%0A%20%20constructor(songData)%20%7B%0A%20%20%20%20super(songData)%3B%0A%20%20%20%20this.artist%20%3D%20songData.artist%3B%0A%20%20%7D%0A%7D%0Aconst%20mySong%20%3D%20new%20Song(%7B%20%0A%20%20artist%3A%20'Queen'%2C%20%0A%20%20name%3A%20'Bohemian%20Rhapsody'%2C%20%0A%20%20publishDate%3A%201975%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s10-131",
+      "sectionId": "s10",
+      "title": "Class%20Constructor",
+      "body": "%60%60%60javascript%0Aclass%20Song%20%7B%0A%20%20constructor(title%2C%20artist)%20%7B%0A%20%20%20%20this.title%20%3D%20title%3B%0A%20%20%20%20this.artist%20%3D%20artist%3B%0A%20%20%7D%0A%7D%0Aconst%20mySong%20%3D%20new%20Song('Bohemian%20Rhapsody'%2C%20'Queen')%3B%0Aconsole.log(mySong.title)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s10-132",
+      "sectionId": "s10",
+      "title": "Class%20Methods",
+      "body": "%60%60%60javascript%0Aclass%20Song%20%7B%0A%20%20play()%20%7B%0A%20%20%20%20console.log('Playing!')%3B%0A%20%20%7D%0A%20%20%0A%20%20stop()%20%7B%0A%20%20%20%20console.log('Stopping!')%3B%0A%20%20%7D%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s11-133",
+      "sectionId": "s11",
+      "title": "Export / Import",
+      "body": "```javascript\n// myMath.js\n// 默认导出 Default export\nexport default function add(x,y){\n  return x + y\n}\n// 正常导出 Normal export\nexport function subtract(x,y){\n  return x - y\n}\n// 多重导出 Multiple exports\nfunction multiply(x,y){\n  return x * y\n}\nfunction duplicate(x){\n  return x * 2\n}\nexport {\n  multiply, duplicate\n}\n```"
+    },
+    {
+      "id": "s11-134",
+      "sectionId": "s11",
+      "title": "import%20%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97",
+      "body": "%60%60%60javascript%0A%2F%2F%20main.js%0Aimport%20add%2C%20%7B%20subtract%2C%20multiply%2C%20duplicate%20%7D%20from%20'.%2FmyMath.js'%3B%0Aconsole.log(add(6%2C%202))%3B%20%20%20%20%20%20%2F%2F%208%20%0Aconsole.log(subtract(6%2C%202))%20%20%2F%2F%204%0Aconsole.log(multiply(6%2C%202))%3B%20%2F%2F%2012%0Aconsole.log(duplicate(5))%20%20%20%20%2F%2F%2010%0A%2F%2F%20index.html%0A%3Cscript%20type%3D%22module%22%20src%3D%22main.js%22%3E%3C%2Fscript%3E%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s11-135",
+      "sectionId": "s11",
+      "title": "Export Module",
+      "body": "```javascript\n// myMath.js\nfunction add(x,y){\n  return x + y\n}\nfunction subtract(x,y){\n  return x - y\n}\nfunction multiply(x,y){\n  return x * y\n}\nfunction duplicate(x){\n  return x * 2\n}\n// node.js 中的多个导出\nmodule.exports = {\n  add,\n  subtract,\n  multiply,\n  duplicate\n}\n```"
+    },
+    {
+      "id": "s11-136",
+      "sectionId": "s11",
+      "title": "require%20%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97",
+      "body": "%60%60%60javascript%0A%2F%2F%20main.js%0Aconst%20myMath%20%3D%20require('.%2FmyMath.js')%0Aconsole.log(myMath.add(6%2C%202))%3B%20%20%20%20%20%20%2F%2F%208%20%0Aconsole.log(myMath.subtract(6%2C%202))%20%20%2F%2F%204%0Aconsole.log(myMath.multiply(6%2C%202))%3B%20%2F%2F%2012%0Aconsole.log(myMath.duplicate(5))%20%20%20%20%2F%2F%2010%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-137",
+      "sectionId": "s12",
+      "title": "Promise",
+      "body": "创建 promises\n\n```javascript\nnew Promise((resolve, reject) => {\n  if (ok) {\n    resolve(result)\n  } else {\n    reject(error)\n  }\n})\n```"
+    },
+    {
+      "id": "s12-139",
+      "sectionId": "s12",
+      "title": "使用 promises",
+      "body": "```javascript\npromise\n  .then((result) => { ··· })\n  .catch((error) => { ··· })\n```"
+    },
+    {
+      "id": "s12-140",
+      "sectionId": "s12",
+      "title": "Promise 方法",
+      "body": "```javascript\nPromise.all(···)\nPromise.race(···)\nPromise.reject(···)\nPromise.resolve(···)\n```"
+    },
+    {
+      "id": "s12-141",
+      "sectionId": "s12",
+      "title": "%E6%89%A7%E8%A1%8C%E5%99%A8%E5%87%BD%E6%95%B0",
+      "body": "%60%60%60javascript%0Aconst%20executorFn%20%3D%20(resolve%2C%20reject)%20%3D%3E%20%7B%0A%20%20resolve('Resolved!')%3B%0A%7D%3B%0Aconst%20promise%20%3D%20new%20Promise(executorFn)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-142",
+      "sectionId": "s12",
+      "title": "setTimeout()",
+      "body": "%60%60%60javascript%0Aconst%20loginAlert%20%3D%20()%20%3D%3E%20%7B%0A%20%20console.log('Login')%3B%0A%7D%3B%0AsetTimeout(loginAlert%2C%206000)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-143",
+      "sectionId": "s12",
+      "title": "Promise%20%E7%8A%B6%E6%80%81",
+      "body": "%60%60%60javascript%0Aconst%20promise%20%3D%20new%20Promise((resolve%2C%20reject)%20%3D%3E%20%7B%0A%20%20const%20res%20%3D%20true%3B%0A%20%20%2F%2F%20%E4%B8%80%E4%B8%AA%E5%BC%82%E6%AD%A5%E6%93%8D%E4%BD%9C%E3%80%82%0A%20%20if%20(res)%20%7B%0A%20%20%20%20resolve('Resolved!')%3B%0A%20%20%7D%0A%20%20else%20%7B%0A%20%20%20%20reject(Error('Error'))%3B%0A%20%20%7D%0A%7D)%3B%0Apromise.then(%0A%20%20(res)%20%3D%3E%20console.log(res)%2C%0A%20%20(err)%20%3D%3E%20console.error(err)%0A)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-144",
+      "sectionId": "s12",
+      "title": ".then()%20%E6%96%B9%E6%B3%95",
+      "body": "%60%60%60javascript%0Aconst%20promise%20%3D%20new%20Promise((resolve%2C%20reject)%20%3D%3E%20%7B%20%20%20%20%0A%20%20setTimeout(()%20%3D%3E%20%7B%0A%20%20%20%20resolve('Result')%3B%0A%20%20%7D%2C%20200)%3B%0A%7D)%3B%0A%0Apromise.then((res)%20%3D%3E%20%7B%0A%20%20console.log(res)%3B%0A%7D%2C%20(err)%20%3D%3E%20%7B%0A%20%20console.error(err)%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-145",
+      "sectionId": "s12",
+      "title": ".catch()%20%E6%96%B9%E6%B3%95",
+      "body": "%60%60%60javascript%0Aconst%20promise%20%3D%20new%20Promise(%0A%20%20(resolve%2C%20reject)%20%3D%3E%20%7B%20%20%0A%20%20setTimeout(()%20%3D%3E%20%7B%0A%20%20%20%20reject(Error('Promise%20%E6%97%A0%E6%9D%A1%E4%BB%B6%E6%8B%92%E7%BB%9D%E3%80%82'))%3B%0A%20%20%7D%2C%201000)%3B%0A%7D)%3B%0A%0Apromise.then((res)%20%3D%3E%20%7B%0A%20%20console.log(value)%3B%0A%7D)%3B%0A%0Apromise.catch((err)%20%3D%3E%20%7B%0A%20%20console.error(err)%3B%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-146",
+      "sectionId": "s12",
+      "title": "Promise.all()",
+      "body": "```javascript\nconst promise1 = new Promise((resolve, reject) => {\n  setTimeout(() => {\n    resolve(3);\n  }, 300);\n});\nconst promise2 = new Promise((resolve, reject) => {\n  setTimeout(() => {\n    resolve(2);\n  }, 200);\n});\nPromise.all([promise1, promise2]).then((res) => {\n  console.log(res[0]);\n  console.log(res[1]);\n});\n```"
+    },
+    {
+      "id": "s12-147",
+      "sectionId": "s12",
+      "title": "%E9%93%BE%E6%8E%A5%E5%A4%9A%E4%B8%AA%20.then()",
+      "body": "%60%60%60javascript%0Aconst%20promise%20%3D%20new%20Promise(%0A%20%20resolve%20%3D%3E%20%0A%20%20%20%20setTimeout(()%20%3D%3E%20resolve('dAlan')%2C100)%0A)%3B%0A%0Apromise.then(res%20%3D%3E%20%7B%0A%20%20return%20res%20%3D%3D%3D%20'Alan'%20%0A%20%20%20%20%3F%20Promise.resolve('Hey%20Alan!')%0A%20%20%20%20%3A%20Promise.reject('Who%20are%20you%3F')%0A%7D)%0A.then((res)%20%3D%3E%20%7B%0A%20%20console.log(res)%0A%7D%2C%20(err)%20%3D%3E%20%7B%0A%20%20console.error(err)%0A%7D)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s12-148",
+      "sectionId": "s12",
+      "title": "%E9%81%BF%E5%85%8D%E5%B5%8C%E5%A5%97%E7%9A%84%20Promise%20%E5%92%8C%20.then()",
+      "body": "%60%60%60javascript%0Aconst%20promise%20%3D%20new%20Promise((resolve%2C%20reject)%20%3D%3E%20%7B%20%20%0A%20%20setTimeout(()%20%3D%3E%20%7B%0A%20%20%20%20resolve('*')%3B%0A%20%20%7D%2C%201000)%3B%0A%7D)%3B%0Aconst%20twoStars%20%3D%20(star)%20%3D%3E%20%7B%20%20%0A%20%20return%20(star%20%2B%20star)%3B%0A%7D%3B%0Aconst%20oneDot%20%3D%20(star)%20%3D%3E%20%7B%20%20%0A%20%20return%20(star%20%2B%20'.')%3B%0A%7D%3B%0Aconst%20print%20%3D%20(val)%20%3D%3E%20%7B%0A%20%20console.log(val)%3B%0A%7D%3B%0A%2F%2F%20%E5%B0%86%E5%AE%83%E4%BB%AC%E9%93%BE%E6%8E%A5%E5%9C%A8%E4%B8%80%E8%B5%B7%0Apromise.then(twoStars).then(oneDot).then(print)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s13-149",
+      "sectionId": "s13",
+      "title": "%E5%BC%82%E6%AD%A5",
+      "body": "%60%60%60javascript%0Afunction%20helloWorld()%20%7B%0A%20%20return%20new%20Promise(resolve%20%3D%3E%20%7B%0A%20%20%20%20setTimeout(()%20%3D%3E%20%7B%0A%20%20%20%20%20%20resolve('Hello%20World!')%3B%0A%20%20%20%20%7D%2C%202000)%3B%0A%20%20%7D)%3B%0A%7D%0A%0A%2F%2F%20%E5%BC%82%E6%AD%A5%E5%87%BD%E6%95%B0%E8%A1%A8%E8%BE%BE%E5%BC%8F%0Aconst%20msg%20%3D%20async%20function()%20%7B%0A%20%20const%20msg%20%3D%20await%20helloWorld()%3B%0A%20%20console.log('Message%3A'%2C%20msg)%3B%0A%7D%0A%0A%2F%2F%20%E5%BC%82%E6%AD%A5%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0%0Aconst%20msg1%20%3D%20async%20()%20%3D%3E%20%7B%0A%20%20const%20msg%20%3D%20await%20helloWorld()%3B%0A%20%20console.log('Message%3A'%2C%20msg)%3B%0A%7D%0A%0Amsg()%3B%20%2F%2F%20Message%3A%20Hello%20World!%20%3C--%202%20%E7%A7%92%E5%90%8E%0Amsg1()%3B%20%2F%2F%20Message%3A%20Hello%20World!%20%3C--%202%20%E7%A7%92%E5%90%8E%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s13-150",
+      "sectionId": "s13",
+      "title": "%E8%A7%A3%E5%86%B3%20Promises",
+      "body": "%60%60%60javascript%0Alet%20pro1%20%3D%20Promise.resolve(5)%3B%0Alet%20pro2%20%3D%2044%3B%0Alet%20pro3%20%3D%20new%20Promise(function(resolve%2C%20reject)%20%7B%0A%20%20setTimeout(resolve%2C%20100%2C%20'foo')%3B%0A%7D)%3B%0APromise.all(%5Bpro1%2C%20pro2%2C%20pro3%5D).then(function(values)%20%7B%0A%20%20console.log(values)%3B%0A%7D)%3B%0A%2F%2F%20expected%20%3D%3E%20Array%20%5B5%2C%2044%2C%20%22foo%22%5D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s13-151",
+      "sectionId": "s13",
+      "title": "%E5%BC%82%E6%AD%A5%E7%AD%89%E5%BE%85%20Promises",
+      "body": "%60%60%60javascript%0Afunction%20helloWorld()%20%7B%0A%20%20return%20new%20Promise(resolve%20%3D%3E%20%7B%0A%20%20%20%20setTimeout(()%20%3D%3E%20%7B%0A%20%20%20%20%20%20resolve('Hello%20World!')%3B%0A%20%20%20%20%7D%2C%202000)%3B%0A%20%20%7D)%3B%0A%7D%0Aasync%20function%20msg()%20%7B%0A%20%20const%20msg%20%3D%20await%20helloWorld()%3B%0A%20%20console.log('Message%3A'%2C%20msg)%3B%0A%7D%0Amsg()%3B%20%2F%2F%20Message%3A%20Hello%20World!%20%3C--%202%20%E7%A7%92%E5%90%8E%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s13-152",
+      "sectionId": "s13",
+      "title": "%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86",
+      "body": "%60%60%60javascript%0A%2F%2F%20%E6%95%B0%E6%8D%AE%E4%B8%8D%E5%AE%8C%E6%95%B4%0Alet%20json%20%3D%20'%7B%20%22age%22%3A%2030%20%7D'%3B%0A%0Atry%20%7B%0A%20%20let%20user%20%3D%20JSON.parse(json)%3B%20%2F%2F%20%3C--%20%E6%B2%A1%E6%9C%89%E9%94%99%E8%AF%AF%0A%20%20console.log(%20user.name%20)%3B%20%20%20%20%2F%2F%20no%20name!%0A%7D%20catch%20(e)%20%7B%0A%20%20console.error(%20%22Invalid%20JSON%20data!%22%20)%3B%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s13-153",
+      "sectionId": "s13",
+      "title": "%E5%BC%82%E6%AD%A5%E7%AD%89%E5%BE%85%E8%BF%90%E7%AE%97%E7%AC%A6",
+      "body": "%60%60%60javascript%0Afunction%20helloWorld()%20%7B%0A%20%20return%20new%20Promise(resolve%20%3D%3E%20%7B%0A%20%20%20%20setTimeout(()%20%3D%3E%20%7B%0A%20%20%20%20%20%20resolve('Hello%20World!')%3B%0A%20%20%20%20%7D%2C%202000)%3B%0A%20%20%7D)%3B%0A%7D%0Aasync%20function%20msg()%20%7B%0A%20%20const%20msg%20%3D%20await%20helloWorld()%3B%0A%20%20console.log('Message%3A'%2C%20msg)%3B%0A%7D%0Amsg()%3B%20%2F%2F%20Message%3A%20Hello%20World!%20%3C--%202%20%E7%A7%92%E5%90%8E%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s14-154",
+      "sectionId": "s14",
+      "title": "JSON",
+      "body": "%60%60%60JS%0Aconst%20jsonObj%20%3D%20%7B%0A%20%20%22name%22%3A%20%22Rick%22%2C%0A%20%20%22id%22%3A%20%2211A%22%2C%0A%20%20%22level%22%3A%204%20%20%0A%7D%3B%0A%60%60%60%0A%0A%E5%8F%A6%E8%A7%81%EF%BC%9A%5BJSON%20%E5%A4%87%E5%BF%98%E5%8D%95%5D(.%2Fjson.md)",
+      "encoded": true
+    },
+    {
+      "id": "s14-156",
+      "sectionId": "s14",
+      "title": "XMLHttpRequest",
+      "body": "%60%60%60javascript%0Aconst%20xhr%20%3D%20new%20XMLHttpRequest()%3B%0Axhr.open('GET'%2C%20'mysite.com%2Fgetjson')%3B%0A%60%60%60%0A%0A%60XMLHttpRequest%60%20%E6%98%AF%E4%B8%80%E4%B8%AA%E6%B5%8F%E8%A7%88%E5%99%A8%E7%BA%A7%E5%88%AB%E7%9A%84%20API%EF%BC%8C%E5%AE%83%E4%BD%BF%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%83%BD%E5%A4%9F%E9%80%9A%E8%BF%87%20JavaScript%20%E7%BC%96%E5%86%99%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93%E8%84%9A%E6%9C%AC%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%20JavaScript%20%E8%AF%AD%E8%A8%80%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86%E3%80%82",
+      "encoded": true
+    },
+    {
+      "id": "s14-158",
+      "sectionId": "s14",
+      "title": "GET",
+      "body": "%60%60%60javascript%0Aconst%20req%20%3D%20new%20XMLHttpRequest()%3B%0Areq.responseType%20%3D%20'json'%3B%0Areq.open('GET'%2C%20'%2Fgetdata%3Fid%3D65')%3B%0Areq.onload%20%3D%20()%20%3D%3E%20%7B%0A%20%20console.log(xhr.response)%3B%0A%7D%3B%0Areq.send()%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s14-159",
+      "sectionId": "s14",
+      "title": "POST",
+      "body": "%60%60%60javascript%0Aconst%20data%20%3D%20%7B%20weight%3A%20'1.5%20KG'%20%7D%3B%0Aconst%20xhr%20%3D%20new%20XMLHttpRequest()%3B%0A%2F%2F%20%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%80%E4%B8%AA%E8%AF%B7%E6%B1%82%E3%80%82%0Axhr.open('POST'%2C%20'%2Finventory%2Fadd')%3B%0A%2F%2F%20%E4%B8%80%E4%B8%AA%E7%94%A8%E4%BA%8E%E5%AE%9A%E4%B9%89%E5%93%8D%E5%BA%94%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%9E%9A%E4%B8%BE%E5%80%BC%0Axhr.responseType%20%3D%20'json'%3B%0A%2F%2F%20%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82%E4%BB%A5%E5%8F%8A%E6%95%B0%E6%8D%AE%E3%80%82%0Axhr.send(JSON.stringify(data))%3B%0A%2F%2F%20%E8%AF%B7%E6%B1%82%E6%88%90%E5%8A%9F%E5%AE%8C%E6%88%90%E6%97%B6%E8%A7%A6%E5%8F%91%E3%80%82%0Axhr.onload%20%3D%20()%20%3D%3E%20%7B%0A%20%20console.log(xhr.response)%3B%0A%7D%0A%2F%2F%20%E5%BD%93%20request%20%E9%81%AD%E9%81%87%E9%94%99%E8%AF%AF%E6%97%B6%E8%A7%A6%E5%8F%91%E3%80%82%0Axhr.onerror%20%3D%20()%20%3D%3E%20%7B%0A%20%20console.log(xhr.response)%3B%0A%7D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s14-160",
+      "sectionId": "s14",
+      "title": "fetch%20api",
+      "body": "%60%60%60javascript%0Afetch(url%2C%20%7B%0A%20%20%20%20method%3A%20'POST'%2C%0A%20%20%20%20headers%3A%20%7B%0A%20%20%20%20%20%20'Content-type'%3A%20'application%2Fjson'%2C%0A%20%20%20%20%20%20'apikey'%3A%20apiKey%0A%20%20%20%20%7D%2C%0A%20%20%20%20body%3A%20data%0A%7D).then(response%20%3D%3E%20%7B%0A%20%20if%20(response.ok)%20%7B%0A%20%20%20%20return%20response.json()%3B%0A%20%20%7D%0A%20%20throw%20new%20Error('Request%20failed!')%3B%0A%7D%2C%20networkError%20%3D%3E%20%7B%0A%20%20console.log(networkError.message)%0A%7D)%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s14-161",
+      "sectionId": "s14",
+      "title": "JSON%20%E6%A0%BC%E5%BC%8F",
+      "body": "%60%60%60javascript%0Afetch('url-that-returns-JSON')%0A%20%20.then(response%20%3D%3E%20response.json())%0A%20%20.then(jsonResponse%20%3D%3E%20%7B%0A%20%20%20%20console.log(jsonResponse)%3B%0A%20%20%7D)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s14-162",
+      "sectionId": "s14",
+      "title": "promise%20url%20%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96%20API",
+      "body": "%60%60%60javascript%0Afetch('url')%0A%20%20.then(response%20%20%3D%3E%20%7B%0A%20%20%20%20console.log(response)%3B%0A%20%20%7D%2C%20rejection%20%3D%3E%20%7B%0A%20%20%20%20console.error(rejection.message)%3B%0A%20%20%7D)%3B%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s14-163",
+      "sectionId": "s14",
+      "title": "Fetch%20API%20%E5%87%BD%E6%95%B0",
+      "body": "%60%60%60javascript%0Afetch('https%3A%2F%2Fapi-xxx.com%2Fendpoint'%2C%20%7B%0A%20%20method%3A%20'POST'%2C%0A%20%20body%3A%20JSON.stringify(%7Bid%3A%20%22200%22%7D)%0A%7D).then(response%20%3D%3E%20%7B%0A%20%20if(response.ok)%7B%0A%20%20%20%20return%20response.json()%3B%20%20%0A%20%20%7D%0A%20%20throw%20new%20Error('Request%20failed!')%3B%0A%7D%2C%20networkError%20%3D%3E%20%7B%0A%20%20console.log(networkError.message)%3B%0A%7D).then(jsonResponse%20%3D%3E%20%7B%0A%20%20console.log(jsonResponse)%3B%0A%7D)%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s14-164",
+      "sectionId": "s14",
+      "title": "async%20await%20%E8%AF%AD%E6%B3%95",
+      "body": "%60%60%60javascript%0Aconst%20getSuggestions%20%3D%20async%20()%20%3D%3E%20%7B%0A%20%20const%20wordQuery%20%3D%20inputField.value%3B%0A%20%20const%20endpoint%20%3D%20%60%24%7Burl%7D%24%7BqueryParams%7D%24%7BwordQuery%7D%60%3B%0A%20%20try%7B%0A%20%20%20%20const%20response%20%3D%20await%20fetch(endpoint%2C%20%7Bcache%3A%20'no-cache'%7D)%3B%0A%20%20%20%20if(response.ok)%7B%0A%20%20%20%20%20%20const%20jsonResponse%20%3D%20await%20response.json()%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20catch(error)%7B%0A%20%20%20%20console.log(error)%0A%20%20%7D%0A%7D%0A%60%60%60",
+      "encoded": true
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/javascript.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/javascript.md",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

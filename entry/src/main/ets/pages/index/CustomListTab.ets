@@ -1,19 +1,25 @@
-// 自定义清单Tab组件
+// 自定义清单Tab组件 - 记忆表格模式
 
 import type { AppThemeTokens } from '../../common/appTheme';
 import type { ReferenceLang } from '../../common/referenceModels';
 import type {
   CustomList,
-  CustomListItem,
   CustomListCollection,
   ReviewStats,
   ReviewGrade,
+  ListSection,
+  MemoryTable,
+  MemoryTableRow,
+  MemoryTableCell,
 } from '../../common/customListModels';
 import {
   createCustomList,
-  createCustomListItem,
-  getDueItems,
+  createListSection,
+  createMemoryTable,
+  createTableRow,
+  getDueRows,
   calculateReviewStats,
+  listToMarkdown,
   REVIEW_GRADE_FORGOT,
   REVIEW_GRADE_HARD,
   REVIEW_GRADE_GOOD,
@@ -26,9 +32,16 @@ import { lengthToNumber } from './utils';
 import pasteboard from '@ohos.pasteboard';
 import promptAction from '@ohos.promptAction';
 
-type ViewMode = 'lists' | 'items' | 'review' | 'edit-list' | 'edit-item' | 'share';
+type ViewMode = 'lists' | 'sections' | 'edit-list' | 'edit-section' | 'edit-table' | 'review' | 'share';
 
 const FONT_AWESOME_SOLID_FAMILY: string = 'FontAwesomeSolid';
+
+interface ReviewItem {
+  sectionId: string;
+  tableId: string;
+  row: MemoryTableRow;
+  headers: Array<string>;
+}
 
 @Component
 export struct CustomListTab {
@@ -46,19 +59,26 @@ export struct CustomListTab {
 
   @State private viewMode: ViewMode = 'lists';
   @State private selectedList: CustomList | null = null;
-  @State private selectedItem: CustomListItem | null = null;
-  @State private reviewItems: Array<CustomListItem> = [];
+  @State private selectedSection: ListSection | null = null;
+  @State private selectedTable: MemoryTable | null = null;
+  @State private reviewItems: Array<ReviewItem> = [];
   @State private currentReviewIndex: number = 0;
   @State private showAnswer: boolean = false;
   @State private reviewStats: ReviewStats | null = null;
+  @State private showTableSectionPicker: boolean = false;
 
   // 编辑表单状态
   @State private editListName: string = '';
   @State private editListDesc: string = '';
-  @State private editItemTitle: string = '';
-  @State private editItemContent: string = '';
-  @State private editItemAnswer: string = '';
+  @State private editSectionTitle: string = '';
+  @State private editSectionContent: string = '';
+  @State private editSectionLevel: number = 2;
   @State private isEditing: boolean = false;
+
+  // 表格编辑状态
+  @State private editHeaders: Array<string> = [];
+  @State private editRows: Array<Array<string>> = [];
+  @State private editRowIds: Array<string> = [];
 
   // 分享相关状态
   @State private sharePassword: string = '';
@@ -118,13 +138,11 @@ export struct CustomListTab {
     const ctx = this.getHostContext();
     if (!ctx) return;
 
-    // 处理日历提醒
     const oldReminderEnabled = this.selectedList.reminderEnabled;
     const oldCalendarEventId = this.selectedList.calendarEventId;
     let newCalendarEventId: string | undefined = oldCalendarEventId;
 
     if (this.reminderEnabled && !oldReminderEnabled) {
-      // 启用提醒：创建新的日历提醒
       const reminderId = await createDailyReminder({
         listId: this.selectedList.id,
         listName: this.editListName.trim(),
@@ -133,11 +151,9 @@ export struct CustomListTab {
       });
       newCalendarEventId = reminderId.toString();
     } else if (!this.reminderEnabled && oldReminderEnabled && oldCalendarEventId) {
-      // 禁用提醒：取消日历提醒
       await cancelReminder(parseInt(oldCalendarEventId));
       newCalendarEventId = undefined;
     } else if (this.reminderEnabled && oldReminderEnabled && oldCalendarEventId) {
-      // 更新提醒时间：先取消旧的，再创建新的
       await cancelReminder(parseInt(oldCalendarEventId));
       const reminderId = await createDailyReminder({
         listId: this.selectedList.id,
@@ -157,7 +173,7 @@ export struct CustomListTab {
     });
 
     this.selectedList = this.customLists.lists.find(l => l.id === this.selectedList?.id) || null;
-    this.setViewMode(this.selectedList ? 'items' : 'lists');
+    this.setViewMode(this.selectedList ? 'sections' : 'lists');
     this.onRefreshLists?.();
   }
 
@@ -165,7 +181,6 @@ export struct CustomListTab {
     const ctx = this.getHostContext();
     if (!ctx) return;
 
-    // 取消日历提醒（如果有）
     const listToDelete = this.customLists.lists.find(l => l.id === listId);
     if (listToDelete?.calendarEventId) {
       await cancelReminder(parseInt(listToDelete.calendarEventId));
@@ -179,74 +194,271 @@ export struct CustomListTab {
     this.onRefreshLists?.();
   }
 
-  private async createNewItem(): Promise<void> {
-    if (!this.selectedList || !this.editItemTitle.trim()) return;
+  private async createNewSection(): Promise<void> {
+    if (!this.selectedList || !this.editSectionTitle.trim()) return;
     const ctx = this.getHostContext();
     if (!ctx) return;
 
-    const newItem = createCustomListItem(
-      this.editItemTitle.trim(),
-      this.editItemContent.trim(),
-      this.editItemAnswer.trim() || undefined
-    );
+    const newSection = createListSection(this.editSectionTitle.trim(), this.editSectionLevel);
+    newSection.content = this.editSectionContent.trim();
 
-    const updatedList = await this.repository.addItem(ctx, this.selectedList.id, newItem);
+    const updatedList = await this.repository.addSection(ctx, this.selectedList.id, newSection);
     if (updatedList) {
       this.selectedList = updatedList;
       await this.loadLists();
     }
 
-    this.editItemTitle = '';
-    this.editItemContent = '';
-    this.editItemAnswer = '';
-    this.setViewMode('items');
+    this.editSectionTitle = '';
+    this.editSectionContent = '';
+    this.editSectionLevel = 2;
+    this.setViewMode('sections');
     this.onRefreshLists?.();
   }
 
-  private async updateSelectedItem(): Promise<void> {
-    if (!this.selectedList || !this.selectedItem || !this.editItemTitle.trim()) return;
+  private async updateSelectedSection(): Promise<void> {
+    if (!this.selectedList || !this.selectedSection || !this.editSectionTitle.trim()) return;
     const ctx = this.getHostContext();
     if (!ctx) return;
 
-    const updatedList = await this.repository.updateItem(ctx, this.selectedList.id, this.selectedItem.id, {
-      title: this.editItemTitle.trim(),
-      content: this.editItemContent.trim(),
-      answer: this.editItemAnswer.trim() || undefined,
+    const updatedList = await this.repository.updateSection(ctx, this.selectedList.id, this.selectedSection.id, {
+      title: this.editSectionTitle.trim(),
+      content: this.editSectionContent.trim(),
+      level: this.editSectionLevel,
     });
 
     if (updatedList) {
       this.selectedList = updatedList;
+      this.selectedSection = updatedList.sections.find(s => s.id === this.selectedSection?.id) || null;
       await this.loadLists();
     }
 
-    this.selectedItem = null;
-    this.setViewMode('items');
+    this.setViewMode('sections');
     this.onRefreshLists?.();
   }
 
-  private async deleteItem(itemId: string): Promise<void> {
+  private async deleteSection(sectionId: string): Promise<void> {
     if (!this.selectedList) return;
     const ctx = this.getHostContext();
     if (!ctx) return;
 
-    const updatedList = await this.repository.deleteItem(ctx, this.selectedList.id, itemId);
+    const updatedList = await this.repository.deleteSection(ctx, this.selectedList.id, sectionId);
     if (updatedList) {
       this.selectedList = updatedList;
       await this.loadLists();
     }
     this.onRefreshLists?.();
+  }
+
+  private async createNewTable(): Promise<void> {
+    if (!this.selectedList || !this.selectedSection) return;
+    const ctx = this.getHostContext();
+    if (!ctx) return;
+
+    const headers = this.editHeaders.filter(h => h.trim() !== '');
+    if (headers.length < 2) {
+      headers.push('');
+      headers.push('');
+    }
+
+    const newTable = createMemoryTable(headers);
+
+    for (let i = 0; i < this.editRows.length; i++) {
+      const rowCells = this.editRows[i];
+      const cellTexts: Array<string> = [];
+      for (let j = 0; j < headers.length; j++) {
+        cellTexts.push(rowCells[j] || '');
+      }
+      if (cellTexts.some(c => c.trim() !== '')) {
+        newTable.rows.push(createTableRow(cellTexts));
+      }
+    }
+
+    const updatedList = await this.repository.addTable(ctx, this.selectedList.id, this.selectedSection.id, newTable);
+    if (updatedList) {
+      this.selectedList = updatedList;
+      this.selectedSection = updatedList.sections.find(s => s.id === this.selectedSection?.id) || null;
+      await this.loadLists();
+    }
+
+    this.resetTableEditState();
+    this.setViewMode('sections');
+    this.onRefreshLists?.();
+  }
+
+  private async updateSelectedTable(): Promise<void> {
+    if (!this.selectedList || !this.selectedSection || !this.selectedTable) return;
+    const ctx = this.getHostContext();
+    if (!ctx) return;
+
+    const headers = this.editHeaders.filter(h => h.trim() !== '');
+    if (headers.length < 2) {
+      headers.push('');
+      headers.push('');
+    }
+
+    const newRows: Array<MemoryTableRow> = [];
+    for (let i = 0; i < this.editRows.length; i++) {
+      const rowCells = this.editRows[i];
+      const cellObjs: Array<MemoryTableCell> = [];
+      for (let j = 0; j < headers.length; j++) {
+        cellObjs.push({ text: rowCells[j] || '' });
+      }
+      if (cellObjs.some(c => c.text.trim() !== '')) {
+        const existingRow = this.selectedTable.rows.find(r => r.id === this.editRowIds[i]);
+        if (existingRow) {
+          newRows.push({
+            id: existingRow.id,
+            cells: cellObjs,
+            reviewCount: existingRow.reviewCount,
+            lastReviewAt: existingRow.lastReviewAt,
+            nextReviewAt: existingRow.nextReviewAt,
+            easeFactor: existingRow.easeFactor,
+            interval: existingRow.interval,
+            lastGrade: existingRow.lastGrade,
+          });
+        } else {
+          newRows.push(createTableRow(cellObjs.map(c => c.text)));
+        }
+      }
+    }
+
+    const updatedList = await this.repository.updateTable(
+      ctx,
+      this.selectedList.id,
+      this.selectedSection.id,
+      this.selectedTable.id,
+      { headers, rows: newRows }
+    );
+
+    if (updatedList) {
+      this.selectedList = updatedList;
+      this.selectedSection = updatedList.sections.find(s => s.id === this.selectedSection?.id) || null;
+      this.selectedTable = this.selectedSection?.tables.find(t => t.id === this.selectedTable?.id) || null;
+      await this.loadLists();
+    }
+
+    this.setViewMode('sections');
+    this.onRefreshLists?.();
+  }
+
+  private async deleteTable(tableId: string): Promise<void> {
+    if (!this.selectedList || !this.selectedSection) return;
+    const ctx = this.getHostContext();
+    if (!ctx) return;
+
+    const updatedList = await this.repository.deleteTable(ctx, this.selectedList.id, this.selectedSection.id, tableId);
+    if (updatedList) {
+      this.selectedList = updatedList;
+      this.selectedSection = updatedList.sections.find(s => s.id === this.selectedSection?.id) || null;
+      await this.loadLists();
+    }
+    this.onRefreshLists?.();
+  }
+
+  private resetTableEditState(): void {
+    this.editHeaders = ['', ''];
+    this.editRows = [['', '']];
+    this.editRowIds = [''];
+    this.selectedTable = null;
+    this.isEditing = false;
+  }
+
+  private initTableEditState(table: MemoryTable): void {
+    this.editHeaders = table.headers.slice();
+    this.editRows = [];
+    this.editRowIds = [];
+
+    for (const row of table.rows) {
+      const cells: Array<string> = [];
+      for (let i = 0; i < table.headers.length; i++) {
+        cells.push(row.cells[i]?.text || '');
+      }
+      this.editRows.push(cells);
+      this.editRowIds.push(row.id);
+    }
+
+    if (this.editRows.length === 0) {
+      const emptyRow: Array<string> = [];
+      for (let i = 0; i < this.editHeaders.length; i++) {
+        emptyRow.push('');
+      }
+      this.editRows.push(emptyRow);
+      this.editRowIds.push('');
+    }
+  }
+
+  private openTableEditor(section: ListSection, table?: MemoryTable): void {
+    this.selectedSection = section;
+    if (table) {
+      this.selectedTable = table;
+      this.initTableEditState(table);
+      this.isEditing = true;
+    } else {
+      this.resetTableEditState();
+    }
+    this.showTableSectionPicker = false;
+    this.setViewMode('edit-table');
+  }
+
+  private addTableColumn(): void {
+    this.editHeaders.push('');
+    for (let i = 0; i < this.editRows.length; i++) {
+      this.editRows[i].push('');
+    }
+    // 触发响应式更新
+    this.editHeaders = this.editHeaders.slice();
+    this.editRows = this.editRows.slice();
+  }
+
+  private removeTableColumn(index: number): void {
+    if (this.editHeaders.length <= 2) return;
+    this.editHeaders.splice(index, 1);
+    for (let i = 0; i < this.editRows.length; i++) {
+      this.editRows[i].splice(index, 1);
+    }
+    this.editHeaders = this.editHeaders.slice();
+    this.editRows = this.editRows.slice();
+  }
+
+  private addTableRow(): void {
+    const newRow: Array<string> = [];
+    for (let i = 0; i < this.editHeaders.length; i++) {
+      newRow.push('');
+    }
+    this.editRows.push(newRow);
+    this.editRowIds.push('');
+    this.editRows = this.editRows.slice();
+    this.editRowIds = this.editRowIds.slice();
+  }
+
+  private removeTableRow(index: number): void {
+    if (this.editRows.length <= 1) return;
+    this.editRows.splice(index, 1);
+    this.editRowIds.splice(index, 1);
+    this.editRows = this.editRows.slice();
+    this.editRowIds = this.editRowIds.slice();
   }
 
   private startReview(): void {
     if (!this.selectedList) return;
 
-    const dueItems = getDueItems(this.selectedList.items);
-    if (dueItems.length === 0) {
-      // 没有待复习的项目
-      return;
+    const dueRows = getDueRows(this.selectedList);
+    if (dueRows.length === 0) return;
+
+    this.reviewItems = [];
+    for (const item of dueRows) {
+      const section = this.selectedList.sections.find(s => s.id === item.sectionId);
+      const table = section?.tables.find(t => t.id === item.tableId);
+      if (table) {
+        this.reviewItems.push({
+          sectionId: item.sectionId,
+          tableId: item.tableId,
+          row: item.row,
+          headers: table.headers,
+        });
+      }
     }
 
-    this.reviewItems = dueItems;
     this.currentReviewIndex = 0;
     this.showAnswer = false;
     this.setViewMode('review');
@@ -258,22 +470,27 @@ export struct CustomListTab {
     if (!ctx) return;
 
     const currentItem = this.reviewItems[this.currentReviewIndex];
-    await this.repository.recordReview(ctx, this.selectedList.id, currentItem.id, grade);
+    await this.repository.recordReview(
+      ctx,
+      this.selectedList.id,
+      currentItem.sectionId,
+      currentItem.tableId,
+      currentItem.row.id,
+      grade
+    );
 
-    // 刷新数据
     const updatedList = await this.repository.getList(ctx, this.selectedList.id);
     if (updatedList) {
       this.selectedList = updatedList;
+      this.reviewStats = calculateReviewStats(updatedList);
       await this.loadLists();
     }
 
-    // 移动到下一个
     this.currentReviewIndex++;
     this.showAnswer = false;
 
     if (this.currentReviewIndex >= this.reviewItems.length) {
-      // 复习完成
-      this.setViewMode('items');
+      this.setViewMode('sections');
     }
   }
 
@@ -314,6 +531,20 @@ export struct CustomListTab {
       }, 2000);
     } catch (_) {
       this.shareCopied = false;
+    }
+  }
+
+  private async copyMarkdown(): Promise<void> {
+    if (!this.selectedList) return;
+
+    const markdown = listToMarkdown(this.selectedList);
+    const pasteData = pasteboard.createData(pasteboard.MIMETYPE_TEXT_PLAIN, markdown);
+    const board = pasteboard.getSystemPasteboard();
+    try {
+      await board.setData(pasteData);
+      promptAction.showToast({ message: this.t('已复制Markdown', 'Markdown copied') });
+    } catch (_) {
+      // ignore
     }
   }
 
@@ -358,9 +589,19 @@ export struct CustomListTab {
     }
   }
 
+  private getTotalRows(list: CustomList): number {
+    let count = 0;
+    for (const section of list.sections) {
+      for (const table of section.tables) {
+        count += table.rows.length;
+      }
+    }
+    return count;
+  }
 
   private setViewMode(next: ViewMode): void {
     if (this.viewMode === next) return;
+    this.showTableSectionPicker = false;
     this.viewMode = next;
   }
 
@@ -369,27 +610,31 @@ export struct CustomListTab {
   }
 
   private handleBackPress(): boolean {
-    if (this.viewMode === 'items') {
-      this.selectedItem = null;
+    if (this.viewMode === 'sections') {
       this.selectedList = null;
+      this.selectedSection = null;
       this.setViewMode('lists');
       return true;
     }
     if (this.viewMode === 'review') {
-      this.setViewMode('items');
+      this.setViewMode('sections');
       return true;
     }
     if (this.viewMode === 'share') {
-      this.setViewMode(this.selectedList ? 'items' : 'lists');
+      this.setViewMode(this.selectedList ? 'sections' : 'lists');
       return true;
     }
     if (this.viewMode === 'edit-list') {
-      // 编辑已有清单：返回到项目列表；新建清单：返回到清单列表
-      this.setViewMode(this.isEditing && this.selectedList ? 'items' : 'lists');
+      this.setViewMode(this.isEditing && this.selectedList ? 'sections' : 'lists');
       return true;
     }
-    if (this.viewMode === 'edit-item') {
-      this.setViewMode('items');
+    if (this.viewMode === 'edit-section') {
+      this.setViewMode('sections');
+      return true;
+    }
+    if (this.viewMode === 'edit-table') {
+      this.resetTableEditState();
+      this.setViewMode('sections');
       return true;
     }
     return false;
@@ -409,11 +654,29 @@ export struct CustomListTab {
         await this.deleteList(this.selectedList.id);
       }
     } catch (_) {
-      // ignore user cancellations or errors
+      // ignore
     }
   }
 
-  private async showDeleteItemConfirm(): Promise<void> {
+  private async showDeleteSectionConfirm(sectionId: string): Promise<void> {
+    try {
+      const result: promptAction.ShowDialogSuccessResponse = await promptAction.showDialog({
+        title: this.t('确认删除', 'Confirm Delete'),
+        message: this.t('删除章节将同时删除其中的所有表格，确定要删除吗？', 'Deleting this section will also delete all tables in it. Are you sure?'),
+        buttons: [
+          { text: this.t('取消', 'Cancel'), color: this.theme.mutedTextColor.toString() },
+          { text: this.t('删除', 'Delete'), color: '#EF4444' },
+        ],
+      });
+      if (result.index === 1) {
+        await this.deleteSection(sectionId);
+      }
+    } catch (_) {
+      // ignore
+    }
+  }
+
+  private async showDeleteTableConfirm(tableId: string): Promise<void> {
     try {
       const result: promptAction.ShowDialogSuccessResponse = await promptAction.showDialog({
         title: this.t('确认删除', 'Confirm Delete'),
@@ -423,19 +686,17 @@ export struct CustomListTab {
           { text: this.t('删除', 'Delete'), color: '#EF4444' },
         ],
       });
-      if (result.index === 1 && this.selectedItem) {
-        await this.deleteItem(this.selectedItem.id);
-        this.setViewMode('items');
+      if (result.index === 1) {
+        await this.deleteTable(tableId);
       }
     } catch (_) {
-      // ignore user cancellations or errors
+      // ignore
     }
   }
 
   @Builder
   private ListsView(): void {
     Column({ space: this.fontSize * 0.8 }) {
-      // 标题栏
       Row() {
         Text(this.t('我的清单', 'My Lists'))
           .fontSize(this.fontSize * 1.25)
@@ -446,8 +707,7 @@ export struct CustomListTab {
           });
 
         Row({ space: this.fontSize * 0.5 }) {
-          // 导入按钮
-          Text('\uf56f') // file-import
+          Text('\uf56f')
             .fontFamily(FONT_AWESOME_SOLID_FAMILY)
             .fontSize(this.fontSize * 1.1)
             .fontColor(this.theme.mutedTextColor)
@@ -459,8 +719,7 @@ export struct CustomListTab {
               this.setViewMode('share');
             });
 
-          // 新建按钮
-          Text('\uf067') // plus
+          Text('\uf067')
             .fontFamily(FONT_AWESOME_SOLID_FAMILY)
             .fontSize(this.fontSize * 1.1)
             .fontColor(this.theme.accentColor)
@@ -478,9 +737,8 @@ export struct CustomListTab {
       .alignItems(VerticalAlign.Center);
 
       if (this.customLists.lists.length === 0) {
-        // 空状态
         Column({ space: this.fontSize }) {
-          Text('\uf07c') // folder-open
+          Text('\uf0ca')
             .fontFamily(FONT_AWESOME_SOLID_FAMILY)
             .fontSize(this.fontSize * 3)
             .fontColor(this.theme.mutedTextColor);
@@ -489,7 +747,7 @@ export struct CustomListTab {
             .fontSize(this.fontSize)
             .fontColor(this.theme.mutedTextColor);
 
-          Text(this.t('点击右上角 + 创建第一个清单', 'Tap + to create your first list'))
+          Text(this.t('点击右上角 + 创建记忆表格', 'Tap + to create a memory table'))
             .fontSize(this.fontSize * 0.85)
             .fontColor(this.theme.mutedTextColor);
         }
@@ -497,7 +755,6 @@ export struct CustomListTab {
         .padding({ top: this.fontSize * 4 })
         .alignItems(HorizontalAlign.Center);
       } else {
-        // 清单列表
         List({ scroller: this.listScroller }) {
           ForEach(this.customLists.lists, (list: CustomList) => {
             ListItem() {
@@ -510,14 +767,14 @@ export struct CustomListTab {
                     .layoutWeight(1);
 
                   if (list.isShared) {
-                    Text('\uf1e0') // share-alt
+                    Text('\uf1e0')
                       .fontFamily(FONT_AWESOME_SOLID_FAMILY)
                       .fontSize(this.fontSize * 0.8)
                       .fontColor(this.theme.accentColor)
                       .margin({ right: this.fontSize * 0.5 });
                   }
 
-                  Text('\uf105') // chevron-right
+                  Text('\uf105')
                     .fontFamily(FONT_AWESOME_SOLID_FAMILY)
                     .fontSize(this.fontSize)
                     .fontColor(this.theme.mutedTextColor);
@@ -526,11 +783,15 @@ export struct CustomListTab {
                 .alignItems(VerticalAlign.Center);
 
                 Row({ space: this.fontSize * 0.8 }) {
-                  Text(this.t(`${list.items.length} 项`, `${list.items.length} items`))
+                  Text(this.t(`${list.sections.length} 章节`, `${list.sections.length} sections`))
                     .fontSize(this.fontSize * 0.8)
                     .fontColor(this.theme.mutedTextColor);
 
-                  if (list.items.length > 0) {
+                  Text(this.t(`${this.getTotalRows(list)} 行`, `${this.getTotalRows(list)} rows`))
+                    .fontSize(this.fontSize * 0.8)
+                    .fontColor(this.theme.mutedTextColor);
+
+                  if (this.getTotalRows(list) > 0) {
                     this.ListDueCount(list);
                   }
                 }
@@ -550,8 +811,8 @@ export struct CustomListTab {
               .borderRadius(this.fontSize * 0.5)
               .onClick(() => {
                 this.selectedList = list;
-                this.reviewStats = list.items.length > 0 ? calculateReviewStats(list.items) : null;
-                this.setViewMode('items');
+                this.reviewStats = this.getTotalRows(list) > 0 ? calculateReviewStats(list) : null;
+                this.setViewMode('sections');
               });
             }
             .margin({ bottom: this.fontSize * 0.5 });
@@ -568,27 +829,27 @@ export struct CustomListTab {
 
   @Builder
   private ListDueCount(list: CustomList): void {
-    if (list.items.length > 0) {
+    if (this.getTotalRows(list) > 0) {
       Text(this.getDueCountText(list))
         .fontSize(this.fontSize * 0.8)
         .fontColor(this.theme.accentColor)
         .fontWeight(FontWeight.Medium)
-        .visibility(this.hasDueItems(list) ? Visibility.Visible : Visibility.Hidden);
+        .visibility(this.hasDueRows(list) ? Visibility.Visible : Visibility.Hidden);
     }
   }
 
   private getDueCountText(list: CustomList): string {
-    const stats = calculateReviewStats(list.items);
+    const stats = calculateReviewStats(list);
     return this.t(`${stats.dueCount} 待复习`, `${stats.dueCount} due`);
   }
 
-  private hasDueItems(list: CustomList): boolean {
-    const stats = calculateReviewStats(list.items);
+  private hasDueRows(list: CustomList): boolean {
+    const stats = calculateReviewStats(list);
     return stats.dueCount > 0;
   }
 
   @Builder
-  private ItemsView(): void {
+  private SectionsView(): void {
     if (!this.selectedList) {
       Column() {
         Text(this.t('未选择清单', 'No list selected'))
@@ -599,10 +860,9 @@ export struct CustomListTab {
       .height('100%');
     } else {
       Column({ space: this.fontSize * 0.8 }) {
-        // 标题栏
         Row() {
           Row({ space: this.fontSize * 0.5 }) {
-            Text('\uf053') // chevron-left
+            Text('\uf053')
               .fontFamily(FONT_AWESOME_SOLID_FAMILY)
               .fontSize(this.fontSize)
               .fontColor(this.theme.accentColor)
@@ -624,8 +884,7 @@ export struct CustomListTab {
           .layoutWeight(1);
 
           Row({ space: this.fontSize * 0.3 }) {
-            // 分享按钮
-            Text('\uf1e0') // share-alt
+            Text('\uf1e0')
               .fontFamily(FONT_AWESOME_SOLID_FAMILY)
               .fontSize(this.fontSize)
               .fontColor(this.theme.mutedTextColor)
@@ -637,8 +896,7 @@ export struct CustomListTab {
                 this.setViewMode('share');
               });
 
-            // 编辑清单
-            Text('\uf013') // cog
+            Text('\uf013')
               .fontFamily(FONT_AWESOME_SOLID_FAMILY)
               .fontSize(this.fontSize)
               .fontColor(this.theme.mutedTextColor)
@@ -653,28 +911,85 @@ export struct CustomListTab {
                 this.isEditing = true;
                 this.setViewMode('edit-list');
               });
-
-            // 新建项目
-            Text('\uf067') // plus
-              .fontFamily(FONT_AWESOME_SOLID_FAMILY)
-              .fontSize(this.fontSize)
-              .fontColor(this.theme.accentColor)
-              .padding(this.fontSize * 0.4)
-              .onClick(() => {
-                this.editItemTitle = '';
-                this.editItemContent = '';
-                this.editItemAnswer = '';
-                this.selectedItem = null;
-                this.isEditing = false;
-                this.setViewMode('edit-item');
-              });
           }
         }
         .width('100%')
         .alignItems(VerticalAlign.Center);
 
-        // 复习统计和开始复习按钮
-        if (this.reviewStats && this.selectedList.items.length > 0) {
+        Row({ space: this.fontSize * 0.5 }) {
+          Button(this.t('æ–°å»ºç« èŠ‚', 'New Section'))
+            .layoutWeight(1)
+            .fontSize(this.fontSize * 0.9)
+            .fontColor(this.theme.chipSelectedTextColor)
+            .backgroundColor(this.theme.accentColor)
+            .borderRadius(this.fontSize * 0.6)
+            .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+            .margin({ right: this.fontSize * 0.3 })
+            .onClick(() => {
+              this.editSectionTitle = '';
+              this.editSectionContent = '';
+              this.editSectionLevel = 2;
+              this.selectedSection = null;
+              this.isEditing = false;
+              this.setViewMode('edit-section');
+            });
+
+          Button(this.t('æ–°å»ºè¡¨æ ¼', 'New Table'))
+            .layoutWeight(1)
+            .fontSize(this.fontSize * 0.9)
+            .fontColor(this.theme.textColor)
+            .backgroundColor(this.theme.surfaceBackgroundColor)
+            .borderRadius(this.fontSize * 0.6)
+            .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+            .enabled(this.selectedList.sections.length > 0)
+            .opacity(this.selectedList.sections.length > 0 ? 1 : 0.5)
+            .onClick(() => {
+              if (!this.selectedList || this.selectedList.sections.length === 0) {
+                promptAction.showToast({ message: this.t('è¯·é¦–å…ˆæ·»åŠ ä¸€ä¸ªç« èŠ‚', 'Add a section first') });
+                return;
+              }
+              this.showTableSectionPicker = true;
+            });
+        }
+        .width('100%')
+        .margin({ top: this.fontSize * 0.6 });
+
+        if (this.showTableSectionPicker && this.selectedList) {
+          Column({ space: this.fontSize * 0.4 }) {
+            Text(this.t('é€‰æ‹©ä¸€ä¸ªç« èŠ‚ç»æ–°è¡¨æ ¼', 'Pick a section to add a table'))
+              .fontSize(this.fontSize * 0.85)
+              .fontColor(this.theme.mutedTextColor);
+
+            ForEach(this.selectedList.sections, (section: ListSection) => {
+              Button(section.title || this.t('æœªå‘½åç« èŠ‚', 'Untitled section'))
+                .width('100%')
+                .fontSize(this.fontSize * 0.85)
+                .fontColor(this.theme.textColor)
+                .backgroundColor(this.theme.surfaceBackgroundColor)
+                .borderRadius(this.fontSize * 0.5)
+                .padding({ top: this.fontSize * 0.65, bottom: this.fontSize * 0.65 })
+                .onClick(() => this.openTableEditor(section));
+            }, (section: ListSection) => section.id);
+
+            Button(this.t('å–æ¶ˆ', 'Cancel'))
+              .width('100%')
+              .fontSize(this.fontSize * 0.85)
+              .fontColor(this.theme.mutedTextColor)
+              .backgroundColor(this.theme.surfaceMutedBackgroundColor)
+              .borderRadius(this.fontSize * 0.5)
+              .padding({ top: this.fontSize * 0.65, bottom: this.fontSize * 0.65 })
+              .onClick(() => {
+                this.showTableSectionPicker = false;
+              });
+          }
+          .width('100%')
+          .padding(this.fontSize * 0.6)
+          .backgroundColor(this.theme.surfaceBackgroundColor)
+          .borderRadius(this.fontSize * 0.6)
+          .margin({ top: this.fontSize * 0.6 });
+        }
+
+        if (this.reviewStats && this.getTotalRows(this.selectedList) > 0) {
           Row() {
             Column({ space: this.fontSize * 0.2 }) {
               Row({ space: this.fontSize * 0.8 }) {
@@ -712,19 +1027,18 @@ export struct CustomListTab {
           .borderRadius(this.fontSize * 0.5);
         }
 
-        // 项目列表
-        if (this.selectedList.items.length === 0) {
+        if (this.selectedList.sections.length === 0) {
           Column({ space: this.fontSize }) {
-            Text('\uf0ca') // list-ul
+            Text('\uf0ca')
               .fontFamily(FONT_AWESOME_SOLID_FAMILY)
               .fontSize(this.fontSize * 3)
               .fontColor(this.theme.mutedTextColor);
 
-            Text(this.t('暂无项目', 'No items yet'))
+            Text(this.t('暂无章节', 'No sections yet'))
               .fontSize(this.fontSize)
               .fontColor(this.theme.mutedTextColor);
 
-            Text(this.t('点击右上角 + 添加第一个项目', 'Tap + to add your first item'))
+            Text(this.t('点击右上角 + 添加第一个章节', 'Tap + to add your first section'))
               .fontSize(this.fontSize * 0.85)
               .fontColor(this.theme.mutedTextColor);
           }
@@ -732,62 +1046,16 @@ export struct CustomListTab {
           .padding({ top: this.fontSize * 4 })
           .alignItems(HorizontalAlign.Center);
         } else {
-          List({ scroller: this.listScroller }) {
-            ForEach(this.selectedList.items, (item: CustomListItem) => {
-              ListItem() {
-                Column({ space: this.fontSize * 0.3 }) {
-                  Row() {
-                    Text(item.title)
-                      .fontSize(this.fontSize * 0.95)
-                      .fontWeight(FontWeight.Medium)
-                      .fontColor(this.theme.textColor)
-                      .layoutWeight(1)
-                      .maxLines(1)
-                      .textOverflow({ overflow: TextOverflow.Ellipsis });
-
-                    Text(this.formatNextReviewTime(item.nextReviewAt))
-                      .fontSize(this.fontSize * 0.75)
-                      .fontColor(item.nextReviewAt <= Date.now() ? this.theme.accentColor : this.theme.mutedTextColor);
-                  }
-                  .width('100%')
-                  .alignItems(VerticalAlign.Center);
-
-                  if (item.content) {
-                    Text(item.content)
-                      .fontSize(this.fontSize * 0.85)
-                      .fontColor(this.theme.mutedTextColor)
-                      .maxLines(2)
-                      .textOverflow({ overflow: TextOverflow.Ellipsis });
-                  }
-
-                  Row({ space: this.fontSize }) {
-                    Text(this.t(`复习 ${item.reviewCount} 次`, `Reviewed ${item.reviewCount}x`))
-                      .fontSize(this.fontSize * 0.75)
-                      .fontColor(this.theme.mutedTextColor);
-
-                    Text(this.t(`间隔 ${item.interval} 天`, `Interval ${item.interval}d`))
-                      .fontSize(this.fontSize * 0.75)
-                      .fontColor(this.theme.mutedTextColor);
-                  }
-                }
-                .width('100%')
-                .padding({ left: this.fontSize, right: this.fontSize, top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
-                .backgroundColor(this.theme.surfaceBackgroundColor)
-                .borderRadius(this.fontSize * 0.5)
-                .onClick(() => {
-                  this.selectedItem = item;
-                  this.editItemTitle = item.title;
-                  this.editItemContent = item.content;
-                  this.editItemAnswer = item.answer || '';
-                  this.isEditing = true;
-                  this.setViewMode('edit-item');
-                });
-              }
-              .margin({ bottom: this.fontSize * 0.4 });
-            }, (item: CustomListItem) => item.id);
+          Scroll(this.scroller) {
+            Column({ space: this.fontSize * 0.8 }) {
+              ForEach(this.selectedList.sections, (section: ListSection) => {
+                this.SectionCard(section);
+              }, (section: ListSection) => section.id);
+            }
+            .width('100%');
           }
-          .width('100%')
-          .layoutWeight(1);
+          .layoutWeight(1)
+          .scrollBar(BarState.Off);
         }
       }
       .width('100%')
@@ -797,197 +1065,148 @@ export struct CustomListTab {
   }
 
   @Builder
-  private ReviewView(): void {
-    if (!this.selectedList || this.reviewItems.length === 0) {
-      Column() {
-        Text(this.t('无复习项目', 'No review items'))
-          .fontSize(this.fontSize)
-          .fontColor(this.theme.mutedTextColor);
-      }
-      .width('100%')
-      .height('100%');
-    } else {
-      Column({ space: this.fontSize }) {
-        // 进度条
-        Row() {
-          Text(`${this.currentReviewIndex + 1} / ${this.reviewItems.length}`)
-            .fontSize(this.fontSize * 0.9)
-            .fontColor(this.theme.mutedTextColor);
+  private SectionCard(section: ListSection): void {
+    Column({ space: this.fontSize * 0.5 }) {
+      Row() {
+        Text('#'.repeat(section.level) + ' ' + section.title)
+          .fontSize(this.fontSize * 0.95)
+          .fontWeight(FontWeight.Medium)
+          .fontColor(this.theme.textColor)
+          .layoutWeight(1)
+          .maxLines(2)
+          .textOverflow({ overflow: TextOverflow.Ellipsis });
 
-          Text('\uf00d') // times
+        Row({ space: this.fontSize * 0.3 }) {
+          Text('\uf044')
             .fontFamily(FONT_AWESOME_SOLID_FAMILY)
-            .fontSize(this.fontSize)
+            .fontSize(this.fontSize * 0.85)
             .fontColor(this.theme.mutedTextColor)
-            .padding(this.fontSize * 0.5)
+            .padding(this.fontSize * 0.3)
             .onClick(() => {
-              this.setViewMode('items');
+              this.selectedSection = section;
+              this.editSectionTitle = section.title;
+              this.editSectionContent = section.content;
+              this.editSectionLevel = section.level;
+              this.isEditing = true;
+              this.setViewMode('edit-section');
             });
-        }
-        .width('100%')
-        .justifyContent(FlexAlign.SpaceBetween)
-        .alignItems(VerticalAlign.Center);
 
-        // 进度指示器
-        Row() {
-          ForEach(this.getProgressIndicators(), (i: number) => {
-            Column()
-              .width(this.fontSize * 0.5)
-              .height(this.fontSize * 0.3)
-              .backgroundColor(i <= this.currentReviewIndex ? this.theme.accentColor : this.theme.borderColor)
-              .borderRadius(this.fontSize * 0.15)
-              .margin({ right: this.fontSize * 0.2 });
-          }, (i: number) => i.toString());
-        }
-        .width('100%');
+          Text('\uf1c9')
+            .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+            .fontSize(this.fontSize * 0.85)
+            .fontColor(this.theme.accentColor)
+            .padding(this.fontSize * 0.3)
+            .onClick(() => this.openTableEditor(section));
 
-        // 卡片内容
-        Column({ space: this.fontSize }) {
-          // 问题
-          Column({ space: this.fontSize * 0.5 }) {
-            Text(this.getCurrentReviewItemTitle())
-              .fontSize(this.fontSize * 1.2)
-              .fontWeight(FontWeight.Bold)
-              .fontColor(this.theme.textColor)
-              .textAlign(TextAlign.Center);
-
-            Text(this.getCurrentReviewItemContent())
-              .fontSize(this.fontSize)
-              .fontColor(this.theme.textColor)
-              .textAlign(TextAlign.Center)
-              .visibility(this.getCurrentReviewItemContent() ? Visibility.Visible : Visibility.None);
-          }
-          .width('100%')
-          .padding(this.fontSize * 1.5)
-          .backgroundColor(this.theme.surfaceBackgroundColor)
-          .borderRadius(this.fontSize * 0.8);
-
-          // 答案
-          if (this.showAnswer) {
-            Column() {
-              Text(this.getCurrentReviewItemAnswer())
-                .fontSize(this.fontSize)
-                .fontColor(this.theme.textColor)
-                .textAlign(TextAlign.Center);
-            }
-            .width('100%')
-            .padding(this.fontSize * 1.5)
-            .backgroundColor(this.theme.surfaceMutedBackgroundColor)
-            .borderRadius(this.fontSize * 0.8)
-            .border({ width: 1, color: this.theme.accentColor });
-          }
-        }
-        .layoutWeight(1)
-        .width('100%')
-        .justifyContent(FlexAlign.Center);
-
-        // 操作按钮
-        if (!this.showAnswer) {
-          Button(this.t('显示答案', 'Show Answer'))
-            .width('100%')
-            .fontSize(this.fontSize)
-            .fontColor(this.theme.chipSelectedTextColor)
-            .backgroundColor(this.theme.accentColor)
-            .borderRadius(this.fontSize * 0.5)
-            .padding({ top: this.fontSize, bottom: this.fontSize })
-            .onClick(() => {
-              this.showAnswer = true;
-            });
-        } else {
-          Column({ space: this.fontSize * 0.5 }) {
-            Text(this.t('你的掌握程度如何？', 'How well did you know this?'))
-              .fontSize(this.fontSize * 0.9)
-              .fontColor(this.theme.mutedTextColor);
-
-            Row({ space: this.fontSize * 0.5 }) {
-              Button(this.t('忘记', 'Forgot'))
-                .layoutWeight(1)
-                .fontSize(this.fontSize * 0.85)
-                .fontColor('#FFFFFF')
-                .backgroundColor('#EF4444')
-                .borderRadius(this.fontSize * 0.4)
-                .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
-                .onClick(() => this.recordReviewResult(REVIEW_GRADE_FORGOT));
-
-              Button(this.t('困难', 'Hard'))
-                .layoutWeight(1)
-                .fontSize(this.fontSize * 0.85)
-                .fontColor('#FFFFFF')
-                .backgroundColor('#F59E0B')
-                .borderRadius(this.fontSize * 0.4)
-                .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
-                .onClick(() => this.recordReviewResult(REVIEW_GRADE_HARD));
-
-              Button(this.t('一般', 'Good'))
-                .layoutWeight(1)
-                .fontSize(this.fontSize * 0.85)
-                .fontColor('#FFFFFF')
-                .backgroundColor('#10B981')
-                .borderRadius(this.fontSize * 0.4)
-                .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
-                .onClick(() => this.recordReviewResult(REVIEW_GRADE_GOOD));
-
-              Button(this.t('简单', 'Easy'))
-                .layoutWeight(1)
-                .fontSize(this.fontSize * 0.85)
-                .fontColor('#FFFFFF')
-                .backgroundColor('#3B82F6')
-                .borderRadius(this.fontSize * 0.4)
-                .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
-                .onClick(() => this.recordReviewResult(REVIEW_GRADE_EASY));
-            }
-            .width('100%');
-          }
-          .width('100%');
+          Text('\uf2ed')
+            .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+            .fontSize(this.fontSize * 0.85)
+            .fontColor('#EF4444')
+            .padding(this.fontSize * 0.3)
+            .onClick(() => this.showDeleteSectionConfirm(section.id));
         }
       }
       .width('100%')
-      .height('100%')
-      .padding(this.tabPadding());
+      .alignItems(VerticalAlign.Center);
+
+      if (section.content) {
+        Text(section.content)
+          .fontSize(this.fontSize * 0.8)
+          .fontColor(this.theme.mutedTextColor)
+          .maxLines(2)
+          .textOverflow({ overflow: TextOverflow.Ellipsis });
+      }
+
+      if (section.tables.length > 0) {
+        ForEach(section.tables, (table: MemoryTable) => {
+          this.TablePreview(section, table);
+        }, (table: MemoryTable) => table.id);
+      }
     }
+    .width('100%')
+    .padding(this.fontSize * 0.8)
+    .backgroundColor(this.theme.surfaceBackgroundColor)
+    .borderRadius(this.fontSize * 0.5);
   }
 
-  private getProgressIndicators(): Array<number> {
-    const result: Array<number> = [];
-    for (let i = 0; i < this.reviewItems.length; i++) {
-      result.push(i);
-    }
-    return result;
-  }
+  @Builder
+  private TablePreview(section: ListSection, table: MemoryTable): void {
+    Column({ space: this.fontSize * 0.3 }) {
+      Row() {
+        Text(this.t(`表格 (${table.rows.length} 行)`, `Table (${table.rows.length} rows)`))
+          .fontSize(this.fontSize * 0.8)
+          .fontColor(this.theme.mutedTextColor);
 
-  private getCurrentReviewItemTitle(): string {
-    if (this.currentReviewIndex < this.reviewItems.length) {
-      return this.reviewItems[this.currentReviewIndex].title;
-    }
-    return '';
-  }
+        Row({ space: this.fontSize * 0.2 }) {
+          Text('\uf044')
+            .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+            .fontSize(this.fontSize * 0.75)
+            .fontColor(this.theme.mutedTextColor)
+            .padding(this.fontSize * 0.2)
+            .onClick(() => this.openTableEditor(section, table));
 
-  private getCurrentReviewItemContent(): string {
-    if (this.currentReviewIndex < this.reviewItems.length) {
-      return this.reviewItems[this.currentReviewIndex].content;
-    }
-    return '';
-  }
+          Text('\uf2ed')
+            .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+            .fontSize(this.fontSize * 0.75)
+            .fontColor('#EF4444')
+            .padding(this.fontSize * 0.2)
+            .onClick(() => this.showDeleteTableConfirm(table.id));
+        }
+      }
+      .width('100%')
+      .justifyContent(FlexAlign.SpaceBetween)
+      .alignItems(VerticalAlign.Center);
 
-  private getCurrentReviewItemAnswer(): string {
-    if (this.currentReviewIndex < this.reviewItems.length) {
-      return this.reviewItems[this.currentReviewIndex].answer || '';
+      if (table.headers.length > 0) {
+        Row() {
+          ForEach(table.headers.slice(0, 3), (header: string, index: number) => {
+            Text(header || '-')
+              .fontSize(this.fontSize * 0.75)
+              .fontColor(this.theme.mutedTextColor)
+              .fontWeight(FontWeight.Medium)
+              .maxLines(1)
+              .textOverflow({ overflow: TextOverflow.Ellipsis })
+              .layoutWeight(1);
+
+            if (index < 2 && index < table.headers.length - 1) {
+              Text('|')
+                .fontSize(this.fontSize * 0.75)
+                .fontColor(this.theme.borderColor)
+                .margin({ left: this.fontSize * 0.3, right: this.fontSize * 0.3 });
+            }
+          }, (header: string, index: number) => `${header}-${index}`);
+
+          if (table.headers.length > 3) {
+            Text('...')
+              .fontSize(this.fontSize * 0.75)
+              .fontColor(this.theme.mutedTextColor);
+          }
+        }
+        .width('100%')
+        .padding({ top: this.fontSize * 0.2, bottom: this.fontSize * 0.2 })
+        .backgroundColor(this.theme.surfaceMutedBackgroundColor)
+        .borderRadius(this.fontSize * 0.25);
+      }
     }
-    return '';
+    .width('100%')
+    .margin({ top: this.fontSize * 0.3 })
+    .padding(this.fontSize * 0.5)
+    .backgroundColor(this.theme.surfaceMutedBackgroundColor)
+    .borderRadius(this.fontSize * 0.3);
   }
 
   @Builder
   private EditListView(): void {
     Column({ space: this.fontSize * 0.8 }) {
-      // 标题栏
       Row() {
-        Text('\uf053') // chevron-left
+        Text('\uf053')
           .fontFamily(FONT_AWESOME_SOLID_FAMILY)
           .fontSize(this.fontSize)
           .fontColor(this.theme.accentColor)
           .padding(this.iconButtonPadding())
           .borderRadius(this.iconButtonPadding())
           .onClick(() => {
-            this.setViewMode(this.selectedList ? 'items' : 'lists');
+            this.setViewMode(this.selectedList ? 'sections' : 'lists');
           });
 
         Text(this.isEditing ? this.t('编辑清单', 'Edit List') : this.t('新建清单', 'New List'))
@@ -997,7 +1216,7 @@ export struct CustomListTab {
           .layoutWeight(1)
           .textAlign(TextAlign.Center);
 
-        Text('\uf00c') // check
+        Text('\uf00c')
           .fontFamily(FONT_AWESOME_SOLID_FAMILY)
           .fontSize(this.fontSize)
           .fontColor(this.editListName.trim() ? this.theme.accentColor : this.theme.mutedTextColor)
@@ -1014,7 +1233,6 @@ export struct CustomListTab {
       .width('100%')
       .alignItems(VerticalAlign.Center);
 
-      // 表单
       Column({ space: this.fontSize }) {
         Column({ space: this.fontSize * 0.3 }) {
           Text(this.t('名称', 'Name'))
@@ -1049,7 +1267,6 @@ export struct CustomListTab {
             });
         }
 
-        // 日历提醒设置
         Column({ space: this.fontSize * 0.5 }) {
           Row() {
             Text(this.t('每日提醒', 'Daily Reminder'))
@@ -1115,7 +1332,6 @@ export struct CustomListTab {
         .backgroundColor(this.theme.surfaceBackgroundColor)
         .borderRadius(this.fontSize * 0.5);
 
-        // 删除按钮（仅编辑模式）
         if (this.isEditing && this.selectedList) {
           Button(this.t('删除清单', 'Delete List'))
             .width('100%')
@@ -1137,38 +1353,37 @@ export struct CustomListTab {
   }
 
   @Builder
-  private EditItemView(): void {
+  private EditSectionView(): void {
     Column({ space: this.fontSize * 0.8 }) {
-      // 标题栏
       Row() {
-        Text('\uf053') // chevron-left
+        Text('\uf053')
           .fontFamily(FONT_AWESOME_SOLID_FAMILY)
           .fontSize(this.fontSize)
           .fontColor(this.theme.accentColor)
           .padding(this.iconButtonPadding())
           .borderRadius(this.iconButtonPadding())
           .onClick(() => {
-            this.setViewMode('items');
+            this.setViewMode('sections');
           });
 
-        Text(this.isEditing ? this.t('编辑项目', 'Edit Item') : this.t('新建项目', 'New Item'))
+        Text(this.isEditing ? this.t('编辑章节', 'Edit Section') : this.t('新建章节', 'New Section'))
           .fontSize(this.fontSize * 1.1)
           .fontWeight(FontWeight.Bold)
           .fontColor(this.theme.textColor)
           .layoutWeight(1)
           .textAlign(TextAlign.Center);
 
-        Text('\uf00c') // check
+        Text('\uf00c')
           .fontFamily(FONT_AWESOME_SOLID_FAMILY)
           .fontSize(this.fontSize)
-          .fontColor(this.editItemTitle.trim() ? this.theme.accentColor : this.theme.mutedTextColor)
+          .fontColor(this.editSectionTitle.trim() ? this.theme.accentColor : this.theme.mutedTextColor)
           .padding(this.iconButtonPadding())
           .borderRadius(this.iconButtonPadding())
           .onClick(() => {
             if (this.isEditing) {
-              this.updateSelectedItem();
+              this.updateSelectedSection();
             } else {
-              this.createNewItem();
+              this.createNewSection();
             }
           });
       }
@@ -1178,67 +1393,55 @@ export struct CustomListTab {
       Scroll(this.scroller) {
         Column({ space: this.fontSize }) {
           Column({ space: this.fontSize * 0.3 }) {
+            Text(this.t('标题级别', 'Heading Level'))
+              .fontSize(this.fontSize * 0.9)
+              .fontColor(this.theme.mutedTextColor);
+
+            Row({ space: this.fontSize * 0.5 }) {
+              ForEach([2, 3, 4, 5, 6] as Array<number>, (level: number) => {
+                Text(`H${level}`)
+                  .fontSize(this.fontSize * 0.85)
+                  .fontColor(this.editSectionLevel === level ? this.theme.chipSelectedTextColor : this.theme.textColor)
+                  .backgroundColor(this.editSectionLevel === level ? this.theme.accentColor : this.theme.surfaceBackgroundColor)
+                  .borderRadius(this.fontSize * 0.3)
+                  .padding({ left: this.fontSize * 0.6, right: this.fontSize * 0.6, top: this.fontSize * 0.3, bottom: this.fontSize * 0.3 })
+                  .onClick(() => {
+                    this.editSectionLevel = level;
+                  });
+              }, (level: number) => level.toString());
+            }
+          }
+
+          Column({ space: this.fontSize * 0.3 }) {
             Text(this.t('标题', 'Title'))
               .fontSize(this.fontSize * 0.9)
               .fontColor(this.theme.mutedTextColor);
 
-            TextInput({ placeholder: this.t('输入标题', 'Enter title'), text: this.editItemTitle })
+            TextInput({ placeholder: this.t('输入章节标题', 'Enter section title'), text: this.editSectionTitle })
               .fontSize(this.fontSize)
               .fontColor(this.theme.textColor)
               .backgroundColor(this.theme.surfaceBackgroundColor)
               .borderRadius(this.fontSize * 0.5)
               .padding(this.fontSize * 0.8)
               .onChange((value: string) => {
-                this.editItemTitle = value;
+                this.editSectionTitle = value;
               });
           }
 
           Column({ space: this.fontSize * 0.3 }) {
-            Text(this.t('正面内容', 'Front Content'))
+            Text(this.t('描述（可选）', 'Description (optional)'))
               .fontSize(this.fontSize * 0.9)
               .fontColor(this.theme.mutedTextColor);
 
-            TextArea({ placeholder: this.t('输入正面内容（问题或提示）', 'Enter front content (question or prompt)'), text: this.editItemContent })
+            TextArea({ placeholder: this.t('输入章节描述', 'Enter section description'), text: this.editSectionContent })
               .fontSize(this.fontSize)
               .fontColor(this.theme.textColor)
               .backgroundColor(this.theme.surfaceBackgroundColor)
               .borderRadius(this.fontSize * 0.5)
               .padding(this.fontSize * 0.8)
-              .height(this.fontSize * 6)
+              .height(this.fontSize * 5)
               .onChange((value: string) => {
-                this.editItemContent = value;
-              });
-          }
-
-          Column({ space: this.fontSize * 0.3 }) {
-            Text(this.t('背面内容（答案）', 'Back Content (Answer)'))
-              .fontSize(this.fontSize * 0.9)
-              .fontColor(this.theme.mutedTextColor);
-
-            TextArea({ placeholder: this.t('输入背面内容（答案或解释）', 'Enter back content (answer or explanation)'), text: this.editItemAnswer })
-              .fontSize(this.fontSize)
-              .fontColor(this.theme.textColor)
-              .backgroundColor(this.theme.surfaceBackgroundColor)
-              .borderRadius(this.fontSize * 0.5)
-              .padding(this.fontSize * 0.8)
-              .height(this.fontSize * 6)
-              .onChange((value: string) => {
-                this.editItemAnswer = value;
-              });
-          }
-
-          // 删除按钮（仅编辑模式）
-          if (this.isEditing && this.selectedItem) {
-            Button(this.t('删除项目', 'Delete Item'))
-              .width('100%')
-              .fontSize(this.fontSize)
-              .fontColor('#EF4444')
-              .backgroundColor(this.theme.surfaceBackgroundColor)
-              .borderRadius(this.fontSize * 0.5)
-              .padding({ top: this.fontSize * 0.8, bottom: this.fontSize * 0.8 })
-              .margin({ top: this.fontSize * 2 })
-              .onClick(() => {
-                this.showDeleteItemConfirm();
+                this.editSectionContent = value;
               });
           }
         }
@@ -1253,18 +1456,339 @@ export struct CustomListTab {
   }
 
   @Builder
-  private ShareView(): void {
+  private EditTableView(): void {
     Column({ space: this.fontSize * 0.8 }) {
-      // 标题栏
       Row() {
-        Text('\uf053') // chevron-left
+        Text('\uf053')
           .fontFamily(FONT_AWESOME_SOLID_FAMILY)
           .fontSize(this.fontSize)
           .fontColor(this.theme.accentColor)
           .padding(this.iconButtonPadding())
           .borderRadius(this.iconButtonPadding())
           .onClick(() => {
-            this.setViewMode(this.selectedList ? 'items' : 'lists');
+            this.resetTableEditState();
+            this.setViewMode('sections');
+          });
+
+        Text(this.isEditing ? this.t('编辑表格', 'Edit Table') : this.t('新建表格', 'New Table'))
+          .fontSize(this.fontSize * 1.1)
+          .fontWeight(FontWeight.Bold)
+          .fontColor(this.theme.textColor)
+          .layoutWeight(1)
+          .textAlign(TextAlign.Center);
+
+        Text('\uf00c')
+          .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+          .fontSize(this.fontSize)
+          .fontColor(this.theme.accentColor)
+          .padding(this.iconButtonPadding())
+          .borderRadius(this.iconButtonPadding())
+          .onClick(() => {
+            if (this.isEditing) {
+              this.updateSelectedTable();
+            } else {
+              this.createNewTable();
+            }
+          });
+      }
+      .width('100%')
+      .alignItems(VerticalAlign.Center);
+
+      Scroll(this.scroller) {
+        Column({ space: this.fontSize }) {
+          Column({ space: this.fontSize * 0.3 }) {
+            Row() {
+              Text(this.t('表头', 'Headers'))
+                .fontSize(this.fontSize * 0.9)
+                .fontColor(this.theme.mutedTextColor);
+
+              Text('\uf067')
+                .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+                .fontSize(this.fontSize * 0.85)
+                .fontColor(this.theme.accentColor)
+                .padding(this.fontSize * 0.3)
+                .onClick(() => this.addTableColumn());
+            }
+            .width('100%')
+            .justifyContent(FlexAlign.SpaceBetween)
+            .alignItems(VerticalAlign.Center);
+
+            Row({ space: this.fontSize * 0.3 }) {
+              ForEach(this.editHeaders, (header: string, index: number) => {
+                Row() {
+                  TextInput({ placeholder: this.t(`列${index + 1}`, `Col${index + 1}`), text: header })
+                    .fontSize(this.fontSize * 0.9)
+                    .fontColor(this.theme.textColor)
+                    .backgroundColor(this.theme.surfaceBackgroundColor)
+                    .borderRadius(this.fontSize * 0.3)
+                    .padding(this.fontSize * 0.5)
+                    .layoutWeight(1)
+                    .onChange((value: string) => {
+                      this.editHeaders[index] = value;
+                      this.editHeaders = this.editHeaders.slice();
+                    });
+
+                  if (this.editHeaders.length > 2) {
+                    Text('\uf00d')
+                      .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+                      .fontSize(this.fontSize * 0.75)
+                      .fontColor('#EF4444')
+                      .padding(this.fontSize * 0.2)
+                      .onClick(() => this.removeTableColumn(index));
+                  }
+                }
+                .layoutWeight(1);
+              }, (header: string, index: number) => `header-${index}-${this.editHeaders.length}`);
+            }
+            .width('100%');
+          }
+
+          Column({ space: this.fontSize * 0.3 }) {
+            Row() {
+              Text(this.t('数据行', 'Rows'))
+                .fontSize(this.fontSize * 0.9)
+                .fontColor(this.theme.mutedTextColor);
+
+              Text('\uf067')
+                .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+                .fontSize(this.fontSize * 0.85)
+                .fontColor(this.theme.accentColor)
+                .padding(this.fontSize * 0.3)
+                .onClick(() => this.addTableRow());
+            }
+            .width('100%')
+            .justifyContent(FlexAlign.SpaceBetween)
+            .alignItems(VerticalAlign.Center);
+
+            ForEach(this.editRows, (row: Array<string>, rowIndex: number) => {
+              Row({ space: this.fontSize * 0.3 }) {
+                ForEach(row, (cell: string, colIndex: number) => {
+                  TextInput({ placeholder: '...', text: cell })
+                    .fontSize(this.fontSize * 0.85)
+                    .fontColor(this.theme.textColor)
+                    .backgroundColor(this.theme.surfaceBackgroundColor)
+                    .borderRadius(this.fontSize * 0.3)
+                    .padding(this.fontSize * 0.4)
+                    .layoutWeight(1)
+                    .onChange((value: string) => {
+                      this.editRows[rowIndex][colIndex] = value;
+                      this.editRows = this.editRows.slice();
+                    });
+                }, (cell: string, colIndex: number) => `cell-${rowIndex}-${colIndex}-${this.editRows.length}`);
+
+                if (this.editRows.length > 1) {
+                  Text('\uf00d')
+                    .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+                    .fontSize(this.fontSize * 0.75)
+                    .fontColor('#EF4444')
+                    .padding(this.fontSize * 0.2)
+                    .onClick(() => this.removeTableRow(rowIndex));
+                }
+              }
+              .width('100%')
+              .margin({ bottom: this.fontSize * 0.3 });
+            }, (row: Array<string>, rowIndex: number) => `row-${rowIndex}-${this.editRows.length}`);
+          }
+        }
+        .width('100%');
+      }
+      .layoutWeight(1)
+      .scrollBar(BarState.Off);
+    }
+    .width('100%')
+    .height('100%')
+    .padding(this.tabPadding());
+  }
+
+  @Builder
+  private ReviewView(): void {
+    if (!this.selectedList || this.reviewItems.length === 0) {
+      Column() {
+        Text(this.t('无复习项目', 'No review items'))
+          .fontSize(this.fontSize)
+          .fontColor(this.theme.mutedTextColor);
+      }
+      .width('100%')
+      .height('100%');
+    } else {
+      Column({ space: this.fontSize }) {
+        Row() {
+          Text(`${this.currentReviewIndex + 1} / ${this.reviewItems.length}`)
+            .fontSize(this.fontSize * 0.9)
+            .fontColor(this.theme.mutedTextColor);
+
+          Text('\uf00d')
+            .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+            .fontSize(this.fontSize)
+            .fontColor(this.theme.mutedTextColor)
+            .padding(this.fontSize * 0.5)
+            .onClick(() => {
+              this.setViewMode('sections');
+            });
+        }
+        .width('100%')
+        .justifyContent(FlexAlign.SpaceBetween)
+        .alignItems(VerticalAlign.Center);
+
+        Row() {
+          ForEach(this.getProgressIndicators(), (i: number) => {
+            Column()
+              .width(this.fontSize * 0.5)
+              .height(this.fontSize * 0.3)
+              .backgroundColor(i <= this.currentReviewIndex ? this.theme.accentColor : this.theme.borderColor)
+              .borderRadius(this.fontSize * 0.15)
+              .margin({ right: this.fontSize * 0.2 });
+          }, (i: number) => i.toString());
+        }
+        .width('100%');
+
+        Column({ space: this.fontSize }) {
+          Column({ space: this.fontSize * 0.5 }) {
+            if (this.currentReviewIndex < this.reviewItems.length) {
+              this.ReviewCardContent();
+            }
+          }
+          .width('100%')
+          .padding(this.fontSize * 1.5)
+          .backgroundColor(this.theme.surfaceBackgroundColor)
+          .borderRadius(this.fontSize * 0.8);
+
+          if (this.showAnswer && this.currentReviewIndex < this.reviewItems.length) {
+            Column() {
+              this.ReviewAnswerContent();
+            }
+            .width('100%')
+            .padding(this.fontSize * 1.5)
+            .backgroundColor(this.theme.surfaceMutedBackgroundColor)
+            .borderRadius(this.fontSize * 0.8)
+            .border({ width: 1, color: this.theme.accentColor });
+          }
+        }
+        .layoutWeight(1)
+        .width('100%')
+        .justifyContent(FlexAlign.Center);
+
+        if (!this.showAnswer) {
+          Button(this.t('显示答案', 'Show Answer'))
+            .width('100%')
+            .fontSize(this.fontSize)
+            .fontColor(this.theme.chipSelectedTextColor)
+            .backgroundColor(this.theme.accentColor)
+            .borderRadius(this.fontSize * 0.5)
+            .padding({ top: this.fontSize, bottom: this.fontSize })
+            .onClick(() => {
+              this.showAnswer = true;
+            });
+        } else {
+          Column({ space: this.fontSize * 0.5 }) {
+            Text(this.t('你的掌握程度如何？', 'How well did you know this?'))
+              .fontSize(this.fontSize * 0.9)
+              .fontColor(this.theme.mutedTextColor);
+
+            Row({ space: this.fontSize * 0.5 }) {
+              Button(this.t('忘记', 'Forgot'))
+                .layoutWeight(1)
+                .fontSize(this.fontSize * 0.85)
+                .fontColor('#FFFFFF')
+                .backgroundColor('#EF4444')
+                .borderRadius(this.fontSize * 0.4)
+                .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+                .onClick(() => this.recordReviewResult(REVIEW_GRADE_FORGOT));
+
+              Button(this.t('困难', 'Hard'))
+                .layoutWeight(1)
+                .fontSize(this.fontSize * 0.85)
+                .fontColor('#FFFFFF')
+                .backgroundColor('#F59E0B')
+                .borderRadius(this.fontSize * 0.4)
+                .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+                .onClick(() => this.recordReviewResult(REVIEW_GRADE_HARD));
+
+              Button(this.t('一般', 'Good'))
+                .layoutWeight(1)
+                .fontSize(this.fontSize * 0.85)
+                .fontColor('#FFFFFF')
+                .backgroundColor('#10B981')
+                .borderRadius(this.fontSize * 0.4)
+                .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+                .onClick(() => this.recordReviewResult(REVIEW_GRADE_GOOD));
+
+              Button(this.t('简单', 'Easy'))
+                .layoutWeight(1)
+                .fontSize(this.fontSize * 0.85)
+                .fontColor('#FFFFFF')
+                .backgroundColor('#3B82F6')
+                .borderRadius(this.fontSize * 0.4)
+                .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+                .onClick(() => this.recordReviewResult(REVIEW_GRADE_EASY));
+            }
+            .width('100%');
+          }
+          .width('100%');
+        }
+      }
+      .width('100%')
+      .height('100%')
+      .padding(this.tabPadding());
+    }
+  }
+
+  @Builder
+  private ReviewCardContent(): void {
+    Column({ space: this.fontSize * 0.3 }) {
+      if (this.reviewItems[this.currentReviewIndex].headers[0]) {
+        Text(this.reviewItems[this.currentReviewIndex].headers[0])
+          .fontSize(this.fontSize * 0.8)
+          .fontColor(this.theme.mutedTextColor);
+      }
+
+      Text(this.reviewItems[this.currentReviewIndex].row.cells[0]?.text || '')
+        .fontSize(this.fontSize * 1.2)
+        .fontWeight(FontWeight.Bold)
+        .fontColor(this.theme.textColor)
+        .textAlign(TextAlign.Center);
+    }
+  }
+
+  @Builder
+  private ReviewAnswerContent(): void {
+    Column({ space: this.fontSize * 0.5 }) {
+      ForEach(this.reviewItems[this.currentReviewIndex].headers.slice(1), (header: string, index: number) => {
+        Column({ space: this.fontSize * 0.2 }) {
+          Text(header || this.t(`列${index + 2}`, `Col${index + 2}`))
+            .fontSize(this.fontSize * 0.8)
+            .fontColor(this.theme.mutedTextColor);
+
+          Text(this.reviewItems[this.currentReviewIndex].row.cells[index + 1]?.text || '-')
+            .fontSize(this.fontSize)
+            .fontColor(this.theme.textColor);
+        }
+        .width('100%')
+        .alignItems(HorizontalAlign.Start);
+      }, (header: string, index: number) => `answer-${index}`);
+    }
+  }
+
+  private getProgressIndicators(): Array<number> {
+    const result: Array<number> = [];
+    for (let i = 0; i < this.reviewItems.length; i++) {
+      result.push(i);
+    }
+    return result;
+  }
+
+  @Builder
+  private ShareView(): void {
+    Column({ space: this.fontSize * 0.8 }) {
+      Row() {
+        Text('\uf053')
+          .fontFamily(FONT_AWESOME_SOLID_FAMILY)
+          .fontSize(this.fontSize)
+          .fontColor(this.theme.accentColor)
+          .padding(this.iconButtonPadding())
+          .borderRadius(this.iconButtonPadding())
+          .onClick(() => {
+            this.setViewMode(this.selectedList ? 'sections' : 'lists');
           });
 
         Text(this.selectedList ? this.t('分享清单', 'Share List') : this.t('导入清单', 'Import List'))
@@ -1282,22 +1806,27 @@ export struct CustomListTab {
       Scroll(this.scroller) {
         Column({ space: this.fontSize * 1.5 }) {
           if (this.selectedList) {
-            // 分享功能
             Column({ space: this.fontSize }) {
-              Text(this.t('生成分享链接', 'Generate Share Link'))
+              Text(this.t('分享为Markdown', 'Share as Markdown'))
                 .fontSize(this.fontSize)
                 .fontWeight(FontWeight.Medium)
                 .fontColor(this.theme.textColor);
 
-              Text(
-                this.t(
-                  '将清单（可选加密）上传并生成短链接；对方可在“导入清单”中粘贴链接导入。',
-                  'Uploads (optionally encrypted) and returns a short link. Paste it in “Import List” to import.',
-                ),
-              )
+              Text(this.t(
+                '清单将转换为Markdown格式上传。对方可通过链接导入。',
+                'List will be converted to Markdown format and uploaded. Others can import via the link.',
+              ))
                 .fontSize(this.fontSize * 0.8)
-                .fontColor(this.theme.mutedTextColor)
-                .opacity(0.85);
+                .fontColor(this.theme.mutedTextColor);
+
+              Button(this.t('复制Markdown', 'Copy Markdown'))
+                .width('100%')
+                .fontSize(this.fontSize)
+                .fontColor(this.theme.chipTextColor)
+                .backgroundColor(this.theme.surfaceBackgroundColor)
+                .borderRadius(this.fontSize * 0.5)
+                .padding({ top: this.fontSize * 0.7, bottom: this.fontSize * 0.7 })
+                .onClick(() => this.copyMarkdown());
 
               Column({ space: this.fontSize * 0.3 }) {
                 Text(this.t('加密密码（可选）', 'Encryption Password (optional)'))
@@ -1335,7 +1864,7 @@ export struct CustomListTab {
 
               if (this.shareLink) {
                 Column({ space: this.fontSize * 0.5 }) {
-                  Text(this.t('已上传并生成分享链接', 'Share link ready'))
+                  Text(this.t('分享链接已生成', 'Share link ready'))
                     .fontSize(this.fontSize * 0.9)
                     .fontColor(this.theme.accentColor);
 
@@ -1371,7 +1900,6 @@ export struct CustomListTab {
               .strokeWidth(1);
           }
 
-          // 导入功能
           Column({ space: this.fontSize }) {
             Text(this.t('从链接导入', 'Import from Link'))
               .fontSize(this.fontSize)
@@ -1445,14 +1973,16 @@ export struct CustomListTab {
     Stack() {
       if (this.viewMode === 'lists') {
         this.ListsView();
-      } else if (this.viewMode === 'items') {
-        this.ItemsView();
+      } else if (this.viewMode === 'sections') {
+        this.SectionsView();
       } else if (this.viewMode === 'review') {
         this.ReviewView();
       } else if (this.viewMode === 'edit-list') {
         this.EditListView();
-      } else if (this.viewMode === 'edit-item') {
-        this.EditItemView();
+      } else if (this.viewMode === 'edit-section') {
+        this.EditSectionView();
+      } else if (this.viewMode === 'edit-table') {
+        this.EditTableView();
       } else if (this.viewMode === 'share') {
         this.ShareView();
       }

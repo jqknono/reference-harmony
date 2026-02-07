@@ -164,7 +164,7 @@ tbody tr:hover {
   border-radius: 0.65rem;
   overflow: hidden;
   border: 0.0625rem solid var(--border);
-  background: color-mix(in srgb, var(--card) 70%, var(--bg) 30%);
+  background: var(--accent);
   display: grid;
   place-items: center;
 }

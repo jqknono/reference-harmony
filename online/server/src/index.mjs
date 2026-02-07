@@ -934,6 +934,16 @@ function randomShareId() {
   return out;
 }
 
+function looksLikeBase64Payload(data) {
+  const s = String(data ?? '').trim();
+  if (!s) return false;
+  if (s.startsWith('ENC:')) return false;
+  if (/\s/.test(s)) return false;
+  if (s.length < 16) return false;
+  if (s.length % 4 !== 0) return false;
+  return /^[A-Za-z0-9+/=_-]+$/.test(s);
+}
+
 function readJsonBody(req, limitBytes = 512 * 1024) {
   return new Promise((resolve, reject) => {
     const chunks = [];
@@ -995,7 +1005,7 @@ async function handleShareApi(req, res, url) {
       const origin = requestOrigin(req) || 'http://localhost';
       return json(res, 200, {
         id,
-        url: `${origin}/share/${encodeURIComponent(id)}`,
+        url: `${origin}/share/${encodeURIComponent(id)}.md`,
         deepLink: `refhm://share/${encodeURIComponent(id)}`,
       });
     } catch (e) {
@@ -1010,6 +1020,30 @@ async function handleShareApi(req, res, url) {
       const doc = await readShareFile(id);
       if (!doc) return json(res, 404, { error: 'Not found' });
       return json(res, 200, { id: doc.id, data: doc.data });
+    } catch (e) {
+      return json(res, 500, { error: String(e) });
+    }
+  }
+
+  const mdMatch = /^\/share\/([^/]+)\.(md|markdown)$/i.exec(url.pathname);
+  if (mdMatch && req.method === 'GET') {
+    try {
+      const id = decodeURIComponent(mdMatch[1]);
+      const doc = await readShareFile(id);
+      if (!doc) return text(res, 404, 'Not found');
+
+      const rawData = String(doc.data ?? '');
+      if (rawData.startsWith('ENC:')) {
+        return text(
+          res,
+          200,
+          '# Encrypted share\n\nThis share is encrypted. Please open the link in the app and enter the password to import.\n',
+          { 'Content-Type': 'text/markdown; charset=utf-8' },
+        );
+      }
+
+      const markdown = looksLikeBase64Payload(rawData) ? Buffer.from(rawData, 'base64').toString('utf-8') : rawData;
+      return text(res, 200, markdown, { 'Content-Type': 'text/markdown; charset=utf-8' });
     } catch (e) {
       return json(res, 500, { error: String(e) });
     }

@@ -1,22 +1,28 @@
-// 自定义清单存储仓库
+// 自定义清单存储仓库 - 记忆表格模式
 
 import preferences from '@ohos.data.preferences';
 import util from '@ohos.util';
 import type {
   CustomList,
-  CustomListItem,
   CustomListCollection,
   SharedListData,
   ReviewGrade,
+  ListSection,
+  MemoryTable,
+  MemoryTableRow,
+  MemoryTableCell,
 } from './customListModels';
 import { OnlineShareRepository } from './onlineShareRepository';
 import {
   createEmptyCustomListCollection,
   generateCustomListId,
-  generateCustomListItemId,
+  generateSectionId,
+  generateTableId,
+  generateRowId,
   generateShareId,
   calculateNextReview,
   calculateChecksum,
+  listToMarkdown,
 } from './customListModels';
 
 type Preferences = preferences.Preferences;
@@ -24,7 +30,7 @@ type ValueType = preferences.ValueType;
 
 const CUSTOM_LISTS_KEY = 'custom_lists';
 const MAX_LISTS_STORED = 100;
-const SHARE_DATA_VERSION = 1;
+const SHARE_DATA_VERSION = 2;
 
 function isRecord(value: Object | null | undefined): boolean {
   return typeof value === 'object' && value !== null;
@@ -78,7 +84,18 @@ function clampInt(value: number, min: number, max: number): number {
   return n;
 }
 
-function sanitizeCustomListItem(raw: Object | null | undefined, markChanged: () => void, usedIds: Set<string>): CustomListItem | null {
+function sanitizeMemoryTableCell(raw: Object | null | undefined, markChanged: () => void): MemoryTableCell {
+  if (!isRecord(raw)) {
+    markChanged();
+    return { text: '' };
+  }
+  const obj = raw as Record<string, Object>;
+  return {
+    text: toStringOrEmpty(obj['text'] as Object | null | undefined, markChanged),
+  };
+}
+
+function sanitizeMemoryTableRow(raw: Object | null | undefined, markChanged: () => void, usedIds: Set<string>): MemoryTableRow | null {
   if (!isRecord(raw)) {
     markChanged();
     return null;
@@ -88,56 +105,156 @@ function sanitizeCustomListItem(raw: Object | null | undefined, markChanged: () 
   let id: string = toStringOrEmpty(obj['id'] as Object | null | undefined, markChanged).trim();
   if (!id) {
     markChanged();
-    id = generateCustomListItemId();
+    id = generateRowId();
   }
   if (usedIds.has(id)) {
     markChanged();
-    id = generateCustomListItemId();
+    id = generateRowId();
   }
   usedIds.add(id);
 
   const now = Date.now();
-  const title: string = toStringOrEmpty(obj['title'] as Object | null | undefined, markChanged);
-  const content: string = toStringOrEmpty(obj['content'] as Object | null | undefined, markChanged);
-  const createdAt: number = toNumberOr(obj['createdAt'] as Object | null | undefined, now, markChanged);
-  const updatedAt: number = toNumberOr(obj['updatedAt'] as Object | null | undefined, createdAt, markChanged);
+  const cellsRaw = obj['cells'] as Object | null | undefined;
+  const cells: Array<MemoryTableCell> = [];
+  if (Array.isArray(cellsRaw)) {
+    for (const c of cellsRaw as Array<Object>) {
+      cells.push(sanitizeMemoryTableCell(c, markChanged));
+    }
+  } else {
+    markChanged();
+  }
 
-  const reviewCount: number = Math.max(
-    0,
-    clampInt(toNumberOr(obj['reviewCount'] as Object | null | undefined, 0, markChanged), 0, 1_000_000)
-  );
-  const lastReviewAt: number = Math.max(0, toNumberOr(obj['lastReviewAt'] as Object | null | undefined, 0, markChanged));
-  const nextReviewAt: number = Math.max(
-    0,
-    toNumberOr(obj['nextReviewAt'] as Object | null | undefined, createdAt, markChanged)
-  );
-  const easeFactor: number = (() => {
+  const reviewCount = Math.max(0, clampInt(toNumberOr(obj['reviewCount'] as Object | null | undefined, 0, markChanged), 0, 1_000_000));
+  const lastReviewAt = Math.max(0, toNumberOr(obj['lastReviewAt'] as Object | null | undefined, 0, markChanged));
+  const nextReviewAt = Math.max(0, toNumberOr(obj['nextReviewAt'] as Object | null | undefined, now, markChanged));
+  const easeFactor = (() => {
     const v = toNumberOr(obj['easeFactor'] as Object | null | undefined, 2.5, markChanged);
     if (!Number.isFinite(v)) return 2.5;
     return Math.max(1.3, Math.min(3.0, v));
   })();
-  const interval: number = Math.max(
-    0,
-    clampInt(toNumberOr(obj['interval'] as Object | null | undefined, 0, markChanged), 0, 36500)
-  );
+  const interval = Math.max(0, clampInt(toNumberOr(obj['interval'] as Object | null | undefined, 0, markChanged), 0, 36500));
 
-  const lastGradeRaw: number = toNumberOr(obj['lastGrade'] as Object | null | undefined, -1, markChanged);
-  const lastGrade: number | undefined =
-    lastGradeRaw === 0 || lastGradeRaw === 1 || lastGradeRaw === 2 || lastGradeRaw === 3 ? lastGradeRaw : undefined;
+  const lastGradeRaw = toNumberOr(obj['lastGrade'] as Object | null | undefined, -1, markChanged);
+  const lastGrade = lastGradeRaw === 0 || lastGradeRaw === 1 || lastGradeRaw === 2 || lastGradeRaw === 3 ? lastGradeRaw : undefined;
 
   return {
     id,
-    title,
-    content,
-    answer: toOptionalString(obj['answer'] as Object | null | undefined, markChanged),
-    createdAt,
-    updatedAt,
+    cells,
     reviewCount,
     lastReviewAt,
     nextReviewAt,
     easeFactor,
     interval,
     lastGrade,
+  };
+}
+
+function sanitizeMemoryTable(raw: Object | null | undefined, markChanged: () => void, usedIds: Set<string>): MemoryTable | null {
+  if (!isRecord(raw)) {
+    markChanged();
+    return null;
+  }
+  const obj = raw as Record<string, Object>;
+
+  let id: string = toStringOrEmpty(obj['id'] as Object | null | undefined, markChanged).trim();
+  if (!id) {
+    markChanged();
+    id = generateTableId();
+  }
+  if (usedIds.has(id)) {
+    markChanged();
+    id = generateTableId();
+  }
+  usedIds.add(id);
+
+  const now = Date.now();
+  const headersRaw = obj['headers'] as Object | null | undefined;
+  const headers: Array<string> = [];
+  if (Array.isArray(headersRaw)) {
+    for (const h of headersRaw as Array<Object>) {
+      headers.push(toStringOrEmpty(h, markChanged));
+    }
+  } else {
+    markChanged();
+    headers.push('');
+    headers.push('');
+  }
+
+  const rowsRaw = obj['rows'] as Object | null | undefined;
+  const usedRowIds = new Set<string>();
+  const rows: Array<MemoryTableRow> = [];
+  if (Array.isArray(rowsRaw)) {
+    for (const r of rowsRaw as Array<Object>) {
+      const row = sanitizeMemoryTableRow(r, markChanged, usedRowIds);
+      if (row) rows.push(row);
+    }
+  } else if (rowsRaw !== undefined && rowsRaw !== null) {
+    markChanged();
+  }
+
+  const createdAt = toNumberOr(obj['createdAt'] as Object | null | undefined, now, markChanged);
+  const updatedAt = toNumberOr(obj['updatedAt'] as Object | null | undefined, createdAt, markChanged);
+
+  return {
+    id,
+    headers,
+    rows,
+    createdAt,
+    updatedAt,
+  };
+}
+
+function sanitizeListSection(raw: Object | null | undefined, markChanged: () => void, usedIds: Set<string>): ListSection | null {
+  if (!isRecord(raw)) {
+    markChanged();
+    return null;
+  }
+  const obj = raw as Record<string, Object>;
+
+  let id: string = toStringOrEmpty(obj['id'] as Object | null | undefined, markChanged).trim();
+  if (!id) {
+    markChanged();
+    id = generateSectionId();
+  }
+  if (usedIds.has(id)) {
+    markChanged();
+    id = generateSectionId();
+  }
+  usedIds.add(id);
+
+  const now = Date.now();
+  const level = clampInt(toNumberOr(obj['level'] as Object | null | undefined, 2, markChanged), 1, 6);
+  const title = (() => {
+    const t = toStringOrEmpty(obj['title'] as Object | null | undefined, markChanged).trim();
+    if (t) return t;
+    markChanged();
+    return 'Untitled';
+  })();
+  const content = toStringOrEmpty(obj['content'] as Object | null | undefined, markChanged);
+
+  const tablesRaw = obj['tables'] as Object | null | undefined;
+  const usedTableIds = new Set<string>();
+  const tables: Array<MemoryTable> = [];
+  if (Array.isArray(tablesRaw)) {
+    for (const t of tablesRaw as Array<Object>) {
+      const table = sanitizeMemoryTable(t, markChanged, usedTableIds);
+      if (table) tables.push(table);
+    }
+  } else if (tablesRaw !== undefined && tablesRaw !== null) {
+    markChanged();
+  }
+
+  const createdAt = toNumberOr(obj['createdAt'] as Object | null | undefined, now, markChanged);
+  const updatedAt = toNumberOr(obj['updatedAt'] as Object | null | undefined, createdAt, markChanged);
+
+  return {
+    id,
+    level,
+    title,
+    content,
+    tables,
+    createdAt,
+    updatedAt,
   };
 }
 
@@ -170,16 +287,16 @@ function sanitizeCustomList(raw: Object | null | undefined, markChanged: () => v
   const createdAt: number = toNumberOr(obj['createdAt'] as Object | null | undefined, now, markChanged);
   const updatedAt: number = toNumberOr(obj['updatedAt'] as Object | null | undefined, createdAt, markChanged);
 
-  const itemsRaw: Object | null | undefined = obj['items'] as Object | null | undefined;
-  const usedItemIds: Set<string> = new Set<string>();
-  const items: Array<CustomListItem> = [];
-  if (Array.isArray(itemsRaw)) {
-    const arr = itemsRaw as Array<Object>;
-    for (const it of arr) {
-      const item = sanitizeCustomListItem(it, markChanged, usedItemIds);
-      if (item) items.push(item);
+  const sectionsRaw: Object | null | undefined = obj['sections'] as Object | null | undefined;
+  const usedSectionIds: Set<string> = new Set<string>();
+  const sections: Array<ListSection> = [];
+  if (Array.isArray(sectionsRaw)) {
+    const arr = sectionsRaw as Array<Object>;
+    for (const s of arr) {
+      const section = sanitizeListSection(s, markChanged, usedSectionIds);
+      if (section) sections.push(section);
     }
-  } else if (itemsRaw !== undefined && itemsRaw !== null) {
+  } else if (sectionsRaw !== undefined && sectionsRaw !== null) {
     markChanged();
   }
 
@@ -195,7 +312,7 @@ function sanitizeCustomList(raw: Object | null | undefined, markChanged: () => v
     name,
     description: toOptionalString(obj['description'] as Object | null | undefined, markChanged),
     icon: toOptionalString(obj['icon'] as Object | null | undefined, markChanged),
-    items,
+    sections,
     createdAt,
     updatedAt,
     shareId: toOptionalString(obj['shareId'] as Object | null | undefined, markChanged),
@@ -249,7 +366,6 @@ function sanitizeCustomListCollection(raw: Object | null | undefined, markChange
 
 /**
  * 加密/解密工具 (使用 Base64 + 简单 XOR 混淆)
- * 注：生产环境建议使用更安全的加密算法
  */
 function encryptData(data: string, password: string): string {
   const encoder = new util.TextEncoder();
@@ -280,40 +396,101 @@ function decryptData(encrypted: string, password: string): string {
   return decoder.decodeToString(decrypted);
 }
 
+function looksLikeBase64Payload(data: string): boolean {
+  const s = String(data ?? '').trim();
+  if (!s) return false;
+  if (s.startsWith('ENC:')) return false;
+  // base64 payload should not contain whitespace
+  if (/\s/.test(s)) return false;
+  // avoid false positives on short strings
+  if (s.length < 16) return false;
+  // padding aligned
+  if (s.length % 4 !== 0) return false;
+  // standard base64 (allow URL-safe variants too)
+  return /^[A-Za-z0-9+/=_-]+$/.test(s);
+}
+
 /**
- * 复制CustomListItem对象
+ * 复制 MemoryTableCell 对象
  */
-function copyListItem(item: CustomListItem): CustomListItem {
+function copyCell(cell: MemoryTableCell): MemoryTableCell {
+  return { text: cell.text };
+}
+
+/**
+ * 复制 MemoryTableRow 对象
+ */
+function copyRow(row: MemoryTableRow): MemoryTableRow {
+  const cells: Array<MemoryTableCell> = [];
+  for (const cell of row.cells) {
+    cells.push(copyCell(cell));
+  }
   return {
-    id: item.id,
-    title: item.title,
-    content: item.content,
-    answer: item.answer,
-    createdAt: item.createdAt,
-    updatedAt: item.updatedAt,
-    reviewCount: item.reviewCount,
-    lastReviewAt: item.lastReviewAt,
-    nextReviewAt: item.nextReviewAt,
-    easeFactor: item.easeFactor,
-    interval: item.interval,
-    lastGrade: item.lastGrade,
+    id: row.id,
+    cells,
+    reviewCount: row.reviewCount,
+    lastReviewAt: row.lastReviewAt,
+    nextReviewAt: row.nextReviewAt,
+    easeFactor: row.easeFactor,
+    interval: row.interval,
+    lastGrade: row.lastGrade,
   };
 }
 
 /**
- * 复制CustomList对象
+ * 复制 MemoryTable 对象
+ */
+function copyTable(table: MemoryTable): MemoryTable {
+  const headers: Array<string> = [];
+  for (const h of table.headers) {
+    headers.push(h);
+  }
+  const rows: Array<MemoryTableRow> = [];
+  for (const row of table.rows) {
+    rows.push(copyRow(row));
+  }
+  return {
+    id: table.id,
+    headers,
+    rows,
+    createdAt: table.createdAt,
+    updatedAt: table.updatedAt,
+  };
+}
+
+/**
+ * 复制 ListSection 对象
+ */
+function copySection(section: ListSection): ListSection {
+  const tables: Array<MemoryTable> = [];
+  for (const table of section.tables) {
+    tables.push(copyTable(table));
+  }
+  return {
+    id: section.id,
+    level: section.level,
+    title: section.title,
+    content: section.content,
+    tables,
+    createdAt: section.createdAt,
+    updatedAt: section.updatedAt,
+  };
+}
+
+/**
+ * 复制 CustomList 对象
  */
 function copyList(list: CustomList): CustomList {
-  const items: Array<CustomListItem> = [];
-  for (const item of list.items) {
-    items.push(copyListItem(item));
+  const sections: Array<ListSection> = [];
+  for (const section of list.sections) {
+    sections.push(copySection(section));
   }
   return {
     id: list.id,
     name: list.name,
     description: list.description,
     icon: list.icon,
-    items: items,
+    sections,
     createdAt: list.createdAt,
     updatedAt: list.updatedAt,
     shareId: list.shareId,
@@ -327,7 +504,7 @@ function copyList(list: CustomList): CustomList {
 }
 
 /**
- * 合并更新到CustomList
+ * 合并更新到 CustomList
  */
 function mergeListUpdates(list: CustomList, updates: Partial<CustomList>): CustomList {
   return {
@@ -335,7 +512,7 @@ function mergeListUpdates(list: CustomList, updates: Partial<CustomList>): Custo
     name: updates.name !== undefined ? updates.name : list.name,
     description: updates.description !== undefined ? updates.description : list.description,
     icon: updates.icon !== undefined ? updates.icon : list.icon,
-    items: updates.items !== undefined ? updates.items : list.items,
+    sections: updates.sections !== undefined ? updates.sections : list.sections,
     createdAt: list.createdAt,
     updatedAt: Date.now(),
     shareId: updates.shareId !== undefined ? updates.shareId : list.shareId,
@@ -345,26 +522,6 @@ function mergeListUpdates(list: CustomList, updates: Partial<CustomList>): Custo
     calendarEventId: updates.calendarEventId !== undefined ? updates.calendarEventId : list.calendarEventId,
     reminderEnabled: updates.reminderEnabled !== undefined ? updates.reminderEnabled : list.reminderEnabled,
     reminderTime: updates.reminderTime !== undefined ? updates.reminderTime : list.reminderTime,
-  };
-}
-
-/**
- * 合并更新到CustomListItem
- */
-function mergeItemUpdates(item: CustomListItem, updates: Partial<CustomListItem>): CustomListItem {
-  return {
-    id: item.id,
-    title: updates.title !== undefined ? updates.title : item.title,
-    content: updates.content !== undefined ? updates.content : item.content,
-    answer: updates.answer !== undefined ? updates.answer : item.answer,
-    createdAt: item.createdAt,
-    updatedAt: Date.now(),
-    reviewCount: updates.reviewCount !== undefined ? updates.reviewCount : item.reviewCount,
-    lastReviewAt: updates.lastReviewAt !== undefined ? updates.lastReviewAt : item.lastReviewAt,
-    nextReviewAt: updates.nextReviewAt !== undefined ? updates.nextReviewAt : item.nextReviewAt,
-    easeFactor: updates.easeFactor !== undefined ? updates.easeFactor : item.easeFactor,
-    interval: updates.interval !== undefined ? updates.interval : item.interval,
-    lastGrade: updates.lastGrade !== undefined ? updates.lastGrade : item.lastGrade,
   };
 }
 
@@ -405,7 +562,6 @@ export class CustomListRepository {
     try {
       parsed = JSON.parse(saved) as Object | null;
     } catch (_) {
-      // 数据损坏：避免直接崩溃导致 Tab 打开即闪退
       return createEmptyCustomListCollection();
     }
 
@@ -416,7 +572,6 @@ export class CustomListRepository {
 
     const sanitized: CustomListCollection = sanitizeCustomListCollection(parsed, markChanged);
 
-    // 若检测到旧版本/损坏数据，则写回修复后的结构，避免后续渲染时出现字段缺失导致崩溃
     if (changed) {
       await this.saveCustomLists(context, sanitized);
     }
@@ -431,7 +586,6 @@ export class CustomListRepository {
     const prefs = await this.getPrefs(context);
     if (!prefs) return;
 
-    // 限制存储的清单数量
     if (collection.lists.length > MAX_LISTS_STORED) {
       collection.lists = collection.lists.slice(0, MAX_LISTS_STORED);
     }
@@ -490,13 +644,13 @@ export class CustomListRepository {
   }
 
   /**
-   * 添加项目到清单
+   * 添加章节
    */
-  async addItem(context: Context, listId: string, item: CustomListItem): Promise<CustomList | undefined> {
+  async addSection(context: Context, listId: string, section: ListSection): Promise<CustomList | undefined> {
     const collection = await this.getCustomLists(context);
     const list = collection.lists.find(l => l.id === listId);
     if (list) {
-      list.items.push(item);
+      list.sections.push(section);
       list.updatedAt = Date.now();
       await this.saveCustomLists(context, collection);
     }
@@ -504,20 +658,24 @@ export class CustomListRepository {
   }
 
   /**
-   * 更新清单项目
+   * 更新章节
    */
-  async updateItem(
-    context: Context,
-    listId: string,
-    itemId: string,
-    updates: Partial<CustomListItem>
-  ): Promise<CustomList | undefined> {
+  async updateSection(context: Context, listId: string, sectionId: string, updates: Partial<ListSection>): Promise<CustomList | undefined> {
     const collection = await this.getCustomLists(context);
     const list = collection.lists.find(l => l.id === listId);
     if (list) {
-      const itemIndex = list.items.findIndex(i => i.id === itemId);
-      if (itemIndex >= 0) {
-        list.items[itemIndex] = mergeItemUpdates(list.items[itemIndex], updates);
+      const sectionIndex = list.sections.findIndex(s => s.id === sectionId);
+      if (sectionIndex >= 0) {
+        const section = list.sections[sectionIndex];
+        list.sections[sectionIndex] = {
+          id: section.id,
+          level: updates.level !== undefined ? updates.level : section.level,
+          title: updates.title !== undefined ? updates.title : section.title,
+          content: updates.content !== undefined ? updates.content : section.content,
+          tables: updates.tables !== undefined ? updates.tables : section.tables,
+          createdAt: section.createdAt,
+          updatedAt: Date.now(),
+        };
         list.updatedAt = Date.now();
         await this.saveCustomLists(context, collection);
       }
@@ -526,13 +684,13 @@ export class CustomListRepository {
   }
 
   /**
-   * 删除清单项目
+   * 删除章节
    */
-  async deleteItem(context: Context, listId: string, itemId: string): Promise<CustomList | undefined> {
+  async deleteSection(context: Context, listId: string, sectionId: string): Promise<CustomList | undefined> {
     const collection = await this.getCustomLists(context);
     const list = collection.lists.find(l => l.id === listId);
     if (list) {
-      list.items = list.items.filter(i => i.id !== itemId);
+      list.sections = list.sections.filter(s => s.id !== sectionId);
       list.updatedAt = Date.now();
       await this.saveCustomLists(context, collection);
     }
@@ -540,39 +698,191 @@ export class CustomListRepository {
   }
 
   /**
-   * 记录复习结果（更新艾宾浩斯记忆数据）
+   * 添加表格到章节
+   */
+  async addTable(context: Context, listId: string, sectionId: string, table: MemoryTable): Promise<CustomList | undefined> {
+    const collection = await this.getCustomLists(context);
+    const list = collection.lists.find(l => l.id === listId);
+    if (list) {
+      const section = list.sections.find(s => s.id === sectionId);
+      if (section) {
+        section.tables.push(table);
+        section.updatedAt = Date.now();
+        list.updatedAt = Date.now();
+        await this.saveCustomLists(context, collection);
+      }
+    }
+    return list;
+  }
+
+  /**
+   * 更新表格
+   */
+  async updateTable(context: Context, listId: string, sectionId: string, tableId: string, updates: Partial<MemoryTable>): Promise<CustomList | undefined> {
+    const collection = await this.getCustomLists(context);
+    const list = collection.lists.find(l => l.id === listId);
+    if (list) {
+      const section = list.sections.find(s => s.id === sectionId);
+      if (section) {
+        const tableIndex = section.tables.findIndex(t => t.id === tableId);
+        if (tableIndex >= 0) {
+          const table = section.tables[tableIndex];
+          section.tables[tableIndex] = {
+            id: table.id,
+            headers: updates.headers !== undefined ? updates.headers : table.headers,
+            rows: updates.rows !== undefined ? updates.rows : table.rows,
+            createdAt: table.createdAt,
+            updatedAt: Date.now(),
+          };
+          section.updatedAt = Date.now();
+          list.updatedAt = Date.now();
+          await this.saveCustomLists(context, collection);
+        }
+      }
+    }
+    return list;
+  }
+
+  /**
+   * 删除表格
+   */
+  async deleteTable(context: Context, listId: string, sectionId: string, tableId: string): Promise<CustomList | undefined> {
+    const collection = await this.getCustomLists(context);
+    const list = collection.lists.find(l => l.id === listId);
+    if (list) {
+      const section = list.sections.find(s => s.id === sectionId);
+      if (section) {
+        section.tables = section.tables.filter(t => t.id !== tableId);
+        section.updatedAt = Date.now();
+        list.updatedAt = Date.now();
+        await this.saveCustomLists(context, collection);
+      }
+    }
+    return list;
+  }
+
+  /**
+   * 添加表格行
+   */
+  async addRow(context: Context, listId: string, sectionId: string, tableId: string, row: MemoryTableRow): Promise<CustomList | undefined> {
+    const collection = await this.getCustomLists(context);
+    const list = collection.lists.find(l => l.id === listId);
+    if (list) {
+      const section = list.sections.find(s => s.id === sectionId);
+      if (section) {
+        const table = section.tables.find(t => t.id === tableId);
+        if (table) {
+          table.rows.push(row);
+          table.updatedAt = Date.now();
+          section.updatedAt = Date.now();
+          list.updatedAt = Date.now();
+          await this.saveCustomLists(context, collection);
+        }
+      }
+    }
+    return list;
+  }
+
+  /**
+   * 更新表格行
+   */
+  async updateRow(context: Context, listId: string, sectionId: string, tableId: string, rowId: string, updates: Partial<MemoryTableRow>): Promise<CustomList | undefined> {
+    const collection = await this.getCustomLists(context);
+    const list = collection.lists.find(l => l.id === listId);
+    if (list) {
+      const section = list.sections.find(s => s.id === sectionId);
+      if (section) {
+        const table = section.tables.find(t => t.id === tableId);
+        if (table) {
+          const rowIndex = table.rows.findIndex(r => r.id === rowId);
+          if (rowIndex >= 0) {
+            const row = table.rows[rowIndex];
+            table.rows[rowIndex] = {
+              id: row.id,
+              cells: updates.cells !== undefined ? updates.cells : row.cells,
+              reviewCount: updates.reviewCount !== undefined ? updates.reviewCount : row.reviewCount,
+              lastReviewAt: updates.lastReviewAt !== undefined ? updates.lastReviewAt : row.lastReviewAt,
+              nextReviewAt: updates.nextReviewAt !== undefined ? updates.nextReviewAt : row.nextReviewAt,
+              easeFactor: updates.easeFactor !== undefined ? updates.easeFactor : row.easeFactor,
+              interval: updates.interval !== undefined ? updates.interval : row.interval,
+              lastGrade: updates.lastGrade !== undefined ? updates.lastGrade : row.lastGrade,
+            };
+            table.updatedAt = Date.now();
+            section.updatedAt = Date.now();
+            list.updatedAt = Date.now();
+            await this.saveCustomLists(context, collection);
+          }
+        }
+      }
+    }
+    return list;
+  }
+
+  /**
+   * 删除表格行
+   */
+  async deleteRow(context: Context, listId: string, sectionId: string, tableId: string, rowId: string): Promise<CustomList | undefined> {
+    const collection = await this.getCustomLists(context);
+    const list = collection.lists.find(l => l.id === listId);
+    if (list) {
+      const section = list.sections.find(s => s.id === sectionId);
+      if (section) {
+        const table = section.tables.find(t => t.id === tableId);
+        if (table) {
+          table.rows = table.rows.filter(r => r.id !== rowId);
+          table.updatedAt = Date.now();
+          section.updatedAt = Date.now();
+          list.updatedAt = Date.now();
+          await this.saveCustomLists(context, collection);
+        }
+      }
+    }
+    return list;
+  }
+
+  /**
+   * 记录复习结果
    */
   async recordReview(
     context: Context,
     listId: string,
-    itemId: string,
+    sectionId: string,
+    tableId: string,
+    rowId: string,
     grade: ReviewGrade
-  ): Promise<CustomListItem | undefined> {
+  ): Promise<MemoryTableRow | undefined> {
     const collection = await this.getCustomLists(context);
     const list = collection.lists.find(l => l.id === listId);
     if (!list) return undefined;
 
-    const itemIndex = list.items.findIndex(i => i.id === itemId);
-    if (itemIndex < 0) return undefined;
+    const section = list.sections.find(s => s.id === sectionId);
+    if (!section) return undefined;
 
-    const updatedItem = calculateNextReview(list.items[itemIndex], grade);
-    list.items[itemIndex] = updatedItem;
+    const table = section.tables.find(t => t.id === tableId);
+    if (!table) return undefined;
+
+    const rowIndex = table.rows.findIndex(r => r.id === rowId);
+    if (rowIndex < 0) return undefined;
+
+    const updatedRow = calculateNextReview(table.rows[rowIndex], grade);
+    table.rows[rowIndex] = updatedRow;
+    table.updatedAt = Date.now();
+    section.updatedAt = Date.now();
     list.updatedAt = Date.now();
     await this.saveCustomLists(context, collection);
-    return updatedItem;
+    return updatedRow;
   }
 
   /**
    * 导出清单为分享数据（可选加密）
    */
   exportListForShare(list: CustomList, password?: string): string {
-    // 创建不含敏感信息的清单副本
     const exportList: CustomList = {
       id: list.id,
       name: list.name,
       description: list.description,
       icon: list.icon,
-      items: list.items,
+      sections: list.sections,
       createdAt: list.createdAt,
       updatedAt: list.updatedAt,
       shareId: undefined,
@@ -596,32 +906,28 @@ export class CustomListRepository {
     const finalJson = JSON.stringify(shareData);
 
     if (password && password.length > 0) {
-      // 加密数据
       const encrypted = encryptData(finalJson, password);
       return `ENC:${encrypted}`;
     }
 
-    // Base64 编码（不加密）
     const base64 = new util.Base64Helper();
     const encoder = new util.TextEncoder();
     return base64.encodeToStringSync(encoder.encodeInto(finalJson));
   }
 
   /**
-   * 导入分享数据（自动检测是否加密）
+   * 导入分享数据
    */
   importShareData(data: string, password?: string): SharedListData | null {
     let jsonData: string = '';
     try {
       if (data.startsWith('ENC:')) {
-        // 加密数据
         if (!password || password.length === 0) {
-          return null; // 需要密码
+          return null;
         }
         const encrypted = data.slice(4);
         jsonData = decryptData(encrypted, password);
       } else {
-        // Base64 编码数据
         const base64 = new util.Base64Helper();
         const decoded = base64.decodeSync(data);
         const decoder = new util.TextDecoder('utf-8');
@@ -658,40 +964,33 @@ export class CustomListRepository {
       checksum: toStringOrEmpty(obj['checksum'] as Object | null | undefined, markChanged),
     };
 
-    // 验证数据完整性
-    const checkData: SharedListData = {
-      version: shareData.version,
-      list: shareData.list,
-      exportedAt: shareData.exportedAt,
-      checksum: '',
-    };
-    const expectedChecksum = calculateChecksum(JSON.stringify(checkData));
-    if (shareData.checksum !== expectedChecksum) {
-      // 校验失败，但仍然允许导入（数据可能被手动编辑）
-      console.warn('CustomListRepository: checksum mismatch');
-    }
-
     return shareData;
   }
 
   /**
-   * 生成分享链接
+   * 生成分享链接（上传Markdown）
    */
   async generateShareLink(context: Context, listId: string, password?: string): Promise<string | null> {
     const list = await this.getList(context, listId);
     if (!list) return null;
 
-    // 导出数据
-    const shareData = this.exportListForShare(list, password);
+    // 导出为Markdown
+    const markdown = listToMarkdown(list);
 
-    // 上传到服务器并返回短链接（支持加密：客户端先加密再上传）
+    // 如果有密码，加密Markdown内容；否则直接上传Markdown原文
+    let shareData: string;
+    if (password && password.length > 0) {
+      shareData = `ENC:${encryptData(markdown, password)}`;
+    } else {
+      shareData = markdown;
+    }
+
     const result = await this.onlineShareRepository.createShare(shareData).then(
       (r) => r,
       () => null,
     );
     if (!result) return null;
 
-    // 更新本地分享信息（shareId 用于标记已分享）
     await this.updateList(context, listId, {
       shareId: result.id || generateShareId(),
       sharePassword: password,
@@ -713,41 +1012,30 @@ export class CustomListRepository {
     const trimmed = String(shareLink ?? '').trim();
     if (!trimmed) return null;
 
-    // 1) 兼容旧格式：refhm://share/<id>?data=...
-    const legacy = trimmed.match(/refhm:\/\/share\/([^?]+)\?data=(.+)/);
-    if (legacy && legacy[2]) {
-      const data = decodeURIComponent(legacy[2]);
-      const shareData = this.importShareData(data, password);
-      if (!shareData) return null;
-
-      return await this.importSharedList(context, shareData);
-    }
-
-    // 2) 新格式：https://<host>/share/<id> 或 refhm://share/<id>
+    // 尝试解析新格式链接
     let shareId: string = '';
     let apiOriginOverride: string = '';
 
     const urlMatch = trimmed.match(/^https?:\/\/([^/]+)(\/.*)?$/i);
     if (urlMatch) {
-      const u = trimmed;
-      const idMatch = u.match(/\/share\/([^/?#]+)/i);
+      const idMatch = trimmed.match(/\/share\/([^/?#]+)/i);
       if (idMatch) {
         shareId = decodeURIComponent(idMatch[1]);
-        const originMatch = u.match(/^(https?:\/\/[^/?#]+)/i);
+        shareId = shareId.replace(/\.(md|markdown)$/i, '');
+        const originMatch = trimmed.match(/^(https?:\/\/[^/?#]+)/i);
         apiOriginOverride = originMatch ? originMatch[1] : '';
       }
     } else {
       const deepMatch = trimmed.match(/refhm:\/\/share\/([^/?#]+)/i);
       if (deepMatch) {
         shareId = decodeURIComponent(deepMatch[1]);
+        shareId = shareId.replace(/\.(md|markdown)$/i, '');
       }
     }
 
     if (!shareId) {
-      // 3) 兼容：直接粘贴分享数据（Base64 或 ENC:...）
-      const asData = this.importShareData(trimmed, password);
-      if (!asData) return null;
-      return await this.importSharedList(context, asData);
+      // 尝试直接解析数据
+      return this.importFromShareData(context, trimmed, password);
     }
 
     const remoteData = await this.onlineShareRepository.fetchShareData(shareId, apiOriginOverride).then(
@@ -756,41 +1044,92 @@ export class CustomListRepository {
     );
     if (!remoteData) return null;
 
-    const shareData = this.importShareData(remoteData, password);
-    if (!shareData) {
+    return this.importFromShareData(context, remoteData, password);
+  }
+
+  /**
+   * 从分享数据导入清单
+   */
+  private async importFromShareData(context: Context, data: string, password?: string): Promise<CustomList | null> {
+    const raw = String(data ?? '').trim();
+    if (!raw) return null;
+
+    // 兼容旧格式：JSON 分享数据（可能是 base64 或 ENC 包裹）
+    const legacyShareData = this.importShareData(raw, password);
+    if (legacyShareData) {
+      return this.importSharedList(context, legacyShareData);
+    }
+
+    let markdown: string = raw;
+    try {
+      if (raw.startsWith('ENC:')) {
+        if (!password || password.length === 0) return null;
+        markdown = decryptData(raw.slice(4), password);
+      } else if (looksLikeBase64Payload(raw)) {
+        const base64 = new util.Base64Helper();
+        const decoded = base64.decodeSync(raw);
+        const decoder = new util.TextDecoder('utf-8');
+        markdown = decoder.decodeToString(decoded);
+      }
+    } catch (_) {
       return null;
     }
 
-    return await this.importSharedList(context, shareData);
+    // 从Markdown解析清单
+    const models = await import('./customListModels');
+    const newList = models.markdownToList(markdown);
+    await this.addList(context, newList);
+    return newList;
   }
 
   private async importSharedList(context: Context, shareData: SharedListData): Promise<CustomList | null> {
-    // 创建新清单（生成新ID避免冲突）
     const now = Date.now();
-    const newItems: Array<CustomListItem> = [];
-    for (const item of shareData.list.items) {
-      newItems.push({
-        id: `item_${now}_${Math.floor(Math.random() * 10000)}_${Math.floor(Math.random() * 1000)}`,
-        title: item.title,
-        content: item.content,
-        answer: item.answer,
+    const newSections: Array<ListSection> = [];
+
+    for (const section of shareData.list.sections) {
+      const newTables: Array<MemoryTable> = [];
+      for (const table of section.tables) {
+        const newRows: Array<MemoryTableRow> = [];
+        for (const row of table.rows) {
+          const newCells: Array<MemoryTableCell> = [];
+          for (const cell of row.cells) {
+            newCells.push({ text: cell.text });
+          }
+          newRows.push({
+            id: generateRowId(),
+            cells: newCells,
+            reviewCount: 0,
+            lastReviewAt: 0,
+            nextReviewAt: now,
+            easeFactor: 2.5,
+            interval: 0,
+          });
+        }
+        newTables.push({
+          id: generateTableId(),
+          headers: table.headers.slice(),
+          rows: newRows,
+          createdAt: now,
+          updatedAt: now,
+        });
+      }
+      newSections.push({
+        id: generateSectionId(),
+        level: section.level,
+        title: section.title,
+        content: section.content,
+        tables: newTables,
         createdAt: now,
         updatedAt: now,
-        reviewCount: 0,
-        lastReviewAt: 0,
-        nextReviewAt: now,
-        easeFactor: 2.5,
-        interval: 0,
-        lastGrade: undefined,
       });
     }
 
     const newList: CustomList = {
-      id: `list_${now}_${Math.floor(Math.random() * 10000)}`,
+      id: generateCustomListId(),
       name: shareData.list.name,
       description: shareData.list.description,
       icon: shareData.list.icon,
-      items: newItems,
+      sections: newSections,
       createdAt: now,
       updatedAt: now,
       shareId: undefined,

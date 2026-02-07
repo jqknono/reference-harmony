@@ -1,45 +1,71 @@
-// 自定义清单数据模型
+// 自定义清单数据模型 - 记忆表格模式
 
 /**
- * 自定义清单项目（单个卡片/知识点）
+ * 表格单元格
  */
-export interface CustomListItem {
+export interface MemoryTableCell {
+  text: string;
+}
+
+/**
+ * 表格行
+ */
+export interface MemoryTableRow {
   id: string;
-  title: string;
-  content: string; // 正面内容
-  answer?: string; // 背面内容（用于记忆卡片）
-  createdAt: number;
-  updatedAt: number;
-  // 艾宾浩斯记忆相关
-  reviewCount: number; // 复习次数
-  lastReviewAt: number; // 上次复习时间
-  nextReviewAt: number; // 下次复习时间
-  easeFactor: number; // 难度系数 (默认 2.5)
-  interval: number; // 当前间隔（天）
-  // 复习结果：0=忘记，1=困难，2=一般，3=简单
+  cells: Array<MemoryTableCell>;
+  // 艾宾浩斯记忆相关（每行独立追踪）
+  reviewCount: number;
+  lastReviewAt: number;
+  nextReviewAt: number;
+  easeFactor: number;
+  interval: number;
   lastGrade?: number;
 }
 
 /**
- * 自定义清单
+ * 记忆表格
+ */
+export interface MemoryTable {
+  id: string;
+  headers: Array<string>; // 表头
+  rows: Array<MemoryTableRow>;
+  createdAt: number;
+  updatedAt: number;
+}
+
+/**
+ * 清单章节（对应markdown的header）
+ */
+export interface ListSection {
+  id: string;
+  level: number; // 1-6 对应 # 到 ######
+  title: string;
+  content: string; // 章节描述文本
+  tables: Array<MemoryTable>; // 该章节下的表格
+  createdAt: number;
+  updatedAt: number;
+}
+
+/**
+ * 自定义清单（记忆表格模式）
  */
 export interface CustomList {
   id: string;
   name: string;
   description?: string;
   icon?: string;
-  items: Array<CustomListItem>;
+  sections: Array<ListSection>;
   createdAt: number;
   updatedAt: number;
   // 分享相关
-  shareId?: string; // 分享ID（用于网络分享）
-  sharePassword?: string; // 分享密码（加密分享）
+  shareId?: string;
+  sharePassword?: string;
   isShared: boolean;
   sharedAt?: number;
   // 日历提醒
   calendarEventId?: string;
   reminderEnabled: boolean;
-  reminderTime?: number; // 每日提醒时间（分钟数，如 480 = 8:00）
+  reminderTime?: number;
 }
 
 /**
@@ -52,13 +78,6 @@ export interface CustomListCollection {
 
 /**
  * 艾宾浩斯记忆曲线间隔（天数）
- * 第1次复习：1天后
- * 第2次复习：2天后
- * 第3次复习：4天后
- * 第4次复习：7天后
- * 第5次复习：15天后
- * 第6次复习：30天后
- * 之后按难度系数计算
  */
 export const EBBINGHAUS_INTERVALS: ReadonlyArray<number> = [1, 2, 4, 7, 15, 30];
 
@@ -78,18 +97,18 @@ export interface SharedListData {
   version: number;
   list: CustomList;
   exportedAt: number;
-  checksum: string; // 用于验证数据完整性
+  checksum: string;
 }
 
 /**
  * 待复习项目统计
  */
 export interface ReviewStats {
-  dueCount: number; // 今日待复习数量
-  newCount: number; // 新卡片数量（未复习）
-  reviewedToday: number; // 今日已复习数量
-  totalItems: number; // 总卡片数
-  nextReviewAt: number; // 最近的下次复习时间
+  dueCount: number;
+  newCount: number;
+  reviewedToday: number;
+  totalRows: number;
+  nextReviewAt: number;
 }
 
 /**
@@ -103,17 +122,26 @@ export function createEmptyCustomListCollection(): CustomListCollection {
 }
 
 /**
- * 生成自定义清单ID
+ * 生成ID
  */
-export function generateCustomListId(): string {
-  return `list_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
+export function generateId(prefix: string): string {
+  return `${prefix}_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
 }
 
-/**
- * 生成自定义清单项目ID
- */
-export function generateCustomListItemId(): string {
-  return `item_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
+export function generateCustomListId(): string {
+  return generateId('list');
+}
+
+export function generateSectionId(): string {
+  return generateId('sec');
+}
+
+export function generateTableId(): string {
+  return generateId('tbl');
+}
+
+export function generateRowId(): string {
+  return generateId('row');
 }
 
 /**
@@ -129,6 +157,56 @@ export function generateShareId(): string {
 }
 
 /**
+ * 创建新的表格行
+ */
+export function createTableRow(cells: Array<string>): MemoryTableRow {
+  const now = Date.now();
+  const cellObjs: Array<MemoryTableCell> = [];
+  for (const text of cells) {
+    cellObjs.push({ text });
+  }
+  return {
+    id: generateRowId(),
+    cells: cellObjs,
+    reviewCount: 0,
+    lastReviewAt: 0,
+    nextReviewAt: now,
+    easeFactor: 2.5,
+    interval: 0,
+  };
+}
+
+/**
+ * 创建新的表格
+ */
+export function createMemoryTable(headers: Array<string>): MemoryTable {
+  const now = Date.now();
+  return {
+    id: generateTableId(),
+    headers: headers.length > 0 ? headers : ['', ''],
+    rows: [],
+    createdAt: now,
+    updatedAt: now,
+  };
+}
+
+/**
+ * 创建新的章节
+ */
+export function createListSection(title: string, level: number = 2): ListSection {
+  const now = Date.now();
+  return {
+    id: generateSectionId(),
+    level: Math.max(1, Math.min(6, level)),
+    title,
+    content: '',
+    tables: [],
+    createdAt: now,
+    updatedAt: now,
+  };
+}
+
+/**
  * 创建新的自定义清单
  */
 export function createCustomList(name: string, description?: string): CustomList {
@@ -137,7 +215,7 @@ export function createCustomList(name: string, description?: string): CustomList
     id: generateCustomListId(),
     name,
     description,
-    items: [],
+    sections: [],
     createdAt: now,
     updatedAt: now,
     isShared: false,
@@ -146,130 +224,376 @@ export function createCustomList(name: string, description?: string): CustomList
 }
 
 /**
- * 创建新的自定义清单项目
- */
-export function createCustomListItem(title: string, content: string, answer?: string): CustomListItem {
-  const now = Date.now();
-  return {
-    id: generateCustomListItemId(),
-    title,
-    content,
-    answer,
-    createdAt: now,
-    updatedAt: now,
-    reviewCount: 0,
-    lastReviewAt: 0,
-    nextReviewAt: now, // 立即可复习
-    easeFactor: 2.5,
-    interval: 0,
-  };
-}
-
-/**
  * 根据艾宾浩斯记忆曲线计算下次复习时间
- * @param item 清单项目
- * @param grade 复习评级 (0-3)
- * @returns 更新后的项目
  */
-export function calculateNextReview(item: CustomListItem, grade: ReviewGrade): CustomListItem {
+export function calculateNextReview(row: MemoryTableRow, grade: ReviewGrade): MemoryTableRow {
   const now = Date.now();
   const dayMs = 24 * 60 * 60 * 1000;
-  
+
   let newInterval: number;
-  let newEaseFactor = item.easeFactor;
-  
+  let newEaseFactor = row.easeFactor;
+
   if (grade === REVIEW_GRADE_FORGOT) {
-    // 忘记了，重置间隔
     newInterval = 1;
-    newEaseFactor = Math.max(1.3, item.easeFactor - 0.2);
-  } else if (item.reviewCount < EBBINGHAUS_INTERVALS.length) {
-    // 使用艾宾浩斯预设间隔
-    newInterval = EBBINGHAUS_INTERVALS[item.reviewCount];
-    
-    // 根据评级微调
+    newEaseFactor = Math.max(1.3, row.easeFactor - 0.2);
+  } else if (row.reviewCount < EBBINGHAUS_INTERVALS.length) {
+    newInterval = EBBINGHAUS_INTERVALS[row.reviewCount];
+
     if (grade === REVIEW_GRADE_HARD) {
       newInterval = Math.max(1, Math.floor(newInterval * 0.8));
-      newEaseFactor = Math.max(1.3, item.easeFactor - 0.15);
+      newEaseFactor = Math.max(1.3, row.easeFactor - 0.15);
     } else if (grade === REVIEW_GRADE_EASY) {
       newInterval = Math.floor(newInterval * 1.3);
-      newEaseFactor = Math.min(3.0, item.easeFactor + 0.15);
+      newEaseFactor = Math.min(3.0, row.easeFactor + 0.15);
     }
   } else {
-    // 使用 SM-2 算法计算
-    newInterval = Math.round(item.interval * item.easeFactor);
-    
-    // 根据评级调整难度系数
-    newEaseFactor = item.easeFactor + (0.1 - (3 - grade) * (0.08 + (3 - grade) * 0.02));
+    newInterval = Math.round(row.interval * row.easeFactor);
+
+    newEaseFactor = row.easeFactor + (0.1 - (3 - grade) * (0.08 + (3 - grade) * 0.02));
     newEaseFactor = Math.max(1.3, Math.min(3.0, newEaseFactor));
-    
+
     if (grade === REVIEW_GRADE_HARD) {
       newInterval = Math.max(1, Math.floor(newInterval * 0.8));
     } else if (grade === REVIEW_GRADE_EASY) {
       newInterval = Math.floor(newInterval * 1.3);
     }
   }
-  
-  const result: CustomListItem = {
-    id: item.id,
-    title: item.title,
-    content: item.content,
-    answer: item.answer,
-    createdAt: item.createdAt,
-    updatedAt: now,
-    reviewCount: item.reviewCount + 1,
+
+  const newCells: Array<MemoryTableCell> = [];
+  for (const cell of row.cells) {
+    newCells.push({ text: cell.text });
+  }
+
+  return {
+    id: row.id,
+    cells: newCells,
+    reviewCount: row.reviewCount + 1,
     lastReviewAt: now,
     nextReviewAt: now + newInterval * dayMs,
     easeFactor: newEaseFactor,
     interval: newInterval,
     lastGrade: grade,
   };
-  return result;
 }
 
 /**
- * 获取待复习的项目
+ * 获取所有待复习的行
  */
-export function getDueItems(items: Array<CustomListItem>): Array<CustomListItem> {
+export interface DueRowItem {
+  sectionId: string;
+  tableId: string;
+  row: MemoryTableRow;
+}
+
+export function getDueRows(list: CustomList): Array<DueRowItem> {
   const now = Date.now();
-  return items.filter(item => item.nextReviewAt <= now);
+  const result: Array<DueRowItem> = [];
+
+  for (const section of list.sections) {
+    for (const table of section.tables) {
+      for (const row of table.rows) {
+        if (row.nextReviewAt <= now) {
+          result.push({ sectionId: section.id, tableId: table.id, row: row });
+        }
+      }
+    }
+  }
+
+  return result;
 }
 
 /**
  * 计算复习统计
  */
-export function calculateReviewStats(items: Array<CustomListItem>): ReviewStats {
+export function calculateReviewStats(list: CustomList): ReviewStats {
   const now = Date.now();
   const todayStart = new Date().setHours(0, 0, 0, 0);
   const todayEnd = todayStart + 24 * 60 * 60 * 1000;
-  
+
   let dueCount = 0;
   let newCount = 0;
   let reviewedToday = 0;
+  let totalRows = 0;
   let nextReviewAt = Number.MAX_SAFE_INTEGER;
-  
-  for (const item of items) {
-    if (item.reviewCount === 0) {
-      newCount++;
-    }
-    
-    if (item.nextReviewAt <= now) {
-      dueCount++;
-    } else if (item.nextReviewAt < nextReviewAt) {
-      nextReviewAt = item.nextReviewAt;
-    }
-    
-    if (item.lastReviewAt >= todayStart && item.lastReviewAt < todayEnd) {
-      reviewedToday++;
+
+  for (const section of list.sections) {
+    for (const table of section.tables) {
+      for (const row of table.rows) {
+        totalRows++;
+
+        if (row.reviewCount === 0) {
+          newCount++;
+        }
+
+        if (row.nextReviewAt <= now) {
+          dueCount++;
+        } else if (row.nextReviewAt < nextReviewAt) {
+          nextReviewAt = row.nextReviewAt;
+        }
+
+        if (row.lastReviewAt >= todayStart && row.lastReviewAt < todayEnd) {
+          reviewedToday++;
+        }
+      }
     }
   }
-  
+
   return {
     dueCount,
     newCount,
     reviewedToday,
-    totalItems: items.length,
+    totalRows,
     nextReviewAt: nextReviewAt === Number.MAX_SAFE_INTEGER ? 0 : nextReviewAt,
   };
+}
+
+/**
+ * 将清单转换为Markdown格式
+ */
+export function listToMarkdown(list: CustomList): string {
+  const lines: Array<string> = [];
+
+  // 标题
+  lines.push(`# ${list.name}`);
+  lines.push('');
+
+  // 描述
+  if (list.description) {
+    lines.push(list.description);
+    lines.push('');
+  }
+
+  // 章节
+  for (const section of list.sections) {
+    // 章节标题
+    const prefix = '#'.repeat(section.level);
+    lines.push(`${prefix} ${section.title}`);
+    lines.push('');
+
+    // 章节描述
+    if (section.content) {
+      lines.push(section.content);
+      lines.push('');
+    }
+
+    // 表格
+    for (const table of section.tables) {
+      if (table.headers.length === 0) continue;
+
+      // 表头
+      lines.push('| ' + table.headers.join(' | ') + ' |');
+
+      // 分隔符
+      const separators: Array<string> = [];
+      for (let i = 0; i < table.headers.length; i++) {
+        separators.push('---');
+      }
+      lines.push('| ' + separators.join(' | ') + ' |');
+
+      // 数据行
+      for (const row of table.rows) {
+        const cells: Array<string> = [];
+        for (let i = 0; i < table.headers.length; i++) {
+          const cell = row.cells[i];
+          // 转义 | 字符
+          const text = cell ? cell.text.replace(/\|/g, '\\|').replace(/\n/g, '<br>') : '';
+          cells.push(text);
+        }
+        lines.push('| ' + cells.join(' | ') + ' |');
+      }
+
+      lines.push('');
+    }
+  }
+
+  return lines.join('\n');
+}
+
+/**
+ * 从Markdown解析清单
+ */
+export function markdownToList(markdown: string, existingId?: string): CustomList {
+  const now = Date.now();
+  const lines = markdown.replace(/\r\n/g, '\n').split('\n');
+
+  let name = '';
+  let description = '';
+  const sections: Array<ListSection> = [];
+  let currentSection: ListSection | null = null;
+  let currentTable: MemoryTable | null = null;
+  let inTable = false;
+  let tableHeaderParsed = false;
+
+  const finalizeTable = (): void => {
+    if (currentTable && currentSection) {
+      currentSection.tables.push(currentTable);
+      currentTable = null;
+    }
+    inTable = false;
+    tableHeaderParsed = false;
+  };
+
+  const finalizeSection = (): void => {
+    finalizeTable();
+    if (currentSection) {
+      sections.push(currentSection);
+      currentSection = null;
+    }
+  };
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const trimmed = line.trim();
+
+    // 检测标题
+    const headingMatch = /^(#{1,6})\s+(.+)$/.exec(trimmed);
+    if (headingMatch) {
+      const level = headingMatch[1].length;
+      const title = headingMatch[2].trim();
+
+      if (level === 1 && !name) {
+        // 文档标题
+        name = title;
+      } else {
+        // 章节标题
+        finalizeSection();
+        currentSection = createListSection(title, level);
+      }
+      continue;
+    }
+
+    // 检测表格
+    if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      const cells = splitTableLine(trimmed);
+
+      if (!inTable) {
+        // 可能是表头
+        inTable = true;
+        tableHeaderParsed = false;
+        currentTable = createMemoryTable(cells);
+        continue;
+      }
+
+      if (!tableHeaderParsed) {
+        // 分隔符行
+        if (isTableSeparator(trimmed)) {
+          tableHeaderParsed = true;
+          continue;
+        } else {
+          // 不是有效表格
+          finalizeTable();
+          continue;
+        }
+      }
+
+      // 数据行
+      if (currentTable) {
+        const row = createTableRow(cells);
+        currentTable.rows.push(row);
+      }
+      continue;
+    }
+
+    // 非表格行
+    if (inTable) {
+      finalizeTable();
+    }
+
+    // 空行
+    if (!trimmed) {
+      continue;
+    }
+
+    // 普通文本
+    if (!name) {
+      name = trimmed;
+    } else if (!currentSection) {
+      // 文档描述
+      if (description) {
+        description += '\n' + trimmed;
+      } else {
+        description = trimmed;
+      }
+    } else {
+      // 章节内容
+      if (currentSection.content) {
+        currentSection.content += '\n' + trimmed;
+      } else {
+        currentSection.content = trimmed;
+      }
+    }
+  }
+
+  finalizeSection();
+
+  return {
+    id: existingId || generateCustomListId(),
+    name: name || 'Untitled',
+    description: description || undefined,
+    sections,
+    createdAt: now,
+    updatedAt: now,
+    isShared: false,
+    reminderEnabled: false,
+  };
+}
+
+/**
+ * 分割表格行
+ */
+function splitTableLine(line: string): Array<string> {
+  let s = line.trim();
+  if (s.startsWith('|')) s = s.slice(1);
+  if (s.endsWith('|')) s = s.slice(0, -1);
+
+  const cells: Array<string> = [];
+  let current = '';
+  let escaped = false;
+
+  for (let i = 0; i < s.length; i++) {
+    const ch = s.charAt(i);
+
+    if (escaped) {
+      current += ch;
+      escaped = false;
+      continue;
+    }
+
+    if (ch === '\\') {
+      escaped = true;
+      continue;
+    }
+
+    if (ch === '|') {
+      cells.push(current.trim().replace(/<br>/gi, '\n'));
+      current = '';
+      continue;
+    }
+
+    current += ch;
+  }
+
+  cells.push(current.trim().replace(/<br>/gi, '\n'));
+  return cells;
+}
+
+/**
+ * 检测是否为表格分隔符行
+ */
+function isTableSeparator(line: string): boolean {
+  const trimmed = line.trim();
+  if (!trimmed.includes('|')) return false;
+
+  let s = trimmed;
+  if (s.startsWith('|')) s = s.slice(1);
+  if (s.endsWith('|')) s = s.slice(0, -1);
+
+  const cells = s.split('|');
+  for (const cell of cells) {
+    const c = cell.trim();
+    if (!/^:?-{3,}:?$/.test(c)) return false;
+  }
+  return cells.length > 0;
 }
 
 /**
@@ -280,7 +604,7 @@ export function calculateChecksum(data: string): string {
   for (let i = 0; i < data.length; i++) {
     const char = data.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // 转换为32位整数
+    hash = hash & hash;
   }
   return Math.abs(hash).toString(16).padStart(8, '0');
 }

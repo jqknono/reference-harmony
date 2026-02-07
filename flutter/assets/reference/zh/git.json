@@ -1,0 +1,682 @@
+{
+  "id": "git",
+  "name": "Git 备忘清单",
+  "title": "本备忘单总结了常用的 [Git](https://git-scm.com/) 命令行指令，以供快速参考。",
+  "icon": "reference/icons/zh/git.svg",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "Commit",
+      "startIndex": 105
+    },
+    {
+      "id": "s3",
+      "title": "Git Submodule 子模块",
+      "startIndex": 131
+    },
+    {
+      "id": "s4",
+      "title": "Config 设置",
+      "startIndex": 145
+    },
+    {
+      "id": "s5",
+      "title": "Git 技巧",
+      "startIndex": 160
+    },
+    {
+      "id": "s6",
+      "title": "统计查询",
+      "startIndex": 232
+    },
+    {
+      "id": "s7",
+      "title": "Conventional Commmits",
+      "startIndex": 246
+    },
+    {
+      "id": "s8",
+      "title": "patch 补丁的使用",
+      "startIndex": 249
+    },
+    {
+      "id": "s9",
+      "title": "另见",
+      "startIndex": 257
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "body": "本备忘单总结了常用的 [Git](https://git-scm.com/) 命令行指令，以供快速参考。"
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "创建存储库",
+      "body": "创建一个新的本地存储库\n\n```shell\n$ git init [项目名称]\n```\n\n克隆存储库(代码仓库)\n\n```shell\n$ git clone <git_url>\n```\n\n将存储库克隆到指定目录\n\n```shell\n$ git clone <git_url> 指定目录\n```\n\n将存储库克隆到指定目录，并指定分支\n\n```shell\n$ git clone <git_url> -b <分支名称> 指定目录\n```"
+    },
+    {
+      "id": "s1-9",
+      "sectionId": "s1",
+      "title": "%E5%81%9A%E5%87%BA%E6%94%B9%E5%8F%98",
+      "body": "%E5%9C%A8%E5%B7%A5%E4%BD%9C%E7%9B%AE%E5%BD%95%E4%B8%AD**%E6%98%BE%E7%A4%BA**%E4%BF%AE%E6%94%B9%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E4%B8%BA%E6%82%A8%E7%9A%84%E4%B8%8B%E4%B8%80%E6%AC%A1%E6%8F%90%E4%BA%A4%E6%9A%82%E5%AD%98%0A%0A%60%60%60shell%0A%24%20git%20status%0A%60%60%60%0A%0A%E6%9A%82%E5%AD%98%E6%96%87%E4%BB%B6%EF%BC%8C%E5%87%86%E5%A4%87%E6%8F%90%E4%BA%A4%0A%0A%60%60%60shell%0A%24%20git%20add%20%5Bfile%5D%0A%60%60%60%0A%0A%E6%9A%82%E5%AD%98**%E6%89%80%E6%9C%89**%E6%9B%B4%E6%94%B9%E7%9A%84%E6%96%87%E4%BB%B6%EF%BC%8C%E5%87%86%E5%A4%87%E6%8F%90%E4%BA%A4%0A%0A%60%60%60shell%0A%24%20git%20add%20.%0A%60%60%60%0A%0A%E5%B0%86%E6%89%80%E6%9C%89%E6%9A%82%E5%AD%98%E6%96%87%E4%BB%B6%E6%8F%90%E4%BA%A4%E5%88%B0%E7%89%88%E6%9C%AC%E5%8C%96%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%0A%0A%60%60%60shell%0A%24%20git%20commit%20-m%20%22commit%20message%22%0A%60%60%60%0A%0A%E5%B0%86%E6%89%80%E6%9C%89%E8%B7%9F%E8%B8%AA%E7%9A%84%E6%96%87%E4%BB%B6%E6%8F%90%E4%BA%A4%E5%88%B0%E7%89%88%E6%9C%AC%E5%8C%96%E5%8E%86%E5%8F%B2%E8%AE%B0%E5%BD%95%0A%0A%60%60%60shell%0A%24%20git%20commit%20-am%20%22commit%20message%22%0A%60%60%60%0A%0A%E5%8F%96%E6%B6%88%E6%9A%82%E5%AD%98%E6%96%87%E4%BB%B6%EF%BC%8C%E4%BF%9D%E7%95%99%E6%96%87%E4%BB%B6%E6%9B%B4%E6%94%B9%0A%0A%60%60%60shell%0A%24%20git%20reset%20%5Bfile%5D%0A%60%60%60%0A%0A%E5%B0%86%E6%89%80%E6%9C%89%E5%86%85%E5%AE%B9%E6%81%A2%E5%A4%8D%E5%88%B0%E6%9C%80%E5%90%8E%E4%B8%80%E6%AC%A1%E6%8F%90%E4%BA%A4%0A%0A%60%60%60shell%0A%24%20git%20reset%20--hard%0A%60%60%60%0A%0A%E5%B7%B2%E6%9B%B4%E6%94%B9%E4%BD%86%E6%9C%AA%E6%9A%82%E5%AD%98%E5%86%85%E5%AE%B9%E7%9A%84%E5%B7%AE%E5%BC%82%0A%0A%60%60%60shell%0A%24%20git%20diff%0A%60%60%60%0A%0A%E5%B7%B2%20commited%20%E4%BD%86%E5%B0%9A%E6%9C%AA%E6%8F%90%E4%BA%A4%E7%9A%84%E5%86%85%E5%AE%B9%E7%9A%84%E5%B7%AE%E5%BC%82%0A%0A%60%60%60shell%0A%24%20git%20diff%20--staged%0A%60%60%60%0A%0A%E5%9C%A8%E6%8C%87%E5%AE%9A%E5%88%86%E6%94%AF%E4%B9%8B%E5%89%8D%E5%BA%94%E7%94%A8%E5%BD%93%E5%89%8D%E5%88%86%E6%94%AF%E7%9A%84%E4%BB%BB%E4%BD%95%E6%8F%90%E4%BA%A4%0A%0A%60%60%60shell%0A%24%20git%20rebase%20%5Bbranch%5D%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-29",
+      "sectionId": "s1",
+      "title": "%E9%85%8D%E7%BD%AE",
+      "body": "%E8%AE%BE%E7%BD%AE%E5%B0%86%E9%99%84%E5%8A%A0%E5%88%B0%E6%82%A8%E7%9A%84%E6%8F%90%E4%BA%A4%E5%92%8C%E6%A0%87%E7%AD%BE%E7%9A%84%E5%90%8D%E7%A7%B0%0A%0A%60%60%60shell%0A%24%20git%20config%20--global%20user.name%20%22name%22%0A%60%60%60%0A%0A%E8%AE%BE%E7%BD%AE%E5%B0%86%E9%99%84%E5%8A%A0%E5%88%B0%E6%82%A8%E7%9A%84%E6%8F%90%E4%BA%A4%E5%92%8C%E6%A0%87%E7%AD%BE%20tags%20%E7%9A%84**%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E5%9C%B0%E5%9D%80**%0A%0A%60%60%60shell%0A%24%20git%20config%20--global%20user.email%20%22email%22%0A%60%60%60%0A%0A%E5%90%AF%E7%94%A8%20Git%20%E8%BE%93%E5%87%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9D%80%E8%89%B2%0A%0A%60%60%60shell%0A%24%20git%20config%20--global%20color.ui%20auto%0A%60%60%60%0A%0A%E5%9C%A8%E6%96%87%E6%9C%AC%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E7%BC%96%E8%BE%91%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%0A%0A%60%60%60shell%0A%24%20git%20config%20--global%20--edit%0A%60%60%60%0A%0A%E6%98%BE%E7%A4%BA%E6%9C%AC%E5%9C%B0%20%60repo%60%20%E9%85%8D%E7%BD%AE%E8%AE%BE%E7%BD%AE%0A%0A%60%60%60shell%0A%24%20git%20config%20--list%0A%60%60%60%0A%0A%E5%88%A0%E9%99%A4%E5%85%A8%E5%B1%80%E8%AE%BE%E7%BD%AE%0A%0A%60%60%60bash%0A%24%20git%20config%20--global%20--unset%20%3Centry-name%3E%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s1-41",
+      "sectionId": "s1",
+      "title": "使用分支",
+      "body": "列出所有本地分支\n\n```shell\n$ git branch\n```\n\n列出所有分支，本地和远程\n\n```shell\n$ git branch -av\n```\n\n切换到 `my_branch`，并更新工作目录\n\n```shell\n$ git checkout my_branch\n```\n\n创建并切换到新分支`new_branch`\n\n```shell\n$ git checkout -b new_branch\n```\n\n删除名为 `my_branch` 的分支\n\n```shell\n$ git branch -d my_branch\n```\n\n删除本地存在远程不存在的分支\n\n```shell\n$ git remote prune origin\n```\n\n将分支 `A` 合并到分支 `B`\n\n```shell\n$ git checkout branchB\n$ git merge branchA\n```\n\n标记当前提交\n\n```shell\n$ git tag my_tag\n```\n\n从远程分支中创建并切换到本地分支\n\n```shell\n$ git checkout -b <branch-name> origin/<branch-name>\n```"
+    },
+    {
+      "id": "s1-59",
+      "sectionId": "s1",
+      "title": "临时提交",
+      "body": "```shell\n# 保存已修改和分阶段的更改\n$ git stash\n# 列出隐藏文件更改的堆栈顺序\n$ git stash list\n# 从存储堆栈顶部编写工作\n$ git stash pop\n# 丢弃存储堆栈顶部的更改\n$ git stash drop\n# 回到某个 stash 的状态\n$ git stash apply <stash@{n}>\n# 删除所有的 stash\n$ git stash clear\n```"
+    },
+    {
+      "id": "s1-60",
+      "sectionId": "s1",
+      "title": "观察你的存储库",
+      "body": "显示当前活动分支的提交历史\n\n```shell\n$ git log\n```\n\n显示 branchA 上不在 branchB 上的提交\n\n```shell\n$ git log branchB..branchA\n```\n\n显示更改文件的提交，即使跨重命名\n\n```shell\n$ git log --follow [file]\n```\n\n显示 branchA 中的内容与 branchB 中的内容的差异\n\n```shell\n$ git diff branchB...branchA\n```\n\n以人类可读的格式显示 Git 中的任何对象\n\n```shell\n$ git show [SHA]\n```"
+    },
+    {
+      "id": "s1-70",
+      "sectionId": "s1",
+      "title": "忽略文件 .gitignore",
+      "body": "文件 `.gitignore` 指定了 `Git` 应该忽略的 **未跟踪的** 文件\n\n:- | :-\n:- | :-\n行首 `#` | 全行注释，不支持行尾类注释 _(转义 `\\#`)_\n行首 **`!`** | 否定模式 _(转义 `\\!`)_\n`**` | 匹配任意路径\n`*` | 匹配任意多个字符\n`?` | 匹配任意一个字符\n`doc/**` | 匹配 `doc` 文件夹下的全部内容\n`doc/**/a` | 匹配任意深度路径下的 `a` 文件或文件夹\n`/` | 表示路径分隔符，不区分操作系统\n`/` 结尾 | 仅会匹配文件夹，否则会匹配文件和文件夹\n空行 | 不匹配任何文件\n行尾空格 | 默认被忽略，可使用`\\`进行转义\n行首空格 | 被正常处理，不会被忽略\n\n当前 `.gitignore` 文件定义规则的优先级高于上级路径 `.gitignore` 定义规则的优先级；后定义的规则优先级高于前面定义规则的优先级\n\n```gitignore showLineNumbers\n# 忽略当前目录logs文件夹下的全部内容\n/logs/\n/logs/*\n/logs/**\n# 上述几条规则等效\n\n# 忽略 Mac 系统文件，包括任意子路径下的同名文件（夹）\n.DS_store\n\n# 忽略 node_modules 文件夹，包括任意子路径下的同名文件夹\nnode_modules/\n\n# 忽略任意子路径下build、target文件夹，\n# 但不忽略src/main、src/test下的build、target文件夹\nbuild/\n!**/src/main/**/build/\n!**/src/test/**/build/\ntarget/\n!**/src/main/**/target/\n!**/src/test/**/target/\n\n# 使用 ! 重新包含指定文件（夹）\n!logs/.gitkeep\n```"
+    },
+    {
+      "id": "s1-74",
+      "sectionId": "s1",
+      "title": "重构文件名",
+      "body": "```bash\n# 从工作目录中删除文件并暂存删除\ngit rm <filename>\n\n# 从版本控制中删除文件但在本地保留文件\ngit rm --cached <filename>\n\n# 更改文件名并准备提交\ngit mv <filename-orig> <filename-renamed>\n```"
+    },
+    {
+      "id": "s1-75",
+      "sectionId": "s1",
+      "title": "同步",
+      "body": "从该 Git 远程获取所有分支\n\n```shell\n$ git fetch [alias]\n```\n\n将远程分支合并到当前分支以使其保持最新状态\n\n```shell\n$ git merge [alias]/[branch]\n# 没有快进\n$ git merge --no-ff [alias]/[branch]\n# 仅快进\n$ git merge --ff-only [alias]/[branch]\n```\n\n将本地分支提交传输到远程存储库分支\n\n```shell\n$ git push [alias] [branch]\n```\n\n从跟踪远程分支获取并合并任何提交\n\n```shell\n$ git pull\n```\n\n将另一个分支的一个特定提交合并到当前分支\n\n```shell\n$ git cherry-pick [commit_id]\n```"
+    },
+    {
+      "id": "s1-85",
+      "sectionId": "s1",
+      "title": "远程",
+      "body": "添加一个 git URL 作为别名\n\n```shell\n$ git remote add [alias] [url]\n```\n\n显示您设置的远程存储库的名称\n\n```shell\n$ git remote\n```\n\n显示远程存储库的名称和 URL\n\n```shell\n$ git remote -v\n```\n\n删除远程存储库\n\n```shell\n$ git remote rm [remote repo name]\n```\n\n更改 git repo 的 URL\n\n```shell\n$ git remote set-url origin [git_url]\n```"
+    },
+    {
+      "id": "s1-95",
+      "sectionId": "s1",
+      "title": "跟踪路径更改",
+      "body": "从项目中删除文件并暂存删除以进行提交\n\n```shell\n$ git rm [file]\n```\n\n更改现有文件路径并暂存移动\n\n```shell\n$ git mv [existing-path] [new-path]\n```\n\n显示所有提交日志，并指示任何移动的路径\n\n```shell\n$ git log --stat -M\n```"
+    },
+    {
+      "id": "s1-101",
+      "sectionId": "s1",
+      "title": ".gitattributes",
+      "body": "```ini\n# 设置默认行为，以防人们没有设置 core.autocrlf\n* text=auto\n# 明确声明您希望始终规范化并在结帐时\n# 转换为本机行结尾的文本文件\n*.c text\n*.h text\n# 声明在结帐时始终以 CRLF 行结尾的文件\n*.sln text eol=crlf\n# 表示所有真正二进制且不应修改的文件\n*.png binary\n*.jpg binary\n```\n\n[计入存储库语言](https://github.com/github/linguist/blob/master/docs/overrides.md#using-gitattributes)\n\n```ini\n# 标记或取消标记要根据存储库的语言统计数据而\n# 忽略或默认隐藏差异的路径\nsearch/index.json linguist-generated=true\n# 以下属性统计 SQL 文件\n*.sql linguist-detectable=true\n# 从统计信息中排除\ndocs/formatter.rb linguist-documentation=false\n# 将它们从统计信息中排除\nspecial-vendored-path/* linguist-vendored\n# 将所有 .rb 文件检测为 Java 文件\n*.rb linguist-language=Java\n```"
+    },
+    {
+      "id": "s1-104",
+      "sectionId": "s1",
+      "title": "git 配置 ssh 代理",
+      "body": "```bash\n$ cat ~/.ssh/config\nHost gitlab.com\n# 直接使用 sh**socks 提供的 socks5 代理端口\nProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p\n\nHost github.com\nProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p\n```"
+    },
+    {
+      "id": "s2-105",
+      "sectionId": "s2",
+      "title": "%E6%94%B9%E5%86%99%E5%8E%86%E5%8F%B2",
+      "body": "%E9%87%8D%E5%86%99%E6%9C%80%E5%90%8E%E7%9A%84%E6%8F%90%E4%BA%A4%E6%B6%88%E6%81%AF%0A%0A%60%60%60shell%0A%24%20git%20commit%20--amend%20-m%20%22new%20message%22%0A%60%60%60%0A%0A%E4%BF%AE%E6%94%B9%E6%9C%80%E6%96%B0%E7%9A%84%E6%8F%90%E4%BA%A4%E8%80%8C%E4%B8%8D%E6%9B%B4%E6%94%B9%E6%8F%90%E4%BA%A4%E6%B6%88%E6%81%AF%0A%0A%60%60%60shell%0A%24%20git%20commit%20--amend%20--no-edit%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-109",
+      "sectionId": "s2",
+      "title": "在 commit log 中显示 GPG 签名",
+      "body": "```bash\n$ git log --show-signature\n```"
+    },
+    {
+      "id": "s2-110",
+      "sectionId": "s2",
+      "title": "修改远程 Commit 记录",
+      "body": "```shell\n$ git rebase -i HEAD~3\n# 表示要修改当前版本的倒数第三次状态\n# 将要更改的记录行首单词 pick 改为 edit\npick 96dc3f9 提交 commit 描述内容 1\npick f1cce8a 提交 commit 描述内容 2\npick 6293516 提交 commit 描述内容 3\n# Rebase eeb03a4..6293516 onto eeb03a4\n#                     (3 commands)\n#\n# Commands:\n# p, pick = 使用提交\n# r, reword = 使用提交，但编辑提交消息\n# e, edit = 使用提交，但停止修改\n# s, squash = 使用提交，但融合到先前的提交中\n# f, fixup = 像 squash，但丢弃此提交的日志消息\n# x, exec = 使用 shell 运行命令(该行的其余部分)\n# d, drop = 删除提交\n```\n\n保存并退出，会弹出下面提示\n\n```shell\n# 您现在可以修改提交，使用\n#\n#   git commit --amend\n#\n# 对更改感到满意后，运行\n#\n#   git rebase --continue\n#\n# 1. 通过这条命令进入编辑更改 commit，保存退出\n$ git commit --amend\n# 2. 保存退出确认修改，继续执行下面命令,\n$ git rebase --continue\n# 如果修改多条记录反复执行上面两条命令直到完成所有修改\n\n# 最后，确保没有人提交进行推送，最好不要加 -f 强制推送\n$ git push -f origin master\n```"
+    },
+    {
+      "id": "s2-113",
+      "sectionId": "s2",
+      "title": "Commit",
+      "body": "```shell\n$ git commit -v --amend\n```\n\n重写最后的提交信息"
+    },
+    {
+      "id": "s2-115",
+      "sectionId": "s2",
+      "title": "撤销远程记录",
+      "body": "```shell\n# 撤销一条记录\n$ git reset --hard HEAD~1\n# 强制同步到远程仓库\n$ git push -f origin HEAD:master\n```"
+    },
+    {
+      "id": "s2-116",
+      "sectionId": "s2",
+      "title": "放弃本地修改内容",
+      "body": "```shell\n# 如果有的修改以及加入暂存区的话\n$ git reset --hard\n# 还原所有修改，不会删除新增的文件\n$ git checkout .\n# 下面命令会删除新增的文件\n$ git clean -xdf\n```"
+    },
+    {
+      "id": "s2-117",
+      "sectionId": "s2",
+      "title": "把 A 分支的某一个 commit，放到 B 分支上",
+      "body": "```shell\n# 切换到 B 分支\n$ git checkout <B>\n# 将 A 分支 <hash-id> 的内容 pick 到 B 分支\n$ git cherry-pick <hash-id>\n```"
+    },
+    {
+      "id": "s2-118",
+      "sectionId": "s2",
+      "title": "重设第一个 commit",
+      "body": "```bash\n$ git update-ref -d HEAD\n```\n\n把所有的改动都重新放回工作区，并**清空所有的 commit**，这样就可以重新提交第一个 `commit` 了"
+    },
+    {
+      "id": "s2-120",
+      "sectionId": "s2",
+      "title": "回到远程仓库的状态",
+      "body": "```bash\n$ git fetch --all && git reset --hard origin/master\n```\n\n抛弃本地所有的修改，回到远程仓库的状态"
+    },
+    {
+      "id": "s2-122",
+      "sectionId": "s2",
+      "title": "commit 历史中显示 Branch1 有的但是 Branch2 没有 commit",
+      "body": "```bash\n$ git log Branch1 ^Branch2\n```"
+    },
+    {
+      "id": "s2-123",
+      "sectionId": "s2",
+      "title": "git 迁移",
+      "body": "• 从原地址克隆一份裸版本库\n\n```bash\n$ git clone --bare https://github.com/username/project.git\n```\n\n• 然后新建一个地址，比如一下\n\n```bash\n$ https://gitee.com/username/newproject.git\n```\n\n• 进入project.git这个全裸版本库，以镜像推送的方式上传代码到newproject上。\n\n```\n$ cd project.git\n\n$ git push --mirror https://gitee.com/username/newproject.git\n```\n\n• 使用新地址，直接 Clone 到本地就可以了。\n\n```\n$ git clone https://gitee.com/username/newproject.git\n```"
+    },
+    {
+      "id": "s3-131",
+      "sectionId": "s3",
+      "title": "添加子模块",
+      "body": "```bash\n$ git submodule add <仓库地址> <子模块路径>\n```"
+    },
+    {
+      "id": "s3-132",
+      "sectionId": "s3",
+      "title": "克隆包含子模块的仓库",
+      "body": "```bash\n$ git clone <repository_url> --recursive\n```"
+    },
+    {
+      "id": "s3-133",
+      "sectionId": "s3",
+      "title": "更新子模块",
+      "body": "```bash\n$ git submodule update --remote\n```"
+    },
+    {
+      "id": "s3-134",
+      "sectionId": "s3",
+      "title": "切换到子模块的特定提交",
+      "body": "```bash\n$ cd <path_to_submodule>\n$ git checkout <commit_hash>\n```"
+    },
+    {
+      "id": "s3-135",
+      "sectionId": "s3",
+      "title": "查看当前仓库中的子模块",
+      "body": "```bash\n$ git submodule status\n```"
+    },
+    {
+      "id": "s3-136",
+      "sectionId": "s3",
+      "title": "初始化子模块",
+      "body": "```bash\n$ git submodule init\n```"
+    },
+    {
+      "id": "s3-137",
+      "sectionId": "s3",
+      "title": "切换到父仓库的特定提交，并更新子模块",
+      "body": "```bash\n$ cd ..\n$ git checkout <commit_hash>\n$ git submodule update --remote\n```"
+    },
+    {
+      "id": "s3-138",
+      "sectionId": "s3",
+      "title": "获取并切换子模块的最新标签",
+      "body": "```bash\n$ cd <path_to_submodule>\n$ git fetch --tags\n$ git checkout $(git describe --tags $(git rev-list --tags --max-count=1))\n```"
+    },
+    {
+      "id": "s3-139",
+      "sectionId": "s3",
+      "title": "子模块递归",
+      "body": "```bash\n# 添加所有已存在的子模块\n$ git submodule foreach --recursive git submodule add <repository_url>\n# 更新所有子模块到最新提交\n$ git submodule foreach --recursive git pull origin master\n# 检出特定的子模块路径\n$ git submodule foreach --recursive git checkout <branch_name>\n# 获取仓库中的所有子模块变化\n$ git submodule foreach --recursive git fetch\n# 获取并合并子模块的远程分支\n$ git submodule foreach --recursive git pull origin <branch_name>\n# 将子模块还原到父仓库中的初始提交\n$ git submodule foreach --recursive git checkout .\n# 获取子模块的更新并忽略本地修改\n$ git submodule foreach --recursive git fetch --all\n$ git submodule foreach --recursive git reset --hard origin/master\n```"
+    },
+    {
+      "id": "s3-140",
+      "sectionId": "s3",
+      "title": "获取子模块的最新提交",
+      "body": "```bash\n$ cd <path_to_submodule>\n$ git pull\n```"
+    },
+    {
+      "id": "s3-141",
+      "sectionId": "s3",
+      "title": "删除子模块",
+      "body": "```bash\n$ git submodule deinit <path_to_submodule>\n$ git rm <path_to_submodule>\n```"
+    },
+    {
+      "id": "s3-142",
+      "sectionId": "s3",
+      "title": "切换子模块的分支",
+      "body": "```bash\n$ cd <path_to_submodule>\n$ git checkout <branch_name>\n```"
+    },
+    {
+      "id": "s3-143",
+      "sectionId": "s3",
+      "title": "初始化并更新所有子模块",
+      "body": "```bash\n$ git submodule init\n$ git submodule update\n```"
+    },
+    {
+      "id": "s3-144",
+      "sectionId": "s3",
+      "title": "切换子模块的特定标签",
+      "body": "```bash\n$ cd <path_to_submodule>\n$ git checkout tags/<tag_name>\n```"
+    },
+    {
+      "id": "s4-145",
+      "sectionId": "s4",
+      "title": "查看配置的信息",
+      "body": "```bash\n$ git help config\n```\n\n获取帮助信息，查看修改个人信息的参数"
+    },
+    {
+      "id": "s4-147",
+      "sectionId": "s4",
+      "title": "忽略文件的权限变化",
+      "body": "```shell\ngit config core.fileMode false\n```\n\n不再将文件的权限变化视作改动"
+    },
+    {
+      "id": "s4-149",
+      "sectionId": "s4",
+      "title": "配置自动换行",
+      "body": "```bash\n$ git config --global core.autocrlf input\n```\n\n自动转换坑太大，提交到git是自动将换行符转换为 `lf`"
+    },
+    {
+      "id": "s4-151",
+      "sectionId": "s4",
+      "title": "获取帮助信息",
+      "body": "```bash\n$ git config --list\n```"
+    },
+    {
+      "id": "s4-152",
+      "sectionId": "s4",
+      "title": "中文乱码的解决方案",
+      "body": "```shell\n$ git config --global core.quotepath false\n```"
+    },
+    {
+      "id": "s4-153",
+      "sectionId": "s4",
+      "title": "删除全局设置",
+      "body": "```bash\n$ git config --global --unset <entry-name>\n```"
+    },
+    {
+      "id": "s4-154",
+      "sectionId": "s4",
+      "title": "配置 http 和 socks 代理",
+      "body": "```bash\n# 查看代理\n$ git config --global http.proxy\n$ git config --global https.proxy\n$ git config --global socks.proxy\n\n# 设置代理\n# 适用于 privoxy 将 socks 协议转为 http 协议的 http 端口\n$ git config --global http.proxy http://127.0.0.1:1080\n$ git config --global https.proxy http://127.0.0.1:1080\n$ git config --global socks.proxy 127.0.0.1:1080\n\n# 取消代理\n$ git config --global --unset http.proxy\n$ git config --global --unset https.proxy\n$ git config --global --unset socks.proxy\n\n# 只对 github.com 设置代理\n$ git config --global http.https://github.com.proxy socks5://127.0.0.1:1080\n$ git config --global https.https://github.com.proxy socks5://127.0.0.1:1080\n\n# 取消 github.com 代理\n$ git config --global --unset http.https://github.com.proxy\n$ git config --global --unset https.https://github.com.proxy\n```"
+    },
+    {
+      "id": "s4-155",
+      "sectionId": "s4",
+      "title": "Git 别名",
+      "body": "```shell\n$ git config --global alias.co checkout\n$ git config --global alias.br branch\n$ git config --global alias.ci commit\n$ git config --global alias.st status\n```\n\n配置好后，再输入 `git` 命令的时候就不用再输入一大段了，例如我们要查看状态，只需：\n\n```bash\n$ git st\n```\n\n也可以看看：[更多别名](https://gist.github.com/johnpolacek/69604a1f6861129ef088)"
+    },
+    {
+      "id": "s4-159",
+      "sectionId": "s4",
+      "title": "设置大小写敏感",
+      "body": "```shell\n# 查看git 的设置\n$ git config --get core.ignorecase\n# 设置大小写敏感\n$ git config core.ignorecase false\n# 远程有俩相同目录，通过这种方式清除掉，然后提交记录\n$ git rm -r --cached <目录/文件>\n```"
+    },
+    {
+      "id": "s5-160",
+      "sectionId": "s5",
+      "title": "重命名分支",
+      "body": "• **重命名**为`new`\n\n  ```shell\n  $ git branch -m <new>\n  $ git branch -m <old> <new> #重命名分支\n  ```\n\n• **推送**并重置\n\n  ```shell\n  $ git push origin -u <new>\n  ```\n\n• **删除**远程分支\n\n  ```shell\n  $ git push origin --delete <old> #方法1\n  $ git push origin :oldBranchName #方法2\n  ```"
+    },
+    {
+      "id": "s5-166",
+      "sectionId": "s5",
+      "title": "Log",
+      "body": "%E6%8C%89%E5%86%85%E5%AE%B9%E6%90%9C%E7%B4%A2%E6%9B%B4%E6%94%B9%0A%0A%60%60%60shell%0A%24%20git%20log%20-S'%3Ca%20term%20in%20the%20source%3E'%0A%60%60%60%0A%0A%E6%98%BE%E7%A4%BA%E7%89%B9%E5%AE%9A%E6%96%87%E4%BB%B6%E9%9A%8F%E6%97%B6%E9%97%B4%E7%9A%84%E5%8F%98%E5%8C%96%0A%0A%60%60%60shell%0A%24%20git%20log%20-p%20%3Cfile_name%3E%0A%60%60%60%0A%0A%E6%89%93%E5%8D%B0%E5%87%BA%E5%BE%88%E9%85%B7%E7%9A%84%E6%97%A5%E5%BF%97%E5%8F%AF%E8%A7%86%E5%8C%96%0A%0A%60%60%60shell%0A%24%20git%20log%20--pretty%3Doneline%20--graph%20--decorate%20--all%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s5-172",
+      "sectionId": "s5",
+      "title": "分支",
+      "body": "列出所有分支及其上游\n\n```shell\n$ git branch -vv\n```\n\n快速切换到上一个分支\n\n```shell\n$ git checkout -\n```\n\n只获取所有远程分支\n\n```shell\n$ git branch -r\n```\n\n从另一个分支签出单个文件\n\n```shell\n$ git checkout <branch> -- <file>\n```\n\n删除本地存在远程不存在的分支\n\n```shell\n$ git remote prune origin\n```"
+    },
+    {
+      "id": "s5-182",
+      "sectionId": "s5",
+      "title": "获取最近一次提交的 Hash",
+      "body": "```shell\n$ git rev-parse HEAD # e10721cb8859b2c\n# 获取短 hash\n$ git rev-parse --short HEAD # e10721c\n```"
+    },
+    {
+      "id": "s5-183",
+      "sectionId": "s5",
+      "title": "%E5%88%A0%E9%99%A4%E5%B7%B2%E7%BB%8F%E5%90%88%E5%B9%B6%E5%88%B0%20master%20%E7%9A%84%E5%88%86%E6%94%AF",
+      "body": "%60%60%60shell%0A%24%20git%20branch%20--merged%20master%20%7C%20grep%20-v%20'%5E%5C*%5C%7C%20%20master'%20%7C%20xargs%20-n%201%20git%20branch%20-d%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s5-184",
+      "sectionId": "s5",
+      "title": "查看冲突文件列表",
+      "body": "```bash\n$ git diff --name-only --diff-filter=U\n```"
+    },
+    {
+      "id": "s5-185",
+      "sectionId": "s5",
+      "title": "展示工作区的冲突文件列表",
+      "body": "输出工作区和暂存区的 different (不同)。\n\n```bash\n$ git diff\n```\n\n还可以展示本地仓库中任意两个 commit 之间的文件变动：\n\n```bash\n$ git diff <commit-id> <commit-id>\n```"
+    },
+    {
+      "id": "s5-189",
+      "sectionId": "s5",
+      "title": "展示暂存区和最近版本的不同",
+      "body": "```bash\ngit diff --cached\n```"
+    },
+    {
+      "id": "s5-190",
+      "sectionId": "s5",
+      "title": "展示暂存区、工作区和最近版本的不同",
+      "body": "```bash\n$ git diff HEAD\n```\n\n输出工作区、暂存区 和本地最近的版本(commit)的different(不同)。"
+    },
+    {
+      "id": "s5-192",
+      "sectionId": "s5",
+      "title": "%E5%88%A0%E9%99%A4%E5%B7%B2%E7%BB%8F%E5%90%88%E5%B9%B6%E5%88%B0%20master%20%E7%9A%84%E5%88%86%E6%94%AF",
+      "body": "%60%60%60bash%0A%24%20git%20branch%20--merged%20master%20%7C%20grep%20-v%20'%5E%5C*%5C%7C%20%20master'%20%7C%20xargs%20-n%201%20git%20branch%20-d%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s5-193",
+      "sectionId": "s5",
+      "title": "关联远程分支",
+      "body": "```bash\n$ git branch -u origin/mybranch\n```\n\n或者在 `push` 时加上 `-u` 参数\n\n```bash\ngit push origin/mybranch -u\n```\n\n关联之后，`git branch -vv` 就可以展示关联的远程分支名了, 同时推送到远程仓库直接：`git push`，不需要指定远程仓库"
+    },
+    {
+      "id": "s5-197",
+      "sectionId": "s5",
+      "title": "查看远程分支和本地分支的对应关系",
+      "body": "```bash\n$ git remote show origin\n```"
+    },
+    {
+      "id": "s5-198",
+      "sectionId": "s5",
+      "title": "展示当前分支的最近的 tag",
+      "body": "```bash\n$ git describe --tags --abbrev=0\n```"
+    },
+    {
+      "id": "s5-199",
+      "sectionId": "s5",
+      "title": "%E4%BF%AE%E6%94%B9%E4%BD%9C%E8%80%85%E5%90%8D",
+      "body": "%60%60%60bash%0A%24%20git%20commit%20--amend%20--author%3D'Author%20Name%20%3Cemail%40address.com%3E'%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s5-200",
+      "sectionId": "s5",
+      "title": "增加远程仓库",
+      "body": "```bash\n$ git remote add origin <remote-url>\n```"
+    },
+    {
+      "id": "s5-201",
+      "sectionId": "s5",
+      "title": "列出所有远程仓库",
+      "body": "```bash\n$ git remote -v\n```"
+    },
+    {
+      "id": "s5-202",
+      "sectionId": "s5",
+      "title": "从 stash 中拿出某个文件的修改",
+      "body": "```bash\n$ git checkout <stash@{n}> -- <file-path>\n```"
+    },
+    {
+      "id": "s5-203",
+      "sectionId": "s5",
+      "title": "展示所有 tracked 的文件",
+      "body": "```bash\n$ git ls-files -t\n```"
+    },
+    {
+      "id": "s5-204",
+      "sectionId": "s5",
+      "title": "展示所有 untracked 的文件",
+      "body": "```bash\n$ git ls-files --others\n```"
+    },
+    {
+      "id": "s5-205",
+      "sectionId": "s5",
+      "title": "展示所有忽略的文件",
+      "body": "```bash\n$ git ls-files --others -i --exclude-standard\n```"
+    },
+    {
+      "id": "s5-206",
+      "sectionId": "s5",
+      "title": "把某一个分支导出成一个文件",
+      "body": "```bash\n$ git bundle create <file> <branch-name>\n```"
+    },
+    {
+      "id": "s5-207",
+      "sectionId": "s5",
+      "title": "从包中导入分支",
+      "body": "```bash\n$ git clone repo.bundle <repo-dir> -b <branch-name>\n```\n\n新建一个分支，分支内容就是上面 `git bundle create` 命令导出的内容"
+    },
+    {
+      "id": "s5-209",
+      "sectionId": "s5",
+      "title": "执行 rebase 之前自动 stash",
+      "body": "```bash\n$ git rebase --autostash\n```"
+    },
+    {
+      "id": "s5-210",
+      "sectionId": "s5",
+      "title": "从远程仓库根据 ID，拉下某一状态，到本地分支",
+      "body": "```bash\n$ git fetch origin pull/<id>/head:<branch-name>\n```"
+    },
+    {
+      "id": "s5-211",
+      "sectionId": "s5",
+      "title": "详细展示一行中的修改",
+      "body": "```bash\n$ git diff --word-diff\n```"
+    },
+    {
+      "id": "s5-212",
+      "sectionId": "s5",
+      "title": "清除 gitignore 文件中记录的文件",
+      "body": "```bash\n$ git clean -X -f\n```"
+    },
+    {
+      "id": "s5-213",
+      "sectionId": "s5",
+      "title": "展示忽略的文件",
+      "body": "```bash\n$ git status --ignored\n```"
+    },
+    {
+      "id": "s5-214",
+      "sectionId": "s5",
+      "title": "新建并切换到新分支上，同时这个分支没有任何 commit",
+      "body": "```bash\n$ git checkout --orphan <branch-name>\n```\n\n相当于保存修改，但是重写 commit 历史"
+    },
+    {
+      "id": "s5-216",
+      "sectionId": "s5",
+      "title": "展示任意分支某一文件的内容",
+      "body": "```bash\n$ git show <branch-name>:<file-name>\n```"
+    },
+    {
+      "id": "s5-217",
+      "sectionId": "s5",
+      "title": "clone 最新一次提交",
+      "body": "```bash\n$ git clone --depth=1 https://github.com/user/repo.git\n```\n\n只会 `clone` 最近一次提交，将减少 `clone` 时间"
+    },
+    {
+      "id": "s5-219",
+      "sectionId": "s5",
+      "title": "忽略某个文件的改动",
+      "body": "关闭 track 指定文件的改动，也就是 Git 将不会在记录这个文件的改动\n\n```bash\ngit update-index --assume-unchanged path/to/file\n```\n\n恢复 track 指定文件的改动\n\n```bash\ngit update-index --no-assume-unchanged path/to/file\n```"
+    },
+    {
+      "id": "s5-223",
+      "sectionId": "s5",
+      "title": "%E4%BB%A5%E6%9C%80%E5%90%8E%E6%8F%90%E4%BA%A4%E7%9A%84%E9%A1%BA%E5%BA%8F%E5%88%97%E5%87%BA%E6%89%80%E6%9C%89%20Git%20%E5%88%86%E6%94%AF",
+      "body": "%60%60%60bash%0Agit%20for-each-ref%20--sort%3D-committerdate%20--format%3D'%25(refname%3Ashort)'%20refs%2Fheads%0A%60%60%60%0A%0A%E6%9C%80%E6%96%B0%E7%9A%84%E6%94%BE%E5%9C%A8%E6%9C%80%E4%B8%8A%E9%9D%A2",
+      "encoded": true
+    },
+    {
+      "id": "s5-225",
+      "sectionId": "s5",
+      "title": "把暂存区的指定 file 放到工作区中",
+      "body": "```bash\ngit reset <file-name>\n```\n\n不添加参数，默认是 `-mixed`"
+    },
+    {
+      "id": "s5-227",
+      "sectionId": "s5",
+      "title": "配置 SSH 协议代理",
+      "body": "```shell\n# 对于使用 git@ 协议的，可以配置 socks5 代理\n# macOS 系统编辑 ~/.ssh/config 文件，添加这几行，设置 github 代理\nHost github.com\n  ProxyCommand nc -X 5 -x 127.0.0.1:1080 %h %p\n```"
+    },
+    {
+      "id": "s5-228",
+      "sectionId": "s5",
+      "title": "Fork仓库同步上游仓库",
+      "body": "• 设置上游仓库\n\n  ```shell\n  $ git remote add upstream https://github.com/jaywcjlove/reference.git\n  ```\n\n• 本地项目操作\n\n  ```shell\n  $ git fetch upstream # 获取上游仓库更新\n  $ git stach # 暂存本地修改(如果有)\n  $ git branch -a # 列出所有远程仓库地址(非必须)\n  $ git rebase remotes/upstream/main # 使用远程仓库的提交记录来重写本地提交记录\n  $ git push -f # 强制推送到远程(github)仓库\n  $ git stach pop # 恢复暂存的本地修改(如果有)\n  ```"
+    },
+    {
+      "id": "s6-232",
+      "sectionId": "s6",
+      "title": "%E6%9F%A5%E7%9C%8B%20git%20%E4%B8%8A%E7%9A%84%E4%B8%AA%E4%BA%BA%E4%BB%A3%E7%A0%81%E9%87%8F",
+      "body": "%E2%80%A2%20%60username%60%20%E9%9C%80%E8%A6%81%E6%94%B9%E6%88%90%E8%87%AA%E5%B7%B1%E7%9A%84%0A%0A%60%60%60bash%0Agit%20log%20--author%3D%22username%22%20--pretty%3Dtformat%3A%20--numstat%20%7C%20awk%20%5C%0A'%7B%20add%20%2B%3D%20%241%3B%20subs%20%2B%3D%20%242%3B%20loc%20%2B%3D%20%241%20-%20%242%20%7D%20END%20%7B%20printf%20%22added%20lines%3A%20%25s%2C%20removed%20lines%3A%20%25s%2C%20total%20lines%3A%20%25s%5Cn%22%2C%20add%2C%20subs%2C%20loc%20%7D'%20-%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-234",
+      "sectionId": "s6",
+      "title": "%E7%BB%9F%E8%AE%A1%E6%AF%8F%E4%B8%AA%E4%BA%BA%E5%A2%9E%E5%88%A0%E8%A1%8C%E6%95%B0",
+      "body": "%60%60%60bash%0Agit%20log%20--format%3D'%25aN'%20%7C%20sort%20-u%20%7C%5C%0A%20%20while%20read%20name%3B%20do%20echo%20-en%20%22%24name%5Ct%22%3B%5C%0A%20%20git%20log%20--author%3D%22%24name%22%20--pretty%3Dtformat%3A%20--numstat%20%7C%20awk%20%5C%0A%20%20'%7B%20add%20%2B%3D%20%241%3B%20subs%20%2B%3D%20%242%3B%20loc%20%2B%3D%20%241%20-%20%242%20%7D%20END%20%7B%20printf%20%22added%20lines%3A%20%25s%2C%20removed%20lines%3A%20%25s%2C%20total%20lines%3A%20%25s%5Cn%22%2C%20add%2C%20subs%2C%20loc%20%7D'%20-%3B%20done%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-235",
+      "sectionId": "s6",
+      "title": "%E6%9F%A5%E7%9C%8B%E4%BB%93%E5%BA%93%E6%8F%90%E4%BA%A4%E8%80%85%E6%8E%92%E5%90%8D",
+      "body": "%E8%BF%99%E9%87%8C%E6%98%AF%E6%8E%92%E5%90%8D%E5%89%8D%E5%8D%81%EF%BC%8C%E4%B9%9F%E5%8F%AF%E4%BB%A5%E6%9B%B4%E6%94%B9%E6%8E%92%E5%90%8D%0A%0A%60%60%60bash%0Agit%20log%20--pretty%3D'%25aN'%20%7C%20sort%20%7C%20uniq%20-c%20%7C%20sort%20-k1%20-n%20-r%20%7C%20head%20-n%2010%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-237",
+      "sectionId": "s6",
+      "title": "提交数统计",
+      "body": "```bash\ngit log --oneline | wc -l\n```"
+    },
+    {
+      "id": "s6-238",
+      "sectionId": "s6",
+      "title": "查看某段代码是谁写的",
+      "body": "```bash\n$ git blame <file-name>\n```\n\n`blame` 的意思为`责怪`，你懂的。"
+    },
+    {
+      "id": "s6-240",
+      "sectionId": "s6",
+      "title": "%E6%9F%A5%E7%9C%8B%E4%B8%A4%E4%B8%AA%E6%98%9F%E6%9C%9F%E5%86%85%E7%9A%84%E6%94%B9%E5%8A%A8",
+      "body": "%60%60%60bash%0A%24%20git%20whatchanged%20--since%3D'2%20weeks%20ago'%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s6-241",
+      "sectionId": "s6",
+      "title": "%E5%9C%A8%20commit%20log%20%E4%B8%AD%E6%9F%A5%E6%89%BE%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9",
+      "body": "%60%60%60bash%0A%24%20git%20log%20--all%20--grep%3D'%3Cgiven-text%3E'%0A%60%60%60%0A%0A%E9%80%9A%E8%BF%87%20grep%20%E6%9F%A5%E6%89%BE%EF%BC%8Cgiven-text%3A%20%E6%89%80%E9%9C%80%E8%A6%81%E6%9F%A5%E6%89%BE%E7%9A%84%E5%AD%97%E6%AE%B5",
+      "encoded": true
+    },
+    {
+      "id": "s6-243",
+      "sectionId": "s6",
+      "title": "Git 仓库的大小",
+      "body": "```bash\n$ git ls-files | xargs -r du -hs\n```"
+    },
+    {
+      "id": "s6-244",
+      "sectionId": "s6",
+      "title": "Git 仓库的总大小",
+      "body": "```bash\n$ git count-objects -vH\n```"
+    },
+    {
+      "id": "s6-245",
+      "sectionId": "s6",
+      "title": "%E6%9F%A5%E8%AF%A2%E5%8E%86%E5%8F%B2%E4%BD%93%E7%A7%AF%E5%A4%A7%E7%9A%84%2010%20%E4%B8%AA%E6%96%87%E4%BB%B6",
+      "body": "%60%60%60bash%0A%24%20git%20rev-list%20--objects%20--all%20%7C%20git%20cat-file%20--batch-check%3D'%25(objecttype)%20%25(objectname)%20%25(objectsize)%20%25(rest)'%20%7C%20awk%20'%2F%5Eblob%2F%20%7Bprint%20substr(%240%2C6)%7D'%20%7C%20sort%20--numeric-sort%20--key%3D2%20--reverse%20%7C%20head%20-n%2010%20%7C%20cut%20-c%2013-%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s7-246",
+      "sectionId": "s7",
+      "title": "格式",
+      "body": "```text\n<type>(<scope>): <short summary>\n  │       │             │\n  │       │             └─⫸ 紧凑简短的描述，无需大写，也不需要用句号结尾\n  │       │\n  │       └─⫸ Commit 范围: animations|bazel|benchpress|common|compiler|compiler-cli|core|\n  │                          elements|forms|http|language-service|localize|platform-browser|\n  │                          platform-browser-dynamic|platform-server|router|service-worker|\n  │                          upgrade|zone.js|packaging|changelog|docs-infra|migrations|ngcc|ve|\n  │                          devtools....\n  │\n  └─⫸ Commit 类型: build|ci|doc|docs|feat|fix|perf|refactor|test\n                    website|chore|style|type|revert\n```"
+    },
+    {
+      "id": "s7-247",
+      "sectionId": "s7",
+      "title": "常用",
+      "body": "|   类型   |  描述 |\n| ----------|------------ |\n| `feat:`   | 新特性     |\n| `fix(scope):`   | 修复 scope 中的 Bug |\n| `feat!:` / `feat(scope)!:` | breaking change /  重构 API |\n| `chore(deps):` | 更新依赖 |"
+    },
+    {
+      "id": "s7-248",
+      "sectionId": "s7",
+      "title": "Commit 类型",
+      "body": "|   类型   |  描述 |\n| ----------|------------ |\n| `build:` | 变更影响的是**构建系统**或者**外部依赖** (如: gulp, npm) |\n| `ci:` | 修改了 CI 配置文件或脚本 (如: Github Action, Travis) |\n| `chore:` | **【重要】** 变更不影响源代码或测试（如更新了辅助工具、库等) |\n| `docs:` | 只修改了文档 |\n| `feat:` | **【重要】** 一个新特性 |\n| `fix:` | **【重要】** 修复了一个 Bug |\n| `perf:` | 增强性能的代码变更 |\n| `refactor:` | 并非修复 Bug 或添加新特性的代码变更 |\n| `revert:` | 回退代码 |\n| `style:` | 变更不影响一些有意义的代码 (如: 删除空格、格式化代码、添加分号等) |\n| `test:` | 添加测试代码或修正已有的测试 |"
+    },
+    {
+      "id": "s8-249",
+      "sectionId": "s8",
+      "title": "简单创建",
+      "body": "```bash\n$ git diff commit_id > my.patch\n```"
+    },
+    {
+      "id": "s8-250",
+      "sectionId": "s8",
+      "title": "简单应用",
+      "body": "• **检查**补丁\n\n    ```bash\n    # 检查下这个补丁能否被正常应用\n    $ git apply --check path/to/my.patch\n    ```\n\n• **使用**补丁\n\n    ```\n    # 检查通过使用该补丁\n    $ git apply < path/to/my.patch\n    ```\n\n• 若有冲突则**解决**\n\n    ```\n    # 检查不通过可以自动合入patch不冲突的代码，同时保留冲突部分\n    $ git apply --reject path/to/my.patch\n    ```"
+    },
+    {
+      "id": "s8-256",
+      "sectionId": "s8",
+      "title": "Email patch 方式",
+      "body": "```bash\n# 创建指定 commit sha1 id 之前的 n 次提交补丁\n$ git format-patch commit_id -n\n# 创建 300f59991f22826c8478f0c019387c4ca815b085 这个提交的patch\n$ git format-patch commit_id -1\n# 提取当前分支最上面的3次提交，生成补丁\n$ git format-patch -3\n# 发送者可使用 git-send-email 发送 git format-patch 的结果给接收者\n# 接收者保存邮件到文件 email.txt，然后应用补丁创建一个提交，会自动包含作者的信息\n$ git am < email.txt\n```"
+    },
+    {
+      "id": "s9-257",
+      "sectionId": "s9",
+      "title": "另见",
+      "body": "• [最常用的 git 提示和技巧](https://github.com/git-tips/tips)\n• [Conventional Commits 官方网站](https://www.conventionalcommits.org/zh-hans/v1.0.0/) _(conventionalcommits.org)_\n• [Conventional Commits Cheatsheet](https://gist.github.com/Zekfad/f51cb06ac76e2457f11c80ed705c95a3) _(gist.github.com)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/git.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/git.md",
+    "lang": "zh",
+    "mode": "local"
+  }
+}
