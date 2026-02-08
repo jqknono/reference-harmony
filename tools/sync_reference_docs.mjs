@@ -376,6 +376,69 @@ function extractFrontmatter(markdown) {
   return { frontmatter, body };
 }
 
+// Count total data rows in all markdown tables (GFM-style) within the given markdown.
+// Keep behavior aligned with entry/src/main/ets/common/markdownDocParser.ets.
+function countMarkdownTableRows(markdown, { keepTags } = {}) {
+  const { body } = extractFrontmatter(markdown);
+  const lines = String(body ?? '').replace(/\r\n/g, '\n').split('\n');
+
+  const normalizeLine = (raw) => {
+    const withoutComments = stripHtmlCommentsInLine(raw);
+    if (keepTags) return withoutComments;
+    return stripTagsInLine(withoutComments);
+  };
+
+  let totalRows = 0;
+  let rehypeIgnoreDepth = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const rawLine = lines[i];
+    const line = normalizeLine(rawLine);
+
+    if (isRehypeIgnoreStart(rawLine)) {
+      rehypeIgnoreDepth++;
+      continue;
+    }
+    if (isRehypeIgnoreEnd(rawLine)) {
+      if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
+      continue;
+    }
+    if (rehypeIgnoreDepth > 0) continue;
+    if (!line.trim()) continue;
+    if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
+    if (isHorizontalRuleLine(line)) continue;
+
+    const fence = parseFenceOpen(line);
+    if (fence) {
+      i++;
+      while (i < lines.length && !isFenceClose(stripHtmlCommentsInLine(lines[i]), fence.marker)) i++;
+      continue;
+    }
+
+    // table header + separator
+    if (line.includes('|') && i + 1 < lines.length) {
+      const sep = normalizeLine(lines[i + 1]);
+      if (!isTableSeparatorLine(sep)) continue;
+
+      i += 2;
+      while (i < lines.length) {
+        const rowRaw = lines[i];
+        // Don't cross ignore markers; outer loop needs to process ignore regions.
+        if (isRehypeIgnoreStart(rowRaw) || isRehypeIgnoreEnd(rowRaw)) break;
+        const rowLine = normalizeLine(rowRaw);
+        if (!rowLine.trim() || !rowLine.includes('|')) break;
+        if (isTableSeparatorLine(rowLine)) break;
+        totalRows++;
+        i++;
+      }
+      i--;
+      continue;
+    }
+  }
+
+  return totalRows;
+}
+
 function safeIdFromPath(relativePath) {
   const raw = relativePath.replace(/\.md$/i, '').replace(/[\\/]/g, '_');
   const normalized = raw.normalize('NFKD').replace(/[^\w-]/g, '_');
@@ -1087,6 +1150,7 @@ async function main() {
           });
         const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath, ref, icon, debug: Boolean(filter), keepTags });
         if (filter) console.log(`Parsed: ${lang} ${id} sections=${parsed.sections.length} cards=${parsed.cards.length}`);
+        const tableRows = countMarkdownTableRows(md, { keepTags });
         const file = `reference/${lang}/${id}.json`;
 
         await fs.writeFile(path.join(langOutDir, `${id}.json`), JSON.stringify(parsed, null, 2), 'utf8');
@@ -1100,7 +1164,7 @@ async function main() {
           icon: parsed.icon,
           file,
           sectionCount: parsed.sections.length,
-          cardCount: parsed.cards.length,
+          cardCount: tableRows > 0 ? tableRows : parsed.cards.length,
         };
       });
       manifestDocs.push(...summaries.filter(Boolean));
@@ -1123,6 +1187,7 @@ async function main() {
           });
         const parsed = parseMarkdownToCards(md, { id, lang, mode: modeUsed, source, sourcePath: doc.path, ref, icon, debug: Boolean(filter), keepTags });
         if (filter) console.log(`Parsed: ${lang} ${id} sections=${parsed.sections.length} cards=${parsed.cards.length}`);
+        const tableRows = countMarkdownTableRows(md, { keepTags });
         const file = `reference/${lang}/${id}.json`;
 
         await fs.writeFile(path.join(langOutDir, `${id}.json`), JSON.stringify(parsed, null, 2), 'utf8');
@@ -1136,7 +1201,7 @@ async function main() {
           icon: parsed.icon,
           file,
           sectionCount: parsed.sections.length,
-          cardCount: parsed.cards.length,
+          cardCount: tableRows > 0 ? tableRows : parsed.cards.length,
         };
       });
       manifestDocs.push(...summaries.filter(Boolean));

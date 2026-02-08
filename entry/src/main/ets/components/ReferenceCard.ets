@@ -11,26 +11,30 @@ interface ReferenceCardParams {
   unboundedTableColumns?: boolean;
   learningMode?: boolean;
   margin?: Margin | number;
+  // When a section/group header already shows the same title, suppress the per-card title to avoid duplicates.
+  hideTitle?: boolean;
 }
 
 @Builder
 export function ReferenceCard($$: ReferenceCardParams): void {
   Column({ space: ($$.fontSize ?? 15) * 0.5 }) {
-    Row() {
-      Column() {
-        MarkdownView({
-          markdown: decodeIfEncoded($$.card.title, $$.card.encoded === true),
-          inlineOnly: true,
-          fontSize: $$.fontSize ?? 15,
-          fontColor: $$.theme.cardTitleColor,
-          fontWeight: FontWeight.Bold,
-          theme: $$.theme,
-          unboundedTableColumns: $$.unboundedTableColumns ?? false,
-          learningMode: $$.learningMode ?? false,
-          hostContext: $$.hostContext,
-        });
+    if (!($$.hideTitle ?? false) && decodeIfEncoded($$.card.title, $$.card.encoded === true).trim()) {
+      Row() {
+        Column() {
+          MarkdownView({
+            markdown: decodeIfEncoded($$.card.title, $$.card.encoded === true),
+            inlineOnly: true,
+            fontSize: $$.fontSize ?? 15,
+            fontColor: $$.theme.cardTitleColor,
+            fontWeight: FontWeight.Bold,
+            theme: $$.theme,
+            unboundedTableColumns: $$.unboundedTableColumns ?? false,
+            learningMode: $$.learningMode ?? false,
+            hostContext: $$.hostContext,
+          });
+        }
+        .layoutWeight(1);
       }
-      .layoutWeight(1);
     }
 
     if ($$.card.kind === 'qa') {

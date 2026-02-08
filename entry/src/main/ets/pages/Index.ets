@@ -21,7 +21,7 @@ import type { LaunchParams } from '../common/launchParamsStore';
 import { requestAppReview } from '../common/appReview';
 
 import type { SectionWithCards } from './index/types';
-import { APP_REVIEW_MIN_DAYS_SINCE_FIRST_LAUNCH, APP_REVIEW_MIN_LAUNCH_COUNT, APP_REVIEW_PREF_KEY_DO_NOT_ASK, APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, APP_REVIEW_PREF_KEY_LAUNCH_COUNT, APP_REVIEW_PROMPT_COOLDOWN_DAYS, CATALOG_DOC_ID_BLACKLIST, DEBUG_MODE_PREF_KEY, DEBUG_SERVER_ORIGIN_PREF_KEY, DEFAULT_DEBUG_SERVER_ORIGIN, ENABLE_APP_REVIEW_PROMPT, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_PRIVACY_CONSENT_DIALOG, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT, TABBAR_AUTO_HIDE_EFFECTIVE_ASPECT_RATIO_THRESHOLD } from './index/constants';
+import { APP_REVIEW_MIN_DAYS_SINCE_FIRST_LAUNCH, APP_REVIEW_MIN_LAUNCH_COUNT, APP_REVIEW_PREF_KEY_DO_NOT_ASK, APP_REVIEW_PREF_KEY_FIRST_LAUNCH_AT, APP_REVIEW_PREF_KEY_LAST_PROMPT_AT, APP_REVIEW_PREF_KEY_LAUNCH_COUNT, APP_REVIEW_PROMPT_COOLDOWN_DAYS, CATALOG_DOC_ID_BLACKLIST, DEBUG_MODE_PREF_KEY, DEBUG_SERVER_ORIGIN_PREF_KEY, DEFAULT_DEBUG_SERVER_ORIGIN, ENABLE_APP_REVIEW_PROMPT, ENABLE_ONLINE_CLOUD_CATALOG, ENABLE_ORIENTATION_MODE_SETTING, ENABLE_PRIVACY_CONSENT_DIALOG, ENABLE_RECENT_DOCS, LAUNCH_ACTION_OPEN_RECENT_DOCS, PRIVACY_CONSENT_PREF_KEY, PRIVACY_STATEMENT_URL, RECENT_DOC_MAX_COUNT, TABBAR_AUTO_HIDE_EFFECTIVE_ASPECT_RATIO_THRESHOLD } from './index/constants';
 import { lengthToNumber, normalizeSearchTokens, cardMatchesTokens, toHexColorString } from './index/utils';
 import { DocListTab } from './index/DocListTab';
 import { ReadTab } from './index/ReadTab';
@@ -29,9 +29,11 @@ import { QuizTab } from './index/QuizTab';
 import { SettingsTab } from './index/SettingsTab';
 import { CustomListTab } from './index/CustomListTab';
 import { TocPanel } from './index/TocPanel';
-import type { CustomListCollection } from '../common/customListModels';
+import type { CustomList, CustomListCollection } from '../common/customListModels';
 import { createEmptyCustomListCollection } from '../common/customListModels';
 import { CustomListRepository } from '../common/customListRepository';
+import { listToMarkdown } from '../common/customListModels';
+import { countMarkdownTableRows, parseMarkdownToDoc } from '../common/markdownDocParser';
 import { handleCustomListBackPress, handleQuizBackPress } from '../common/backHandlerRegistry';
 
 type Preferences = preferences.Preferences;
@@ -95,6 +97,9 @@ struct Index {
   @State private quizResultListScrollIndex: number = 0;
   @State private settingsScrollY: number = 0;
   @State private tocListScrollIndex: number = 0;
+  // Cache of computed table-row counts for manifest docs.
+  // Key format: `${lang}:${docId}`.
+  private manifestTableRowCountByDocKey: Map<string, number> = new Map<string, number>();
 
   private tabsController: TabsController = new TabsController();
   private catalogListScroller: ListScroller = new ListScroller();
@@ -112,6 +117,7 @@ struct Index {
   private privacyConsentStatementController: webview.WebviewController = new webview.WebviewController();
   private repository: ReferenceRepository | undefined = undefined;
   private openDocRequestId: number = 0;
+  private manifestRowCountRequestId: number = 0;
   private rootWidth: number = 0;
   private rootHeight: number = 0;
   private fontAwesomeRegistered: boolean = false;
@@ -191,6 +197,87 @@ struct Index {
 
   private resetTocScrollState(): void {
     this.tocListScrollIndex = 0;
+  }
+
+  private customListRowCount(list: CustomList): number {
+    let rows = 0;
+    for (let i = 0; i < list.sections.length; i++) {
+      const sec = list.sections[i];
+      for (let j = 0; j < sec.tables.length; j++) {
+        const tableRows = sec.tables[j]?.rows;
+        rows += Array.isArray(tableRows) ? tableRows.length : 0;
+      }
+    }
+    return rows;
+  }
+
+  private docTableRowCount(doc: ReferenceDoc): number {
+    let rows = 0;
+    for (let i = 0; i < (doc.cards ?? []).length; i++) {
+      const c = doc.cards[i];
+      if (!c) continue;
+      rows += countMarkdownTableRows(String(c.body ?? ''));
+      rows += countMarkdownTableRows(String(c.front ?? ''));
+      rows += countMarkdownTableRows(String(c.back ?? ''));
+    }
+    return rows;
+  }
+
+  private customListDocsForCatalog(): Array<ReferenceDocSummary> {
+    const out: Array<ReferenceDocSummary> = [];
+    for (let i = 0; i < this.customLists.lists.length; i++) {
+      const list = this.customLists.lists[i];
+      out.push({
+        id: `customlist_${list.id}`,
+        name: list.name,
+        // If no description, keep title empty to avoid showing a redundant "自建清单" line in catalog.
+        title: (list.description ?? '').trim(),
+        icon: undefined,
+        // 占位：自建清单不是 rawfile 文档
+        file: '',
+        sectionCount: list.sections.length,
+        // cardCount 统一表示“卡片数”：对齐内置清单的逻辑，这里用所有表格的数据行总数承载。
+        cardCount: this.customListRowCount(list),
+      });
+    }
+    return out;
+  }
+
+  private async openCustomListFromCatalog(customListId: string): Promise<void> {
+    const baseId = (customListId ?? '').trim();
+    if (!baseId) return;
+
+    this.openDocRequestId++;
+    const requestId = this.openDocRequestId;
+    this.loading = true;
+    this.errorText = '';
+    this.selectedDocIcon = '';
+
+    const list = this.customLists.lists.find(l => l.id === baseId) || null;
+    if (!list) {
+      this.loading = false;
+      return;
+    }
+
+    // Convert list to markdown, then parse as a normal doc so it can be shown in “清单”(ReadTab).
+    const markdown = listToMarkdown(list);
+    const docId = `customlist_${baseId}`;
+    const doc = parseMarkdownToDoc(markdown, docId, `customlist://${baseId}`);
+
+    if (requestId !== this.openDocRequestId) return;
+    this.selectedDoc = doc;
+    this.selectedDocId = docId;
+    this.selectedDocAvatarVersion = requestId;
+    this.rebuildSectionCards(doc);
+    this.rebuildSearchResults();
+    this.updateQuizAvailableCount();
+    this.addToRecentDocs(docId);
+    this.resetReadTabScrollState();
+    this.resetTocScrollState();
+    this.switchToTab(1);
+    if (requestId === this.openDocRequestId) {
+      this.loading = false;
+    }
   }
 
   private async consumeNotificationLaunchIfAny(): Promise<void> {
@@ -1025,6 +1112,10 @@ struct Index {
     for (let i = 0; i < this.localMdDocs.length; i++) {
       pushIfMatched(this.localMdDocs[i]);
     }
+    const customListDocs = this.customListDocsForCatalog();
+    for (let i = 0; i < customListDocs.length; i++) {
+      pushIfMatched(customListDocs[i]);
+    }
 
     results.sort((a: ReferenceDocSummary, b: ReferenceDocSummary): number => {
       const ak = (a.name || a.title || a.id || '').trim().toLowerCase();
@@ -1176,6 +1267,7 @@ struct Index {
     }
 
     const targetLang: ReferenceLang = this.lang;
+    const rowCountRequestId: number = ++this.manifestRowCountRequestId;
 
     this.loading = true;
     this.errorText = '';
@@ -1196,6 +1288,10 @@ struct Index {
             cardCount: doc.cardCount,
           }));
         this.rebuildCatalogSearchResults();
+        // Compute "card count" as total table rows for catalog display (best-effort; runs in background).
+        Promise.resolve()
+          .then((): Promise<void> => this.enrichManifestDocsWithTableRowCounts(targetLang, rowCountRequestId))
+          .then((): void => undefined, (): void => undefined);
         await this.migrateRecentDocsAutoOpenBugIfNeeded();
         if (autoOpenFirst && !this.selectedDocId && this.docs.length > 0) {
           await this.openDoc(this.docs[0].id, false, false);
@@ -1214,6 +1310,63 @@ struct Index {
     if (this.lang === targetLang) {
       this.loading = false;
     }
+  }
+
+  private async enrichManifestDocsWithTableRowCounts(lang: ReferenceLang, requestId: number): Promise<void> {
+    // Only applies to offline manifest docs in `this.docs`.
+    if (this.lang !== lang) return;
+    if (requestId !== this.manifestRowCountRequestId) return;
+
+    const repo = await this.ensureRepository();
+    if (!repo) return;
+
+    const docsSnapshot: Array<ReferenceDocSummary> = (this.docs ?? []).slice();
+    const batchSize = 4;
+    for (let start = 0; start < docsSnapshot.length; start += batchSize) {
+      if (this.lang !== lang) return;
+      if (requestId !== this.manifestRowCountRequestId) return;
+
+      const batch = docsSnapshot.slice(start, start + batchSize);
+      await Promise.all(batch.map(async (summary: ReferenceDocSummary): Promise<void> => {
+        const docId = (summary?.id ?? '').trim();
+        if (!docId) return;
+        const key = `${lang}:${docId}`;
+        if (this.manifestTableRowCountByDocKey.has(key)) return;
+
+        const doc = await repo.getDocByLang(lang, docId).then(
+          (d: ReferenceDoc): ReferenceDoc => d,
+          (): ReferenceDoc | null => null,
+        );
+        if (!doc) {
+          this.manifestTableRowCountByDocKey.set(key, 0);
+          return;
+        }
+        const rows = this.docTableRowCount(doc);
+        this.manifestTableRowCountByDocKey.set(key, rows);
+      }));
+
+      // Apply partial updates for better responsiveness; rebuild search results at the end.
+      const nextDocs: Array<ReferenceDocSummary> = (this.docs ?? []).map((d: ReferenceDocSummary): ReferenceDocSummary => {
+        const docId = (d?.id ?? '').trim();
+        const key = `${lang}:${docId}`;
+        const rows = this.manifestTableRowCountByDocKey.get(key) ?? 0;
+        if (rows <= 0 || d.cardCount === rows) return d;
+        return {
+          id: d.id,
+          name: d.name,
+          title: d.title,
+          icon: d.icon,
+          file: d.file,
+          sectionCount: d.sectionCount,
+          cardCount: rows,
+        };
+      });
+      this.docs = nextDocs;
+    }
+
+    if (this.lang !== lang) return;
+    if (requestId !== this.manifestRowCountRequestId) return;
+    this.rebuildCatalogSearchResults();
   }
 
   private async loadManifestCounts(): Promise<void> {
@@ -1444,6 +1597,14 @@ struct Index {
   }
 
   private async loadCloudCatalog(): Promise<void> {
+    if (!ENABLE_ONLINE_CLOUD_CATALOG) {
+      // Feature flag off: keep cloud docs empty and skip any network requests.
+      if (this.cloudCatalogDocs.length > 0) {
+        this.cloudCatalogDocs = [];
+        this.rebuildCatalogSearchResults();
+      }
+      return;
+    }
     const targetLang: ReferenceLang = this.lang;
     const apiUrlOrOriginOverride: string = this.debugModeEnabled ? this.debugServerOrigin : '';
     await this.onlineCatalogRepository.fetchCatalog(targetLang, apiUrlOrOriginOverride).then(
@@ -1519,13 +1680,14 @@ struct Index {
       const cachedDoc = await this.onlineMdRepository.getDocFromCache(host, linkId);
       if (cachedDoc) {
         this.onlineMdDocCache.set(linkId, cachedDoc);
+        const tableRows = this.docTableRowCount(cachedDoc);
         summaries.push({
           id: linkId,
           name: link.name || cachedDoc.name,
           title: cachedDoc.title,
           file: `online:${link.url}`,
           sectionCount: cachedDoc.sections.length,
-          cardCount: cachedDoc.cards.length,
+          cardCount: tableRows > 0 ? tableRows : cachedDoc.cards.length,
         });
         continue;
       }
@@ -1557,13 +1719,14 @@ struct Index {
       const cachedDoc = await this.localMdRepository.getDocFromCache(host, linkId);
       if (cachedDoc) {
         this.localMdDocCache.set(linkId, cachedDoc);
+        const tableRows = this.docTableRowCount(cachedDoc);
         summaries.push({
           id: linkId,
           name: link.name || cachedDoc.name,
           title: cachedDoc.title,
           file: `local:${link.url}`,
           sectionCount: cachedDoc.sections.length,
-          cardCount: cachedDoc.cards.length,
+          cardCount: tableRows > 0 ? tableRows : cachedDoc.cards.length,
         });
         continue;
       }
@@ -1841,6 +2004,7 @@ struct Index {
   private updateCloudCatalogSummary(docId: string, doc: ReferenceDoc): void {
     const next: Array<ReferenceDocSummary> = [];
     let changed: boolean = false;
+    const tableRows = this.docTableRowCount(doc);
     for (let i = 0; i < this.cloudCatalogDocs.length; i++) {
       const item = this.cloudCatalogDocs[i];
       if (item.id !== docId) {
@@ -1855,7 +2019,7 @@ struct Index {
         icon: item.icon,
         file: item.file,
         sectionCount: doc.sections.length,
-        cardCount: doc.cards.length,
+        cardCount: tableRows > 0 ? tableRows : doc.cards.length,
       });
     }
     if (changed) {
@@ -2608,10 +2772,12 @@ struct Index {
         cloudDocs: this.cloudCatalogDocs,
         onlineMdDocs: this.onlineMdDocs,
         localMdDocs: this.localMdDocs,
+        customListDocs: this.customListDocsForCatalog(),
         onOpenDoc: (docId: string, switchToReadTab: boolean): void => { this.openDoc(docId, switchToReadTab); },
         onOpenCloudDoc: (docId: string): void => { this.openCloudDoc(docId); },
         onOpenOnlineDoc: (docId: string): void => { this.openOnlineDoc(docId); },
         onOpenLocalDoc: (docId: string): void => { this.openLocalDoc(docId); },
+        onOpenCustomList: (listId: string): void => { this.openCustomListFromCatalog(listId); },
         onOpenDocAndQuiz: (docId: string): void => { this.openDocAndQuiz(docId); },
         onOpenCloudDocAndQuiz: (docId: string): void => { this.openCloudDocAndQuiz(docId); },
         onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },
@@ -2793,10 +2959,12 @@ struct Index {
                 cloudDocs: this.cloudCatalogDocs,
                 onlineMdDocs: this.onlineMdDocs,
                 localMdDocs: this.localMdDocs,
+                customListDocs: this.customListDocsForCatalog(),
                 onOpenDoc: (docId: string, switchToReadTab: boolean): void => { this.openDoc(docId, switchToReadTab); },
                 onOpenCloudDoc: (docId: string): void => { this.openCloudDoc(docId); },
                 onOpenOnlineDoc: (docId: string): void => { this.openOnlineDoc(docId); },
                 onOpenLocalDoc: (docId: string): void => { this.openLocalDoc(docId); },
+                onOpenCustomList: (listId: string): void => { this.openCustomListFromCatalog(listId); },
                 onOpenDocAndQuiz: (docId: string): void => { this.openDocAndQuiz(docId); },
                 onOpenCloudDocAndQuiz: (docId: string): void => { this.openCloudDocAndQuiz(docId); },
                 onOpenOnlineDocAndQuiz: (docId: string): void => { this.openOnlineDocAndQuiz(docId); },

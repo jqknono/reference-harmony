@@ -4,6 +4,12 @@ export const RECENT_DOC_MAX_COUNT: number = 3;
 // 特性开关（默认关闭）
 export const ENABLE_RECENT_DOCS: boolean = true;
 export const ENABLE_ORIENTATION_MODE_SETTING: boolean = true;
+// 目录清单：是否启用“在线清单列表（cloud catalog）”，默认关闭。
+// - 关闭：不请求 OnlineCatalogRepository，不展示云端清单入口
+// - 开启：可从远端拉取清单摘要并出现在“目录”中
+export const ENABLE_ONLINE_CLOUD_CATALOG: boolean = false;
+// “我的清单”页：是否隐藏导入/分享入口（默认隐藏，避免误触和复杂度）。
+export const HIDE_CUSTOM_LIST_IMPORT_AND_SHARE_ENTRY: boolean = true;
 // 首次启动：是否显示隐私确认弹窗（默认不显示）
 export const ENABLE_PRIVACY_CONSENT_DIALOG: boolean = false;
 // 目录清单：是否保留“收藏/最近”在原位置（完整清单）中的入口；默认不保留（避免重复入口）

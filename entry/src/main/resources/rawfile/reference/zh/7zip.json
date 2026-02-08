@@ -1,0 +1,164 @@
+{
+  "id": "7zip",
+  "name": "7zip 备忘清单",
+  "title": "7z（7-Zip / p7zip）命令用于创建、更新、查看与解压压缩包，常见格式包括 `7z`、`zip`、`tar` 等。",
+  "sections": [
+    {
+      "id": "intro",
+      "title": "简介",
+      "startIndex": 0
+    },
+    {
+      "id": "s1",
+      "title": "入门",
+      "startIndex": 1
+    },
+    {
+      "id": "s2",
+      "title": "7z 压缩示例",
+      "startIndex": 9
+    },
+    {
+      "id": "s3",
+      "title": "7z 解压示例",
+      "startIndex": 17
+    },
+    {
+      "id": "s4",
+      "title": "另见",
+      "startIndex": 25
+    }
+  ],
+  "cards": [
+    {
+      "id": "intro-0",
+      "sectionId": "intro",
+      "title": "简介",
+      "body": "7z（7-Zip / p7zip）命令用于创建、更新、查看与解压压缩包，常见格式包括 `7z`、`zip`、`tar` 等。"
+    },
+    {
+      "id": "s1-1",
+      "sectionId": "s1",
+      "title": "7z 用法",
+      "body": "```shell\n$ 7z <命令> [<开关>..] <压缩包名称> [<文件名>..]\n```\n\n常见命令：\n\n• `a` 添加文件到压缩包（创建/追加）\n• `x` 解压（保留完整路径）\n• `e` 解压（不保留目录结构）\n• `l` 列出压缩包内容\n• `t` 测试压缩包完整性\n\n安装：\n\n```shell\n# Debian/Ubuntu\n$ sudo apt install p7zip-full\n\n# RHEL/CentOS/Fedora\n$ sudo yum install p7zip p7zip-plugins\n\n# macOS (Homebrew)\n$ brew install sevenzip\n```"
+    },
+    {
+      "id": "s1-6",
+      "sectionId": "s1",
+      "title": "命令",
+      "body": "参数 | 描述 | 参数 | 描述\n:--- | :--- | :--- | :---\n`a` | **add：** 添加/创建压缩包 | `x` | **extract：** 解压（保留完整路径）\n`e` | **extract：** 解压（不保留目录名） | `l` | **list：** 列出压缩包内容\n`t` | **test：** 测试压缩包完整性 | `h` | **hash：** 计算文件哈希\n`u` | **update：** 更新压缩包内文件 | `d` | **delete：** 从压缩包中删除文件\n`rn` | **rename：** 重命名压缩包内文件 | `i` | **info：** 查看支持的格式信息\n`b` | **benchmark：** 性能测试 | &nbsp; | &nbsp;"
+    },
+    {
+      "id": "s1-7",
+      "sectionId": "s1",
+      "title": "语法形式和选项",
+      "body": ":- | :-\n:- | :-\n**基本语法** | `7z <命令> [开关...] 压缩包 [文件...]`\n**创建 7z 压缩包** | `7z a -t7z archive.7z 文件/目录...`\n**创建 zip 压缩包** | `7z a -tzip archive.zip 文件/目录...`\n**解压（保留路径）** | `7z x archive.7z -o输出目录`\n**解压（不保留目录）** | `7z e archive.7z -o输出目录`\n**列出内容** | `7z l archive.7z`\n**测试完整性** | `7z t archive.7z`\n**计算哈希** | `7z h -scrcSHA256 文件...`\n**创建分卷压缩包** | `7z a archive.7z 大文件.iso -v1g`"
+    },
+    {
+      "id": "s1-8",
+      "sectionId": "s1",
+      "title": "常用开关示例",
+      "body": "参数 | 描述 | 参数 | 描述\n:--- | :--- | :--- | :---\n`--` | 停止解析后续参数为开关 | `-t{Type}` | 指定压缩格式（如 `-t7z` / `-tzip`），默认为`7z`\n`-o{目录}` | 指定输出目录（解压） | `-p{密码}` | 设置密码\n`-r[-\\|0]` | 递归子目录（`-r` / `-r-` / `-r0`） | `-mx[N]` | 压缩等级：`-mx0`（不压缩） `-mx1`（最快）… `-mx9`（最强）\n`-mmt[N]` | 线程数（如 `-mmt4`） | `-y` | 所有询问默认回答 Yes\n`-ao{a\\|s\\|t\\|u}` | 覆盖策略：a 全覆盖 / s 跳过 / t 仅覆盖旧文件 / u 自动重命名 | &nbsp; | &nbsp;\n`-v{Size}[b\\|k\\|m\\|g]` | 分卷（如 `-v1g` / `-v500m`） | `-sdel` | 压缩后删除源文件\n`-sfx[{name}]` | 生成自解压压缩包（SFX） | `-bd` | 关闭进度指示器\n`-bb[0-3]` | 输出日志等级 | `-bt` | 输出执行时间统计\n`-so` | 输出到 stdout | `-si[{name}]` | 从 stdin 读入数据\n`-scrc[CRC64\\|SHA1\\|SHA256\\|*]` | 指定校验/哈希算法（用于 `x/e/h`） | `@listfile` | 从列表文件读取文件名\n`-i...` | 仅包含匹配项（include） | `-x...` | 排除匹配项（exclude）\n`-slt` | `l` 命令输出技术信息 | `-spf` | 使用绝对路径"
+    },
+    {
+      "id": "s2-9",
+      "sectionId": "s2",
+      "title": "创建新的 7z 压缩包",
+      "body": "```shell\n$ 7z a -t7z archive.7z file1 file2 dir1/\n```"
+    },
+    {
+      "id": "s2-10",
+      "sectionId": "s2",
+      "title": "创建分卷压缩包",
+      "body": "```shell\n$ 7z a big.7z big.iso -v1g\n```\n\n压缩时会自动根据文件名后缀判断压缩格式，所以可以忽略 `-t` 开关"
+    },
+    {
+      "id": "s2-12",
+      "sectionId": "s2",
+      "title": "设置压缩等级与线程数",
+      "body": "```shell\n$ 7z a archive.7z dir1/ -mx9 -mmt4\n```"
+    },
+    {
+      "id": "s2-13",
+      "sectionId": "s2",
+      "title": "%E6%8E%92%E9%99%A4%E7%9B%AE%E5%BD%95%E6%88%96%E6%96%87%E4%BB%B6",
+      "body": "%60%60%60shell%0A%24%207z%20a%20archive.7z%20example%2F%20'-x!example%2Fnode_modules%2F*'%20'-x!example%2Fdist%2F*'%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-14",
+      "sectionId": "s2",
+      "title": "从列表文件读取待压缩文件",
+      "body": "```shell\n$ 7z a archive.7z @files.txt\n```\n\n`files.txt` 每行一个文件路径（相对或绝对路径均可）。"
+    },
+    {
+      "id": "s2-16",
+      "sectionId": "s2",
+      "title": "压缩后删除源文件",
+      "body": "```shell\n$ 7z a archive.7z dir1/ -sdel\n```"
+    },
+    {
+      "id": "s3-17",
+      "sectionId": "s3",
+      "title": "解压并保留目录结构（推荐）",
+      "body": "```shell\n$ 7z x archive.7z\n```"
+    },
+    {
+      "id": "s3-18",
+      "sectionId": "s3",
+      "title": "解压到指定目录",
+      "body": "```shell\n$ 7z x archive.7z -o./output\n```"
+    },
+    {
+      "id": "s3-19",
+      "sectionId": "s3",
+      "title": "解压但不保留目录结构",
+      "body": "```shell\n$ 7z e archive.7z -o./output\n```"
+    },
+    {
+      "id": "s3-20",
+      "sectionId": "s3",
+      "title": "解压时覆盖策略",
+      "body": "```shell\n$ 7z x archive.7z -o./output -aoa\n```"
+    },
+    {
+      "id": "s3-21",
+      "sectionId": "s3",
+      "title": "%E4%BB%85%E8%A7%A3%E5%8E%8B%E5%8C%B9%E9%85%8D%E7%9A%84%E6%96%87%E4%BB%B6",
+      "body": "%60%60%60shell%0A%24%207z%20x%20archive.7z%20'*.log'%20-o.%2Foutput%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s3-22",
+      "sectionId": "s3",
+      "title": "列出压缩包内容（含技术信息）",
+      "body": "```shell\n$ 7z l archive.7z -slt\n```"
+    },
+    {
+      "id": "s3-23",
+      "sectionId": "s3",
+      "title": "测试压缩包完整性",
+      "body": "```shell\n$ 7z t archive.7z\n```"
+    },
+    {
+      "id": "s3-24",
+      "sectionId": "s3",
+      "title": "计算文件哈希（SHA256）",
+      "body": "```shell\n$ 7z h -scrcSHA256 file1 file2\n```"
+    },
+    {
+      "id": "s4-25",
+      "sectionId": "s4",
+      "title": "另见",
+      "body": "• [7-Zip 官网](https://www.7-zip.org/) _(7-zip.org)_\n• [7-Zip 简体中文网站](https://sparanoid.com/lab/7z/) _(7-zip.org)_\n• [7z 命令帮助文档](https://jaywcjlove.github.io/linux-command/c/7z.html) _(linux-command)_"
+    }
+  ],
+  "source": {
+    "repo": "https://github.com/jaywcjlove/reference",
+    "path": "docs/7zip.md",
+    "ref": "main",
+    "url": "https://github.com/jaywcjlove/reference/tree/main/docs/7zip.md",
+    "lang": "zh",
+    "mode": "local"
+  }
+}

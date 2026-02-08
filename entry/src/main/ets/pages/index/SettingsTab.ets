@@ -3,7 +3,7 @@ import type { ReferenceLang } from '../../common/referenceModels';
 import type { OnlineMdLink } from '../../common/onlineMdModels';
 import { openExternalLink } from '../../common/openExternalLink';
 import { formatDocCount, lengthToNumber } from './utils';
-import { DEFAULT_DEBUG_SERVER_ORIGIN, ENABLE_ORIENTATION_MODE_SETTING, PRIVACY_STATEMENT_URL, SHOW_DEBUG_MODE_TOGGLE, SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
+import { DEFAULT_DEBUG_SERVER_ORIGIN, ENABLE_ONLINE_CLOUD_CATALOG, ENABLE_ORIENTATION_MODE_SETTING, PRIVACY_STATEMENT_URL, SHOW_DEBUG_MODE_TOGGLE, SHOW_IMPORT_MARKDOWN_URL_SETTING } from './constants';
 import webview from '@ohos.web.webview';
 import bundleManager from '@ohos.bundle.bundleManager';
 
@@ -11,8 +11,8 @@ type ThemePreference = 'dark' | 'light' | 'system';
 
 const APP_DISPLAY_NAME_ZH: string = '开发速查';
 const APP_DISPLAY_NAME_EN: string = 'Quick Reference';
-const FALLBACK_VERSION_NAME: string = '0.22.0';
-const FALLBACK_VERSION_CODE: number = 2026020716;
+const FALLBACK_VERSION_NAME: string = '0.23.0';
+const FALLBACK_VERSION_CODE: number = 2026020821;
 const DEVELOPER_NAME: string = '李偲';
 const ONLINE_FILE_LIST_URL: string = 'https://reference.jqknono.com/';
 
@@ -264,7 +264,7 @@ export struct SettingsTab {
         .borderRadius(this.fontSize * 0.8)
         .border({ width: this.fontSize * 0.07, color: this.theme.borderColor });
 
-        if (SHOW_DEBUG_MODE_TOGGLE) {
+        if (SHOW_DEBUG_MODE_TOGGLE && ENABLE_ONLINE_CLOUD_CATALOG) {
           Column({ space: 0 }) {
             Row() {
               Column({ space: this.fontSize * 0.2 }) {

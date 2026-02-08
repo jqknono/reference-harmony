@@ -204,6 +204,7 @@ export struct ReadTab {
                       learningMode: this.learningModeEnabled,
                       hostContext: this.getHostContext(),
                       margin: makeCardMargin(this.fontSize),
+                      hideTitle: getTocCardTitle(card).trim() === group.section.title.trim(),
                     })
                     ;
                   }
@@ -339,6 +340,7 @@ export struct ReadTab {
                       learningMode: this.learningModeEnabled,
                       hostContext: this.getHostContext(),
                       margin: makeCardMargin(this.fontSize),
+                      hideTitle: getTocCardTitle(card).trim() === group.section.title.trim(),
                     })
                     ;
                   }

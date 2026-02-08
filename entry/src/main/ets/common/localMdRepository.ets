@@ -8,7 +8,7 @@ import type { Context } from '@ohos.abilityAccessCtrl';
 import type { OnlineMdLink, OnlineMdLinkList } from './onlineMdModels';
 import type { ReferenceDoc, ReferenceDocSummary, ReferenceDocSource } from './referenceModels';
 import type { ParseResult } from './onlineMdRepository';
-import { parseMarkdownToDoc } from './markdownDocParser';
+import { countMarkdownTableRows, parseMarkdownToDoc } from './markdownDocParser';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
@@ -150,6 +150,7 @@ export class LocalMdRepository {
 
     const docId = this.extractIdFromUri(fileUri);
     const doc = parseMarkdownToDoc(markdown, docId, fileUri);
+    const tableRows = countMarkdownTableRows(markdown);
 
     const source: ReferenceDocSource = {
       repo: fileUri,
@@ -167,10 +168,15 @@ export class LocalMdRepository {
       title: doc.title,
       file: `local:${fileUri}`,
       sectionCount: doc.sections.length,
-      cardCount: doc.cards.length,
+      cardCount: tableRows > 0 ? tableRows : doc.cards.length,
     };
 
     return { success: true, doc, summary };
+  }
+
+  // Read raw markdown text from a local file URI/path (no parsing).
+  async readText(uri: string): Promise<string> {
+    return this.readTextFromUri((uri ?? '').trim());
   }
 
   async getDocFromCache(context: Context, linkId: string): Promise<ReferenceDoc | undefined> {
@@ -313,5 +319,3 @@ export class LocalMdRepository {
       );
   }
 }
-
-

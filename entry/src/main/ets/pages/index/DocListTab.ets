@@ -21,6 +21,7 @@ export struct DocListTab {
   @Prop cloudDocs: Array<ReferenceDocSummary> = [];
   @Prop onlineMdDocs: Array<ReferenceDocSummary> = [];
   @Prop localMdDocs: Array<ReferenceDocSummary> = [];
+  @Prop customListDocs: Array<ReferenceDocSummary> = [];
   @Prop favoriteDocIds: Array<string>;
   @Prop recentDocIds: Array<string>;
   @Link iconErrorKeys: Array<string>;
@@ -35,6 +36,7 @@ export struct DocListTab {
   onOpenCloudDoc?: (docId: string) => void;
   onOpenOnlineDoc?: (docId: string) => void;
   onOpenLocalDoc?: (docId: string) => void;
+  onOpenCustomList?: (listId: string) => void;
   onOpenDocAndQuiz?: (docId: string) => void;
   onOpenCloudDocAndQuiz?: (docId: string) => void;
   onOpenOnlineDocAndQuiz?: (docId: string) => void;
@@ -76,6 +78,14 @@ export struct DocListTab {
 
   private isLocalDoc(docId: string): boolean {
     return docId.startsWith('local_');
+  }
+
+  private isCustomListDoc(docId: string): boolean {
+    return docId.startsWith('customlist_');
+  }
+
+  private customListBaseId(docId: string): string {
+    return this.isCustomListDoc(docId) ? docId.slice('customlist_'.length) : docId;
   }
 
   private isDocFavorite(docId: string): boolean {
@@ -152,6 +162,9 @@ export struct DocListTab {
     }
     for (let i = 0; i < this.localMdDocs.length; i++) {
       merged.push(this.localMdDocs[i]);
+    }
+    for (let i = 0; i < this.customListDocs.length; i++) {
+      merged.push(this.customListDocs[i]);
     }
 
     const favorites: Array<ReferenceDocSummary> = [];
@@ -271,6 +284,10 @@ export struct DocListTab {
   }
 
   private handleOpenDoc(docId: string): void {
+    if (this.isCustomListDoc(docId)) {
+      this.onOpenCustomList?.(this.customListBaseId(docId));
+      return;
+    }
     if (this.isCloudDoc(docId)) {
       this.onOpenCloudDoc?.(docId);
     } else if (this.isOnlineDoc(docId)) {
@@ -283,6 +300,10 @@ export struct DocListTab {
   }
 
   private handleOpenDocAndQuiz(docId: string): void {
+    if (this.isCustomListDoc(docId)) {
+      this.onOpenCustomList?.(this.customListBaseId(docId));
+      return;
+    }
     if (this.isCloudDoc(docId)) {
       this.onOpenCloudDocAndQuiz?.(docId);
     } else if (this.isOnlineDoc(docId)) {
@@ -300,7 +321,7 @@ export struct DocListTab {
       Column({ space: this.fontSize * 0.6 }) {
         // 避免在“目录”页点卡片打开文档时插入顶部占位导致页面抖动：
         // 仅当目录清单本身为空且正在加载时才展示加载提示。
-        if (this.loading && (this.docs.length + this.cloudDocs.length + this.onlineMdDocs.length + this.localMdDocs.length) === 0) {
+        if (this.loading && (this.docs.length + this.cloudDocs.length + this.onlineMdDocs.length + this.localMdDocs.length + this.customListDocs.length) === 0) {
           Text(this.t('加载中…', 'Loading…')).fontColor(this.theme.mutedTextColor);
         }
 
@@ -348,13 +369,15 @@ export struct DocListTab {
                         .border({ width: 1, color: this.theme.accentColor })
                         .borderRadius(this.fontSize * 0.4)
                         .onClick(() => this.handleOpenDoc(doc.id));
-                      Text(this.t('测验', 'Quiz'))
-                        .fontSize(this.fontSize * 0.8)
-                        .fontColor(this.theme.accentColor)
-                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                        .border({ width: 1, color: this.theme.accentColor })
-                        .borderRadius(this.fontSize * 0.4)
-                        .onClick(() => this.handleOpenDocAndQuiz(doc.id));
+                      if (!this.isCustomListDoc(doc.id)) {
+                        Text(this.t('测验', 'Quiz'))
+                          .fontSize(this.fontSize * 0.8)
+                          .fontColor(this.theme.accentColor)
+                          .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                          .border({ width: 1, color: this.theme.accentColor })
+                          .borderRadius(this.fontSize * 0.4)
+                          .onClick(() => this.handleOpenDocAndQuiz(doc.id));
+                      }
                     }
                   } else {
                     Column({ space: this.fontSize * 0.5 }) {
@@ -365,13 +388,15 @@ export struct DocListTab {
                         .border({ width: 1, color: this.theme.accentColor })
                         .borderRadius(this.fontSize * 0.4)
                         .onClick(() => this.handleOpenDoc(doc.id));
-                      Text(this.t('测验', 'Quiz'))
-                        .fontSize(this.fontSize * 0.8)
-                        .fontColor(this.theme.accentColor)
-                        .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
-                        .border({ width: 1, color: this.theme.accentColor })
-                        .borderRadius(this.fontSize * 0.4)
-                        .onClick(() => this.handleOpenDocAndQuiz(doc.id));
+                      if (!this.isCustomListDoc(doc.id)) {
+                        Text(this.t('测验', 'Quiz'))
+                          .fontSize(this.fontSize * 0.8)
+                          .fontColor(this.theme.accentColor)
+                          .padding({ left: this.fontSize * 0.8, right: this.fontSize * 0.8, top: this.fontSize * 0.4, bottom: this.fontSize * 0.4 })
+                          .border({ width: 1, color: this.theme.accentColor })
+                          .borderRadius(this.fontSize * 0.4)
+                          .onClick(() => this.handleOpenDocAndQuiz(doc.id));
+                      }
                     }
                     .alignItems(HorizontalAlign.End);
                   }
@@ -412,6 +437,19 @@ export struct DocListTab {
                       .fontColor(0xffffffff)
                       .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
                       .backgroundColor(0xff0EA5E9)
+                      .borderRadius({
+                        topLeft: this.fontSize * 0.7,
+                        topRight: this.fontSize * 0.4,
+                        bottomLeft: this.fontSize * 0,
+                       bottomRight: this.fontSize * 0.4
+                      });
+                  }
+                  if (this.isCustomListDoc(doc.id)) {
+                    Text(this.t('自建', 'Custom'))
+                      .fontSize(this.fontSize * 0.65)
+                      .fontColor(0xffffffff)
+                      .padding({ left: this.fontSize * 0.4, right: this.fontSize * 0.4, top: this.fontSize * 0.15, bottom: this.fontSize * 0.15 })
+                      .backgroundColor(0xff6366F1)
                       .borderRadius({
                         topLeft: this.fontSize * 0.7,
                         topRight: this.fontSize * 0.4,

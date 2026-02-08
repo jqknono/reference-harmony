@@ -189,7 +189,7 @@ $ ssh-keygen -t rsa -b 4096 -C "your@mail.com"
 
 {.left-text}
 
-Generate an RSA 4096 bit key with email as a comment
+Generate an RSA 4096 bit key with email as a comment, or use [SSH Key Generator](https://sshkeygenerator.com/) online
 
 ### Generate {.col-span-2 .row-span-2}
 

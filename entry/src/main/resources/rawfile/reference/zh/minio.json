@@ -16,8 +16,13 @@
     },
     {
       "id": "s2",
-      "title": "另见",
+      "title": "Admin 常用管理命令",
       "startIndex": 63
+    },
+    {
+      "id": "s3",
+      "title": "另见",
+      "startIndex": 109
     }
   ],
   "cards": [
@@ -92,7 +97,7 @@
       "id": "s1-41",
       "sectionId": "s1",
       "title": "mc 文件夹操作",
-      "body": "列出文件夹\n\n```sh\nmc ls myminio/mybucket/folder\n```\n\n创建文件夹\n\n```sh\nmc mb myminio/mybucket/folder\n```\n\n删除文件夹\n\n```sh\nmc rb myminio/mybucket/folder\n```\n\n移动文件夹\n\n```sh\nmc mv myminio/mybucket/folder myminio/mybucket/newfolder\n```\n\n拷贝文件夹\n\n```sh\nmc cp myminio/mybucket/folder myminio/mybucket/newfolder\n```\n\n删除文件夹中的所有文件\n\n```sh\nmc rm --recursive myminio/mybucket/folder\n```\n\n列出文件夹中的所有文件\n\n```sh\nmc ls --recursive myminio/mybucket/folder\n```\n\n列出文件夹中的所有文件，包括子文件夹\n\n```sh\nmc ls --recursive --include-folders myminio/mybucket/folder\n```"
+      "body": "列出文件夹\n\n```sh\nmc ls myminio/mybucket/folder\n```\n\n创建文件夹\n\n```sh\nmc mb myminio/mybucket/folder\n```\n\n删除文件夹\n\n```sh\nmc rb myminio/mybucket/folder\n```\n\n移动文件夹\n\n```sh\nmc mv -r myminio/mybucket/folder myminio/mybucket/newfolder\n```\n\n拷贝文件夹\n\n```sh\nmc cp -r myminio/mybucket/folder myminio/mybucket/newfolder\n```\n\n删除文件夹中的所有文件\n\n```sh\nmc rm --recursive myminio/mybucket/folder\n```\n\n列出文件夹中的所有文件\n\n```sh\nmc ls --recursive myminio/mybucket/folder\n```\n\n列出文件夹中的所有文件，包括子文件夹\n\n```sh\nmc ls --recursive --include-folders myminio/mybucket/folder\n```"
     },
     {
       "id": "s1-57",
@@ -103,6 +108,85 @@
     {
       "id": "s2-63",
       "sectionId": "s2",
+      "title": "mc admin 管理操作",
+      "body": "`mc admin` 用于管理 MinIO 服务端（需要具备相应管理权限的账号/策略）。"
+    },
+    {
+      "id": "s2-64",
+      "sectionId": "s2",
+      "title": "%E5%B8%B8%E7%94%A8%E5%85%A8%E5%B1%80%E5%8F%82%E6%95%B0%EF%BC%88%60mc%60%20%E5%85%A8%E5%B1%80%EF%BC%8C%E5%AF%B9%20%60mc%20admin%60%20%E5%90%8C%E6%A0%B7%E9%80%82%E7%94%A8%EF%BC%89",
+      "body": "%E5%8F%82%E6%95%B0%20%7C%20%E8%AF%B4%E6%98%8E%0A----%20%7C%20----%0A%60--json%60%20%7C%20%E8%BE%93%E5%87%BA%20JSON%EF%BC%8C%E4%BE%BF%E4%BA%8E%E8%84%9A%E6%9C%AC%E8%A7%A3%E6%9E%90%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E5%A4%84%E7%90%86%0A%60--debug%60%20%7C%20%E6%89%93%E5%8D%B0%E8%B0%83%E8%AF%95%E4%BF%A1%E6%81%AF%EF%BC%88%E6%8E%92%E6%9F%A5%E6%9D%83%E9%99%90%2F%E7%BD%91%E7%BB%9C%2F%E7%AD%BE%E5%90%8D%E7%AD%89%E9%97%AE%E9%A2%98%EF%BC%89%0A%60--insecure%60%20%7C%20%E8%B7%B3%E8%BF%87%20TLS%20%E8%AF%81%E4%B9%A6%E6%A0%A1%E9%AA%8C%EF%BC%88%E8%87%AA%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6%2F%E6%B5%8B%E8%AF%95%E7%8E%AF%E5%A2%83%E5%B8%B8%E7%94%A8%EF%BC%89%0A%60-C%2C%20--config-dir%20%3CDIR%3E%60%20%7C%20%E6%8C%87%E5%AE%9A%20%60mc%60%20%E9%85%8D%E7%BD%AE%E7%9B%AE%E5%BD%95%EF%BC%88%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%9A%94%E7%A6%BB%EF%BC%89%0A%60-q%2C%20--quiet%60%20%7C%20%E9%9D%99%E9%BB%98%E6%A8%A1%E5%BC%8F%EF%BC%8C%E5%87%8F%E5%B0%91%E9%9D%9E%E5%BF%85%E8%A6%81%E8%BE%93%E5%87%BA%0A%60--no-color%60%20%7C%20%E7%A6%81%E7%94%A8%E5%BD%A9%E8%89%B2%E8%BE%93%E5%87%BA%EF%BC%88CI%2F%E6%97%A5%E5%BF%97%E6%9B%B4%E5%8F%8B%E5%A5%BD%EF%BC%89%0A%60--dp%2C%20--disable-pager%60%20%7C%20%E7%A6%81%E7%94%A8%E5%88%86%E9%A1%B5%E5%99%A8%EF%BC%88%E7%AE%A1%E9%81%93%2F%E9%87%8D%E5%AE%9A%E5%90%91%E5%9C%BA%E6%99%AF%E6%9B%B4%E7%A8%B3%E5%AE%9A%EF%BC%89%0A%60-H%2C%20--custom-header%20'%3Ckey%3E%3A%3Cvalue%3E'%60%20%7C%20%E8%BF%BD%E5%8A%A0%E8%87%AA%E5%AE%9A%E4%B9%89%20HTTP%20Header",
+      "encoded": true
+    },
+    {
+      "id": "s2-65",
+      "sectionId": "s2",
+      "title": "mc admin info（节点/集群信息）",
+      "body": "查看 MinIO 服务信息（集群/节点/版本等）。\n\n```sh\nmc admin info [--offline] TARGET\n```\n\n常用参数：\n\n参数 | 说明\n---- | ----\n`--offline` | 允许在部分节点离线的情况下返回可用信息（排障场景常用）\n\n示例：\n\n```sh\nmc admin info myminio\nmc admin info --offline myminio\nmc admin info --json myminio\n```"
+    },
+    {
+      "id": "s2-71",
+      "sectionId": "s2",
+      "title": "mc admin logs（服务端日志）",
+      "body": "按需拉取服务端日志输出（可指定节点）。\n\n```sh\nmc admin logs [--last <N>] [--type <TYPE>] TARGET [NODE]\n```\n\n常用参数：\n\n参数 | 说明\n---- | ----\n`-l, --last <N>` | 返回最近 N 条日志\n`-t, --type <TYPE>` | 指定服务类型（常见：`minio`）\n\n示例：\n\n```sh\nmc admin logs myminio\nmc admin logs --last 100 myminio\nmc admin logs --type minio myminio\nmc admin logs --json --last 200 myminio\nmc admin logs myminio http://minio-node-1:9000\n```"
+    },
+    {
+      "id": "s2-77",
+      "sectionId": "s2",
+      "title": "mc admin accesskey（访问密钥 / Service Account）",
+      "body": "用于创建与管理用户的访问密钥（常用于给应用/CI 生成可控权限的 Service Account）。\n\n> 注：从 `mc` **2024-10-08** 起开始提供 `mc admin accesskey`（旧版本可能使用 `mc admin user svcacct` 等命令族）。"
+    },
+    {
+      "id": "s2-79",
+      "sectionId": "s2",
+      "title": "create%EF%BC%88%E5%88%9B%E5%BB%BA%EF%BC%89",
+      "body": "%60%60%60sh%0A%23%20%E7%94%A8%E6%88%B7%E5%90%8D%E5%8F%AF%E5%BF%BD%E7%95%A5%EF%BC%8C%E9%BB%98%E8%AE%A4%E4%B8%BA%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%0Amc%20admin%20accesskey%20create%20%5BFLAGS%5D%20TARGET%20%5BUSERNAME%5D%0A%60%60%60%0A%0A%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0%EF%BC%9A%0A%0A%E5%8F%82%E6%95%B0%20%7C%20%E8%AF%B4%E6%98%8E%0A----%20%7C%20----%0A%60--access-key%20%3CACCESSKEY%3E%60%20%7C%20%E6%8C%87%E5%AE%9A%20Access%20Key%EF%BC%88%E4%B8%8D%E6%8C%87%E5%AE%9A%E5%88%99%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%EF%BC%89%0A%60--secret-key%20%3CSECRETKEY%3E%60%20%7C%20%E6%8C%87%E5%AE%9A%20Secret%20Key%EF%BC%88%E4%B8%8D%E6%8C%87%E5%AE%9A%E5%88%99%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%EF%BC%89%0A%60--comment%20%3CTEXT%3E%60%20%7C%20%E4%B8%BA%E8%AF%A5%E5%AF%86%E9%92%A5%E6%B7%BB%E5%8A%A0%E5%A4%87%E6%B3%A8%0A%60--expiry%20%3CDURATION%3E%60%20%7C%20%E8%AE%BE%E7%BD%AE%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4%2F%E6%9C%89%E6%95%88%E6%9C%9F%EF%BC%88%E4%B8%8D%E6%8C%87%E5%AE%9A%E5%88%99%E4%B8%BA%E6%B0%B8%E4%B9%85%E6%9C%89%E6%95%88%EF%BC%89%0A%60--policy%20%3CJSON%3E%60%20%7C%20%E7%9B%B4%E6%8E%A5%E4%BC%A0%E5%85%A5%E7%AD%96%E7%95%A5%20JSON%EF%BC%88%E4%B8%BA%E8%AF%A5%E5%AF%86%E9%92%A5%E7%BB%91%E5%AE%9A%E6%9D%83%E9%99%90%EF%BC%89%0A%60--policy-file%20%3CFILE%3E%60%20%7C%20%E4%BB%8E%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BD%E7%AD%96%E7%95%A5%20JSON%0A%60--description%20%3CTEXT%3E%60%20%7C%20%E6%8F%8F%E8%BF%B0%E4%BF%A1%E6%81%AF%0A%0A%E7%A4%BA%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60sh%0Amc%20admin%20accesskey%20create%20myminio%0Amc%20admin%20accesskey%20create%20--comment%20%22ci%22%20--policy-file%20.%2Freadonly.json%20myminio%20appuser%0Amc%20admin%20accesskey%20create%20--access-key%20%22%24AK%22%20--secret-key%20%22%24SK%22%20--expiry%20168h%20myminio%20appuser%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-84",
+      "sectionId": "s2",
+      "title": "edit%EF%BC%88%E7%BC%96%E8%BE%91%EF%BC%89",
+      "body": "%60%60%60sh%0Amc%20admin%20accesskey%20edit%20%5BFLAGS%5D%20TARGET%20ACCESSKEY%0A%60%60%60%0A%0A%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0%EF%BC%9A%0A%0A%E5%8F%82%E6%95%B0%20%7C%20%E8%AF%B4%E6%98%8E%0A----%20%7C%20----%0A%60--comment%20%3CTEXT%3E%60%20%7C%20%E6%9B%B4%E6%96%B0%E5%A4%87%E6%B3%A8%0A%60--expiry%20%3CDURATION%3E%60%20%7C%20%E6%9B%B4%E6%96%B0%E8%BF%87%E6%9C%9F%E6%97%B6%E9%97%B4%2F%E6%9C%89%E6%95%88%E6%9C%9F%0A%60--policy%20%3CJSON%3E%60%20%7C%20%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5%20JSON%0A%60--policy-file%20%3CFILE%3E%60%20%7C%20%E4%BB%8E%E6%96%87%E4%BB%B6%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5%20JSON%0A%60--description%20%3CTEXT%3E%60%20%7C%20%E6%9B%B4%E6%96%B0%E6%8F%8F%E8%BF%B0%E4%BF%A1%E6%81%AF%0A%0A%E7%A4%BA%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60sh%0Amc%20admin%20accesskey%20edit%20--comment%20%22rotate-2026-01%22%20myminio%20%22%24AK%22%0Amc%20admin%20accesskey%20edit%20--policy-file%20.%2Fwriteonly.json%20myminio%20%22%24AK%22%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-89",
+      "sectionId": "s2",
+      "title": "info%EF%BC%88%E6%9F%A5%E7%9C%8B%E8%AF%A6%E6%83%85%EF%BC%89",
+      "body": "%60%60%60sh%0Amc%20admin%20accesskey%20info%20TARGET%20ACCESSKEY%0A%60%60%60%0A%0A%E7%A4%BA%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60sh%0Amc%20admin%20accesskey%20info%20myminio%20%22%24AK%22%0Amc%20admin%20accesskey%20info%20--json%20myminio%20%22%24AK%22%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-92",
+      "sectionId": "s2",
+      "title": "ls（列表）",
+      "body": "```sh\nmc admin accesskey ls [FLAGS] TARGET [USERNAME]\n```\n\n常用参数：\n\n参数 | 说明\n---- | ----\n`--all` | 列出所有用户（含临时用户）\n`--self` | 仅列出当前用户\n`--svcacc-only` | 仅列出临时 STS Key\n`--temp-only` | 仅列出有 Access Key 的用户（只返回存在关联密钥的用户）\n`--users-only` | 仅列出用户（不含临时 Key）\n\n示例：\n\n```sh\nmc admin accesskey ls myminio\nmc admin accesskey ls myminio appuser\nmc admin accesskey ls --users-only myminio\nmc admin accesskey ls --svcacc-only myminio\n```"
+    },
+    {
+      "id": "s2-97",
+      "sectionId": "s2",
+      "title": "enable%20%2F%20disable%EF%BC%88%E5%90%AF%E7%94%A8%20%2F%20%E7%A6%81%E7%94%A8%EF%BC%89",
+      "body": "%60%60%60sh%0Amc%20admin%20accesskey%20enable%20TARGET%20ACCESSKEY%0Amc%20admin%20accesskey%20disable%20TARGET%20ACCESSKEY%0A%60%60%60%0A%0A%E7%A4%BA%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60sh%0Amc%20admin%20accesskey%20disable%20myminio%20%22%24AK%22%0Amc%20admin%20accesskey%20enable%20myminio%20%22%24AK%22%0A%60%60%60%0A%0A%60%24AK%60%20%E6%9B%BF%E6%8D%A2%E4%B8%BA%E4%BD%A0%E7%9A%84AccessKey",
+      "encoded": true
+    },
+    {
+      "id": "s2-101",
+      "sectionId": "s2",
+      "title": "rm%EF%BC%88%E5%88%A0%E9%99%A4%EF%BC%89",
+      "body": "%60%60%60sh%0Amc%20admin%20accesskey%20rm%20TARGET%20ACCESSKEY%0A%60%60%60%0A%0A%E7%A4%BA%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60sh%0Amc%20admin%20accesskey%20rm%20myminio%20%22%24AK%22%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s2-104",
+      "sectionId": "s2",
+      "title": "sts-revoke%EF%BC%88%E6%92%A4%E9%94%80%20STS%20%E4%B8%B4%E6%97%B6%E5%87%AD%E8%AF%81%EF%BC%89",
+      "body": "%60%60%60sh%0Amc%20admin%20accesskey%20sts-revoke%20%5BFLAGS%5D%20TARGET%20%5BSTS-KEY%20...%5D%0A%60%60%60%0A%0A%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0%EF%BC%9A%0A%0A%E5%8F%82%E6%95%B0%20%7C%20%E8%AF%B4%E6%98%8E%0A----%20%7C%20----%0A%60--all%60%20%7C%20%E6%92%A4%E9%94%80%E5%85%A8%E9%83%A8%20STS%20Key%0A%60--self%60%20%7C%20%E6%92%A4%E9%94%80%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E7%9A%84%20STS%20Key%0A%60--token-type%20%3CTYPE%3E%60%20%7C%20%E4%BB%85%E6%92%A4%E9%94%80%E6%8C%87%E5%AE%9A%E7%B1%BB%E5%9E%8B%E7%9A%84%20Token%EF%BC%88%E4%BE%8B%E5%A6%82%20%60web%60%E3%80%81%60api%60%EF%BC%89%0A%0A%E7%A4%BA%E4%BE%8B%EF%BC%9A%0A%0A%60%60%60sh%0Amc%20admin%20accesskey%20sts-revoke%20--self%20myminio%0Amc%20admin%20accesskey%20sts-revoke%20--all%20myminio%0Amc%20admin%20accesskey%20sts-revoke%20--token-type%20web%20myminio%0Amc%20admin%20accesskey%20sts-revoke%20myminio%20%22%24STS_KEY%22%0A%60%60%60",
+      "encoded": true
+    },
+    {
+      "id": "s3-109",
+      "sectionId": "s3",
       "title": "另见",
       "body": "• [MinIO官方文档](https://min.io/docs/minio/kubernetes/upstream/) _(min.io)_\n• [MinIO github 源码](https://github.com/minio/minio) _(github.com)_"
     }

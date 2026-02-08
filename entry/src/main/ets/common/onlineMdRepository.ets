@@ -7,7 +7,7 @@ import type { Context } from '@ohos.abilityAccessCtrl';
 import type { OnlineMdLink, OnlineMdLinkList } from './onlineMdModels';
 import { generateOnlineMdId } from './onlineMdModels';
 import type { ReferenceDoc, ReferenceDocSummary, ReferenceSection, ReferenceCardData, ReferenceDocSource } from './referenceModels';
-import { parseMarkdownToDoc } from './markdownDocParser';
+import { countMarkdownTableRows, parseMarkdownToDoc } from './markdownDocParser';
 
 type Preferences = preferences.Preferences;
 type ValueType = preferences.ValueType;
@@ -478,6 +478,7 @@ export class OnlineMdRepository {
 
         const id = this.extractIdFromUrl(url);
         const doc = parseMarkdownToDoc(markdown, id, url);
+        const tableRows = countMarkdownTableRows(markdown);
 
         const summary: ReferenceDocSummary = {
           id: doc.id,
@@ -485,7 +486,7 @@ export class OnlineMdRepository {
           title: doc.title,
           file: `online:${url}`,
           sectionCount: doc.sections.length,
-          cardCount: doc.cards.length,
+          cardCount: tableRows > 0 ? tableRows : doc.cards.length,
         };
 
         const successResult: ParseResult = {
@@ -557,4 +558,3 @@ export class OnlineMdRepository {
       .then((): void => undefined, (): void => undefined);
   }
 }
-

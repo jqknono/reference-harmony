@@ -835,5 +835,69 @@ export function parseMarkdownToDoc(markdown: string, id: string, url: string, ke
   return doc;
 }
 
+// Count total data rows in all markdown tables (GFM-style) within the given markdown.
+// This is used for catalog "card count" display, treating each table row as one learning card.
+// Keep behavior aligned with tools/sync_reference_docs.mjs.
+export function countMarkdownTableRows(markdown: string, keepTags: boolean = false): number {
+  const fmResult = extractFrontmatter(markdown);
+  const body = fmResult.body;
+  const lines = body.replace(/\r\n/g, '\n').split('\n');
+
+  const normalizeLine = (raw: string): string => {
+    const withoutComments = stripHtmlCommentsInLine(raw);
+    if (keepTags) return withoutComments;
+    return stripTagsInLine(withoutComments);
+  };
+
+  let totalRows = 0;
+  let rehypeIgnoreDepth = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const rawLine = lines[i];
+    const line = normalizeLine(rawLine);
+
+    if (isRehypeIgnoreStart(rawLine)) {
+      rehypeIgnoreDepth++;
+      continue;
+    }
+    if (isRehypeIgnoreEnd(rawLine)) {
+      if (rehypeIgnoreDepth > 0) rehypeIgnoreDepth--;
+      continue;
+    }
+    if (rehypeIgnoreDepth > 0) continue;
+    if (!line.trim()) continue;
+    if (/^\s*\{[.#][^}]+\}\s*$/.test(line)) continue;
+    if (isHorizontalRuleLine(line)) continue;
+
+    const fence = parseFenceOpen(line);
+    if (fence) {
+      i++;
+      while (i < lines.length && !isFenceClose(stripHtmlCommentsInLine(lines[i]), fence.marker)) i++;
+      continue;
+    }
+
+    // table header + separator
+    if (line.includes('|') && i + 1 < lines.length) {
+      const sep = normalizeLine(lines[i + 1]);
+      if (!isTableSeparatorLine(sep)) continue;
+
+      i += 2;
+      while (i < lines.length) {
+        const rowRaw = lines[i];
+        // Don't cross ignore markers; outer loop needs to process ignore regions.
+        if (isRehypeIgnoreStart(rowRaw) || isRehypeIgnoreEnd(rowRaw)) break;
+        const rowLine = normalizeLine(rowRaw);
+        if (!rowLine.trim() || !rowLine.includes('|')) break;
+        if (isTableSeparatorLine(rowLine)) break;
+        totalRows++;
+        i++;
+      }
+      i--;
+      continue;
+    }
+  }
+
+  return totalRows;
+}
 
 
