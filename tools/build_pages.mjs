@@ -21,7 +21,9 @@ function normalizeDomain(domain) {
 }
 
 function toDownloadUrl(domain, relPath) {
-  if (!domain) return `/${relPath.replace(/\\/g, '/')}`
+  // Prefer relative URLs when domain is not provided so it works for
+  // both GitHub Pages project sites (/repo/) and custom domains.
+  if (!domain) return relPath.replace(/\\/g, '/')
   return new URL(relPath.replace(/\\/g, '/'), domain).toString()
 }
 
@@ -49,8 +51,9 @@ async function walkFiles(dirAbs, baseAbs) {
 
 const domain = normalizeDomain(getArgValue('domain') || process.env.SITE_DOMAIN || '')
 if (!domain) {
-  console.error('缺少构建入参：--domain=你的域名（例如 --domain=https://xxx.github.io/reference-harmony/）')
-  process.exit(1)
+  console.warn(
+    '未提供 --domain 或 SITE_DOMAIN：将生成相对链接（推荐用于 GitHub Pages / 自定义域名场景）。',
+  )
 }
 
 await rm(DIST_DIR, { recursive: true, force: true })
@@ -281,7 +284,10 @@ ${rows.map((r) => `              ${r}`).join('\n')}
           var btn = e.target.closest('.btn[data-url]');
           if (!btn) return;
           var url = btn.getAttribute('data-url');
-          navigator.clipboard.writeText(url).then(function () {
+          // Always copy absolute URL for convenience.
+          var abs = url;
+          try { abs = new URL(url, location.href).toString(); } catch (e) {}
+          navigator.clipboard.writeText(abs).then(function () {
             var orig = btn.textContent;
             btn.textContent = '已复制';
             btn.classList.add('copied');
@@ -299,4 +305,3 @@ ${rows.map((r) => `              ${r}`).join('\n')}
 
 await writeFile(path.join(DIST_DIR, 'index.html'), html, 'utf8')
 console.log(`已生成：${path.relative(PROJECT_ROOT, path.join(DIST_DIR, 'index.html'))}`)
-

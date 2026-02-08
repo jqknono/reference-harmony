@@ -300,13 +300,6 @@ function sanitizeCustomList(raw: Object | null | undefined, markChanged: () => v
     markChanged();
   }
 
-  const reminderEnabled: boolean = toBooleanOr(obj['reminderEnabled'] as Object | null | undefined, false, markChanged);
-  const reminderTime: number | undefined = (() => {
-    const t = toNumberOr(obj['reminderTime'] as Object | null | undefined, -1, markChanged);
-    if (!Number.isFinite(t) || t < 0) return undefined;
-    return clampInt(t, 0, 1439);
-  })();
-
   return {
     id,
     name,
@@ -322,9 +315,6 @@ function sanitizeCustomList(raw: Object | null | undefined, markChanged: () => v
       const t = toNumberOr(obj['sharedAt'] as Object | null | undefined, -1, markChanged);
       return Number.isFinite(t) && t > 0 ? t : undefined;
     })(),
-    calendarEventId: toOptionalString(obj['calendarEventId'] as Object | null | undefined, markChanged),
-    reminderEnabled,
-    reminderTime: reminderEnabled ? reminderTime : undefined,
   };
 }
 
@@ -497,9 +487,6 @@ function copyList(list: CustomList): CustomList {
     sharePassword: list.sharePassword,
     isShared: list.isShared,
     sharedAt: list.sharedAt,
-    calendarEventId: list.calendarEventId,
-    reminderEnabled: list.reminderEnabled,
-    reminderTime: list.reminderTime,
   };
 }
 
@@ -519,9 +506,6 @@ function mergeListUpdates(list: CustomList, updates: Partial<CustomList>): Custo
     sharePassword: updates.sharePassword !== undefined ? updates.sharePassword : list.sharePassword,
     isShared: updates.isShared !== undefined ? updates.isShared : list.isShared,
     sharedAt: updates.sharedAt !== undefined ? updates.sharedAt : list.sharedAt,
-    calendarEventId: updates.calendarEventId !== undefined ? updates.calendarEventId : list.calendarEventId,
-    reminderEnabled: updates.reminderEnabled !== undefined ? updates.reminderEnabled : list.reminderEnabled,
-    reminderTime: updates.reminderTime !== undefined ? updates.reminderTime : list.reminderTime,
   };
 }
 
@@ -889,9 +873,6 @@ export class CustomListRepository {
       sharePassword: undefined,
       isShared: false,
       sharedAt: undefined,
-      calendarEventId: undefined,
-      reminderEnabled: false,
-      reminderTime: undefined,
     };
 
     const shareData: SharedListData = {
@@ -1136,9 +1117,6 @@ export class CustomListRepository {
       sharePassword: undefined,
       isShared: false,
       sharedAt: undefined,
-      calendarEventId: undefined,
-      reminderEnabled: false,
-      reminderTime: undefined,
     };
 
     await this.addList(context, newList);

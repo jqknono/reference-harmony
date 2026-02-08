@@ -1,4 +1,4 @@
-name: Deploy online web to GitHub Pages
+name: Deploy dist to GitHub Pages
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
       - master
     paths:
       - "mds/**"
-      - "online/web/**"
+      - "tools/build_pages.mjs"
+      - "package.json"
       - ".github/workflows/pages.yml"
   workflow_dispatch:
     {}
@@ -40,19 +41,15 @@ jobs:
         with:
           node-version: 20
 
-      - name: Build site (online/web)
+      - name: Build site (tools/build_pages.mjs)
         run: |
-          cd online/web
-          npm install --no-audit --no-fund
-          npm run build
+          node ./tools/build_pages.mjs
 
       - name: Upload artifact (dist)
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./online/web/dist
+          path: ./dist
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-

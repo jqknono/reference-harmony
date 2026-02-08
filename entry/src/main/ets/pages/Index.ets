@@ -28,8 +28,9 @@ import { ReadTab } from './index/ReadTab';
 import { QuizTab } from './index/QuizTab';
 import { SettingsTab } from './index/SettingsTab';
 import { CustomListTab } from './index/CustomListTab';
+import type { ViewMode as CustomListViewMode } from './index/CustomListTab';
 import { TocPanel } from './index/TocPanel';
-import type { CustomList, CustomListCollection } from '../common/customListModels';
+import type { CustomList, CustomListCollection, ListSection, MemoryTable } from '../common/customListModels';
 import { createEmptyCustomListCollection } from '../common/customListModels';
 import { CustomListRepository } from '../common/customListRepository';
 import { listToMarkdown } from '../common/customListModels';
@@ -181,6 +182,23 @@ struct Index {
   @State private customLists: CustomListCollection = createEmptyCustomListCollection();
   @State private customListScrollY: number = 0;
   private customListRepository: CustomListRepository = new CustomListRepository();
+  // 自定义清单 Tab 的 UI 状态：横竖屏切换时 Index 会切换不同的布局树，子组件可能重建。
+  // 这里把关键编辑状态上移到 Index，避免旋转导致回到“我的清单”根页或丢表单输入。
+  @State private customListViewMode: CustomListViewMode = 'lists';
+  @State private customListSelectedList: CustomList | null = null;
+  @State private customListSelectedSection: ListSection | null = null;
+  @State private customListSelectedTable: MemoryTable | null = null;
+  @State private customListShowTableSectionPicker: boolean = false;
+  @State private customListEditListName: string = '';
+  @State private customListEditListDesc: string = '';
+  @State private customListEditSectionTitle: string = '';
+  @State private customListEditSectionContent: string = '';
+  // 章节仅支持 H2/H3（##/###），默认 H2
+  @State private customListEditSectionLevel: number = 2;
+  @State private customListIsEditing: boolean = false;
+  @State private customListEditHeaders: Array<string> = [];
+  @State private customListEditRows: Array<Array<string>> = [];
+  @State private customListEditRowIds: Array<string> = [];
 
   private stopAllTextInputEditing(): void {
     this.catalogSearchInputController.stopEditing();
@@ -2864,6 +2882,20 @@ struct Index {
         isLandscape: this.isLandscape,
         customLists: this.customLists,
         scrollY: this.customListScrollY,
+        viewMode: this.customListViewMode,
+        selectedList: this.customListSelectedList,
+        selectedSection: this.customListSelectedSection,
+        selectedTable: this.customListSelectedTable,
+        showTableSectionPicker: this.customListShowTableSectionPicker,
+        editListName: this.customListEditListName,
+        editListDesc: this.customListEditListDesc,
+        editSectionTitle: this.customListEditSectionTitle,
+        editSectionContent: this.customListEditSectionContent,
+        editSectionLevel: this.customListEditSectionLevel,
+        isEditing: this.customListIsEditing,
+        editHeaders: this.customListEditHeaders,
+        editRows: this.customListEditRows,
+        editRowIds: this.customListEditRowIds,
         onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
         onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
         onRefreshLists: (): void => { this.loadCustomLists(); },
@@ -3060,6 +3092,20 @@ struct Index {
                 isLandscape: this.isLandscape,
                 customLists: this.customLists,
                 scrollY: this.customListScrollY,
+                viewMode: this.customListViewMode,
+                selectedList: this.customListSelectedList,
+                selectedSection: this.customListSelectedSection,
+                selectedTable: this.customListSelectedTable,
+                showTableSectionPicker: this.customListShowTableSectionPicker,
+                editListName: this.customListEditListName,
+                editListDesc: this.customListEditListDesc,
+                editSectionTitle: this.customListEditSectionTitle,
+                editSectionContent: this.customListEditSectionContent,
+                editSectionLevel: this.customListEditSectionLevel,
+                isEditing: this.customListIsEditing,
+                editHeaders: this.customListEditHeaders,
+                editRows: this.customListEditRows,
+                editRowIds: this.customListEditRowIds,
                 onLandscapeScrollDirection: (direction: 'up' | 'down'): void => { this.handleLandscapeContentScroll(direction); },
                 onTitleAreaHeightChange: (height: number): void => { this.setTitleAreaHeight(height); },
                 onRefreshLists: (): void => { this.loadCustomLists(); },

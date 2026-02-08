@@ -18,14 +18,13 @@ import {
   listToMarkdown,
 } from '../../common/customListModels';
 import { CustomListRepository } from '../../common/customListRepository';
-import { createDailyReminder, cancelReminder } from '../../common/calendarReminder';
 import { clearCustomListBackHandler, setCustomListBackHandler } from '../../common/backHandlerRegistry';
 import { lengthToNumber } from './utils';
 import { HIDE_CUSTOM_LIST_IMPORT_AND_SHARE_ENTRY } from './constants';
 import pasteboard from '@ohos.pasteboard';
 import promptAction from '@ohos.promptAction';
 
-type ViewMode = 'lists' | 'sections' | 'edit-list' | 'edit-section' | 'edit-table' | 'share' | 'md-text';
+export type ViewMode = 'lists' | 'sections' | 'edit-list' | 'edit-section' | 'edit-table' | 'share' | 'md-text';
 
 const FONT_AWESOME_SOLID_FAMILY: string = 'FontAwesomeSolid';
 type ActionButtonKind = 'primary' | 'secondary' | 'danger';
@@ -40,35 +39,35 @@ export struct CustomListTab {
   @Link customLists: CustomListCollection;
   @Link scrollY: number;
 
+  // Hoisted UI state: keep editing context stable across orientation/layout tree switches.
+  @Link viewMode: ViewMode;
+  @Link selectedList: CustomList | null;
+  @Link selectedSection: ListSection | null;
+  @Link selectedTable: MemoryTable | null;
+  @Link showTableSectionPicker: boolean;
+
+  // Edit form state
+  @Link editListName: string;
+  @Link editListDesc: string;
+  @Link editSectionTitle: string;
+  @Link editSectionContent: string;
+  @Link editSectionLevel: number;
+  @Link isEditing: boolean;
+
+  // Table editor state
+  @Link editHeaders: Array<string>;
+  @Link editRows: Array<Array<string>>;
+  @Link editRowIds: Array<string>;
+
   scroller: Scroller = new Scroller();
   listScroller: ListScroller = new ListScroller();
   private repository: CustomListRepository = new CustomListRepository();
 
-  @State private viewMode: ViewMode = 'lists';
-  @State private selectedList: CustomList | null = null;
-  @State private selectedSection: ListSection | null = null;
-  @State private selectedTable: MemoryTable | null = null;
-  @State private showTableSectionPicker: boolean = false;
   @State private mdTextName: string = '';
   @State private mdText: string = '';
   @State private mdTextLoading: boolean = false;
   @State private mdTextError: string = '';
   @State private mdTextReturnMode: ViewMode = 'lists';
-
-  // 编辑表单状态
-  @State private editListName: string = '';
-  @State private editListDesc: string = '';
-  @State private editSectionTitle: string = '';
-  @State private editSectionContent: string = '';
-  // 章节仅支持 H2/H3（##/###）
-  // 新建章节默认 H2
-  @State private editSectionLevel: number = 2;
-  @State private isEditing: boolean = false;
-
-  // 表格编辑状态
-  @State private editHeaders: Array<string> = [];
-  @State private editRows: Array<Array<string>> = [];
-  @State private editRowIds: Array<string> = [];
 
   // 分享相关状态
   @State private sharePassword: string = '';
@@ -79,11 +78,6 @@ export struct CustomListTab {
   @State private importData: string = '';
   @State private importPassword: string = '';
   @State private importError: string = '';
-
-  // 日历提醒
-  @State private reminderEnabled: boolean = false;
-  @State private reminderHour: number = 8;
-  @State private reminderMinute: number = 0;
 
   onLandscapeScrollDirection?: (direction: 'up' | 'down') => void;
   onTitleAreaHeightChange?: (height: number) => void;
@@ -111,7 +105,10 @@ export struct CustomListTab {
   }
 
   private async createNewList(): Promise<void> {
-    if (!this.editListName.trim()) return;
+    if (!this.editListName.trim()) {
+      promptAction.showToast({ message: this.t('请输入清单名称', 'Please enter a list name') });
+      return;
+    }
     const ctx = this.getHostContext();
     if (!ctx) return;
 
@@ -124,42 +121,17 @@ export struct CustomListTab {
   }
 
   private async updateSelectedList(): Promise<void> {
-    if (!this.selectedList || !this.editListName.trim()) return;
+    if (!this.selectedList) return;
+    if (!this.editListName.trim()) {
+      promptAction.showToast({ message: this.t('请输入清单名称', 'Please enter a list name') });
+      return;
+    }
     const ctx = this.getHostContext();
     if (!ctx) return;
-
-    const oldReminderEnabled = this.selectedList.reminderEnabled;
-    const oldCalendarEventId = this.selectedList.calendarEventId;
-    let newCalendarEventId: string | undefined = oldCalendarEventId;
-
-    if (this.reminderEnabled && !oldReminderEnabled) {
-      const reminderId = await createDailyReminder({
-        listId: this.selectedList.id,
-        listName: this.editListName.trim(),
-        hour: this.reminderHour,
-        minute: this.reminderMinute,
-      });
-      newCalendarEventId = reminderId.toString();
-    } else if (!this.reminderEnabled && oldReminderEnabled && oldCalendarEventId) {
-      await cancelReminder(parseInt(oldCalendarEventId));
-      newCalendarEventId = undefined;
-    } else if (this.reminderEnabled && oldReminderEnabled && oldCalendarEventId) {
-      await cancelReminder(parseInt(oldCalendarEventId));
-      const reminderId = await createDailyReminder({
-        listId: this.selectedList.id,
-        listName: this.editListName.trim(),
-        hour: this.reminderHour,
-        minute: this.reminderMinute,
-      });
-      newCalendarEventId = reminderId.toString();
-    }
 
     this.customLists = await this.repository.updateList(ctx, this.selectedList.id, {
       name: this.editListName.trim(),
       description: this.editListDesc.trim() || undefined,
-      reminderEnabled: this.reminderEnabled,
-      reminderTime: this.reminderEnabled ? this.reminderHour * 60 + this.reminderMinute : undefined,
-      calendarEventId: newCalendarEventId,
     });
 
     this.selectedList = this.customLists.lists.find(l => l.id === this.selectedList?.id) || null;
@@ -170,11 +142,6 @@ export struct CustomListTab {
   private async deleteList(listId: string): Promise<void> {
     const ctx = this.getHostContext();
     if (!ctx) return;
-
-    const listToDelete = this.customLists.lists.find(l => l.id === listId);
-    if (listToDelete?.calendarEventId) {
-      await cancelReminder(parseInt(listToDelete.calendarEventId));
-    }
 
     this.customLists = await this.repository.deleteList(ctx, listId);
     if (this.selectedList?.id === listId) {
@@ -994,19 +961,15 @@ export struct CustomListTab {
 
             this.IconTextButton(
               '\uf013',
-              this.t('编辑', 'Edit'),
-              'secondary',
-              () => {
-                this.editListName = this.selectedList?.name || '';
-                this.editListDesc = this.selectedList?.description || '';
-                this.reminderEnabled = this.selectedList?.reminderEnabled || false;
-                const reminderTime = this.selectedList?.reminderTime || 480;
-                this.reminderHour = Math.floor(reminderTime / 60);
-                this.reminderMinute = reminderTime % 60;
-                this.isEditing = true;
-                this.setViewMode('edit-list');
-              },
-            );
+            this.t('编辑', 'Edit'),
+            'secondary',
+            () => {
+              this.editListName = this.selectedList?.name || '';
+              this.editListDesc = this.selectedList?.description || '';
+              this.isEditing = true;
+              this.setViewMode('edit-list');
+            },
+          );
           }
         }
         .width('100%')
@@ -1354,74 +1317,6 @@ export struct CustomListTab {
               });
           }
 
-          // 新建清单时不展示「每日提醒」设置（避免干扰创建流程）；编辑清单时才可配置。
-          if (this.isEditing) {
-            Column({ space: this.fontSize * 0.5 }) {
-              Row() {
-                Text(this.t('每日提醒', 'Daily Reminder'))
-                  .fontSize(this.fontSize * 0.9)
-                  .fontColor(this.theme.textColor);
-
-                Toggle({ type: ToggleType.Switch, isOn: this.reminderEnabled })
-                  .selectedColor(this.theme.accentColor)
-                  .onChange((isOn: boolean) => {
-                    this.reminderEnabled = isOn;
-                  });
-              }
-              .width('100%')
-              .justifyContent(FlexAlign.SpaceBetween)
-              .alignItems(VerticalAlign.Center);
-
-              if (this.reminderEnabled) {
-                Row({ space: this.fontSize }) {
-                  Text(this.t('提醒时间', 'Reminder Time'))
-                    .fontSize(this.fontSize * 0.85)
-                    .fontColor(this.theme.mutedTextColor);
-
-                  Row() {
-                    TextInput({ text: this.reminderHour.toString().padStart(2, '0') })
-                      .width(this.fontSize * 3)
-                      .fontSize(this.fontSize)
-                      .fontColor(this.theme.textColor)
-                      .backgroundColor(this.theme.surfaceBackgroundColor)
-                      .borderRadius(this.fontSize * 0.3)
-                      .textAlign(TextAlign.Center)
-                      .type(InputType.Number)
-                      .onChange((value: string) => {
-                        const num = parseInt(value) || 0;
-                        this.reminderHour = Math.max(0, Math.min(23, num));
-                      });
-
-                    Text(':')
-                      .fontSize(this.fontSize)
-                      .fontColor(this.theme.textColor)
-                      .margin({ left: this.fontSize * 0.3, right: this.fontSize * 0.3 });
-
-                    TextInput({ text: this.reminderMinute.toString().padStart(2, '0') })
-                      .width(this.fontSize * 3)
-                      .fontSize(this.fontSize)
-                      .fontColor(this.theme.textColor)
-                      .backgroundColor(this.theme.surfaceBackgroundColor)
-                      .borderRadius(this.fontSize * 0.3)
-                      .textAlign(TextAlign.Center)
-                      .type(InputType.Number)
-                      .onChange((value: string) => {
-                        const num = parseInt(value) || 0;
-                        this.reminderMinute = Math.max(0, Math.min(59, num));
-                      });
-                  }
-                }
-                .width('100%')
-                .justifyContent(FlexAlign.SpaceBetween)
-                .alignItems(VerticalAlign.Center);
-              }
-            }
-            .width('100%')
-            .padding(this.fontSize * 0.8)
-            .backgroundColor(this.theme.surfaceBackgroundColor)
-            .borderRadius(this.fontSize * 0.5);
-          }
-
           if (this.isEditing && this.selectedList) {
             Button(this.t('删除清单', 'Delete List'))
               .width('100%')
@@ -1473,7 +1368,7 @@ export struct CustomListTab {
                 this.createNewList();
               }
             },
-            this.editListName.trim().length > 0,
+            true,
             1,
           );
         }

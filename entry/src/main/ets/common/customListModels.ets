@@ -62,10 +62,6 @@ export interface CustomList {
   sharePassword?: string;
   isShared: boolean;
   sharedAt?: number;
-  // 日历提醒
-  calendarEventId?: string;
-  reminderEnabled: boolean;
-  reminderTime?: number;
 }
 
 /**
@@ -219,7 +215,6 @@ export function createCustomList(name: string, description?: string): CustomList
     createdAt: now,
     updatedAt: now,
     isShared: false,
-    reminderEnabled: false,
   };
 }
 
@@ -534,7 +529,6 @@ export function markdownToList(markdown: string, existingId?: string): CustomLis
     createdAt: now,
     updatedAt: now,
     isShared: false,
-    reminderEnabled: false,
   };
 }
 
