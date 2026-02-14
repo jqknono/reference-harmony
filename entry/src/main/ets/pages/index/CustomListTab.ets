@@ -22,7 +22,6 @@ import { clearCustomListBackHandler, setCustomListBackHandler } from '../../comm
 import { lengthToNumber } from './utils';
 import { HIDE_CUSTOM_LIST_IMPORT_AND_SHARE_ENTRY } from './constants';
 import pasteboard from '@ohos.pasteboard';
-import promptAction from '@ohos.promptAction';
 
 export type ViewMode = 'lists' | 'sections' | 'edit-list' | 'edit-section' | 'edit-table' | 'share' | 'md-text';
 
@@ -87,6 +86,42 @@ export struct CustomListTab {
     return this.getUIContext().getHostContext();
   }
 
+  private getPromptAction() {
+    try {
+      return this.getUIContext().getPromptAction();
+    } catch (_) {
+      return undefined;
+    }
+  }
+
+  private showToast(message: string): void {
+    const action = this.getPromptAction();
+    if (!action) return;
+    try {
+      action.showToast({ message: message });
+    } catch (_) {
+      // ignore
+    }
+  }
+
+  private async confirmDelete(message: string): Promise<boolean> {
+    const action = this.getPromptAction();
+    if (!action) return false;
+    try {
+      const result = await action.showDialog({
+        title: this.t('确认删除', 'Confirm Delete'),
+        message: message,
+        buttons: [
+          { text: this.t('取消', 'Cancel'), color: this.theme.mutedTextColor.toString() },
+          { text: this.t('删除', 'Delete'), color: '#EF4444' },
+        ],
+      });
+      return result.index === 1;
+    } catch (_) {
+      return false;
+    }
+  }
+
   private t(zh: string, en: string): string {
     return this.lang === 'en' ? en : zh;
   }
@@ -106,7 +141,7 @@ export struct CustomListTab {
 
   private async createNewList(): Promise<void> {
     if (!this.editListName.trim()) {
-      promptAction.showToast({ message: this.t('请输入清单名称', 'Please enter a list name') });
+      this.showToast(this.t('请输入清单名称', 'Please enter a list name'));
       return;
     }
     const ctx = this.getHostContext();
@@ -123,7 +158,7 @@ export struct CustomListTab {
   private async updateSelectedList(): Promise<void> {
     if (!this.selectedList) return;
     if (!this.editListName.trim()) {
-      promptAction.showToast({ message: this.t('请输入清单名称', 'Please enter a list name') });
+      this.showToast(this.t('请输入清单名称', 'Please enter a list name'));
       return;
     }
     const ctx = this.getHostContext();
@@ -154,7 +189,7 @@ export struct CustomListTab {
   private async createNewSection(): Promise<void> {
     if (!this.selectedList) return;
     if (!this.editSectionTitle.trim()) {
-      promptAction.showToast({ message: this.t('请输入章节标题', 'Please enter a section title') });
+      this.showToast(this.t('请输入章节标题', 'Please enter a section title'));
       return;
     }
     const ctx = this.getHostContext();
@@ -180,7 +215,7 @@ export struct CustomListTab {
   private async updateSelectedSection(): Promise<void> {
     if (!this.selectedList || !this.selectedSection) return;
     if (!this.editSectionTitle.trim()) {
-      promptAction.showToast({ message: this.t('请输入章节标题', 'Please enter a section title') });
+      this.showToast(this.t('请输入章节标题', 'Please enter a section title'));
       return;
     }
     const ctx = this.getHostContext();
@@ -454,7 +489,7 @@ export struct CustomListTab {
     const board = pasteboard.getSystemPasteboard();
     try {
       await board.setData(pasteData);
-      promptAction.showToast({ message: this.t('已复制Markdown', 'Markdown copied') });
+      this.showToast(this.t('已复制Markdown', 'Markdown copied'));
     } catch (_) {
       // ignore
     }
@@ -555,12 +590,17 @@ export struct CustomListTab {
     this.setViewMode('md-text');
   }
 
-  private copyMarkdownText(): void {
+  private async copyMarkdownText(): Promise<void> {
     const text = (this.mdText ?? '').toString();
     if (!text) return;
     const pasteData = pasteboard.createData(pasteboard.MIMETYPE_TEXT_PLAIN, text);
-    pasteboard.getSystemPasteboard().setData(pasteData);
-    promptAction.showToast({ message: this.t('已复制', 'Copied') });
+    const board = pasteboard.getSystemPasteboard();
+    try {
+      await board.setData(pasteData);
+      this.showToast(this.t('已复制', 'Copied'));
+    } catch (_) {
+      // ignore
+    }
   }
 
   @Builder
@@ -640,56 +680,26 @@ export struct CustomListTab {
   }
 
   private async showDeleteListConfirm(): Promise<void> {
-    try {
-      const result: promptAction.ShowDialogSuccessResponse = await promptAction.showDialog({
-        title: this.t('确认删除', 'Confirm Delete'),
-        message: this.t('删除后无法恢复，确定要删除吗？', 'This action cannot be undone. Are you sure?'),
-        buttons: [
-          { text: this.t('取消', 'Cancel'), color: this.theme.mutedTextColor.toString() },
-          { text: this.t('删除', 'Delete'), color: '#EF4444' },
-        ],
-      });
-      if (result.index === 1 && this.selectedList) {
-        await this.deleteList(this.selectedList.id);
-      }
-    } catch (_) {
-      // ignore
+    if (!this.selectedList) return;
+    const confirmed = await this.confirmDelete(this.t('删除后无法恢复，确定要删除吗？', 'This action cannot be undone. Are you sure?'));
+    if (confirmed) {
+      await this.deleteList(this.selectedList.id);
     }
   }
 
   private async showDeleteSectionConfirm(sectionId: string): Promise<void> {
-    try {
-      const result: promptAction.ShowDialogSuccessResponse = await promptAction.showDialog({
-        title: this.t('确认删除', 'Confirm Delete'),
-        message: this.t('删除章节将同时删除其中的所有表格，确定要删除吗？', 'Deleting this section will also delete all tables in it. Are you sure?'),
-        buttons: [
-          { text: this.t('取消', 'Cancel'), color: this.theme.mutedTextColor.toString() },
-          { text: this.t('删除', 'Delete'), color: '#EF4444' },
-        ],
-      });
-      if (result.index === 1) {
-        await this.deleteSection(sectionId);
-      }
-    } catch (_) {
-      // ignore
+    const confirmed = await this.confirmDelete(
+      this.t('删除章节将同时删除其中的所有表格，确定要删除吗？', 'Deleting this section will also delete all tables in it. Are you sure?'),
+    );
+    if (confirmed) {
+      await this.deleteSection(sectionId);
     }
   }
 
   private async showDeleteTableConfirm(tableId: string): Promise<void> {
-    try {
-      const result: promptAction.ShowDialogSuccessResponse = await promptAction.showDialog({
-        title: this.t('确认删除', 'Confirm Delete'),
-        message: this.t('删除后无法恢复，确定要删除吗？', 'This action cannot be undone. Are you sure?'),
-        buttons: [
-          { text: this.t('取消', 'Cancel'), color: this.theme.mutedTextColor.toString() },
-          { text: this.t('删除', 'Delete'), color: '#EF4444' },
-        ],
-      });
-      if (result.index === 1) {
-        await this.deleteTable(tableId);
-      }
-    } catch (_) {
-      // ignore
+    const confirmed = await this.confirmDelete(this.t('删除后无法恢复，确定要删除吗？', 'This action cannot be undone. Are you sure?'));
+    if (confirmed) {
+      await this.deleteTable(tableId);
     }
   }
 
@@ -998,7 +1008,7 @@ export struct CustomListTab {
             'secondary',
             () => {
               if (!this.selectedList || this.selectedList.sections.length === 0) {
-                promptAction.showToast({ message: this.t('请首先添加一个章节', 'Add a section first') });
+                this.showToast(this.t('请首先添加一个章节', 'Add a section first'));
                 return;
               }
               this.showTableSectionPicker = true;
